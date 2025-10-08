@@ -1,4 +1,4 @@
-name: Validate
+name: HACS validate (plugin)
 
 on:
   push:
@@ -8,13 +8,13 @@ on:
   workflow_dispatch:
 
 permissions: {}
-
 jobs:
-  validate-hacs:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: HACS validation
         uses: hacs/action@main
         with:
