@@ -1,6 +1,7 @@
 # Thermostat Timeline Card
 
 Et Lovelace-kort til Home Assistant, der lader dig planlægge temperaturer på en enkel tidslinje og (valgfrit) automatisk sætte setpoint på dine `climate.*`-entiteter.
+<img width="2291" height="581" alt="timline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
 > **Custom element:** `thermostat-timeline-card`  
 > **Fil (leveres via HACS):** `dist/thermostat-pro-timeline-card.js`
