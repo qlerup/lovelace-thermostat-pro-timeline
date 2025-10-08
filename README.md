@@ -77,5 +77,3 @@ type: custom:thermostat-timeline-card
 entities:
   - climate.stue
 ```
-
-––  
