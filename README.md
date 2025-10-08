@@ -67,11 +67,6 @@ labels:
   → Integration: https://github.com/qlerup/thermostat-pro-timeline-sync
 - **Without integration**: Data is stored in **LocalStorage** in the browser (per device).
 
-## Build & release
-- This repository is a “single‑file plugin” — the distributed file is in the repo root.
-- Create a release (e.g. `v0.1.0`) when ready. HACS prefers a published release.
-- The `Validate` GitHub Actions workflow runs the HACS validator automatically.
-
 ## Example (card type in UI)
 Once the resource is loaded, use the card like this:
 
