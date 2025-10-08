@@ -79,4 +79,3 @@ entities:
 ```
 
 ––  
-Made with ♥ for Home Assistant.
