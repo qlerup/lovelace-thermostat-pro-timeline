@@ -1,41 +1,42 @@
 # Thermostat Timeline Card
 
-Et Lovelace-kort til Home Assistant, der lader dig planlægge temperaturer på en enkel tidslinje og (valgfrit) automatisk sætte setpoint på dine `climate.*`-entiteter.
-<img width="2291" height="581" alt="timline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
+A Lovelace card for Home Assistant that lets you plan temperatures on a simple, draggable timeline and (optionally) auto-apply the setpoint to your `climate.*` entities.
+<img width="2291" height="581" alt="timeline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
 > **Custom element:** `thermostat-timeline-card`  
-> **Fil (leveres via HACS):** `dist/thermostat-pro-timeline-card.js`
+> **File (served by HACS):** `thermostat-pro-timeline.js`
 
-## Funktioner
-- Tidslinje pr. termostat med blokke (fra–til, °C)
-- Standardtemperatur per række
-- Dobbeltklik/dobbelttap for at redigere blokke
-- “Nu”-markør på tidslinjen
-- Automatisk anvendelse af setpoint til `climate.set_temperature` (kan slås fra)
-- GUI-editor i Lovelace
+## Features
+- Per-thermostat timeline with blocks (from–to, °C)
+- Default temperature per row
+- Double‑click/double‑tap to edit blocks
+- “Now” indicator on the timeline
+- Optional auto‑apply of setpoint via `climate.set_temperature`
+- Lovelace GUI editor
 
-## Installation (HACS – som custom repo)
-1. Upload dette repo til GitHub som `thermostat-timeline-card` (eller et navn efter eget valg).
-2. I Home Assistant → **HACS** → ⋯ → **Custom repositories** → tilføj: din GitHub-URL, **Category: Dashboard**.
-3. Find og installer kortet i HACS. HACS tilføjer ressource automatisk i moderne HA.  
-   Ressource-URL bliver typisk: `/hacsfiles/thermostat-timeline-card/dist/thermostat-pro-timeline-card.js`.
+## Installation (HACS – as a custom repository)
+1. Upload/publish this to GitHub as `lovelace-thermostat-pro-timeline` (or any name you prefer).
+2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → add your GitHub URL, **Category: Dashboard**.
+3. Find and install the card in HACS. In recent HA versions, the resource is added automatically.  
+   Typical resource URL:  
+   `/hacsfiles/lovelace-thermostat-pro-timeline/thermostat-pro-timeline.js`
 
-### Manuel installation
-1. Kopiér `dist/thermostat-pro-timeline-card.js` til `/config/www/`.
-2. Tilføj ressourcen i **Indstillinger → Dashboards → Ressourcer**:
-   - URL: `/local/thermostat-pro-timeline-card.js`
+### Manual installation
+1. Copy `thermostat-pro-timeline.js` to `/config/www/`.
+2. Add the resource in **Settings → Dashboards → Resources**:
+   - URL: `/local/thermostat-pro-timeline.js`
    - Type: **JavaScript Module**
 
-## Brug
-Tilføj et kort i dit dashboard med YAML:
+## Usage
+Add a card to your dashboard with YAML:
 
 ```yaml
 type: custom:thermostat-timeline-card
-title: Termostat Tidslinje
+title: Thermostat Timeline
 entities:
-  - climate.stue
-  - climate.sovevaerelse
-storage_entity: sensor.thermostat_timeline   # valgfri (se “Lagring”)
+  - climate.living_room
+  - climate.bedroom
+storage_entity: sensor.thermostat_timeline   # optional (see “Storage & sync”)
 default_temp: 20
 row_height: 64
 now_update_ms: 60000
@@ -45,36 +46,37 @@ auto_apply: true
 apply_on_edit: true
 apply_on_default_change: true
 labels:
-  climate.stue: Stuen
-  climate.sovevaerelse: Soveværelse
+  climate.living_room: Living room
+  climate.bedroom: Bedroom
 ```
 
-### Felter (uddrag)
-- `entities` (**krævet**): Liste af `climate.*` entiteter.
-- `title`: Kortets titel.
-- `default_temp` (°C): Standardtemperatur pr. række.
-- `row_height` (px): Højde per række.
-- `now_update_ms`: Interval for opdatering af “nu”-stregen.
-- `storage_entity` (fx `sensor.thermostat_timeline`): Hvis denne entitet findes, gemmes tidsplanen i sensorets attributter via en servicekald (se nedenfor). Ellers bruges browserens LocalStorage.
-- `auto_apply`: Sæt automatisk setpoint på de angivne `climate.*` så det matcher nuværende plan.
-- `apply_on_edit`: Anvend straks hvis en redigering ændrer det aktuelle setpoint.
-- `apply_on_default_change`: Anvend straks hvis ændring af “Default °C” påvirker det aktuelle setpoint.
-- `labels`: Valgfri map fra `entity_id` → visningsnavn i UI.
+### Options (excerpt)
+- `entities` (**required**): List of `climate.*` entities.
+- `title`: Card title.
+- `default_temp` (°C): Default temperature per row.
+- `row_height` (px): Row height.
+- `now_update_ms`: Refresh interval for the “now” indicator.
+- `storage_entity` (e.g. `sensor.thermostat_timeline`): If present, the schedule is synced via a sensor attribute through a service call (see below). Otherwise browser LocalStorage is used.
+- `auto_apply`: Automatically set the setpoint on the given `climate.*` entities to match the active block.
+- `apply_on_edit`: Apply immediately if an edit changes the current setpoint.
+- `apply_on_default_change`: Apply immediately if changing “Default °C” affects the current setpoint.
+- `labels`: Optional map from `entity_id` → display name in the UI.
 
-## Lagring og synkronisering
-- **Med `storage_entity`**: Kortet forsøger at gemme tidsplanen i en sensor og kalder en service i domænet `thermostat_timeline` for at opdatere data. Det kræver, at du har (eller laver) en simpel integration/template der eksponerer sensoren og håndterer servicen.
-- **Uden `storage_entity`**: Data gemmes i **LocalStorage** i browseren (per enhed).
+## Storage & sync
+- **With integration (`thermostat-pro-timeline-sync`)**: To keep the dashboard in sync across browsers/devices, use my companion integration which exposes a sensor and a service to persist the schedule.  
+  → Integration: https://github.com/qlerup/thermostat-pro-timeline-sync
+- **Without integration**: Data is stored in **LocalStorage** in the browser (per device).
 
 ## Build & release
-- Repoet er klar som “single-file plugin” – filen ligger i `dist/`.
-- Lav en release (fx `v0.1.0`) når du er klar. HACS foretrækker at kunne finde en release.
-- GitHub Actions-workflowet `Validate` kører HACS’ validator automatisk.
+- This repository is a “single‑file plugin” — the distributed file is in the repo root.
+- Create a release (e.g. `v0.1.0`) when ready. HACS prefers a published release.
+- The `Validate` GitHub Actions workflow runs the HACS validator automatically.
 
-## Eksempel på kort-type i UI
-Når ressourcen er indlæst, bruges kortet som:
+## Example (card type in UI)
+Once the resource is loaded, use the card like this:
 
 ```yaml
 type: custom:thermostat-timeline-card
 entities:
-  - climate.stue
+  - climate.living_room
 ```
