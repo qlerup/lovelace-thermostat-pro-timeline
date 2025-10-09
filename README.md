@@ -4,9 +4,6 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 <img width="2291" height="581" alt="timeline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
-> **Custom element:** `thermostat-timeline-card`
-> **File (served by HACS):** `thermostat-pro-timeline.js`
-
 ---
 
 ## ✨ Features
