@@ -87,8 +87,6 @@ labels:
 
 ## 🌍 Localization
 
-Starting from **v1.0.5**, the card automatically detects your **Home Assistant language**. 🧠💬
-
 | Language           | Supported |
 | ------------------ | --------- |
 | 🇩🇰 **Danish**    | ✅         |
