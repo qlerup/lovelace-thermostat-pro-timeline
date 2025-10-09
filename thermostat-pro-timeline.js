@@ -461,7 +461,7 @@ class ThermostatTimelineCard extends HTMLElement {
   _sortBlocks(entity) { const r = this._schedules[entity]; r.blocks.sort((a,b)=>a.startMin - b.startMin || a.endMin - b.endMin); }
   _neighbors(entity, id) { const r = this._schedules[entity]; const i = r.blocks.findIndex(b=>b.id===id); if (i === -1) return {left:null, right:null, index:-1}; return { left: r.blocks[i-1] || null, right: r.blocks[i+1] || null, index:i }; }
   _applyNoOverlapResize(entity, b, edge, proposed) { this._sortBlocks(entity); const {left, right} = this._neighbors(entity, b.id); if (edge === "left") { let ns = this._clamp(Math.floor(proposed), 0, b.endMin - 5); if (left) ns = Math.max(ns, left.endMin); b.startMin = ns; } else if (edge === "right") { let ne = this._clamp(Math.ceil(proposed), b.startMin + 5, 1440); if (right) ne = Math.min(ne, right.startMin); b.endMin = ne; } this._sortBlocks(entity); }
-  _label(min) { if (isNaN(min)) return "00:00"; const hh=Math.floor(min/60), mm=Math.round(min%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
+  _label(min) { if (!Number.isFinite(min)) return "00:00"; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.round(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _getNowMin(){ const d=new Date(); return d.getHours()*60 + d.getMinutes(); }
   _clamp(v,a,b){ if (isNaN(v)) return a; return Math.min(Math.max(v,a),b); }
   _prettyName(eid){ const st=this._hass?.states?.[eid]; if (st?.attributes?.friendly_name) return st.attributes.friendly_name; const base=(eid||"").split(".")[1]||eid||""; return base.replace(/_/g," ").replace(/\b\w/g,(m)=>m.toUpperCase()); }
@@ -594,7 +594,7 @@ class ThermostatTimelineCard extends HTMLElement {
         <div class="header"><div class="title"></div></div>
         <div class="scale"><div class="scale-inner"></div></div>
         <div class="rows"></div>
-        <div class="footer"><div class="label-end"><span>00:00</span><span>24:00</span></div></div>
+        <div class="footer"><div class="label-end"><span>00:00</span><span>00:00</span></div></div>
         <div class="overlay" part="overlay">
           <div class="modal" role="dialog" aria-modal="true" aria-label="Redigér blok">
             <h3>Redigér blok</h3>
@@ -644,7 +644,7 @@ class ThermostatTimelineCard extends HTMLElement {
       t.style.left = `${(i / 24) * 100}%`;
       if (i % 2 === 0 || !compact) {
         const l = document.createElement('label');
-        l.textContent = `${String(i).padStart(2, '0')}:00`;
+        l.textContent = (i === 24) ? '00:00' : `${String(i).padStart(2, '0')}:00`;
         t.append(l);
       }
       scaleEl.append(t);
@@ -778,42 +778,39 @@ class ThermostatTimelineCard extends HTMLElement {
     {
       const nowEl = document.createElement('div');
       nowEl.className = 'now';
-      nowEl.style.left = `${nowPct}%`;
-      // no extend into header/footer when global
-      // nowEl.style.setProperty('--now-extend-top', showTop ? `-${extendPx}px` : '0');
+      // left will be set in pixels to account for row padding
       rowsEl.append(nowEl);
 
-
-      // Fit NOW line between rows, with a small overhang into the top timeline
-      try {
-        const overhang = 12; // px to extend above rows into the scale/timeline
-        const tracks = Array.from(this.shadowRoot.querySelectorAll('.track'));
-        if (tracks.length) {
+      const updateNowGeom = () => {
+        try {
+          const tracks = Array.from(this.shadowRoot.querySelectorAll('.track'));
           const rowsBox = rowsEl.getBoundingClientRect();
-          const firstBox = tracks[0].getBoundingClientRect();
-          const lastBox = tracks[tracks.length - 1].getBoundingClientRect();
-          const top = Math.round(firstBox.top - rowsBox.top - overhang);
-          const bottom = Math.round(lastBox.bottom - rowsBox.top);
-          nowEl.style.top = top + 'px';
-          nowEl.style.height = (bottom - top) + 'px';
-        }
-        const ro = new ResizeObserver(() => {
-          try {
-            const tracks2 = Array.from(this.shadowRoot.querySelectorAll('.track'));
-            if (tracks2.length) {
-              const overhang2 = 12;
-              const rowsBox2 = rowsEl.getBoundingClientRect();
-              const firstBox2 = tracks2[0].getBoundingClientRect();
-              const lastBox2 = tracks2[tracks2.length - 1].getBoundingClientRect();
-              const top2 = Math.round(firstBox2.top - rowsBox2.top - overhang2);
-              const bottom2 = Math.round(lastBox2.bottom - rowsBox2.top);
-              nowEl.style.top = top2 + 'px';
-              nowEl.style.height = (bottom2 - top2) + 'px';
-            }
-          } catch {}
-        });
-        ro.observe(rowsEl);
-      } catch {}
+          // Vertical placement/height
+          if (tracks.length) {
+            const overhang = 12;
+            const firstBox = tracks[0].getBoundingClientRect();
+            const lastBox = tracks[tracks.length - 1].getBoundingClientRect();
+            const top = Math.round(firstBox.top - rowsBox.top - overhang);
+            const bottom = Math.round(lastBox.bottom - rowsBox.top);
+            nowEl.style.top = top + 'px';
+            nowEl.style.height = (bottom - top) + 'px';
+          }
+          // Horizontal left: respect rows padding so it matches .track coordinate system
+          const cs = getComputedStyle(rowsEl);
+          const pl = parseFloat(cs.paddingLeft || '0') || 0;
+          const pr = parseFloat(cs.paddingRight || '0') || 0;
+          const contentW = rowsEl.clientWidth - pl - pr;
+          const leftPx = pl + (nowMin / 1440) * contentW;
+          nowEl.style.left = leftPx + 'px';
+        } catch {}
+      };
+
+      updateNowGeom();
+
+      const ro = new ResizeObserver(() => {
+        updateNowGeom();
+      });
+      try { ro.observe(rowsEl); } catch {}
     }
 
     // Editor modal events
@@ -984,9 +981,20 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch {}
  }
 
-  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; if (blockId) b = row.blocks.find(x => x.id === blockId); const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); let start = this._fromTimeInput(edFrom.value); let end = this._fromTimeInput(edTo.value); let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw); if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20; start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440); if (end <= start) end = this._clamp(start + 15, start + 1, 1440); const others = (row.blocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; } const before = this._desiredNowSnapshot(); if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; } this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin); await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
+  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; if (blockId) b = row.blocks.find(x => x.id === blockId); const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
+    const rawFrom = String(edFrom.value || "");
+    const rawTo = String(edTo.value || "");
+    let start = this._fromTimeInput(rawFrom);
+    let end = this._fromTimeInput(rawTo);
+    // Treat end time 00:00 as end of day (24:00 -> 1440 minutes)
+    if (rawTo === '00:00') end = 1440;
+    let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw);
+    if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
+    start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440);
+    if (end <= start) end = this._clamp(start + 15, start + 1, 1440);
+    const others = (row.blocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; } const before = this._desiredNowSnapshot(); if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; } this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin); await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
 
-  _toTimeInput(min){ if (isNaN(min)) min = 0; const hh=Math.floor(min/60), mm=Math.floor(min%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
+  _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
 
   // ---------- Mutations ----------
