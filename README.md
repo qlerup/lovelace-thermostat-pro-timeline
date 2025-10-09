@@ -11,7 +11,7 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ## ✨ Features
 
-* 🧊 Per‑thermostat timeline with draggable blocks (from–to, °C)
+* 🧊 Per‑thermostat timeline
 * 🔥 Default temperature per row
 * 🖱️ Double‑click / double‑tap to edit blocks
 * ⏱️ "Now" indicator on the timeline
