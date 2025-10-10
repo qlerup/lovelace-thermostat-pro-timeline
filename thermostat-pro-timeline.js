@@ -27,7 +27,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Drag to reorder',
     'editor.remove': 'Remove',
     'editor.default_c': 'Default °C',
-    'editor.row_height_px': 'Row height (px)',
+  'editor.row_height_px': 'Row height (px)',
+  'editor.max_c': 'Max °C',
     'editor.auto_apply.title': 'Automatisk anvendelse',
     'editor.auto_apply.desc':
       'When enabled, the card will try to set the temperature on selected climate entities so it matches the planned value for “right now”.',
@@ -40,6 +41,10 @@ const TT_I18N = {
     'editor.merge_label': 'Merge with (add extra thermostat)',
     'editor.display_name_optional': 'Display name (optional)',
     'editor.merged_with': 'Merged with'
+    , 'editor.store_enable.title': 'Enable shared storage',
+    'editor.store_enable.desc': 'When enabled, schedules are saved to the selected sensor so they are shared across all users/dashboards. When disabled, schedules are saved only in your browser.',
+    'editor.clear_store': 'Clear storage',
+    'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?'
   },
   da: {
     // Kort
@@ -69,7 +74,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Træk for at ændre rækkefølge',
     'editor.remove': 'Fjern',
     'editor.default_c': 'Standard °C',
-    'editor.row_height_px': 'Rækkens højde (px)',
+  'editor.row_height_px': 'Rækkens højde (px)',
+  'editor.max_c': 'Maks °C',
     'editor.auto_apply.title': 'Automatisk anvendelse',
     'editor.auto_apply.desc':
       'Når slået til forsøger kortet automatisk at sætte temperaturen på de valgte climate-entities, så den matcher den planlagte værdi for “lige nu”.',
@@ -81,7 +87,11 @@ const TT_I18N = {
       'Når “Standard °C” ændres og det påvirker temperaturen for nuværende tidsrum, anvendes den nye temperatur straks.',
     'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
     'editor.display_name_optional': 'Visningsnavn (valgfrit)',
-    'editor.merged_with': 'Flettet med'
+    'editor.merged_with': 'Flettet med',
+    'editor.store_enable.title': 'Aktivér delt lager',
+    'editor.store_enable.desc': 'Når slået til, gemmes tidsplanen i den valgte sensor og deles mellem alle brugere/dashboards. Når slået fra, gemmes den kun lokalt i din browser.',
+    'editor.clear_store': 'Ryd lager',
+    'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -107,7 +117,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Dra för att ändra ordning',
     'editor.remove': 'Ta bort',
     'editor.default_c': 'Standard °C',
-    'editor.row_height_px': 'Radhöjd (px)',
+  'editor.row_height_px': 'Radhöjd (px)',
+  'editor.max_c': 'Max °C',
     'editor.auto_apply.title': 'Automatisk tillämpning',
     'editor.auto_apply.desc': 'När det är aktiverat försöker kortet automatiskt ställa in temperaturen på valda climate-entiteter så att den matchar det planerade värdet för ”just nu”.',
     'editor.apply_edit.title': 'Vid redigering',
@@ -116,7 +127,11 @@ const TT_I18N = {
     'editor.apply_default.desc': 'När ”Standard °C” ändras och det påverkar den aktuella perioden, tillämpas den nya temperaturen omedelbart.',
     'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
     'editor.display_name_optional': 'Visningsnamn (valgfrit)',
-    'editor.merged_with': 'Sammanslagen med'
+    'editor.merged_with': 'Sammanslagen med',
+    'editor.store_enable.title': 'Aktivera delad lagring',
+    'editor.store_enable.desc': 'När det är aktiverat sparas scheman i vald sensor och delas mellan alla användare/dashboard. När det är av sparas de endast lokalt i din webbläsare.',
+    'editor.clear_store': 'Rensa lagring',
+    'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -142,7 +157,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Dra for å endre rekkefølge',
     'editor.remove': 'Fjern',
     'editor.default_c': 'Standard °C',
-    'editor.row_height_px': 'Radhøyde (px)',
+  'editor.row_height_px': 'Radhøyde (px)',
+  'editor.max_c': 'Maks °C',
     'editor.auto_apply.title': 'Automatisk bruk',
     'editor.auto_apply.desc': 'Når aktivert forsøker kortet å sette temperaturen på valgte climate-entiteter slik at den samsvarer med planlagt verdi for «nå».',
     'editor.apply_edit.title': 'Ved redigering',
@@ -151,7 +167,11 @@ const TT_I18N = {
     'editor.apply_default.desc': 'Når «Standard °C» endres og det påvirker gjeldende periode, brukes den nye temperaturen umiddelbart.',
     'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
     'editor.display_name_optional': 'Visningsnavn (valgfrit)',
-    'editor.merged_with': 'Flettet med'
+    'editor.merged_with': 'Flettet med',
+    'editor.store_enable.title': 'Aktiver delt lagring',
+    'editor.store_enable.desc': 'Når aktivert lagres tidsplanen i valgt sensor og deles mellom alle brukere/dashboards. Når av, lagres den kun lokalt i nettleseren.',
+    'editor.clear_store': 'Tøm lagring',
+    'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -177,7 +197,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Zum Neuordnen ziehen',
     'editor.remove': 'Entfernen',
     'editor.default_c': 'Standard °C',
-    'editor.row_height_px': 'Zeilenhöhe (px)',
+  'editor.row_height_px': 'Zeilenhöhe (px)',
+  'editor.max_c': 'Max °C',
     'editor.auto_apply.title': 'Automatisch anwenden',
     'editor.auto_apply.desc': 'Wenn aktiviert, versucht die Karte, die Temperatur der ausgewählten climate-Entitäten automatisch so einzustellen, dass sie dem geplanten Wert für „jetzt“ entspricht.',
     'editor.apply_edit.title': 'Beim Bearbeiten',
@@ -186,7 +207,11 @@ const TT_I18N = {
     'editor.apply_default.desc': 'Wenn „Standard °C“ geändert wird und dies den aktuellen Zeitraum betrifft, wird die neue Temperatur sofort angewendet.',
     'editor.merge_label': 'Mit zusammenführen (zusätzlichen Thermostat hinzufügen)',
     'editor.display_name_optional': 'Anzeigename (optional)',
-    'editor.merged_with': 'Zusammengeführt mit'
+    'editor.merged_with': 'Zusammengeführt mit',
+    'editor.store_enable.title': 'Geteilten Speicher aktivieren',
+    'editor.store_enable.desc': 'Wenn aktiviert, werden Pläne im ausgewählten Sensor gespeichert und mit allen Benutzern/Dashboards geteilt. Wenn deaktiviert, wird nur lokal im Browser gespeichert.',
+    'editor.clear_store': 'Speicher leeren',
+    'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -212,7 +237,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Arrastrar para reordenar',
     'editor.remove': 'Eliminar',
     'editor.default_c': 'Predeterminado °C',
-    'editor.row_height_px': 'Altura de fila (px)',
+  'editor.row_height_px': 'Altura de fila (px)',
+  'editor.max_c': 'Máx °C',
     'editor.auto_apply.title': 'Aplicar automáticamente',
     'editor.auto_apply.desc': 'Cuando está activado, la tarjeta intentará establecer la temperatura en las entidades climate seleccionadas para que coincida con el valor planificado para “ahora mismo”.',
     'editor.apply_edit.title': 'Al editar',
@@ -221,7 +247,11 @@ const TT_I18N = {
     'editor.apply_default.desc': 'Cuando “Predeterminado °C” cambia y afecta al período actual, la nueva temperatura se aplica inmediatamente.',
     'editor.merge_label': 'Combinar con (añadir termostato extra)',
     'editor.display_name_optional': 'Nombre para mostrar (opcional)',
-    'editor.merged_with': 'Combinado con'
+    'editor.merged_with': 'Combinado con',
+    'editor.store_enable.title': 'Habilitar almacenamiento compartido',
+    'editor.store_enable.desc': 'Al activarlo, los horarios se guardan en el sensor seleccionado y se comparten entre todos los usuarios/tableros. Al desactivarlo, se guardan solo localmente en tu navegador.',
+    'editor.clear_store': 'Vaciar almacenamiento',
+    'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -247,7 +277,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Glisser pour réorganiser',
     'editor.remove': 'Supprimer',
     'editor.default_c': 'Par défaut °C',
-    'editor.row_height_px': 'Hauteur de ligne (px)',
+  'editor.row_height_px': 'Hauteur de ligne (px)',
+  'editor.max_c': 'Max °C',
     'editor.auto_apply.title': 'Application automatique',
     'editor.auto_apply.desc': 'Lorsqu’il est activé, la carte essaie de régler la température des entités climate sélectionnées pour qu’elle corresponde à la valeur prévue pour « maintenant »',
     'editor.apply_edit.title': 'Lors de l’édition',
@@ -256,7 +287,11 @@ const TT_I18N = {
     'editor.apply_default.desc': 'Lorsque « °C par défaut » change et que cela affecte la période en cours, la nouvelle température est appliquée immédiatement.',
     'editor.merge_label': 'Fusionner avec (ajouter un thermostat supplémentaire)',
     'editor.display_name_optional': 'Nom d’affichage (facultatif)',
-    'editor.merged_with': 'Fusionné avec'
+    'editor.merged_with': 'Fusionné avec',
+    'editor.store_enable.title': 'Activer le stockage partagé',
+    'editor.store_enable.desc': 'Lorsque activé, les plannings sont enregistrés dans le capteur sélectionné et partagés entre tous les utilisateurs/tableaux de bord. Lorsque désactivé, ils sont enregistrés uniquement localement dans votre navigateur.',
+    'editor.clear_store': 'Vider le stockage',
+    'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -282,7 +317,8 @@ const TT_I18N = {
     'editor.drag_reorder': 'Vedä järjestelläksesi',
     'editor.remove': 'Poista',
     'editor.default_c': 'Oletus °C',
-    'editor.row_height_px': 'Rivin korkeus (px)',
+  'editor.row_height_px': 'Rivin korkeus (px)',
+  'editor.max_c': 'Maksi °C',
     'editor.auto_apply.title': 'Automaattinen käyttö',
     'editor.auto_apply.desc': 'Kun käytössä, kortti yrittää asettaa valittujen climate-entiteettien lämpötilan vastaamaan suunniteltua arvoa tälle hetkelle.',
     'editor.apply_edit.title': 'Muokkauksen yhteydessä',
@@ -291,7 +327,11 @@ const TT_I18N = {
     'editor.apply_default.desc': 'Kun ”Oletus °C” muuttuu ja se vaikuttaa meneillään olevaan ajanjaksoon, uusi lämpötila otetaan käyttöön heti.',
     'editor.merge_label': 'Yhdistä (lisää toinen termostaatti)',
     'editor.display_name_optional': 'Näyttönimi (valinnainen)',
-    'editor.merged_with': 'Yhdistetty kohteeseen'
+    'editor.merged_with': 'Yhdistetty kohteeseen',
+    'editor.store_enable.title': 'Ota jaettu tallennus käyttöön',
+    'editor.store_enable.desc': 'Kun käytössä, aikataulut tallennetaan valittuun sensoriin ja jaetaan kaikille käyttäjille/näkymille. Kun pois päältä, ne tallennetaan vain paikallisesti selaimeen.',
+    'editor.clear_store': 'Tyhjennä tallennus',
+    'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb' };
@@ -329,8 +369,10 @@ class ThermostatTimelineCard extends HTMLElement {
       entities: [],
       row_height: 64,
       default_temp: 20,
+      max_temp: 25,
       now_update_ms: 60000,   // kun til UI 'nu'-stregen
       storage_entity: "sensor.thermostat_timeline",     // fx sensor.thermostat_timeline
+      storage_enabled: false, // default: off -> only local per user
       show_top_now: false,
       now_extend_px: 76,
       auto_apply: true,        // sæt automatisk setpoint via climate.set_temperature
@@ -346,7 +388,7 @@ class ThermostatTimelineCard extends HTMLElement {
     this._hass = hass; this._lang = ttGetLangFromHass(hass);
 
     // Hent fra sensor hvis version ændret
-    if (this._config?.storage_entity) {
+    if (this._config?.storage_enabled && this._config?.storage_entity) {
       const st = this._hass.states?.[this._config.storage_entity];
       const ver = Number(st?.state || 0);
       if (!Number.isNaN(ver) && ver !== this._lastVersion && !this._saving) {
@@ -384,7 +426,8 @@ class ThermostatTimelineCard extends HTMLElement {
     if (!config || !Array.isArray(config.entities)) throw new Error("Config skal have 'entities: [climate.xxx, ...]'.");
     let rowh = Number(config.row_height ?? 64); rowh = isNaN(rowh) ? 64 : Math.max(40, Math.min(120, Math.round(rowh)));
     let deft = Number(config.default_temp ?? 20); deft = isNaN(deft) ? 20 : Math.max(5, Math.min(35, deft));
-    let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
+  let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
+  let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(50, maxt));
     const showTop = Boolean(config.show_top_now ?? false);
     let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
 
@@ -393,8 +436,10 @@ class ThermostatTimelineCard extends HTMLElement {
       entities: config.entities,
       row_height: rowh,
       default_temp: deft,
+  max_temp: maxt,
       now_update_ms: nowms,
       storage_entity: (config.storage_entity || "").trim(),
+      storage_enabled: !!(config.storage_enabled ?? false),
       show_top_now: showTop,
       now_extend_px: extendPx,
       auto_apply: config.auto_apply ?? true,
@@ -453,10 +498,10 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   // ---------- Storage (sensor attributes + fallback) ----------
-  _storageAvailable() { const eid = this._config?.storage_entity; return !!(eid && this._hass?.states?.[eid]); }
+  _storageAvailable() { const eid = this._config?.storage_entity; return !!(this._config?.storage_enabled && eid && this._hass?.states?.[eid]); }
 
   async _loadStore(preferSensor = true) {
-    if (preferSensor && this._storageAvailable()) {
+    if (preferSensor && this._config?.storage_enabled && this._storageAvailable()) {
       try {
         const st = this._hass.states[this._config.storage_entity];
         const attrs = st?.attributes || {};
@@ -474,7 +519,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   async _saveStore() {
     try { localStorage.setItem("thermostat_timeline_store", JSON.stringify(this._schedules)); } catch {}
-    if (!this._storageAvailable()) return;
+    if (!this._config?.storage_enabled || !this._storageAvailable()) return;
     this._saving = true;
     try { await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules }); }
     catch (e) { console.error("thermostat-timeline: save failed", e); }
@@ -518,7 +563,8 @@ class ThermostatTimelineCard extends HTMLElement {
   _scheduleNextApply(){ if (this._transitionTimer) clearTimeout(this._transitionTimer); if (!this._config?.auto_apply) return; const when = this._nextBoundaryDate(); const delay = Math.max(500, when.getTime() - Date.now()); this._transitionTimer = setTimeout(async () => { await this._applyCurrentSetpoints(true); this._scheduleNextApply(); }, delay); }
 
   async _applyCurrentSetpoints(force=false){ if (!this._config?.auto_apply || !this._hass) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
-      const desired = this._desiredTempFor(eid, nowMin);
+    let desired = this._desiredTempFor(eid, nowMin);
+    const mx = this._config?.max_temp ?? 25; if (Number.isFinite(mx)) desired = Math.min(desired, mx);
       if (desired == null || Number.isNaN(desired)) continue;
       const last = this._lastApplied[eid] || {};
       if (!force && last.min === nowMin && Math.abs((last.temp??NaN) - desired) < 0.05) continue;
@@ -531,7 +577,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   // ---------- "Apply on change" helper ----------
   _desiredNowSnapshot(){ const nowMin = this._getNowMin(); const snap = {}; for (const eid of this._allTargetEntities()) snap[eid] = this._desiredTempFor(eid, nowMin); return snap; }
-  async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin(); for (const eid of Object.keys(after)){ const a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
+  async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin(); for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) a = Math.min(a, mx); if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
   }
 
   // ---------- UI ----------
@@ -683,7 +729,7 @@ class ThermostatTimelineCard extends HTMLElement {
     const showTop = this._config.show_top_now;
     const extendPx = this._config.now_extend_px;
     for (const eid of this._config.entities) {
-      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+  const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
       const rowEl = document.createElement('div');
       rowEl.className = 'row';
       const head = document.createElement('div');
@@ -700,7 +746,7 @@ class ThermostatTimelineCard extends HTMLElement {
       inline.type = 'number';
       inline.step = '0.5';
       inline.min = '5';
-      inline.max = '35';
+  inline.max = String(this._config.max_temp ?? 25);
       inline.value = String(row.defaultTemp ?? this._config.default_temp);
       inline.addEventListener('focus', () => {
         this._inlineEditing = true;
@@ -715,13 +761,13 @@ class ThermostatTimelineCard extends HTMLElement {
       });
       inline.addEventListener('input', (e) => {
         let v = parseFloat(e.target.value);
-        v = isNaN(v) ? row.defaultTemp : this._clamp(v, 5, 35);
+  v = isNaN(v) ? row.defaultTemp : this._clamp(v, 5, this._config.max_temp ?? 25);
         this._inlineTempDraft = v;
       });
       inline.addEventListener('change', async (e) => {
         const before = this._desiredNowSnapshot();
         let v = parseFloat(e.target.value);
-        v = isNaN(v) ? this._config.default_temp : this._clamp(v, 5, 35);
+  v = isNaN(v) ? this._config.default_temp : this._clamp(v, 5, this._config.max_temp ?? 25);
         row.defaultTemp = v;
         this._schedules[eid] = row;
         this._debouncedSaveStore();
@@ -864,7 +910,7 @@ class ThermostatTimelineCard extends HTMLElement {
     const overlay = this.shadowRoot.querySelector(".overlay");
     const title = this.shadowRoot.querySelector('.modal h3');
     const delBtn = this.shadowRoot.querySelector('.ed-delete');
-    if (edTemp) edTemp.value = String(b.temp);
+  if (edTemp) { edTemp.value = String(b.temp); edTemp.max = String(this._config?.max_temp ?? 25); }
     if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
     if (edTo) edTo.value = this._toTimeInput(b.endMin);
     if (title) title.textContent = this._t('ui.edit_block');
@@ -961,6 +1007,7 @@ class ThermostatTimelineCard extends HTMLElement {
   _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId }=this._editing; if (!blockId) { this._closeEditor(); return; } this._deleteBlock(entity, blockId); this._closeEditor(); }
 
   _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(row.defaultTemp ?? 20); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; } overlay.classList.add('open');
+    if (edTemp) edTemp.max = String(this._config?.max_temp ?? 25);
     try {
       const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
       window.addEventListener('keydown', onKey, { once: true });
@@ -1015,8 +1062,9 @@ class ThermostatTimelineCard extends HTMLElement {
     let end = this._fromTimeInput(rawTo);
     // Treat end time 00:00 as end of day (24:00 -> 1440 minutes)
     if (rawTo === '00:00') end = 1440;
-    let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw);
-    if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
+  let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw);
+  if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
+  const maxLimit = this._config?.max_temp ?? 25; if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit);
     start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440);
     if (end <= start) end = this._clamp(start + 15, start + 1, 1440);
     const others = (row.blocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; } const before = this._desiredNowSnapshot(); if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; } this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin); await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
@@ -1025,7 +1073,7 @@ class ThermostatTimelineCard extends HTMLElement {
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
 
   // ---------- Mutations ----------
-  _addBlock(entity){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; const now=this._getNowMin(); const start=this._clamp(Math.round(now),0,1380); const end=this._clamp(Math.round(start+60), start+15, 1440); const id=Math.random().toString(36).slice(2,9); const b={id,startMin:start,endMin:end,temp:(row.defaultTemp||20)+2}; row.blocks.push(b); this._applyNoOverlapResize(entity,b,"left",b.startMin); this._applyNoOverlapResize(entity,b,"right",b.endMin); this._active={entity,id}; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
+  _addBlock(entity){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; const now=this._getNowMin(); const start=this._clamp(Math.round(now),0,1380); const end=this._clamp(Math.round(start+60), start+15, 1440); const id=Math.random().toString(36).slice(2,9); let t=(row.defaultTemp||20)+2; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) t=Math.min(t,mx); const b={id,startMin:start,endMin:end,temp:t}; row.blocks.push(b); this._applyNoOverlapResize(entity,b,"left",b.startMin); this._applyNoOverlapResize(entity,b,"right",b.endMin); this._active={entity,id}; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
   _deleteBlock(entity,id){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; row.blocks=row.blocks.filter(b=>b.id!==id); if(this._active&&this._active.entity===entity&&this._active.id===id) this._active=null; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
 
   _t(k){ return ttLocalize(k, this._lang || this._hass || 'en'); }
@@ -1166,7 +1214,22 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         </style>
       <div class="wrap">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
-        <div class="row"><div class="label">Storage entity</div><ha-entity-picker class="storage" label="sensor.thermostat_timeline" include-domains='["sensor"]'></ha-entity-picker></div>
+        <div class="row">
+          <div class="label">Storage entity</div>
+          <div style="display:grid; gap:6px; max-width:480px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div style="display:grid; gap:2px;">
+                <div class="store-title" style="font-weight:600;">Enable shared storage</div>
+                <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);">When enabled, schedules are shared via the selected sensor.</div>
+              </div>
+              <ha-switch class="store-enable"></ha-switch>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <ha-entity-picker class="storage" style="flex:1;" label="sensor.thermostat_timeline" include-domains='["sensor"]'></ha-entity-picker>
+              <button type="button" class="remove-btn clear-store"><ha-icon icon="mdi:delete"></ha-icon><span>Clear storage</span></button>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="label">Vælg termostat-entities</div>
           <div class="entities"></div>
@@ -1186,7 +1249,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 }
 .settings-card .grid2 {
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap:10px;
   margin-bottom: 6px;
 }
@@ -1207,6 +1270,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   <div class="grid2">
     <ha-textfield class="def" type="number" label="Standard °C" min="5" max="35"></ha-textfield>
     <ha-textfield class="rowh" type="number" label="Rækkens højde (px)" min="40" max="120"></ha-textfield>
+    <ha-textfield class="maxc" type="number" label="Max °C" min="5" max="50"></ha-textfield>
   </div>
 
   <div class="setting">
@@ -1239,12 +1303,35 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const qs = (s)=>this.shadowRoot.querySelector(s);
     qs(".title")?.addEventListener("change", e => this._upd("title", e.target.value));
     qs(".storage")?.addEventListener("value-changed", e => this._upd("storage_entity", e.detail.value));
-    qs(".def")  ?.addEventListener("change", e => { let raw=String(e.target.value||"").replace(",","."); let v=Number(raw); v=isNaN(v)?20:Math.max(5,Math.min(35,v)); this._upd("default_temp",v); qs(".def").value=String(v); });
+    qs('.store-enable')?.addEventListener('change', e => {
+      const on = !!e.target.checked;
+      this._upd('storage_enabled', on);
+      const picker = this.shadowRoot.querySelector('.storage');
+      if (picker) picker.disabled = !on;
+      this._applyEditorI18n();
+    });
+  qs(".def")  ?.addEventListener("change", e => { let raw=String(e.target.value||"").replace(",","."); let v=Number(raw); const mx = Number(this._config?.max_temp ?? 25); v=isNaN(v)?20:Math.max(5,Math.min(mx,v)); this._upd("default_temp",v); qs(".def").value=String(v); });
     qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
     qs(".add-entity-btn")?.addEventListener("click", () => this._addEntity());
     qs(".auto")?.addEventListener("change", e => this._upd("auto_apply", e.target.checked));
     qs(".applyedit")?.addEventListener("change", e => this._upd("apply_on_edit", e.target.checked));
     qs(".applydef")?.addEventListener("change", e => this._upd("apply_on_default_change", e.target.checked));
+  qs('.maxc')?.addEventListener('change', e => { let v=Number(e.target.value); v=isNaN(v)?25:Math.max(5,Math.min(50,Math.round(v))); this._upd('max_temp',v); const mx=this.shadowRoot.querySelector('.maxc'); if(mx) mx.value=String(v); });
+    qs('.clear-store')?.addEventListener('click', async () => {
+      const msg = this._t('editor.clear_store_confirm');
+      if (!confirm(msg)) return;
+      try {
+        // Clear local store
+        try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
+        // Clear global sensor store if enabled
+        if (this._config.storage_enabled && this._hass && this._config.storage_entity) {
+          await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
+        }
+        // Reset in-memory schedules and notify
+        this._config = { ...this._config };
+        this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._config }, bubbles: true, composed: true }));
+      } catch (e) { console.warn('clear-store failed', e); }
+    });
   }
 
   connectedCallback(){ this._render(); }
@@ -1253,19 +1340,25 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if(!this._hass || !this.shadowRoot || !this._config) return;
     if(this._openCount > 0) return;
 
-    const t = this.shadowRoot.querySelector(".title");
-    const d = this.shadowRoot.querySelector(".def");
+  const t = this.shadowRoot.querySelector(".title");
+  const d = this.shadowRoot.querySelector(".def");
+  const mx= this.shadowRoot.querySelector('.maxc');
     const rh= this.shadowRoot.querySelector(".rowh");
-    const se= this.shadowRoot.querySelector(".storage");
+  const se= this.shadowRoot.querySelector(".storage");
+  const seEn = this.shadowRoot.querySelector('.store-enable');
     const au= this.shadowRoot.querySelector(".auto");
     const aed= this.shadowRoot.querySelector(".applyedit");
     const adf= this.shadowRoot.querySelector(".applydef");
     if (t)  t.value  = this._config.title ?? "";
-    if (d && d !== this.shadowRoot.activeElement) d.value = String(this._config.default_temp ?? 20);
+  if (d && d !== this.shadowRoot.activeElement) d.value = String(this._config.default_temp ?? 20);
+  if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._config.max_temp ?? 25);
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
-    if (se) { se.hass = this._hass; se.value = this._config.storage_entity || ""; 
+    if (se) { se.hass = this._hass; se.value = this._config.storage_entity || ""; }
+    if (seEn) {
+      seEn.checked = !!this._config.storage_enabled;
+      if (se) se.disabled = !seEn.checked;
+    }
     this._applyEditorI18n();
-  }
     if (au) { au.checked = !!this._config.auto_apply; }
     if (aed){ aed.checked = !!this._config.apply_on_edit; }
     if (adf){ adf.checked = !!this._config.apply_on_default_change; }
@@ -1659,6 +1752,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (storagePicker) {
         const storageLabel = storagePicker.closest('.row')?.querySelector('.label');
         if (storageLabel) storageLabel.textContent = t('editor.storage_entity');
+        // toggle texts
+        const stTitle = root.querySelector('.store-title');
+        const stDesc = root.querySelector('.store-desc');
+        if (stTitle) stTitle.textContent = t('editor.store_enable.title');
+        if (stDesc) stDesc.textContent = t('editor.store_enable.desc');
+        const clrBtn = root.querySelector('.clear-store span');
+        if (clrBtn) clrBtn.textContent = t('editor.clear_store');
       }
 
       // Entities section label (use the .entities container to find its label robustly)
@@ -1677,6 +1777,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (def) def.setAttribute('label', t('editor.default_c'));
       const rowh = root.querySelector('ha-textfield.rowh');
       if (rowh) rowh.setAttribute('label', t('editor.row_height_px'));
+  const maxc = root.querySelector('ha-textfield.maxc');
+  if (maxc) maxc.setAttribute('label', t('editor.max_c'));
 
       // Settings titles/descriptions
       const settings = Array.from(root.querySelectorAll('.settings-card .setting'));
