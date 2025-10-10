@@ -29,7 +29,7 @@ const TT_I18N = {
     'editor.default_c': 'Default °C',
   'editor.row_height_px': 'Row height (px)',
   'editor.max_c': 'Max °C',
-    'editor.auto_apply.title': 'Automatisk anvendelse',
+  'editor.auto_apply.title': 'Automatic apply',
     'editor.auto_apply.desc':
       'When enabled, the card will try to set the temperature on selected climate entities so it matches the planned value for “right now”.',
     'editor.apply_edit.title': 'On editing',
