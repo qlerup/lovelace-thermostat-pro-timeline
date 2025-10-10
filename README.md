@@ -38,11 +38,6 @@ If you have multiple thermostats in the same physical room, you can now **merge*
 * Less clutter, fewer timelines to manage 🧹
 * Still view each device’s details individually 🔎
 
-📸 **Examples:** 
-
-<img width="490" height="293" alt="ui-new-room" src="https://github.com/user-attachments/assets/a26b6fbf-f0be-4418-9aca-0897c1d2c6aa" /> 
-<img width="490" height="573" alt="ui-new-room-foldout" src="https://github.com/user-attachments/assets/cf74107c-185e-4e76-8175-0548c219843f" />
-
 ---
 
 ## ⚙️ Installation (via HACS – as a custom repository)
