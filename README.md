@@ -1,4 +1,5 @@
 # Thermostat Timeline Card 🔥🕒
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 
 A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple, draggable timeline 🏡📅 — and automatically apply them to your `climate.*` entities.
 
