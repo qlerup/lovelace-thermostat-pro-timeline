@@ -25,6 +25,8 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ## ⚙️ Installation (via HACS – as a custom repository)
 
+[![Open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=lovelace-thermostat-pro-timeline)
+
 1. Upload/publish this repo as `lovelace-thermostat-pro-timeline`.
 2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → add your GitHub URL, **Category: Dashboard**.
 3. Install via HACS.
