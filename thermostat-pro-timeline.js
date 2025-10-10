@@ -1701,7 +1701,7 @@ customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardE
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Dev Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
 
 function loadCard() {}
 loadCard();
