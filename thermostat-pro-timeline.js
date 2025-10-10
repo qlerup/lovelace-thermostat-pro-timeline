@@ -37,6 +37,9 @@ const TT_I18N = {
     'editor.apply_default.title': 'On Default °C change',
     'editor.apply_default.desc':
       'When “Default °C” changes and it affects the current period, the new temperature is applied immediately.',
+    'editor.merge_label': 'Merge with (add extra thermostat)',
+    'editor.display_name_optional': 'Display name (optional)',
+    'editor.merged_with': 'Merged with'
   },
   da: {
     // Kort
@@ -76,6 +79,9 @@ const TT_I18N = {
     'editor.apply_default.title': 'Ved Standard °C ændring',
     'editor.apply_default.desc':
       'Når “Standard °C” ændres og det påvirker temperaturen for nuværende tidsrum, anvendes den nye temperatur straks.',
+    'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
+    'editor.display_name_optional': 'Visningsnavn (valgfrit)',
+    'editor.merged_with': 'Flettet med'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -108,6 +114,9 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'När du ändrar tidslinjeblock och ändringen påverkar aktuell tid, tillämpas den nya temperaturen omedelbart.',
     'editor.apply_default.title': 'Vid ändring av Standard °C',
     'editor.apply_default.desc': 'När ”Standard °C” ändras och det påverkar den aktuella perioden, tillämpas den nya temperaturen omedelbart.',
+    'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
+    'editor.display_name_optional': 'Visningsnamn (valgfrit)',
+    'editor.merged_with': 'Sammanslagen med'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -137,9 +146,12 @@ const TT_I18N = {
     'editor.auto_apply.title': 'Automatisk bruk',
     'editor.auto_apply.desc': 'Når aktivert forsøker kortet å sette temperaturen på valgte climate-entiteter slik at den samsvarer med planlagt verdi for «nå».',
     'editor.apply_edit.title': 'Ved redigering',
-    'editor.apply_edit.desc': 'Når du endrer blokker i tidslinjen og endringen påvirker aktuell tid, brukes den nye temperaturen umiddelbart.',
+    'editor.apply_edit.desc': 'Når du endrer blokker i tidslinjen og endringen påvirker aktuell tid, tilpasses den nye temperaturen umiddelbart.',
     'editor.apply_default.title': 'Ved Standard °C-endring',
     'editor.apply_default.desc': 'Når «Standard °C» endres og det påvirker gjeldende periode, brukes den nye temperaturen umiddelbart.',
+    'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
+    'editor.display_name_optional': 'Visningsnavn (valgfrit)',
+    'editor.merged_with': 'Flettet med'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -172,6 +184,9 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Wenn Sie Blöcke der Zeitlinie ändern und die Änderung die aktuelle Zeit betrifft, wird die neue Temperatur sofort angewendet.',
     'editor.apply_default.title': 'Bei Änderung von Standard °C',
     'editor.apply_default.desc': 'Wenn „Standard °C“ geändert wird und dies den aktuellen Zeitraum betrifft, wird die neue Temperatur sofort angewendet.',
+    'editor.merge_label': 'Mit zusammenführen (zusätzlichen Thermostat hinzufügen)',
+    'editor.display_name_optional': 'Anzeigename (optional)',
+    'editor.merged_with': 'Zusammengeführt mit'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -204,6 +219,9 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Cuando cambias bloques de la línea de tiempo y el cambio afecta a la hora actual, la nueva temperatura se aplica inmediatamente.',
     'editor.apply_default.title': 'Al cambiar Predeterminado °C',
     'editor.apply_default.desc': 'Cuando “Predeterminado °C” cambia y afecta al período actual, la nueva temperatura se aplica inmediatamente.',
+    'editor.merge_label': 'Combinar con (añadir termostato extra)',
+    'editor.display_name_optional': 'Nombre para mostrar (opcional)',
+    'editor.merged_with': 'Combinado con'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -236,6 +254,9 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Quand vous modifiez des blocs de la chronologie et que la modification affecte l’heure actuelle, la nouvelle température est appliquée immédiatement.',
     'editor.apply_default.title': 'Lors d’un changement de °C par défaut',
     'editor.apply_default.desc': 'Lorsque « °C par défaut » change et que cela affecte la période en cours, la nouvelle température est appliquée immédiatement.',
+    'editor.merge_label': 'Fusionner avec (ajouter un thermostat supplémentaire)',
+    'editor.display_name_optional': 'Nom d’affichage (facultatif)',
+    'editor.merged_with': 'Fusionné avec'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -268,6 +289,9 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Kun muutat aikajanan lohkoja ja muutos koskee nykyhetkeä, uusi lämpötila otetaan käyttöön heti.',
     'editor.apply_default.title': 'Kun Oletus °C muuttuu',
     'editor.apply_default.desc': 'Kun ”Oletus °C” muuttuu ja se vaikuttaa meneillään olevaan ajanjaksoon, uusi lämpötila otetaan käyttöön heti.',
+    'editor.merge_label': 'Yhdistä (lisää toinen termostaatti)',
+    'editor.display_name_optional': 'Näyttönimi (valinnainen)',
+    'editor.merged_with': 'Yhdistetty kohteeseen'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb' };
@@ -312,7 +336,8 @@ class ThermostatTimelineCard extends HTMLElement {
       auto_apply: true,        // sæt automatisk setpoint via climate.set_temperature
       apply_on_edit: true,     // NYT: anvend straks hvis den ønskede temp *nu* ændres af en redigering
       apply_on_default_change: true, // NYT: anvend straks hvis Standard °C ændrer den ønskede temp *nu*,
-      labels: {}
+      labels: {},
+      merges: {}               // { [primary_eid]: [linked_eid, ...] }
     };
   }
 
@@ -376,6 +401,7 @@ class ThermostatTimelineCard extends HTMLElement {
       apply_on_edit: config.apply_on_edit ?? true,
       apply_on_default_change: config.apply_on_default_change ?? true,
       labels: { ...(config.labels || {}) },
+      merges: { ...(config.merges || {}) },
     };
 
     if (this._initialized) {
@@ -467,13 +493,31 @@ class ThermostatTimelineCard extends HTMLElement {
   _prettyName(eid){ const st=this._hass?.states?.[eid]; if (st?.attributes?.friendly_name) return st.attributes.friendly_name; const base=(eid||"").split(".")[1]||eid||""; return base.replace(/_/g," ").replace(/\b\w/g,(m)=>m.toUpperCase()); }
   _isCompactScale(){ try { const isCoarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches; const isLandscape = window.matchMedia && window.matchMedia('(orientation: landscape)').matches; const w = window.innerWidth || 0; return (isCoarse && isLandscape) || (w > 600 && w < 1100 && isLandscape); } catch (e) { return false; } }
 
-  _desiredTempFor(eid, nowMin){ const row = this._schedules[eid]; if (!row) return null; const hit = (row.blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); return Number(hit ? hit.temp : row.defaultTemp); }
+  // --- Merge helpers ---
+  _groupPrimaryOf(eid){
+    const prims = this._config?.entities || [];
+    if (prims.includes(eid)) return eid;
+    const merges = this._config?.merges || {};
+    for (const p of prims){ const arr = merges[p]||[]; if (arr.includes(eid)) return p; }
+    return eid;
+  }
+  _allTargetEntities(){
+    const out = new Set();
+    const merges = this._config?.merges || {};
+    for (const p of (this._config?.entities||[])){
+      out.add(p);
+      for (const l of (merges[p]||[])) out.add(l);
+    }
+    return Array.from(out);
+  }
+
+  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; const hit = (row.blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); return Number(hit ? hit.temp : row.defaultTemp); }
 
   _nextBoundaryDate(){ const now = new Date(); const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity; for (const eid of (this._config.entities || [])){ const row = this._schedules[eid]; if (!row) continue; const times = []; for (const b of (row.blocks||[])) { times.push(b.startMin, b.endMin); } for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } } } if (bestT == null) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0); } const dayOffset = (bestT >= nowMin) ? 0 : 1; const target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset, Math.floor(bestT/60), bestT%60, 0, 0); if (target.getTime() - now.getTime() <= 250) target.setTime(target.getTime() + 60000); return target; }
 
   _scheduleNextApply(){ if (this._transitionTimer) clearTimeout(this._transitionTimer); if (!this._config?.auto_apply) return; const when = this._nextBoundaryDate(); const delay = Math.max(500, when.getTime() - Date.now()); this._transitionTimer = setTimeout(async () => { await this._applyCurrentSetpoints(true); this._scheduleNextApply(); }, delay); }
 
-  async _applyCurrentSetpoints(force=false){ if (!this._config?.auto_apply || !this._hass) return; const nowMin = this._getNowMin(); for (const eid of (this._config.entities || [])){
+  async _applyCurrentSetpoints(force=false){ if (!this._config?.auto_apply || !this._hass) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
       const desired = this._desiredTempFor(eid, nowMin);
       if (desired == null || Number.isNaN(desired)) continue;
       const last = this._lastApplied[eid] || {};
@@ -486,7 +530,7 @@ class ThermostatTimelineCard extends HTMLElement {
     } }
 
   // ---------- "Apply on change" helper ----------
-  _desiredNowSnapshot(){ const nowMin = this._getNowMin(); const snap = {}; for (const eid of (this._config.entities || [])) snap[eid] = this._desiredTempFor(eid, nowMin); return snap; }
+  _desiredNowSnapshot(){ const nowMin = this._getNowMin(); const snap = {}; for (const eid of this._allTargetEntities()) snap[eid] = this._desiredTempFor(eid, nowMin); return snap; }
   async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin(); for (const eid of Object.keys(after)){ const a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
   }
 
@@ -566,30 +610,12 @@ class ThermostatTimelineCard extends HTMLElement {
         }
         .placeholder { border:2px dashed var(--primary-color); border-radius:10px; margin:6px 0; }
         
-/* --- Enforce editor left column width (hard cap + min-width fixes) --- */
-.wrap,
-.entities,
-.inline,
-.settings-card,
-.settings-card .grid2,
-.add-entity-btn {
-  max-width: var(--tt_editor_max_w) !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-  overflow: hidden;
-}
-/* Prevent children from stretching the column */
-.wrap > * {
-  max-width: var(--tt_editor_max_w) !important;
-  min-width: 0 !important;
-}
-.inline ha-entity-picker {
-  width: 100% !important;
-  min-width: 120px !important;
-  max-width: calc(var(--tt_editor_max_w) - 140px) !important; /* leave room for actions */
-}
-</style>
+        /* Merge chips */
+        .linked-chips { display:flex; flex-wrap:wrap; gap:6px; }
+        .pill-chip { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); color: var(--primary-text-color); }
+        .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
+        .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
+        </style>
       <ha-card class="card">
         <div class="header"><div class="title"></div></div>
         <div class="scale"><div class="scale-inner"></div></div>
@@ -669,6 +695,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const customLabel = (this._config.labels && this._config.labels[eid]) ? this._config.labels[eid] : null;
       name.textContent = customLabel || this._prettyName(eid);
       meta.append(name);
+      // merged/linked entities should not be shown in the card UI
       const inline = document.createElement('input');
       inline.type = 'number';
       inline.step = '0.5';
@@ -1067,19 +1094,23 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         .label { font-size:.85rem; color: var(--secondary-text-color); }
         .entities { display:grid; gap:10px; }
         /* Entity row (summary + collapsible details) */
-        .inline { transition: none; display:grid; gap:6px; max-width: 480px;  grid-template-columns: 1fr auto; grid-template-rows: auto auto; align-items: start; }
-        .inline > div:first-child { grid-column: 1; grid-row: 1 / span 2; }
+        .inline { transition: none; display:grid; gap:6px; max-width: 480px; grid-template-columns: 1fr; grid-auto-rows: auto; align-items: start; }
+        /* actions are inside summary; details always stack below summary */
+        .inline > div:first-child { grid-column:  1; grid-row: 1 / span 2; }
         .inline > .actions { grid-column: 2; grid-row: 2; align-self: center; }
 
         .inline .summary { display:flex; align-items:center; justify-content:space-between; padding:6px; border:1px dashed var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
         .inline .summary-left { display:flex; align-items:center; gap:8px; min-width:0; }
         .inline .summary-title { font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 320px; }
+        /* New: subtitle below title with merged entities */
+        .inline .summary-text { display:grid; gap:2px; min-width:0; }
+        .inline .summary-sub { font-size:.8rem; color: var(--secondary-text-color); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 320px; }
         .inline .expander { width:28px; height:28px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
         .inline.open .expander { transform: rotate(180deg); }
         .inline .details { display:none; grid-template-columns: minmax(250px, 440px); gap:6px; padding:6px; border:1px dashed var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
         .inline.open .details { display:grid; }
-         ha-textfield { width:100%; max-width:380px; }
-         .label-input { width:100%; max-width:380px; }
+         ha-textfield { width:100%; max-width:440px; }
+         .label-input { width:100%; max-width:440px; }
   /* entity picker width constraint */
   .inline ha-entity-picker { width: 100%; min-width: 250px; max-width: 440px; overflow: hidden; text-overflow: ellipsis; }
         /* Add entity button styles */
@@ -1126,6 +1157,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           z-index: 9999;
         }
         .placeholder { border:2px dashed var(--primary-color); border-radius:10px; margin:6px 0; }
+        
+        /* Merge chips */
+        .linked-chips { display:flex; flex-wrap:wrap; gap:6px; }
+        .pill-chip { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); color: var(--primary-text-color); }
+        .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
+        .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
         </style>
       <div class="wrap">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
@@ -1246,14 +1283,16 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (picker) {
         picker.hass = this._hass;
         picker.value = this._config.entities[i] || "";
-        // Exclude entities already selected in other rows, but allow the current selection
+        // Exclude entities already selected in other rows, or linked elsewhere; allow the current selection
         picker.entityFilter = (st) => {
           try {
             const id = st?.entity_id || st?.entityId || st?.entityID || "";
             if (!id) return false;
-            const chosen = (this._config.entities || []).filter(Boolean);
+            const chosenPrim = (this._config.entities || []).filter(Boolean);
+            const allLinked = Object.values(this._config.merges || {}).flat();
+            const blocked = new Set([...chosenPrim, ...allLinked]);
             const current = this._config.entities[i];
-            return !chosen.includes(id) || id === current;
+            return !blocked.has(id) || id === current;
           } catch { return true; }
         };
       }
@@ -1263,11 +1302,49 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const eid = this._config.entities[i] || "";
         const labels = this._config.labels || {};
         const titleEl = row.querySelector('.summary-title');
+        const subEl = row.querySelector('.summary-sub');
         const nameInp = row.querySelector('.label-input');
         const friendly = eid ? (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid)) : '';
         const shown = labels[eid] || friendly || 'Vælg en entitet';
         if (titleEl) titleEl.textContent = shown;
         if (nameInp && nameInp !== this.shadowRoot.activeElement) nameInp.value = labels[eid] || '';
+        // Build merged subtitle text
+        if (subEl) {
+          const linked = (this._config.merges?.[eid] || []).map(id => (
+            this._hass?.states?.[id]?.attributes?.friendly_name || (id.split('.')[1] || id)
+          ));
+          subEl.textContent = linked.length ? `${this._t('editor.merged_with')}: ${linked.join(', ')}` : '';
+        }
+      } catch {}
+
+      // Rebuild merge chips every render
+      try {
+        const eid = this._config.entities[i] || '';
+        const chips = row.querySelector('.linked-chips');
+        const mergePicker = row.querySelector('.merge-picker');
+        if (mergePicker) mergePicker.hass = this._hass;
+        if (chips && eid){
+          chips.innerHTML = '';
+          const links = (this._config.merges?.[eid] || []);
+          for (const l of links){
+            const chip = document.createElement('span');
+            chip.className = 'pill-chip';
+            const txt = document.createElement('span');
+            txt.textContent = this._hass?.states?.[l]?.attributes?.friendly_name || (l.split('.')[1]||l);
+            const rm = document.createElement('button');
+            rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+            rm.setAttribute('aria-label', this._t('editor.remove'));
+            rm.addEventListener('click', ()=>{
+              const merges = { ...(this._config.merges || {}) };
+              merges[eid] = (merges[eid]||[]).filter(x=>x!==l);
+              if (!merges[eid]?.length) delete merges[eid];
+              this._config.merges = merges;
+              this._emit(true);
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        }
       } catch {}
      }
    }
@@ -1336,7 +1413,27 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     _makeEntityRow(idx){
     const line = document.createElement("div"); line.className = "inline";
 
-    // Left column: entity picker + optional label field stacked
+    // Summary bar (collapsed row header)
+    const summary = document.createElement('div');
+    summary.className = 'summary';
+    const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+    const expander = document.createElement('button'); expander.className = 'expander'; expander.innerHTML = `<ha-icon icon="mdi:chevron-down"></ha-icon>`; sumLeft.append(expander);
+    // Title and subtitle container
+    const textWrap = document.createElement('div'); textWrap.className = 'summary-text';
+    const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = 'Vælg en entitet';
+    const subSpan = document.createElement('span'); subSpan.className = 'summary-sub'; subSpan.textContent = '';
+    textWrap.append(titleSpan, subSpan);
+    sumLeft.append(textWrap);
+    summary.append(sumLeft);
+    const actions = document.createElement("div"); actions.className = "actions";
+    const handle = document.createElement("button"); handle.className = "drag-handle"; handle.setAttribute("draggable","true"); handle.setAttribute("title", this._t('editor.drag_reorder')); handle.innerHTML = `<ha-icon icon="mdi:drag"></ha-icon>`; actions.append(handle);
+    const del = document.createElement("button"); del.className = "remove-btn"; del.innerHTML = `<ha-icon icon="mdi:close"></ha-icon><span>${this._t('editor.remove')}</span>`; actions.append(del);
+    summary.append(actions);
+
+    // Details (expanded content)
+    const details = document.createElement('div'); details.className = 'details';
+
+    // Left column: entity picker + optional label + merge UI
     const left = document.createElement("div"); left.style.display = "grid"; left.style.gap = "6px";
 
     const pick = document.createElement("ha-entity-picker");
@@ -1347,15 +1444,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       try {
         const id = st?.entity_id || st?.entityId || st?.entityID || "";
         if (!id) return false;
-        const chosen = (this._config.entities || []).filter(Boolean);
+        const chosenPrim = (this._config.entities || []).filter(Boolean);
+        const allLinked = Object.values(this._config.merges || {}).flat();
+        const blocked = new Set([...chosenPrim, ...allLinked]);
         const current = this._config.entities[idx];
-        return !chosen.includes(id) || id === current;
+        return !blocked.has(id) || id === current;
       } catch { return true; }
     };
 
     const nameInp = document.createElement("ha-textfield");
     nameInp.className = "label-input";
-    nameInp.setAttribute("label", "Visningsnavn (valgfrit)");
+    nameInp.setAttribute("label", this._t('editor.display_name_optional'));
     nameInp.addEventListener("change", (e)=>{
       const eid = this._config.entities[idx];
       if (!eid) return;
@@ -1366,63 +1465,175 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       this._emit();
     });
 
-    left.append(pick, nameInp);
-    line.append(left);
+    // Merge/Link section
+    const linkWrap = document.createElement('div');
+    linkWrap.style.display = 'grid';
+    linkWrap.style.gap = '6px';
 
-    pick.addEventListener("opened-changed", (e)=>{
-      if (e.detail.value) { this._openCount++; }
-      else {
-        this._openCount = Math.max(0, this._openCount-1);
-        if (this._openCount === 0 && this._pendingEmit) { this._pendingEmit = false; this._emit(); }
-        this._render();
-      }
-    });
-
-    pick.addEventListener("value-changed", (e)=>{
-      this._config.entities[idx] = e.detail.value;
-      // update the label input to any existing override for this entity
-      try { nameInp.value = (this._config.labels || {})[e.detail.value] || ""; } catch {}
-      if (this._openCount > 0) this._pendingEmit = true; else this._emit();
-    });
-
-    const actions = document.createElement("div"); actions.className = "actions";
-    const handle = document.createElement("button"); handle.className = "drag-handle"; handle.setAttribute("draggable","true"); handle.setAttribute("title", this._t('editor.drag_reorder')); handle.innerHTML = `<ha-icon icon="mdi:drag"></ha-icon>`; actions.append(handle);
-    const del = document.createElement("button"); del.className = "remove-btn"; del.innerHTML = `<ha-icon icon="mdi:close"></ha-icon><span>${this._t('editor.remove')}</span>`; actions.append(del);
-    del.addEventListener("click", ()=>{
-      const eid = this._config.entities[idx];
-      this._config.entities.splice(idx,1);
-      if (eid && this._config.labels && this._config.labels[eid]) {
-
-        const labels = { ...this._config.labels };
-        delete labels[eid];
-        this._config.labels = labels;
-      }
+    const linkPicker = document.createElement('ha-entity-picker');
+    linkPicker.className = 'merge-picker';
+    linkPicker.setAttribute('include-domains', '["climate"]');
+    linkPicker.setAttribute('label', this._t('editor.merge_label') || 'Flet med (tilføj ekstra termostat)');
+    linkPicker.hass = this._hass;
+    const linkFilter = (st) => {
+      try {
+        const id = st?.entity_id || st?.entityId || st?.entityID || '';
+        if (!id) return false;
+        const prims = (this._config.entities || []).filter(Boolean);
+        const allLinked = Object.values(this._config.merges || {}).flat();
+        const used = new Set([...prims, ...allLinked]);
+        // Allow selecting if not already used anywhere and not equal to current primary
+        const cur = this._config.entities[idx];
+        return !used.has(id) && id !== cur;
+      } catch { return true; }
+    };
+    linkPicker.entityFilter = linkFilter;
+    linkPicker.addEventListener('value-changed', (e)=>{
+      const toAdd = e.detail.value;
+      linkPicker.value = '';
+      const primary = this._config.entities[idx];
+      if (!primary || !toAdd) return;
+      const merges = { ...(this._config.merges || {}) };
+      const arr = Array.from(new Set([...(merges[primary] || []), toAdd]));
+      merges[primary] = arr;
+      this._config.merges = merges;
       this._emit(true);
     });
 
-    // Drag & drop logic
-    handle.addEventListener("dragstart", (e)=>{ e.dataTransfer.setData("text/plain", String(idx)); e.dataTransfer.effectAllowed = "move"; });
-    const over = (e)=>{ e.preventDefault(); e.dataTransfer.dropEffect="move"; line.classList.add("drag-over"); };
-    const leave= ()=>{ line.classList.remove("drag-over"); };
-    line.addEventListener("dragover", over);
-    line.addEventListener("dragleave", leave);
-    line.addEventListener("drop", (e)=>{ e.preventDefault(); leave(); const from = Number(e.dataTransfer.getData("text/plain")); const to = idx; if (isNaN(from) || from===to) return; const arr = [...(this._config.entities||[])]; const [it] = arr.splice(from,1); arr.splice(to,0,it); this._config.entities = arr; this._emit(true); });
-    line.append(actions);
+    const chips = document.createElement('div');
+    chips.className = 'linked-chips';
 
-    // Pointer DnD on the whole line except interactive controls
-    line.addEventListener('mousedown', (e)=>{
-      const pathEl = e.target;
-      // skip if clicking inside entity picker or buttons/inputs
-      const isButton = pathEl.closest && (pathEl.closest('button') || pathEl.closest('.actions') || pathEl.closest('ha-icon-button'));
-      const isPicker = pathEl.closest && pathEl.closest('ha-entity-picker');
-      const isInput = (pathEl.tagName==='INPUT' || pathEl.tagName==='HA-TEXTFIELD' || pathEl.closest?.('ha-textfield'));
-      if (isButton || isPicker || isInput) return;
-      this._startPointerDnd(line, idx);
-      e.preventDefault();
+    left.append(pick, nameInp, linkWrap, chips);
+    details.append(left);
+
+    // Expand/collapse
+    const toggle = ()=>{ line.classList.toggle('open'); };
+    expander.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
+    sumLeft.addEventListener('click', (e)=>{ if (e.target === expander) return; toggle(); });
+
+    line.append(summary, details);
+
+    // populate chips on render
+    const refreshChips = () => {
+      try {
+        linkPicker.hass = this._hass;
+        const primary = this._config.entities[idx];
+        const links = (this._config.merges?.[primary] || []);
+        chips.innerHTML = '';
+        for (const l of links){
+          const chip = document.createElement('span');
+          chip.className = 'pill-chip';
+          const txt = document.createElement('span');
+          txt.textContent = this._hass?.states?.[l]?.attributes?.friendly_name || (l.split('.')[1]||l);
+          const rm = document.createElement('button');
+          rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+          rm.setAttribute('aria-label', this._t('editor.remove'));
+          rm.addEventListener('click', ()=>{
+            const merges = { ...(this._config.merges || {}) };
+            merges[primary] = (merges[primary]||[]).filter(x=>x!==l);
+            if (!merges[primary]?.length) delete merges[primary];
+            this._config.merges = merges;
+            this._emit(true);
+          });
+          chip.append(txt, rm);
+          chips.append(chip);
+        }
+        // Update subtitle after chip changes
+        try {
+          const subEl = line.querySelector('.summary-sub');
+          const linkedNames = links.map(id => this._hass?.states?.[id]?.attributes?.friendly_name || (id.split('.')[1]||id));
+          if (subEl) subEl.textContent = linkedNames.length ? `${this._t('editor.merged_with')}: ${linkedNames.join(', ')}` : '';
+        } catch {}
+        linkWrap.innerHTML = '';
+        linkWrap.append(linkPicker);
+      } catch {}
+    };
+
+    // When picker changes primary value, migrate merges
+    pick.addEventListener("value-changed", (e)=>{
+      const oldPrimary = this._config.entities[idx];
+      const newPrimary = e.detail.value;
+      if (oldPrimary && newPrimary && oldPrimary !== newPrimary){
+        const merges = { ...(this._config.merges || {}) };
+        if (merges[oldPrimary] && !merges[newPrimary]) { merges[newPrimary] = merges[oldPrimary]; delete merges[oldPrimary]; }
+        else if (merges[oldPrimary] && merges[newPrimary]) { merges[newPrimary] = Array.from(new Set([...(merges[newPrimary]||[]), ...(merges[oldPrimary]||[])])); delete merges[oldPrimary]; }
+        this._config.merges = merges;
+      }
+      this._config.entities[idx] = newPrimary;
+      try { nameInp.value = (this._config.labels || {})[newPrimary] || ""; } catch {}
+      if (this._openCount > 0) this._pendingEmit = true; else this._emit(true);
+      refreshChips();
+      // Also update subtitle on primary change
+      try {
+        const subEl = line.querySelector('.summary-sub');
+        const linkedNames = (this._config.merges?.[this._config.entities[idx]] || []).map(id => this._hass?.states?.[id]?.attributes?.friendly_name || (id.split('.')[1]||id));
+        if (subEl) subEl.textContent = linkedNames.length ? `${this._t('editor.merged_with')}: ${linkedNames.join(', ')}` : '';
+      } catch {}
     });
 
     return line;
   }
+
+  // Pointer-driven drag & drop is disabled; use native DnD via handle only
+  /* _startPointerDnd(line, idx){
+    const wrap = line.parentElement;
+    if (!wrap) return;
+    if (this._pointerDndActive) return;
+    this._pointerDndActive = true;
+
+    const rect = line.getBoundingClientRect();
+    const ghost = line.cloneNode(true);
+    ghost.classList.add('drag-ghost');
+    ghost.style.width = rect.width + 'px';
+    ghost.style.height = rect.height + 'px';
+    ghost.style.top = rect.top + 'px';
+    ghost.style.left = rect.left + 'px';
+
+    const placeholder = document.createElement('div');
+    placeholder.className = 'placeholder';
+    placeholder.style.height = rect.height + 'px';
+
+    // place placeholder where line was, and hide line
+    wrap.insertBefore(placeholder, line);
+    line.style.display = 'none';
+    document.body.appendChild(ghost);
+
+    const onMove = (ev)=>{
+      const y = ev.clientY;
+      ghost.style.top = (y - rect.height/2) + 'px';
+
+      // find element under pointer within this shadowRoot
+      let el = this.shadowRoot && this.shadowRoot.elementFromPoint(ev.clientX, ev.clientY);
+      // climb to row in the same wrap
+      while (el && el !== wrap && !el.classList?.contains('inline')) el = el.parentElement;
+      if (!el || el===placeholder || el===wrap) return;
+      const targetRect = el.getBoundingClientRect();
+      const before = (ev.clientY - targetRect.top) < targetRect.height/2;
+      if (before) wrap.insertBefore(placeholder, el);
+      else wrap.insertBefore(placeholder, el.nextSibling);
+    };
+
+    const onUp = (ev)=>{
+      window.removeEventListener('mousemove', onMove, true);
+      window.removeEventListener('mouseup', onUp, true);
+      ghost.remove();
+      // compute new order
+      const from = idx;
+      const to = Array.prototype.indexOf.call(wrap.children, placeholder);
+      const arr = [...(this._config.entities||[])];
+      const [item] = arr.splice(from,1);
+      const correctedTo = Math.max(0, Math.min(to, arr.length));
+      arr.splice(correctedTo, 0, item);
+      placeholder.remove();
+      line.style.display = '';
+      this._pointerDndActive = false;
+      this._config.entities = arr;
+      this._emit(true);
+    };
+
+    window.addEventListener('mousemove', onMove, true);
+    window.addEventListener('mouseup', onUp, true);
+  } */
 
   _addEntity(){ this._config.entities = [...(this._config.entities||[]), ""]; this._emit(true); }
   _upd(key,val){ this._config[key] = val; this._emit(); }
@@ -1490,7 +1701,7 @@ customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardE
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Dev Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
 
 function loadCard() {}
 loadCard();
