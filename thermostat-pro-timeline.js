@@ -22,7 +22,7 @@ const TT_I18N = {
     'editor.title_label': 'Title',
     'editor.storage_entity': 'Storage entity',
     'editor.select_entities': 'Select thermostat entities',
-    'editor.add_entity': 'Add entity',
+  'editor.add_entity': 'Add room',
     'editor.entity_placeholder': 'Select an entity',
     'editor.drag_reorder': 'Drag to reorder',
     'editor.remove': 'Remove',
@@ -44,7 +44,16 @@ const TT_I18N = {
     , 'editor.store_enable.title': 'Enable shared storage',
     'editor.store_enable.desc': 'When enabled, schedules are saved to the selected sensor so they are shared across all users/dashboards. When disabled, schedules are saved only in your browser.',
     'editor.clear_store': 'Clear storage',
-    'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?'
+    'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
+    'editor.migrate_to_store': 'Transfer browser data to storage',
+    'editor.migrate_confirm': 'Transfer your browser-saved schedules to the selected storage sensor? This will overwrite any existing schedules in storage.',
+    'editor.no_local_data': 'No local browser data found.',
+    'editor.clear_all': 'Clear all data',
+    'editor.clear_all_confirm': 'This will delete both storage and local browser schedules. Continue?',
+  'editor.clear_storage_only': 'Clear storage data only',
+    'editor.clear_storage_only_confirm': 'This will delete schedules from the selected storage sensor. Continue?',
+  'editor.clear_local_only': 'Clear local data only',
+    'editor.clear_local_only_confirm': 'This will delete schedules saved in your browser only. Continue?'
   },
   da: {
     // Kort
@@ -69,7 +78,7 @@ const TT_I18N = {
     'editor.title_label': 'Titel',
     'editor.storage_entity': 'Lager-entitet',
     'editor.select_entities': 'Vælg termostat-entities',
-    'editor.add_entity': 'Tilføj entitet',
+  'editor.add_entity': 'Tilføj rum',
     'editor.entity_placeholder': 'Vælg en entitet',
     'editor.drag_reorder': 'Træk for at ændre rækkefølge',
     'editor.remove': 'Fjern',
@@ -91,7 +100,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Aktivér delt lager',
     'editor.store_enable.desc': 'Når slået til, gemmes tidsplanen i den valgte sensor og deles mellem alle brugere/dashboards. Når slået fra, gemmes den kun lokalt i din browser.',
     'editor.clear_store': 'Ryd lager',
-    'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?'
+    'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
+    'editor.migrate_to_store': 'Overfør browserdata til lager',
+    'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
+    'editor.no_local_data': 'Ingen lokale browserdata blev fundet.',
+    'editor.clear_all': 'Ryd al data',
+    'editor.clear_all_confirm': 'Dette sletter både lager og lokale/browser tidsplaner. Vil du fortsætte?',
+  'editor.clear_storage_only': 'Ryd kun lagerdata',
+    'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
+  'editor.clear_local_only': 'Ryd kun lokale data',
+    'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner gemt i din browser. Vil du fortsætte?'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -112,7 +130,7 @@ const TT_I18N = {
     'editor.title_label': 'Titel',
     'editor.storage_entity': 'Lagringsentitet',
     'editor.select_entities': 'Välj termostat-entiteter',
-    'editor.add_entity': 'Lägg till entitet',
+  'editor.add_entity': 'Lägg till rum',
     'editor.entity_placeholder': 'Välj en entitet',
     'editor.drag_reorder': 'Dra för att ändra ordning',
     'editor.remove': 'Ta bort',
@@ -131,7 +149,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Aktivera delad lagring',
     'editor.store_enable.desc': 'När det är aktiverat sparas scheman i vald sensor och delas mellan alla användare/dashboard. När det är av sparas de endast lokalt i din webbläsare.',
     'editor.clear_store': 'Rensa lagring',
-    'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?'
+    'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?',
+    'editor.migrate_to_store': 'Överför webbläsardata till lagring',
+    'editor.migrate_confirm': 'Överför dina webbläsar-sparade scheman till vald sensor? Detta skriver över befintliga scheman i lagringen.',
+    'editor.no_local_data': 'Inga lokala webbläsardata hittades.',
+    'editor.clear_all': 'Rensa all data',
+    'editor.clear_all_confirm': 'Detta tar bort både lagring och lokala webblässarscheman. Vill du fortsätta?',
+  'editor.clear_storage_only': 'Rensa endast lagringsdata',
+    'editor.clear_storage_only_confirm': 'Detta tar bort scheman från vald lagringssensor. Vill du fortsätta?',
+  'editor.clear_local_only': 'Rensa endast lokala data',
+    'editor.clear_local_only_confirm': 'Detta tar endast bort scheman som sparats i din webbläsare. Vill du fortsätta?'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -152,7 +179,7 @@ const TT_I18N = {
     'editor.title_label': 'Tittel',
     'editor.storage_entity': 'Lagringsentitet',
     'editor.select_entities': 'Velg termostat-entiteter',
-    'editor.add_entity': 'Legg til entitet',
+  'editor.add_entity': 'Legg til rom',
     'editor.entity_placeholder': 'Velg en entitet',
     'editor.drag_reorder': 'Dra for å endre rekkefølge',
     'editor.remove': 'Fjern',
@@ -171,7 +198,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Aktiver delt lagring',
     'editor.store_enable.desc': 'Når aktivert lagres tidsplanen i valgt sensor og deles mellom alle brukere/dashboards. Når av, lagres den kun lokalt i nettleseren.',
     'editor.clear_store': 'Tøm lagring',
-    'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?'
+    'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?',
+    'editor.migrate_to_store': 'Overfør nettleserdata til lagring',
+    'editor.migrate_confirm': 'Overfør nettleserlagrede tidsplaner til valgt sensor? Dette overskriver eksisterende tidsplaner i lagringen.',
+    'editor.no_local_data': 'Ingen lokale nettleserdata ble funnet.',
+    'editor.clear_all': 'Tøm all data',
+    'editor.clear_all_confirm': 'Dette sletter både lagring og lokale nettleserplaner. Fortsette?',
+  'editor.clear_storage_only': 'Tøm kun lagringsdata',
+    'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra valgt lagringssenso r. Fortsette?',
+  'editor.clear_local_only': 'Tøm kun lokale data',
+    'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner som er lagret i nettleseren. Fortsette?'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -192,7 +228,7 @@ const TT_I18N = {
     'editor.title_label': 'Titel',
     'editor.storage_entity': 'Speicherentität',
     'editor.select_entities': 'Thermostat-Entitäten auswählen',
-    'editor.add_entity': 'Entität hinzufügen',
+  'editor.add_entity': 'Raum hinzufügen',
     'editor.entity_placeholder': 'Entität auswählen',
     'editor.drag_reorder': 'Zum Neuordnen ziehen',
     'editor.remove': 'Entfernen',
@@ -211,7 +247,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Geteilten Speicher aktivieren',
     'editor.store_enable.desc': 'Wenn aktiviert, werden Pläne im ausgewählten Sensor gespeichert und mit allen Benutzern/Dashboards geteilt. Wenn deaktiviert, wird nur lokal im Browser gespeichert.',
     'editor.clear_store': 'Speicher leeren',
-    'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?'
+    'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?',
+    'editor.migrate_to_store': 'Browserdaten in Speicher übertragen',
+    'editor.migrate_confirm': 'Ihre im Browser gespeicherten Pläne in den ausgewählten Sensor übertragen? Vorhandene gespeicherte Pläne werden überschrieben.',
+    'editor.no_local_data': 'Keine lokalen Browserdaten gefunden.',
+    'editor.clear_all': 'Alle Daten löschen',
+    'editor.clear_all_confirm': 'Dies löscht sowohl Speicher- als auch lokale Browser-Zeitpläne. Fortfahren?',
+  'editor.clear_storage_only': 'Nur Speicherdaten löschen',
+    'editor.clear_storage_only_confirm': 'Dies löscht Zeitpläne vom ausgewählten Speichersensor. Fortfahren?',
+  'editor.clear_local_only': 'Nur lokale Daten löschen',
+    'editor.clear_local_only_confirm': 'Dies löscht nur im Browser gespeicherte Zeitpläne. Fortfahren?'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -232,7 +277,7 @@ const TT_I18N = {
     'editor.title_label': 'Título',
     'editor.storage_entity': 'Entidad de almacenamiento',
     'editor.select_entities': 'Seleccionar entidades del termostato',
-    'editor.add_entity': 'Agregar entidad',
+  'editor.add_entity': 'Añadir habitación',
     'editor.entity_placeholder': 'Selecciona una entidad',
     'editor.drag_reorder': 'Arrastrar para reordenar',
     'editor.remove': 'Eliminar',
@@ -251,7 +296,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Habilitar almacenamiento compartido',
     'editor.store_enable.desc': 'Al activarlo, los horarios se guardan en el sensor seleccionado y se comparten entre todos los usuarios/tableros. Al desactivarlo, se guardan solo localmente en tu navegador.',
     'editor.clear_store': 'Vaciar almacenamiento',
-    'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?'
+    'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?',
+    'editor.migrate_to_store': 'Transferir datos del navegador al almacenamiento',
+    'editor.migrate_confirm': '¿Transferir los horarios guardados en tu navegador al sensor seleccionado? Esto sobrescribirá los horarios existentes en el almacenamiento.',
+    'editor.no_local_data': 'No se encontraron datos locales del navegador.',
+    'editor.clear_all': 'Borrar todos los datos',
+    'editor.clear_all_confirm': 'Esto eliminará los horarios tanto del almacenamiento como del navegador local. ¿Continuar?',
+  'editor.clear_storage_only': 'Borrar solo datos de almacenamiento',
+    'editor.clear_storage_only_confirm': 'Esto eliminará los horarios del sensor de almacenamiento seleccionado. ¿Continuar?',
+  'editor.clear_local_only': 'Borrar solo datos locales',
+    'editor.clear_local_only_confirm': 'Esto eliminará solo los horarios guardados en tu navegador. ¿Continuar?'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -272,7 +326,7 @@ const TT_I18N = {
     'editor.title_label': 'Titre',
     'editor.storage_entity': 'Entité de stockage',
     'editor.select_entities': 'Sélectionner des entités thermostat',
-    'editor.add_entity': 'Ajouter une entité',
+  'editor.add_entity': 'Ajouter une pièce',
     'editor.entity_placeholder': 'Sélectionnez une entité',
     'editor.drag_reorder': 'Glisser pour réorganiser',
     'editor.remove': 'Supprimer',
@@ -291,7 +345,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Activer le stockage partagé',
     'editor.store_enable.desc': 'Lorsque activé, les plannings sont enregistrés dans le capteur sélectionné et partagés entre tous les utilisateurs/tableaux de bord. Lorsque désactivé, ils sont enregistrés uniquement localement dans votre navigateur.',
     'editor.clear_store': 'Vider le stockage',
-    'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?'
+    'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?',
+    'editor.migrate_to_store': 'Transférer les données du navigateur vers le stockage',
+    'editor.migrate_confirm': 'Transférer vos plannings enregistrés dans le navigateur vers le capteur sélectionné ? Cela remplacera les plannings existants dans le stockage.',
+    'editor.no_local_data': 'Aucune donnée locale du navigateur trouvée.',
+    'editor.clear_all': 'Effacer toutes les données',
+    'editor.clear_all_confirm': 'Cela supprimera les plannings du stockage et du navigateur local. Continuer ?',
+  'editor.clear_storage_only': 'Effacer uniquement les données du stockage',
+    'editor.clear_storage_only_confirm': 'Cela supprimera les plannings du capteur de stockage sélectionné. Continuer ?',
+  'editor.clear_local_only': 'Effacer uniquement les données locales',
+    'editor.clear_local_only_confirm': 'Cela supprimera uniquement les plannings enregistrés dans votre navigateur. Continuer ?'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -312,7 +375,7 @@ const TT_I18N = {
     'editor.title_label': 'Otsikko',
     'editor.storage_entity': 'Tallennusentiteetti',
     'editor.select_entities': 'Valitse termostaatti-entiteetit',
-    'editor.add_entity': 'Lisää entiteetti',
+  'editor.add_entity': 'Lisää huone',
     'editor.entity_placeholder': 'Valitse entiteetti',
     'editor.drag_reorder': 'Vedä järjestelläksesi',
     'editor.remove': 'Poista',
@@ -331,7 +394,16 @@ const TT_I18N = {
     'editor.store_enable.title': 'Ota jaettu tallennus käyttöön',
     'editor.store_enable.desc': 'Kun käytössä, aikataulut tallennetaan valittuun sensoriin ja jaetaan kaikille käyttäjille/näkymille. Kun pois päältä, ne tallennetaan vain paikallisesti selaimeen.',
     'editor.clear_store': 'Tyhjennä tallennus',
-    'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?'
+    'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?',
+    'editor.migrate_to_store': 'Siirrä selaindata tallennukseen',
+    'editor.migrate_confirm': 'Siirretäänkö selaimeen tallennetut aikataulut valittuun sensoriin? Tämä korvaa nykyiset aikataulut tallennuksessa.',
+    'editor.no_local_data': 'Paikallisia selaintietoja ei löytynyt.',
+    'editor.clear_all': 'Tyhjennä kaikki tiedot',
+    'editor.clear_all_confirm': 'Tämä poistaa sekä tallennuksesta että selaimesta aikataulut. Jatketaanko?',
+  'editor.clear_storage_only': 'Tyhjennä vain tallennusdata',
+    'editor.clear_storage_only_confirm': 'Tämä poistaa aikataulut valitusta sensorista. Jatketaanko?',
+  'editor.clear_local_only': 'Tyhjennä vain paikalliset tiedot',
+    'editor.clear_local_only_confirm': 'Tämä poistaa vain selaimeen tallennetut aikataulut. Jatketaanko?'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb' };
@@ -1127,14 +1199,22 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   setConfig(config) { this._config = { ...ThermostatTimelineCard.getStubConfig(), ...(config||{}) }; this._render(); }
   set hass(hass) { this._hass = hass; this._lang = ttGetLangFromHass(hass); // Avoid clobbering inputs while user is typing
   const ae = this.shadowRoot && this.shadowRoot.activeElement;
-  if (ae && (ae.classList?.contains("def") || ae.classList?.contains("rowh") || ae.classList?.contains("title"))) return;
+  if (this._suspendRender) return;
+  if (ae) {
+    try {
+      if (ae.classList?.contains("def") || ae.classList?.contains("rowh") || ae.classList?.contains("title") || ae.classList?.contains('label-input')) return;
+      if (ae.closest && ae.closest('ha-entity-picker')) return;
+    } catch {}
+  }
   this._render(); this._applyEditorI18n(); }
 
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this._openCount = 0;
+  this._openCount = 0;
     this._pendingEmit = false;
+  this._openRows = new Set();
+  this._suspendRender = false;
     this.shadowRoot.innerHTML = `
       <style>
         .wrap { padding:8px 12px; display:grid; gap:16px; max-width: 480px; }
@@ -1224,9 +1304,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               </div>
               <ha-switch class="store-enable"></ha-switch>
             </div>
-            <div style="display:flex; gap:8px; align-items:center;">
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap: wrap;">
               <ha-entity-picker class="storage" style="flex:1;" label="sensor.thermostat_timeline" include-domains='["sensor"]'></ha-entity-picker>
-              <button type="button" class="remove-btn clear-store"><ha-icon icon="mdi:delete"></ha-icon><span>Clear storage</span></button>
+              <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
+              <button type="button" class="remove-btn clear-store"><ha-icon icon="mdi:database-off"></ha-icon><span>Clear storage only</span></button>
+              <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
             </div>
           </div>
         </div>
@@ -1298,6 +1380,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   </div>
 </div>
 
+<!-- Bottom action: clear local only -->
+<div class="row">
+  <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
+  <div class="label" style="opacity:.8;">&nbsp;</div>
+  <!-- spacer to align with grid -->
+  
+</div>
+
       </div>`;    this._applyEditorI18n();
 
     const qs = (s)=>this.shadowRoot.querySelector(s);
@@ -1309,6 +1399,23 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const picker = this.shadowRoot.querySelector('.storage');
       if (picker) picker.disabled = !on;
       this._applyEditorI18n();
+      // On enabling shared storage: offer to migrate local browser data to storage
+      try {
+        if (on) {
+          const localRaw = localStorage.getItem('thermostat_timeline_store');
+          const hasLocal = !!(localRaw && localRaw.length > 2);
+          const target = this._config.storage_entity;
+          if (hasLocal && target) {
+            const ok = confirm(this._t('editor.migrate_confirm'));
+            if (ok) {
+              const schedules = JSON.parse(localRaw || '{}');
+              if (this._hass) {
+                this._hass.callService('thermostat_timeline', 'set_store', { schedules });
+              }
+            }
+          }
+        }
+      } catch {}
     });
   qs(".def")  ?.addEventListener("change", e => { let raw=String(e.target.value||"").replace(",","."); let v=Number(raw); const mx = Number(this._config?.max_temp ?? 25); v=isNaN(v)?20:Math.max(5,Math.min(mx,v)); this._upd("default_temp",v); qs(".def").value=String(v); });
     qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
@@ -1317,24 +1424,71 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     qs(".applyedit")?.addEventListener("change", e => this._upd("apply_on_edit", e.target.checked));
     qs(".applydef")?.addEventListener("change", e => this._upd("apply_on_default_change", e.target.checked));
   qs('.maxc')?.addEventListener('change', e => { let v=Number(e.target.value); v=isNaN(v)?25:Math.max(5,Math.min(50,Math.round(v))); this._upd('max_temp',v); const mx=this.shadowRoot.querySelector('.maxc'); if(mx) mx.value=String(v); });
+    // Clear storage only
     qs('.clear-store')?.addEventListener('click', async () => {
-      const msg = this._t('editor.clear_store_confirm');
+      const msg = this._t('editor.clear_storage_only_confirm');
       if (!confirm(msg)) return;
       try {
-        // Clear local store
+        if (this._hass && this._config.storage_entity) {
+          await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
+        } else {
+          alert(this._t('editor.storage_entity'));
+          return;
+        }
+      } catch (e) { console.warn('clear-storage-only failed', e); }
+    });
+
+    // Clear all data (storage + local)
+    qs('.clear-all')?.addEventListener('click', async () => {
+      const msg = this._t('editor.clear_all_confirm');
+      if (!confirm(msg)) return;
+      try {
         try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
-        // Clear global sensor store if enabled
-        if (this._config.storage_enabled && this._hass && this._config.storage_entity) {
+        if (this._hass && this._config.storage_entity) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
         }
-        // Reset in-memory schedules and notify
-        this._config = { ...this._config };
-        this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._config }, bubbles: true, composed: true }));
-      } catch (e) { console.warn('clear-store failed', e); }
+      } catch (e) { console.warn('clear-all failed', e); }
+    });
+
+    // Clear local only (bottom)
+    qs('.clear-local-only')?.addEventListener('click', async () => {
+      const msg = this._t('editor.clear_local_only_confirm');
+      if (!confirm(msg)) return;
+      try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
+    });
+    qs('.migrate-to-store')?.addEventListener('click', async () => {
+      try {
+        const target = this._config.storage_entity;
+        if (!target) { alert(this._t('editor.storage_entity')); return; }
+        const raw = localStorage.getItem('thermostat_timeline_store') || '';
+        if (!raw) { alert(this._t('editor.no_local_data')); return; }
+        const ok = confirm(this._t('editor.migrate_confirm'));
+        if (!ok) return;
+        const schedules = JSON.parse(raw || '{}');
+        if (this._hass) {
+          await this._hass.callService('thermostat_timeline', 'set_store', { schedules });
+        }
+      } catch (e) {
+        console.warn('migrate-to-store failed', e);
+      }
     });
   }
 
-  connectedCallback(){ this._render(); }
+  connectedCallback(){
+    this._render();
+    try {
+      // Suspend render while interacting with any entity picker to avoid closing dropdowns
+      this.shadowRoot.addEventListener('focusin', (e)=>{
+        try { if (e.target?.closest && e.target.closest('ha-entity-picker')) this._suspendRender = true; } catch {}
+      });
+      this.shadowRoot.addEventListener('focusout', ()=>{
+        setTimeout(()=>{ this._suspendRender = false; }, 100);
+      });
+      this.shadowRoot.addEventListener('value-changed', (e)=>{
+        try { if (e.target?.tagName?.toLowerCase() === 'ha-entity-picker') { this._suspendRender = false; } } catch {}
+      });
+    } catch {}
+  }
 
   _render(){
     if(!this._hass || !this.shadowRoot || !this._config) return;
@@ -1366,9 +1520,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const wrap = this.shadowRoot.querySelector(".entities");
     if(!wrap) return;
 
+    // Rebuild rows; preserve which are open using a stable key per row (entity id or placeholder)
     const want = (this._config.entities || []).length;
-    while (wrap.children.length > want) wrap.removeChild(wrap.lastElementChild);
-    while (wrap.children.length < want) wrap.append(this._makeEntityRow(wrap.children.length));
+    wrap.innerHTML = '';
+    for (let i=0;i<want;i++) {
+      const line = this._makeEntityRow(i);
+      const key = (this._config.entities?.[i]) || `#idx:${i}`;
+      if (this._openRows.has(key)) line.classList.add('open');
+      wrap.append(line);
+    }
 
     for (let i=0;i<want;i++){
       const row = wrap.children[i];
@@ -1448,6 +1608,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (!wrap) return;
     if (this._pointerDndActive) return;
     this._pointerDndActive = true;
+    // Avoid any re-render while dragging which could disrupt DOM
+    try { this._suspendRender = true; } catch {}
 
     const rect = line.getBoundingClientRect();
     const ghost = line.cloneNode(true);
@@ -1466,24 +1628,32 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     line.style.display = 'none';
     document.body.appendChild(ghost);
 
+    const readClient = (e)=>{
+      if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      return { x: e.clientX, y: e.clientY };
+    };
+
     const onMove = (ev)=>{
-      const y = ev.clientY;
+      try { ev.preventDefault(); } catch {}
+      const { y, x } = readClient(ev);
       ghost.style.top = (y - rect.height/2) + 'px';
 
       // find element under pointer within this shadowRoot
-      let el = this.shadowRoot && this.shadowRoot.elementFromPoint(ev.clientX, ev.clientY);
+      let el = this.shadowRoot && this.shadowRoot.elementFromPoint(x, y);
       // climb to row in the same wrap
       while (el && el !== wrap && !el.classList?.contains('inline')) el = el.parentElement;
       if (!el || el===placeholder || el===wrap) return;
       const targetRect = el.getBoundingClientRect();
-      const before = (ev.clientY - targetRect.top) < targetRect.height/2;
+      const before = (y - targetRect.top) < targetRect.height/2;
       if (before) wrap.insertBefore(placeholder, el);
       else wrap.insertBefore(placeholder, el.nextSibling);
     };
 
-    const onUp = (ev)=>{
+    const endDrag = ()=>{
       window.removeEventListener('mousemove', onMove, true);
       window.removeEventListener('mouseup', onUp, true);
+      window.removeEventListener('touchmove', onMove, true);
+      window.removeEventListener('touchend', onUp, true);
       ghost.remove();
       // compute new order
       const from = idx;
@@ -1496,11 +1666,16 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       line.style.display = '';
       this._pointerDndActive = false;
       this._config.entities = arr;
+      try { this._suspendRender = false; } catch {}
       this._emit(true);
     };
 
+    const onUp = (ev)=>{ try { ev.preventDefault?.(); } catch {} endDrag(); };
+
     window.addEventListener('mousemove', onMove, true);
     window.addEventListener('mouseup', onUp, true);
+    window.addEventListener('touchmove', onMove, true);
+    window.addEventListener('touchend', onUp, true);
   }
 
     _makeEntityRow(idx){
@@ -1519,8 +1694,26 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     sumLeft.append(textWrap);
     summary.append(sumLeft);
     const actions = document.createElement("div"); actions.className = "actions";
-    const handle = document.createElement("button"); handle.className = "drag-handle"; handle.setAttribute("draggable","true"); handle.setAttribute("title", this._t('editor.drag_reorder')); handle.innerHTML = `<ha-icon icon="mdi:drag"></ha-icon>`; actions.append(handle);
-    const del = document.createElement("button"); del.className = "remove-btn"; del.innerHTML = `<ha-icon icon="mdi:close"></ha-icon><span>${this._t('editor.remove')}</span>`; actions.append(del);
+  const handle = document.createElement("button"); handle.className = "drag-handle"; handle.setAttribute("draggable","true"); handle.setAttribute("title", this._t('editor.drag_reorder')); handle.innerHTML = `<ha-icon icon="mdi:drag"></ha-icon>`; actions.append(handle);
+    // Start pointer-driven drag on mousedown (more reliable inside HA editors than native DnD)
+    handle.addEventListener('mousedown', (ev)=>{
+      ev.preventDefault();
+      try {
+        const wrap = line.parentElement;
+        const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+        this._startPointerDnd(line, curIdx);
+      } catch { this._startPointerDnd(line, idx); }
+    });
+    // Touch support
+    handle.addEventListener('touchstart', (ev)=>{
+      try { ev.preventDefault(); } catch {}
+      try {
+        const wrap = line.parentElement;
+        const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+        this._startPointerDnd(line, curIdx);
+      } catch { this._startPointerDnd(line, idx); }
+    }, { passive: false });
+  const del = document.createElement("button"); del.className = "remove-btn"; del.innerHTML = `<ha-icon icon="mdi:close"></ha-icon><span>${this._t('editor.remove')}</span>`; actions.append(del);
     summary.append(actions);
 
     // Details (expanded content)
@@ -1559,9 +1752,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     });
 
     // Merge/Link section
-    const linkWrap = document.createElement('div');
-    linkWrap.style.display = 'grid';
-    linkWrap.style.gap = '6px';
+  const linkWrap = document.createElement('div');
+  linkWrap.style.display = 'grid';
+  linkWrap.style.gap = '6px';
+  // Visible label for merge/link section
+  const linkLabel = document.createElement('div');
+  linkLabel.className = 'label';
+  linkLabel.textContent = this._t('editor.merge_label') || 'Flet med (tilføj ekstra termostat)';
 
     const linkPicker = document.createElement('ha-entity-picker');
     linkPicker.className = 'merge-picker';
@@ -1600,7 +1797,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     details.append(left);
 
     // Expand/collapse
-    const toggle = ()=>{ line.classList.toggle('open'); };
+    const toggle = ()=>{
+      line.classList.toggle('open');
+      try {
+        const eid = this._config.entities[idx] || `#idx:${idx}`;
+        if (line.classList.contains('open')) this._openRows.add(eid);
+        else this._openRows.delete(eid);
+      } catch {}
+    };
     expander.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
     sumLeft.addEventListener('click', (e)=>{ if (e.target === expander) return; toggle(); });
 
@@ -1638,9 +1842,38 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (subEl) subEl.textContent = linkedNames.length ? `${this._t('editor.merged_with')}: ${linkedNames.join(', ')}` : '';
         } catch {}
         linkWrap.innerHTML = '';
-        linkWrap.append(linkPicker);
+        linkWrap.append(linkLabel, linkPicker);
       } catch {}
     };
+
+    // Initial render of merge section
+    refreshChips();
+
+    // Remove this room/entity
+    del.addEventListener('click', () => {
+      try {
+        const arr = [...(this._config.entities || [])];
+        const primary = arr[idx];
+        // Remove the primary from entities
+        arr.splice(idx, 1);
+        // Clean up labels
+        const labels = { ...(this._config.labels || {}) };
+        if (primary && labels[primary]) delete labels[primary];
+        // Clean up merges: remove mapping for this primary and remove it from other arrays
+        const merges = { ...(this._config.merges || {}) };
+        if (primary && merges[primary]) delete merges[primary];
+        for (const k of Object.keys(merges)) {
+          merges[k] = (merges[k] || []).filter((e) => e !== primary);
+          if (!merges[k].length) delete merges[k];
+        }
+        this._config.entities = arr;
+        this._config.labels = labels;
+        this._config.merges = merges;
+        this._emit(true);
+      } catch (e) {
+        console.warn('remove entity failed', e);
+      }
+    });
 
     // When picker changes primary value, migrate merges
     pick.addEventListener("value-changed", (e)=>{
@@ -1653,6 +1886,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         this._config.merges = merges;
       }
       this._config.entities[idx] = newPrimary;
+      // Move open-state key from old -> new entity id
+      try {
+        const oldKey = oldPrimary || `#idx:${idx}`;
+        const newKey = newPrimary || `#idx:${idx}`;
+        if (this._openRows.has(oldKey)) { this._openRows.delete(oldKey); this._openRows.add(newKey); }
+      } catch {}
       try { nameInp.value = (this._config.labels || {})[newPrimary] || ""; } catch {}
       if (this._openCount > 0) this._pendingEmit = true; else this._emit(true);
       refreshChips();
@@ -1758,8 +1997,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (stTitle) stTitle.textContent = t('editor.store_enable.title');
         if (stDesc) stDesc.textContent = t('editor.store_enable.desc');
         const clrBtn = root.querySelector('.clear-store span');
-        if (clrBtn) clrBtn.textContent = t('editor.clear_store');
+        if (clrBtn) clrBtn.textContent = t('editor.clear_storage_only');
+        const clrAllBtn = root.querySelector('.clear-all span');
+        if (clrAllBtn) clrAllBtn.textContent = t('editor.clear_all');
+        const migBtn = root.querySelector('.migrate-to-store span');
+        if (migBtn) migBtn.textContent = t('editor.migrate_to_store');
       }
+      const clrLocalBtn = root.querySelector('.clear-local-only span');
+      if (clrLocalBtn) clrLocalBtn.textContent = t('editor.clear_local_only');
 
       // Entities section label (use the .entities container to find its label robustly)
       const entitiesWrap = root.querySelector('.entities');
