@@ -20,8 +20,7 @@ const TT_I18N = {
 
     // GUI editor panel
     'editor.title_label': 'Title',
-    'editor.storage_entity': 'Storage entity',
-    'editor.select_entities': 'Select thermostat entities',
+  'editor.storage_entity': 'Storage entity',
   'editor.add_entity': 'Add room',
     'editor.entity_placeholder': 'Select an entity',
     'editor.drag_reorder': 'Drag to reorder',
@@ -76,8 +75,7 @@ const TT_I18N = {
 
     // GUI editor panel
     'editor.title_label': 'Titel',
-    'editor.storage_entity': 'Lager-entitet',
-    'editor.select_entities': 'Vælg termostat-entities',
+  'editor.storage_entity': 'Lager-entitet',
   'editor.add_entity': 'Tilføj rum',
     'editor.entity_placeholder': 'Vælg en entitet',
     'editor.drag_reorder': 'Træk for at ændre rækkefølge',
@@ -128,8 +126,7 @@ const TT_I18N = {
     'ui.fix_end_to': 'Justera slut till {time}',
 
     'editor.title_label': 'Titel',
-    'editor.storage_entity': 'Lagringsentitet',
-    'editor.select_entities': 'Välj termostat-entiteter',
+  'editor.storage_entity': 'Lagringsentitet',
   'editor.add_entity': 'Lägg till rum',
     'editor.entity_placeholder': 'Välj en entitet',
     'editor.drag_reorder': 'Dra för att ändra ordning',
@@ -177,8 +174,7 @@ const TT_I18N = {
     'ui.fix_end_to': 'Sett slutt til {time}',
 
     'editor.title_label': 'Tittel',
-    'editor.storage_entity': 'Lagringsentitet',
-    'editor.select_entities': 'Velg termostat-entiteter',
+  'editor.storage_entity': 'Lagringsentitet',
   'editor.add_entity': 'Legg til rom',
     'editor.entity_placeholder': 'Velg en entitet',
     'editor.drag_reorder': 'Dra for å endre rekkefølge',
@@ -226,8 +222,7 @@ const TT_I18N = {
     'ui.fix_end_to': 'Ende auf {time} korrigieren',
 
     'editor.title_label': 'Titel',
-    'editor.storage_entity': 'Speicherentität',
-    'editor.select_entities': 'Thermostat-Entitäten auswählen',
+  'editor.storage_entity': 'Speicherentität',
   'editor.add_entity': 'Raum hinzufügen',
     'editor.entity_placeholder': 'Entität auswählen',
     'editor.drag_reorder': 'Zum Neuordnen ziehen',
@@ -275,8 +270,7 @@ const TT_I18N = {
     'ui.fix_end_to': 'Ajustar fin a {time}',
 
     'editor.title_label': 'Título',
-    'editor.storage_entity': 'Entidad de almacenamiento',
-    'editor.select_entities': 'Seleccionar entidades del termostato',
+  'editor.storage_entity': 'Entidad de almacenamiento',
   'editor.add_entity': 'Añadir habitación',
     'editor.entity_placeholder': 'Selecciona una entidad',
     'editor.drag_reorder': 'Arrastrar para reordenar',
@@ -324,8 +318,7 @@ const TT_I18N = {
     'ui.fix_end_to': 'Ajuster la fin à {time}',
 
     'editor.title_label': 'Titre',
-    'editor.storage_entity': 'Entité de stockage',
-    'editor.select_entities': 'Sélectionner des entités thermostat',
+  'editor.storage_entity': 'Entité de stockage',
   'editor.add_entity': 'Ajouter une pièce',
     'editor.entity_placeholder': 'Sélectionnez une entité',
     'editor.drag_reorder': 'Glisser pour réorganiser',
@@ -373,8 +366,7 @@ const TT_I18N = {
     'ui.fix_end_to': 'Korjaa loppu ajaksi {time}',
 
     'editor.title_label': 'Otsikko',
-    'editor.storage_entity': 'Tallennusentiteetti',
-    'editor.select_entities': 'Valitse termostaatti-entiteetit',
+  'editor.storage_entity': 'Tallennusentiteetti',
   'editor.add_entity': 'Lisää huone',
     'editor.entity_placeholder': 'Valitse entiteetti',
     'editor.drag_reorder': 'Vedä järjestelläksesi',
@@ -1304,7 +1296,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               </div>
               <ha-switch class="store-enable"></ha-switch>
             </div>
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap: wrap;">
+            <div class="store-controls" style="display:flex; gap:8px; align-items:center; flex-wrap: wrap;">
               <ha-entity-picker class="storage" style="flex:1;" label="sensor.thermostat_timeline" include-domains='["sensor"]'></ha-entity-picker>
               <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
               <button type="button" class="remove-btn clear-store"><ha-icon icon="mdi:database-off"></ha-icon><span>Clear storage only</span></button>
@@ -1313,7 +1305,6 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           </div>
         </div>
         <div class="row">
-          <div class="label">Vælg termostat-entities</div>
           <div class="entities"></div>
           <button class="add-entity-btn" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
         </div>
@@ -1398,6 +1389,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       this._upd('storage_enabled', on);
       const picker = this.shadowRoot.querySelector('.storage');
       if (picker) picker.disabled = !on;
+      // Show/hide storage controls when shared storage is toggled
+      try {
+        const ctrls = this.shadowRoot.querySelector('.store-controls');
+        if (ctrls) ctrls.style.display = on ? 'flex' : 'none';
+      } catch {}
       this._applyEditorI18n();
       // On enabling shared storage: offer to migrate local browser data to storage
       try {
@@ -1509,8 +1505,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
     if (se) { se.hass = this._hass; se.value = this._config.storage_entity || ""; }
     if (seEn) {
-      seEn.checked = !!this._config.storage_enabled;
-      if (se) se.disabled = !seEn.checked;
+      const enabled = !!this._config.storage_enabled;
+      seEn.checked = enabled;
+      if (se) se.disabled = !enabled;
+      // Ensure controls visibility matches toggle
+      try {
+        const ctrls = this.shadowRoot.querySelector('.store-controls');
+        if (ctrls) ctrls.style.display = enabled ? 'flex' : 'none';
+      } catch {}
     }
     this._applyEditorI18n();
     if (au) { au.checked = !!this._config.auto_apply; }
