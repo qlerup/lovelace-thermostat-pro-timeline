@@ -1,7 +1,8 @@
 # Thermostat Timeline Card 🔥🕒
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 
-A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple, draggable timeline 🏡📅 — and automatically apply them to your `climate.*` entities.
+[![hacs\_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
+
+A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple, draggable timeline 🏡🗕️ — and automatically apply them to your `climate.*` entities.
 
 <img width="2291" height="581" alt="timeline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
@@ -12,14 +13,22 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 * 🧊 Per-thermostat **or merged room-based timeline**
 * 🌡️➕🌡️ **Merge multiple thermostats** into one room – control them together via a single timeline 🏠🕒
 * 🔥 Default temperature per row
-* 🖱️ Double-click / double-tap to edit blocks
+* 🔁 Double-click / double-tap to edit blocks
 * ⏱️ “Now” indicator on the timeline
 * 🤖 Optional auto-apply via `climate.set_temperature`
 * 🧭 Clean, modern **Editor UI**
-* 🧩 Lovelace GUI editor support
-* 🧹 **Clear all data** button to reset local + sensor storage ♻️
+* 🧹 Lovelace GUI editor support
 * 🔁 **Storage sensor toggle** — choose between synced sensor or local-only mode
+* 🔄 **Data migration** — easily transfer data from browser to storage sensor 🔁
+* 🙈 **Storage sensor auto-hides** when disabled — cleaner UI ✨
+* 🧹 **Granular data clearing options** — choose exactly what to wipe:
+
+  * 🪸 All data (sensor + browser)
+  * 🧽 Local only (browser)
+  * 🗄️ Storage sensor only
 * 🌡️⛔ **Max temperature limit** — prevent overheating with an upper bound 🛡️
+* 🏷️ **Cleaner labels** — removed invalid/duplicate label issues 🧹
+* 🔁 **Smoother drag-and-drop reordering** — faster, more accurate interaction 💨
 
 ---
 
@@ -30,20 +39,20 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 1. Upload/publish this repo as `lovelace-thermostat-pro-timeline`.
 2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → add your GitHub URL, **Category: Dashboard**.
 3. Install via HACS.
+
    * Resource URL: `/hacsfiles/lovelace-thermostat-pro-timeline/thermostat-pro-timeline.js`
 
-### 🧠 Manual installation
+### 🦙 Manual installation
 
 1. Copy `thermostat-pro-timeline.js` to `/config/www/`.
 2. Add the resource in **Settings → Dashboards → Resources**:
+
    * URL: `/local/thermostat-pro-timeline.js`
    * Type: **JavaScript Module**
 
 ---
 
-## 🧰 Usage
-
-Add a card to your dashboard with YAML:
+## 🧪 Usage
 
 ```yaml
 type: custom:thermostat-timeline-card
@@ -65,25 +74,7 @@ max_temp: 24                     # maximum allowed setpoint 🌡️⛔
 labels:
   climate.living_room: Living room
   climate.bedroom: Bedroom
-````
-
-### 🧾 Options (excerpt)
-
-| Option                    | Type    | Description                                                        |
-| ------------------------- | ------- | ------------------------------------------------------------------ |
-| `entities`                | list    | List of `climate.*` entities.                                      |
-| `title`                   | string  | Card title.                                                        |
-| `default_temp`            | number  | Default temperature per row (°C).                                  |
-| `row_height`              | number  | Row height (px).                                                   |
-| `now_update_ms`           | number  | Refresh interval for the “now” indicator.                          |
-| `storage_entity`          | string  | Optional sync via sensor attribute.                                |
-| `auto_apply`              | boolean | Automatically apply the setpoint.                                  |
-| `apply_on_edit`           | boolean | Apply when editing.                                                |
-| `apply_on_default_change` | boolean | Apply when changing default °C.                                    |
-| `labels`                  | object  | Optional display names.                                            |
-| `merged_rooms`            | object  | *(auto-detected)* Defines thermostats grouped under a single room. |
-| `use_storage_sensor`      | boolean | Enable/disable syncing with storage sensor 🔁                      |
-| `max_temp`                | number  | Cap setpoint to avoid exceeding limit 🌡️⛔                         |
+```
 
 ---
 
@@ -93,9 +84,22 @@ labels:
   → [Integration repo](https://github.com/qlerup/thermostat-pro-timeline-sync)
 * **Without integration**: Data stored locally (browser LocalStorage).
 * 🔁 **Toggle per card**: Switch between local-only and sensor-based storage.
-* 🧹 **Clear all data**: Wipes both storage types if needed.
+* 🔄 **Data migration tool**: Transfer browser data → storage sensor data 🔁
+* 🙈 **Auto-hide sensor** when disabled — reduces UI clutter
+* 🧹 **Clear data menu**:
 
-> ℹ️ Switching between sensor and local storage changes where state is kept. If you mix modes, stored timelines may not carry over — that’s expected.
+  * 🪸 All data — clears both sensor + browser
+  * 🧽 Local only — clears browser cache
+  * 🗄️ Storage sensor only — clears persistent store
+
+> ℹ️ Mixing modes may cause timelines not to carry over — expected behavior.
+
+---
+
+## 🖼️ User Interface Preview
+
+<img width="505" height="1010" alt="thermo-new" src="https://github.com/user-attachments/assets/64af1362-68d4-4369-9c7a-e758f440a6f4" />
+<img width="504" height="636" alt="thermo-clear-data" src="https://github.com/user-attachments/assets/3a3310d9-694b-41a7-8a3c-42c01c227474" />
 
 ---
 
@@ -117,8 +121,5 @@ Want to help? Open an issue titled `Locale request: <language>`.
 
 ---
 
-🎉 **Enjoy your smarter, safer, and cleaner thermostat control!**
-🌡️🔥 With **storage toggle, clear data, and max temperature limit** for full flexibility. 💫
-
-```
-```
+🎉 **Enjoy your smarter, safer, and now cleaner thermostat control!**
+🌡️🔥 With smoother drag-drop, auto-hiding sensors, and granular clearing options — your timeline just got an upgrade 💫
