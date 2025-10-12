@@ -2,7 +2,7 @@
 
 [![hacs\_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 
-A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple, draggable timeline 🏡🗕️️ — and automatically apply them to your `climate.*` entities.
+A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple timeline🏡🗕️️ — and automatically apply them to your `climate.*` entities.
 
 <img width="2291" height="581" alt="timeline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
