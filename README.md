@@ -2,7 +2,7 @@
 
 [![hacs\_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 
-A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple, draggable timeline 🏡🗕️ — and automatically apply them to your `climate.*` entities.
+A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple, draggable timeline 🏡🗕️️ — and automatically apply them to your `climate.*` entities.
 
 <img width="2291" height="581" alt="timeline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
@@ -13,6 +13,13 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 * 🧊 Per-thermostat **or merged room-based timeline**
 * 🌡️➕🌡️ **Merge multiple thermostats** into one room – control them together via a single timeline 🏠🕒
 * 🔥 Default temperature per row
+* 🕓 **Temperature Units** — choose **°C or °F**, or let it auto-detect from Home Assistant 🌡️
+* ⏰ **12/24-Hour Clock Toggle** — display times using your preferred format 🕒
+* 🗖️ **Weekday Timeline Modes** — set up flexible daily schedules:
+
+  * Weekdays + Weekend (Mon–Fri, Sat–Sun)
+  * Weekdays + Saturday + Sunday
+  * Individual days per week 🧩
 * 🔁 Double-click / double-tap to edit blocks
 * ⏱️ “Now” indicator on the timeline
 * 🤖 Optional auto-apply via `climate.set_temperature`
@@ -23,12 +30,13 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 * 🙈 **Storage sensor auto-hides** when disabled — cleaner UI ✨
 * 🧹 **Granular data clearing options** — choose exactly what to wipe:
 
-  * 🪸 All data (sensor + browser)
+  * 🧈 All data (sensor + browser)
   * 🧽 Local only (browser)
   * 🗄️ Storage sensor only
 * 🌡️⛔ **Max temperature limit** — prevent overheating with an upper bound 🛡️
 * 🏷️ **Cleaner labels** — removed invalid/duplicate label issues 🧹
 * 🔁 **Smoother drag-and-drop reordering** — faster, more accurate interaction 💨
+* 🐛 **Fix:** timeline layering now correct when reopening editor overlay ✔️
 
 ---
 
@@ -60,7 +68,7 @@ title: Thermostat Timeline
 entities:
   - climate.living_room
   - climate.bedroom
-storage_entity: sensor.thermostat_timeline  # optional (see “Storage & sync”)
+storage_entity: sensor.thermostat_timeline
 default_temp: 20
 row_height: 64
 now_update_ms: 60000
@@ -69,8 +77,11 @@ now_extend_px: 76
 auto_apply: true
 apply_on_edit: true
 apply_on_default_change: true
-use_storage_sensor: true         # toggle storage sensor on/off 🔁
-max_temp: 24                     # maximum allowed setpoint 🌡️⛔
+use_storage_sensor: true
+max_temp: 24
+unit: auto               # "auto", "C", or "F" 🌡️
+time_format: auto        # "auto", "12h", or "24h" 🕒
+weekday_mode: 1          # 1=Weekdays+Weekend, 2=Weekdays+Sat+Sun, 3=Individual Days 🕯️
 labels:
   climate.living_room: Living room
   climate.bedroom: Bedroom
@@ -78,7 +89,7 @@ labels:
 
 ---
 
-## 💾 Storage & Sync
+## 💮 Storage & Sync
 
 * **With integration (`thermostat-pro-timeline-sync`)**: Keeps data synced across browsers/devices.
   → [Integration repo](https://github.com/qlerup/thermostat-pro-timeline-sync)
@@ -88,7 +99,7 @@ labels:
 * 🙈 **Auto-hide sensor** when disabled — reduces UI clutter
 * 🧹 **Clear data menu**:
 
-  * 🪸 All data — clears both sensor + browser
+  * 🧈 All data — clears both sensor + browser
   * 🧽 Local only — clears browser cache
   * 🗄️ Storage sensor only — clears persistent store
 
@@ -121,5 +132,5 @@ Want to help? Open an issue titled `Locale request: <language>`.
 
 ---
 
-🎉 **Enjoy your smarter, safer, and now cleaner thermostat control!**
-🌡️🔥 With smoother drag-drop, auto-hiding sensors, and granular clearing options — your timeline just got an upgrade 💫
+🎉 **Enjoy your smarter, safer, and now even more flexible thermostat control!**
+🌡️🔥 With per-day schedules, temperature units, and auto-detected time formats — your timeline just got a major upgrade 💫
