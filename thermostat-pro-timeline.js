@@ -28,6 +28,7 @@ const TT_I18N = {
     'editor.default_c': 'Default °C',
   'editor.row_height_px': 'Row height (px)',
   'editor.max_c': 'Max °C',
+  'editor.min_c': 'Min °C',
   'editor.auto_apply.title': 'Automatic apply',
     'editor.auto_apply.desc':
       'When enabled, the card will try to set the temperature on selected climate entities so it matches the planned value for “right now”.',
@@ -85,6 +86,21 @@ const TT_I18N = {
     , 'editor.timefmt.desc': 'Choose 24-hour or 12-hour (AM/PM) display for times on the card.'
     , 'editor.tempfmt.title': 'Temperature unit'
     , 'editor.tempfmt.desc': 'Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.'
+  , 'editor.tabs.settings': 'Settings'
+  , 'editor.tabs.colors': 'Colors'
+  , 'editor.tabs.away': 'Away from home'
+  , 'away.enable': 'Enable away mode'
+  , 'away.desc': 'When no selected people are home, lower thermostats automatically to the set temperature.'
+  , 'away.temp': 'Away temperature'
+  , 'away.persons': 'People'
+  , 'away.add_person': 'Add person'
+    , 'editor.heat_colors.title': 'Heat block colors'
+  , 'editor.heat_colors.add': 'Add color range'
+    , 'editor.colors.col_from': 'From °C'
+    , 'editor.colors.col_to': 'To °C'
+    , 'editor.colors.col_color': 'Color'
+  , 'editor.colors.empty': 'No rooms added yet. Add a room to define heat block colors.'
+  , 'editor.colors.go_add': 'Add room'
   },
   da: {
     // Kort
@@ -115,6 +131,7 @@ const TT_I18N = {
     'editor.default_c': 'Standard °C',
   'editor.row_height_px': 'Rækkens højde (px)',
   'editor.max_c': 'Maks °C',
+    'editor.min_c': 'Min °C',
     'editor.auto_apply.title': 'Automatisk anvendelse',
     'editor.auto_apply.desc':
       'Når slået til forsøger kortet automatisk at sætte temperaturen på de valgte climate-entities, så den matcher den planlagte værdi for “lige nu”.',
@@ -140,6 +157,8 @@ const TT_I18N = {
     'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
   'editor.clear_local_only': 'Ryd kun lokale data',
     'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner gemt i din browser. Vil du fortsætte?'
+    , 'editor.colors.empty': 'Der er endnu ikke oprettet rum. Tilføj et rum for at definere farver.'
+    , 'editor.colors.go_add': 'Tilføj rum'
     , 'week.enable': 'Aktivér ugedage',
     'week.mode': 'Ugedags-tilstand',
   // removed same_all option from UI
@@ -172,6 +191,19 @@ const TT_I18N = {
     , 'editor.timefmt.desc': 'Vælg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.'
     , 'editor.tempfmt.title': 'Temperaturenhed'
     , 'editor.tempfmt.desc': 'Vælg Celsius (°C) eller Fahrenheit (°F) til visning i kortet og editorer.'
+  , 'editor.tabs.settings': 'Indstillinger'
+  , 'editor.tabs.colors': 'Farver'
+    , 'editor.tabs.away': 'Væk fra hjemme'
+    , 'away.enable': 'Aktivér væk-tilstand'
+    , 'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.'
+    , 'away.temp': 'Væk-temperatur'
+    , 'away.persons': 'Personer'
+    , 'away.add_person': 'Tilføj person'
+    , 'editor.heat_colors.title': 'Farver for varmeblokke'
+    , 'editor.heat_colors.add': 'Tilføj farveinterval'
+    , 'editor.colors.col_from': 'Fra °C'
+    , 'editor.colors.col_to': 'Til °C'
+    , 'editor.colors.col_color': 'Farve'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -198,6 +230,7 @@ const TT_I18N = {
     'editor.default_c': 'Standard °C',
   'editor.row_height_px': 'Radhöjd (px)',
   'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
     'editor.auto_apply.title': 'Automatisk tillämpning',
     'editor.auto_apply.desc': 'När det är aktiverat försöker kortet automatiskt ställa in temperaturen på valda climate-entiteter så att den matchar det planerade värdet för ”just nu”.',
     'editor.apply_edit.title': 'Vid redigering',
@@ -249,6 +282,13 @@ const TT_I18N = {
     'editor.timefmt.desc': 'Välj 24-timmars eller 12-timmars (AM/PM) visning på kortet.',
     'editor.tempfmt.title': 'Temperaturenhet',
     'editor.tempfmt.desc': 'Välj Celsius (°C) eller Fahrenheit (°F) för visning i kortet och editorer.',
+    'editor.heat_colors.title': 'Färger för värmeblock',
+    'editor.heat_colors.add': 'Lägg till färgintervall',
+    'editor.colors.col_from': 'Från °C',
+    'editor.colors.col_to': 'Till °C',
+    'editor.colors.col_color': 'Färg',
+    'editor.colors.empty': 'Inga rum tillagda ännu. Lägg till ett rum för att definiera färger.',
+    'editor.colors.go_add': 'Lägg till rum',
     'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.'
   },
   nb: {
@@ -276,6 +316,7 @@ const TT_I18N = {
     'editor.default_c': 'Standard °C',
   'editor.row_height_px': 'Radhøyde (px)',
   'editor.max_c': 'Maks °C',
+    'editor.min_c': 'Min °C',
     'editor.auto_apply.title': 'Automatisk bruk',
     'editor.auto_apply.desc': 'Når aktivert forsøker kortet å sette temperaturen på valgte climate-entiteter slik at den samsvarer med planlagt verdi for «nå».',
     'editor.apply_edit.title': 'Ved redigering',
@@ -327,6 +368,13 @@ const TT_I18N = {
     'editor.timefmt.desc': 'Velg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.',
     'editor.tempfmt.title': 'Temperaturenhet',
     'editor.tempfmt.desc': 'Velg Celsius (°C) eller Fahrenheit (°F) for visning i kortet og editorer.',
+    'editor.heat_colors.title': 'Farger for varmeblokker',
+    'editor.heat_colors.add': 'Legg til fargeintervall',
+    'editor.colors.col_from': 'Fra °C',
+    'editor.colors.col_to': 'Til °C',
+    'editor.colors.col_color': 'Farge',
+    'editor.colors.empty': 'Ingen rom lagt til ennå. Legg til et rom for å definere farger.',
+    'editor.colors.go_add': 'Legg til rom',
     'week.enable.desc': 'Aktiver plan per ukedag. Når av, brukes samme plan hver dag.'
   },
   de: {
@@ -354,6 +402,7 @@ const TT_I18N = {
     'editor.default_c': 'Standard °C',
   'editor.row_height_px': 'Zeilenhöhe (px)',
   'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
     'editor.auto_apply.title': 'Automatisch anwenden',
     'editor.auto_apply.desc': 'Wenn aktiviert, versucht die Karte, die Temperatur der ausgewählten climate-Entitäten automatisch so einzustellen, dass sie dem geplanten Wert für „jetzt“ entspricht.',
     'editor.apply_edit.title': 'Beim Bearbeiten',
@@ -405,6 +454,13 @@ const TT_I18N = {
     'editor.timefmt.desc': '24-Stunden- oder 12-Stunden-Anzeige (AM/PM) für Zeiten auf der Karte wählen.',
     'editor.tempfmt.title': 'Temperatureinheit',
     'editor.tempfmt.desc': 'Celsius (°C) oder Fahrenheit (°F) für Anzeige in Karte und Editoren wählen.',
+    'editor.heat_colors.title': 'Farben für Heizblöcke',
+    'editor.heat_colors.add': 'Farbintervall hinzufügen',
+    'editor.colors.col_from': 'Von °C',
+    'editor.colors.col_to': 'Bis °C',
+    'editor.colors.col_color': 'Farbe',
+    'editor.colors.empty': 'Noch keine Räume hinzugefügt. Fügen Sie einen Raum hinzu, um Farben zu definieren.',
+    'editor.colors.go_add': 'Raum hinzufügen',
     'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.'
   },
   es: {
@@ -432,6 +488,7 @@ const TT_I18N = {
     'editor.default_c': 'Predeterminado °C',
   'editor.row_height_px': 'Altura de fila (px)',
   'editor.max_c': 'Máx °C',
+    'editor.min_c': 'Mín °C',
     'editor.auto_apply.title': 'Aplicar automáticamente',
     'editor.auto_apply.desc': 'Cuando está activado, la tarjeta intentará establecer la temperatura en las entidades climate seleccionadas para que coincida con el valor planificado para “ahora mismo”.',
     'editor.apply_edit.title': 'Al editar',
@@ -483,6 +540,13 @@ const TT_I18N = {
     'editor.timefmt.desc': 'Elige visualización de 24 horas o 12 horas (AM/PM) para la tarjeta.',
     'editor.tempfmt.title': 'Unidad de temperatura',
     'editor.tempfmt.desc': 'Elige Celsius (°C) o Fahrenheit (°F) para mostrar en la tarjeta y editores.',
+    'editor.heat_colors.title': 'Colores de bloques de calor',
+    'editor.heat_colors.add': 'Añadir intervalo de color',
+    'editor.colors.col_from': 'Desde °C',
+    'editor.colors.col_to': 'Hasta °C',
+    'editor.colors.col_color': 'Color',
+    'editor.colors.empty': 'Aún no se han añadido habitaciones. Añade una para definir colores.',
+    'editor.colors.go_add': 'Añadir habitación',
     'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.'
   },
   fr: {
@@ -510,6 +574,7 @@ const TT_I18N = {
     'editor.default_c': 'Par défaut °C',
   'editor.row_height_px': 'Hauteur de ligne (px)',
   'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
     'editor.auto_apply.title': 'Application automatique',
     'editor.auto_apply.desc': 'Lorsqu’il est activé, la carte essaie de régler la température des entités climate sélectionnées pour qu’elle corresponde à la valeur prévue pour « maintenant »',
     'editor.apply_edit.title': 'Lors de l’édition',
@@ -561,6 +626,13 @@ const TT_I18N = {
     'editor.timefmt.desc': 'Choisir affichage 24 h ou 12 h (AM/PM) pour les heures sur la carte.',
     'editor.tempfmt.title': 'Unité de température',
     'editor.tempfmt.desc': 'Choisir Celsius (°C) ou Fahrenheit (°F) pour l’affichage dans la carte et les éditeurs.',
+    'editor.heat_colors.title': 'Couleurs des blocs de chauffe',
+    'editor.heat_colors.add': 'Ajouter un intervalle de couleur',
+    'editor.colors.col_from': 'De °C',
+    'editor.colors.col_to': 'À °C',
+    'editor.colors.col_color': 'Couleur',
+    'editor.colors.empty': 'Aucune pièce ajoutée. Ajoutez une pièce pour définir des couleurs.',
+    'editor.colors.go_add': 'Ajouter une pièce',
     'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.'
   },
   fi: {
@@ -588,6 +660,7 @@ const TT_I18N = {
     'editor.default_c': 'Oletus °C',
   'editor.row_height_px': 'Rivin korkeus (px)',
   'editor.max_c': 'Maksi °C',
+    'editor.min_c': 'Min °C',
     'editor.auto_apply.title': 'Automaattinen käyttö',
     'editor.auto_apply.desc': 'Kun käytössä, kortti yrittää asettaa valittujen climate-entiteettien lämpötilan vastaamaan suunniteltua arvoa tälle hetkelle.',
     'editor.apply_edit.title': 'Muokkauksen yhteydessä',
@@ -639,6 +712,13 @@ const TT_I18N = {
     'editor.timefmt.desc': 'Valitse 24 tunnin tai 12 tunnin (AM/PM) näyttö kortin ajoille.',
     'editor.tempfmt.title': 'Lämpötilayksikkö',
     'editor.tempfmt.desc': 'Valitse Celsius (°C) tai Fahrenheit (°F) kortin ja editorien näyttöön.',
+    'editor.heat_colors.title': 'Lämmityslohkojen värit',
+    'editor.heat_colors.add': 'Lisää värihaarukka',
+    'editor.colors.col_from': 'Alkaen °C',
+    'editor.colors.col_to': 'Asti °C',
+    'editor.colors.col_color': 'Väri',
+    'editor.colors.empty': 'Huoneita ei ole lisätty vielä. Lisää huone määrittääksesi värit.',
+    'editor.colors.go_add': 'Lisää huone',
     'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.'
   },
 };
@@ -676,9 +756,11 @@ class ThermostatTimelineCard extends HTMLElement {
       entities: [],
       row_height: 64,
       default_temp: 20,
-      max_temp: 25,
+  max_temp: 25,
+  min_temp: 5,
   temp_unit: null, // 'C' | 'F' | null(auto from HA)
   time_12h: null,
+      color_ranges: {}, // { [entity_id]: [ { from: number(C), to: number(C), color: string } ] }
       now_update_ms: 60000,   // kun til UI 'nu'-stregen
       storage_entity: "sensor.thermostat_timeline",     // fx sensor.thermostat_timeline
       storage_enabled: false, // default: off -> only local per user
@@ -690,7 +772,8 @@ class ThermostatTimelineCard extends HTMLElement {
       labels: {},
       merges: {},              // { [primary_eid]: [linked_eid, ...] }
   weekdays_enabled: false,
-  weekdays_mode: 'weekday_weekend' // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
+  weekdays_mode: 'weekday_weekend', // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
+      away: { enabled: false, persons: [], target_c: 17 }
     };
   }
 
@@ -739,6 +822,7 @@ class ThermostatTimelineCard extends HTMLElement {
     let deft = Number(config.default_temp ?? 20); deft = isNaN(deft) ? 20 : Math.max(5, Math.min(35, deft));
   let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
   let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(50, maxt));
+  let mint = Number(config.min_temp ?? 5); mint = isNaN(mint) ? 5 : Math.max(0, Math.min(45, mint));
     const showTop = Boolean(config.show_top_now ?? false);
     let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
 
@@ -748,6 +832,7 @@ class ThermostatTimelineCard extends HTMLElement {
       row_height: rowh,
       default_temp: deft,
   max_temp: maxt,
+    min_temp: mint,
       temp_unit: (config.temp_unit === undefined || config.temp_unit === null || config.temp_unit === 'auto')
         ? (this._detectPreferF() ? 'F' : 'C')
         : (String(config.temp_unit).toUpperCase()==='F'?'F':'C'),
@@ -762,10 +847,12 @@ class ThermostatTimelineCard extends HTMLElement {
       auto_apply: config.auto_apply ?? true,
       apply_on_edit: config.apply_on_edit ?? true,
       apply_on_default_change: config.apply_on_default_change ?? true,
-      labels: { ...(config.labels || {}) },
+  labels: { ...(config.labels || {}) },
       merges: { ...(config.merges || {}) },
+  color_ranges: { ...(config.color_ranges || {}) },
       weekdays_enabled: !!(config.weekdays_enabled ?? false),
-  weekdays_mode: (config.weekdays_mode || 'weekday_weekend')
+  weekdays_mode: (config.weekdays_mode || 'weekday_weekend'),
+    away: { enabled: !!(config.away?.enabled ?? false), persons: [...(config.away?.persons || [])], target_c: Number.isFinite(config.away?.target_c) ? Number(config.away.target_c) : 17 }
     };
 
     if (this._initialized) {
@@ -839,12 +926,26 @@ class ThermostatTimelineCard extends HTMLElement {
           if (attrs.settings && typeof attrs.settings === 'object') {
             try {
               const s = attrs.settings;
-              if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
-              if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+              // Do not override user-selected format/unit from shared storage
+              // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
+              // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+              if (s.color_ranges && typeof s.color_ranges==='object') this._config.color_ranges = { ...s.color_ranges };
+              if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
+              if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+              if (s.away && typeof s.away === 'object') {
+                try {
+                  const a = s.away;
+                  this._config.away = {
+                    enabled: !!a.enabled,
+                    persons: Array.isArray(a.persons) ? [...a.persons] : [],
+                    target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17)
+                  };
+                } catch {}
+              }
             } catch {}
           }
           this._lastVersion = Number(st.state || 0) || 0;
-          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit } })); } catch {}
+          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away } })); } catch {}
           return;
         }
       } catch (e) { /* fallback */ }
@@ -855,9 +956,19 @@ class ThermostatTimelineCard extends HTMLElement {
       const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object' && parsed.schedules) {
         this._schedules = parsed.schedules || {};
-        const s = parsed.settings || {};
-        if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
-        if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+  const s = parsed.settings || {};
+  // Do not override user-selected format/unit from local browser storage
+  // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
+  // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+  if (s.color_ranges && typeof s.color_ranges==='object') this._config.color_ranges = { ...s.color_ranges };
+    if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
+    if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+    if (s.away && typeof s.away === 'object') {
+      try {
+        const a = s.away;
+        this._config.away = { enabled: !!a.enabled, persons: Array.isArray(a.persons) ? [...a.persons] : [], target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17) };
+      } catch {}
+    }
       } else {
         // backward compat: schedules stored directly
         this._schedules = parsed || {};
@@ -867,10 +978,10 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   async _saveStore() {
-    try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit } })); } catch {}
+  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away } })); } catch {}
     if (!this._config?.storage_enabled || !this._storageAvailable()) return;
     this._saving = true;
-    try { await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit } }); }
+  try { await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away } }); }
     catch (e) { console.error("thermostat-timeline: save failed", e); }
     finally { setTimeout(() => { this._saving = false; }, 600); }
   }
@@ -944,6 +1055,7 @@ class ThermostatTimelineCard extends HTMLElement {
   _toDisplayTemp(c){ return this._isF()? Math.round((c*9/5+32)*10)/10 : c; }
   _fromDisplayTemp(v){ return this._isF()? ( (v-32)*5/9 ) : v; }
   _maxDisplay(){ const c = Number(this._config?.max_temp ?? 25); return this._toDisplayTemp(c); }
+  _minDisplay(){ const c = Number(this._config?.min_temp ?? 5); return this._toDisplayTemp(c); }
   _todayFullName(){ try { const lang = ttGetLangFromHass(this._hass || this._lang || 'en'); const s = new Intl.DateTimeFormat(lang, { weekday: 'long' }).format(new Date()); return s.charAt(0).toUpperCase()+s.slice(1); } catch { const names = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' }; return names[this._todayKey()] || 'Today'; } }
 
   // --- Weekday helpers ---
@@ -975,7 +1087,26 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; let blocks = row.blocks||[]; if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey); }
-    const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); return Number(hit ? hit.temp : row.defaultTemp); }
+    const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); let want = Number(hit ? hit.temp : row.defaultTemp);
+    // Apply away override if active
+    try {
+      if (this._isAwayActive()) {
+        const targetC = Number(this._config?.away?.target_c ?? 17);
+        if (Number.isFinite(targetC)) want = Math.min(want, targetC);
+      }
+    } catch {}
+    return want; }
+
+  _isAwayActive(){
+    try {
+      const a = this._config?.away; if (!a || !a.enabled) return false;
+      const persons = Array.isArray(a.persons) ? a.persons : [];
+      if (!persons.length) return false;
+      // Consider away if none are 'home'
+      for (const p of persons){ const st = this._hass?.states?.[p]; const s = (st?.state||'').toLowerCase(); if (s === 'home') return false; }
+      return true;
+    } catch { return false; }
+  }
 
   _nextBoundaryDate(){ const now = new Date(); const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity; for (const eid of (this._config.entities || [])){
       const row = this._schedules[eid]; if (!row) continue; const times = [];
@@ -992,7 +1123,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   async _applyCurrentSetpoints(force=false){ if (!this._config?.auto_apply || !this._hass) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
     let desired = this._desiredTempFor(eid, nowMin);
-    const mx = this._config?.max_temp ?? 25; if (Number.isFinite(mx)) desired = Math.min(desired, mx);
+    const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5; if (Number.isFinite(mx)) desired = Math.min(desired, mx); if (Number.isFinite(mn)) desired = Math.max(desired, mn);
       if (desired == null || Number.isNaN(desired)) continue;
       const last = this._lastApplied[eid] || {};
       if (!force && last.min === nowMin && Math.abs((last.temp??NaN) - desired) < 0.05) continue;
@@ -1005,7 +1136,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   // ---------- "Apply on change" helper ----------
   _desiredNowSnapshot(){ const nowMin = this._getNowMin(); const snap = {}; for (const eid of this._allTargetEntities()) snap[eid] = this._desiredTempFor(eid, nowMin); return snap; }
-  async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin(); for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) a = Math.min(a, mx); if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
+  async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin(); for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
   }
 
   // ---------- UI ----------
@@ -1048,6 +1179,8 @@ class ThermostatTimelineCard extends HTMLElement {
         .overlay.open{display:grid}
 
   .modal{width:min(80vw,320px);max-width:320px;border-radius:8px;padding:10px;background:var(--card-background-color);color:var(--primary-text-color);border:1px solid var(--divider-color)}
+  /* Wider modal when 12h editor controls (AM/PM) are shown */
+  .modal.modal-12h{ width: min(92vw, 400px); max-width: 400px; }
   /* Wider weekday editor */
   .modal-week{ width: min(95vw, 640px); max-width: 640px; position: relative; }
   /* Indent scale and track so ticks/blocks are not against the edge */
@@ -1059,17 +1192,26 @@ class ThermostatTimelineCard extends HTMLElement {
   .modal-week .week-track .block .pill{ display:none; }
   .modal-week .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
         .modal h3{margin:0 0 10px;font-size:1rem}
-        .grid{display:grid;grid-template-columns:auto auto;gap:6px}
+  .grid{display:grid;grid-template-columns:max-content max-content;column-gap:15px;row-gap:8px}
+  /* Add a bit of inner padding so right time input isn't hugging the edge */
+  .modal .grid{padding:0 4px}
         .grid>div{display:grid;gap:6px;align-items:start}
-        .grid .time-inline{display:flex;flex-direction:row;align-items:center;gap:2px}
-        .grid .time-inline label{margin:0;width:18px;flex:0 0 18px}
-        .grid .time-inline input[type=time]{flex:0 0 120px;min-width:120px}
-        .grid>div.time-right{justify-content:flex-end}
+  .grid .time-inline{display:flex;flex-direction:row;align-items:center;gap:2px}
+  .grid .time-inline label{margin:0 4px 0 0; width:auto; flex:0 0 auto; white-space:nowrap}
+  /* Keep 'To' compact but readable */
+  .grid .time-right label{margin:0 4px 0 0; width:auto; flex:0 0 auto}
+  .grid .time-inline input[type=time]{flex:0 0 96px;min-width:96px;max-width:96px;box-sizing:border-box;border:1px solid var(--divider-color);border-radius:8px;background: var(--card-background-color);color: var(--primary-text-color);height:28px;padding:2px 6px}
+  .grid .time-inline select.mer-select{flex:0 0 60px;min-width:60px;max-width:60px;height:28px;padding:2px 6px;border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);color:var(--primary-text-color)}
+  .grid>div.time-right{justify-content:flex-start;padding-right:0}
+  /* Temperature input: compact and rounded */
+  .grid .rowfull .ed-temp { width: 140px; height:28px; padding:2px 6px; box-sizing:border-box; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
       
         /* remove button */
         .remove-btn { flex-shrink: 0; padding:4px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--error-color); display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
         
-        .actions { display:flex; gap:8px; justify-content:flex-end; align-items:center; }
+  .actions { display:flex; gap:8px; justify-content:flex-end; align-items:center; }
+  /* Give modal action buttons some space from inputs */
+  .modal .actions { margin-top: 10px; }
         .order-btn {
           display:inline-flex; align-items:center; justify-content:center;
           width:32px; height:32px; border-radius:8px;
@@ -1114,8 +1256,8 @@ class ThermostatTimelineCard extends HTMLElement {
           <div class="modal" role="dialog" aria-modal="true" aria-label="Redigér blok">
             <h3>Redigér blok</h3>
             <div class="grid">
-              <div class="time-inline"><label>Fra</label><input class="ed-from" type="time" step="60" /></div>
-              <div class="time-inline time-right"><label>Til</label><input class="ed-to" type="time" step="60" /></div>
+              <div class="time-inline"><label>Fra</label><input class="ed-from" type="time" step="60" /><select class="mer-select ed-from-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
+              <div class="time-inline time-right"><label>Til</label><input class="ed-to" type="time" step="60" /><select class="mer-select ed-to-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
               <div class="rowfull"><label>Temperatur (°C)</label><input class="ed-temp" type="number" step="0.5" min="0" max="50" /></div>
             </div>
             <div class="ed-error" role="alert" aria-live="assertive" style="color:var(--error-color); display:none; margin-top:8px; font-size:.95rem;"></div>
@@ -1232,7 +1374,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const inline = document.createElement('input');
       inline.type = 'number';
       inline.step = '0.5';
-    inline.min = '5';
+    inline.min = String(this._minDisplay());
   inline.max = String(this._maxDisplay());
     inline.value = String(this._toDisplayTemp(row.defaultTemp ?? this._config.default_temp));
       inline.addEventListener('focus', () => {
@@ -1248,13 +1390,13 @@ class ThermostatTimelineCard extends HTMLElement {
       });
   inline.addEventListener('input', (e) => {
     let v = parseFloat(e.target.value);
-  v = isNaN(v) ? this._toDisplayTemp(row.defaultTemp) : this._clamp(v, 5, this._maxDisplay());
+  v = isNaN(v) ? this._toDisplayTemp(row.defaultTemp) : this._clamp(v, this._minDisplay(), this._maxDisplay());
     this._inlineTempDraft = v; // display units
       });
       inline.addEventListener('change', async (e) => {
         const before = this._desiredNowSnapshot();
     let v = parseFloat(e.target.value);
-  v = isNaN(v) ? this._toDisplayTemp(this._config.default_temp) : this._clamp(v, 5, this._maxDisplay());
+  v = isNaN(v) ? this._toDisplayTemp(this._config.default_temp) : this._clamp(v, this._minDisplay(), this._maxDisplay());
     row.defaultTemp = this._fromDisplayTemp(v);
         this._schedules[eid] = row;
         this._debouncedSaveStore();
@@ -1300,6 +1442,7 @@ class ThermostatTimelineCard extends HTMLElement {
         bl.className = 'block';
         bl.style.left = `${pctStart}%`;
         bl.style.width = `${pctWidth}%`;
+    try { const clr = this._colorFor(eid, b.temp); if (clr) { bl.style.background = clr; bl.style.borderColor = clr; } } catch {}
         if (this._active?.entity === eid && this._active?.id === b.id) bl.classList.add('active');
         const pillTime = document.createElement('span');
         pillTime.className = 'pill';
@@ -1422,19 +1565,31 @@ class ThermostatTimelineCard extends HTMLElement {
     if (!b) return;
     const edTemp = this.shadowRoot.querySelector(".ed-temp");
     const edFrom = this.shadowRoot.querySelector(".ed-from");
-    const edTo = this.shadowRoot.querySelector(".ed-to");
+  const edTo = this.shadowRoot.querySelector(".ed-to");
+  const fromMer = this.shadowRoot.querySelector('.ed-from-mer');
+  const toMer = this.shadowRoot.querySelector('.ed-to-mer');
     const overlay = this.shadowRoot.querySelector(".overlay");
     const title = this.shadowRoot.querySelector('.modal h3');
     const delBtn = this.shadowRoot.querySelector('.ed-delete');
-  if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); }
-    if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
-    if (edTo) edTo.value = this._toTimeInput(b.endMin);
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+    if (this._config?.time_12h) {
+      if (edFrom) edFrom.value = this._toTimeInput12h(b.startMin);
+      if (edTo) edTo.value = this._toTimeInput12h(b.endMin);
+      if (fromMer) { fromMer.style.display=''; fromMer.value = (b.startMin>=720)?'PM':'AM'; }
+      if (toMer) { toMer.style.display=''; toMer.value = (b.endMin>=720 && b.endMin<1440)?'PM':'AM'; }
+    } else {
+      if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
+      if (edTo) edTo.value = this._toTimeInput(b.endMin);
+      if (fromMer) fromMer.style.display='none';
+      if (toMer) toMer.style.display='none';
+    }
     if (title) title.textContent = this._t('ui.edit_block');
     if (delBtn) delBtn.style.display = '';
     const err = this.shadowRoot.querySelector(".ed-error");
     if (err) { err.style.display = "none"; err.textContent = ""; }
 
-    overlay.classList.add("open");
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  overlay.classList.add("open");
     try {
       const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
       window.addEventListener('keydown', onKey, { once: true });
@@ -1541,8 +1696,11 @@ class ThermostatTimelineCard extends HTMLElement {
     }
     this._deleteBlock(entity, blockId); this._closeEditor(); }
 
-  _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; } overlay.classList.add('open');
-    if (edTemp) edTemp.max = String(this._maxDisplay());
+  _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; }
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  overlay.classList.add('open');
+  try { const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer'); if (this._config?.time_12h) { if (edFrom) edFrom.value = this._toTimeInput12h(start); if (edTo) edTo.value = this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value = (start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value = (end>=720 && end<1440)?'PM':'AM'; } } else { if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; } } catch {}
+  if (edTemp) { edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
     try {
       const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
       window.addEventListener('keydown', onKey, { once: true });
@@ -1703,8 +1861,9 @@ class ThermostatTimelineCard extends HTMLElement {
         div.style.top='6px'; div.style.bottom='6px';
         div.style.left = (b.startMin/1440*100)+'%';
         div.style.width = ((b.endMin-b.startMin)/1440*100)+'%';
-        // Only show temperature in the block in the weekly popup (hide time)
+  // Only show temperature in the block in the weekly popup (hide time)
   const t2 = document.createElement('span'); t2.className='pill'; t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; div.append(t2);
+  try { const clr = this._colorFor(this._weeklyEntity, b.temp); if (clr) { div.style.background = clr; div.style.borderColor = clr; } } catch {}
         // double-click to edit (prevent bubbling to track handler)
         div.addEventListener('dblclick', (ev)=>{ try { ev.stopPropagation(); ev.preventDefault(); } catch {} this._openWeeklyBlockEditor(b.id); });
         // Hover -> show tooltip with full time range + temp (no click needed)
@@ -1744,40 +1903,71 @@ class ThermostatTimelineCard extends HTMLElement {
       const start = Number.isFinite(atMin) ? this._clamp(Math.round(atMin),0,1380) : this._clamp(Math.round(this._getNowMin()),0,1380);
       const end = this._clamp(start+60, start+15, 1440);
       const row = this._schedules[this._weeklyEntity] || { defaultTemp: this._config.default_temp };
-      const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error');
+  const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
       this._editing = { entity: this._weeklyEntity, blockId: null, weeklyDay: day };
   if (edTemp) { edTemp.value = String(this._toDisplayTemp(row.defaultTemp||20)); edTemp.max= String(this._maxDisplay()); }
-      if (edFrom) edFrom.value = this._toTimeInput(start);
-      if (edTo) edTo.value = this._toTimeInput(end);
+      if (this._config?.time_12h) {
+        if (edFrom) edFrom.value = this._toTimeInput12h(start);
+        if (edTo) edTo.value = this._toTimeInput12h(end);
+        if (fromMer){ fromMer.style.display=''; fromMer.value = (start>=720)?'PM':'AM'; }
+        if (toMer){ toMer.style.display=''; toMer.value = (end>=720 && end<1440)?'PM':'AM'; }
+      } else {
+        if (edFrom) edFrom.value = this._toTimeInput(start);
+        if (edTo) edTo.value = this._toTimeInput(end);
+        if (fromMer) fromMer.style.display='none';
+        if (toMer) toMer.style.display='none';
+      }
       if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
       // Hide weekday overlay while editing to avoid double-popups
       const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
-      overlay.classList.add('open');
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  overlay.classList.add('open');
     } else {
   const b = arr.find(x=>x.id===blockId);
       if (!b) return;
-      const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error');
+  const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
       this._editing = { entity: this._weeklyEntity, blockId, weeklyDay: day };
   if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max= String(this._maxDisplay()); }
-      if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
-      if (edTo) edTo.value = this._toTimeInput(b.endMin);
+      if (this._config?.time_12h) {
+        if (edFrom) edFrom.value = this._toTimeInput12h(b.startMin);
+        if (edTo) edTo.value = this._toTimeInput12h(b.endMin);
+        if (fromMer){ fromMer.style.display=''; fromMer.value = (b.startMin>=720)?'PM':'AM'; }
+        if (toMer){ toMer.style.display=''; toMer.value = (b.endMin>=720 && b.endMin<1440)?'PM':'AM'; }
+      } else {
+        if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
+        if (edTo) edTo.value = this._toTimeInput(b.endMin);
+        if (fromMer) fromMer.style.display='none';
+        if (toMer) toMer.style.display='none';
+      }
       if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
       const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
-      overlay.classList.add('open');
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  overlay.classList.add('open');
     }
   }
 
   async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
     const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
+    const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer'); const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
     const rawFrom = String(edFrom.value || "");
     const rawTo = String(edTo.value || "");
     let start = this._fromTimeInput(rawFrom);
     let end = this._fromTimeInput(rawTo);
+    // If 12h mode, adjust using AM/PM selects
+    if (this._config?.time_12h) {
+      const merF = (fromMerSel?.value || 'AM').toUpperCase();
+      const merT = (toMerSel?.value || 'AM').toUpperCase();
+      let sh = Math.floor(start/60), sm = start%60;
+      let eh = Math.floor(end/60), em = end%60;
+      if (sh <= 12) { if (merF==='AM' && sh===12) sh = 0; if (merF==='PM' && sh<12) sh += 12; }
+      if (eh <= 12) { if (merT==='AM' && eh===12) eh = 0; if (merT==='PM' && eh<12) eh += 12; }
+      start = sh*60 + sm; end = eh*60 + em;
+    }
     // Treat end time 00:00 as end of day (24:00 -> 1440 minutes)
     if (rawTo === '00:00') end = 1440;
   let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw);
   if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
-  const maxLimit = this._maxDisplay(); if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit);
+  const maxLimit = this._maxDisplay(); const minLimit = this._minDisplay(); if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit); if (Number.isFinite(minLimit)) temp = Math.max(temp, minLimit);
     start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440);
     if (end <= start) end = this._clamp(start + 15, start + 1, 1440);
     const others = (sourceBlocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; }
@@ -1803,6 +1993,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
+  _toTimeInput12h(min){ if (!Number.isFinite(min)) min=0; const m=((Math.floor(min)%1440)+1440)%1440; let hh=Math.floor(m/60); const mm=Math.floor(m%60); let h=hh%12; if(h===0) h=12; return `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; }
 
   // ---------- Mutations ----------
   _addBlock(entity){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; const now=this._getNowMin(); const start=this._clamp(Math.round(now),0,1380); const end=this._clamp(Math.round(start+60), start+15, 1440); const id=Math.random().toString(36).slice(2,9); let t=(row.defaultTemp||20)+2; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) t=Math.min(t,mx); const b={id,startMin:start,endMin:end,temp:t}; row.blocks.push(b); this._applyNoOverlapResize(entity,b,"left",b.startMin); this._applyNoOverlapResize(entity,b,"right",b.endMin); this._active={entity,id}; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
@@ -1873,6 +2064,19 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch (e) { /* ignore */ }
   }
 
+  _colorFor(eid, tempC){
+    try {
+      const ranges = (this._config?.color_ranges?.[eid]) || [];
+      for (const r of ranges){
+        const from = Number(r.from);
+        const to = Number(r.to);
+        if (!Number.isFinite(from) || !Number.isFinite(to)) continue;
+        if (tempC >= Math.min(from,to) && tempC <= Math.max(from,to)) return r.color || '';
+      }
+    } catch {}
+    return '';
+  }
+
 }
 customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
 
@@ -1896,7 +2100,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   this._openCount = 0;
     this._pendingEmit = false;
   this._openRows = new Set();
+  this._openColorRows = new Set();
   this._suspendRender = false;
+  this._activeTab = 'settings';
     this.shadowRoot.innerHTML = `
       <style>
         .wrap { padding:8px 12px; display:grid; gap:16px; max-width: 480px; }
@@ -1977,8 +2183,41 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         .pill-chip { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); color: var(--primary-text-color); }
         .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
         .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
+  /* Tabs */
+  .tabs { display:flex; gap:18px; align-items:flex-end; padding:0 6px; margin:8px 0; border-bottom: 1px solid var(--divider-color); position:relative; z-index:3; }
+  .tab-btn { appearance:none; border:none; background:transparent; color: var(--secondary-text-color); padding:10px 2px; margin:0; cursor:pointer; font-weight:600; position:relative; }
+  .tab-btn::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background: transparent; border-radius:2px; }
+  .tab-btn.active { color: var(--primary-text-color); }
+  .tab-btn.active::after { background: var(--primary-color); }
+  /* Remove blue focus ring on click; keep it for keyboard users only */
+  .tab-btn:focus { outline: none; }
+  .tab-btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset:2px; border-radius:4px; }
+  /* Compact inputs for Colors tab */
+  .colors-row { display:grid; grid-template-columns: 88px 88px 48px 1fr; gap:8px; align-items:center; padding-right:6px; }
+  .colors-row input[type=number] { width:88px; height:28px; padding:4px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing: border-box; display:block; }
+  .colors-row input[type=color] { width:48px; height:28px; padding:0; border:1px solid var(--divider-color); border-radius:6px; background: transparent; box-sizing: border-box; display:block; }
+  .colors-row .remove-btn { padding:4px 10px; width:auto; justify-self:end; align-self:center; }
+  .colors-head { display:grid; grid-template-columns: 88px 88px 48px 1fr; gap:8px; align-items:center; margin:0; color: var(--secondary-text-color); font-size:.8rem; line-height:1; }
+  /* Visual card for each color range */
+  .color-item { border:1px dashed var(--divider-color); border-radius:10px; padding:6px; background: var(--secondary-background-color, transparent); }
+  .color-item + .color-item { margin-top:6px; }
+  /* Space the add button away from header line */
+  .tab-colors .add-entity-btn { margin-top:6px; }
+  .colors-head span:nth-child(1),
+  .colors-head span:nth-child(2),
+  .colors-head span:nth-child(3) { padding-left:10px; }
+  /* Away tab: fix picker width */
+  .tab-away .away-person-picker { width: 320px; min-width: 320px; max-width: 320px; }
+        /* Empty state + attention pulse */
+        .empty-box { border:1px dashed var(--divider-color); border-radius:10px; padding:14px; max-width:480px; color: var(--secondary-text-color); display:grid; gap:10px; }
+        .pulse-attn { position:relative; }
+        .pulse-attn.pulse { animation: tt-pulse 1.2s ease-in-out 0s 4; }
+        @keyframes tt-pulse { 0% { box-shadow: 0 0 0 0 rgba(var(--rgb-primary-color, 3,155,229), .8); }
+          70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+          100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
         </style>
-      <div class="wrap">
+  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button></div>
+      <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         <div class="row">
           <div class="label">Storage entity</div>
@@ -2000,7 +2239,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         </div>
         <div class="row">
           <div class="entities"></div>
-          <button class="add-entity-btn" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
+          <button class="add-entity-btn add-room-settings" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
         </div>
         
 <style>
@@ -2016,10 +2255,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 }
 .settings-card .grid2 {
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap:10px;
   margin-bottom: 6px;
 }
+.settings-card .sfield { display:grid; gap:2px; align-items:start; }
+.settings-card .slabel { font-size:.8rem; color: var(--secondary-text-color); line-height:1; padding-left:4px; }
+.settings-card .settings-input { width:88px; height:28px; padding:4px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing:border-box; }
 .settings-card .setting {
   display:grid;
   grid-template-columns: 1fr auto;
@@ -2035,9 +2277,22 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 </style>
 <div class="settings-card">
   <div class="grid2">
-    <ha-textfield class="def" type="number" label="Standard °C" min="5" max="35"></ha-textfield>
-    <ha-textfield class="rowh" type="number" label="Rækkens højde (px)" min="40" max="120"></ha-textfield>
-    <ha-textfield class="maxc" type="number" label="Max °C" min="5" max="50"></ha-textfield>
+    <div class="sfield">
+      <div class="slabel slabel-def">Standard °C</div>
+      <input class="def settings-input" type="number" min="5" max="35" step="0.5" />
+    </div>
+    <div class="sfield">
+      <div class="slabel slabel-rowh">Rækkens højde (px)</div>
+      <input class="rowh settings-input" type="number" min="40" max="120" step="1" />
+    </div>
+    <div class="sfield">
+      <div class="slabel slabel-minc">Min °C</div>
+      <input class="minc settings-input" type="number" min="0" max="45" step="0.5" />
+    </div>
+    <div class="sfield">
+      <div class="slabel slabel-maxc">Max °C</div>
+      <input class="maxc settings-input" type="number" min="5" max="50" step="0.5" />
+    </div>
   </div>
 
   <div class="setting">
@@ -2101,7 +2356,36 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   
 </div>
 
-      </div>`;    this._applyEditorI18n();
+  </div>
+  <div class="wrap tab-colors" style="display:none;"></div>
+  <div class="wrap tab-away" style="display:none; max-width:480px;">
+    <div class="settings-card">
+      <div class="setting">
+        <div class="text">
+          <div class="title away-enable-title">Away</div>
+          <div class="desc away-desc">Lower temperature when nobody is home.</div>
+        </div>
+        <ha-switch class="away-enable"></ha-switch>
+      </div>
+      <div class="setting">
+        <div class="text">
+          <div class="title away-temp-title">Away temperature</div>
+          <div class="desc away-temp-desc"></div>
+        </div>
+        <input class="away-temp settings-input" type="number" step="0.5" />
+      </div>
+      <div class="setting">
+        <div class="text">
+          <div class="title away-persons-title">People</div>
+          <div class="desc away-persons-desc"></div>
+        </div>
+        <div style="display:grid; gap:8px;">
+          <ha-entity-picker class="away-person-picker" include-domains='["person"]'></ha-entity-picker>
+          <div class="linked-chips away-chips"></div>
+        </div>
+      </div>
+    </div>
+  </div>`;    this._applyEditorI18n();
 
     const qs = (s)=>this.shadowRoot.querySelector(s);
     qs(".title")?.addEventListener("change", e => this._upd("title", e.target.value));
@@ -2141,13 +2425,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       // Convert from display units to Celsius for storage
       let vC = isNaN(vDisp)? (this._config?.default_temp ?? 20) : this._fromDisplayTemp(vDisp);
       const mxC = Number(this._config?.max_temp ?? 25);
-      vC = Math.max(5, Math.min(mxC, vC));
+      const mnC = Number(this._config?.min_temp ?? 5);
+      vC = Math.max(mnC, Math.min(mxC, vC));
       this._upd("default_temp", vC);
       // reflect display value after clamp
       const input = qs(".def"); if (input) input.value = String(this._toDisplayTemp(vC));
     });
     qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
-    qs(".add-entity-btn")?.addEventListener("click", () => this._addEntity());
+  qs(".add-room-settings")?.addEventListener("click", () => this._addEntity());
     qs(".auto")?.addEventListener("change", e => this._upd("auto_apply", e.target.checked));
     qs(".applyedit")?.addEventListener("change", e => this._upd("apply_on_edit", e.target.checked));
     qs(".applydef")?.addEventListener("change", e => this._upd("apply_on_default_change", e.target.checked));
@@ -2157,7 +2442,50 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       let vC = isNaN(vDisp)? (this._config?.max_temp ?? 25) : this._fromDisplayTemp(vDisp);
       vC = Math.max(5, Math.min(50, Math.round(vC)));
       this._upd('max_temp', vC);
+      // Clamp existing color ranges to new max
+      try {
+        const cr = { ...(this._config.color_ranges || {}) };
+        for (const k of Object.keys(cr)){
+          cr[k] = (cr[k]||[]).map(r=>({
+            ...r,
+            from: Math.min(Number(r.from ?? 0), vC),
+            to: Math.min(Number(r.to ?? 0), vC)
+          }));
+        }
+        this._config.color_ranges = cr;
+      } catch {}
       const mxEl=this.shadowRoot.querySelector('.maxc'); if(mxEl) mxEl.value=String(this._toDisplayTemp(vC));
+      // Repaint so Colors inputs pick up new max attribute
+      this._render();
+    });
+    // Min temp change
+    qs('.minc')?.addEventListener('change', e => {
+      let raw=String(e.target.value||"").replace(",",".");
+      let vDisp=Number(raw);
+      let vC = isNaN(vDisp)? (this._config?.min_temp ?? 5) : this._fromDisplayTemp(vDisp);
+      // Keep within 0..(max-1)
+      const mxC = Number(this._config?.max_temp ?? 25);
+      vC = Math.max(0, Math.min(mxC, Math.round(vC)));
+      this._upd('min_temp', vC);
+      // Clamp defaults and color ranges to new min
+      try {
+        // Default temp
+        const defEl = this.shadowRoot.querySelector('.def');
+        if (defEl) {
+          let d= this._fromDisplayTemp(Number(defEl.value));
+          if (!isNaN(d) && d < vC) { d = vC; defEl.value = String(this._toDisplayTemp(d)); this._upd('default_temp', d); }
+        }
+        const cr = { ...(this._config.color_ranges || {}) };
+        for (const k of Object.keys(cr)){
+          cr[k] = (cr[k]||[]).map(r=>({
+            ...r,
+            from: Math.max(Number(r.from ?? vC), vC)
+          }));
+        }
+        this._config.color_ranges = cr;
+      } catch {}
+      const mnEl=this.shadowRoot.querySelector('.minc'); if(mnEl) mnEl.value=String(this._toDisplayTemp(vC));
+      this._render();
     });
     // Weekdays enable (mode selection removed from editor)
     qs('.week-enable')?.addEventListener('change', e => {
@@ -2203,9 +2531,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (!raw) { alert(this._t('editor.no_local_data')); return; }
         const ok = confirm(this._t('editor.migrate_confirm'));
         if (!ok) return;
-        const parsed = JSON.parse(raw || '{}');
-        const schedules = parsed.schedules || parsed || {};
-        const settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit };
+    const parsed = JSON.parse(raw || '{}');
+    const schedules = parsed.schedules || parsed || {};
+    const settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away };
         if (this._hass) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
         }
@@ -2242,6 +2570,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (uF) uF.addEventListener('click', ()=>{ this._upd('temp_unit','F'); applyUnitUi(); });
       applyUnitUi();
     } catch {}
+    // Tabs behavior
+    try {
+      const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
+      const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
+      const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
+      if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
+      if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
+      if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
+    } catch {}
   }
 
   // --- Local helpers for unit/time conversions (editor context) ---
@@ -2256,9 +2593,19 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       // Suspend render while interacting with any entity picker to avoid closing dropdowns
       this.shadowRoot.addEventListener('focusin', (e)=>{
         try { if (e.target?.closest && e.target.closest('ha-entity-picker')) this._suspendRender = true; } catch {}
+        try {
+          // Also suspend while editing inputs in Colors tab (prevents HA hass updates from re-rendering and killing focus)
+          const t = e.target;
+          if (t && t.closest && t.closest('.tab-colors')) {
+            if (t.tagName === 'INPUT' || t.classList?.contains('remove-btn')) {
+              this._suspendRender = true;
+            }
+          }
+        } catch {}
       });
       this.shadowRoot.addEventListener('focusout', ()=>{
-        setTimeout(()=>{ this._suspendRender = false; }, 100);
+        // Give a tiny delay so click into next field doesn't flicker
+        setTimeout(()=>{ this._suspendRender = false; }, 150);
       });
       this.shadowRoot.addEventListener('value-changed', (e)=>{
         try { if (e.target?.tagName?.toLowerCase() === 'ha-entity-picker') { this._suspendRender = false; } } catch {}
@@ -2270,9 +2617,24 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if(!this._hass || !this.shadowRoot || !this._config) return;
     if(this._openCount > 0) return;
 
+    // Robust tab delegation (ensures Colors can be opened even with no rooms)
+    if (!this._tabHandlersBound) {
+      this._tabHandlersBound = true;
+      try {
+        this.shadowRoot.addEventListener('click', (ev)=>{
+          const t = ev.target && ev.target.closest ? ev.target : (ev.composedPath && ev.composedPath()[0]);
+          const el = t && t.closest ? t.closest('.tab-btn') : null;
+          if (!el) return;
+          if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
+          if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
+        });
+      } catch {}
+    }
+
   const t = this.shadowRoot.querySelector(".title");
   const d = this.shadowRoot.querySelector(".def");
   const mx= this.shadowRoot.querySelector('.maxc');
+  const mn= this.shadowRoot.querySelector('.minc');
     const rh= this.shadowRoot.querySelector(".rowh");
   const se= this.shadowRoot.querySelector(".storage");
   const seEn = this.shadowRoot.querySelector('.store-enable');
@@ -2283,6 +2645,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (t)  t.value  = this._config.title ?? "";
   if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
   if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
+    if (mn && mn !== this.shadowRoot.activeElement) mn.value = String(this._toDisplayTemp(this._config.min_temp ?? 5));
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
     if (se) { se.hass = this._hass; se.value = this._config.storage_entity || ""; }
     if (seEn) {
@@ -2336,7 +2699,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       wrap.append(line);
     }
 
-    for (let i=0;i<want;i++){
+  for (let i=0;i<want;i++){
       const row = wrap.children[i];
       const picker = row.querySelector("ha-entity-picker");
       if (picker) {
@@ -2404,9 +2767,146 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             chips.append(chip);
           }
         }
+
+          // (colors tab content and visibility now rendered once outside the entity loop)
       } catch {}
      }
-   }
+
+    // Build colors tab content (always render once, even with zero rooms)
+    try {
+      const root = this.shadowRoot.querySelector('.tab-colors');
+      if (root) {
+        root.innerHTML = '';
+        if (want === 0) {
+          const box = document.createElement('div'); box.className = 'empty-box';
+          const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
+          const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn'; btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
+          btn.onclick = () => {
+            this._activeTab = 'settings'; this._render();
+            const add = this.shadowRoot.querySelector('.add-room-settings');
+            if (add) { add.classList.add('pulse-attn','pulse'); setTimeout(() => add.classList.remove('pulse'), 3500); add.scrollIntoView({ behavior:'smooth', block:'center' }); }
+          };
+          box.append(p, btn); root.append(box);
+        }
+        for (let i = 0; i < want; i++) {
+          const eid = this._config.entities[i]; if (!eid) continue;
+          const line = document.createElement('div'); line.className = 'inline';
+          const summary = document.createElement('div'); summary.className = 'summary';
+          const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+          const exp = document.createElement('button'); exp.className = 'expander'; exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+          const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+          const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+          txtWrap.append(titleSpan); sumLeft.append(exp, txtWrap); summary.append(sumLeft);
+          line.append(summary);
+          const details = document.createElement('div'); details.className = 'details'; line.append(details);
+          const colorsWrap = document.createElement('div'); colorsWrap.style.display = 'grid'; colorsWrap.style.gap = '0px'; details.append(colorsWrap);
+          // Header labels for inputs (appended only when ranges exist)
+          const head = document.createElement('div'); head.className = 'colors-head';
+          head.innerHTML = `<span>${this._t('editor.colors.col_from')}</span><span>${this._t('editor.colors.col_to')}</span><span>${this._t('editor.colors.col_color')}</span><span></span>`;
+          // Restore open state for this entity in Colors tab
+          try { if (this._openColorRows.has(eid)) line.classList.add('open'); } catch {}
+          const renderRanges = () => {
+            colorsWrap.innerHTML = '';
+            const ranges = (this._config.color_ranges?.[eid]) || [];
+            if (ranges.length > 0) colorsWrap.append(head);
+            ranges.forEach((r, ri) => {
+              const outer = document.createElement('div'); outer.className = 'color-item';
+              const row = document.createElement('div'); row.className = 'colors-row';
+              const f = document.createElement('input'); f.type = 'number'; f.step = '0.5'; f.value = String(this._toDisplayTemp(r.from ?? 0)); f.setAttribute('aria-label', this._t('editor.colors.col_from')); f.title = this._t('editor.colors.col_from');
+              const t = document.createElement('input'); t.type = 'number'; t.step = '0.5'; t.value = String(this._toDisplayTemp(r.to ?? 0)); t.setAttribute('aria-label', this._t('editor.colors.col_to')); t.title = this._t('editor.colors.col_to');
+              const c = document.createElement('input'); c.type = 'color'; c.value = r.color || '#ffb347'; c.setAttribute('aria-label', this._t('editor.colors.col_color')); c.title = this._t('editor.colors.col_color');
+              // Apply min/max constraints based on max_temp (respect display units)
+              const maxDisp = this._toDisplayTemp(this._config.max_temp ?? 25);
+              const minDisp = this._toDisplayTemp(this._config.min_temp ?? 5);
+              f.min = String(minDisp); t.min = String(minDisp);
+              f.max = String(maxDisp); t.max = String(maxDisp);
+              const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+              f.onchange = () => { let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v); r.from = this._fromDisplayTemp(v); this._config.color_ranges[eid] = ranges; this._emit(); };
+              t.onchange = () => { let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v); r.to = this._fromDisplayTemp(v); this._config.color_ranges[eid] = ranges; this._emit(); };
+              c.onchange = () => { r.color = c.value; this._config.color_ranges[eid] = ranges; this._emit(); };
+              rm.onclick = () => { ranges.splice(ri, 1); this._config.color_ranges[eid] = ranges; this._emit(true); renderRanges(); };
+              row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
+            });
+            const add = document.createElement('button'); add.className = 'add-entity-btn'; add.type = 'button'; add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
+            add.onclick = () => { const arr = [...(this._config.color_ranges?.[eid] || [])]; arr.push({ from: this._config.default_temp || 20, to: this._config.default_temp || 20, color: '#ffb347' }); this._config.color_ranges = { ...(this._config.color_ranges || {}), [eid]: arr }; this._emit(true); renderRanges(); };
+            colorsWrap.append(add);
+          };
+          renderRanges();
+          exp.onclick = () => {
+            line.classList.toggle('open');
+            const key = eid;
+            if (line.classList.contains('open')) this._openColorRows.add(key);
+            else this._openColorRows.delete(key);
+          };
+          root.append(line);
+        }
+      }
+    } catch {}
+
+    // Apply tab visibility/class based on state (always run)
+    try {
+      const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
+      const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
+      const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
+      const sSec = this.shadowRoot.querySelector('.tab-settings');
+      const cSec = this.shadowRoot.querySelector('.tab-colors');
+      const aSec = this.shadowRoot.querySelector('.tab-away');
+      const isColors = this._activeTab === 'colors';
+      const isSettings = this._activeTab === 'settings';
+      const isAway = this._activeTab === 'away';
+      if (sBtn && cBtn && aBtn && sSec && cSec && aSec) {
+        sBtn.classList.toggle('active', isSettings);
+        cBtn.classList.toggle('active', isColors);
+        aBtn.classList.toggle('active', isAway);
+        sSec.style.display = isSettings ? '' : 'none';
+        cSec.style.display = isColors ? '' : 'none';
+        aSec.style.display = isAway ? '' : 'none';
+      }
+    } catch {}
+
+    // Populate Away tab controls
+    try {
+      const en = this.shadowRoot.querySelector('.away-enable');
+      if (en) en.checked = !!(this._config.away?.enabled);
+      en?.addEventListener('change', (e)=>{
+        const cur = { ...(this._config.away || {}) };
+        cur.enabled = !!e.target.checked; this._config.away = cur; this._emit();
+      });
+      const temp = this.shadowRoot.querySelector('.away-temp');
+      if (temp && temp !== this.shadowRoot.activeElement) temp.value = String(this._toDisplayTemp(this._config.away?.target_c ?? 17));
+      temp?.setAttribute('min', String(this._toDisplayTemp(this._config.min_temp ?? 5)));
+      temp?.setAttribute('max', String(this._toDisplayTemp(this._config.max_temp ?? 25)));
+      temp?.addEventListener('change', (e)=>{
+        let raw = String(e.target.value||"").replace(",",".");
+        let vDisp = Number(raw);
+        let vC = isNaN(vDisp) ? (this._config.away?.target_c ?? 17) : this._fromDisplayTemp(vDisp);
+        const mn = this._config.min_temp ?? 5; const mx = this._config.max_temp ?? 25;
+        vC = Math.max(mn, Math.min(mx, vC));
+        const cur = { ...(this._config.away || {}) };
+        cur.target_c = vC; this._config.away = cur; this._emit();
+      });
+      const picker = this.shadowRoot.querySelector('.away-person-picker');
+      if (picker) { picker.hass = this._hass; picker.value = ''; }
+      picker?.addEventListener('value-changed', (e)=>{
+        const val = e.detail.value; if (!val) return; picker.value = '';
+        const cur = { ...(this._config.away || { enabled:false, persons:[], target_c:17 }) };
+        const set = new Set(cur.persons || []); set.add(val); cur.persons = Array.from(set); this._config.away = cur; this._emit(true);
+      });
+      const chips = this.shadowRoot.querySelector('.away-chips');
+      if (chips) {
+        chips.innerHTML = '';
+        const arr = (this._config.away?.persons || []);
+        for (const p of arr) {
+          const chip = document.createElement('span'); chip.className = 'pill-chip';
+          const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[p]?.attributes?.friendly_name || (p.split('.')[1]||p);
+          const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.setAttribute('aria-label', this._t('editor.remove'));
+          rm.addEventListener('click', ()=>{ const cur = { ...(this._config.away || {}) }; cur.persons = (cur.persons||[]).filter(x=>x!==p); this._config.away = cur; this._emit(true); });
+          chip.append(txt, rm); chips.append(chip);
+        }
+      }
+    } catch {}
+
+  }
 
   // Pointer-driven Drag & Drop (works reliably inside HA editors)
   _startPointerDnd(line, idx){
@@ -2764,19 +3264,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const addBtn = root.querySelector('.add-entity-btn span');
       if (addBtn) addBtn.textContent = t('editor.add_entity');
 
-      // Settings labels
-      const def = root.querySelector('ha-textfield.def');
-      if (def) {
-        const lbl = t('editor.default_c');
-        def.setAttribute('label', lbl.replace('°C', this._unitSymbol()));
-      }
-      const rowh = root.querySelector('ha-textfield.rowh');
-      if (rowh) rowh.setAttribute('label', t('editor.row_height_px'));
-  const maxc = root.querySelector('ha-textfield.maxc');
-  if (maxc) {
-        const lblm = t('editor.max_c');
-        maxc.setAttribute('label', lblm.replace('°C', this._unitSymbol()));
-      }
+      // Settings labels (compact inputs)
+  const defLbl = root.querySelector('.slabel-def');
+      if (defLbl) defLbl.textContent = t('editor.default_c').replace('°C', this._unitSymbol());
+      const rowLbl = root.querySelector('.slabel-rowh');
+      if (rowLbl) rowLbl.textContent = t('editor.row_height_px');
+      const maxLbl = root.querySelector('.slabel-maxc');
+      if (maxLbl) maxLbl.textContent = t('editor.max_c').replace('°C', this._unitSymbol());
+  const minLbl = root.querySelector('.slabel-minc');
+  if (minLbl) minLbl.textContent = t('editor.min_c').replace('°C', this._unitSymbol());
 
       // Settings titles/descriptions
       const settings = Array.from(root.querySelectorAll('.settings-card .setting'));
@@ -2810,6 +3306,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       try {
         const tuTitle = root.querySelector('.tempfmt-title'); if (tuTitle) tuTitle.textContent = t('editor.tempfmt.title');
         const tuDesc = root.querySelector('.tempfmt-desc'); if (tuDesc) tuDesc.textContent = t('editor.tempfmt.desc');
+      } catch {}
+      // Tabs labels
+      try {
+        const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
+        const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
+        const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
+        // Away tab labels
+        const awayTitle = root.querySelector('.away-enable-title'); if (awayTitle) awayTitle.textContent = t('away.enable');
+        const awayDesc = root.querySelector('.away-desc'); if (awayDesc) awayDesc.textContent = t('away.desc');
+        const awayTemp = root.querySelector('.away-temp-title'); if (awayTemp) awayTemp.textContent = t('away.temp');
+        const awayPersons = root.querySelector('.away-persons-title'); if (awayPersons) awayPersons.textContent = t('away.persons');
       } catch {}
 
     } catch(e){ /* ignore */ }
