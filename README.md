@@ -2,7 +2,7 @@
 
 [![hacs\_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 
-A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple timeline🏡🗕️️ — and automatically apply them to your `climate.*` entities.
+A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple timeline🏡🔕️️ — and automatically apply them to your `climate.*` entities.
 
 <img width="2291" height="581" alt="timeline" src="https://github.com/user-attachments/assets/7dce9516-1654-4eb8-87b1-6c091a3bf233" />
 
@@ -12,10 +12,13 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 * 🧊 Per-thermostat **or merged room-based timeline**
 * 🌡️➕🌡️ **Merge multiple thermostats** into one room – control them together via a single timeline 🏠🕒
+* 🎨 **Color Blocks** — visually highlight temperature ranges with custom colors 🌈
+* 🏡 **Away From Home** — auto-set your “away” temperature when nobody’s home, resume schedule when someone returns 🚶‍♂️🏠
 * 🔥 Default temperature per row
 * 🕓 **Temperature Units** — choose **°C or °F**, or let it auto-detect from Home Assistant 🌡️
 * ⏰ **12/24-Hour Clock Toggle** — display times using your preferred format 🕒
-* 🗖️ **Weekday Timeline Modes** — set up flexible daily schedules:
+* 🕰️ **AM/PM Picker Fixed** — smooth, reliable time selection ✅
+* 🗆️ **Weekday Timeline Modes** — set up flexible daily schedules:
 
   * Weekdays + Weekend (Mon–Fri, Sat–Sun)
   * Weekdays + Saturday + Sunday
@@ -23,20 +26,57 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 * 🔁 Double-click / double-tap to edit blocks
 * ⏱️ “Now” indicator on the timeline
 * 🤖 Optional auto-apply via `climate.set_temperature`
-* 🧭 Clean, modern **Editor UI**
-* 🧹 Lovelace GUI editor support
+* 🦭 Clean, modern **Editor UI**
+* 🥳 Lovelace GUI editor support
 * 🔁 **Storage sensor toggle** — choose between synced sensor or local-only mode
 * 🔄 **Data migration** — easily transfer data from browser to storage sensor 🔁
 * 🙈 **Storage sensor auto-hides** when disabled — cleaner UI ✨
-* 🧹 **Granular data clearing options** — choose exactly what to wipe:
+* 🥳 **Granular data clearing options** — choose exactly what to wipe:
 
-  * 🧈 All data (sensor + browser)
-  * 🧽 Local only (browser)
+  * 🥈 All data (sensor + browser)
+  * 🥽 Local only (browser)
   * 🗄️ Storage sensor only
-* 🌡️⛔ **Max temperature limit** — prevent overheating with an upper bound 🛡️
-* 🏷️ **Cleaner labels** — removed invalid/duplicate label issues 🧹
-* 🔁 **Smoother drag-and-drop reordering** — faster, more accurate interaction 💨
-* 🐛 **Fix:** timeline layering now correct when reopening editor overlay ✔️
+* 🌡️⛔ **Max temperature limit** — prevent overheating with an upper bound 🚡️
+
+---
+
+## 🎨 Color Blocks
+
+Bring color to your comfort! 🌈
+
+Define visual temperature ranges to make your schedule instantly readable.
+
+```yaml
+color_blocks:
+  - from: 18
+    to: 21
+    color: teal
+  - from: 21
+    to: 24
+    color: orange
+```
+
+* Each range colors any block that fits inside it.
+* Helps you spot comfort vs eco zones quickly 🔍
+* Order ranges thoughtfully to avoid overlap confusion.
+
+---
+
+## 🏡 Away From Home (Presence-Aware Mode)
+
+Keep temperatures smart and efficient while you’re out 💡
+
+```yaml
+away_mode:
+  persons:
+    - person.john
+    - person.jane
+  temp: 17
+```
+
+* Automatically applies the **away temperature** when everyone is away.
+* When someone returns home, your schedule resumes automatically 🙌
+* Works seamlessly with your existing timelines.
 
 ---
 
@@ -60,7 +100,7 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ---
 
-## 🧪 Usage
+## 🤪 Usage
 
 ```yaml
 type: custom:thermostat-timeline-card
@@ -79,9 +119,9 @@ apply_on_edit: true
 apply_on_default_change: true
 use_storage_sensor: true
 max_temp: 24
-unit: auto               # "auto", "C", or "F" 🌡️
-time_format: auto        # "auto", "12h", or "24h" 🕒
-weekday_mode: 1          # 1=Weekdays+Weekend, 2=Weekdays+Sat+Sun, 3=Individual Days 🕯️
+unit: auto
+time_format: auto
+weekday_mode: 1
 labels:
   climate.living_room: Living room
   climate.bedroom: Bedroom
@@ -89,7 +129,7 @@ labels:
 
 ---
 
-## 💮 Storage & Sync
+## 🚷 Storage & Sync
 
 * **With integration (`thermostat-pro-timeline-sync`)**: Keeps data synced across browsers/devices.
   → [Integration repo](https://github.com/qlerup/thermostat-pro-timeline-sync)
@@ -97,10 +137,10 @@ labels:
 * 🔁 **Toggle per card**: Switch between local-only and sensor-based storage.
 * 🔄 **Data migration tool**: Transfer browser data → storage sensor data 🔁
 * 🙈 **Auto-hide sensor** when disabled — reduces UI clutter
-* 🧹 **Clear data menu**:
+* 🥳 **Clear data menu**:
 
-  * 🧈 All data — clears both sensor + browser
-  * 🧽 Local only — clears browser cache
+  * 🥈 All data — clears both sensor + browser
+  * 🥽 Local only — clears browser cache
   * 🗄️ Storage sensor only — clears persistent store
 
 > ℹ️ Mixing modes may cause timelines not to carry over — expected behavior.
@@ -132,5 +172,5 @@ Want to help? Open an issue titled `Locale request: <language>`.
 
 ---
 
-🎉 **Enjoy your smarter, safer, and now even more flexible thermostat control!**
-🌡️🔥 With per-day schedules, temperature units, and auto-detected time formats — your timeline just got a major upgrade 💫
+🎉 **Enjoy your smarter, safer, and now even more colorful thermostat control!**
+🌡️🔥 With **Color Blocks**, **Away Mode**, and fixed **AM/PM Picker** — your timeline just got both smarter *and* prettier 💫
