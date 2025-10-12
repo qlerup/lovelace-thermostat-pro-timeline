@@ -53,6 +53,38 @@ const TT_I18N = {
     'editor.clear_storage_only_confirm': 'This will delete schedules from the selected storage sensor. Continue?',
   'editor.clear_local_only': 'Clear local data only',
     'editor.clear_local_only_confirm': 'This will delete schedules saved in your browser only. Continue?'
+    , 'week.enable': 'Enable weekdays',
+    'week.mode': 'Weekday mode',
+  // removed same_all option from UI
+  'week.mode.weekday_weekend': 'Weekdays + Weekend',
+  'week.mode.weekday_sat_sun': 'Weekdays + Saturday + Sunday',
+  'week.mode.all_7': 'All days',
+    'week.button': 'Weekdays',
+  'week.group.weekdays': 'Weekdays',
+  'week.group.weekend': 'Weekend',
+  'week.days_full.mon': 'Monday',
+  'week.days_full.tue': 'Tuesday',
+  'week.days_full.wed': 'Wednesday',
+  'week.days_full.thu': 'Thursday',
+  'week.days_full.fri': 'Friday',
+  'week.days_full.sat': 'Saturday',
+  'week.days_full.sun': 'Sunday',
+  'week.group.weekdays': 'Weekdays',
+  'week.group.weekend': 'Weekend',
+    'week.days.mon': 'Mon',
+    'week.days.tue': 'Tue',
+    'week.days.wed': 'Wed',
+    'week.days.thu': 'Thu',
+    'week.days.fri': 'Fri',
+    'week.days.sat': 'Sat',
+    'week.days.sun': 'Sun',
+    'week.editor.title': 'Weekday schedule',
+  'week.editor.preview_note': 'Preview only. Changes apply when you press Save.'
+  , 'week.enable.desc': 'Enable per-weekday scheduling. When off, the same plan is used every day.'
+    , 'editor.timefmt.title': 'Time format'
+    , 'editor.timefmt.desc': 'Choose 24-hour or 12-hour (AM/PM) display for times on the card.'
+    , 'editor.tempfmt.title': 'Temperature unit'
+    , 'editor.tempfmt.desc': 'Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.'
   },
   da: {
     // Kort
@@ -108,6 +140,38 @@ const TT_I18N = {
     'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
   'editor.clear_local_only': 'Ryd kun lokale data',
     'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner gemt i din browser. Vil du fortsætte?'
+    , 'week.enable': 'Aktivér ugedage',
+    'week.mode': 'Ugedags-tilstand',
+  // removed same_all option from UI
+  'week.mode.weekday_weekend': 'Hverdage + Weekend',
+  'week.mode.weekday_sat_sun': 'Hverdage + Lørdag + Søndag',
+  'week.mode.all_7': 'Alle dage',
+    'week.button': 'Ugedage',
+  'week.group.weekdays': 'Hverdage',
+  'week.group.weekend': 'Weekend',
+  'week.days_full.mon': 'Mandag',
+  'week.days_full.tue': 'Tirsdag',
+  'week.days_full.wed': 'Onsdag',
+  'week.days_full.thu': 'Torsdag',
+  'week.days_full.fri': 'Fredag',
+  'week.days_full.sat': 'Lørdag',
+  'week.days_full.sun': 'Søndag',
+  'week.group.weekdays': 'Hverdage',
+  'week.group.weekend': 'Weekend',
+    'week.days.mon': 'Man',
+    'week.days.tue': 'Tir',
+    'week.days.wed': 'Ons',
+    'week.days.thu': 'Tor',
+    'week.days.fri': 'Fre',
+    'week.days.sat': 'Lør',
+    'week.days.sun': 'Søn',
+    'week.editor.title': 'Ugedags-tidsplan',
+  'week.editor.preview_note': 'Kun forhåndsvisning. Ændringer gemmes først når du trykker Gem.'
+  , 'week.enable.desc': 'Aktivér plan per ugedag. Når slået fra, bruges samme plan hver dag.'
+    , 'editor.timefmt.title': 'Tidsformat'
+    , 'editor.timefmt.desc': 'Vælg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.'
+    , 'editor.tempfmt.title': 'Temperaturenhed'
+    , 'editor.tempfmt.desc': 'Vælg Celsius (°C) eller Fahrenheit (°F) til visning i kortet og editorer.'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -155,7 +219,37 @@ const TT_I18N = {
   'editor.clear_storage_only': 'Rensa endast lagringsdata',
     'editor.clear_storage_only_confirm': 'Detta tar bort scheman från vald lagringssensor. Vill du fortsätta?',
   'editor.clear_local_only': 'Rensa endast lokala data',
-    'editor.clear_local_only_confirm': 'Detta tar endast bort scheman som sparats i din webbläsare. Vill du fortsätta?'
+    'editor.clear_local_only_confirm': 'Detta tar endast bort scheman som sparats i din webbläsare. Vill du fortsätta?',
+    'week.enable': 'Aktivera veckodagar',
+    'week.mode': 'Veckoläge',
+    'week.mode.same_all': 'Samma alla dagar (1)',
+  'week.mode.weekday_weekend': 'Vardagar + Helg',
+  'week.mode.weekday_sat_sun': 'Vardagar + Lördag + Söndag',
+  'week.mode.all_7': 'Alla dagar',
+    'week.button': 'Veckodagar',
+    'week.days.mon': 'Mån',
+    'week.days.tue': 'Tis',
+    'week.days.wed': 'Ons',
+    'week.days.thu': 'Tor',
+    'week.days.fri': 'Fre',
+    'week.days.sat': 'Lör',
+    'week.days.sun': 'Sön',
+    'week.editor.title': 'Veckoschema',
+    'week.editor.preview_note': 'Endast förhandsvisning. Ändringar tillämpas när du trycker Spara.',
+    'week.group.weekdays': 'Vardagar',
+  'week.group.weekend': 'Helg',
+    'week.days_full.mon': 'Måndag',
+    'week.days_full.tue': 'Tisdag',
+    'week.days_full.wed': 'Onsdag',
+    'week.days_full.thu': 'Torsdag',
+    'week.days_full.fri': 'Fredag',
+    'week.days_full.sat': 'Lördag',
+    'week.days_full.sun': 'Söndag',
+    'editor.timefmt.title': 'Tidsformat',
+    'editor.timefmt.desc': 'Välj 24-timmars eller 12-timmars (AM/PM) visning på kortet.',
+    'editor.tempfmt.title': 'Temperaturenhet',
+    'editor.tempfmt.desc': 'Välj Celsius (°C) eller Fahrenheit (°F) för visning i kortet och editorer.',
+    'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -203,7 +297,37 @@ const TT_I18N = {
   'editor.clear_storage_only': 'Tøm kun lagringsdata',
     'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra valgt lagringssenso r. Fortsette?',
   'editor.clear_local_only': 'Tøm kun lokale data',
-    'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner som er lagret i nettleseren. Fortsette?'
+    'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner som er lagret i nettleseren. Fortsette?',
+    'week.enable': 'Aktiver ukedager',
+    'week.mode': 'Ukedagsmodus',
+    'week.mode.same_all': 'Samme hver dag (1)',
+  'week.mode.weekday_weekend': 'Hverdager + Helg',
+  'week.mode.weekday_sat_sun': 'Hverdager + Lørdag + Søndag',
+  'week.mode.all_7': 'Alle dager',
+    'week.button': 'Ukedager',
+    'week.days.mon': 'Man',
+    'week.days.tue': 'Tir',
+    'week.days.wed': 'Ons',
+    'week.days.thu': 'Tor',
+    'week.days.fri': 'Fre',
+    'week.days.sat': 'Lør',
+    'week.days.sun': 'Søn',
+    'week.editor.title': 'Ukeplan',
+    'week.editor.preview_note': 'Kun forhåndsvisning. Endringer brukes når du trykker Lagre.',
+    'week.group.weekdays': 'Hverdager',
+    'week.group.weekend': 'Helg',
+    'week.days_full.mon': 'Mandag',
+    'week.days_full.tue': 'Tirsdag',
+    'week.days_full.wed': 'Onsdag',
+    'week.days_full.thu': 'Torsdag',
+    'week.days_full.fri': 'Fredag',
+    'week.days_full.sat': 'Lørdag',
+    'week.days_full.sun': 'Søndag',
+    'editor.timefmt.title': 'Tidsformat',
+    'editor.timefmt.desc': 'Velg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.',
+    'editor.tempfmt.title': 'Temperaturenhet',
+    'editor.tempfmt.desc': 'Velg Celsius (°C) eller Fahrenheit (°F) for visning i kortet og editorer.',
+    'week.enable.desc': 'Aktiver plan per ukedag. Når av, brukes samme plan hver dag.'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -251,7 +375,37 @@ const TT_I18N = {
   'editor.clear_storage_only': 'Nur Speicherdaten löschen',
     'editor.clear_storage_only_confirm': 'Dies löscht Zeitpläne vom ausgewählten Speichersensor. Fortfahren?',
   'editor.clear_local_only': 'Nur lokale Daten löschen',
-    'editor.clear_local_only_confirm': 'Dies löscht nur im Browser gespeicherte Zeitpläne. Fortfahren?'
+    'editor.clear_local_only_confirm': 'Dies löscht nur im Browser gespeicherte Zeitpläne. Fortfahren?',
+    'week.enable': 'Wochentage aktivieren',
+    'week.mode': 'Wochentagsmodus',
+    'week.mode.same_all': 'Jeden Tag gleich (1)',
+  'week.mode.weekday_weekend': 'Werktage + Wochenende',
+  'week.mode.weekday_sat_sun': 'Werktage + Samstag + Sonntag',
+  'week.mode.all_7': 'Alle Tage',
+    'week.button': 'Wochentage',
+    'week.days.mon': 'Mo',
+    'week.days.tue': 'Di',
+    'week.days.wed': 'Mi',
+    'week.days.thu': 'Do',
+    'week.days.fri': 'Fr',
+    'week.days.sat': 'Sa',
+    'week.days.sun': 'So',
+    'week.editor.title': 'Wochenschema',
+    'week.editor.preview_note': 'Nur Vorschau. Änderungen werden erst beim Speichern angewendet.',
+    'week.group.weekdays': 'Werktage',
+    'week.group.weekend': 'Wochenende',
+    'week.days_full.mon': 'Montag',
+    'week.days_full.tue': 'Dienstag',
+    'week.days_full.wed': 'Mittwoch',
+    'week.days_full.thu': 'Donnerstag',
+    'week.days_full.fri': 'Freitag',
+    'week.days_full.sat': 'Samstag',
+    'week.days_full.sun': 'Sonntag',
+    'editor.timefmt.title': 'Zeitformat',
+    'editor.timefmt.desc': '24-Stunden- oder 12-Stunden-Anzeige (AM/PM) für Zeiten auf der Karte wählen.',
+    'editor.tempfmt.title': 'Temperatureinheit',
+    'editor.tempfmt.desc': 'Celsius (°C) oder Fahrenheit (°F) für Anzeige in Karte und Editoren wählen.',
+    'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -299,7 +453,37 @@ const TT_I18N = {
   'editor.clear_storage_only': 'Borrar solo datos de almacenamiento',
     'editor.clear_storage_only_confirm': 'Esto eliminará los horarios del sensor de almacenamiento seleccionado. ¿Continuar?',
   'editor.clear_local_only': 'Borrar solo datos locales',
-    'editor.clear_local_only_confirm': 'Esto eliminará solo los horarios guardados en tu navegador. ¿Continuar?'
+    'editor.clear_local_only_confirm': 'Esto eliminará solo los horarios guardados en tu navegador. ¿Continuar?',
+    'week.enable': 'Habilitar días de la semana',
+    'week.mode': 'Modo por días',
+    'week.mode.same_all': 'Igual todos los días (1)',
+  'week.mode.weekday_weekend': 'Laborables + Fin de semana',
+  'week.mode.weekday_sat_sun': 'Laborables + Sábado + Domingo',
+  'week.mode.all_7': 'Todos los días',
+    'week.button': 'Días de la semana',
+    'week.days.mon': 'Lun',
+    'week.days.tue': 'Mar',
+    'week.days.wed': 'Mié',
+    'week.days.thu': 'Jue',
+    'week.days.fri': 'Vie',
+    'week.days.sat': 'Sáb',
+    'week.days.sun': 'Dom',
+    'week.editor.title': 'Programación por días',
+    'week.editor.preview_note': 'Solo vista previa. Los cambios se aplican al pulsar Guardar.',
+    'week.group.weekdays': 'Laborables',
+    'week.group.weekend': 'Fin de semana',
+    'week.days_full.mon': 'Lunes',
+    'week.days_full.tue': 'Martes',
+    'week.days_full.wed': 'Miércoles',
+    'week.days_full.thu': 'Jueves',
+    'week.days_full.fri': 'Viernes',
+    'week.days_full.sat': 'Sábado',
+    'week.days_full.sun': 'Domingo',
+    'editor.timefmt.title': 'Formato de hora',
+    'editor.timefmt.desc': 'Elige visualización de 24 horas o 12 horas (AM/PM) para la tarjeta.',
+    'editor.tempfmt.title': 'Unidad de temperatura',
+    'editor.tempfmt.desc': 'Elige Celsius (°C) o Fahrenheit (°F) para mostrar en la tarjeta y editores.',
+    'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -347,7 +531,37 @@ const TT_I18N = {
   'editor.clear_storage_only': 'Effacer uniquement les données du stockage',
     'editor.clear_storage_only_confirm': 'Cela supprimera les plannings du capteur de stockage sélectionné. Continuer ?',
   'editor.clear_local_only': 'Effacer uniquement les données locales',
-    'editor.clear_local_only_confirm': 'Cela supprimera uniquement les plannings enregistrés dans votre navigateur. Continuer ?'
+    'editor.clear_local_only_confirm': 'Cela supprimera uniquement les plannings enregistrés dans votre navigateur. Continuer ?',
+    'week.enable': 'Activer les jours de semaine',
+    'week.mode': 'Mode jours de semaine',
+    'week.mode.same_all': 'Identique chaque jour (1)',
+  'week.mode.weekday_weekend': 'Jours ouvrés + Week-end',
+  'week.mode.weekday_sat_sun': 'Jours ouvrés + Samedi + Dimanche',
+  'week.mode.all_7': 'Tous les jours',
+    'week.button': 'Jours de semaine',
+    'week.days.mon': 'Lun',
+    'week.days.tue': 'Mar',
+    'week.days.wed': 'Mer',
+    'week.days.thu': 'Jeu',
+    'week.days.fri': 'Ven',
+    'week.days.sat': 'Sam',
+    'week.days.sun': 'Dim',
+    'week.editor.title': 'Planification par jour',
+    'week.editor.preview_note': 'Aperçu uniquement. Les modifications s’appliquent lors de l’enregistrement.',
+    'week.group.weekdays': 'Jours ouvrés',
+    'week.group.weekend': 'Week-end',
+    'week.days_full.mon': 'Lundi',
+    'week.days_full.tue': 'Mardi',
+    'week.days_full.wed': 'Mercredi',
+    'week.days_full.thu': 'Jeudi',
+    'week.days_full.fri': 'Vendredi',
+    'week.days_full.sat': 'Samedi',
+    'week.days_full.sun': 'Dimanche',
+    'editor.timefmt.title': 'Format de l’heure',
+    'editor.timefmt.desc': 'Choisir affichage 24 h ou 12 h (AM/PM) pour les heures sur la carte.',
+    'editor.tempfmt.title': 'Unité de température',
+    'editor.tempfmt.desc': 'Choisir Celsius (°C) ou Fahrenheit (°F) pour l’affichage dans la carte et les éditeurs.',
+    'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -395,7 +609,37 @@ const TT_I18N = {
   'editor.clear_storage_only': 'Tyhjennä vain tallennusdata',
     'editor.clear_storage_only_confirm': 'Tämä poistaa aikataulut valitusta sensorista. Jatketaanko?',
   'editor.clear_local_only': 'Tyhjennä vain paikalliset tiedot',
-    'editor.clear_local_only_confirm': 'Tämä poistaa vain selaimeen tallennetut aikataulut. Jatketaanko?'
+    'editor.clear_local_only_confirm': 'Tämä poistaa vain selaimeen tallennetut aikataulut. Jatketaanko?',
+    'week.enable': 'Ota viikonpäivät käyttöön',
+    'week.mode': 'Viikkotila',
+    'week.mode.same_all': 'Sama joka päivä (1)',
+  'week.mode.weekday_weekend': 'Arkipäivät + Viikonloppu',
+  'week.mode.weekday_sat_sun': 'Arkipäivät + Lauantai + Sunnuntai',
+  'week.mode.all_7': 'Kaikki päivät',
+    'week.button': 'Viikonpäivät',
+    'week.days.mon': 'Ma',
+    'week.days.tue': 'Ti',
+    'week.days.wed': 'Ke',
+    'week.days.thu': 'To',
+    'week.days.fri': 'Pe',
+    'week.days.sat': 'La',
+    'week.days.sun': 'Su',
+    'week.editor.title': 'Viikkosuunnitelma',
+    'week.editor.preview_note': 'Vain esikatselu. Muutokset otetaan käyttöön, kun painat Tallenna.',
+    'week.group.weekdays': 'Arkipäivät',
+    'week.group.weekend': 'Viikonloppu',
+    'week.days_full.mon': 'Maanantai',
+    'week.days_full.tue': 'Tiistai',
+    'week.days_full.wed': 'Keskiviikko',
+    'week.days_full.thu': 'Torstai',
+    'week.days_full.fri': 'Perjantai',
+    'week.days_full.sat': 'Lauantai',
+    'week.days_full.sun': 'Sunnuntai',
+    'editor.timefmt.title': 'Aikamuoto',
+    'editor.timefmt.desc': 'Valitse 24 tunnin tai 12 tunnin (AM/PM) näyttö kortin ajoille.',
+    'editor.tempfmt.title': 'Lämpötilayksikkö',
+    'editor.tempfmt.desc': 'Valitse Celsius (°C) tai Fahrenheit (°F) kortin ja editorien näyttöön.',
+    'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb' };
@@ -412,7 +656,6 @@ function ttLocalize(key, langOrHass) {
     parts[0],
     TT_LANG_ALIAS[lang],
     TT_LANG_ALIAS[parts[0]],
-    'da',
     'en',
   ].filter(Boolean);
   for (const c of candidates) {
@@ -434,6 +677,8 @@ class ThermostatTimelineCard extends HTMLElement {
       row_height: 64,
       default_temp: 20,
       max_temp: 25,
+  temp_unit: null, // 'C' | 'F' | null(auto from HA)
+  time_12h: null,
       now_update_ms: 60000,   // kun til UI 'nu'-stregen
       storage_entity: "sensor.thermostat_timeline",     // fx sensor.thermostat_timeline
       storage_enabled: false, // default: off -> only local per user
@@ -443,7 +688,9 @@ class ThermostatTimelineCard extends HTMLElement {
       apply_on_edit: true,     // NYT: anvend straks hvis den ønskede temp *nu* ændres af en redigering
       apply_on_default_change: true, // NYT: anvend straks hvis Standard °C ændrer den ønskede temp *nu*,
       labels: {},
-      merges: {}               // { [primary_eid]: [linked_eid, ...] }
+      merges: {},              // { [primary_eid]: [linked_eid, ...] }
+  weekdays_enabled: false,
+  weekdays_mode: 'weekday_weekend' // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
     };
   }
 
@@ -501,6 +748,12 @@ class ThermostatTimelineCard extends HTMLElement {
       row_height: rowh,
       default_temp: deft,
   max_temp: maxt,
+      temp_unit: (config.temp_unit === undefined || config.temp_unit === null || config.temp_unit === 'auto')
+        ? (this._detectPreferF() ? 'F' : 'C')
+        : (String(config.temp_unit).toUpperCase()==='F'?'F':'C'),
+      time_12h: (config.time_12h === undefined || config.time_12h === null || config.time_12h === 'auto')
+        ? this._detectPrefer12h()
+        : !!config.time_12h,
       now_update_ms: nowms,
       storage_entity: (config.storage_entity || "").trim(),
       storage_enabled: !!(config.storage_enabled ?? false),
@@ -511,6 +764,8 @@ class ThermostatTimelineCard extends HTMLElement {
       apply_on_default_change: config.apply_on_default_change ?? true,
       labels: { ...(config.labels || {}) },
       merges: { ...(config.merges || {}) },
+      weekdays_enabled: !!(config.weekdays_enabled ?? false),
+  weekdays_mode: (config.weekdays_mode || 'weekday_weekend')
     };
 
     if (this._initialized) {
@@ -518,6 +773,8 @@ class ThermostatTimelineCard extends HTMLElement {
       this._startUiTimer();
       if (!this._inlineEditing && !this._editing) this._render();
       this._scheduleNextApply();
+      // Persist shared settings to storage so other users/dashboards pick them up
+      this._debouncedSaveStore();
     }
   }
 
@@ -553,6 +810,13 @@ class ThermostatTimelineCard extends HTMLElement {
 
     // Auto apply guard
     this._lastApplied = {}; // { [entity_id]: { min:number, temp:number } }
+
+    // Weekday modal state
+    this._weeklyOpen = false;
+    this._weeklyEntity = null;
+    this._weeklyDraft = null; // { mode, days: { mon:[], ... } }
+    this._weeklyDayKey = null;
+    this._weeklyOverlayHiddenForEditor = false;
   }
 
   disconnectedCallback() {
@@ -571,21 +835,42 @@ class ThermostatTimelineCard extends HTMLElement {
         const attrs = st?.attributes || {};
         if (attrs.schedules && typeof attrs.schedules === "object") {
           this._schedules = JSON.parse(JSON.stringify(attrs.schedules));
+          // Optional shared settings
+          if (attrs.settings && typeof attrs.settings === 'object') {
+            try {
+              const s = attrs.settings;
+              if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
+              if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+            } catch {}
+          }
           this._lastVersion = Number(st.state || 0) || 0;
-          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify(this._schedules)); } catch {}
+          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit } })); } catch {}
           return;
         }
       } catch (e) { /* fallback */ }
     }
-    try { const raw = localStorage.getItem("thermostat_timeline_store") || ""; this._schedules = raw ? JSON.parse(raw) : {}; }
+    try {
+      const raw = localStorage.getItem("thermostat_timeline_store") || "";
+      if (!raw) { this._schedules = {}; return; }
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object' && parsed.schedules) {
+        this._schedules = parsed.schedules || {};
+        const s = parsed.settings || {};
+        if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
+        if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+      } else {
+        // backward compat: schedules stored directly
+        this._schedules = parsed || {};
+      }
+    }
     catch { this._schedules = {}; }
   }
 
   async _saveStore() {
-    try { localStorage.setItem("thermostat_timeline_store", JSON.stringify(this._schedules)); } catch {}
+    try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit } })); } catch {}
     if (!this._config?.storage_enabled || !this._storageAvailable()) return;
     this._saving = true;
-    try { await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules }); }
+    try { await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit } }); }
     catch (e) { console.error("thermostat-timeline: save failed", e); }
     finally { setTimeout(() => { this._saving = false; }, 600); }
   }
@@ -596,11 +881,80 @@ class ThermostatTimelineCard extends HTMLElement {
   _sortBlocks(entity) { const r = this._schedules[entity]; r.blocks.sort((a,b)=>a.startMin - b.startMin || a.endMin - b.endMin); }
   _neighbors(entity, id) { const r = this._schedules[entity]; const i = r.blocks.findIndex(b=>b.id===id); if (i === -1) return {left:null, right:null, index:-1}; return { left: r.blocks[i-1] || null, right: r.blocks[i+1] || null, index:i }; }
   _applyNoOverlapResize(entity, b, edge, proposed) { this._sortBlocks(entity); const {left, right} = this._neighbors(entity, b.id); if (edge === "left") { let ns = this._clamp(Math.floor(proposed), 0, b.endMin - 5); if (left) ns = Math.max(ns, left.endMin); b.startMin = ns; } else if (edge === "right") { let ne = this._clamp(Math.ceil(proposed), b.startMin + 5, 1440); if (right) ne = Math.min(ne, right.startMin); b.endMin = ne; } this._sortBlocks(entity); }
-  _label(min) { if (!Number.isFinite(min)) return "00:00"; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.round(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
+  _label(min) {
+    if (!Number.isFinite(min)) min = 0;
+    const m = ((Math.floor(min) % 1440) + 1440) % 1440;
+    const hh = Math.floor(m/60), mm = Math.round(m%60);
+    if (this._config?.time_12h) {
+      const am = hh < 12;
+      let h = hh % 12; if (h === 0) h = 12;
+      return `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')} ${am ? 'AM' : 'PM'}`;
+    }
+    return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+  }
+  _timeParts(min){
+    // Returns { main: 'hh:mm', mer: 'AM'|'PM'|null } according to current format
+    if (!Number.isFinite(min)) min = 0;
+    const m = ((Math.floor(min) % 1440) + 1440) % 1440;
+    const hh = Math.floor(m/60), mm = Math.round(m%60);
+    if (this._config?.time_12h) {
+      const am = hh < 12;
+      let h = hh % 12; if (h === 0) h = 12;
+      return { main: `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`, mer: am ? 'AM' : 'PM' };
+    }
+    return { main: `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`, mer: null };
+  }
+  _hourLabel(h){ const min = (h%24)*60; return this._label(min); }
   _getNowMin(){ const d=new Date(); return d.getHours()*60 + d.getMinutes(); }
   _clamp(v,a,b){ if (isNaN(v)) return a; return Math.min(Math.max(v,a),b); }
   _prettyName(eid){ const st=this._hass?.states?.[eid]; if (st?.attributes?.friendly_name) return st.attributes.friendly_name; const base=(eid||"").split(".")[1]||eid||""; return base.replace(/_/g," ").replace(/\b\w/g,(m)=>m.toUpperCase()); }
   _isCompactScale(){ try { const isCoarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches; const isLandscape = window.matchMedia && window.matchMedia('(orientation: landscape)').matches; const w = window.innerWidth || 0; return (isCoarse && isLandscape) || (w > 600 && w < 1100 && isLandscape); } catch (e) { return false; } }
+  _detectPrefer12h(){
+    try {
+      // Prefer Home Assistant locale if available
+      const lf = this._hass?.locale?.time_format || this._hass?.locale?.time_format_preference || '';
+      if (typeof lf === 'string') {
+        const s = lf.toLowerCase();
+        if (s.includes('12')) return true;
+        if (s.includes('24')) return false;
+      }
+    } catch {}
+    try {
+      // Fallback: browser preference
+      const fmt = new Intl.DateTimeFormat(navigator.language || undefined, { hour: 'numeric' });
+      const ro = fmt.resolvedOptions?.() || {};
+      if (typeof ro.hour12 === 'boolean') return ro.hour12;
+    } catch {}
+    // Final fallback: 24h
+    return false;
+  }
+  _detectPreferF(){
+    try {
+      const u = this._hass?.config?.unit_system?.temperature || this._hass?.locale?.temperature || '';
+      if (typeof u === 'string' && u.toUpperCase().includes('F')) return true;
+    } catch {}
+    try {
+      const f = new Intl.NumberFormat(navigator.language || undefined, { style:'unit', unit:'fahrenheit' });
+      // Heuristic: if formatter exists, still default to C; most regions outside US use C, but HA already covers primary preference
+    } catch {}
+    return false;
+  }
+  _isF(){ return (this._config?.temp_unit||'C')==='F'; }
+  _unitSymbol(){ return this._isF()? '°F' : '°C'; }
+  _toDisplayTemp(c){ return this._isF()? Math.round((c*9/5+32)*10)/10 : c; }
+  _fromDisplayTemp(v){ return this._isF()? ( (v-32)*5/9 ) : v; }
+  _maxDisplay(){ const c = Number(this._config?.max_temp ?? 25); return this._toDisplayTemp(c); }
+  _todayFullName(){ try { const lang = ttGetLangFromHass(this._hass || this._lang || 'en'); const s = new Intl.DateTimeFormat(lang, { weekday: 'long' }).format(new Date()); return s.charAt(0).toUpperCase()+s.slice(1); } catch { const names = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' }; return names[this._todayKey()] || 'Today'; } }
+
+  // --- Weekday helpers ---
+  _weekdayNames(){ return ['mon','tue','wed','thu','fri','sat','sun']; }
+  _todayKey(){ const d=new Date(); const idx=((d.getDay()+6)%7); return this._weekdayNames()[idx]; }
+  _ensureWeeklyStruct(row){ if (!row.weekly) { row.weekly = { mode: this._config?.weekdays_mode || 'same_all', days: {} }; } const names=this._weekdayNames(); for (const k of names){ if (!Array.isArray(row.weekly.days[k])) row.weekly.days[k] = []; }
+    return row;
+  }
+  _getBlocksForDay(row, dayKey){ if (!this._config?.weekdays_enabled || !row?.weekly) return row?.blocks || []; const days = row.weekly.days || {}; return Array.isArray(days[dayKey]) ? days[dayKey] : (row.blocks||[]); }
+  _weeklyEditableKeys(mode){ const all = this._weekdayNames(); if (!mode) mode = 'weekday_weekend'; if (mode==='weekday_weekend') return ['weekdays','weekend']; if (mode==='weekday_sat_sun') return ['weekdays','sat','sun']; if (mode==='all_7') return all; return ['weekdays','weekend']; }
+  _effectiveDayKey(sel){ if (sel==='weekdays') return 'mon'; if (sel==='weekend') return 'sat'; return sel || 'mon'; }
 
   // --- Merge helpers ---
   _groupPrimaryOf(eid){
@@ -620,9 +974,19 @@ class ThermostatTimelineCard extends HTMLElement {
     return Array.from(out);
   }
 
-  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; const hit = (row.blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); return Number(hit ? hit.temp : row.defaultTemp); }
+  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; let blocks = row.blocks||[]; if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey); }
+    const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); return Number(hit ? hit.temp : row.defaultTemp); }
 
-  _nextBoundaryDate(){ const now = new Date(); const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity; for (const eid of (this._config.entities || [])){ const row = this._schedules[eid]; if (!row) continue; const times = []; for (const b of (row.blocks||[])) { times.push(b.startMin, b.endMin); } for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } } } if (bestT == null) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0); } const dayOffset = (bestT >= nowMin) ? 0 : 1; const target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset, Math.floor(bestT/60), bestT%60, 0, 0); if (target.getTime() - now.getTime() <= 250) target.setTime(target.getTime() + 60000); return target; }
+  _nextBoundaryDate(){ const now = new Date(); const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity; for (const eid of (this._config.entities || [])){
+      const row = this._schedules[eid]; if (!row) continue; const times = [];
+      // If weekdays enabled, use today's blocks for boundary detection
+      let blocks = row.blocks||[];
+      if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || []; }
+      for (const b of blocks) { times.push(b.startMin, b.endMin); }
+      for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } }
+    }
+    if (bestT == null) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0); }
+    const dayOffset = (bestT >= nowMin) ? 0 : 1; const target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset, Math.floor(bestT/60), bestT%60, 0, 0); if (target.getTime() - now.getTime() <= 250) target.setTime(target.getTime() + 60000); return target; }
 
   _scheduleNextApply(){ if (this._transitionTimer) clearTimeout(this._transitionTimer); if (!this._config?.auto_apply) return; const when = this._nextBoundaryDate(); const delay = Math.max(500, when.getTime() - Date.now()); this._transitionTimer = setTimeout(async () => { await this._applyCurrentSetpoints(true); this._scheduleNextApply(); }, delay); }
 
@@ -650,16 +1014,20 @@ class ThermostatTimelineCard extends HTMLElement {
       <meta charset="UTF-8">
       <style>
         :host { display:block; }
-        .card{ --pad-x:16px; background: var(--card-background-color); color: var(--primary-text-color); border-radius: var(--ha-card-border-radius, 12px); box-shadow: var(--ha-card-box-shadow, none); overflow:hidden }
-        .header{display:flex;align-items:center;gap:.75rem;padding:12px var(--pad-x);border-bottom:1px solid var(--divider-color)}
-        .title{font-weight:600;font-size:1rem;color:var(--primary-text-color)}
-        .scale{position:relative;padding:8px var(--pad-x);z-index:12;margin-bottom:6px;border-bottom:1px solid var(--divider-color)}
+    .card{ --pad-x:16px; background: var(--card-background-color); color: var(--primary-text-color); border-radius: var(--ha-card-border-radius, 12px); box-shadow: var(--ha-card-box-shadow, none); overflow:hidden }
+  .header{display:grid;align-items:center;grid-template-columns: 1fr auto 1fr;gap:.75rem;padding:12px var(--pad-x);border-bottom:1px solid var(--divider-color)}
+  .title{font-weight:600;font-size:1rem;color:var(--primary-text-color)}
+  .header .spacer{}
+  .weekday-full{ text-align:center; font-weight:700; font-size:1.15rem; color:var(--primary-text-color)}
+  .scale{position:relative;padding:8px var(--pad-x);z-index:0;margin-bottom:6px;border-bottom:1px solid var(--divider-color)}
         .scale-inner{position:relative;height:48px;display:block}
         .rows{padding:0 var(--pad-x);position:relative}
         .tick{position:absolute;width:0}
         .tick.full{top:6px;bottom:8px;border-left:1px solid var(--divider-color)}
         .tick.short{top:22px;bottom:8px;border-left:1px solid var(--divider-color);opacity:1}
         .tick label{position:absolute;bottom:14px;left:50%;transform:translate(-50%,0);user-select:none;font-weight:500;font-size:.75rem;color:var(--secondary-text-color)}
+  .tick label .t-main{display:block; line-height:1;}
+  .tick label .mer{display:block; line-height:1; font-size:.65rem; text-align:center;}
         .row{border-bottom:1px solid var(--divider-color)}
         .row-head{display:flex;align-items:center;justify-content:space-between;padding:8px 0;background:transparent}
         .row-head .meta{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--secondary-text-color)}
@@ -667,6 +1035,7 @@ class ThermostatTimelineCard extends HTMLElement {
         .btn{cursor:pointer;border:1px solid var(--divider-color);border-radius:10px;padding:6px 10px;font-size:.8rem;background:var(--card-background-color);color:var(--primary-text-color)}
         .btn.primary{background:var(--primary-color);color:var(--text-primary-color, #fff);border-color:var(--primary-color)}
         .btn.ghost{background:var(--card-background-color);color:var(--primary-text-color)}
+  .btn[disabled]{ opacity:.5; cursor:not-allowed }
         .track{position:relative;height:var(--row-height,64px);user-select:none;background:transparent}
         .block{position:absolute;top:6px;bottom:6px;border:1px solid var(--divider-color);border-radius:10px;background:var(--secondary-background-color, rgba(0,0,0,.05));display:flex;align-items:center;gap:10px;padding:0 10px;cursor:pointer;box-sizing:border-box}
         .block.active{outline:2px solid var(--primary-color)}
@@ -678,7 +1047,17 @@ class ThermostatTimelineCard extends HTMLElement {
         .overlay{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.32);z-index:9999}
         .overlay.open{display:grid}
 
-        .modal{width:min(80vw,320px);max-width:320px;border-radius:8px;padding:10px;background:var(--card-background-color);color:var(--primary-text-color);border:1px solid var(--divider-color)}
+  .modal{width:min(80vw,320px);max-width:320px;border-radius:8px;padding:10px;background:var(--card-background-color);color:var(--primary-text-color);border:1px solid var(--divider-color)}
+  /* Wider weekday editor */
+  .modal-week{ width: min(95vw, 640px); max-width: 640px; position: relative; }
+  /* Indent scale and track so ticks/blocks are not against the edge */
+  .modal-week .week-scale{ margin: 0 16px; }
+  .modal-week .week-track{ margin: 0 16px; }
+  /* Inline tooltip for weekly blocks */
+  .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
+  /* Hide temp pill inside weekly preview blocks for cleaner look */
+  .modal-week .week-track .block .pill{ display:none; }
+  .modal-week .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
         .modal h3{margin:0 0 10px;font-size:1rem}
         .grid{display:grid;grid-template-columns:auto auto;gap:6px}
         .grid>div{display:grid;gap:6px;align-items:start}
@@ -727,10 +1106,10 @@ class ThermostatTimelineCard extends HTMLElement {
         .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
         </style>
       <ha-card class="card">
-        <div class="header"><div class="title"></div></div>
+  <div class="header"><div class="title"></div><div class="weekday-full" style="display:none;"></div><div class="spacer"></div></div>
         <div class="scale"><div class="scale-inner"></div></div>
         <div class="rows"></div>
-        <div class="footer"><div class="label-end"><span>00:00</span><span>00:00</span></div></div>
+  <div class="footer"><div class="label-end"><span class="lbl-start">00:00</span><span class="lbl-end">00:00</span></div></div>
         <div class="overlay" part="overlay">
           <div class="modal" role="dialog" aria-modal="true" aria-label="Redigér blok">
             <h3>Redigér blok</h3>
@@ -743,6 +1122,34 @@ class ThermostatTimelineCard extends HTMLElement {
             <div class="actions"><button class="btn ghost danger ed-delete" type="button">Slet</button><button class="btn ghost ed-cancel" type="button">Annullér</button><button class="btn primary ed-save" type="button">Gem</button></div>
           </div>
         </div>
+        <div class="overlay overlay-week" part="overlay">
+          <div class="modal modal-week" role="dialog" aria-modal="true" aria-label="Ugedage">
+            <h3 class="week-title">Ugedags-tidsplan</h3>
+            <div style="display:grid; gap:10px;">
+              <div style="display:grid; gap:4px;">
+                <label style="font-size:.85rem; color: var(--secondary-text-color);" class="week-mode-label">Mode</label>
+                <select class="week-mode" style="padding:6px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color);">
+                  <option value="weekday_weekend">Weekdays same, weekend same (2)</option>
+                  <option value="weekday_sat_sun">Weekdays + Saturday + Sunday (3)</option>
+                  <option value="all_7">All days (7)</option>
+                </select>
+              </div>
+              <div class="week-days" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+              <div class="week-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <div class="week-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
+                <button class="btn primary wk-add" type="button">+ Add block</button>
+              </div>
+              <div class="week-scale" style="position:relative; height:32px;">
+                <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+              </div>
+              <div class="week-track" style="position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden;"></div>
+              <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <button class="btn ghost wk-cancel" type="button">Annullér</button>
+                <button class="btn primary wk-save" type="button">Gem</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </ha-card>`;    this._applyCardI18n();
 
 
@@ -753,6 +1160,7 @@ class ThermostatTimelineCard extends HTMLElement {
   _ensureSchedules() {
     for (const eid of this._config.entities) {
       if (!this._schedules[eid]) this._schedules[eid] = { defaultTemp: this._config.default_temp, blocks: [] };
+      if (this._config?.weekdays_enabled) this._ensureWeeklyStruct(this._schedules[eid]);
     }
   }
 
@@ -763,12 +1171,22 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _render() {
     const qs = (s) => this.shadowRoot.querySelector(s);
-    const titleEl = qs('.title');
+  const titleEl = qs('.title');
+  const dayFull = qs('.weekday-full');
     const rowsEl = qs('.rows');
     const scaleEl = qs('.scale-inner');
     if (!rowsEl || !scaleEl || !titleEl) return;
 
     titleEl.textContent = this._config.title || "Termostat Tidslinje";
+    // Update weekday full label (centered)
+    try {
+      if (this._config?.weekdays_enabled && dayFull) {
+        dayFull.textContent = this._todayFullName();
+        dayFull.style.display = '';
+      } else if (dayFull) {
+        dayFull.style.display = 'none';
+      }
+    } catch {}
 
     // Scale ticks
     scaleEl.innerHTML = '';
@@ -780,7 +1198,12 @@ class ThermostatTimelineCard extends HTMLElement {
       t.style.left = `${(i / 24) * 100}%`;
       if (i % 2 === 0 || !compact) {
         const l = document.createElement('label');
-        l.textContent = (i === 24) ? '00:00' : `${String(i).padStart(2, '0')}:00`;
+        if (this._config?.time_12h){
+          const p = this._timeParts(i===24?0:i*60);
+          l.innerHTML = `<span class="t-main">${p.main}</span><span class="mer">${p.mer||''}</span>`;
+        } else {
+          l.textContent = (i === 24) ? this._label(0) : this._label(i*60);
+        }
         t.append(l);
       }
       scaleEl.append(t);
@@ -809,9 +1232,9 @@ class ThermostatTimelineCard extends HTMLElement {
       const inline = document.createElement('input');
       inline.type = 'number';
       inline.step = '0.5';
-      inline.min = '5';
-  inline.max = String(this._config.max_temp ?? 25);
-      inline.value = String(row.defaultTemp ?? this._config.default_temp);
+    inline.min = '5';
+  inline.max = String(this._maxDisplay());
+    inline.value = String(this._toDisplayTemp(row.defaultTemp ?? this._config.default_temp));
       inline.addEventListener('focus', () => {
         this._inlineEditing = true;
         this._inlineEntity = eid;
@@ -823,16 +1246,16 @@ class ThermostatTimelineCard extends HTMLElement {
         this._inlineTempDraft = null;
         this._render();
       });
-      inline.addEventListener('input', (e) => {
-        let v = parseFloat(e.target.value);
-  v = isNaN(v) ? row.defaultTemp : this._clamp(v, 5, this._config.max_temp ?? 25);
-        this._inlineTempDraft = v;
+  inline.addEventListener('input', (e) => {
+    let v = parseFloat(e.target.value);
+  v = isNaN(v) ? this._toDisplayTemp(row.defaultTemp) : this._clamp(v, 5, this._maxDisplay());
+    this._inlineTempDraft = v; // display units
       });
       inline.addEventListener('change', async (e) => {
         const before = this._desiredNowSnapshot();
-        let v = parseFloat(e.target.value);
-  v = isNaN(v) ? this._config.default_temp : this._clamp(v, 5, this._config.max_temp ?? 25);
-        row.defaultTemp = v;
+    let v = parseFloat(e.target.value);
+  v = isNaN(v) ? this._toDisplayTemp(this._config.default_temp) : this._clamp(v, 5, this._maxDisplay());
+    row.defaultTemp = this._fromDisplayTemp(v);
         this._schedules[eid] = row;
         this._debouncedSaveStore();
         this._inlineEditing = false;
@@ -843,20 +1266,34 @@ class ThermostatTimelineCard extends HTMLElement {
         this._scheduleNextApply();
       });
       meta.append(inline);
-      const unit = document.createElement('span');
-      unit.textContent = '°C';
+  const unit = document.createElement('span');
+  unit.textContent = this._unitSymbol();
       meta.append(unit);
       head.append(meta);
+      const buttonsWrap = document.createElement('div');
+      buttonsWrap.style.display = 'flex';
+      buttonsWrap.style.gap = '6px';
       const addBtn = document.createElement('button');
       addBtn.className = 'btn primary';
       addBtn.textContent = '+ ' + this._t('ui.add_block');
       addBtn.addEventListener('click', () => this._openNewEditor(eid));
-      head.append(addBtn);
+      buttonsWrap.append(addBtn);
+      if (this._config?.weekdays_enabled) {
+        const weekBtn = document.createElement('button');
+        weekBtn.className = 'btn ghost';
+        weekBtn.textContent = this._t('week.button');
+        weekBtn.addEventListener('click', () => this._openWeeklyEditor(eid));
+        buttonsWrap.append(weekBtn);
+      }
+      head.append(buttonsWrap);
       rowEl.append(head);
       const track = document.createElement('div');
       track.className = 'track';
       track.style.setProperty('--row-height', `${this._config.row_height}px`);
-      for (const b of row.blocks) {
+  // Use today's blocks if weekdays enabled
+  const dayKey = this._todayKey();
+  const showBlocks = this._config?.weekdays_enabled ? (this._getBlocksForDay(row, dayKey) || []) : (row.blocks || []);
+  for (const b of showBlocks) {
         const pctStart = (b.startMin / 1440) * 100;
         const pctWidth = ((b.endMin - b.startMin) / 1440) * 100;
         const bl = document.createElement('div');
@@ -870,7 +1307,7 @@ class ThermostatTimelineCard extends HTMLElement {
         bl.append(pillTime);
         const pillTemp = document.createElement('span');
         pillTemp.className = 'pill';
-        pillTemp.textContent = `${b.temp} °C`;
+  pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
         bl.append(pillTemp);
         track.append(bl);
         
@@ -950,6 +1387,14 @@ class ThermostatTimelineCard extends HTMLElement {
       try { ro.observe(rowsEl); } catch {}
     }
 
+    // Update footer labels to reflect time format
+    try {
+      const s = this.shadowRoot.querySelector('.lbl-start');
+      const e = this.shadowRoot.querySelector('.lbl-end');
+      if (s) s.textContent = this._label(0);
+      if (e) e.textContent = this._label(0);
+    } catch {}
+
     // Editor modal events
     const overlay = qs('.overlay');
     const edSave = qs('.ed-save');
@@ -959,6 +1404,13 @@ class ThermostatTimelineCard extends HTMLElement {
     if (edCancel) edCancel.addEventListener('click', () => this._closeEditor());
     if (edDelete) edDelete.addEventListener('click', () => this._deleteFromEditor());
     overlay.addEventListener('click', (e) => { if (e.target === overlay) this._closeEditor(); });
+    // Week overlay events
+    const wov = qs('.overlay-week');
+    const wsave = qs('.wk-save');
+    const wcancel = qs('.wk-cancel');
+    if (wsave) wsave.addEventListener('click', () => this._weeklySaveAll());
+    if (wcancel) wcancel.addEventListener('click', () => this._closeWeeklyEditor());
+    if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) this._closeWeeklyEditor(); });
   }
 
   _openEditor(entity, blockId) {
@@ -974,7 +1426,7 @@ class ThermostatTimelineCard extends HTMLElement {
     const overlay = this.shadowRoot.querySelector(".overlay");
     const title = this.shadowRoot.querySelector('.modal h3');
     const delBtn = this.shadowRoot.querySelector('.ed-delete');
-  if (edTemp) { edTemp.value = String(b.temp); edTemp.max = String(this._config?.max_temp ?? 25); }
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); }
     if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
     if (edTo) edTo.value = this._toTimeInput(b.endMin);
     if (title) title.textContent = this._t('ui.edit_block');
@@ -1066,12 +1518,31 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch {}
 
   }
-  _closeEditor(){ this._editing = null; this.shadowRoot.querySelector(".overlay")?.classList.remove("open"); }
+  _closeEditor(){
+    this._editing = null;
+    this.shadowRoot.querySelector(".overlay")?.classList.remove("open");
+    // If we hid the weekday modal for editing, restore it now
+    if (this._weeklyOverlayHiddenForEditor && this._weeklyDraft) {
+      this._weeklyOverlayHiddenForEditor = false;
+      const wov = this.shadowRoot.querySelector('.overlay-week');
+      if (wov) wov.classList.add('open');
+      this._renderWeeklyModal();
+    }
+  }
 
-  _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId }=this._editing; if (!blockId) { this._closeEditor(); return; } this._deleteBlock(entity, blockId); this._closeEditor(); }
+  _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId, weeklyDay }=this._editing; if (!blockId) { this._closeEditor(); return; }
+    if (weeklyDay && this._weeklyDraft) {
+      const arr = this._weeklyDraft.days?.[weeklyDay] || [];
+      const idx = arr.findIndex(x=>x.id===blockId);
+      if (idx>=0) arr.splice(idx,1);
+      this._renderWeeklyModal();
+      this._closeEditor();
+      return;
+    }
+    this._deleteBlock(entity, blockId); this._closeEditor(); }
 
-  _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(row.defaultTemp ?? 20); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; } overlay.classList.add('open');
-    if (edTemp) edTemp.max = String(this._config?.max_temp ?? 25);
+  _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; } overlay.classList.add('open');
+    if (edTemp) edTemp.max = String(this._maxDisplay());
     try {
       const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
       window.addEventListener('keydown', onKey, { once: true });
@@ -1119,7 +1590,185 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch {}
  }
 
-  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; if (blockId) b = row.blocks.find(x => x.id === blockId); const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
+  // ---------- Weekdays modal ----------
+  _openWeeklyEditor(entity){
+    this._weeklyEntity = entity;
+    const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
+    this._ensureWeeklyStruct(row);
+    // Deep copy as draft
+    this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+    this._weeklyDayKey = this._todayKey();
+    this._weeklyOpen = true;
+    const ov = this.shadowRoot.querySelector('.overlay-week');
+    if (ov) ov.classList.add('open');
+    this._renderWeeklyModal();
+  }
+  _closeWeeklyEditor(){ this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); }
+  _weeklySaveAll(){ try { if (!this._weeklyEntity || !this._weeklyDraft) { this._closeWeeklyEditor(); return; } const entity = this._weeklyEntity; const row = this._schedules[entity]; if (!row) { this._closeWeeklyEditor(); return; }
+      // Normalize by mode: propagate grouped days
+      const mode = this._weeklyDraft.mode || 'same_all';
+      const d = this._weeklyDraft.days || {};
+      const applyGroup = (keys, srcKey)=>{ const src = JSON.parse(JSON.stringify(d[srcKey]||[])); for (const k of keys){ d[k] = JSON.parse(JSON.stringify(src)); } };
+      if (mode === 'weekday_weekend') {
+        applyGroup(['tue','wed','thu','fri'], 'mon');
+        applyGroup(['sun'], 'sat');
+      } else if (mode === 'weekday_sat_sun') {
+        applyGroup(['tue','wed','thu','fri'], 'mon');
+      } // all_7 -> keep individual
+      row.weekly = { mode, days: d };
+      this._schedules[entity] = row;
+      const before = this._desiredNowSnapshot();
+      this._saveStore();
+      this._closeWeeklyEditor();
+      if (this._config.apply_on_edit) this._applyIfDesiredChanged(before);
+      this._scheduleNextApply();
+    } catch(e){ console.warn('weekly save failed', e); this._closeWeeklyEditor(); }
+  }
+  _renderWeeklyModal(){ try {
+      const modeSel = this.shadowRoot.querySelector('.week-mode');
+      const titleEl = this.shadowRoot.querySelector('.week-title');
+    const note = this.shadowRoot.querySelector('.week-note');
+      const daysWrap = this.shadowRoot.querySelector('.week-days');
+      const track = this.shadowRoot.querySelector('.week-track');
+    const scale = this.shadowRoot.querySelector('.week-scale-inner');
+    const addBtn = this.shadowRoot.querySelector('.wk-add');
+    const modalWeek = this.shadowRoot.querySelector('.modal-week');
+      if (!this._weeklyDraft || !daysWrap || !track) return;
+      // i18n
+      if (titleEl) titleEl.textContent = this._t('week.editor.title');
+      const modeLab = this.shadowRoot.querySelector('.week-mode-label');
+      if (modeLab) modeLab.textContent = this._t('week.mode');
+      if (note) note.textContent = this._t('week.editor.preview_note');
+      if (modeSel) {
+        modeSel.value = this._weeklyDraft.mode || 'weekday_weekend';
+        // set option labels i18n
+        for (const opt of Array.from(modeSel.options)){
+          if (opt.value==='weekday_weekend') opt.textContent = this._t('week.mode.weekday_weekend');
+          if (opt.value==='weekday_sat_sun') opt.textContent = this._t('week.mode.weekday_sat_sun');
+          if (opt.value==='all_7') opt.textContent = this._t('week.mode.all_7');
+        }
+        modeSel.onchange = () => { this._weeklyDraft.mode = modeSel.value; this._renderWeeklyModal(); };
+      }
+      // Build group/day buttons reflecting mode grouping
+      daysWrap.innerHTML = '';
+      const editable = this._weeklyEditableKeys(this._weeklyDraft.mode);
+      const items = [];
+      if (this._weeklyDraft.mode === 'weekday_weekend') {
+        items.push({key:'weekdays', label: (this._t('week.group.weekdays')||'Weekdays')});
+        items.push({key:'weekend', label: (this._t('week.group.weekend')||'Weekend')});
+      } else if (this._weeklyDraft.mode === 'weekday_sat_sun') {
+        items.push({key:'weekdays', label: (this._t('week.group.weekdays')||'Weekdays')});
+        items.push({key:'sat', label: this._t('week.days_full.sat') || this._t('week.days.sat')});
+        items.push({key:'sun', label: this._t('week.days_full.sun') || this._t('week.days.sun')});
+      } else { // all_7
+        for (const k of this._weekdayNames()) items.push({key:k, label:(this._t('week.days_full.'+k) || this._t('week.days.'+k))});
+      }
+      if (!editable.includes(this._weeklyDayKey)) this._weeklyDayKey = editable[0] || 'weekdays';
+      for (const it of items){
+        const b = document.createElement('button'); b.type='button'; b.className='btn ghost'; b.textContent = it.label;
+        b.addEventListener('click', ()=>{ this._weeklyDayKey = it.key; this._renderWeeklyModal(); });
+        if (it.key === this._weeklyDayKey) b.classList.add('primary');
+        daysWrap.append(b);
+      }
+      // Toolbar actions
+      if (addBtn) {
+        addBtn.onclick = () => this._openWeeklyBlockEditor(null);
+        // Localize label with + prefix already handled globally
+      }
+      // Compact scale ticks (every 2 hours)
+      if (scale) {
+        scale.innerHTML = '';
+        for (let i=0;i<=24;i+=2){
+          const t = document.createElement('div');
+          t.style.position='absolute';
+          t.style.left = (i/24*100)+'%';
+          t.style.top='4px'; t.style.bottom='4px';
+          t.style.borderLeft='1px solid var(--divider-color)';
+          const lab = document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+          if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24? this._label(0) : this._label(i*60)); }
+          t.append(lab); scale.append(t);
+        }
+      }
+      // Render preview track with today's selected day blocks
+      track.innerHTML = '';
+  const effKey = this._effectiveDayKey(this._weeklyDayKey);
+  const blocks = (this._weeklyDraft.days?.[effKey] || []);
+      // Ensure tooltip exists
+      let tooltip = this.shadowRoot.querySelector('.wk-tooltip');
+      if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip'; tooltip.style.display='none'; modalWeek?.append(tooltip); }
+      for (const b of blocks){
+        const div = document.createElement('div');
+        div.className = 'block';
+        div.style.position='absolute';
+        div.style.top='6px'; div.style.bottom='6px';
+        div.style.left = (b.startMin/1440*100)+'%';
+        div.style.width = ((b.endMin-b.startMin)/1440*100)+'%';
+        // Only show temperature in the block in the weekly popup (hide time)
+  const t2 = document.createElement('span'); t2.className='pill'; t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; div.append(t2);
+        // double-click to edit (prevent bubbling to track handler)
+        div.addEventListener('dblclick', (ev)=>{ try { ev.stopPropagation(); ev.preventDefault(); } catch {} this._openWeeklyBlockEditor(b.id); });
+        // Hover -> show tooltip with full time range + temp (no click needed)
+        const showTip = ()=>{
+          const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+          if (tooltip){
+            tooltip.textContent = txt;
+            const box = div.getBoundingClientRect();
+            const cont = modalWeek?.getBoundingClientRect();
+            const left = box.left + box.width/2 - (cont?.left||0);
+            const top = (box.top - (cont?.top||0)) - 8; // a little above
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.style.transform = 'translate(-50%,-100%)';
+            tooltip.style.display = '';
+          }
+        };
+        const hideTip = ()=>{ if (tooltip) tooltip.style.display='none'; };
+        div.addEventListener('mouseenter', showTip);
+        div.addEventListener('mouseleave', hideTip);
+        track.append(div);
+      }
+      // Add click on empty area to add
+      track.addEventListener('dblclick', (e)=>{
+        try {
+          if (e.target && (e.target.closest && e.target.closest('.block'))) return;
+          const box = track.getBoundingClientRect();
+          const rel = (e.clientX - box.left) / box.width; const min = this._clamp(Math.round(rel*1440),0,1439);
+          this._openWeeklyBlockEditor(null, min);
+        } catch { this._openWeeklyBlockEditor(null); }
+      });
+  track.addEventListener('mouseleave', ()=>{ const tip = this.shadowRoot.querySelector('.wk-tooltip'); if (tip) tip.style.display='none'; });
+    } catch(e){ console.warn('render weekly modal failed', e); }
+  }
+  _openWeeklyBlockEditor(blockId, atMin=null){ if (!this._weeklyDraft) return; const day = this._effectiveDayKey(this._weeklyDayKey || 'mon'); const arr = this._weeklyDraft.days?.[day] || []; if (!blockId){
+      // open new
+      const start = Number.isFinite(atMin) ? this._clamp(Math.round(atMin),0,1380) : this._clamp(Math.round(this._getNowMin()),0,1380);
+      const end = this._clamp(start+60, start+15, 1440);
+      const row = this._schedules[this._weeklyEntity] || { defaultTemp: this._config.default_temp };
+      const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error');
+      this._editing = { entity: this._weeklyEntity, blockId: null, weeklyDay: day };
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(row.defaultTemp||20)); edTemp.max= String(this._maxDisplay()); }
+      if (edFrom) edFrom.value = this._toTimeInput(start);
+      if (edTo) edTo.value = this._toTimeInput(end);
+      if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
+      // Hide weekday overlay while editing to avoid double-popups
+      const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
+      overlay.classList.add('open');
+    } else {
+  const b = arr.find(x=>x.id===blockId);
+      if (!b) return;
+      const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error');
+      this._editing = { entity: this._weeklyEntity, blockId, weeklyDay: day };
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max= String(this._maxDisplay()); }
+      if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
+      if (edTo) edTo.value = this._toTimeInput(b.endMin);
+      if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
+      const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
+      overlay.classList.add('open');
+    }
+  }
+
+  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
+    const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
     const rawFrom = String(edFrom.value || "");
     const rawTo = String(edTo.value || "");
     let start = this._fromTimeInput(rawFrom);
@@ -1128,10 +1777,29 @@ class ThermostatTimelineCard extends HTMLElement {
     if (rawTo === '00:00') end = 1440;
   let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw);
   if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
-  const maxLimit = this._config?.max_temp ?? 25; if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit);
+  const maxLimit = this._maxDisplay(); if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit);
     start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440);
     if (end <= start) end = this._clamp(start + 15, start + 1, 1440);
-    const others = (row.blocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; } const before = this._desiredNowSnapshot(); if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; } this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin); await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
+    const others = (sourceBlocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; }
+  temp = this._fromDisplayTemp(temp);
+  const before = this._desiredNowSnapshot();
+    if (weeklyDay && this._weeklyDraft) {
+      if (!b) {
+        const id = Math.random().toString(36).slice(2,9);
+        b = { id, startMin: start, endMin: end, temp };
+        sourceBlocks.push(b);
+      } else {
+        b.temp = temp; b.startMin = start; b.endMin = end;
+      }
+      // sort and adjust neighbors only within this day list
+      sourceBlocks.sort((a,bx)=>a.startMin - bx.startMin || a.endMin - bx.endMin);
+      // Close editor and re-render weekly preview; no immediate apply
+      this._closeEditor();
+      this._renderWeeklyModal();
+      return;
+    }
+    // Normal (non-weekly) save
+    if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; } this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin); await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
 
   _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
@@ -1157,8 +1825,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (fromLab) fromLab.textContent = t('ui.from');
       const toLab = this.shadowRoot && this.shadowRoot.querySelector('.time-right label');
       if (toLab) toLab.textContent = t('ui.to');
-      const tempLab = this.shadowRoot && this.shadowRoot.querySelector('.rowfull label');
-      if (tempLab) tempLab.textContent = t('ui.temperature') + ' (°C)';
+  const tempLab = this.shadowRoot && this.shadowRoot.querySelector('.rowfull label');
+  if (tempLab) tempLab.textContent = t('ui.temperature') + ' ('+ this._unitSymbol() +')';
       // Buttons
       const del = this.shadowRoot && this.shadowRoot.querySelector('.ed-delete');
       if (del) del.textContent = t('ui.delete');
@@ -1166,6 +1834,11 @@ class ThermostatTimelineCard extends HTMLElement {
       if (cancel) cancel.textContent = t('ui.cancel');
       const save = this.shadowRoot && this.shadowRoot.querySelector('.ed-save');
       if (save) save.textContent = t('ui.save');
+  // Week modal buttons
+  const wcancelBtn = this.shadowRoot && this.shadowRoot.querySelector('.wk-cancel');
+  if (wcancelBtn) wcancelBtn.textContent = t('ui.cancel');
+  const wsaveBtn = this.shadowRoot && this.shadowRoot.querySelector('.wk-save');
+  if (wsaveBtn) wsaveBtn.textContent = t('ui.save');
       // Header title fallback
       const titleEl = this.shadowRoot && this.shadowRoot.querySelector('.title');
       if (titleEl && (!this._config || !this._config.title)) {
@@ -1180,6 +1853,23 @@ class ThermostatTimelineCard extends HTMLElement {
           }
         });
       }
+      // Week modal add button
+      const wkAdd = this.shadowRoot && this.shadowRoot.querySelector('.wk-add');
+      if (wkAdd) wkAdd.textContent = '+ ' + t('ui.add_block');
+      // Week modal labels
+      try {
+        const wt = this.shadowRoot && this.shadowRoot.querySelector('.week-title'); if (wt) wt.textContent = t('week.editor.title');
+        const wml = this.shadowRoot && this.shadowRoot.querySelector('.week-mode-label'); if (wml) wml.textContent = t('week.mode');
+        const wnote = this.shadowRoot && this.shadowRoot.querySelector('.week-note'); if (wnote) wnote.textContent = t('week.editor.preview_note');
+        const wsel = this.shadowRoot && this.shadowRoot.querySelector('.week-mode'); if (wsel) {
+          for (const opt of Array.from(wsel.options)){
+            if (opt.value==='weekday_weekend') opt.textContent = t('week.mode.weekday_weekend');
+            if (opt.value==='weekday_sat_sun') opt.textContent = t('week.mode.weekday_sat_sun');
+            if (opt.value==='all_7') opt.textContent = t('week.mode.all_7');
+          }
+        }
+        // Weekdays button text in rows is set during render via this._t('week.button')
+      } catch {}
     } catch (e) { /* ignore */ }
   }
 
@@ -1227,7 +1917,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         .inline .summary-sub { font-size:.8rem; color: var(--secondary-text-color); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 320px; }
         .inline .expander { width:28px; height:28px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
         .inline.open .expander { transform: rotate(180deg); }
-        .inline .details { display:none; grid-template-columns: minmax(250px, 440px); gap:6px; padding:6px; border:1px dashed var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
+  .inline .details { display:none; grid-template-columns: minmax(250px, 440px); gap:6px; padding:6px; border:1px dashed var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
+  /* segmented control */
+  .seg { display:inline-flex; border:1px solid var(--divider-color); border-radius:10px; overflow:hidden; }
+  .seg button { padding:6px 10px; background: var(--card-background-color); color: var(--primary-text-color); border:0; cursor:pointer; }
+  .seg button.active { background: var(--primary-color); color: var(--text-primary-color, #fff); }
         .inline.open .details { display:grid; }
          ha-textfield { width:100%; max-width:440px; }
          .label-input { width:100%; max-width:440px; }
@@ -1369,6 +2063,34 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
     <ha-switch class="applydef"></ha-switch>
   </div>
+  <div class="setting">
+    <div class="text">
+      <div class="title timefmt-title">Time format</div>
+      <div class="desc timefmt-desc">Choose 24-hour or 12-hour (AM/PM) display for times on the card.</div>
+    </div>
+    <div class="seg timefmt">
+      <button type="button" class="fmt24">24h</button>
+      <button type="button" class="fmt12">12h</button>
+    </div>
+  </div>
+
+  <div class="setting">
+    <div class="text">
+      <div class="title tempfmt-title">Temperature unit</div>
+      <div class="desc tempfmt-desc">Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.</div>
+    </div>
+    <div class="seg tempfmt">
+      <button type="button" class="unitC">°C</button>
+      <button type="button" class="unitF">°F</button>
+    </div>
+  </div>
+  <div class="setting week-setting">
+    <div class="text">
+      <div class="title">Ugedage</div>
+      <div class="desc week-enable-desc">Aktivér plan per ugedag. Hvis slået fra, bruges samme plan hver dag.</div>
+    </div>
+    <ha-switch class="week-enable"></ha-switch>
+  </div>
 </div>
 
 <!-- Bottom action: clear local only -->
@@ -1413,13 +2135,34 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         }
       } catch {}
     });
-  qs(".def")  ?.addEventListener("change", e => { let raw=String(e.target.value||"").replace(",","."); let v=Number(raw); const mx = Number(this._config?.max_temp ?? 25); v=isNaN(v)?20:Math.max(5,Math.min(mx,v)); this._upd("default_temp",v); qs(".def").value=String(v); });
+  qs(".def")  ?.addEventListener("change", e => {
+      let raw=String(e.target.value||"").replace(",",".");
+      let vDisp=Number(raw);
+      // Convert from display units to Celsius for storage
+      let vC = isNaN(vDisp)? (this._config?.default_temp ?? 20) : this._fromDisplayTemp(vDisp);
+      const mxC = Number(this._config?.max_temp ?? 25);
+      vC = Math.max(5, Math.min(mxC, vC));
+      this._upd("default_temp", vC);
+      // reflect display value after clamp
+      const input = qs(".def"); if (input) input.value = String(this._toDisplayTemp(vC));
+    });
     qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
     qs(".add-entity-btn")?.addEventListener("click", () => this._addEntity());
     qs(".auto")?.addEventListener("change", e => this._upd("auto_apply", e.target.checked));
     qs(".applyedit")?.addEventListener("change", e => this._upd("apply_on_edit", e.target.checked));
     qs(".applydef")?.addEventListener("change", e => this._upd("apply_on_default_change", e.target.checked));
-  qs('.maxc')?.addEventListener('change', e => { let v=Number(e.target.value); v=isNaN(v)?25:Math.max(5,Math.min(50,Math.round(v))); this._upd('max_temp',v); const mx=this.shadowRoot.querySelector('.maxc'); if(mx) mx.value=String(v); });
+  qs('.maxc')?.addEventListener('change', e => {
+      let raw=String(e.target.value||"").replace(",",".");
+      let vDisp=Number(raw);
+      let vC = isNaN(vDisp)? (this._config?.max_temp ?? 25) : this._fromDisplayTemp(vDisp);
+      vC = Math.max(5, Math.min(50, Math.round(vC)));
+      this._upd('max_temp', vC);
+      const mxEl=this.shadowRoot.querySelector('.maxc'); if(mxEl) mxEl.value=String(this._toDisplayTemp(vC));
+    });
+    // Weekdays enable (mode selection removed from editor)
+    qs('.week-enable')?.addEventListener('change', e => {
+      const on = !!e.target.checked; this._upd('weekdays_enabled', on);
+    });
     // Clear storage only
     qs('.clear-store')?.addEventListener('click', async () => {
       const msg = this._t('editor.clear_storage_only_confirm');
@@ -1460,15 +2203,52 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (!raw) { alert(this._t('editor.no_local_data')); return; }
         const ok = confirm(this._t('editor.migrate_confirm'));
         if (!ok) return;
-        const schedules = JSON.parse(raw || '{}');
+        const parsed = JSON.parse(raw || '{}');
+        const schedules = parsed.schedules || parsed || {};
+        const settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit };
         if (this._hass) {
-          await this._hass.callService('thermostat_timeline', 'set_store', { schedules });
+          await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
         }
       } catch (e) {
         console.warn('migrate-to-store failed', e);
       }
     });
+    // Time format segmented control
+    try {
+      const fmt24 = this.shadowRoot.querySelector('.fmt24');
+      const fmt12 = this.shadowRoot.querySelector('.fmt12');
+      const applyFmtUi = ()=>{
+        if (!fmt24 || !fmt12) return;
+        const on12 = !!this._config.time_12h;
+        fmt12.classList.toggle('active', on12);
+        fmt24.classList.toggle('active', !on12);
+      };
+      if (fmt24) fmt24.addEventListener('click', ()=>{ this._upd('time_12h', false); applyFmtUi(); });
+      if (fmt12) fmt12.addEventListener('click', ()=>{ this._upd('time_12h', true); applyFmtUi(); });
+      applyFmtUi();
+    } catch {}
+    // Temperature unit segmented control
+    try {
+      const uC = this.shadowRoot.querySelector('.unitC');
+      const uF = this.shadowRoot.querySelector('.unitF');
+      const applyUnitUi = ()=>{
+        const isF = (this._config.temp_unit||'C')==='F';
+        if (uC && uF){
+          uF.classList.toggle('active', isF);
+          uC.classList.toggle('active', !isF);
+        }
+      };
+      if (uC) uC.addEventListener('click', ()=>{ this._upd('temp_unit','C'); applyUnitUi(); });
+      if (uF) uF.addEventListener('click', ()=>{ this._upd('temp_unit','F'); applyUnitUi(); });
+      applyUnitUi();
+    } catch {}
   }
+
+  // --- Local helpers for unit/time conversions (editor context) ---
+  _isF(){ try { return (this._config?.temp_unit||'C')==='F'; } catch { return false; } }
+  _unitSymbol(){ return this._isF() ? '°F' : '°C'; }
+  _toDisplayTemp(c){ try { return this._isF() ? Math.round((Number(c)*9/5+32)*10)/10 : Number(c); } catch { return c; } }
+  _fromDisplayTemp(v){ try { return this._isF() ? ((Number(v)-32)*5/9) : Number(v); } catch { return Number(v); } }
 
   connectedCallback(){
     this._render();
@@ -1499,9 +2279,10 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const au= this.shadowRoot.querySelector(".auto");
     const aed= this.shadowRoot.querySelector(".applyedit");
     const adf= this.shadowRoot.querySelector(".applydef");
+  const wek = this.shadowRoot.querySelector('.week-enable');
     if (t)  t.value  = this._config.title ?? "";
-  if (d && d !== this.shadowRoot.activeElement) d.value = String(this._config.default_temp ?? 20);
-  if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._config.max_temp ?? 25);
+  if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
+  if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
     if (se) { se.hass = this._hass; se.value = this._config.storage_entity || ""; }
     if (seEn) {
@@ -1518,6 +2299,29 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (au) { au.checked = !!this._config.auto_apply; }
     if (aed){ aed.checked = !!this._config.apply_on_edit; }
     if (adf){ adf.checked = !!this._config.apply_on_default_change; }
+  if (wek){ wek.checked = !!this._config.weekdays_enabled; }
+  // No mode dropdown in editor
+
+    // Reflect time format segmented control state
+    try {
+      const fmt24 = this.shadowRoot.querySelector('.fmt24');
+      const fmt12 = this.shadowRoot.querySelector('.fmt12');
+      if (fmt24 && fmt12) {
+        const on12 = !!this._config.time_12h;
+        fmt12.classList.toggle('active', on12);
+        fmt24.classList.toggle('active', !on12);
+      }
+    } catch {}
+    // Reflect temperature unit segmented control state
+    try {
+      const uC = this.shadowRoot.querySelector('.unitC');
+      const uF = this.shadowRoot.querySelector('.unitF');
+      if (uC && uF) {
+        const isF = (this._config.temp_unit||'C')==='F';
+        uF.classList.toggle('active', isF);
+        uC.classList.toggle('active', !isF);
+      }
+    } catch {}
 
     const wrap = this.shadowRoot.querySelector(".entities");
     if(!wrap) return;
@@ -1908,66 +2712,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     return line;
   }
 
-  // Pointer-driven drag & drop is disabled; use native DnD via handle only
-  /* _startPointerDnd(line, idx){
-    const wrap = line.parentElement;
-    if (!wrap) return;
-    if (this._pointerDndActive) return;
-    this._pointerDndActive = true;
-
-    const rect = line.getBoundingClientRect();
-    const ghost = line.cloneNode(true);
-    ghost.classList.add('drag-ghost');
-    ghost.style.width = rect.width + 'px';
-    ghost.style.height = rect.height + 'px';
-    ghost.style.top = rect.top + 'px';
-    ghost.style.left = rect.left + 'px';
-
-    const placeholder = document.createElement('div');
-    placeholder.className = 'placeholder';
-    placeholder.style.height = rect.height + 'px';
-
-    // place placeholder where line was, and hide line
-    wrap.insertBefore(placeholder, line);
-    line.style.display = 'none';
-    document.body.appendChild(ghost);
-
-    const onMove = (ev)=>{
-      const y = ev.clientY;
-      ghost.style.top = (y - rect.height/2) + 'px';
-
-      // find element under pointer within this shadowRoot
-      let el = this.shadowRoot && this.shadowRoot.elementFromPoint(ev.clientX, ev.clientY);
-      // climb to row in the same wrap
-      while (el && el !== wrap && !el.classList?.contains('inline')) el = el.parentElement;
-      if (!el || el===placeholder || el===wrap) return;
-      const targetRect = el.getBoundingClientRect();
-      const before = (ev.clientY - targetRect.top) < targetRect.height/2;
-      if (before) wrap.insertBefore(placeholder, el);
-      else wrap.insertBefore(placeholder, el.nextSibling);
-    };
-
-    const onUp = (ev)=>{
-      window.removeEventListener('mousemove', onMove, true);
-      window.removeEventListener('mouseup', onUp, true);
-      ghost.remove();
-      // compute new order
-      const from = idx;
-      const to = Array.prototype.indexOf.call(wrap.children, placeholder);
-      const arr = [...(this._config.entities||[])];
-      const [item] = arr.splice(from,1);
-      const correctedTo = Math.max(0, Math.min(to, arr.length));
-      arr.splice(correctedTo, 0, item);
-      placeholder.remove();
-      line.style.display = '';
-      this._pointerDndActive = false;
-      this._config.entities = arr;
-      this._emit(true);
-    };
-
-    window.addEventListener('mousemove', onMove, true);
-    window.addEventListener('mouseup', onUp, true);
-  } */
+  // (Removed unused pointer-driven drag & drop prototype)
 
   _addEntity(){ this._config.entities = [...(this._config.entities||[]), ""]; this._emit(true); }
   _upd(key,val){ this._config[key] = val; this._emit(); }
@@ -2021,11 +2766,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 
       // Settings labels
       const def = root.querySelector('ha-textfield.def');
-      if (def) def.setAttribute('label', t('editor.default_c'));
+      if (def) {
+        const lbl = t('editor.default_c');
+        def.setAttribute('label', lbl.replace('°C', this._unitSymbol()));
+      }
       const rowh = root.querySelector('ha-textfield.rowh');
       if (rowh) rowh.setAttribute('label', t('editor.row_height_px'));
   const maxc = root.querySelector('ha-textfield.maxc');
-  if (maxc) maxc.setAttribute('label', t('editor.max_c'));
+  if (maxc) {
+        const lblm = t('editor.max_c');
+        maxc.setAttribute('label', lblm.replace('°C', this._unitSymbol()));
+      }
 
       // Settings titles/descriptions
       const settings = Array.from(root.querySelectorAll('.settings-card .setting'));
@@ -2041,6 +2792,25 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const ti = settings[2].querySelector('.title'); if (ti) ti.textContent = t('editor.apply_default.title');
         const de = settings[2].querySelector('.desc'); if (de) de.textContent = t('editor.apply_default.desc');
       }
+      // Weekdays enable section (select by class to avoid index issues)
+      try {
+        const ws = root.querySelector('.week-setting');
+        if (ws){
+          const ti = ws.querySelector('.title'); if (ti) ti.textContent = t('week.enable');
+          const de = ws.querySelector('.week-enable-desc') || ws.querySelector('.desc');
+          if (de) de.textContent = t('week.enable.desc');
+        }
+      } catch {}
+      // Time format section (always last)
+      try {
+        const tfTitle = root.querySelector('.timefmt-title'); if (tfTitle) tfTitle.textContent = t('editor.timefmt.title');
+        const tfDesc = root.querySelector('.timefmt-desc'); if (tfDesc) tfDesc.textContent = t('editor.timefmt.desc');
+      } catch {}
+      // Temperature unit section
+      try {
+        const tuTitle = root.querySelector('.tempfmt-title'); if (tuTitle) tuTitle.textContent = t('editor.tempfmt.title');
+        const tuDesc = root.querySelector('.tempfmt-desc'); if (tuDesc) tuDesc.textContent = t('editor.tempfmt.desc');
+      } catch {}
 
     } catch(e){ /* ignore */ }
   }
