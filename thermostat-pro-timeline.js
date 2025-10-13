@@ -800,7 +800,8 @@ class ThermostatTimelineCard extends HTMLElement {
   static getConfigElement() { return document.createElement("thermostat-timeline-card-editor"); }
   static getStubConfig() {
     return {
-      title: "Termostat Tidslinje",
+      // Localize default title based on browser language; editor will further adapt to HA language
+      title: ttLocalize('card.title_default', navigator.language || 'en'),
       entities: [],
       row_height: 64,
       default_temp: 20,
@@ -890,7 +891,10 @@ class ThermostatTimelineCard extends HTMLElement {
     let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
 
     this._config = {
-      title: config.title ?? "Termostat Tidslinje",
+      // If no explicit title, localize a default based on HA/browser language
+      title: (config.title !== undefined && config.title !== null)
+        ? String(config.title)
+        : ttLocalize('card.title_default', this._hass || this._lang || navigator.language || 'en'),
       entities: config.entities,
       row_height: rowh,
       default_temp: deft,
@@ -1422,7 +1426,20 @@ class ThermostatTimelineCard extends HTMLElement {
     const scaleEl = qs('.scale-inner');
     if (!rowsEl || !scaleEl || !titleEl) return;
 
-    titleEl.textContent = this._config.title || "Termostat Tidslinje";
+    {
+      const isDef = (txt)=>{
+        try {
+          const s = String(txt || '').trim();
+          for (const k of Object.keys(TT_I18N || {})){
+            const v = TT_I18N[k] && TT_I18N[k]['card.title_default'];
+            if (v && String(v).trim() === s) return true;
+          }
+        } catch {}
+        return false;
+      };
+      const shown = (!this._config.title || isDef(this._config.title)) ? this._t('card.title_default') : this._config.title;
+      titleEl.textContent = shown;
+    }
     // Update weekday full label (centered)
     try {
       if (this._config?.weekdays_enabled && dayFull) {
@@ -2348,7 +2365,8 @@ customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
 /* ----------------- CONFIG EDITOR ----------------- */
 class ThermostatTimelineCardEditor extends HTMLElement {
   setConfig(config) { this._config = { ...ThermostatTimelineCard.getStubConfig(), ...(config||{}) }; this._render(); }
-  set hass(hass) { this._hass = hass; this._lang = ttGetLangFromHass(hass); // Avoid clobbering inputs while user is typing
+  set hass(hass) { this._hass = hass; this._lang = ttGetLangFromHass(hass);
+  // Avoid clobbering inputs while user is typing
   const ae = this.shadowRoot && this.shadowRoot.activeElement;
   if (this._suspendRender) return;
   if (ae) {
@@ -2357,6 +2375,16 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (ae.closest && ae.closest('ha-entity-picker')) return;
     } catch {}
   }
+  // Keep title preset in sync with language when user hasn't customized it
+  try {
+    if (this._config) {
+      const cur = String(this._config.title || '');
+      if (!cur || this._isDefaultTitle(cur)) {
+        const next = ttLocalize('card.title_default', this._hass || this._lang || 'en');
+        if (next && next !== cur) { this._config.title = next; this._emit(); }
+      }
+    }
+  } catch {}
   this._render(); this._applyEditorI18n(); }
 
   constructor() {
@@ -2996,7 +3024,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const subEl = row.querySelector('.summary-sub');
         const nameInp = row.querySelector('.label-input');
         const friendly = eid ? (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid)) : '';
-        const shown = labels[eid] || friendly || 'Vælg en entitet';
+  const shown = labels[eid] || friendly || this._t('editor.entity_placeholder');
         if (titleEl) titleEl.textContent = shown;
         if (nameInp && nameInp !== this.shadowRoot.activeElement) nameInp.value = labels[eid] || '';
         // Build merged subtitle text
@@ -3397,7 +3425,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const expander = document.createElement('button'); expander.className = 'expander'; expander.innerHTML = `<ha-icon icon="mdi:chevron-down"></ha-icon>`; sumLeft.append(expander);
     // Title and subtitle container
     const textWrap = document.createElement('div'); textWrap.className = 'summary-text';
-    const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = 'Vælg en entitet';
+  const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = this._t('editor.entity_placeholder');
     const subSpan = document.createElement('span'); subSpan.className = 'summary-sub'; subSpan.textContent = '';
     textWrap.append(titleSpan, subSpan);
     sumLeft.append(textWrap);
@@ -3642,7 +3670,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const titleLabel = titleRow?.querySelector('.label') || root.querySelector('.row .label');
       if (titleLabel) titleLabel.textContent = t('editor.title_label');
       const titleField = root.querySelector('ha-textfield.title');
-      if (titleField) titleField.setAttribute('label', t('editor.title_label'));
+      if (titleField) {
+        titleField.setAttribute('label', t('editor.title_label'));
+        // Show localized preset when empty, and keep it updated with language
+        try { titleField.setAttribute('placeholder', this._t('card.title_default')); } catch {}
+      }
 
       // Storage entity (use the .storage picker to find its label robustly)
       const storagePicker = root.querySelector('.storage');
@@ -3734,6 +3766,18 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       } catch {}
 
     } catch(e){ /* ignore */ }
+  }
+
+  // Detect whether a given title equals any built-in localized default
+  _isDefaultTitle(txt){
+    try {
+      const s = String(txt || '').trim();
+      for (const k of Object.keys(TT_I18N || {})){
+        const v = TT_I18N[k] && TT_I18N[k]['card.title_default'];
+        if (v && String(v).trim() === s) return true;
+      }
+    } catch {}
+    return false;
   }
 
 }
