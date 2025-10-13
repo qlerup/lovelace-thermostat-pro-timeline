@@ -52,7 +52,7 @@ const TT_I18N = {
     'editor.clear_all_confirm': 'This will delete both storage and local browser schedules. Continue?',
   'editor.clear_storage_only': 'Clear storage data only',
     'editor.clear_storage_only_confirm': 'This will delete schedules from the selected storage sensor. Continue?',
-  'editor.clear_local_only': 'Clear local data only',
+  'editor.clear_local_only': 'Clear ALL local data only',
     'editor.clear_local_only_confirm': 'This will delete schedules saved in your browser only. Continue?'
     , 'week.enable': 'Enable weekdays',
     'week.mode': 'Weekday mode',
@@ -101,6 +101,12 @@ const TT_I18N = {
     , 'editor.colors.col_color': 'Color'
   , 'editor.colors.empty': 'No rooms added yet. Add a room to define heat block colors.'
   , 'editor.colors.go_add': 'Add room'
+  , 'editor.select_entities': 'Rooms'
+  , 'editor.colors.refresh': 'Update schedule'
+  , 'editor.colors.clear_local': 'Clear local color data'
+  , 'editor.colors.clear_local_confirm': 'This will delete color ranges saved in your browser for this card. Continue?'
+  , 'editor.colors.clear_shared': 'Clear shared color storage'
+  , 'editor.colors.clear_shared_confirm': 'This will delete color ranges in the selected storage sensor. Continue?'
   },
   da: {
     // Kort
@@ -155,10 +161,11 @@ const TT_I18N = {
     'editor.clear_all_confirm': 'Dette sletter både lager og lokale/browser tidsplaner. Vil du fortsætte?',
   'editor.clear_storage_only': 'Ryd kun lagerdata',
     'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
-  'editor.clear_local_only': 'Ryd kun lokale data',
+  'editor.clear_local_only': 'Ryd ALLE lokale data (kun lokalt)',
     'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner gemt i din browser. Vil du fortsætte?'
     , 'editor.colors.empty': 'Der er endnu ikke oprettet rum. Tilføj et rum for at definere farver.'
     , 'editor.colors.go_add': 'Tilføj rum'
+  , 'editor.select_entities': 'Rum'
     , 'week.enable': 'Aktivér ugedage',
     'week.mode': 'Ugedags-tilstand',
   // removed same_all option from UI
@@ -204,6 +211,11 @@ const TT_I18N = {
     , 'editor.colors.col_from': 'Fra °C'
     , 'editor.colors.col_to': 'Til °C'
     , 'editor.colors.col_color': 'Farve'
+    , 'editor.colors.refresh': 'Opdater skema'
+    , 'editor.colors.clear_local': 'Ryd lokale farvedata'
+    , 'editor.colors.clear_local_confirm': 'Dette sletter farveintervaller gemt i din browser for dette kort. Vil du fortsætte?'
+    , 'editor.colors.clear_shared': 'Ryd delt farvelager'
+    , 'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -289,6 +301,12 @@ const TT_I18N = {
     'editor.colors.col_color': 'Färg',
     'editor.colors.empty': 'Inga rum tillagda ännu. Lägg till ett rum för att definiera färger.',
     'editor.colors.go_add': 'Lägg till rum',
+    'editor.colors.refresh': 'Uppdatera schema',
+    'editor.colors.clear_local': 'Rensa lokala färgdata',
+    'editor.colors.clear_local_confirm': 'Detta tar bort färgintervall som sparats i din webbläsare för detta kort. Vill du fortsätta?',
+    'editor.colors.clear_shared': 'Rensa delad färglagring',
+    'editor.colors.clear_shared_confirm': 'Detta tar bort färgintervall i den valda lagringssensorn. Vill du fortsätta?',
+    'editor.select_entities': 'Rum',
     'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.'
   },
   nb: {
@@ -375,6 +393,12 @@ const TT_I18N = {
     'editor.colors.col_color': 'Farge',
     'editor.colors.empty': 'Ingen rom lagt til ennå. Legg til et rom for å definere farger.',
     'editor.colors.go_add': 'Legg til rom',
+    'editor.colors.refresh': 'Oppdater tidsplan',
+    'editor.colors.clear_local': 'Tøm lokale fargedata',
+    'editor.colors.clear_local_confirm': 'Dette sletter fargeintervaller lagret i nettleseren for dette kortet. Fortsette?',
+    'editor.colors.clear_shared': 'Tøm delt fargelagring',
+    'editor.colors.clear_shared_confirm': 'Dette sletter fargeintervaller i den valgte lagringssensoren. Fortsette?',
+    'editor.select_entities': 'Rom',
     'week.enable.desc': 'Aktiver plan per ukedag. Når av, brukes samme plan hver dag.'
   },
   de: {
@@ -461,6 +485,12 @@ const TT_I18N = {
     'editor.colors.col_color': 'Farbe',
     'editor.colors.empty': 'Noch keine Räume hinzugefügt. Fügen Sie einen Raum hinzu, um Farben zu definieren.',
     'editor.colors.go_add': 'Raum hinzufügen',
+    'editor.colors.refresh': 'Zeitplan aktualisieren',
+    'editor.colors.clear_local': 'Lokale Farb-Daten löschen',
+    'editor.colors.clear_local_confirm': 'Dadurch werden in Ihrem Browser für diese Karte gespeicherte Farbbereiche gelöscht. Fortfahren?',
+    'editor.colors.clear_shared': 'Geteilten Farbspeicher löschen',
+    'editor.colors.clear_shared_confirm': 'Dadurch werden Farbbereiche im ausgewählten Speichersensor gelöscht. Fortfahren?',
+    'editor.select_entities': 'Räume',
     'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.'
   },
   es: {
@@ -547,6 +577,12 @@ const TT_I18N = {
     'editor.colors.col_color': 'Color',
     'editor.colors.empty': 'Aún no se han añadido habitaciones. Añade una para definir colores.',
     'editor.colors.go_add': 'Añadir habitación',
+    'editor.colors.refresh': 'Actualizar programación',
+    'editor.colors.clear_local': 'Borrar datos de color locales',
+    'editor.colors.clear_local_confirm': 'Esto eliminará los intervalos de color guardados en tu navegador para esta tarjeta. ¿Continuar?',
+    'editor.colors.clear_shared': 'Borrar almacenamiento de color compartido',
+    'editor.colors.clear_shared_confirm': 'Esto eliminará los intervalos de color en el sensor de almacenamiento seleccionado. ¿Continuar?',
+    'editor.select_entities': 'Habitaciones',
     'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.'
   },
   fr: {
@@ -633,6 +669,12 @@ const TT_I18N = {
     'editor.colors.col_color': 'Couleur',
     'editor.colors.empty': 'Aucune pièce ajoutée. Ajoutez une pièce pour définir des couleurs.',
     'editor.colors.go_add': 'Ajouter une pièce',
+    'editor.colors.refresh': 'Mettre à jour le planning',
+    'editor.colors.clear_local': 'Effacer les données de couleur locales',
+    'editor.colors.clear_local_confirm': 'Cela supprimera les intervalles de couleur enregistrés dans votre navigateur pour cette carte. Continuer ?',
+    'editor.colors.clear_shared': 'Effacer le stockage de couleur partagé',
+    'editor.colors.clear_shared_confirm': 'Cela supprimera les intervalles de couleur dans le capteur de stockage sélectionné. Continuer ?',
+    'editor.select_entities': 'Pièces',
     'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.'
   },
   fi: {
@@ -719,6 +761,12 @@ const TT_I18N = {
     'editor.colors.col_color': 'Väri',
     'editor.colors.empty': 'Huoneita ei ole lisätty vielä. Lisää huone määrittääksesi värit.',
     'editor.colors.go_add': 'Lisää huone',
+    'editor.colors.refresh': 'Päivitä aikataulu',
+    'editor.colors.clear_local': 'Tyhjennä paikalliset väritiedot',
+    'editor.colors.clear_local_confirm': 'Tämä poistaa tähän korttiin selaimeen tallennetut värihaarukat. Jatketaanko?',
+    'editor.colors.clear_shared': 'Tyhjennä jaettu värivarasto',
+    'editor.colors.clear_shared_confirm': 'Tämä poistaa värihaarukat valitusta tallennussensorista. Jatketaanko?',
+    'editor.select_entities': 'Huoneet',
     'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.'
   },
 };
@@ -780,6 +828,21 @@ class ThermostatTimelineCard extends HTMLElement {
   // ---------- Home Assistant hook ----------
   set hass(hass) {
     this._hass = hass; this._lang = ttGetLangFromHass(hass);
+
+    // Detect Away mode changes and apply immediately
+    try {
+      const curAway = this._isAwayActive();
+      if (this._lastAwayActive === null) {
+        this._lastAwayActive = curAway;
+      } else if (this._initialized && curAway !== this._lastAwayActive) {
+        this._lastAwayActive = curAway;
+        if (this._config?.auto_apply) {
+          // Apply immediately on Away enter/exit
+          this._applyCurrentSetpoints(true);
+          this._scheduleNextApply();
+        }
+      }
+    } catch {}
 
     // Hent fra sensor hvis version ændret
     if (this._config?.storage_enabled && this._config?.storage_entity) {
@@ -883,6 +946,8 @@ class ThermostatTimelineCard extends HTMLElement {
     this._active = null;           // { entity, id }
     this._lastTap = { t: 0, target: null };
     this._editing = null;          // { entity, blockId }
+  // When a weekly block is opened from main timeline, auto-save the weekly draft on block save
+  this._autoSaveWeeklyFromTimeline = false;
 
     // Inline edit hard-lock
     this._inlineEditing = false;   // er et inline input aktivt?
@@ -897,6 +962,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
     // Auto apply guard
     this._lastApplied = {}; // { [entity_id]: { min:number, temp:number } }
+  this._lastAwayActive = null; // Track last away state to trigger immediate apply on change
 
     // Weekday modal state
     this._weeklyOpen = false;
@@ -904,12 +970,17 @@ class ThermostatTimelineCard extends HTMLElement {
     this._weeklyDraft = null; // { mode, days: { mon:[], ... } }
     this._weeklyDayKey = null;
     this._weeklyOverlayHiddenForEditor = false;
+
+    // External refresh hook (from editor button)
+    this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
+    try { window.addEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
   }
 
   disconnectedCallback() {
     if (this._uiTimer) clearInterval(this._uiTimer);
     if (this._transitionTimer) clearTimeout(this._transitionTimer);
     if (this._saveTimer) clearTimeout(this._saveTimer);
+    try { if (this._onExternalRefresh) window.removeEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
   }
 
   // ---------- Storage (sensor attributes + fallback) ----------
@@ -1061,7 +1132,30 @@ class ThermostatTimelineCard extends HTMLElement {
   // --- Weekday helpers ---
   _weekdayNames(){ return ['mon','tue','wed','thu','fri','sat','sun']; }
   _todayKey(){ const d=new Date(); const idx=((d.getDay()+6)%7); return this._weekdayNames()[idx]; }
-  _ensureWeeklyStruct(row){ if (!row.weekly) { row.weekly = { mode: this._config?.weekdays_mode || 'same_all', days: {} }; } const names=this._weekdayNames(); for (const k of names){ if (!Array.isArray(row.weekly.days[k])) row.weekly.days[k] = []; }
+  _ensureWeeklyStruct(row){
+    if (!row.weekly) { row.weekly = { mode: this._config?.weekdays_mode || 'weekday_weekend', days: {} }; }
+    const names=this._weekdayNames();
+    for (const k of names){ if (!Array.isArray(row.weekly.days[k])) row.weekly.days[k] = []; }
+    // Maintain separate saved schedules per mode
+    if (!row.weekly_modes) {
+      row.weekly_modes = {
+        weekday_weekend: { days: {} },
+        weekday_sat_sun: { days: {} },
+        all_7: { days: {} }
+      };
+      // Seed current into active mode bucket
+      try {
+        const curMode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+        row.weekly_modes[curMode] = { days: JSON.parse(JSON.stringify(row.weekly?.days||{})) };
+      } catch {}
+    }
+    try {
+      const modes = ['weekday_weekend','weekday_sat_sun','all_7'];
+      for (const m of modes){
+        const bucket = row.weekly_modes[m] = row.weekly_modes[m] || { days: {} };
+        for (const k of names){ if (!Array.isArray(bucket.days[k])) bucket.days[k] = []; }
+      }
+    } catch {}
     return row;
   }
   _getBlocksForDay(row, dayKey){ if (!this._config?.weekdays_enabled || !row?.weekly) return row?.blocks || []; const days = row.weekly.days || {}; return Array.isArray(days[dayKey]) ? days[dayKey] : (row.blocks||[]); }
@@ -1115,6 +1209,15 @@ class ThermostatTimelineCard extends HTMLElement {
       if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || []; }
       for (const b of blocks) { times.push(b.startMin, b.endMin); }
       for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } }
+    }
+    // Always consider midnight rollover (00:00) as a boundary so we re-apply
+    // the next day's desired temperature even if today's schedule has no block
+    // ending/starting at 00:00. This makes day change bullet-proof.
+    {
+      let deltaMid = (1440 - nowMin) % 1440; // minutes until midnight
+      const tMid = 0;
+      if (deltaMid === 0) deltaMid = 1; // avoid scheduling "now"
+      if (deltaMid < bestDelta) { bestDelta = deltaMid; bestT = tMid; }
     }
     if (bestT == null) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0); }
     const dayOffset = (bestT >= nowMin) ? 0 : 1; const target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset, Math.floor(bestT/60), bestT%60, 0, 0); if (target.getTime() - now.getTime() <= 250) target.setTime(target.getTime() + 60000); return target; }
@@ -1418,7 +1521,29 @@ class ThermostatTimelineCard extends HTMLElement {
       const addBtn = document.createElement('button');
       addBtn.className = 'btn primary';
       addBtn.textContent = '+ ' + this._t('ui.add_block');
-      addBtn.addEventListener('click', () => this._openNewEditor(eid));
+      addBtn.addEventListener('click', () => {
+        // If weekdays are enabled, add into today's weekly dataset for the active mode
+        try {
+          const row = this._schedules[eid];
+          if (this._config?.weekdays_enabled && row?.weekly) {
+            const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+            const today = this._todayKey();
+            const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
+            let sel = today;
+            if (mode === 'weekday_weekend') sel = isWeekday ? 'weekdays' : 'weekend';
+            else if (mode === 'weekday_sat_sun') sel = isWeekday ? 'weekdays' : today; // sat/sun
+            // Open weekly editor and immediately open block editor at "now" for selected group/day
+            this._openWeeklyEditor(eid);
+            this._weeklyDayKey = sel;
+            this._autoSaveWeeklyFromTimeline = true;
+            const now = this._getNowMin();
+            this._openWeeklyBlockEditor(null, now);
+            return;
+          }
+        } catch {}
+        // Fallback: non-weekly add
+        this._openNewEditor(eid);
+      });
       buttonsWrap.append(addBtn);
       if (this._config?.weekdays_enabled) {
         const weekBtn = document.createElement('button');
@@ -1442,7 +1567,15 @@ class ThermostatTimelineCard extends HTMLElement {
         bl.className = 'block';
         bl.style.left = `${pctStart}%`;
         bl.style.width = `${pctWidth}%`;
-    try { const clr = this._colorFor(eid, b.temp); if (clr) { bl.style.background = clr; bl.style.borderColor = clr; } } catch {}
+    try {
+          const clr = this._colorFor(eid, b.temp);
+          if (clr) {
+            bl.style.background = clr;
+            bl.style.borderColor = clr;
+            const txt = this._contrastTextColor(clr);
+            if (txt) bl.style.color = txt;
+          }
+        } catch {}
         if (this._active?.entity === eid && this._active?.id === b.id) bl.classList.add('active');
         const pillTime = document.createElement('span');
         pillTime.className = 'pill';
@@ -1452,12 +1585,56 @@ class ThermostatTimelineCard extends HTMLElement {
         pillTemp.className = 'pill';
   pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
         bl.append(pillTemp);
+        // If we colored the block, soften pill background so the color is visible
+        try {
+          const bg = bl.style.background || '';
+          if (bg) {
+            const pills = [pillTime, pillTemp];
+            const txt = bl.style.color || this._contrastTextColor(bg) || '';
+            const pillBg = txt === '#ffffff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
+            const pillBo = txt === '#ffffff' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.12)';
+            for (const p of pills){ p.style.background = pillBg; p.style.borderColor = pillBo; }
+          }
+        } catch {}
         track.append(bl);
         
         // Open editor only on double interaction:
         // - Desktop: double-click
         // - Touch/iPad: double-tap within 350ms on the same block
-        const openEditor = () => this._openEditor(eid, b.id);
+        const openEditor = () => {
+          // If weekdays are enabled, open the weekly editor targeting the correct group/day
+          try {
+            const rowHasWeekly = !!(this._config?.weekdays_enabled && row?.weekly);
+            if (rowHasWeekly) {
+              const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+              const today = dayKey; // computed earlier in render()
+              // Map today -> selection key used by weekly modal
+              const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
+              let sel = today; // default: specific day
+              if (mode === 'weekday_weekend') sel = isWeekday ? 'weekdays' : 'weekend';
+              else if (mode === 'weekday_sat_sun') sel = isWeekday ? 'weekdays' : today; // 'sat' or 'sun'
+              // Determine effective storage day for the selection
+              const eff = this._effectiveDayKey(sel); // 'weekdays'->'mon', 'weekend'->'sat', else the day itself
+              // Find corresponding block in the effective day's array using midpoint
+              const mid = Math.floor((b.startMin + b.endMin) / 2);
+              const effArr = (row.weekly?.days?.[eff] || []);
+              let targetId = b.id;
+              if (eff !== today) {
+                const match = effArr.find(x => mid >= x.startMin && mid < x.endMin);
+                targetId = match ? match.id : null;
+              }
+              // Open weekly overlay and immediately open single-block editor for that day
+              this._openWeeklyEditor(eid);
+              this._weeklyDayKey = sel; // switch the weekly modal context to correct group/day
+              this._autoSaveWeeklyFromTimeline = true; // ensure changes are applied to whole plan
+              if (targetId) this._openWeeklyBlockEditor(targetId);
+              else this._openWeeklyBlockEditor(null, mid); // fallback: create new at midpoint
+              return;
+            }
+          } catch {}
+          // Fallback to normal (non-weekly) editor
+          this._openEditor(eid, b.id);
+        };
 
         // Desktop/mouse
         bl.addEventListener('dblclick', (e) => {
@@ -1554,6 +1731,12 @@ class ThermostatTimelineCard extends HTMLElement {
     if (wsave) wsave.addEventListener('click', () => this._weeklySaveAll());
     if (wcancel) wcancel.addEventListener('click', () => this._closeWeeklyEditor());
     if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) this._closeWeeklyEditor(); });
+  }
+
+  // Allow editor to nudge a repaint explicitly
+  devRefreshFromEditor(){
+    try { this._ensureSchedules(); } catch {}
+    try { if (!this._inlineEditing && !this._editing) this._render(); } catch {}
   }
 
   _openEditor(entity, blockId) {
@@ -1690,8 +1873,20 @@ class ThermostatTimelineCard extends HTMLElement {
       const arr = this._weeklyDraft.days?.[weeklyDay] || [];
       const idx = arr.findIndex(x=>x.id===blockId);
       if (idx>=0) arr.splice(idx,1);
-      this._renderWeeklyModal();
-      this._closeEditor();
+      // If the weekly editor was opened implicitly from the main timeline,
+      // do NOT bounce back into the weekdays popup on delete. Instead, auto-save
+      // the weekly draft and return to the main timeline view.
+      if (this._autoSaveWeeklyFromTimeline) {
+        this._autoSaveWeeklyFromTimeline = false;
+        // Persist weekly changes (propagate groups) and close the weekly overlay
+        this._weeklySaveAll();
+        // Ensure the block editor modal is closed
+        this._closeEditor();
+      } else {
+        // Regular flow when user is inside the weekdays popup: update preview and stay there
+        this._renderWeeklyModal();
+        this._closeEditor();
+      }
       return;
     }
     this._deleteBlock(entity, blockId); this._closeEditor(); }
@@ -1753,8 +1948,17 @@ class ThermostatTimelineCard extends HTMLElement {
     this._weeklyEntity = entity;
     const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
     this._ensureWeeklyStruct(row);
-    // Deep copy as draft
-    this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+    // Deep copy as draft from the dataset for current mode
+    try {
+      const curMode = (row.weekly?.mode) || (this._config?.weekdays_mode) || 'weekday_weekend';
+      const src = row.weekly_modes?.[curMode]?.days || {};
+      const names = this._weekdayNames();
+      const draftDays = JSON.parse(JSON.stringify(src));
+      for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+      this._weeklyDraft = { mode: curMode, days: draftDays };
+    } catch {
+      this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+    }
     this._weeklyDayKey = this._todayKey();
     this._weeklyOpen = true;
     const ov = this.shadowRoot.querySelector('.overlay-week');
@@ -1763,8 +1967,8 @@ class ThermostatTimelineCard extends HTMLElement {
   }
   _closeWeeklyEditor(){ this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); }
   _weeklySaveAll(){ try { if (!this._weeklyEntity || !this._weeklyDraft) { this._closeWeeklyEditor(); return; } const entity = this._weeklyEntity; const row = this._schedules[entity]; if (!row) { this._closeWeeklyEditor(); return; }
-      // Normalize by mode: propagate grouped days
-      const mode = this._weeklyDraft.mode || 'same_all';
+      // Normalize by mode: propagate grouped days within the selected mode only
+      const mode = this._weeklyDraft.mode || 'weekday_weekend';
       const d = this._weeklyDraft.days || {};
       const applyGroup = (keys, srcKey)=>{ const src = JSON.parse(JSON.stringify(d[srcKey]||[])); for (const k of keys){ d[k] = JSON.parse(JSON.stringify(src)); } };
       if (mode === 'weekday_weekend') {
@@ -1773,11 +1977,15 @@ class ThermostatTimelineCard extends HTMLElement {
       } else if (mode === 'weekday_sat_sun') {
         applyGroup(['tue','wed','thu','fri'], 'mon');
       } // all_7 -> keep individual
-      row.weekly = { mode, days: d };
+      this._ensureWeeklyStruct(row);
+      // Save into mode bucket and set active weekly to this mode
+      try { row.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(d)) }; } catch { row.weekly_modes[mode] = { days: d }; }
+      row.weekly = { mode, days: JSON.parse(JSON.stringify(d)) };
       this._schedules[entity] = row;
       const before = this._desiredNowSnapshot();
-      this._saveStore();
-      this._closeWeeklyEditor();
+  this._saveStore();
+  this._closeWeeklyEditor();
+  this._render();
       if (this._config.apply_on_edit) this._applyIfDesiredChanged(before);
       this._scheduleNextApply();
     } catch(e){ console.warn('weekly save failed', e); this._closeWeeklyEditor(); }
@@ -1805,7 +2013,20 @@ class ThermostatTimelineCard extends HTMLElement {
           if (opt.value==='weekday_sat_sun') opt.textContent = this._t('week.mode.weekday_sat_sun');
           if (opt.value==='all_7') opt.textContent = this._t('week.mode.all_7');
         }
-        modeSel.onchange = () => { this._weeklyDraft.mode = modeSel.value; this._renderWeeklyModal(); };
+        modeSel.onchange = () => {
+          const newMode = modeSel.value;
+          this._weeklyDraft.mode = newMode;
+          try {
+            const row = this._schedules[this._weeklyEntity];
+            this._ensureWeeklyStruct(row);
+            const src = row.weekly_modes?.[newMode]?.days || {};
+            const names = this._weekdayNames();
+            const draftDays = JSON.parse(JSON.stringify(src));
+            for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+            this._weeklyDraft.days = draftDays;
+          } catch {}
+          this._renderWeeklyModal();
+        };
       }
       // Build group/day buttons reflecting mode grouping
       daysWrap.innerHTML = '';
@@ -1863,7 +2084,15 @@ class ThermostatTimelineCard extends HTMLElement {
         div.style.width = ((b.endMin-b.startMin)/1440*100)+'%';
   // Only show temperature in the block in the weekly popup (hide time)
   const t2 = document.createElement('span'); t2.className='pill'; t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; div.append(t2);
-  try { const clr = this._colorFor(this._weeklyEntity, b.temp); if (clr) { div.style.background = clr; div.style.borderColor = clr; } } catch {}
+  try {
+          const clr = this._colorFor(this._weeklyEntity, b.temp);
+          if (clr) {
+            div.style.background = clr;
+            div.style.borderColor = clr;
+            const txt = this._contrastTextColor(clr);
+            if (txt) div.style.color = txt;
+          }
+        } catch {}
         // double-click to edit (prevent bubbling to track handler)
         div.addEventListener('dblclick', (ev)=>{ try { ev.stopPropagation(); ev.preventDefault(); } catch {} this._openWeeklyBlockEditor(b.id); });
         // Hover -> show tooltip with full time range + temp (no click needed)
@@ -1983,9 +2212,17 @@ class ThermostatTimelineCard extends HTMLElement {
       }
       // sort and adjust neighbors only within this day list
       sourceBlocks.sort((a,bx)=>a.startMin - bx.startMin || a.endMin - bx.endMin);
-      // Close editor and re-render weekly preview; no immediate apply
-      this._closeEditor();
-      this._renderWeeklyModal();
+      // If started from main timeline, auto-save the whole weekly plan now
+      if (this._autoSaveWeeklyFromTimeline) {
+        this._autoSaveWeeklyFromTimeline = false;
+        this._closeEditor();
+        // Persist weekly draft (propagate groups) and apply if needed
+        this._weeklySaveAll();
+      } else {
+        // Close editor and re-render weekly preview; no immediate apply
+        this._closeEditor();
+        this._renderWeeklyModal();
+      }
       return;
     }
     // Normal (non-weekly) save
@@ -2066,7 +2303,12 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _colorFor(eid, tempC){
     try {
-      const ranges = (this._config?.color_ranges?.[eid]) || [];
+      // Support merged entities by always resolving to primary
+      const primary = this._groupPrimaryOf ? this._groupPrimaryOf(eid) : eid;
+      const cr = (this._config?.color_ranges) || {};
+      const candidates = [primary, eid, '*', 'default'];
+      let ranges = [];
+      for (const k of candidates){ if (Array.isArray(cr[k]) && cr[k].length){ ranges = cr[k]; break; } }
       for (const r of ranges){
         const from = Number(r.from);
         const to = Number(r.to);
@@ -2075,6 +2317,29 @@ class ThermostatTimelineCard extends HTMLElement {
       }
     } catch {}
     return '';
+  }
+
+  // Compute readable text color for a given background
+  _contrastTextColor(bg){
+    try {
+      const rgb = (c)=>{
+        if(!c) return null;
+        let s=String(c).trim();
+        if (s.startsWith('rgb')){
+          const m=s.match(/rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i); if(!m) return null; return {r:+m[1], g:+m[2], b:+m[3]};
+        }
+        if (s[0]==='#') s=s.slice(1);
+        if (s.length===3) s = s.split('').map(x=>x+x).join('');
+        if (s.length!==6) return null;
+        const r=parseInt(s.slice(0,2),16), g=parseInt(s.slice(2,4),16), b=parseInt(s.slice(4,6),16);
+        if ([r,g,b].some(x=>Number.isNaN(x))) return null; return {r,g,b};
+      };
+      const o = rgb(bg); if (!o) return null;
+      // Perceived luminance (sRGB)
+      const lum = (v)=>{ v/=255; return v<=0.03928? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); };
+      const L = 0.2126*lum(o.r) + 0.7152*lum(o.g) + 0.0722*lum(o.b);
+      return L > 0.5 ? '#000000' : '#ffffff';
+    } catch { return null; }
   }
 
 }
@@ -2208,6 +2473,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .colors-head span:nth-child(3) { padding-left:10px; }
   /* Away tab: fix picker width */
   .tab-away .away-person-picker { width: 320px; min-width: 320px; max-width: 320px; }
+  /* Colors tab actions row */
+  .tab-colors .colors-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:6px; }
         /* Empty state + attention pulse */
         .empty-box { border:1px dashed var(--divider-color); border-radius:10px; padding:14px; max-width:480px; color: var(--secondary-text-color); display:grid; gap:10px; }
         .pulse-attn { position:relative; }
@@ -2401,6 +2668,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (ctrls) ctrls.style.display = on ? 'flex' : 'none';
       } catch {}
       this._applyEditorI18n();
+      // Re-render so Colors tab shared-clear button visibility updates immediately
+      try { this._render(); } catch {}
       // On enabling shared storage: offer to migrate local browser data to storage
       try {
         if (on) {
@@ -2821,9 +3090,29 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               f.min = String(minDisp); t.min = String(minDisp);
               f.max = String(maxDisp); t.max = String(maxDisp);
               const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
-              f.onchange = () => { let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v); r.from = this._fromDisplayTemp(v); this._config.color_ranges[eid] = ranges; this._emit(); };
-              t.onchange = () => { let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v); r.to = this._fromDisplayTemp(v); this._config.color_ranges[eid] = ranges; this._emit(); };
-              c.onchange = () => { r.color = c.value; this._config.color_ranges[eid] = ranges; this._emit(); };
+              const repaint = ()=>{
+                this._emit(true);
+                try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+                try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+              };
+              f.onchange = () => {
+                let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v);
+                r.from = this._fromDisplayTemp(v);
+                // replace with new objects to ensure HA detects changes
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] };
+                repaint();
+              };
+              t.onchange = () => {
+                let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v);
+                r.to = this._fromDisplayTemp(v);
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] };
+                repaint();
+              };
+              c.onchange = () => {
+                r.color = c.value;
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] };
+                repaint();
+              };
               rm.onclick = () => { ranges.splice(ri, 1); this._config.color_ranges[eid] = ranges; this._emit(true); renderRanges(); };
               row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
             });
@@ -2839,6 +3128,120 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             else this._openColorRows.delete(key);
           };
           root.append(line);
+        }
+
+  // Add explicit refresh/apply button for colors
+  const refresh = document.createElement('button');
+        refresh.className = 'add-entity-btn';
+        refresh.type = 'button';
+        refresh.innerHTML = '<ha-icon icon="mdi:refresh"></ha-icon><span>' + (this._t('editor.colors.refresh') || 'Update schedule') + '</span>';
+        refresh.onclick = async () => {
+          // Persist color settings to local/shared storage so live card instances pick them up
+          try {
+            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away };
+            let schedules = {};
+            // Prefer current storage sensor schedules when enabled
+            try {
+              if (this._config.storage_enabled && this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){
+                const st = this._hass.states[this._config.storage_entity];
+                const attrs = st?.attributes || {};
+                if (attrs && typeof attrs.schedules === 'object') schedules = JSON.parse(JSON.stringify(attrs.schedules));
+              }
+            } catch {}
+            // Fallback to localStorage copy
+            if (!schedules || Object.keys(schedules).length===0){
+              try { const raw = localStorage.getItem('thermostat_timeline_store') || ''; const parsed = JSON.parse(raw||'{}'); schedules = parsed.schedules || {}; } catch {}
+            }
+            // Write local copy
+            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
+            // And update shared storage if available
+            try {
+              if (this._config.storage_enabled && this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){
+                await this._hass.callService('thermostat_timeline','set_store', { schedules, settings });
+              }
+            } catch {}
+          } catch {}
+          // Emit config change and force preview card re-render
+          this._emit(true);
+          try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+          try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+        };
+  // Append buttons stacked (each on its own line) and aligned left
+  // Update schedule button
+  root.append(refresh);
+
+        // Clear only LOCAL color data (do not touch shared storage)
+  const clrLocal = document.createElement('button');
+  clrLocal.className = 'remove-btn clr-colors-local-btn';
+  clrLocal.type = 'button';
+    // Prevent grid stretch; keep button compact and left-aligned
+    try { clrLocal.style.width = 'max-content'; clrLocal.style.justifySelf = 'start'; } catch {}
+        clrLocal.innerHTML = '<ha-icon icon="mdi:delete-outline"></ha-icon><span>' + (this._t('editor.colors.clear_local') || 'Clear local color data') + '</span>';
+        clrLocal.onclick = async () => {
+          const ok = confirm(this._t('editor.colors.clear_local_confirm') || 'This will delete color ranges saved in your browser for this card. Continue?');
+          if (!ok) return;
+          try {
+            // Update local config and emit so UI reflects change
+            this._config.color_ranges = {};
+            // Update localStorage copy without touching shared storage
+            try {
+              const raw = localStorage.getItem('thermostat_timeline_store') || '';
+              let schedules = {};
+              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away };
+              if (raw) {
+                try {
+                  const parsed = JSON.parse(raw || '{}');
+                  schedules = parsed.schedules || {};
+                  const prev = parsed.settings || {};
+                  settings = { ...prev, color_ranges: {} };
+                } catch {}
+              }
+              localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings }));
+            } catch {}
+          } catch {}
+          // Repaint editor + live cards
+          this._emit(true);
+          try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+          try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+        };
+  // Local clear button (stacked under refresh)
+  root.append(clrLocal);
+
+        // Clear only SHARED color storage (do not touch local browser data)
+  const clrShared = document.createElement('button');
+  clrShared.className = 'remove-btn clr-colors-shared-btn';
+  clrShared.type = 'button';
+    // Prevent grid stretch; keep button compact and left-aligned
+    try { clrShared.style.width = 'max-content'; clrShared.style.justifySelf = 'start'; } catch {}
+        clrShared.innerHTML = '<ha-icon icon="mdi:database-off"></ha-icon><span>' + (this._t('editor.colors.clear_shared') || 'Clear shared color storage') + '</span>';
+        clrShared.onclick = async () => {
+          const ok = confirm(this._t('editor.colors.clear_shared_confirm') || 'This will delete color ranges in the selected storage sensor. Continue?');
+          if (!ok) return;
+          try {
+            if (this._hass && this._config.storage_entity) {
+              // Load current schedules and settings from storage; overwrite color_ranges only
+              let schedules = {};
+              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away };
+              try {
+                const st = this._hass.states?.[this._config.storage_entity];
+                const attrs = st?.attributes || {};
+                if (attrs && typeof attrs.schedules === 'object') schedules = JSON.parse(JSON.stringify(attrs.schedules));
+                if (attrs && typeof attrs.settings === 'object') settings = { ...attrs.settings, color_ranges: {} };
+              } catch {}
+              await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
+            } else {
+              alert(this._t('editor.storage_entity'));
+              return;
+            }
+          } catch (e) {
+            console.warn('clear-shared-colors failed', e);
+          }
+          // Do not modify local config when clearing shared
+        };
+        // Only show the shared clear button when shared storage is enabled
+        if (this._config.storage_enabled) {
+          // Shared clear button (stacked under local)
+          root.append(clrShared);
         }
       }
     } catch {}
@@ -3216,7 +3619,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 
   _addEntity(){ this._config.entities = [...(this._config.entities||[]), ""]; this._emit(true); }
   _upd(key,val){ this._config[key] = val; this._emit(); }
-  _emit(repaint=false){ if (this._openCount > 0) { this._pendingEmit = true; return; } this.dispatchEvent(new CustomEvent("config-changed", { detail:{ config:this._config }, bubbles:true, composed:true })); if (repaint) this._render(); }
+  _emit(repaint=false){
+    if (this._openCount > 0) { this._pendingEmit = true; return; }
+    // Emit a fresh cloned config to ensure HA editor detects changes immediately
+    let cfg;
+    try { cfg = JSON.parse(JSON.stringify(this._config)); }
+    catch { cfg = { ...this._config }; }
+    this.dispatchEvent(new CustomEvent("config-changed", { detail:{ config: cfg }, bubbles:true, composed:true }));
+    if (repaint) this._render();
+  }
 
   _t(k){ return ttLocalize(k, this._lang || this._hass || 'en'); }
 
@@ -3312,6 +3723,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
+        // Colors tab action labels
+        const clrLocalBtn = root.querySelector('.clr-colors-local-btn span'); if (clrLocalBtn) clrLocalBtn.textContent = t('editor.colors.clear_local');
+        const clrSharedBtn = root.querySelector('.clr-colors-shared-btn span'); if (clrSharedBtn) clrSharedBtn.textContent = t('editor.colors.clear_shared');
         // Away tab labels
         const awayTitle = root.querySelector('.away-enable-title'); if (awayTitle) awayTitle.textContent = t('away.enable');
         const awayDesc = root.querySelector('.away-desc'); if (awayDesc) awayDesc.textContent = t('away.desc');
