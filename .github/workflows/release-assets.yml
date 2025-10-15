@@ -1,0 +1,24 @@
+name: Attach JS to Release
+
+on:
+  release:
+    types: [published, prereleased]
+
+permissions:
+  contents: write
+
+jobs:
+  upload-asset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # (valgfrit) tjek at filen findes
+      - run: test -f thermostat-pro-timeline.js
+
+      - name: Upload JS asset
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: thermostat-pro-timeline.js
