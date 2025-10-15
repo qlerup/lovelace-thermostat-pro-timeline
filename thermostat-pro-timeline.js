@@ -20,7 +20,6 @@ const TT_I18N = {
 
     // GUI editor panel
     'editor.title_label': 'Title',
-  'editor.storage_entity': 'Storage entity',
   'editor.add_entity': 'Add room',
     'editor.entity_placeholder': 'Select an entity',
     'editor.drag_reorder': 'Drag to reorder',
@@ -38,8 +37,8 @@ const TT_I18N = {
     'editor.apply_default.title': 'On Default °C change',
     'editor.apply_default.desc':
       'When “Default °C” changes and it affects the current period, the new temperature is applied immediately.',
-    'editor.merge_label': 'Merge with (add extra thermostat)',
-    'editor.display_name_optional': 'Display name (optional)',
+  'editor.merge_label': 'Merge with (add extra thermostat)',
+  'editor.display_name_optional': 'Room name (optional)',
     'editor.merged_with': 'Merged with'
     , 'editor.store_enable.title': 'Enable shared storage',
     'editor.store_enable.desc': 'When enabled, schedules are saved to the selected sensor so they are shared across all users/dashboards. When disabled, schedules are saved only in your browser.',
@@ -129,7 +128,6 @@ const TT_I18N = {
 
     // GUI editor panel
     'editor.title_label': 'Titel',
-  'editor.storage_entity': 'Lager-entitet',
   'editor.add_entity': 'Tilføj rum',
     'editor.entity_placeholder': 'Vælg en entitet',
     'editor.drag_reorder': 'Træk for at ændre rækkefølge',
@@ -147,8 +145,8 @@ const TT_I18N = {
     'editor.apply_default.title': 'Ved Standard °C ændring',
     'editor.apply_default.desc':
       'Når “Standard °C” ændres og det påvirker temperaturen for nuværende tidsrum, anvendes den nye temperatur straks.',
-    'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
-    'editor.display_name_optional': 'Visningsnavn (valgfrit)',
+  'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
+  'editor.display_name_optional': 'Rumnavn (valgfrit)',
     'editor.merged_with': 'Flettet med',
     'editor.store_enable.title': 'Aktivér delt lager',
     'editor.store_enable.desc': 'Når slået til, gemmes tidsplanen i den valgte sensor og deles mellem alle brugere/dashboards. Når slået fra, gemmes den kun lokalt i din browser.',
@@ -234,7 +232,6 @@ const TT_I18N = {
     'ui.fix_end_to': 'Justera slut till {time}',
 
     'editor.title_label': 'Titel',
-  'editor.storage_entity': 'Lagringsentitet',
   'editor.add_entity': 'Lägg till rum',
     'editor.entity_placeholder': 'Välj en entitet',
     'editor.drag_reorder': 'Dra för att ändra ordning',
@@ -249,8 +246,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'När du ändrar tidslinjeblock och ändringen påverkar aktuell tid, tillämpas den nya temperaturen omedelbart.',
     'editor.apply_default.title': 'Vid ändring av Standard °C',
     'editor.apply_default.desc': 'När ”Standard °C” ändras och det påverkar den aktuella perioden, tillämpas den nya temperaturen omedelbart.',
-    'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
-    'editor.display_name_optional': 'Visningsnamn (valgfrit)',
+  'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
+  'editor.display_name_optional': 'Rumsnamn (valfritt)',
     'editor.merged_with': 'Sammanslagen med',
     'editor.store_enable.title': 'Aktivera delad lagring',
     'editor.store_enable.desc': 'När det är aktiverat sparas scheman i vald sensor och delas mellan alla användare/dashboard. När det är av sparas de endast lokalt i din webbläsare.',
@@ -326,7 +323,6 @@ const TT_I18N = {
     'ui.fix_end_to': 'Sett slutt til {time}',
 
     'editor.title_label': 'Tittel',
-  'editor.storage_entity': 'Lagringsentitet',
   'editor.add_entity': 'Legg til rom',
     'editor.entity_placeholder': 'Velg en entitet',
     'editor.drag_reorder': 'Dra for å endre rekkefølge',
@@ -341,8 +337,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Når du endrer blokker i tidslinjen og endringen påvirker aktuell tid, tilpasses den nye temperaturen umiddelbart.',
     'editor.apply_default.title': 'Ved Standard °C-endring',
     'editor.apply_default.desc': 'Når «Standard °C» endres og det påvirker gjeldende periode, brukes den nye temperaturen umiddelbart.',
-    'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
-    'editor.display_name_optional': 'Visningsnavn (valgfrit)',
+  'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
+  'editor.display_name_optional': 'Romnavn (valgfritt)',
     'editor.merged_with': 'Flettet med',
     'editor.store_enable.title': 'Aktiver delt lagring',
     'editor.store_enable.desc': 'Når aktivert lagres tidsplanen i valgt sensor og deles mellom alle brukere/dashboards. Når av, lagres den kun lokalt i nettleseren.',
@@ -418,7 +414,6 @@ const TT_I18N = {
     'ui.fix_end_to': 'Ende auf {time} korrigieren',
 
     'editor.title_label': 'Titel',
-  'editor.storage_entity': 'Speicherentität',
   'editor.add_entity': 'Raum hinzufügen',
     'editor.entity_placeholder': 'Entität auswählen',
     'editor.drag_reorder': 'Zum Neuordnen ziehen',
@@ -433,8 +428,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Wenn Sie Blöcke der Zeitlinie ändern und die Änderung die aktuelle Zeit betrifft, wird die neue Temperatur sofort angewendet.',
     'editor.apply_default.title': 'Bei Änderung von Standard °C',
     'editor.apply_default.desc': 'Wenn „Standard °C“ geändert wird und dies den aktuellen Zeitraum betrifft, wird die neue Temperatur sofort angewendet.',
-    'editor.merge_label': 'Mit zusammenführen (zusätzlichen Thermostat hinzufügen)',
-    'editor.display_name_optional': 'Anzeigename (optional)',
+  'editor.merge_label': 'Mit zusammenführen (zusätzlichen Thermostat hinzufügen)',
+  'editor.display_name_optional': 'Raumname (optional)',
     'editor.merged_with': 'Zusammengeführt mit',
     'editor.store_enable.title': 'Geteilten Speicher aktivieren',
     'editor.store_enable.desc': 'Wenn aktiviert, werden Pläne im ausgewählten Sensor gespeichert und mit allen Benutzern/Dashboards geteilt. Wenn deaktiviert, wird nur lokal im Browser gespeichert.',
@@ -510,7 +505,6 @@ const TT_I18N = {
     'ui.fix_end_to': 'Ajustar fin a {time}',
 
     'editor.title_label': 'Título',
-  'editor.storage_entity': 'Entidad de almacenamiento',
   'editor.add_entity': 'Añadir habitación',
     'editor.entity_placeholder': 'Selecciona una entidad',
     'editor.drag_reorder': 'Arrastrar para reordenar',
@@ -525,8 +519,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Cuando cambias bloques de la línea de tiempo y el cambio afecta a la hora actual, la nueva temperatura se aplica inmediatamente.',
     'editor.apply_default.title': 'Al cambiar Predeterminado °C',
     'editor.apply_default.desc': 'Cuando “Predeterminado °C” cambia y afecta al período actual, la nueva temperatura se aplica inmediatamente.',
-    'editor.merge_label': 'Combinar con (añadir termostato extra)',
-    'editor.display_name_optional': 'Nombre para mostrar (opcional)',
+  'editor.merge_label': 'Combinar con (añadir termostato extra)',
+  'editor.display_name_optional': 'Nombre de la habitación (opcional)',
     'editor.merged_with': 'Combinado con',
     'editor.store_enable.title': 'Habilitar almacenamiento compartido',
     'editor.store_enable.desc': 'Al activarlo, los horarios se guardan en el sensor seleccionado y se comparten entre todos los usuarios/tableros. Al desactivarlo, se guardan solo localmente en tu navegador.',
@@ -602,7 +596,6 @@ const TT_I18N = {
     'ui.fix_end_to': 'Ajuster la fin à {time}',
 
     'editor.title_label': 'Titre',
-  'editor.storage_entity': 'Entité de stockage',
   'editor.add_entity': 'Ajouter une pièce',
     'editor.entity_placeholder': 'Sélectionnez une entité',
     'editor.drag_reorder': 'Glisser pour réorganiser',
@@ -617,8 +610,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Quand vous modifiez des blocs de la chronologie et que la modification affecte l’heure actuelle, la nouvelle température est appliquée immédiatement.',
     'editor.apply_default.title': 'Lors d’un changement de °C par défaut',
     'editor.apply_default.desc': 'Lorsque « °C par défaut » change et que cela affecte la période en cours, la nouvelle température est appliquée immédiatement.',
-    'editor.merge_label': 'Fusionner avec (ajouter un thermostat supplémentaire)',
-    'editor.display_name_optional': 'Nom d’affichage (facultatif)',
+  'editor.merge_label': 'Fusionner avec (ajouter un thermostat supplémentaire)',
+  'editor.display_name_optional': 'Nom de la pièce (facultatif)',
     'editor.merged_with': 'Fusionné avec',
     'editor.store_enable.title': 'Activer le stockage partagé',
     'editor.store_enable.desc': 'Lorsque activé, les plannings sont enregistrés dans le capteur sélectionné et partagés entre tous les utilisateurs/tableaux de bord. Lorsque désactivé, ils sont enregistrés uniquement localement dans votre navigateur.',
@@ -694,7 +687,6 @@ const TT_I18N = {
     'ui.fix_end_to': 'Korjaa loppu ajaksi {time}',
 
     'editor.title_label': 'Otsikko',
-  'editor.storage_entity': 'Tallennusentiteetti',
   'editor.add_entity': 'Lisää huone',
     'editor.entity_placeholder': 'Valitse entiteetti',
     'editor.drag_reorder': 'Vedä järjestelläksesi',
@@ -709,8 +701,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Kun muutat aikajanan lohkoja ja muutos koskee nykyhetkeä, uusi lämpötila otetaan käyttöön heti.',
     'editor.apply_default.title': 'Kun Oletus °C muuttuu',
     'editor.apply_default.desc': 'Kun ”Oletus °C” muuttuu ja se vaikuttaa meneillään olevaan ajanjaksoon, uusi lämpötila otetaan käyttöön heti.',
-    'editor.merge_label': 'Yhdistä (lisää toinen termostaatti)',
-    'editor.display_name_optional': 'Näyttönimi (valinnainen)',
+  'editor.merge_label': 'Yhdistä (lisää toinen termostaatti)',
+  'editor.display_name_optional': 'Huoneen nimi (valinnainen)',
     'editor.merged_with': 'Yhdistetty kohteeseen',
     'editor.store_enable.title': 'Ota jaettu tallennus käyttöön',
     'editor.store_enable.desc': 'Kun käytössä, aikataulut tallennetaan valittuun sensoriin ja jaetaan kaikille käyttäjille/näkymille. Kun pois päältä, ne tallennetaan vain paikallisesti selaimeen.',
@@ -2515,7 +2507,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         <div class="row">
-          <div class="label">Storage entity</div>
+          <div class="label"></div>
           <div style="display:grid; gap:6px; max-width:480px;">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
               <div style="display:grid; gap:2px;">
@@ -2796,7 +2788,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (this._hass && this._config.storage_entity) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
         } else {
-          alert(this._t('editor.storage_entity'));
+          alert('Please select a storage sensor first.');
           return;
         }
       } catch (e) { console.warn('clear-storage-only failed', e); }
@@ -2822,8 +2814,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     });
     qs('.migrate-to-store')?.addEventListener('click', async () => {
       try {
-        const target = this._config.storage_entity;
-        if (!target) { alert(this._t('editor.storage_entity')); return; }
+  const target = this._config.storage_entity;
+  if (!target) { alert('Please select a storage sensor first.'); return; }
         const raw = localStorage.getItem('thermostat_timeline_store') || '';
         if (!raw) { alert(this._t('editor.no_local_data')); return; }
         const ok = confirm(this._t('editor.migrate_confirm'));
@@ -3258,7 +3250,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               } catch {}
               await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
             } else {
-              alert(this._t('editor.storage_entity'));
+              alert('Please select a storage sensor first.');
               return;
             }
           } catch (e) {
@@ -3680,7 +3672,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const storagePicker = root.querySelector('.storage');
       if (storagePicker) {
         const storageLabel = storagePicker.closest('.row')?.querySelector('.label');
-        if (storageLabel) storageLabel.textContent = t('editor.storage_entity');
+  // Hide the label text for the storage section
+  if (storageLabel) storageLabel.textContent = '';
         // toggle texts
         const stTitle = root.querySelector('.store-title');
         const stDesc = root.querySelector('.store-desc');
