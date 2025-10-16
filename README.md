@@ -40,7 +40,7 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ---
 
-## 🏷️ title
+## 🏷️ Title
 
 Display title for the card. If omitted, a localized default title is used automatically.
 
@@ -50,7 +50,7 @@ title: "Heating – Overview"
 
 ---
 
-## 🧩 entities
+## 🧩 Entities
 
 Lists the thermostats (climate.*) to show. Order in the list = order in the UI.
 
@@ -68,6 +68,146 @@ Row height in pixels. Typical range 40–120, default 64.
 
 ```yaml
 row_height: 64
+```
+
+---
+## 🌡️ Default temp
+
+Fallback temperature (°C) used for periods without blocks.
+
+```yaml
+default_temp: 20
+```
+
+---
+
+## 📉 Min temp
+
+Global minimum for temperature pickers and blocks (°C).
+
+```yaml
+min_temp: 5
+```
+
+---
+
+## 📈 Max temp
+
+Global maximum for temperature pickers and blocks (°C).
+
+```yaml
+max_temp: 25
+```
+
+---
+
+## 🔁 Temp unit
+
+Controls display unit. 'C', 'F', or 'auto' (detects preference).
+
+```yaml
+temp_unit: auto
+```
+
+---
+
+## ⏰ Time 12h
+
+12‑hour clock format. true (AM/PM), false (24‑hour) or 'auto'.
+
+```yaml
+time_12h: auto
+```
+
+---
+## ⏱ Now update ms
+
+How often the UI re‑renders and moves the "now" cursor (ms).
+
+```yaml
+now_update_ms: 60000
+```
+
+---
+## 📍 Show top now
+
+```yaml
+show_top_now: true
+```
+
+---
+
+## ↕️ Now extend px
+
+How far the top "now" line extends (px).
+
+```yaml
+now_extend_px: 76
+```
+
+---
+
+## ⚙️ Auto apply
+
+Automatically apply the desired temperature to the current climate entity (and any merges) on load and at the next time boundary.
+
+```yaml
+auto_apply: true
+```
+
+---
+
+## ✏️ Apply on edit
+
+If an edit changes the current period, apply the new temperature immediately.
+
+```yaml
+apply_on_edit: true
+```
+
+---
+
+## 🗓️ Weekdays enabled
+
+Enable per‑day schedules (weekday/weekend or all days).
+
+```yaml
+weekdays_enabled: true
+```
+
+---
+
+## 🗂️ Weekdays mode
+
+Choose the grouping: 'weekday_weekend', 'weekday_sat_sun', or 'all_7'.
+
+```yaml
+weekdays_mode: weekday_weekend
+```
+
+---
+
+## 🏷️ Labels
+
+Custom display name per entity (left label in the UI).
+
+```yaml
+labels:
+  climate.stue: Living Room
+  climate.sovevaerelse: Bedroom
+```
+
+---
+
+## 🔗 Merges
+
+Merge secondary climate entities into a primary so setpoints hit them all at once.
+
+```yaml
+merges:
+  climate.stue:
+    - climate.stue_radiator_hojre
+    - climate.stue_radiator_venstre
 ```
 
 ---
@@ -91,6 +231,26 @@ color_blocks:
 * Each range colors any block that fits inside it.
 * Helps you spot comfort vs eco zones quickly 🔍
 * Order ranges thoughtfully to avoid overlap confusion.
+
+---
+
+## 💾 Storage enabled
+
+Store shared schedules/settings in a sensor (integration) across dashboards/users.
+
+```yaml
+storage_enabled: true
+```
+
+---
+
+## 🗄️ Storage entity
+
+The sensor used as the shared store (from the integration), e.g. sensor.thermostat_timeline.
+
+```yaml
+storage_entity: sensor.thermostat_timeline
+```
 
 ---
 
