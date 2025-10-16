@@ -2394,7 +2394,19 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           warn = document.createElement('div'); warn.className = 'store-missing'; warn.style.color = 'var(--error-color)'; warn.style.fontSize = '.9rem'; warn.style.marginTop = '6px';
           const controls = root.querySelector('.store-controls'); if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
         }
-        warn.textContent = msg;
+        while (warn.firstChild) warn.removeChild(warn.firstChild);
+          warn.appendChild(document.createTextNode(msg.replace(/\.$/, '') + '. '));
+          (function(){
+            let link = document.createElement('a');
+            link.href = 'https://github.com/qlerup/thermostat-pro-timeline-sync';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.style.color = 'var(--error-color)';
+            link.style.textDecoration = 'underline';
+            link.style.fontWeight = '500';
+            link.textContent = 'Installér fra GitHub';
+            warn.appendChild(link);
+          })();
         const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
         const picker = root.querySelector('.storage'); if (picker) picker.disabled = true;
       } else {
@@ -3709,30 +3721,43 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         // Check that the thermostat_timeline integration/service exists in Home Assistant
         try {
           const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
-          // If missing: disable toggle/picker and show warning
+          let warn = root.querySelector('.store-missing');
+          const warnText = this._t ? this._t('editor.store_missing') : null;
+          const msg = warnText && warnText !== 'editor.store_missing'
+            ? warnText
+            : 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.';
+          var githubLink = ' <a href="https://github.com/qlerup/thermostat-pro-timeline-sync" target="_blank" rel="noopener noreferrer" style="color:var(--error-color);text-decoration:underline;font-weight:500;">[Installér fra GitHub]</a>';
+          if (!warn) {
+            warn = document.createElement('div');
+            warn.className = 'store-missing';
+            warn.style.color = 'var(--error-color)';
+            warn.style.fontSize = '.9rem';
+            warn.style.marginTop = '6px';
+            warn.style.display = 'none';
+            const controls = root.querySelector('.store-controls');
+            if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
+          }
+          // Always update warning content
+          // Sæt tekst og link som separate child nodes
+          // Fjern alle eksisterende child nodes
+          while (warn.firstChild) warn.removeChild(warn.firstChild);
+          // Tilføj tekst og link igen
+          warn.appendChild(document.createTextNode(msg.replace(/\.$/, '') + '. '));
+          let link = document.createElement('a');
+          link.href = 'https://github.com/qlerup/thermostat-pro-timeline-sync';
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.style.color = 'var(--error-color)';
+          link.style.textDecoration = 'underline';
+          link.style.fontWeight = '500';
+          link.textContent = 'Installér fra GitHub';
+          warn.appendChild(link);
           if (!hasService) {
-            const warnText = this._t ? this._t('editor.store_missing') : null;
-            const msg = warnText && warnText !== 'editor.store_missing'
-              ? warnText
-              : 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.';
-            // Insert or update a warning node
-            let warn = root.querySelector('.store-missing');
-            if (!warn) {
-              warn = document.createElement('div');
-              warn.className = 'store-missing';
-              warn.style.color = 'var(--error-color)';
-              warn.style.fontSize = '.9rem';
-              warn.style.marginTop = '6px';
-              const controls = root.querySelector('.store-controls');
-              if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
-            }
-            warn.innerHTML = msg +
-              ' <a href="https://github.com/qlerup/thermostat-pro-timeline-sync" target="_blank" rel="noopener noreferrer" style="color:var(--error-color);text-decoration:underline;font-weight:500;">[Installér fra GitHub]</a>';
+            warn.style.display = 'block';
             const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
             const picker = root.querySelector('.storage'); if (picker) picker.disabled = true;
           } else {
-            // Remove warning if present and ensure controls enabled
-            const warn = root.querySelector('.store-missing'); if (warn && warn.parentNode) warn.parentNode.removeChild(warn);
+            warn.style.display = 'none';
             const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
             const picker = root.querySelector('.storage'); if (picker) picker.disabled = false;
           }
