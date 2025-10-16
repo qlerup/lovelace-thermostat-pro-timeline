@@ -36,6 +36,7 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
   * 🥈 All data (sensor + browser)
   * 🥽 Local only (browser)
   * 🗄️ Storage sensor only
+  * 🎨 Clear color block data (browser only, storange only or all)
 * 🌡️⛔ **Max temperature limit** — prevent overheating with an upper bound 🚡️
 
 ---
