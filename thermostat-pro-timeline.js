@@ -42,6 +42,7 @@ const TT_I18N = {
     'editor.merged_with': 'Merged with'
     , 'editor.store_enable.title': 'Enable shared storage',
     'editor.store_enable.desc': 'When enabled, schedules are saved to the selected sensor so they are shared across all users/dashboards. When disabled, schedules are saved only in your browser.',
+  'editor.store_missing': 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.',
     'editor.clear_store': 'Clear storage',
     'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
     'editor.migrate_to_store': 'Transfer browser data to storage',
@@ -150,12 +151,13 @@ const TT_I18N = {
     'editor.merged_with': 'Flettet med',
     'editor.store_enable.title': 'Aktivér delt lager',
     'editor.store_enable.desc': 'Når slået til, gemmes tidsplanen i den valgte sensor og deles mellem alle brugere/dashboards. Når slået fra, gemmes den kun lokalt i din browser.',
+  'editor.store_missing': 'Integrationen "thermostat_timeline" er ikke installeret. Delt lager er ikke tilgængeligt.',
     'editor.clear_store': 'Ryd lager',
     'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
     'editor.migrate_to_store': 'Overfør browserdata til lager',
     'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
     'editor.no_local_data': 'Ingen lokale browserdata blev fundet.',
-    'editor.clear_all': 'Ryd al data',
+  'editor.clear_all': 'Ryd alt data',
     'editor.clear_all_confirm': 'Dette sletter både lager og lokale/browser tidsplaner. Vil du fortsætte?',
   'editor.clear_storage_only': 'Ryd kun lagerdata',
     'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
@@ -2358,7 +2360,7 @@ customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
 class ThermostatTimelineCardEditor extends HTMLElement {
   setConfig(config) { this._config = { ...ThermostatTimelineCard.getStubConfig(), ...(config||{}) }; this._render(); }
   set hass(hass) { this._hass = hass; this._lang = ttGetLangFromHass(hass);
-  // Avoid clobbering inputs while user is typing
+  // Avoid clobbering inputs while user is typing (preserve previous behavior)
   const ae = this.shadowRoot && this.shadowRoot.activeElement;
   if (this._suspendRender) return;
   if (ae) {
@@ -2377,7 +2379,32 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       }
     }
   } catch {}
-  this._render(); this._applyEditorI18n(); }
+  // Full render and i18n apply (normal path)
+  this._render(); this._applyEditorI18n();
+  // Also run a lightweight service-availability-only check in case services changed while editor open
+  try {
+    const root = this.shadowRoot;
+    if (root) {
+      const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
+      if (!hasService) {
+        const warnText = this._t ? this._t('editor.store_missing') : null;
+        const msg = warnText && warnText !== 'editor.store_missing' ? warnText : 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.';
+        let warn = root.querySelector('.store-missing');
+        if (!warn) {
+          warn = document.createElement('div'); warn.className = 'store-missing'; warn.style.color = 'var(--error-color)'; warn.style.fontSize = '.9rem'; warn.style.marginTop = '6px';
+          const controls = root.querySelector('.store-controls'); if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
+        }
+        warn.textContent = msg;
+        const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
+        const picker = root.querySelector('.storage'); if (picker) picker.disabled = true;
+      } else {
+        const rootWarn = root.querySelector('.store-missing'); if (rootWarn && rootWarn.parentNode) rootWarn.parentNode.removeChild(rootWarn);
+        const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
+        const picker = root.querySelector('.storage'); if (picker) picker.disabled = false;
+      }
+    }
+  } catch {}
+ }
 
   constructor() {
     super();
@@ -3679,6 +3706,37 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const stDesc = root.querySelector('.store-desc');
         if (stTitle) stTitle.textContent = t('editor.store_enable.title');
         if (stDesc) stDesc.textContent = t('editor.store_enable.desc');
+        // Check that the thermostat_timeline integration/service exists in Home Assistant
+        try {
+          const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
+          // If missing: disable toggle/picker and show warning
+          if (!hasService) {
+            const warnText = this._t ? this._t('editor.store_missing') : null;
+            const msg = warnText && warnText !== 'editor.store_missing'
+              ? warnText
+              : 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.';
+            // Insert or update a warning node
+            let warn = root.querySelector('.store-missing');
+            if (!warn) {
+              warn = document.createElement('div');
+              warn.className = 'store-missing';
+              warn.style.color = 'var(--error-color)';
+              warn.style.fontSize = '.9rem';
+              warn.style.marginTop = '6px';
+              const controls = root.querySelector('.store-controls');
+              if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
+            }
+            warn.innerHTML = msg +
+              ' <a href="https://github.com/qlerup/thermostat-pro-timeline-sync" target="_blank" rel="noopener noreferrer" style="color:var(--error-color);text-decoration:underline;font-weight:500;">[Installér fra GitHub]</a>';
+            const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
+            const picker = root.querySelector('.storage'); if (picker) picker.disabled = true;
+          } else {
+            // Remove warning if present and ensure controls enabled
+            const warn = root.querySelector('.store-missing'); if (warn && warn.parentNode) warn.parentNode.removeChild(warn);
+            const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
+            const picker = root.querySelector('.storage'); if (picker) picker.disabled = false;
+          }
+        } catch {}
         const clrBtn = root.querySelector('.clear-store span');
         if (clrBtn) clrBtn.textContent = t('editor.clear_storage_only');
         const clrAllBtn = root.querySelector('.clear-all span');
