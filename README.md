@@ -41,6 +41,42 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ---
 
+## 🚷 Storage & Sync
+
+* **With integration (`thermostat-pro-timeline-sync`)**: Keeps data synced across browsers/devices.
+  → [Integration repo](https://github.com/qlerup/thermostat-pro-timeline-sync)
+* **Without integration**: Data stored locally (browser LocalStorage).
+* 🔁 **Toggle per card**: Switch between local-only and sensor-based storage.
+* 🔄 **Data migration tool**: Transfer browser data → storage sensor data 🔁
+* 🙈 **Auto-hide sensor** when disabled — reduces UI clutter
+* 🥳 **Clear data menu**:
+
+  * 🥈 All data — clears both sensor + browser
+  * 🥽 Local only — clears browser cache
+  * 🗄️ Storage sensor only — clears persistent store
+
+> ℹ️ Mixing modes may cause timelines not to carry over — expected behavior.
+
+---
+
+## 🌍 Localization
+
+| Language       | Supported |
+| -------------- | --------- |
+| 🇩🇰 Danish    | ✅         |
+| 🇸🇪 Swedish   | ✅         |
+| 🇳🇴 Norwegian | ✅         |
+| 🇬🇧 English   | ✅         |
+| 🇩🇪 German    | ✅         |
+| 🇪🇸 Spanish   | ✅         |
+| 🇫🇷 French    | ✅         |
+| 🇫🇮 Finnish   | ✅         |
+
+💡 Defaults to **English** if not translated.
+Want to help? Open an issue titled `Locale request: <language>`.
+
+---
+
 ## ⚙️ Installation (via HACS – as a custom repository)
 
 [![Open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=lovelace-thermostat-pro-timeline)
@@ -58,6 +94,13 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
    * URL: `/local/thermostat-pro-timeline.js`
    * Type: **JavaScript Module**
+
+---
+
+## 🖼️ User Interface Preview
+
+<img width="505" height="1010" alt="thermo-new" src="https://github.com/user-attachments/assets/64af1362-68d4-4369-9c7a-e758f440a6f4" />
+<img width="504" height="636" alt="thermo-clear-data" src="https://github.com/user-attachments/assets/3a3310d9-694b-41a7-8a3c-42c01c227474" />
 
 ---
 
@@ -349,49 +392,6 @@ away:
   target_c: 17
 
 ```
-
----
-
-## 🚷 Storage & Sync
-
-* **With integration (`thermostat-pro-timeline-sync`)**: Keeps data synced across browsers/devices.
-  → [Integration repo](https://github.com/qlerup/thermostat-pro-timeline-sync)
-* **Without integration**: Data stored locally (browser LocalStorage).
-* 🔁 **Toggle per card**: Switch between local-only and sensor-based storage.
-* 🔄 **Data migration tool**: Transfer browser data → storage sensor data 🔁
-* 🙈 **Auto-hide sensor** when disabled — reduces UI clutter
-* 🥳 **Clear data menu**:
-
-  * 🥈 All data — clears both sensor + browser
-  * 🥽 Local only — clears browser cache
-  * 🗄️ Storage sensor only — clears persistent store
-
-> ℹ️ Mixing modes may cause timelines not to carry over — expected behavior.
-
----
-
-## 🖼️ User Interface Preview
-
-<img width="505" height="1010" alt="thermo-new" src="https://github.com/user-attachments/assets/64af1362-68d4-4369-9c7a-e758f440a6f4" />
-<img width="504" height="636" alt="thermo-clear-data" src="https://github.com/user-attachments/assets/3a3310d9-694b-41a7-8a3c-42c01c227474" />
-
----
-
-## 🌍 Localization
-
-| Language       | Supported |
-| -------------- | --------- |
-| 🇩🇰 Danish    | ✅         |
-| 🇸🇪 Swedish   | ✅         |
-| 🇳🇴 Norwegian | ✅         |
-| 🇬🇧 English   | ✅         |
-| 🇩🇪 German    | ✅         |
-| 🇪🇸 Spanish   | ✅         |
-| 🇫🇷 French    | ✅         |
-| 🇫🇮 Finnish   | ✅         |
-
-💡 Defaults to **English** if not translated.
-Want to help? Open an issue titled `Locale request: <language>`.
 
 ---
 
