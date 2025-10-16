@@ -101,9 +101,6 @@ Want to help? Open an issue titled `Locale request: <language>`.
 
 <img width="500" height="1074" alt="image" src="https://github.com/user-attachments/assets/bc66c5f3-9ce4-4438-a993-0a3048f95201" />
 
-<img width="505" height="1010" alt="thermo-new" src="https://github.com/user-attachments/assets/64af1362-68d4-4369-9c7a-e758f440a6f4" />
-<img width="504" height="636" alt="thermo-clear-data" src="https://github.com/user-attachments/assets/3a3310d9-694b-41a7-8a3c-42c01c227474" />
-
 ---
 
 ## 🏷️ Title
