@@ -40,6 +40,38 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ---
 
+## 🏷️ title
+
+Display title for the card. If omitted, a localized default title is used automatically.
+
+```yaml
+title: "Heating – Overview"
+```
+
+---
+
+## 🧩 entities
+
+Lists the thermostats (climate.*) to show. Order in the list = order in the UI.
+
+```yaml
+entities:
+  - climate.stue
+  - climate.sovevaerelse
+```
+
+---
+
+## 📏 Row height
+
+Row height in pixels. Typical range 40–120, default 64.
+
+```yaml
+row_height: 64
+```
+
+---
+
 ## 🎨 Color Blocks
 
 Bring color to your comfort! 🌈
@@ -74,6 +106,8 @@ away:
     - person.far
   target_c: 17
 ```
+
+
 
 * Automatically applies the **away temperature** when everyone is away.
 * When someone returns home, your schedule resumes automatically 🙌
