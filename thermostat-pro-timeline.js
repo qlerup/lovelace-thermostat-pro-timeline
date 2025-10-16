@@ -47,6 +47,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
     'editor.migrate_to_store': 'Transfer browser data to storage',
     'editor.migrate_confirm': 'Transfer your browser-saved schedules to the selected storage sensor? This will overwrite any existing schedules in storage.',
+  'editor.migrate_pull_confirm': 'Import schedules from storage and overwrite local browser data?',
+  'editor.select_storage_first': 'Please select a storage sensor first.',
     'editor.no_local_data': 'No local browser data found.',
     'editor.clear_all': 'Clear all data',
     'editor.clear_all_confirm': 'This will delete both storage and local browser schedules. Continue?',
@@ -156,6 +158,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
     'editor.migrate_to_store': 'Overfør browserdata til lager',
     'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
+  'editor.migrate_pull_confirm': 'Importér tidsplaner fra lager og overskriv lokale browserdata?',
+  'editor.select_storage_first': 'Vælg først en lagersensor.',
     'editor.no_local_data': 'Ingen lokale browserdata blev fundet.',
   'editor.clear_all': 'Ryd alt data',
     'editor.clear_all_confirm': 'Dette sletter både lager og lokale/browser tidsplaner. Vil du fortsætte?',
@@ -257,6 +261,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?',
     'editor.migrate_to_store': 'Överför webbläsardata till lagring',
     'editor.migrate_confirm': 'Överför dina webbläsar-sparade scheman till vald sensor? Detta skriver över befintliga scheman i lagringen.',
+  'editor.migrate_pull_confirm': 'Importera scheman från lagring och skriv över lokala webbläsardata?',
+  'editor.select_storage_first': 'Välj först en lagringssensor.',
     'editor.no_local_data': 'Inga lokala webbläsardata hittades.',
     'editor.clear_all': 'Rensa all data',
     'editor.clear_all_confirm': 'Detta tar bort både lagring och lokala webblässarscheman. Vill du fortsätta?',
@@ -348,6 +354,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?',
     'editor.migrate_to_store': 'Overfør nettleserdata til lagring',
     'editor.migrate_confirm': 'Overfør nettleserlagrede tidsplaner til valgt sensor? Dette overskriver eksisterende tidsplaner i lagringen.',
+  'editor.migrate_pull_confirm': 'Importer tidsplaner fra lagring og overskriv lokale nettleserdata?',
+  'editor.select_storage_first': 'Velg først en lagringssensor.',
     'editor.no_local_data': 'Ingen lokale nettleserdata ble funnet.',
     'editor.clear_all': 'Tøm all data',
     'editor.clear_all_confirm': 'Dette sletter både lagring og lokale nettleserplaner. Fortsette?',
@@ -439,6 +447,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?',
     'editor.migrate_to_store': 'Browserdaten in Speicher übertragen',
     'editor.migrate_confirm': 'Ihre im Browser gespeicherten Pläne in den ausgewählten Sensor übertragen? Vorhandene gespeicherte Pläne werden überschrieben.',
+  'editor.migrate_pull_confirm': 'Pläne aus dem Speicher importieren und lokale Browserdaten überschreiben?',
+  'editor.select_storage_first': 'Bitte wähle zuerst einen Speichersensor aus.',
     'editor.no_local_data': 'Keine lokalen Browserdaten gefunden.',
     'editor.clear_all': 'Alle Daten löschen',
     'editor.clear_all_confirm': 'Dies löscht sowohl Speicher- als auch lokale Browser-Zeitpläne. Fortfahren?',
@@ -530,6 +540,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?',
     'editor.migrate_to_store': 'Transferir datos del navegador al almacenamiento',
     'editor.migrate_confirm': '¿Transferir los horarios guardados en tu navegador al sensor seleccionado? Esto sobrescribirá los horarios existentes en el almacenamiento.',
+  'editor.migrate_pull_confirm': '¿Importar horarios desde el almacenamiento y sobrescribir los datos locales del navegador?',
+  'editor.select_storage_first': 'Selecciona primero un sensor de almacenamiento.',
     'editor.no_local_data': 'No se encontraron datos locales del navegador.',
     'editor.clear_all': 'Borrar todos los datos',
     'editor.clear_all_confirm': 'Esto eliminará los horarios tanto del almacenamiento como del navegador local. ¿Continuar?',
@@ -621,6 +633,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?',
     'editor.migrate_to_store': 'Transférer les données du navigateur vers le stockage',
     'editor.migrate_confirm': 'Transférer vos plannings enregistrés dans le navigateur vers le capteur sélectionné ? Cela remplacera les plannings existants dans le stockage.',
+  'editor.migrate_pull_confirm': 'Importer les plannings depuis le stockage et remplacer les données locales du navigateur ?',
+  'editor.select_storage_first': 'Veuillez d’abord sélectionner un capteur de stockage.',
     'editor.no_local_data': 'Aucune donnée locale du navigateur trouvée.',
     'editor.clear_all': 'Effacer toutes les données',
     'editor.clear_all_confirm': 'Cela supprimera les plannings du stockage et du navigateur local. Continuer ?',
@@ -712,6 +726,8 @@ const TT_I18N = {
     'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?',
     'editor.migrate_to_store': 'Siirrä selaindata tallennukseen',
     'editor.migrate_confirm': 'Siirretäänkö selaimeen tallennetut aikataulut valittuun sensoriin? Tämä korvaa nykyiset aikataulut tallennuksessa.',
+  'editor.migrate_pull_confirm': 'Tuo aikataulut tallennuksesta ja korvaa paikalliset selaintiedot?',
+  'editor.select_storage_first': 'Valitse ensin tallennussensori.',
     'editor.no_local_data': 'Paikallisia selaintietoja ei löytynyt.',
     'editor.clear_all': 'Tyhjennä kaikki tiedot',
     'editor.clear_all_confirm': 'Tämä poistaa sekä tallennuksesta että selaimesta aikataulut. Jatketaanko?',
@@ -990,7 +1006,10 @@ class ThermostatTimelineCard extends HTMLElement {
         const st = this._hass.states[this._config.storage_entity];
         const attrs = st?.attributes || {};
         if (attrs.schedules && typeof attrs.schedules === "object") {
-          this._schedules = JSON.parse(JSON.stringify(attrs.schedules));
+          // Unwrap if an older/incorrect payload put the entire object under 'schedules'
+          let sch = JSON.parse(JSON.stringify(attrs.schedules));
+          if (sch && sch.schedules && typeof sch.schedules === 'object') sch = sch.schedules;
+          this._schedules = sch;
           // Optional shared settings
           if (attrs.settings && typeof attrs.settings === 'object') {
             try {
@@ -1024,7 +1043,9 @@ class ThermostatTimelineCard extends HTMLElement {
       if (!raw) { this._schedules = {}; return; }
       const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object' && parsed.schedules) {
-        this._schedules = parsed.schedules || {};
+        // Unwrap legacy nested structure if present
+        const sch = parsed.schedules && parsed.schedules.schedules ? parsed.schedules.schedules : parsed.schedules;
+        this._schedules = sch || {};
   const s = parsed.settings || {};
   // Do not override user-selected format/unit from local browser storage
   // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
@@ -2738,10 +2759,30 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (hasLocal && target) {
             const ok = confirm(this._t('editor.migrate_confirm'));
             if (ok) {
-              const schedules = JSON.parse(localRaw || '{}');
+              // Properly unwrap the local payload and send both schedules and settings
+              let parsed = {};
+              try { parsed = JSON.parse(localRaw || '{}'); } catch { parsed = {}; }
+              let schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : (parsed || {});
+              let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away };
               if (this._hass) {
-                this._hass.callService('thermostat_timeline', 'set_store', { schedules });
+                this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
               }
+            } else {
+              // If user cancels, offer to import schedules FROM storage into local browser
+              try {
+                const st = this._hass?.states?.[target];
+                const attrs = st?.attributes || {};
+                let sch = attrs && typeof attrs.schedules === 'object' ? attrs.schedules : {};
+                // Unwrap in case of legacy nested structure
+                if (sch && sch.schedules && typeof sch.schedules === 'object') sch = sch.schedules;
+                let set = attrs && typeof attrs.settings === 'object' ? attrs.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away };
+                if (Object.keys(sch || {}).length) {
+                  const pull = confirm(this._t('editor.migrate_pull_confirm'));
+                  if (pull) {
+                    try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules: sch, settings: set })); } catch {}
+                  }
+                }
+              } catch {}
             }
           }
         }
@@ -2827,7 +2868,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (this._hass && this._config.storage_entity) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
         } else {
-          alert('Please select a storage sensor first.');
+          alert(this._t('editor.select_storage_first'));
           return;
         }
       } catch (e) { console.warn('clear-storage-only failed', e); }
@@ -2854,7 +2895,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     qs('.migrate-to-store')?.addEventListener('click', async () => {
       try {
   const target = this._config.storage_entity;
-  if (!target) { alert('Please select a storage sensor first.'); return; }
+  if (!target) { alert(this._t('editor.select_storage_first')); return; }
         const raw = localStorage.getItem('thermostat_timeline_store') || '';
         if (!raw) { alert(this._t('editor.no_local_data')); return; }
         const ok = confirm(this._t('editor.migrate_confirm'));
@@ -3204,12 +3245,24 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               if (this._config.storage_enabled && this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){
                 const st = this._hass.states[this._config.storage_entity];
                 const attrs = st?.attributes || {};
-                if (attrs && typeof attrs.schedules === 'object') schedules = JSON.parse(JSON.stringify(attrs.schedules));
+                if (attrs && typeof attrs.schedules === 'object') {
+                  schedules = JSON.parse(JSON.stringify(attrs.schedules));
+                  // Unwrap legacy nested structure if present
+                  if (schedules && schedules.schedules && typeof schedules.schedules === 'object') {
+                    schedules = schedules.schedules;
+                  }
+                }
               }
             } catch {}
             // Fallback to localStorage copy
             if (!schedules || Object.keys(schedules).length===0){
-              try { const raw = localStorage.getItem('thermostat_timeline_store') || ''; const parsed = JSON.parse(raw||'{}'); schedules = parsed.schedules || {}; } catch {}
+              try {
+                const raw = localStorage.getItem('thermostat_timeline_store') || '';
+                const parsed = JSON.parse(raw||'{}');
+                schedules = parsed.schedules || {};
+                // Unwrap if accidentally saved nested
+                if (schedules && schedules.schedules && typeof schedules.schedules === 'object') schedules = schedules.schedules;
+              } catch {}
             }
             // Write local copy
             try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
@@ -3289,7 +3342,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               } catch {}
               await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
             } else {
-              alert('Please select a storage sensor first.');
+              alert(this._t('editor.select_storage_first'));
               return;
             }
           } catch (e) {
