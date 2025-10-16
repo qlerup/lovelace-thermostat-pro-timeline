@@ -41,6 +41,26 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 ---
 
+## ⚙️ Installation (via HACS – as a custom repository)
+
+[![Open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=lovelace-thermostat-pro-timeline)
+
+1. Upload/publish this repo as `lovelace-thermostat-pro-timeline`.
+2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → add your GitHub URL, **Category: Dashboard**.
+3. Install via HACS.
+
+   * Resource URL: `/hacsfiles/lovelace-thermostat-pro-timeline/thermostat-pro-timeline.js`
+
+### 🦙 Manual installation
+
+1. Copy `thermostat-pro-timeline.js` to `/config/www/`.
+2. Add the resource in **Settings → Dashboards → Resources**:
+
+   * URL: `/local/thermostat-pro-timeline.js`
+   * Type: **JavaScript Module**
+
+---
+
 ## 🏷️ Title
 
 Display title for the card. If omitted, a localized default title is used automatically.
@@ -273,26 +293,6 @@ away:
 * Automatically applies the **away temperature** when everyone is away.
 * When someone returns home, your schedule resumes automatically 🙌
 * Works seamlessly with your existing timelines.
-
----
-
-## ⚙️ Installation (via HACS – as a custom repository)
-
-[![Open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=lovelace-thermostat-pro-timeline)
-
-1. Upload/publish this repo as `lovelace-thermostat-pro-timeline`.
-2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → add your GitHub URL, **Category: Dashboard**.
-3. Install via HACS.
-
-   * Resource URL: `/hacsfiles/lovelace-thermostat-pro-timeline/thermostat-pro-timeline.js`
-
-### 🦙 Manual installation
-
-1. Copy `thermostat-pro-timeline.js` to `/config/www/`.
-2. Add the resource in **Settings → Dashboards → Resources**:
-
-   * URL: `/local/thermostat-pro-timeline.js`
-   * Type: **JavaScript Module**
 
 ---
 
