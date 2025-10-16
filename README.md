@@ -104,27 +104,54 @@ away_mode:
 
 ```yaml
 type: custom:thermostat-timeline-card
-title: Thermostat Timeline
+title: Varme – Stue & Soveværelse
 entities:
-  - climate.living_room
-  - climate.bedroom
-storage_entity: sensor.thermostat_timeline
-default_temp: 20
+  - climate.stue
+  - climate.sovevaerelse
+
 row_height: 64
+default_temp: 20
+min_temp: 5
+max_temp: 25
+
+temp_unit: auto         # 'C' | 'F' | 'auto'
+time_12h: auto          # true | false | 'auto'
+
 now_update_ms: 60000
 show_top_now: false
 now_extend_px: 76
+
 auto_apply: true
 apply_on_edit: true
 apply_on_default_change: true
-use_storage_sensor: true
-max_temp: 24
-unit: auto
-time_format: auto
-weekday_mode: 1
+
+weekdays_enabled: true
+weekdays_mode: weekday_sat_sun
+
 labels:
-  climate.living_room: Living room
-  climate.bedroom: Bedroom
+  climate.stue: Stue
+  climate.sovevaerelse: Soveværelse
+
+merges:
+  climate.stue:
+    - climate.traevaerk_termostat
+
+color_ranges:
+  climate.stue:
+    - { from: 5,  to: 18, color: "#87cefa" }
+    - { from: 18, to: 21, color: "#90ee90" }
+    - { from: 21, to: 25, color: "#ffb347" }
+
+storage_enabled: false
+storage_entity: sensor.thermostat_timeline
+
+away:
+  enabled: true
+  persons:
+    - person.mor
+    - person.far
+  target_c: 17
+
 ```
 
 ---
