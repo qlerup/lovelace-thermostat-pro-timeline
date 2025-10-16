@@ -50,10 +50,10 @@ Define visual temperature ranges to make your schedule instantly readable.
 color_blocks:
   - from: 18
     to: 21
-    color: teal
+    color: "#00f0ec"
   - from: 21
     to: 24
-    color: orange
+    color: "#ffb347"
 ```
 
 * Each range colors any block that fits inside it.
@@ -67,11 +67,12 @@ color_blocks:
 Keep temperatures smart and efficient while you’re out 💡
 
 ```yaml
-away_mode:
+away:
+  enabled: true
   persons:
-    - person.john
-    - person.jane
-  temp: 17
+    - person.mor
+    - person.far
+  target_c: 17
 ```
 
 * Automatically applies the **away temperature** when everyone is away.
