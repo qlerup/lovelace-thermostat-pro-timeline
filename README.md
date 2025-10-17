@@ -12,6 +12,7 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 
 * 🧊 Per-thermostat **or merged room-based timeline**
 * 🌡️➕🌡️ **Merge multiple thermostats** into one room – control them together via a single timeline 🏠🕒
+* 📱 Tablet freindly
 * 🎨 **Color Blocks** — visually highlight temperature ranges with custom colors 🌈
 * 🏡 **Away From Home** — auto-set your “away” temperature when nobody’s home, resume schedule when someone returns 🚶‍♂️🏠
 * 🔥 Default temperature per row
