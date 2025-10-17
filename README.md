@@ -84,7 +84,7 @@ Want to help? Open an issue titled `Locale request: <language>`.
 [![Open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=lovelace-thermostat-pro-timeline)
 
 1. Upload/publish this repo as `lovelace-thermostat-pro-timeline`.
-2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → [add your GitHub URL](https://github.com/qlerup/lovelace-thermostat-pro-timeline), **Category: Dashboard**.
+2. In Home Assistant → **HACS** → ⋯ → **Custom repositories** → https://github.com/qlerup/lovelace-thermostat-pro-timeline, **Category: Dashboard**.
 3. Install via HACS.
 
    * Resource URL: `/hacsfiles/lovelace-thermostat-pro-timeline/thermostat-pro-timeline.js`
