@@ -102,7 +102,7 @@ Want to help? Open an issue titled `Locale request: <language>`.
 ## 🖼️ User Interface Preview
 
 <img width="500" height="1074" alt="image" src="https://github.com/user-attachments/assets/bc66c5f3-9ce4-4438-a993-0a3048f95201" />
-
+---
 <img width="497" height="596" alt="image" src="https://github.com/user-attachments/assets/387d2f86-86b1-422b-ba6e-9cbea3ec0230" />
 
 ---
