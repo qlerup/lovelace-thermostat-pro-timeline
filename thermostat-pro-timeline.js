@@ -1020,6 +1020,7 @@ class ThermostatTimelineCard extends HTMLElement {
               if (s.color_ranges && typeof s.color_ranges==='object') this._config.color_ranges = { ...s.color_ranges };
               if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
               if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+              if (s.merges && typeof s.merges === 'object') this._config.merges = { ...s.merges };
               if (s.away && typeof s.away === 'object') {
                 try {
                   const a = s.away;
@@ -1033,7 +1034,7 @@ class ThermostatTimelineCard extends HTMLElement {
             } catch {}
           }
           this._lastVersion = Number(st.state || 0) || 0;
-          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away } })); } catch {}
+          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges } })); } catch {}
           return;
         }
       } catch (e) { /* fallback */ }
@@ -1041,7 +1042,7 @@ class ThermostatTimelineCard extends HTMLElement {
     try {
       const raw = localStorage.getItem("thermostat_timeline_store") || "";
       if (!raw) { this._schedules = {}; return; }
-      const parsed = JSON.parse(raw);
+  const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object' && parsed.schedules) {
         // Unwrap legacy nested structure if present
         const sch = parsed.schedules && parsed.schedules.schedules ? parsed.schedules.schedules : parsed.schedules;
@@ -1053,6 +1054,7 @@ class ThermostatTimelineCard extends HTMLElement {
   if (s.color_ranges && typeof s.color_ranges==='object') this._config.color_ranges = { ...s.color_ranges };
     if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
     if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+    if (s.merges && typeof s.merges==='object') this._config.merges = { ...s.merges };
     if (s.away && typeof s.away === 'object') {
       try {
         const a = s.away;
@@ -1068,10 +1070,17 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   async _saveStore() {
-  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away } })); } catch {}
-    if (!this._config?.storage_enabled || !this._storageAvailable()) return;
+  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges } })); } catch {}
+    if (!this._storageAvailable()) return;
     this._saving = true;
-  try { await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away } }); }
+    try {
+      if (this._config?.storage_enabled) {
+        await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, auto_apply_enabled: true } });
+      } else {
+        // disable background apply without touching schedules
+        await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false } });
+      }
+    }
     catch (e) { console.error("thermostat-timeline: save failed", e); }
     finally { setTimeout(() => { this._saving = false; }, 600); }
   }
@@ -1109,7 +1118,18 @@ class ThermostatTimelineCard extends HTMLElement {
   _getNowMin(){ const d=new Date(); return d.getHours()*60 + d.getMinutes(); }
   _clamp(v,a,b){ if (isNaN(v)) return a; return Math.min(Math.max(v,a),b); }
   _prettyName(eid){ const st=this._hass?.states?.[eid]; if (st?.attributes?.friendly_name) return st.attributes.friendly_name; const base=(eid||"").split(".")[1]||eid||""; return base.replace(/_/g," ").replace(/\b\w/g,(m)=>m.toUpperCase()); }
-  _isCompactScale(){ try { const isCoarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches; const isLandscape = window.matchMedia && window.matchMedia('(orientation: landscape)').matches; const w = window.innerWidth || 0; return (isCoarse && isLandscape) || (w > 600 && w < 1100 && isLandscape); } catch (e) { return false; } }
+  
+  _isCompactScale(){
+    // Compact = show every other hour on small or touch devices (incl. mobile portrait)
+    try {
+      const isCoarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+      // Prefer the card width when available, fallback to window width
+      const hostW = (this.shadowRoot && this.shadowRoot.host && this.shadowRoot.host.clientWidth) || 0;
+      const w = hostW || window.innerWidth || 0;
+      // Consider compact on touch devices (phones/tablets) or narrow widths
+      return isCoarse || w <= 720; // ~mobile/tablet portrait breakpoint
+    } catch (e) { return false; }
+  }
   _detectPrefer12h(){
     try {
       // Prefer Home Assistant locale if available
@@ -1609,10 +1629,7 @@ class ThermostatTimelineCard extends HTMLElement {
           }
         } catch {}
         if (this._active?.entity === eid && this._active?.id === b.id) bl.classList.add('active');
-        const pillTime = document.createElement('span');
-        pillTime.className = 'pill';
-        pillTime.textContent = `${this._label(b.startMin)} - ${this._label(b.endMin)}`;
-        bl.append(pillTime);
+  // Time will be shown in a hover tooltip (like the weekdays popup). Do not render time pill here.
         const pillTemp = document.createElement('span');
         pillTemp.className = 'pill';
   pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
@@ -1621,7 +1638,7 @@ class ThermostatTimelineCard extends HTMLElement {
         try {
           const bg = bl.style.background || '';
           if (bg) {
-            const pills = [pillTime, pillTemp];
+            const pills = [pillTemp];
             const txt = bl.style.color || this._contrastTextColor(bg) || '';
             const pillBg = txt === '#ffffff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
             const pillBo = txt === '#ffffff' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.12)';
@@ -1629,6 +1646,49 @@ class ThermostatTimelineCard extends HTMLElement {
           }
         } catch {}
         track.append(bl);
+
+        // Ensure a tooltip element exists for main timeline (reuse weekly style)
+        try {
+          let tooltip = this.shadowRoot.querySelector('.wk-tooltip.main');
+          const rowsEl = this.shadowRoot.querySelector('.rows');
+          const modalHost = rowsEl || this.shadowRoot.querySelector('ha-card');
+          if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.className = 'wk-tooltip main';
+            tooltip.style.display = 'none';
+            // append to rows so positioning is relative to timeline
+            if (modalHost) modalHost.append(tooltip);
+          }
+          const showTip = () => {
+            const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+            if (!tooltip) return;
+            // Cancel any pending hide
+            try { if (tooltip._hideTimer) { clearTimeout(tooltip._hideTimer); tooltip._hideTimer = null; } } catch {}
+            // Do not show while editor popup is open
+            try {
+              const ov = this.shadowRoot.querySelector('.overlay');
+              if (this._editing || (ov && ov.classList.contains('open'))) return;
+            } catch {}
+            tooltip.textContent = txt;
+            const box = bl.getBoundingClientRect();
+            const cont = (modalHost && modalHost.getBoundingClientRect) ? modalHost.getBoundingClientRect() : { left: 0, top: 0 };
+            const left = box.left + box.width / 2 - (cont.left || 0);
+            const top = (box.top - (cont.top || 0)) - 8;
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.style.transform = 'translate(-50%,-100%)';
+            tooltip.style.display = '';
+          };
+          const hideTip = () => {
+            if (!tooltip) return;
+            // On coarse pointers (tablet) keep tooltip a bit longer
+            const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
+            try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); } catch {}
+            tooltip._hideTimer = setTimeout(() => { try { tooltip.style.display = 'none'; tooltip._hideTimer = null; } catch {} }, delay);
+          };
+          bl.addEventListener('mouseenter', showTip);
+          bl.addEventListener('mouseleave', hideTip);
+        } catch (e) { /* ignore tooltip errors */ }
         
         // Open editor only on double interaction:
         // - Desktop: double-click
@@ -1774,6 +1834,11 @@ class ThermostatTimelineCard extends HTMLElement {
   _openEditor(entity, blockId) {
     if (!blockId) return this._openNewEditor(entity);
     this._editing = { entity, blockId };
+    // Hide any tooltips while editing
+    try {
+      const tips = this.shadowRoot.querySelectorAll('.wk-tooltip');
+      tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display = 'none'; });
+    } catch {}
     const row = this._schedules[entity];
     if (!row) return;
     const b = row.blocks.find(x => x.id === blockId);
@@ -1891,12 +1956,21 @@ class ThermostatTimelineCard extends HTMLElement {
   _closeEditor(){
     this._editing = null;
     this.shadowRoot.querySelector(".overlay")?.classList.remove("open");
-    // If we hid the weekday modal for editing, restore it now
+    // If we hid the weekday modal for editing, decide whether to restore it
+    // Only restore when the edit was initiated from inside the weekdays popup.
+    // If the edit was initiated from the main timeline (auto-save flow), do not reopen the weekdays popup.
     if (this._weeklyOverlayHiddenForEditor && this._weeklyDraft) {
+      const cameFromTimeline = !!this._autoSaveWeeklyFromTimeline;
       this._weeklyOverlayHiddenForEditor = false;
-      const wov = this.shadowRoot.querySelector('.overlay-week');
-      if (wov) wov.classList.add('open');
-      this._renderWeeklyModal();
+      if (cameFromTimeline) {
+        // Do not bounce back into weekdays popup on cancel; reset the auto-save flag and close weekly context
+        this._autoSaveWeeklyFromTimeline = false;
+        this._closeWeeklyEditor();
+      } else {
+        const wov = this.shadowRoot.querySelector('.overlay-week');
+        if (wov) wov.classList.add('open');
+        this._renderWeeklyModal();
+      }
     }
   }
 
@@ -1924,6 +1998,8 @@ class ThermostatTimelineCard extends HTMLElement {
     this._deleteBlock(entity, blockId); this._closeEditor(); }
 
   _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; }
+  // Hide any tooltips while editing
+  try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
   try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
   overlay.classList.add('open');
   try { const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer'); if (this._config?.time_12h) { if (edFrom) edFrom.value = this._toTimeInput12h(start); if (edTo) edTo.value = this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value = (start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value = (end>=720 && end<1440)?'PM':'AM'; } } else { if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; } } catch {}
@@ -2130,19 +2206,29 @@ class ThermostatTimelineCard extends HTMLElement {
         // Hover -> show tooltip with full time range + temp (no click needed)
         const showTip = ()=>{
           const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
-          if (tooltip){
-            tooltip.textContent = txt;
-            const box = div.getBoundingClientRect();
-            const cont = modalWeek?.getBoundingClientRect();
-            const left = box.left + box.width/2 - (cont?.left||0);
-            const top = (box.top - (cont?.top||0)) - 8; // a little above
-            tooltip.style.left = left + 'px';
-            tooltip.style.top = top + 'px';
-            tooltip.style.transform = 'translate(-50%,-100%)';
-            tooltip.style.display = '';
-          }
+          if (!tooltip) return;
+          try { if (tooltip._hideTimer) { clearTimeout(tooltip._hideTimer); tooltip._hideTimer = null; } } catch {}
+          // Do not show while editor popup is open
+          try {
+            const ov = this.shadowRoot.querySelector('.overlay');
+            if (this._editing || (ov && ov.classList.contains('open'))) return;
+          } catch {}
+          tooltip.textContent = txt;
+          const box = div.getBoundingClientRect();
+          const cont = modalWeek?.getBoundingClientRect();
+          const left = box.left + box.width/2 - (cont?.left||0);
+          const top = (box.top - (cont?.top||0)) - 8; // a little above
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = top + 'px';
+          tooltip.style.transform = 'translate(-50%,-100%)';
+          tooltip.style.display = '';
         };
-        const hideTip = ()=>{ if (tooltip) tooltip.style.display='none'; };
+        const hideTip = ()=>{
+          if (!tooltip) return;
+          const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
+          try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); } catch {}
+          tooltip._hideTimer = setTimeout(() => { try { tooltip.style.display='none'; tooltip._hideTimer = null; } catch {} }, delay);
+        };
         div.addEventListener('mouseenter', showTip);
         div.addEventListener('mouseleave', hideTip);
         track.append(div);
@@ -2156,7 +2242,13 @@ class ThermostatTimelineCard extends HTMLElement {
           this._openWeeklyBlockEditor(null, min);
         } catch { this._openWeeklyBlockEditor(null); }
       });
-  track.addEventListener('mouseleave', ()=>{ const tip = this.shadowRoot.querySelector('.wk-tooltip'); if (tip) tip.style.display='none'; });
+  track.addEventListener('mouseleave', ()=>{
+    const tip = this.shadowRoot.querySelector('.wk-tooltip');
+    if (!tip) return;
+    try { if (tip._hideTimer) { clearTimeout(tip._hideTimer); tip._hideTimer = null; } } catch {}
+  const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
+    tip._hideTimer = setTimeout(()=>{ try { tip.style.display='none'; tip._hideTimer = null; } catch{} }, delay);
+  });
     } catch(e){ console.warn('render weekly modal failed', e); }
   }
   _openWeeklyBlockEditor(blockId, atMin=null){ if (!this._weeklyDraft) return; const day = this._effectiveDayKey(this._weeklyDayKey || 'mon'); const arr = this._weeklyDraft.days?.[day] || []; if (!blockId){
@@ -2166,6 +2258,8 @@ class ThermostatTimelineCard extends HTMLElement {
       const row = this._schedules[this._weeklyEntity] || { defaultTemp: this._config.default_temp };
   const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
       this._editing = { entity: this._weeklyEntity, blockId: null, weeklyDay: day };
+  // Hide any tooltips while editing
+  try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
   if (edTemp) { edTemp.value = String(this._toDisplayTemp(row.defaultTemp||20)); edTemp.max= String(this._maxDisplay()); }
       if (this._config?.time_12h) {
         if (edFrom) edFrom.value = this._toTimeInput12h(start);
@@ -2188,6 +2282,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (!b) return;
   const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
       this._editing = { entity: this._weeklyEntity, blockId, weeklyDay: day };
+  // Hide any tooltips while editing
+  try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
   if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max= String(this._maxDisplay()); }
       if (this._config?.time_12h) {
         if (edFrom) edFrom.value = this._toTimeInput12h(b.startMin);
