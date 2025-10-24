@@ -37,12 +37,17 @@ const TT_I18N = {
     'editor.apply_default.title': 'On Default °C change',
     'editor.apply_default.desc':
       'When “Default °C” changes and it affects the current period, the new temperature is applied immediately.',
+      'ui.copy_plan': 'Copy plan',
+      'ui.paste_plan': 'Paste plan',
+      'ui.copy_day': 'Copy day',
+      'ui.paste_day': 'Paste day',
   'editor.merge_label': 'Merge with (add extra thermostat)',
   'editor.display_name_optional': 'Room name (optional)',
     'editor.merged_with': 'Merged with'
-    , 'editor.store_enable.title': 'Enable shared storage',
-    'editor.store_enable.desc': 'When enabled, schedules are saved to the selected sensor so they are shared across all users/dashboards. When disabled, schedules are saved only in your browser.',
-  'editor.store_missing': 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.',
+  , 'editor.store_enable.title': 'Shared storage + background control',
+  'editor.store_enable.short': 'Saves schedules to the selected sensor and enables background control.',
+  'editor.store_enable.desc': 'Saves schedules to the selected sensor and enables background set_temperature via the Thermostat Timeline integration. Thermostats update even when the card is closed. Also shares schedules (heat blocks) and card settings across users/devices. When off, set temperature commands are sent only while the card is actively visible on a device (tablet/PC/mobile) — it must remain open on screen.',
+  'editor.store_missing': 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.',
     'editor.clear_store': 'Clear storage',
     'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
     'editor.migrate_to_store': 'Transfer browser data to storage',
@@ -83,12 +88,17 @@ const TT_I18N = {
     'week.days.sun': 'Sun',
     'week.editor.title': 'Weekday schedule',
   'week.editor.preview_note': 'Preview only. Changes apply when you press Save.'
+  , 'week.copy_to_rooms': 'Copy week to rooms'
+  , 'week.copy_to_rooms.title': 'Copy week to rooms'
+  , 'week.copy_to_rooms.select': 'Select rooms'
+  , 'week.copy_to_rooms.apply': 'Insert into rooms'
   , 'week.enable.desc': 'Enable per-weekday scheduling. When off, the same plan is used every day.'
     , 'editor.timefmt.title': 'Time format'
     , 'editor.timefmt.desc': 'Choose 24-hour or 12-hour (AM/PM) display for times on the card.'
     , 'editor.tempfmt.title': 'Temperature unit'
     , 'editor.tempfmt.desc': 'Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.'
   , 'editor.tabs.settings': 'Settings'
+    , 'editor.tabs.rooms': 'Rooms'
   , 'editor.tabs.colors': 'Colors'
   , 'editor.tabs.away': 'Away from home'
   , 'away.enable': 'Enable away mode'
@@ -148,12 +158,17 @@ const TT_I18N = {
     'editor.apply_default.title': 'Ved Standard °C ændring',
     'editor.apply_default.desc':
       'Når “Standard °C” ændres og det påvirker temperaturen for nuværende tidsrum, anvendes den nye temperatur straks.',
+      'ui.copy_plan': 'Kopiér skema',
+      'ui.paste_plan': 'Indsæt skema',
+      'ui.copy_day': 'Kopiér dag',
+      'ui.paste_day': 'Indsæt dag',
   'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
   'editor.display_name_optional': 'Rumnavn (valgfrit)',
     'editor.merged_with': 'Flettet med',
-    'editor.store_enable.title': 'Aktivér delt lager',
-    'editor.store_enable.desc': 'Når slået til, gemmes tidsplanen i den valgte sensor og deles mellem alle brugere/dashboards. Når slået fra, gemmes den kun lokalt i din browser.',
-  'editor.store_missing': 'Integrationen "thermostat_timeline" er ikke installeret. Delt lager er ikke tilgængeligt.',
+  'editor.store_enable.title': 'Delt lager + baggrundsstyring',
+  'editor.store_enable.short': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring.',
+  'editor.store_enable.desc': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring (set_temperature) via Thermostat Timeline-integrationen. Termostaterne opdateres også når kortet ikke er åbent. Deler desuden tidsplaner (heat-blokke) og kortets indstillinger på tværs af brugere/enheder. Når slået fra, sendes set_temperature-kommandoer kun mens kortet er aktivt vist på en enhed (tablet/PC/mobil) — det er ikke nok at kortet blot er tilføjet; det skal være åbent på skærmen hele tiden.',
+  'editor.store_missing': 'Integrationen "Thermostat Pro Timeline Sync" er ikke installeret. Delt lager er ikke tilgængeligt.',
     'editor.clear_store': 'Ryd lager',
     'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
     'editor.migrate_to_store': 'Overfør browserdata til lager',
@@ -197,12 +212,17 @@ const TT_I18N = {
     'week.days.sun': 'Søn',
     'week.editor.title': 'Ugedags-tidsplan',
   'week.editor.preview_note': 'Kun forhåndsvisning. Ændringer gemmes først når du trykker Gem.'
+  , 'week.copy_to_rooms': 'Kopiér ugedage til rum'
+  , 'week.copy_to_rooms.title': 'Kopiér ugedage til rum'
+  , 'week.copy_to_rooms.select': 'Vælg rum'
+  , 'week.copy_to_rooms.apply': 'Indsæt i rum'
   , 'week.enable.desc': 'Aktivér plan per ugedag. Når slået fra, bruges samme plan hver dag.'
     , 'editor.timefmt.title': 'Tidsformat'
     , 'editor.timefmt.desc': 'Vælg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.'
     , 'editor.tempfmt.title': 'Temperaturenhed'
     , 'editor.tempfmt.desc': 'Vælg Celsius (°C) eller Fahrenheit (°F) til visning i kortet og editorer.'
   , 'editor.tabs.settings': 'Indstillinger'
+    , 'editor.tabs.rooms': 'Rum'
   , 'editor.tabs.colors': 'Farver'
     , 'editor.tabs.away': 'Væk fra hjemme'
     , 'away.enable': 'Aktivér væk-tilstand'
@@ -252,11 +272,17 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'När du ändrar tidslinjeblock och ändringen påverkar aktuell tid, tillämpas den nya temperaturen omedelbart.',
     'editor.apply_default.title': 'Vid ändring av Standard °C',
     'editor.apply_default.desc': 'När ”Standard °C” ändras och det påverkar den aktuella perioden, tillämpas den nya temperaturen omedelbart.',
+  'ui.copy_plan': 'Kopiera schema',
+  'ui.paste_plan': 'Klistra in schema',
+  'ui.copy_day': 'Kopiera dag',
+  'ui.paste_day': 'Klistra in dag',
   'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
   'editor.display_name_optional': 'Rumsnamn (valfritt)',
     'editor.merged_with': 'Sammanslagen med',
-    'editor.store_enable.title': 'Aktivera delad lagring',
-    'editor.store_enable.desc': 'När det är aktiverat sparas scheman i vald sensor och delas mellan alla användare/dashboard. När det är av sparas de endast lokalt i din webbläsare.',
+  'editor.store_enable.title': 'Delad lagring + bakgrundsstyrning',
+  'editor.store_enable.short': 'Sparar scheman i vald sensor och aktiverar bakgrundsstyrning.',
+  'editor.store_enable.desc': 'Sparar scheman i vald sensor och aktiverar set_temperature i bakgrunden. Termostater uppdateras även när kortet är stängt. Delar också scheman (värmeblock) och kortinställningar mellan användare/enheter. När av: kommandon skickas bara när kortet är aktivt synligt på en enhet (surfplatta/dator/mobil) och måste förbli öppet.',
+  'editor.store_missing': 'Integrationen "Thermostat Pro Timeline Sync" är inte installerad. Delad lagring är inte tillgänglig.',
     'editor.clear_store': 'Rensa lagring',
     'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?',
     'editor.migrate_to_store': 'Överför webbläsardata till lagring',
@@ -286,6 +312,10 @@ const TT_I18N = {
     'week.days.sun': 'Sön',
     'week.editor.title': 'Veckoschema',
     'week.editor.preview_note': 'Endast förhandsvisning. Ändringar tillämpas när du trycker Spara.',
+  'week.copy_to_rooms': 'Kopiera vecka till rum',
+  'week.copy_to_rooms.title': 'Kopiera vecka till rum',
+  'week.copy_to_rooms.select': 'Välj rum',
+  'week.copy_to_rooms.apply': 'Klistra in i rum',
     'week.group.weekdays': 'Vardagar',
   'week.group.weekend': 'Helg',
     'week.days_full.mon': 'Måndag',
@@ -312,6 +342,7 @@ const TT_I18N = {
     'editor.colors.clear_shared': 'Rensa delad färglagring',
     'editor.colors.clear_shared_confirm': 'Detta tar bort färgintervall i den valda lagringssensorn. Vill du fortsätta?',
     'editor.select_entities': 'Rum',
+    'editor.tabs.rooms': 'Rum',
     'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.'
   },
   nb: {
@@ -345,11 +376,17 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Når du endrer blokker i tidslinjen og endringen påvirker aktuell tid, tilpasses den nye temperaturen umiddelbart.',
     'editor.apply_default.title': 'Ved Standard °C-endring',
     'editor.apply_default.desc': 'Når «Standard °C» endres og det påvirker gjeldende periode, brukes den nye temperaturen umiddelbart.',
+  'ui.copy_plan': 'Kopier plan',
+  'ui.paste_plan': 'Lim inn plan',
+  'ui.copy_day': 'Kopier dag',
+  'ui.paste_day': 'Lim inn dag',
   'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
   'editor.display_name_optional': 'Romnavn (valgfritt)',
     'editor.merged_with': 'Flettet med',
-    'editor.store_enable.title': 'Aktiver delt lagring',
-    'editor.store_enable.desc': 'Når aktivert lagres tidsplanen i valgt sensor og deles mellom alle brukere/dashboards. Når av, lagres den kun lokalt i nettleseren.',
+  'editor.store_enable.title': 'Delt lagring + bakgrunnsstyring',
+  'editor.store_enable.short': 'Lagrer tidsplaner i valgt sensor og aktiverer bakgrunnsstyring.',
+  'editor.store_enable.desc': 'Lagrer tidsplaner i valgt sensor og aktiverer set_temperature i bakgrunnen. Termostater oppdateres også når kortet er lukket. Deler også tidsplaner (varmeblokker) og kortinnstillinger på tvers av brukere/enheter. Når av: kommandoer sendes kun mens kortet er aktivt synlig på en enhet (nettbrett/PC/mobil) og må forbli åpent.',
+  'editor.store_missing': 'Integrasjonen "Thermostat Pro Timeline Sync" er ikke installert. Delt lagring er ikke tilgjengelig.',
     'editor.clear_store': 'Tøm lagring',
     'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?',
     'editor.migrate_to_store': 'Overfør nettleserdata til lagring',
@@ -379,6 +416,10 @@ const TT_I18N = {
     'week.days.sun': 'Søn',
     'week.editor.title': 'Ukeplan',
     'week.editor.preview_note': 'Kun forhåndsvisning. Endringer brukes når du trykker Lagre.',
+  'week.copy_to_rooms': 'Kopier ukeplan til rom',
+  'week.copy_to_rooms.title': 'Kopier ukeplan til rom',
+  'week.copy_to_rooms.select': 'Velg rom',
+  'week.copy_to_rooms.apply': 'Sett inn i rom',
     'week.group.weekdays': 'Hverdager',
     'week.group.weekend': 'Helg',
     'week.days_full.mon': 'Mandag',
@@ -405,6 +446,7 @@ const TT_I18N = {
     'editor.colors.clear_shared': 'Tøm delt fargelagring',
     'editor.colors.clear_shared_confirm': 'Dette sletter fargeintervaller i den valgte lagringssensoren. Fortsette?',
     'editor.select_entities': 'Rom',
+    'editor.tabs.rooms': 'Rom',
     'week.enable.desc': 'Aktiver plan per ukedag. Når av, brukes samme plan hver dag.'
   },
   de: {
@@ -438,11 +480,17 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Wenn Sie Blöcke der Zeitlinie ändern und die Änderung die aktuelle Zeit betrifft, wird die neue Temperatur sofort angewendet.',
     'editor.apply_default.title': 'Bei Änderung von Standard °C',
     'editor.apply_default.desc': 'Wenn „Standard °C“ geändert wird und dies den aktuellen Zeitraum betrifft, wird die neue Temperatur sofort angewendet.',
+  'ui.copy_plan': 'Plan kopieren',
+  'ui.paste_plan': 'Plan einfügen',
+  'ui.copy_day': 'Tag kopieren',
+  'ui.paste_day': 'Tag einfügen',
   'editor.merge_label': 'Mit zusammenführen (zusätzlichen Thermostat hinzufügen)',
   'editor.display_name_optional': 'Raumname (optional)',
     'editor.merged_with': 'Zusammengeführt mit',
-    'editor.store_enable.title': 'Geteilten Speicher aktivieren',
-    'editor.store_enable.desc': 'Wenn aktiviert, werden Pläne im ausgewählten Sensor gespeichert und mit allen Benutzern/Dashboards geteilt. Wenn deaktiviert, wird nur lokal im Browser gespeichert.',
+  'editor.store_enable.title': 'Geteilter Speicher + Hintergrundsteuerung',
+  'editor.store_enable.short': 'Speichert Pläne im ausgewählten Sensor und aktiviert die Hintergrundsteuerung.',
+  'editor.store_enable.desc': 'Speichert Pläne im ausgewählten Sensor und aktiviert set_temperature im Hintergrund. Thermostate werden auch aktualisiert, wenn die Karte geschlossen ist. Teilt zudem Zeitpläne (Heizblöcke) und Karten-Einstellungen zwischen Benutzern/Geräten. Wenn aus: Befehle werden nur gesendet, solange die Karte auf einem Gerät (Tablet/PC/Mobil) aktiv sichtbar ist und geöffnet bleibt.',
+  'editor.store_missing': 'Die Integration „Thermostat Pro Timeline Sync“ ist nicht installiert. Geteilter Speicher ist nicht verfügbar.',
     'editor.clear_store': 'Speicher leeren',
     'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?',
     'editor.migrate_to_store': 'Browserdaten in Speicher übertragen',
@@ -472,6 +520,10 @@ const TT_I18N = {
     'week.days.sun': 'So',
     'week.editor.title': 'Wochenschema',
     'week.editor.preview_note': 'Nur Vorschau. Änderungen werden erst beim Speichern angewendet.',
+  'week.copy_to_rooms': 'Wochenschema in Räume kopieren',
+  'week.copy_to_rooms.title': 'Wochenschema in Räume kopieren',
+  'week.copy_to_rooms.select': 'Räume auswählen',
+  'week.copy_to_rooms.apply': 'In Räume einfügen',
     'week.group.weekdays': 'Werktage',
     'week.group.weekend': 'Wochenende',
     'week.days_full.mon': 'Montag',
@@ -498,6 +550,7 @@ const TT_I18N = {
     'editor.colors.clear_shared': 'Geteilten Farbspeicher löschen',
     'editor.colors.clear_shared_confirm': 'Dadurch werden Farbbereiche im ausgewählten Speichersensor gelöscht. Fortfahren?',
     'editor.select_entities': 'Räume',
+    'editor.tabs.rooms': 'Räume',
     'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.'
   },
   es: {
@@ -531,11 +584,17 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Cuando cambias bloques de la línea de tiempo y el cambio afecta a la hora actual, la nueva temperatura se aplica inmediatamente.',
     'editor.apply_default.title': 'Al cambiar Predeterminado °C',
     'editor.apply_default.desc': 'Cuando “Predeterminado °C” cambia y afecta al período actual, la nueva temperatura se aplica inmediatamente.',
+  'ui.copy_plan': 'Copiar plan',
+  'ui.paste_plan': 'Pegar plan',
+  'ui.copy_day': 'Copiar día',
+  'ui.paste_day': 'Pegar día',
   'editor.merge_label': 'Combinar con (añadir termostato extra)',
   'editor.display_name_optional': 'Nombre de la habitación (opcional)',
     'editor.merged_with': 'Combinado con',
-    'editor.store_enable.title': 'Habilitar almacenamiento compartido',
-    'editor.store_enable.desc': 'Al activarlo, los horarios se guardan en el sensor seleccionado y se comparten entre todos los usuarios/tableros. Al desactivarlo, se guardan solo localmente en tu navegador.',
+  'editor.store_enable.title': 'Almacenamiento compartido + control en segundo plano',
+  'editor.store_enable.short': 'Guarda horarios en el sensor seleccionado y habilita el control en segundo plano.',
+  'editor.store_enable.desc': 'Guarda horarios en el sensor seleccionado y habilita set_temperature en segundo plano. Los termostatos se actualizan incluso con la tarjeta cerrada. Además comparte horarios (bloques de calor) y la configuración de la tarjeta entre usuarios/dispositivos. Si está desactivado: los comandos se envían solo mientras la tarjeta está visible en un dispositivo (tableta/PC/móvil) y debe permanecer abierta.',
+  'editor.store_missing': 'La integración "Thermostat Pro Timeline Sync" no está instalada. El almacenamiento compartido no está disponible.',
     'editor.clear_store': 'Vaciar almacenamiento',
     'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?',
     'editor.migrate_to_store': 'Transferir datos del navegador al almacenamiento',
@@ -565,6 +624,10 @@ const TT_I18N = {
     'week.days.sun': 'Dom',
     'week.editor.title': 'Programación por días',
     'week.editor.preview_note': 'Solo vista previa. Los cambios se aplican al pulsar Guardar.',
+  'week.copy_to_rooms': 'Copiar semana a habitaciones',
+  'week.copy_to_rooms.title': 'Copiar semana a habitaciones',
+  'week.copy_to_rooms.select': 'Seleccionar habitaciones',
+  'week.copy_to_rooms.apply': 'Insertar en habitaciones',
     'week.group.weekdays': 'Laborables',
     'week.group.weekend': 'Fin de semana',
     'week.days_full.mon': 'Lunes',
@@ -591,6 +654,7 @@ const TT_I18N = {
     'editor.colors.clear_shared': 'Borrar almacenamiento de color compartido',
     'editor.colors.clear_shared_confirm': 'Esto eliminará los intervalos de color en el sensor de almacenamiento seleccionado. ¿Continuar?',
     'editor.select_entities': 'Habitaciones',
+    'editor.tabs.rooms': 'Habitaciones',
     'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.'
   },
   fr: {
@@ -624,11 +688,17 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Quand vous modifiez des blocs de la chronologie et que la modification affecte l’heure actuelle, la nouvelle température est appliquée immédiatement.',
     'editor.apply_default.title': 'Lors d’un changement de °C par défaut',
     'editor.apply_default.desc': 'Lorsque « °C par défaut » change et que cela affecte la période en cours, la nouvelle température est appliquée immédiatement.',
+  'ui.copy_plan': 'Copier le plan',
+  'ui.paste_plan': 'Coller le plan',
+  'ui.copy_day': 'Copier le jour',
+  'ui.paste_day': 'Coller le jour',
   'editor.merge_label': 'Fusionner avec (ajouter un thermostat supplémentaire)',
   'editor.display_name_optional': 'Nom de la pièce (facultatif)',
     'editor.merged_with': 'Fusionné avec',
-    'editor.store_enable.title': 'Activer le stockage partagé',
-    'editor.store_enable.desc': 'Lorsque activé, les plannings sont enregistrés dans le capteur sélectionné et partagés entre tous les utilisateurs/tableaux de bord. Lorsque désactivé, ils sont enregistrés uniquement localement dans votre navigateur.',
+  'editor.store_enable.title': 'Stockage partagé + contrôle en arrière‑plan',
+  'editor.store_enable.short': 'Enregistre les plannings dans le capteur sélectionné et active le contrôle en arrière‑plan.',
+  'editor.store_enable.desc': 'Enregistre les plannings dans le capteur sélectionné et active set_temperature en arrière‑plan. Les thermostats se mettent à jour même lorsque la carte est fermée. Partage également les plannings (blocs de chauffe) et les paramètres de la carte entre utilisateurs/appareils. Désactivé : commandes envoyées uniquement lorsque la carte est visible sur un appareil (tablette/PC/mobile) et elle doit rester ouverte.',
+  'editor.store_missing': 'L’intégration « Thermostat Pro Timeline Sync » n’est pas installée. Le stockage partagé n’est pas disponible.',
     'editor.clear_store': 'Vider le stockage',
     'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?',
     'editor.migrate_to_store': 'Transférer les données du navigateur vers le stockage',
@@ -658,6 +728,10 @@ const TT_I18N = {
     'week.days.sun': 'Dim',
     'week.editor.title': 'Planification par jour',
     'week.editor.preview_note': 'Aperçu uniquement. Les modifications s’appliquent lors de l’enregistrement.',
+  'week.copy_to_rooms': 'Copier la semaine vers des pièces',
+  'week.copy_to_rooms.title': 'Copier la semaine vers des pièces',
+  'week.copy_to_rooms.select': 'Sélectionner des pièces',
+  'week.copy_to_rooms.apply': 'Insérer dans les pièces',
     'week.group.weekdays': 'Jours ouvrés',
     'week.group.weekend': 'Week-end',
     'week.days_full.mon': 'Lundi',
@@ -684,6 +758,7 @@ const TT_I18N = {
     'editor.colors.clear_shared': 'Effacer le stockage de couleur partagé',
     'editor.colors.clear_shared_confirm': 'Cela supprimera les intervalles de couleur dans le capteur de stockage sélectionné. Continuer ?',
     'editor.select_entities': 'Pièces',
+    'editor.tabs.rooms': 'Pièces',
     'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.'
   },
   fi: {
@@ -717,11 +792,17 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Kun muutat aikajanan lohkoja ja muutos koskee nykyhetkeä, uusi lämpötila otetaan käyttöön heti.',
     'editor.apply_default.title': 'Kun Oletus °C muuttuu',
     'editor.apply_default.desc': 'Kun ”Oletus °C” muuttuu ja se vaikuttaa meneillään olevaan ajanjaksoon, uusi lämpötila otetaan käyttöön heti.',
+  'ui.copy_plan': 'Kopioi aikataulu',
+  'ui.paste_plan': 'Liitä aikataulu',
+  'ui.copy_day': 'Kopioi päivä',
+  'ui.paste_day': 'Liitä päivä',
   'editor.merge_label': 'Yhdistä (lisää toinen termostaatti)',
   'editor.display_name_optional': 'Huoneen nimi (valinnainen)',
     'editor.merged_with': 'Yhdistetty kohteeseen',
-    'editor.store_enable.title': 'Ota jaettu tallennus käyttöön',
-    'editor.store_enable.desc': 'Kun käytössä, aikataulut tallennetaan valittuun sensoriin ja jaetaan kaikille käyttäjille/näkymille. Kun pois päältä, ne tallennetaan vain paikallisesti selaimeen.',
+  'editor.store_enable.title': 'Jaettu tallennus + taustasäätö',
+  'editor.store_enable.short': 'Tallentaa aikataulut valittuun sensoriin ja ottaa käyttöön taustasäädön.',
+  'editor.store_enable.desc': 'Tallentaa aikataulut valittuun sensoriin ja ottaa käyttöön taustalla tapahtuvan set_temperature‑ohjauksen. Termostaatit päivittyvät myös, kun kortti ei ole auki. Jakaa myös aikataulut (lämpöblokit) ja kortin asetukset käyttäjien/laitteiden välillä. Kun pois päältä: komennot lähetetään vain, kun kortti on näkyvissä laitteella (tabletti/tietokone/puhelin) ja sen on pysyttävä auki.',
+  'editor.store_missing': 'Integraatiota "Thermostat Pro Timeline Sync" ei ole asennettu. Jaettu tallennus ei ole käytettävissä.',
     'editor.clear_store': 'Tyhjennä tallennus',
     'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?',
     'editor.migrate_to_store': 'Siirrä selaindata tallennukseen',
@@ -751,6 +832,10 @@ const TT_I18N = {
     'week.days.sun': 'Su',
     'week.editor.title': 'Viikkosuunnitelma',
     'week.editor.preview_note': 'Vain esikatselu. Muutokset otetaan käyttöön, kun painat Tallenna.',
+  'week.copy_to_rooms': 'Kopioi viikkosuunnitelma huoneisiin',
+  'week.copy_to_rooms.title': 'Kopioi viikkosuunnitelma huoneisiin',
+  'week.copy_to_rooms.select': 'Valitse huoneet',
+  'week.copy_to_rooms.apply': 'Lisää huoneisiin',
     'week.group.weekdays': 'Arkipäivät',
     'week.group.weekend': 'Viikonloppu',
     'week.days_full.mon': 'Maanantai',
@@ -777,6 +862,7 @@ const TT_I18N = {
     'editor.colors.clear_shared': 'Tyhjennä jaettu värivarasto',
     'editor.colors.clear_shared_confirm': 'Tämä poistaa värihaarukat valitusta tallennussensorista. Jatketaanko?',
     'editor.select_entities': 'Huoneet',
+    'editor.tabs.rooms': 'Huoneet',
     'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.'
   },
 };
@@ -978,12 +1064,21 @@ class ThermostatTimelineCard extends HTMLElement {
     this._lastApplied = {}; // { [entity_id]: { min:number, temp:number } }
   this._lastAwayActive = null; // Track last away state to trigger immediate apply on change
 
+    // Copy/paste schedule state
+    this._copyFrom = null;        // entity id of source room
+    this._copyPayload = null;     // deep-cloned schedule from source
+
     // Weekday modal state
     this._weeklyOpen = false;
     this._weeklyEntity = null;
     this._weeklyDraft = null; // { mode, days: { mon:[], ... } }
     this._weeklyDayKey = null;
     this._weeklyOverlayHiddenForEditor = false;
+      // Weekly copy/paste by group (weekdays/weekend/sat/sun/mon..sun)
+      this._weeklyCopyFromGroup = null;
+      this._weeklyCopyPayload = null;
+      // Pending copy-to-rooms targets (applied on Save)
+      this._weeklyCopyTargets = [];
 
     // External refresh hook (from editor button)
     this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
@@ -1307,6 +1402,8 @@ class ThermostatTimelineCard extends HTMLElement {
         .row-head input[type=number]{width:64px;padding:4px 6px;border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);color:var(--primary-text-color);font-size:.8rem}
         .btn{cursor:pointer;border:1px solid var(--divider-color);border-radius:10px;padding:6px 10px;font-size:.8rem;background:var(--card-background-color);color:var(--primary-text-color)}
         .btn.primary{background:var(--primary-color);color:var(--text-primary-color, #fff);border-color:var(--primary-color)}
+    .btn.success{background:var(--success-color, #2e7d32);color:#fff;border-color:var(--success-color, #2e7d32)}
+    .btn.danger{background:var(--error-color);color:var(--text-primary-color, #fff);border-color:var(--error-color)}
         .btn.ghost{background:var(--card-background-color);color:var(--primary-text-color)}
   .btn[disabled]{ opacity:.5; cursor:not-allowed }
         .track{position:relative;height:var(--row-height,64px);user-select:none;background:transparent}
@@ -1325,9 +1422,20 @@ class ThermostatTimelineCard extends HTMLElement {
   .modal.modal-12h{ width: min(92vw, 400px); max-width: 400px; }
   /* Wider weekday editor */
   .modal-week{ width: min(95vw, 640px); max-width: 640px; position: relative; }
+  .modal-week .week-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 6px; }
+  .modal-week .week-room{ font-weight:600; color: var(--primary-text-color); opacity:.9; }
   /* Indent scale and track so ticks/blocks are not against the edge */
   .modal-week .week-scale{ margin: 0 16px; }
   .modal-week .week-track{ margin: 0 16px; }
+  /* Weekday tabs */
+  .modal-week .week-tabs{ display:flex; gap:8px; flex-wrap:wrap; border-bottom: 1px solid var(--divider-color); padding-bottom:4px; }
+  .modal-week .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .modal-week .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
+  .modal-week .wk-actions{ display:flex; gap:8px; align-items:center; }
+  /* Copy to rooms modal */
+  .modal-copyrooms{ width:min(92vw,420px); max-width:420px; }
+  .copyrooms-list{ max-height: 260px; overflow:auto; border:1px solid var(--divider-color); border-radius:8px; padding:6px; display:grid; gap:6px; }
+  .copyrooms-list label{ display:flex; align-items:center; gap:8px; }
   /* Inline tooltip for weekly blocks */
   .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
   /* Hide temp pill inside weekly preview blocks for cleaner look */
@@ -1408,7 +1516,7 @@ class ThermostatTimelineCard extends HTMLElement {
         </div>
         <div class="overlay overlay-week" part="overlay">
           <div class="modal modal-week" role="dialog" aria-modal="true" aria-label="Ugedage">
-            <h3 class="week-title">Ugedags-tidsplan</h3>
+            <div class="week-head"><h3 class="week-title">Ugedags-tidsplan</h3><div class="week-room"></div></div>
             <div style="display:grid; gap:10px;">
               <div style="display:grid; gap:4px;">
                 <label style="font-size:.85rem; color: var(--secondary-text-color);" class="week-mode-label">Mode</label>
@@ -1418,11 +1526,12 @@ class ThermostatTimelineCard extends HTMLElement {
                   <option value="all_7">All days (7)</option>
                 </select>
               </div>
-              <div class="week-days" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+              <div class="week-tabs" role="tablist"></div>
               <div class="week-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                 <div class="week-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
-                <button class="btn primary wk-add" type="button">+ Add block</button>
+                <div class="wk-actions"></div>
               </div>
+              <div class="week-pastebar" style="display:none; padding:2px 0; gap:6px; flex-wrap:wrap;"></div>
               <div class="week-scale" style="position:relative; height:32px;">
                 <div class="week-scale-inner" style="position:relative; height:100%;"></div>
               </div>
@@ -1431,6 +1540,18 @@ class ThermostatTimelineCard extends HTMLElement {
                 <button class="btn ghost wk-cancel" type="button">Annullér</button>
                 <button class="btn primary wk-save" type="button">Gem</button>
               </div>
+            </div>
+          </div>
+        </div>
+        <!-- Copy entire week to other rooms -->
+        <div class="overlay overlay-copyrooms" part="overlay">
+          <div class="modal modal-copyrooms" role="dialog" aria-modal="true">
+            <h3 class="copyrooms-title">Copy week to rooms</h3>
+            <div class="copyrooms-desc" style="font-size:.9rem; color: var(--secondary-text-color); margin-bottom:6px;"></div>
+            <div class="copyrooms-list"></div>
+            <div class="actions" style="margin-top:10px; display:flex; justify-content:flex-end; gap:8px;">
+              <button class="btn ghost copyrooms-cancel" type="button">Cancel</button>
+              <button class="btn primary copyrooms-apply" type="button">Apply</button>
             </div>
           </div>
         </div>
@@ -1597,6 +1718,57 @@ class ThermostatTimelineCard extends HTMLElement {
         this._openNewEditor(eid);
       });
       buttonsWrap.append(addBtn);
+      // Copy/Paste schedule button
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'btn ghost';
+      const applyCopyStyle = (mode)=>{
+        // mode: 'copy' | 'paste' | 'cancel'
+        copyBtn.className = 'btn';
+        if (mode === 'copy') copyBtn.classList.add('ghost');
+        if (mode === 'paste') copyBtn.classList.add('success');
+        if (mode === 'cancel') copyBtn.classList.add('danger');
+      };
+      const updateCopyBtn = ()=>{
+        if (!this._copyFrom) { copyBtn.textContent = this._t('ui.copy_plan'); applyCopyStyle('copy'); }
+        else if (this._copyFrom === eid) { copyBtn.textContent = this._t('ui.cancel'); applyCopyStyle('cancel'); }
+        else { copyBtn.textContent = this._t('ui.paste_plan'); applyCopyStyle('paste'); }
+      };
+      updateCopyBtn();
+      copyBtn.addEventListener('click', async () => {
+        // Cancel on source row
+        if (this._copyFrom && this._copyFrom === eid) {
+          this._copyFrom = null; this._copyPayload = null; this._render(); return;
+        }
+        // Paste into this row when copy active
+        if (this._copyFrom && this._copyPayload) {
+          const before = this._desiredNowSnapshot();
+          const src = this._copyPayload;
+          try {
+            const tgt = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+            // Deep copy
+            const clone = JSON.parse(JSON.stringify(src));
+            tgt.defaultTemp = Number.isFinite(clone.defaultTemp) ? clone.defaultTemp : (tgt.defaultTemp || this._config.default_temp);
+            tgt.blocks = Array.isArray(clone.blocks) ? clone.blocks.map(b=>({ ...b, id: Math.random().toString(36).slice(2,9) })) : [];
+            // Weekday structures (keep modes if present)
+            if (clone.weekly) tgt.weekly = JSON.parse(JSON.stringify(clone.weekly));
+            if (clone.weekly_modes) tgt.weekly_modes = JSON.parse(JSON.stringify(clone.weekly_modes));
+            this._schedules[eid] = tgt;
+            await this._saveStore();
+            this._render();
+            if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
+            this._scheduleNextApply();
+          } catch(e){ console.warn('paste schedule failed', e); }
+          return;
+        }
+        // Start copy from this row
+        try {
+          const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+          const payload = { defaultTemp: row.defaultTemp, blocks: (row.blocks||[]).map(b=>({ startMin:b.startMin, endMin:b.endMin, temp:b.temp })), weekly: row.weekly ? JSON.parse(JSON.stringify(row.weekly)) : undefined, weekly_modes: row.weekly_modes ? JSON.parse(JSON.stringify(row.weekly_modes)) : undefined };
+          this._copyFrom = eid; this._copyPayload = payload;
+          this._render();
+        } catch(e){ console.warn('copy schedule failed', e); }
+      });
+      buttonsWrap.append(copyBtn);
       if (this._config?.weekdays_enabled) {
         const weekBtn = document.createElement('button');
         weekBtn.className = 'btn ghost';
@@ -1814,15 +1986,17 @@ class ThermostatTimelineCard extends HTMLElement {
     const edDelete = qs('.ed-delete');
     if (edSave) edSave.addEventListener('click', () => this._saveEditor());
     if (edCancel) edCancel.addEventListener('click', () => this._closeEditor());
-    if (edDelete) edDelete.addEventListener('click', () => this._deleteFromEditor());
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) this._closeEditor(); });
+  if (edDelete) edDelete.addEventListener('click', () => this._deleteFromEditor());
+  // Do not close editor when clicking outside; require explicit buttons
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) { e.preventDefault(); e.stopPropagation(); } });
     // Week overlay events
     const wov = qs('.overlay-week');
     const wsave = qs('.wk-save');
     const wcancel = qs('.wk-cancel');
     if (wsave) wsave.addEventListener('click', () => this._weeklySaveAll());
-    if (wcancel) wcancel.addEventListener('click', () => this._closeWeeklyEditor());
-    if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) this._closeWeeklyEditor(); });
+  if (wcancel) wcancel.addEventListener('click', () => this._closeWeeklyEditor());
+  // Do not close weekly editor on outside click either
+  if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) { e.preventDefault(); e.stopPropagation(); } });
   }
 
   // Allow editor to nudge a repaint explicitly
@@ -2056,6 +2230,8 @@ class ThermostatTimelineCard extends HTMLElement {
     this._weeklyEntity = entity;
     const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
     this._ensureWeeklyStruct(row);
+    // Reset any pending cross-room copies for this editing session
+    this._weeklyCopyTargets = [];
     // Deep copy as draft from the dataset for current mode
     try {
       const curMode = (row.weekly?.mode) || (this._config?.weekdays_mode) || 'weekday_weekend';
@@ -2090,6 +2266,21 @@ class ThermostatTimelineCard extends HTMLElement {
       try { row.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(d)) }; } catch { row.weekly_modes[mode] = { days: d }; }
       row.weekly = { mode, days: JSON.parse(JSON.stringify(d)) };
       this._schedules[entity] = row;
+      // Also apply to any pending target rooms selected via "copy week to rooms"
+      const targets = Array.isArray(this._weeklyCopyTargets) ? this._weeklyCopyTargets : [];
+      if (targets.length) {
+        for (const eid of targets){
+          try {
+            const trow = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+            this._ensureWeeklyStruct(trow);
+            trow.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(d)) };
+            trow.weekly = { mode, days: JSON.parse(JSON.stringify(d)) };
+            this._schedules[eid] = trow;
+          } catch {}
+        }
+      }
+      // Clear pending list after Save
+      this._weeklyCopyTargets = [];
       const before = this._desiredNowSnapshot();
   this._saveStore();
   this._closeWeeklyEditor();
@@ -2099,20 +2290,34 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch(e){ console.warn('weekly save failed', e); this._closeWeeklyEditor(); }
   }
   _renderWeeklyModal(){ try {
-      const modeSel = this.shadowRoot.querySelector('.week-mode');
-      const titleEl = this.shadowRoot.querySelector('.week-title');
+  const modeSel = this.shadowRoot.querySelector('.week-mode');
+  const titleEl = this.shadowRoot.querySelector('.week-title');
+  const roomEl = this.shadowRoot.querySelector('.week-room');
     const note = this.shadowRoot.querySelector('.week-note');
-      const daysWrap = this.shadowRoot.querySelector('.week-days');
-      const track = this.shadowRoot.querySelector('.week-track');
+    const tabsWrap = this.shadowRoot.querySelector('.week-tabs');
+    const pasteBar = this.shadowRoot.querySelector('.week-pastebar');
+    const actionsWrap = this.shadowRoot.querySelector('.wk-actions');
+    const track = this.shadowRoot.querySelector('.week-track');
     const scale = this.shadowRoot.querySelector('.week-scale-inner');
-    const addBtn = this.shadowRoot.querySelector('.wk-add');
     const modalWeek = this.shadowRoot.querySelector('.modal-week');
-      if (!this._weeklyDraft || !daysWrap || !track) return;
+    if (!this._weeklyDraft || !tabsWrap || !track) return;
       // i18n
       if (titleEl) titleEl.textContent = this._t('week.editor.title');
+      // Room name on the same header line
+      try {
+        if (roomEl) {
+          const eid = this._weeklyEntity;
+          let name = '';
+          if (eid) {
+            const custom = (this._config?.labels && this._config.labels[eid]) ? this._config.labels[eid] : null;
+            name = custom || this._prettyName(eid);
+          }
+          roomEl.textContent = name || '';
+        }
+      } catch {}
       const modeLab = this.shadowRoot.querySelector('.week-mode-label');
       if (modeLab) modeLab.textContent = this._t('week.mode');
-      if (note) note.textContent = this._t('week.editor.preview_note');
+  if (note) note.textContent = this._t('week.editor.preview_note');
       if (modeSel) {
         modeSel.value = this._weeklyDraft.mode || 'weekday_weekend';
         // set option labels i18n
@@ -2136,8 +2341,143 @@ class ThermostatTimelineCard extends HTMLElement {
           this._renderWeeklyModal();
         };
       }
-      // Build group/day buttons reflecting mode grouping
-      daysWrap.innerHTML = '';
+      // Copy/Paste day logic
+      // Helper to resolve which real days are in a group for current mode
+      const groupDaysForMode = (mode, key)=>{
+        if (mode === 'weekday_weekend') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='weekend') return ['sat','sun'];
+        } else if (mode === 'weekday_sat_sun') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='sat') return ['sat'];
+          if (key==='sun') return ['sun'];
+        } else if (mode === 'all_7') {
+          return [key];
+        }
+        return [this._effectiveDayKey(key)];
+      };
+      // Build per-day action buttons (unique DOM per tab)
+      const renderActions = () => {
+        if (!actionsWrap) return;
+        actionsWrap.innerHTML = '';
+        const curGroup = this._weeklyDayKey || 'weekdays';
+        const mode = this._weeklyDraft.mode || 'weekday_weekend';
+        // Global action: copy entire week to other rooms
+        const copyAllBtn = document.createElement('button');
+        copyAllBtn.type = 'button';
+        copyAllBtn.className = 'btn ghost wk-copyall';
+        copyAllBtn.textContent = this._t('week.copy_to_rooms');
+        copyAllBtn.onclick = (e)=>{ e.preventDefault(); this._openCopyWeekToRooms(); };
+        actionsWrap.append(copyAllBtn);
+        const itemsKeys = [];
+        if (this._weeklyDraft.mode === 'weekday_weekend') itemsKeys.push('weekdays','weekend');
+        else if (this._weeklyDraft.mode === 'weekday_sat_sun') itemsKeys.push('weekdays','sat','sun');
+        else itemsKeys.push('mon','tue','wed','thu','fri','sat','sun');
+        for (const key of itemsKeys){
+          const box = document.createElement('div');
+          box.style.display = key === curGroup ? 'flex' : 'none';
+          box.style.gap = '8px';
+          box.setAttribute('data-key', key);
+          // Copy/Paste button (contextual)
+          const cp = document.createElement('button');
+          cp.type = 'button';
+          cp.className = 'btn';
+          const setCpStyle = (m)=>{ cp.className='btn'; if (m==='copy') cp.classList.add('ghost'); if (m==='paste') cp.classList.add('success'); };
+          if (!this._weeklyCopyFromGroup) { cp.textContent = this._t('ui.copy_day'); setCpStyle('copy'); }
+          else if (this._weeklyCopyFromGroup === key) { cp.textContent = this._t('ui.copy_day'); setCpStyle('copy'); }
+          else { cp.textContent = this._t('ui.paste_day'); setCpStyle('paste'); }
+          // Disable on source day while copy mode is active
+          cp.disabled = !!this._weeklyCopyFromGroup && this._weeklyCopyFromGroup === key;
+          cp.onclick = (ev)=>{
+            ev.preventDefault(); ev.stopPropagation();
+            if (cp.disabled) return;
+            const modeNow = this._weeklyDraft.mode || 'weekday_weekend';
+            if (!this._weeklyCopyFromGroup) {
+              const gDays = groupDaysForMode(modeNow, key);
+              const srcDay = (modeNow==='all_7') ? this._effectiveDayKey(key) : gDays[0];
+              const arr = (this._weeklyDraft?.days?.[srcDay] || []);
+              this._weeklyCopyFromGroup = key;
+              this._weeklyCopyPayload = JSON.parse(JSON.stringify(arr));
+              renderActions();
+              return;
+            }
+            if (this._weeklyCopyFromGroup === key) {
+              // Refresh payload from same source, stay in copy mode
+              const gDays = groupDaysForMode(modeNow, key);
+              const srcDay = (modeNow==='all_7') ? this._effectiveDayKey(key) : gDays[0];
+              const arr = (this._weeklyDraft?.days?.[srcDay] || []);
+              this._weeklyCopyPayload = JSON.parse(JSON.stringify(arr));
+              return;
+            }
+            // Paste into this key
+            try {
+              const payload = Array.isArray(this._weeklyCopyPayload) ? this._weeklyCopyPayload.map(x=>({ ...x, id: Math.random().toString(36).slice(2,9) })) : [];
+              const targets = (modeNow==='all_7') ? [this._effectiveDayKey(key)] : groupDaysForMode(modeNow, key);
+              const daysClone = { ...(this._weeklyDraft.days || {}) };
+              for (const dk of targets){
+                const arr = payload.map(x=>({ ...x }));
+                arr.sort((a,b)=>a.startMin-b.startMin||a.endMin-b.endMin);
+                daysClone[dk] = arr;
+              }
+              this._weeklyDraft.days = daysClone;
+              this._ensureWeeklyStruct(this._schedules[this._weeklyEntity] || { weekly:{} });
+            } catch(e){ console.warn('weekly paste failed', e); }
+            this._weeklyDayKey = key; this._renderWeeklyModal();
+          };
+          // Add block button (per day) — doubles as Cancel while in copy mode
+          const add = document.createElement('button');
+          add.type = 'button';
+          const applyAddState = ()=>{
+            const inCopy = !!this._weeklyCopyFromGroup;
+            add.className = 'btn ' + (inCopy ? 'danger' : 'primary');
+            add.textContent = inCopy ? this._t('ui.cancel') : ('+ ' + this._t('ui.add_block'));
+          };
+          applyAddState();
+          add.onclick = ()=>{
+            if (this._weeklyCopyFromGroup) {
+              // Cancel copy mode
+              this._weeklyCopyFromGroup = null; this._weeklyCopyPayload = null; renderActions();
+            } else {
+              this._weeklyDayKey = key; this._openWeeklyBlockEditor(null);
+            }
+          };
+          box.append(cp, add);
+          actionsWrap.append(box);
+        }
+      };
+      renderActions();
+      // Ensure pastebar stays hidden with the new contextual control
+      try { const pb = this.shadowRoot.querySelector('.week-pastebar'); if (pb) { pb.style.display='none'; pb.innerHTML=''; } } catch{}
+      // Paste target bar (always real days mon..sun). Visible only in copy mode
+      if (pasteBar) {
+        if (!this._weeklyCopyFrom) {
+          pasteBar.style.display = 'none'; pasteBar.innerHTML = '';
+        } else {
+          pasteBar.style.display = 'flex'; pasteBar.innerHTML = '';
+          const names = this._weekdayNames();
+          for (const k of names){
+            const btn = document.createElement('button'); btn.type='button';
+            if (k === this._weeklyCopyFrom) {
+              btn.className = 'btn danger'; btn.textContent = this._t('ui.cancel');
+              btn.onclick = ()=>{ this._weeklyCopyFrom = null; this._weeklyCopyPayload = null; this._renderWeeklyModal(); };
+            } else {
+              btn.className = 'btn success';
+              const lab = (this._t('week.days_full.'+k) || this._t('week.days.'+k) || k);
+              btn.textContent = this._t('ui.paste_day') + ' ' + lab;
+              btn.onclick = ()=>{
+                try {
+                  const payload = Array.isArray(this._weeklyCopyPayload) ? this._weeklyCopyPayload.map(x=>({ ...x, id: Math.random().toString(36).slice(2,9) })) : [];
+                  this._weeklyDraft.days[k] = payload.sort((a,b)=>a.startMin-b.startMin||a.endMin-b.endMin);
+                  this._renderWeeklyModal();
+                } catch(e){ console.warn('paste day target failed', e); }
+              };
+            }
+            pasteBar.append(btn);
+          }
+        }
+      }
+      // Build group/day tabs reflecting mode grouping
+      tabsWrap.innerHTML = '';
       const editable = this._weeklyEditableKeys(this._weeklyDraft.mode);
       const items = [];
       if (this._weeklyDraft.mode === 'weekday_weekend') {
@@ -2151,17 +2491,30 @@ class ThermostatTimelineCard extends HTMLElement {
         for (const k of this._weekdayNames()) items.push({key:k, label:(this._t('week.days_full.'+k) || this._t('week.days.'+k))});
       }
       if (!editable.includes(this._weeklyDayKey)) this._weeklyDayKey = editable[0] || 'weekdays';
+      // Helper: group -> array of real day keys
+  const groupDays2 = (mode, key)=>{
+        if (mode === 'weekday_weekend') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='weekend') return ['sat','sun'];
+        } else if (mode === 'weekday_sat_sun') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='sat') return ['sat'];
+          if (key==='sun') return ['sun'];
+        } else if (mode === 'all_7') {
+          return [key];
+        }
+        return [this._effectiveDayKey(key)];
+      };
       for (const it of items){
-        const b = document.createElement('button'); b.type='button'; b.className='btn ghost'; b.textContent = it.label;
-        b.addEventListener('click', ()=>{ this._weeklyDayKey = it.key; this._renderWeeklyModal(); });
-        if (it.key === this._weeklyDayKey) b.classList.add('primary');
-        daysWrap.append(b);
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'wk-tab' + (it.key === this._weeklyDayKey ? ' active' : '');
+        tab.textContent = it.label;
+        tab.addEventListener('click', ()=>{ this._weeklyDayKey = it.key; this._renderWeeklyModal(); });
+        tabsWrap.append(tab);
       }
-      // Toolbar actions
-      if (addBtn) {
-        addBtn.onclick = () => this._openWeeklyBlockEditor(null);
-        // Localize label with + prefix already handled globally
-      }
+      // Rebuild actions so the visible set matches active tab
+      renderActions();
       // Compact scale ticks (every 2 hours)
       if (scale) {
         scale.innerHTML = '';
@@ -2251,6 +2604,45 @@ class ThermostatTimelineCard extends HTMLElement {
   });
     } catch(e){ console.warn('render weekly modal failed', e); }
   }
+  _openCopyWeekToRooms(){ try {
+      // Build list of target rooms (exclude current)
+      const list = this.shadowRoot.querySelector('.copyrooms-list');
+      const title = this.shadowRoot.querySelector('.copyrooms-title');
+      const desc = this.shadowRoot.querySelector('.copyrooms-desc');
+      const ov = this.shadowRoot.querySelector('.overlay-copyrooms');
+      if (title) title.textContent = this._t('week.copy_to_rooms.title');
+      if (desc) desc.textContent = this._t('week.copy_to_rooms.select');
+      if (list) {
+        list.innerHTML = '';
+        const ents = (this._config?.entities || []);
+        for (const eid of ents){
+          if (eid === this._weeklyEntity) continue;
+          const lbl = (this._config?.labels && this._config.labels[eid]) ? this._config.labels[eid] : this._prettyName(eid);
+          const row = document.createElement('label');
+          const cb = document.createElement('input'); cb.type='checkbox'; cb.value=eid;
+          const span = document.createElement('span'); span.textContent = lbl;
+          row.append(cb, span); list.append(row);
+        }
+      }
+      const cancel = this.shadowRoot.querySelector('.copyrooms-cancel');
+      const apply = this.shadowRoot.querySelector('.copyrooms-apply');
+      if (cancel) cancel.onclick = ()=>{ ov?.classList.remove('open'); };
+      if (apply) apply.onclick = ()=> this._applyCopyWeekToRooms();
+      ov?.classList.add('open');
+    } catch(e){ console.warn('open copy rooms failed', e); }
+  }
+  async _applyCopyWeekToRooms(){ try {
+      const list = this.shadowRoot.querySelector('.copyrooms-list');
+      const ov = this.shadowRoot.querySelector('.overlay-copyrooms');
+      if (!this._weeklyDraft) { ov?.classList.remove('open'); return; }
+      const checked = Array.from(list?.querySelectorAll('input[type=checkbox]:checked') || []).map(x=>x.value);
+      // Queue the targets; actual copy occurs on Save in weekly editor
+      this._weeklyCopyTargets = checked;
+      ov?.classList.remove('open');
+      // Optionally re-render header/note to reflect queued action (no persistence yet)
+      this._renderWeeklyModal();
+    } catch(e){ console.warn('apply copy rooms failed', e); }
+  }
   _openWeeklyBlockEditor(blockId, atMin=null){ if (!this._weeklyDraft) return; const day = this._effectiveDayKey(this._weeklyDayKey || 'mon'); const arr = this._weeklyDraft.days?.[day] || []; if (!blockId){
       // open new
       const start = Number.isFinite(atMin) ? this._clamp(Math.round(atMin),0,1380) : this._clamp(Math.round(this._getNowMin()),0,1380);
@@ -2326,20 +2718,73 @@ class ThermostatTimelineCard extends HTMLElement {
   if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
   const maxLimit = this._maxDisplay(); const minLimit = this._minDisplay(); if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit); if (Number.isFinite(minLimit)) temp = Math.max(temp, minLimit);
     start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440);
-    if (end <= start) end = this._clamp(start + 15, start + 1, 1440);
-    const others = (sourceBlocks || []).filter(x => !b || x.id !== b.id); const overlap = others.find(o => !(end <= o.startMin || start >= o.endMin)); if (overlap) { const overlapStart = Math.max(start, overlap.startMin); const overlapEnd = Math.min(end, overlap.endMin); const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd)); const canFixStart = overlap.endMin < end; const canFixEnd = overlap.startMin > start; let actionLabel = this._t('ui.auto_fix'); let suggestedStart = null, suggestedEnd = null; if (canFixStart && (!canFixEnd || (end - overlap.endMin) <= (overlap.startMin - start))) { suggestedStart = overlap.endMin; actionLabel = this._t('ui.fix_start_to').replace('{time}', this._label(suggestedStart)); } else if (canFixEnd) { suggestedEnd = overlap.startMin; actionLabel = this._t('ui.fix_end_to').replace('{time}', this._label(suggestedEnd)); } errEl.innerHTML = `<div>${msg}</div>` + ((suggestedStart !== null || suggestedEnd !== null) ? `<div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button><button class="btn primary ed-fix-apply" type="button">${actionLabel}</button></div>` : `<div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`); errEl.style.display = 'block'; const apply = errEl.querySelector('.ed-fix-apply'); const cancel = errEl.querySelector('.ed-fix-cancel'); if (cancel) cancel.addEventListener('click', () => { errEl.style.display='none'; errEl.textContent=''; }); if (apply) apply.addEventListener('click', () => { if (suggestedStart !== null) { edFrom.value = this._toTimeInput(suggestedStart); } else if (suggestedEnd !== null) { edTo.value = this._toTimeInput(suggestedEnd); } errEl.style.display='none'; errEl.textContent=''; setTimeout(() => { this._saveEditor(); }, 50); }); } return; }
+
+    // Helper to check overlap in an array of blocks (ignore current 'b' if provided)
+    const hasOverlap = (arr, s, e, ignoreId=null) => {
+      const othersArr = (arr||[]).filter(x=>!ignoreId || x.id !== ignoreId);
+      return othersArr.find(o => !(e <= o.startMin || s >= o.endMin));
+    };
+
+    // If interval crosses midnight (end <= start), split into two blocks
+    const crossesMidnight = end <= start;
+    if (!crossesMidnight) {
+      const overlap = hasOverlap(sourceBlocks, start, end, b?.id);
+      if (overlap) {
+        const overlapStart = Math.max(start, overlap.startMin);
+        const overlapEnd = Math.min(end, overlap.endMin);
+        const errEl = this.shadowRoot.querySelector('.ed-error');
+        if (errEl) {
+          const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd));
+          errEl.innerHTML = `<div>${msg}</div><div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button></div>`;
+          errEl.style.display = 'block';
+          const cancel = errEl.querySelector('.ed-fix-cancel');
+          cancel?.addEventListener('click', ()=>{ errEl.style.display='none'; errEl.textContent=''; });
+        }
+        return;
+      }
+    }
   temp = this._fromDisplayTemp(temp);
   const before = this._desiredNowSnapshot();
     if (weeklyDay && this._weeklyDraft) {
-      if (!b) {
-        const id = Math.random().toString(36).slice(2,9);
-        b = { id, startMin: start, endMin: end, temp };
-        sourceBlocks.push(b);
+      if (crossesMidnight) {
+        // Split into two parts on the SAME day: [start..1440] and [0..end]
+        const dayKey = weeklyDay;
+        const arrToday = this._weeklyDraft.days?.[dayKey] || [];
+        // Check overlaps for each part against the same day
+        const ov1 = hasOverlap(arrToday, start, 1440, b?.id);
+        const ov2 = hasOverlap(arrToday, 0, end, b?.id);
+        if (ov1 || ov2){
+          const errEl = this.shadowRoot.querySelector('.ed-error');
+          if (errEl) {
+            const overlap = ov1 || ov2;
+            const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max((ov1?start:0), overlap.startMin))).replace('{end}', this._label(Math.min((ov1?1440:end), overlap.endMin)));
+            errEl.innerHTML = `<div>${msg}</div><div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`; errEl.style.display='block';
+            errEl.querySelector('.ed-fix-cancel')?.addEventListener('click', ()=>{ errEl.style.display='none'; errEl.textContent=''; });
+          }
+          return;
+        }
+        // Apply changes on same day
+        if (!b) {
+          const id1 = Math.random().toString(36).slice(2,9);
+          const id2 = Math.random().toString(36).slice(2,9);
+          arrToday.push({ id:id1, startMin:start, endMin:1440, temp });
+          arrToday.push({ id:id2, startMin:0, endMin:end, temp });
+        } else {
+          b.temp = temp; b.startMin = start; b.endMin = 1440;
+          const id2 = Math.random().toString(36).slice(2,9);
+          arrToday.push({ id:id2, startMin:0, endMin:end, temp });
+        }
+        this._weeklyDraft.days[dayKey] = arrToday.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
       } else {
-        b.temp = temp; b.startMin = start; b.endMin = end;
+        if (!b) {
+          const id = Math.random().toString(36).slice(2,9);
+          b = { id, startMin: start, endMin: end, temp };
+          sourceBlocks.push(b);
+        } else {
+          b.temp = temp; b.startMin = start; b.endMin = end;
+        }
+        sourceBlocks.sort((a,bx)=>a.startMin - bx.startMin || a.endMin - bx.endMin);
       }
-      // sort and adjust neighbors only within this day list
-      sourceBlocks.sort((a,bx)=>a.startMin - bx.startMin || a.endMin - bx.endMin);
       // If started from main timeline, auto-save the whole weekly plan now
       if (this._autoSaveWeeklyFromTimeline) {
         this._autoSaveWeeklyFromTimeline = false;
@@ -2354,7 +2799,36 @@ class ThermostatTimelineCard extends HTMLElement {
       return;
     }
     // Normal (non-weekly) save
-    if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; } this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin); await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
+    if (crossesMidnight) {
+      // Check overlaps for both parts
+      const ov1 = hasOverlap(row.blocks, start, 1440, b?.id);
+      const ov2 = hasOverlap(row.blocks, 0, end, null);
+      if (ov1 || ov2) {
+        const errEl = this.shadowRoot.querySelector('.ed-error');
+        if (errEl) {
+          const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end));
+          errEl.innerHTML = `<div>${msg}</div><div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button></div>`; errEl.style.display='block';
+          errEl.querySelector('.ed-fix-cancel')?.addEventListener('click', ()=>{ errEl.style.display='none'; errEl.textContent=''; });
+        }
+        return;
+      }
+      if (!b) {
+        const id1 = Math.random().toString(36).slice(2,9);
+        const id2 = Math.random().toString(36).slice(2,9);
+        row.blocks.push({ id:id1, startMin:start, endMin:1440, temp });
+        row.blocks.push({ id:id2, startMin:0, endMin:end, temp });
+      } else {
+        // Update current b to first part and add second
+        b.temp = temp; b.startMin = start; b.endMin = 1440;
+        const id2 = Math.random().toString(36).slice(2,9);
+        row.blocks.push({ id:id2, startMin:0, endMin:end, temp });
+      }
+      row.blocks.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+    } else {
+      if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; }
+      this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin);
+    }
+    await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
 
   _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
@@ -2424,6 +2898,13 @@ class ThermostatTimelineCard extends HTMLElement {
             if (opt.value==='all_7') opt.textContent = t('week.mode.all_7');
           }
         }
+        // Copy-to-rooms modal localization
+        try {
+          const crt = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-title'); if (crt) crt.textContent = t('week.copy_to_rooms.title');
+          const crd = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-desc'); if (crd) crd.textContent = t('week.copy_to_rooms.select');
+          const crc = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-cancel'); if (crc) crc.textContent = t('ui.cancel');
+          const cra = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-apply'); if (cra) cra.textContent = t('week.copy_to_rooms.apply');
+        } catch {}
         // Weekdays button text in rows is set during render via this._t('week.button')
       } catch {}
     } catch (e) { /* ignore */ }
@@ -2505,7 +2986,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
       if (!hasService) {
         const warnText = this._t ? this._t('editor.store_missing') : null;
-        const msg = warnText && warnText !== 'editor.store_missing' ? warnText : 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.';
+  const msg = warnText && warnText !== 'editor.store_missing' ? warnText : 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.';
         let warn = root.querySelector('.store-missing');
         if (!warn) {
           warn = document.createElement('div'); warn.className = 'store-missing'; warn.style.color = 'var(--error-color)'; warn.style.fontSize = '.9rem'; warn.style.marginTop = '6px';
@@ -2515,13 +2996,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           warn.appendChild(document.createTextNode(msg.replace(/\.$/, '') + '. '));
           (function(){
             let link = document.createElement('a');
-            link.href = 'https://github.com/qlerup/thermostat-pro-timeline-sync';
+            // Use my.home-assistant.io deep link to the HACS repository page
+            link.href = 'https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=thermostat-pro-timeline-sync';
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.style.color = 'var(--error-color)';
             link.style.textDecoration = 'underline';
             link.style.fontWeight = '500';
-            link.textContent = 'Installér fra GitHub';
+            link.textContent = 'Åbn i HACS';
             warn.appendChild(link);
           })();
         const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
@@ -2642,6 +3124,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   /* Visual card for each color range */
   .color-item { border:1px dashed var(--divider-color); border-radius:10px; padding:6px; background: var(--secondary-background-color, transparent); }
   .color-item + .color-item { margin-top:6px; }
+  /* Compact info icon with native tooltip (title) */
+  .info-icon { width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--divider-color); border-radius:50%; color: var(--secondary-text-color); font-weight:700; font-size:.75rem; cursor:pointer; background: transparent; }
+  .info-icon::after { content:'?'; line-height:1; }
+  .info-pop { position: fixed; z-index: 10000; max-width: 520px; padding: 10px 12px; border-radius: 8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); box-shadow: var(--ha-card-box-shadow, 0 4px 12px rgba(0,0,0,.2)); font-size:.9rem; }
+  .info-pop.hidden { display:none; }
   /* Space the add button away from header line */
   .tab-colors .add-entity-btn { margin-top:6px; }
   .colors-head span:nth-child(1),
@@ -2659,7 +3146,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
           100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
         </style>
-  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button></div>
+  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         <div class="row">
@@ -2667,8 +3154,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           <div style="display:grid; gap:6px; max-width:480px;">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
               <div style="display:grid; gap:2px;">
-                <div class="store-title" style="font-weight:600;">Enable shared storage</div>
-                <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);">When enabled, schedules are shared via the selected sensor.</div>
+                <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
+                <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);"><span class="store-desc-text">Saves schedules to the selected sensor and enables background control.</span></div>
               </div>
               <ha-switch class="store-enable"></ha-switch>
             </div>
@@ -2680,10 +3167,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="entities"></div>
-          <button class="add-entity-btn add-room-settings" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
-        </div>
+        
         
 <style>
 /* Settings (grouped card with separators) */
@@ -2800,6 +3284,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 </div>
 
   </div>
+  <div class="wrap tab-rooms" style="display:none;">
+    <div class="row">
+      <div class="label">Rooms</div>
+      <div class="entities"></div>
+      <button class="add-entity-btn add-room-btn" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
+    </div>
+  </div>
   <div class="wrap tab-colors" style="display:none;"></div>
   <div class="wrap tab-away" style="display:none; max-width:480px;">
     <div class="settings-card">
@@ -2897,7 +3388,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const input = qs(".def"); if (input) input.value = String(this._toDisplayTemp(vC));
     });
     qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
-  qs(".add-room-settings")?.addEventListener("click", () => this._addEntity());
+  qs(".add-room-btn")?.addEventListener("click", () => this._addEntity());
     qs(".auto")?.addEventListener("change", e => this._upd("auto_apply", e.target.checked));
     qs(".applyedit")?.addEventListener("change", e => this._upd("apply_on_edit", e.target.checked));
     qs(".applydef")?.addEventListener("change", e => this._upd("apply_on_default_change", e.target.checked));
@@ -3038,9 +3529,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     // Tabs behavior
     try {
       const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
+      const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
+      if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); };
       if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
       if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
     } catch {}
@@ -3082,7 +3575,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if(!this._hass || !this.shadowRoot || !this._config) return;
     if(this._openCount > 0) return;
 
-    // Robust tab delegation (ensures Colors can be opened even with no rooms)
+    // Robust tab delegation (ensure any tab can be opened reliably)
     if (!this._tabHandlersBound) {
       this._tabHandlersBound = true;
       try {
@@ -3091,7 +3584,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           const el = t && t.closest ? t.closest('.tab-btn') : null;
           if (!el) return;
           if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
+          if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); }
           if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
+          if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
         });
       } catch {}
     }
@@ -3247,8 +3742,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
           const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn'; btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
           btn.onclick = () => {
-            this._activeTab = 'settings'; this._render();
-            const add = this.shadowRoot.querySelector('.add-room-settings');
+            this._activeTab = 'rooms'; this._render();
+            const add = this.shadowRoot.querySelector('.add-room-btn');
             if (add) { add.classList.add('pulse-attn','pulse'); setTimeout(() => add.classList.remove('pulse'), 3500); add.scrollIntoView({ behavior:'smooth', block:'center' }); }
           };
           box.append(p, btn); root.append(box);
@@ -3457,19 +3952,24 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     // Apply tab visibility/class based on state (always run)
     try {
       const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
+      const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       const sSec = this.shadowRoot.querySelector('.tab-settings');
+      const rSec = this.shadowRoot.querySelector('.tab-rooms');
       const cSec = this.shadowRoot.querySelector('.tab-colors');
       const aSec = this.shadowRoot.querySelector('.tab-away');
+      const isRooms = this._activeTab === 'rooms';
       const isColors = this._activeTab === 'colors';
       const isSettings = this._activeTab === 'settings';
       const isAway = this._activeTab === 'away';
-      if (sBtn && cBtn && aBtn && sSec && cSec && aSec) {
+      if (sBtn && rBtn && cBtn && aBtn && sSec && rSec && cSec && aSec) {
         sBtn.classList.toggle('active', isSettings);
+        rBtn.classList.toggle('active', isRooms);
         cBtn.classList.toggle('active', isColors);
         aBtn.classList.toggle('active', isAway);
         sSec.style.display = isSettings ? '' : 'none';
+        rSec.style.display = isRooms ? '' : 'none';
         cSec.style.display = isColors ? '' : 'none';
         aSec.style.display = isAway ? '' : 'none';
       }
@@ -3865,8 +4365,51 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         // toggle texts
         const stTitle = root.querySelector('.store-title');
         const stDesc = root.querySelector('.store-desc');
-        if (stTitle) stTitle.textContent = t('editor.store_enable.title');
-        if (stDesc) stDesc.textContent = t('editor.store_enable.desc');
+        // Title + info icon (click to open popover)
+        const stTitleText = root.querySelector('.store-title .store-title-text');
+        if (stTitleText) stTitleText.textContent = t('editor.store_enable.title');
+        if (stDesc) {
+          const shortTxt = this._t('editor.store_enable.short');
+          const icon = root.querySelector('.info-icon');
+          const textSpan = root.querySelector('.store-desc-text');
+          if (textSpan) textSpan.textContent = shortTxt !== 'editor.store_enable.short' ? shortTxt : (this._t('editor.store_enable.title') || '');
+
+          // Build popover once
+          let pop = root.querySelector('.info-pop');
+          if (!pop) {
+            pop = document.createElement('div');
+            pop.className = 'info-pop hidden';
+            pop.setAttribute('role','dialog');
+            root.append(pop);
+          }
+          const openPop = () => {
+            const desc = this._t('editor.store_enable.desc');
+            pop.textContent = desc;
+            const r = icon.getBoundingClientRect();
+            const maxW = Math.min(520, Math.max(240, Math.floor(window.innerWidth*0.9)));
+            pop.style.maxWidth = maxW + 'px';
+            let left = Math.max(8, Math.min(window.innerWidth - maxW - 8, r.left));
+            let top = r.bottom + 8;
+            pop.style.left = left + 'px';
+            pop.style.top = top + 'px';
+            pop.classList.remove('hidden');
+          };
+          const closePop = () => { if (pop) pop.classList.add('hidden'); };
+
+          // Bind click/tap once
+          if (icon && !icon.dataset.bound) {
+            icon.dataset.bound = '1';
+            icon.addEventListener('click', (e) => { e.stopPropagation(); if (pop.classList.contains('hidden')) openPop(); else closePop(); });
+            icon.addEventListener('touchend', (e) => { try { e.preventDefault(); } catch{}; e.stopPropagation(); if (pop.classList.contains('hidden')) openPop(); else closePop(); }, { passive:false });
+            // Close on outside click or ESC
+            const onOutside = (ev)=>{
+              const path = ev.composedPath ? ev.composedPath() : [];
+              if (path.includes(icon) || path.includes(pop)) return; closePop();
+            };
+            window.addEventListener('click', onOutside);
+            window.addEventListener('keydown', (ev)=>{ if (ev.key==='Escape') closePop(); });
+          }
+        }
         // Check that the thermostat_timeline integration/service exists in Home Assistant
         try {
           const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
@@ -3874,8 +4417,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           const warnText = this._t ? this._t('editor.store_missing') : null;
           const msg = warnText && warnText !== 'editor.store_missing'
             ? warnText
-            : 'Integration "thermostat_timeline" is not installed. Shared storage is unavailable.';
-          var githubLink = ' <a href="https://github.com/qlerup/thermostat-pro-timeline-sync" target="_blank" rel="noopener noreferrer" style="color:var(--error-color);text-decoration:underline;font-weight:500;">[Installér fra GitHub]</a>';
+            : 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.';
+          var githubLink = ' <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=thermostat-pro-timeline-sync" target="_blank" rel="noopener noreferrer" style="color:var(--error-color);text-decoration:underline;font-weight:500;">[Åbn i HACS]</a>';
           if (!warn) {
             warn = document.createElement('div');
             warn.className = 'store-missing';
@@ -3893,13 +4436,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           // Tilføj tekst og link igen
           warn.appendChild(document.createTextNode(msg.replace(/\.$/, '') + '. '));
           let link = document.createElement('a');
-          link.href = 'https://github.com/qlerup/thermostat-pro-timeline-sync';
+          link.href = 'https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=thermostat-pro-timeline-sync';
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
           link.style.color = 'var(--error-color)';
           link.style.textDecoration = 'underline';
           link.style.fontWeight = '500';
-          link.textContent = 'Installér fra GitHub';
+          link.textContent = 'Åbn i HACS';
           warn.appendChild(link);
           if (!hasService) {
             warn.style.display = 'block';
@@ -3977,7 +4520,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       } catch {}
       // Tabs labels
       try {
-        const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
+  const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
+  const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
         // Colors tab action labels
