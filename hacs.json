@@ -1,7 +1,6 @@
 {
   "name": "Thermostat Pro Timeline",
-  "filename": "dist/thermostat-pro-timeline.js",
+  "filename": "thermostat-pro-timeline.js",
   "homeassistant": "2024.12.0",
-  "render_readme": true,
-  "zip_release": true
+  "render_readme": true
 }
