@@ -1,4 +1,4 @@
-name: Build & attach ZIP for HACS
+name: Build & Attach ZIP for HACS (Lovelace Card)
 
 on:
   release:
@@ -8,27 +8,57 @@ permissions:
   contents: write
 
 jobs:
-  build-and-attach:
+  package-and-upload:
     runs-on: ubuntu-latest
+    env:
+      BUNDLE: thermostat-pro-timeline.js
+      ZIP_NAME: thermostat-pro-timeline.zip
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Byg/forbered dist — tilpas hvis du har npm build
       - name: Prepare dist (bundle + media)
         run: |
-          mkdir -p dist/media/thermostat-guide
-          cp thermostat-pro-timeline.js dist/
-          [ -d media/thermostat-guide ] && rsync -a media/thermostat-guide/ dist/media/thermostat-guide/
+          set -e
 
-      - name: Verify dist
+          # Sørg for dist findes
+          mkdir -p dist
+
+          # 1) Håndtér JS-bundle
+          if [ -f "dist/${BUNDLE}" ]; then
+            echo "Bundle already present: dist/${BUNDLE}"
+          elif [ -f "${BUNDLE}" ]; then
+            cp "${BUNDLE}" "dist/${BUNDLE}"
+            echo "Copied bundle -> dist/${BUNDLE}"
+          else
+            echo "::error ::Bundle not found: ${BUNDLE} (checked repo root and dist/)"
+            echo "Root contents:" && ls -la
+            echo "dist contents (if any):" && ls -la dist || true
+            exit 1
+          fi
+
+          # 2) Kopiér ekstra assets ind i dist/
+          #   Tilpas eller udvid disse mapper efter behov
+          if [ -d "media" ]; then
+            rsync -a "media/" "dist/media/"
+          fi
+          if [ -d "thermostat-guide" ]; then
+            rsync -a "thermostat-guide/" "dist/thermostat-guide/"
+          fi
+
+          # 3) (valgfrit) precompress JS (serveres fint via /hacsfiles)
+          gzip -kf "dist/${BUNDLE}" || true
+
+      - name: Verify dist contents
         run: |
-          test -f dist/thermostat-pro-timeline.js
+          test -f "dist/${BUNDLE}"
+          echo "Dist tree:"
+          find dist -maxdepth 3 -type f | sed 's/^/ - /'
 
-      # VIGTIGT: zip INDHOLDET af dist/, ikke mappen, så filer havner i roden ved udpakning
-      - name: Create ZIP for HACS (contents of dist/)
+      - name: Create ZIP from dist/ contents
         run: |
           cd dist
-          zip -r ../thermostat-pro-timeline.zip . \
+          zip -r "../${ZIP_NAME}" . \
             -x "**/__pycache__/*" "**/*.map" ".DS_Store" ".git/*"
           cd ..
 
@@ -37,5 +67,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: thermostat-pro-timeline.zip
+          files: ${{ env.ZIP_NAME }}
           fail_on_unmatched_files: true
