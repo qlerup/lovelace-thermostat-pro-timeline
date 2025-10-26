@@ -1125,6 +1125,11 @@ class ThermostatTimelineCard extends HTMLElement {
     this._initialized = false;
     this._config = ThermostatTimelineCard.getStubConfig();
 
+    // Temporarily disable all pop-up overlays (block editor, weekday editor, copy-to-rooms, onboarding).
+    // This acts like "commenting out" the popup part without deleting code.
+    // Set to false to re-enable later.
+    this._disablePopups = true;
+
     // Data
     this._schedules = {};          // { [entity_id]: { defaultTemp:number, blocks:[{id,startMin,endMin,temp}] } }
 
@@ -1649,6 +1654,13 @@ class ThermostatTimelineCard extends HTMLElement {
         .pill-chip { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); color: var(--primary-text-color); }
         .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
         .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
+        /* Hide all popups and popup-trigger buttons when card has .hide-popups */
+        .card.hide-popups .overlay,
+        .card.hide-popups .overlay-week,
+        .card.hide-popups .overlay-copyrooms,
+        .card.hide-popups .overlay-onboard { display: none !important; }
+        .card.hide-popups [data-role="addbtn"],
+        .card.hide-popups [data-role="weekbtn"] { display: none !important; }
         </style>
       <ha-card class="card">
   <div class="header"><div class="title"></div><div class="weekday-full" style="display:none;"></div><div class="spacer"></div></div>
@@ -1731,11 +1743,14 @@ class ThermostatTimelineCard extends HTMLElement {
         </div>
       </ha-card>`;    this._applyCardI18n();
 
+    // Apply hide-popups class if requested
+    try { const card = this.shadowRoot.querySelector('ha-card'); if (this._disablePopups && card) card.classList.add('hide-popups'); } catch {}
+
 
     this._ensureSchedules();
     this._startUiTimer();
-    // Show onboarding for first-time users
-    try { this._maybeOpenOnboard(); } catch {}
+    // Show onboarding for first-time users (disabled while popups are turned off)
+    try { if (!this._disablePopups) this._maybeOpenOnboard(); } catch {}
   }
 
   _ensureSchedules() {
@@ -1867,9 +1882,10 @@ class ThermostatTimelineCard extends HTMLElement {
       const buttonsWrap = document.createElement('div');
       buttonsWrap.style.display = 'flex';
       buttonsWrap.style.gap = '6px';
-      const addBtn = document.createElement('button');
+  const addBtn = document.createElement('button');
       addBtn.className = 'btn primary';
       addBtn.textContent = '+ ' + this._t('ui.add_block');
+  try { addBtn.dataset.role = 'addbtn'; if (this._disablePopups) addBtn.style.display = 'none'; } catch {}
       addBtn.addEventListener('click', () => {
         // If weekdays are enabled, add into today's weekly dataset for the active mode
         try {
@@ -1949,6 +1965,7 @@ class ThermostatTimelineCard extends HTMLElement {
         const weekBtn = document.createElement('button');
         weekBtn.className = 'btn ghost';
         weekBtn.textContent = this._t('week.button');
+        try { weekBtn.dataset.role = 'weekbtn'; if (this._disablePopups) weekBtn.style.display = 'none'; } catch {}
         weekBtn.addEventListener('click', () => this._openWeeklyEditor(eid));
         buttonsWrap.append(weekBtn);
       }
@@ -2362,6 +2379,7 @@ class ThermostatTimelineCard extends HTMLElement {
     this._deleteBlock(entity, blockId); this._closeEditor(); }
 
   _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; }
+  /* popups visible: continue */
   // Hide any tooltips while editing
   try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
   try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
@@ -3546,7 +3564,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   /* Colors tab actions row */
   .tab-colors .colors-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:6px; }
   /* Bottom action row: align heights of buttons */
-  .row-bottom-actions .reset-onboard { padding:4px 8px; border-radius:8px; }
+  .row-bottom-actions .reset-onboard { padding:4px 8px; border-radius:8px; display:none !important; }
         /* Empty state + attention pulse */
         .empty-box { border:1px dashed var(--divider-color); border-radius:10px; padding:14px; max-width:480px; color: var(--secondary-text-color); display:grid; gap:10px; }
         .pulse-attn { position:relative; }
@@ -4992,7 +5010,7 @@ customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardE
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Dev Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
 
 function loadCard() {}
 loadCard();
