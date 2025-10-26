@@ -1,4 +1,4 @@
-name: Build & Attach ZIP for HACS (Lovelace Card)
+name: Attach JS to Release (HACS)
 
 on:
   release:
@@ -8,64 +8,34 @@ permissions:
   contents: write
 
 jobs:
-  package-and-upload:
+  upload-asset:
     runs-on: ubuntu-latest
     env:
       BUNDLE: thermostat-pro-timeline.js
-      ZIP_NAME: thermostat-pro-timeline.zip
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare dist (bundle + media)
+      # Hvis du bygger via npm: indsæt build-steps her (npm ci && npm run build)
+
+      - name: Locate bundle
+        id: locate
         run: |
-          set -e
-
-          # Sørg for dist findes
-          mkdir -p dist
-
-          # 1) Håndtér JS-bundle
           if [ -f "dist/${BUNDLE}" ]; then
-            echo "Bundle already present: dist/${BUNDLE}"
+            echo "path=dist/${BUNDLE}" >> "$GITHUB_OUTPUT"
+            echo "Found: dist/${BUNDLE}"
           elif [ -f "${BUNDLE}" ]; then
-            cp "${BUNDLE}" "dist/${BUNDLE}"
-            echo "Copied bundle -> dist/${BUNDLE}"
+            echo "path=${BUNDLE}" >> "$GITHUB_OUTPUT"
+            echo "Found: ${BUNDLE}"
           else
             echo "::error ::Bundle not found: ${BUNDLE} (checked repo root and dist/)"
-            echo "Root contents:" && ls -la
-            echo "dist contents (if any):" && ls -la dist || true
             exit 1
           fi
 
-          # 2) Kopiér ekstra assets ind i dist/
-          #   Tilpas eller udvid disse mapper efter behov
-          if [ -d "media" ]; then
-            rsync -a "media/" "dist/media/"
-          fi
-          if [ -d "thermostat-guide" ]; then
-            rsync -a "thermostat-guide/" "dist/thermostat-guide/"
-          fi
-
-          # 3) (valgfrit) precompress JS (serveres fint via /hacsfiles)
-          gzip -kf "dist/${BUNDLE}" || true
-
-      - name: Verify dist contents
-        run: |
-          test -f "dist/${BUNDLE}"
-          echo "Dist tree:"
-          find dist -maxdepth 3 -type f | sed 's/^/ - /'
-
-      - name: Create ZIP from dist/ contents
-        run: |
-          cd dist
-          zip -r "../${ZIP_NAME}" . \
-            -x "**/__pycache__/*" "**/*.map" ".DS_Store" ".git/*"
-          cd ..
-
-      - name: Upload ZIP asset to release
+      - name: Upload JS asset to release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ env.ZIP_NAME }}
+          files: ${{ steps.locate.outputs.path }}
           fail_on_unmatched_files: true
