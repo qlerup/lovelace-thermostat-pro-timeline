@@ -1488,6 +1488,35 @@ class ThermostatTimelineCard extends HTMLElement {
   async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin(); for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
   }
 
+  // Apply a setpoint immediately for the given entity (and its merged entities)
+  // using the provided temperature (in °C). Honours away override and min/max.
+  async _applyImmediateForEntity(entity, tempC, nowMinOverride=null){
+    try {
+      if (!this._config?.auto_apply || !this._config?.apply_on_edit || !this._hass) return;
+      let desired = Number(tempC);
+      // Away override
+      try { if (this._isAwayActive()) { const a = Number(this._config?.away?.target_c ?? 17); if (Number.isFinite(a)) desired = Math.min(desired, a); } } catch {}
+      // Clamp to min/max
+      const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5;
+      if (Number.isFinite(mx)) desired = Math.min(desired, mx);
+      if (Number.isFinite(mn)) desired = Math.max(desired, mn);
+      const nowMin = Number.isFinite(nowMinOverride) ? nowMinOverride : this._getNowMin();
+      const targets = [entity, ...(this._config?.merges?.[entity] || [])];
+      for (const eid of targets){
+        try {
+          const __eid = eid;
+          if (!(typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid])) continue;
+          // Avoid redundant command if thermostat already at desired
+          const st = this._hass.states[__eid];
+          const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
+          if (Number.isFinite(cur) && Math.abs(cur - desired) < 0.049) { this._lastApplied[__eid] = { min: nowMin, temp: desired }; continue; }
+          this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: desired });
+          this._lastApplied[__eid] = { min: nowMin, temp: desired };
+        } catch {}
+      }
+    } catch {}
+  }
+
   // ---------- UI ----------
   _init() {
     this.shadowRoot.innerHTML = `
@@ -1577,7 +1606,11 @@ class ThermostatTimelineCard extends HTMLElement {
   .grid .rowfull .ed-temp { width: 140px; height:28px; padding:2px 6px; box-sizing:border-box; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
       
         /* remove button */
-        .remove-btn { flex-shrink: 0; padding:4px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--error-color); display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
+  .remove-btn { flex-shrink: 0; padding:4px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--error-color); display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
+  /* Make disabled state clearly visible on remove-style buttons */
+  .remove-btn[disabled] { opacity: .55; cursor: not-allowed; filter: grayscale(60%); color: var(--disabled-text-color, var(--secondary-text-color)) !important; border-color: var(--divider-color) !important; pointer-events: none; }
+  .remove-btn[disabled] ha-icon { filter: grayscale(100%); opacity: .7; }
+  .remove-btn[disabled] span { color: var(--disabled-text-color, var(--secondary-text-color)); }
         
   .actions { display:flex; gap:8px; justify-content:flex-end; align-items:center; }
   /* Give modal action buttons some space from inputs */
@@ -2992,6 +3025,43 @@ class ThermostatTimelineCard extends HTMLElement {
         // Close editor and re-render weekly preview; no immediate apply
         this._closeEditor();
         this._renderWeeklyModal();
+
+        // If "apply on edit" is enabled, and this weekly edit affects "right now",
+        // apply the new temperature immediately without requiring full Week Save.
+        try {
+          if (this._config?.auto_apply && this._config?.apply_on_edit) {
+            const today = this._todayKey();
+            // Determine if the edit impacts today given the current week mode and selected group
+            const mode = (this._weeklyDraft?.mode) || (row.weekly?.mode) || (this._config?.weekdays_mode) || 'weekday_weekend';
+            const selKey = this._weeklyDayKey || weeklyDay || today; // group key the user was editing
+
+            const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
+            let editImpactsToday = false;
+            let sourceKeyForToday = today; // which draft day array reflects today after grouping
+            if (mode === 'weekday_weekend') {
+              if (selKey === 'weekdays' && isWeekday) { editImpactsToday = true; sourceKeyForToday = 'mon'; }
+              if (selKey === 'weekend' && (today==='sat' || today==='sun')) { editImpactsToday = true; sourceKeyForToday = 'sat'; }
+              if (selKey === today) { editImpactsToday = true; sourceKeyForToday = today; }
+            } else if (mode === 'weekday_sat_sun') {
+              if (selKey === 'weekdays' && isWeekday) { editImpactsToday = true; sourceKeyForToday = 'mon'; }
+              if ((selKey === 'sat' && today==='sat') || (selKey==='sun' && today==='sun')) { editImpactsToday = true; sourceKeyForToday = today; }
+              if (selKey === today) { editImpactsToday = true; sourceKeyForToday = today; }
+            } else { // all_7
+              if (selKey === today) { editImpactsToday = true; sourceKeyForToday = today; }
+            }
+
+            if (editImpactsToday) {
+              const nowMin = this._getNowMin();
+              const arrNow = Array.isArray(this._weeklyDraft?.days?.[sourceKeyForToday]) ? this._weeklyDraft.days[sourceKeyForToday] : [];
+              const hit = arrNow.find(x => nowMin >= x.startMin && nowMin < x.endMin);
+              if (hit) {
+                // Apply immediately to reflect the new block that currently covers "now"
+                await this._applyImmediateForEntity(entity, Number(hit.temp), nowMin);
+                this._scheduleNextApply();
+              }
+            }
+          }
+        } catch {}
       }
       return;
     }
@@ -3055,7 +3125,17 @@ class ThermostatTimelineCard extends HTMLElement {
       if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; }
       this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin);
     }
-    await this._saveStore(); this._render(); this._closeEditor(); if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
+    await this._saveStore(); this._render(); this._closeEditor();
+    // Immediate apply if a block now covers the current time (non-weekly path)
+    try {
+      if (this._config?.auto_apply && this._config?.apply_on_edit) {
+        const nowMin = this._getNowMin();
+        const arrNow = Array.isArray(row.blocks) ? row.blocks : [];
+        const hitNow = arrNow.find(x => nowMin >= x.startMin && nowMin < x.endMin);
+        if (hitNow) await this._applyImmediateForEntity(entity, Number(hitNow.temp), nowMin);
+      }
+    } catch {}
+    if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { console.error('[thermostat-timeline] _saveEditor error', e); if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = 'Fejl: ' + (e && e.message ? e.message : String(e)); } }}
 
   _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
@@ -3656,6 +3736,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       this._upd('storage_enabled', on);
       const picker = this.shadowRoot.querySelector('.storage');
       if (picker) picker.disabled = !on;
+      // Disable the bottom "Clear local only" button when shared storage is ON
+      try {
+        const clrLocal = this.shadowRoot.querySelector('.clear-local-only');
+        if (clrLocal) {
+          clrLocal.disabled = on;
+          clrLocal.setAttribute('aria-disabled', on ? 'true' : 'false');
+          clrLocal.title = on ? 'Disabled while shared storage is ON' : '';
+          // Hide button entirely when shared storage is enabled (requested)
+          clrLocal.style.display = on ? 'none' : '';
+        }
+      } catch {}
       // Show/hide storage controls when shared storage is toggled
       try {
         const ctrls = this.shadowRoot.querySelector('.store-controls');
@@ -3801,7 +3892,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     });
 
     // Clear local only (bottom)
-    qs('.clear-local-only')?.addEventListener('click', async () => {
+    qs('.clear-local-only')?.addEventListener('click', async (ev) => {
+      // Hard guard: do nothing if shared storage is enabled
+      if (this._config?.storage_enabled) { try { ev.preventDefault(); ev.stopPropagation(); } catch {} return; }
       const msg = this._t('editor.clear_local_only_confirm');
       if (!confirm(msg)) return;
       try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
@@ -3948,6 +4041,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       try {
         const ctrls = this.shadowRoot.querySelector('.store-controls');
         if (ctrls) ctrls.style.display = enabled ? 'flex' : 'none';
+      } catch {}
+      // Reflect state for bottom "Clear local only" button
+      try {
+        const clrLocal = this.shadowRoot.querySelector('.clear-local-only');
+        if (clrLocal) {
+          clrLocal.disabled = enabled;
+          clrLocal.setAttribute('aria-disabled', enabled ? 'true' : 'false');
+          clrLocal.title = enabled ? 'Disabled while shared storage is ON' : '';
+          // Hide when shared storage is enabled
+          clrLocal.style.display = enabled ? 'none' : '';
+        }
       } catch {}
     }
     this._applyEditorI18n();
