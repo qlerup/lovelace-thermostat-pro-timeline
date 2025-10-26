@@ -119,6 +119,17 @@ const TT_I18N = {
   , 'editor.colors.clear_local_confirm': 'This will delete color ranges saved in your browser for this card. Continue?'
   , 'editor.colors.clear_shared': 'Clear shared color storage'
   , 'editor.colors.clear_shared_confirm': 'This will delete color ranges in the selected storage sensor. Continue?'
+  , 'onboard.title': 'Welcome to Thermostat Timeline'
+  , 'onboard.next': 'Next'
+  , 'onboard.prev': 'Back'
+  , 'onboard.skip': 'Skip'
+  , 'onboard.done': 'Done'
+  , 'onboard.dont_show': "Don't show again"
+  , 'onboard.step_main': 'This is the main timeline. It shows desired temperatures over 24 hours for each room.'
+  , 'onboard.step_add': 'Add a heat block by pressing + Add block or by double‑clicking on the timeline.'
+  , 'onboard.step_edit': 'Edit or delete a block by double‑clicking it. Use Weekdays to plan different days.'
+  , 'onboard.reset': 'Show guide again'
+  , 'onboard.reset_ok': 'Welcome will be shown next time.'
   },
   da: {
     // Kort
@@ -239,7 +250,18 @@ const TT_I18N = {
     , 'editor.colors.clear_local': 'Ryd lokale farvedata'
     , 'editor.colors.clear_local_confirm': 'Dette sletter farveintervaller gemt i din browser for dette kort. Vil du fortsætte?'
     , 'editor.colors.clear_shared': 'Ryd delt farvelager'
-    , 'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?'
+  , 'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?'
+  , 'onboard.title': 'Velkommen til Termostat Tidslinje'
+  , 'onboard.next': 'Næste'
+  , 'onboard.prev': 'Tilbage'
+  , 'onboard.skip': 'Spring over'
+  , 'onboard.done': 'Færdig'
+  , 'onboard.dont_show': 'Vis ikke igen'
+  , 'onboard.step_main': 'Dette er hovedtidslinjen. Den viser ønskede temperaturer over 24 timer for hvert rum.'
+  , 'onboard.step_add': 'Tilføj en varmeblok via + Tilføj blok eller ved at dobbeltklikke på tidslinjen.'
+  , 'onboard.step_edit': 'Redigér eller slet en blok ved dobbeltklik. Brug Ugedage til forskellige dage.'
+  , 'onboard.reset': 'Vis guide igen'
+  , 'onboard.reset_ok': 'Guiden vises næste gang.'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -340,7 +362,18 @@ const TT_I18N = {
     'editor.colors.clear_local': 'Rensa lokala färgdata',
     'editor.colors.clear_local_confirm': 'Detta tar bort färgintervall som sparats i din webbläsare för detta kort. Vill du fortsätta?',
     'editor.colors.clear_shared': 'Rensa delad färglagring',
-    'editor.colors.clear_shared_confirm': 'Detta tar bort färgintervall i den valda lagringssensorn. Vill du fortsätta?',
+  'editor.colors.clear_shared_confirm': 'Detta tar bort färgintervall i den valda lagringssensorn. Vill du fortsätta?',
+  'onboard.title': 'Välkommen till Termostat‑tidslinje',
+  'onboard.next': 'Nästa',
+  'onboard.prev': 'Tillbaka',
+  'onboard.skip': 'Hoppa över',
+  'onboard.done': 'Klar',
+  'onboard.dont_show': 'Visa inte igen',
+  'onboard.step_main': 'Detta är huvudtidslinjen. Den visar önskad temperatur under dygnet för varje rum.',
+  'onboard.step_add': 'Lägg till ett värmeblock via + Lägg till block eller dubbelklicka på tidslinjen.',
+  'onboard.step_edit': 'Redigera eller ta bort ett block genom att dubbelklicka. Använd veckodagar för olika dagar.',
+  'onboard.reset': 'Visa guiden igen',
+  'onboard.reset_ok': 'Guiden visas nästa gång.',
     'editor.select_entities': 'Rum',
     'editor.tabs.rooms': 'Rum',
     'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.'
@@ -444,7 +477,18 @@ const TT_I18N = {
     'editor.colors.clear_local': 'Tøm lokale fargedata',
     'editor.colors.clear_local_confirm': 'Dette sletter fargeintervaller lagret i nettleseren for dette kortet. Fortsette?',
     'editor.colors.clear_shared': 'Tøm delt fargelagring',
-    'editor.colors.clear_shared_confirm': 'Dette sletter fargeintervaller i den valgte lagringssensoren. Fortsette?',
+  'editor.colors.clear_shared_confirm': 'Dette sletter fargeintervaller i den valgte lagringssensoren. Fortsette?',
+  'onboard.title': 'Velkommen til Termostat tidslinje',
+  'onboard.next': 'Neste',
+  'onboard.prev': 'Tilbake',
+  'onboard.skip': 'Hopp over',
+  'onboard.done': 'Ferdig',
+  'onboard.dont_show': 'Ikke vis igjen',
+  'onboard.step_main': 'Dette er hovedtidslinjen. Den viser ønsket temperatur gjennom døgnet for hvert rom.',
+  'onboard.step_add': 'Legg til en varmeblokk via + Legg til blokk eller ved å dobbeltklikke på tidslinjen.',
+  'onboard.step_edit': 'Rediger eller slett en blokk ved å dobbeltklikke. Bruk ukedager for forskjellige dager.',
+  'onboard.reset': 'Vis guiden på nytt',
+  'onboard.reset_ok': 'Velkomst vises neste gang.',
     'editor.select_entities': 'Rom',
     'editor.tabs.rooms': 'Rom',
     'week.enable.desc': 'Aktiver plan per ukedag. Når av, brukes samme plan hver dag.'
@@ -548,7 +592,18 @@ const TT_I18N = {
     'editor.colors.clear_local': 'Lokale Farb-Daten löschen',
     'editor.colors.clear_local_confirm': 'Dadurch werden in Ihrem Browser für diese Karte gespeicherte Farbbereiche gelöscht. Fortfahren?',
     'editor.colors.clear_shared': 'Geteilten Farbspeicher löschen',
-    'editor.colors.clear_shared_confirm': 'Dadurch werden Farbbereiche im ausgewählten Speichersensor gelöscht. Fortfahren?',
+  'editor.colors.clear_shared_confirm': 'Dadurch werden Farbbereiche im ausgewählten Speichersensor gelöscht. Fortfahren?',
+  'onboard.title': 'Willkommen bei Thermostat‑Zeitlinie',
+  'onboard.next': 'Weiter',
+  'onboard.prev': 'Zurück',
+  'onboard.skip': 'Überspringen',
+  'onboard.done': 'Fertig',
+  'onboard.dont_show': 'Nicht erneut anzeigen',
+  'onboard.step_main': 'Dies ist die Hauptzeitlinie. Sie zeigt Solltemperaturen über 24 Stunden für jeden Raum.',
+  'onboard.step_add': 'Fügen Sie einen Heizblock über + Block hinzufügen oder per Doppelklick hinzu.',
+  'onboard.step_edit': 'Bearbeiten/Löschen per Doppelklick. Verwenden Sie Wochentage für verschiedene Tage.',
+  'onboard.reset': 'Anleitung erneut anzeigen',
+  'onboard.reset_ok': 'Willkommen wird beim nächsten Mal angezeigt.',
     'editor.select_entities': 'Räume',
     'editor.tabs.rooms': 'Räume',
     'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.'
@@ -652,7 +707,18 @@ const TT_I18N = {
     'editor.colors.clear_local': 'Borrar datos de color locales',
     'editor.colors.clear_local_confirm': 'Esto eliminará los intervalos de color guardados en tu navegador para esta tarjeta. ¿Continuar?',
     'editor.colors.clear_shared': 'Borrar almacenamiento de color compartido',
-    'editor.colors.clear_shared_confirm': 'Esto eliminará los intervalos de color en el sensor de almacenamiento seleccionado. ¿Continuar?',
+  'editor.colors.clear_shared_confirm': 'Esto eliminará los intervalos de color en el sensor de almacenamiento seleccionado. ¿Continuar?',
+  'onboard.title': 'Bienvenido a la línea de tiempo del termostato',
+  'onboard.next': 'Siguiente',
+  'onboard.prev': 'Atrás',
+  'onboard.skip': 'Omitir',
+  'onboard.done': 'Listo',
+  'onboard.dont_show': 'No mostrar de nuevo',
+  'onboard.step_main': 'Esta es la línea principal. Muestra las temperaturas deseadas a lo largo del día por habitación.',
+  'onboard.step_add': 'Añade un bloque con + Agregar bloque o con doble clic en la línea de tiempo.',
+  'onboard.step_edit': 'Edita o elimina un bloque con doble clic. Usa días de la semana para distintos días.',
+  'onboard.reset': 'Mostrar la guía otra vez',
+  'onboard.reset_ok': 'La bienvenida se mostrará la próxima vez.',
     'editor.select_entities': 'Habitaciones',
     'editor.tabs.rooms': 'Habitaciones',
     'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.'
@@ -756,7 +822,18 @@ const TT_I18N = {
     'editor.colors.clear_local': 'Effacer les données de couleur locales',
     'editor.colors.clear_local_confirm': 'Cela supprimera les intervalles de couleur enregistrés dans votre navigateur pour cette carte. Continuer ?',
     'editor.colors.clear_shared': 'Effacer le stockage de couleur partagé',
-    'editor.colors.clear_shared_confirm': 'Cela supprimera les intervalles de couleur dans le capteur de stockage sélectionné. Continuer ?',
+  'editor.colors.clear_shared_confirm': 'Cela supprimera les intervalles de couleur dans le capteur de stockage sélectionné. Continuer ?',
+  'onboard.title': 'Bienvenue dans la Chronologie du thermostat',
+  'onboard.next': 'Suivant',
+  'onboard.prev': 'Précédent',
+  'onboard.skip': 'Ignorer',
+  'onboard.done': 'Terminer',
+  'onboard.dont_show': 'Ne plus afficher',
+  'onboard.step_main': 'Voici la chronologie principale. Elle affiche les températures souhaitées sur 24 h pour chaque pièce.',
+  'onboard.step_add': 'Ajoutez un bloc via + Ajouter un bloc ou double‑cliquez sur la chronologie.',
+  'onboard.step_edit': 'Modifiez/Supprimez un bloc par double‑clic. Utilisez les jours de semaine pour des jours différents.',
+  'onboard.reset': 'Afficher le guide à nouveau',
+  'onboard.reset_ok': 'La présentation s’affichera la prochaine fois.',
     'editor.select_entities': 'Pièces',
     'editor.tabs.rooms': 'Pièces',
     'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.'
@@ -860,7 +937,18 @@ const TT_I18N = {
     'editor.colors.clear_local': 'Tyhjennä paikalliset väritiedot',
     'editor.colors.clear_local_confirm': 'Tämä poistaa tähän korttiin selaimeen tallennetut värihaarukat. Jatketaanko?',
     'editor.colors.clear_shared': 'Tyhjennä jaettu värivarasto',
-    'editor.colors.clear_shared_confirm': 'Tämä poistaa värihaarukat valitusta tallennussensorista. Jatketaanko?',
+  'editor.colors.clear_shared_confirm': 'Tämä poistaa värihaarukat valitusta tallennussensorista. Jatketaanko?',
+  'onboard.title': 'Tervetuloa Termostaatin aikajanaan',
+  'onboard.next': 'Seuraava',
+  'onboard.prev': 'Edellinen',
+  'onboard.skip': 'Ohita',
+  'onboard.done': 'Valmis',
+  'onboard.dont_show': 'Älä näytä uudelleen',
+  'onboard.step_main': 'Tämä on pääaikajana. Se näyttää toivotut lämpötilat 24 tunnin aikana huoneittain.',
+  'onboard.step_add': 'Lisää lämpölohko painamalla + Lisää lohko tai kaksoisnapsauttamalla aikajanaa.',
+  'onboard.step_edit': 'Muokkaa tai poista lohko kaksoisnapsauttamalla. Käytä viikonpäiviä eri päiville.',
+  'onboard.reset': 'Näytä opas uudelleen',
+  'onboard.reset_ok': 'Tervetuloa-näyttö avautuu seuraavalla kerralla.',
     'editor.select_entities': 'Huoneet',
     'editor.tabs.rooms': 'Huoneet',
     'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.'
@@ -1083,6 +1171,17 @@ class ThermostatTimelineCard extends HTMLElement {
     // External refresh hook (from editor button)
     this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
     try { window.addEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
+
+    // Onboarding state
+    this._onboardOpen = false;
+    this._onboardStep = 0;
+  this._onboardLastUrl = null;
+    this._onboardSlides = [
+      // Supports video (.mp4/.webm) or images (.webp/.png/.gif)
+      { key: 'onboard.step_main', img: this._assetUrl('media/thermostat-guide/step1.mp4'), fallback: '/local/media/thermostat-guide/step1.mp4' },
+      { key: 'onboard.step_add',  img: this._assetUrl('media/thermostat-guide/step2.mp4'), fallback: '/local/media/thermostat-guide/step2.mp4' },
+      { key: 'onboard.step_edit', img: this._assetUrl('media/thermostat-guide/step3.mp4'), fallback: '/local/media/thermostat-guide/step3.mp4' },
+    ];
   }
 
   disconnectedCallback() {
@@ -1090,6 +1189,19 @@ class ThermostatTimelineCard extends HTMLElement {
     if (this._transitionTimer) clearTimeout(this._transitionTimer);
     if (this._saveTimer) clearTimeout(this._saveTimer);
     try { if (this._onExternalRefresh) window.removeEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
+  }
+
+  // Resolve a static asset URL so it works in both dev (/local) and HACS (/hacsfiles/<repo>) installs.
+  // Place assets next to the JS file in your HACS repo (e.g. ./media/...),
+  // or in Home Assistant's config/www (refer using media/...).
+  _assetUrl(p){
+    try {
+      const rel = String(p||'').replace(/^[\/\\]+/, '');
+      // Resolve relative to the current JS module location (works under /local and /hacsfiles)
+      return new URL(rel, import.meta.url).href;
+    } catch (e) {
+      try { return `/local/${String(p||'').replace(/^[\/\\]+/, '')}`; } catch { return String(p||''); }
+    }
   }
 
   // ---------- Storage (sensor attributes + fallback) ----------
@@ -1436,6 +1548,14 @@ class ThermostatTimelineCard extends HTMLElement {
   .modal-copyrooms{ width:min(92vw,420px); max-width:420px; }
   .copyrooms-list{ max-height: 260px; overflow:auto; border:1px solid var(--divider-color); border-radius:8px; padding:6px; display:grid; gap:6px; }
   .copyrooms-list label{ display:flex; align-items:center; gap:8px; }
+  /* Onboarding modal */
+  .modal-onboard{ width:min(96vw,820px); max-width:820px; }
+  .ob-hero{ position:relative; width:100%; height:auto; max-height:60vh; border:1px dashed var(--divider-color); border-radius:10px; display:grid; place-items:center; overflow:hidden; background: var(--secondary-background-color, transparent); }
+  .ob-hero img, .ob-hero video{ display:block; width:100%; height:auto; max-height:100%; object-fit:contain; }
+  .ob-text{ margin-top:8px; font-size:.95rem; color: var(--primary-text-color); }
+  .ob-steps{ display:flex; gap:6px; justify-content:center; margin-top:6px; }
+  .ob-steps .dot{ width:8px; height:8px; border-radius:50%; background: var(--divider-color); }
+  .ob-steps .dot.active{ background: var(--primary-color); }
   /* Inline tooltip for weekly blocks */
   .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
   /* Hide temp pill inside weekly preview blocks for cleaner look */
@@ -1555,11 +1675,34 @@ class ThermostatTimelineCard extends HTMLElement {
             </div>
           </div>
         </div>
+        <!-- First-time onboarding -->
+        <div class="overlay overlay-onboard" part="overlay">
+          <div class="modal modal-onboard" role="dialog" aria-modal="true">
+            <h3 class="onb-title">Welcome</h3>
+            <div class="ob-hero">
+              <img class="onb-img" alt="guide" style="display:none;" />
+              <video class="onb-vid" muted playsinline loop style="display:none;"></video>
+            </div>
+            <div class="ob-text onb-text"></div>
+            <div class="ob-steps onb-dots"></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px; gap:8px;">
+              <label style="display:flex; align-items:center; gap:6px; font-size:.85rem; color: var(--secondary-text-color);"><input type="checkbox" class="onb-hide" /> <span class="onb-hide-lbl">Don't show again</span></label>
+              <div class="actions" style="display:flex; gap:8px;">
+                <button class="btn ghost onb-prev" type="button">Back</button>
+                <button class="btn ghost onb-skip" type="button">Skip</button>
+                <button class="btn primary onb-next" type="button">Next</button>
+                <button class="btn primary onb-done" type="button" style="display:none;">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </ha-card>`;    this._applyCardI18n();
 
 
     this._ensureSchedules();
     this._startUiTimer();
+    // Show onboarding for first-time users
+    try { this._maybeOpenOnboard(); } catch {}
   }
 
   _ensureSchedules() {
@@ -1997,6 +2140,20 @@ class ThermostatTimelineCard extends HTMLElement {
   if (wcancel) wcancel.addEventListener('click', () => this._closeWeeklyEditor());
   // Do not close weekly editor on outside click either
   if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) { e.preventDefault(); e.stopPropagation(); } });
+
+    // Onboarding controls
+    try {
+      const next = qs('.onb-next');
+      const prev = qs('.onb-prev');
+      const skip = qs('.onb-skip');
+      const done = qs('.onb-done');
+      const ov = qs('.overlay-onboard');
+      next && (next.onclick = ()=>{ this._onboardStep = Math.min(this._onboardSlides.length-1, this._onboardStep+1); this._renderOnboard(); });
+      prev && (prev.onclick = ()=>{ this._onboardStep = Math.max(0, this._onboardStep-1); this._renderOnboard(); });
+      skip && (skip.onclick = ()=>{ this._closeOnboard(true); });
+      done && (done.onclick = ()=>{ this._closeOnboard(true); });
+      ov && ov.addEventListener('click', (e)=>{ if (e.target === ov) { e.preventDefault(); e.stopPropagation(); } });
+    } catch {}
   }
 
   // Allow editor to nudge a repaint explicitly
@@ -2735,10 +2892,51 @@ class ThermostatTimelineCard extends HTMLElement {
         const errEl = this.shadowRoot.querySelector('.ed-error');
         if (errEl) {
           const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd));
-          errEl.innerHTML = `<div>${msg}</div><div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button></div>`;
+          const fixStartLab = this._t('ui.fix_start_to').replace('{time}', this._label(overlap.endMin));
+          const fixEndLab = this._t('ui.fix_end_to').replace('{time}', this._label(overlap.startMin));
+          // Decide which fixes are relevant
+          const startInside = start >= overlap.startMin && start < overlap.endMin;
+          const endInside = end > overlap.startMin && end <= overlap.endMin;
+          const showStart = startInside || (!startInside && endInside && end > overlap.endMin); // overlap at right edge
+          const showEnd = endInside || (!endInside && startInside && start < overlap.startMin);  // overlap at left edge
+          let btns = '';
+          if (showStart) btns += `<button class="btn success ed-fix-start" type="button">${fixStartLab}</button>`;
+          if (showEnd) btns += `<button class="btn success ed-fix-end" type="button">${fixEndLab}</button>`;
+          // No extra cancel button here; bottom Cancel handles it
+          errEl.innerHTML = `<div>${msg}</div><div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">${btns}</div>`;
           errEl.style.display = 'block';
-          const cancel = errEl.querySelector('.ed-fix-cancel');
-          cancel?.addEventListener('click', ()=>{ errEl.style.display='none'; errEl.textContent=''; });
+          const applyFix = (kind)=>{
+            // Adjust inputs then re-run save
+            try {
+              const edFrom = this.shadowRoot.querySelector('.ed-from');
+              const edTo = this.shadowRoot.querySelector('.ed-to');
+              const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer');
+              const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
+              if (kind==='start') {
+                const ns = overlap.endMin;
+                if (this._config?.time_12h) {
+                  if (edFrom) edFrom.value = this._toTimeInput12h(ns);
+                  if (fromMerSel) fromMerSel.value = (ns>=720 && ns<1440)?'PM':'AM';
+                } else {
+                  if (edFrom) edFrom.value = this._toTimeInput(ns);
+                }
+              } else if (kind==='end') {
+                const ne = overlap.startMin;
+                if (this._config?.time_12h) {
+                  if (edTo) edTo.value = this._toTimeInput12h(ne);
+                  if (toMerSel) toMerSel.value = (ne>=720 && ne<1440)?'PM':'AM';
+                } else {
+                  if (edTo) edTo.value = this._toTimeInput(ne);
+                }
+              }
+            } catch {}
+            try { errEl.style.display='none'; errEl.textContent=''; } catch {}
+            // Defer to allow DOM to update
+            setTimeout(()=>{ this._saveEditor(); }, 0);
+          };
+          errEl.querySelector('.ed-fix-start')?.addEventListener('click', ()=>applyFix('start'));
+          errEl.querySelector('.ed-fix-end')?.addEventListener('click', ()=>applyFix('end'));
+          // No extra cancel handler
         }
         return;
       }
@@ -2758,8 +2956,7 @@ class ThermostatTimelineCard extends HTMLElement {
           if (errEl) {
             const overlap = ov1 || ov2;
             const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max((ov1?start:0), overlap.startMin))).replace('{end}', this._label(Math.min((ov1?1440:end), overlap.endMin)));
-            errEl.innerHTML = `<div>${msg}</div><div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end;\"><button class=\"btn ghost ed-fix-cancel\" type=\"button\">${this._t('ui.cancel')}</button></div>`; errEl.style.display='block';
-            errEl.querySelector('.ed-fix-cancel')?.addEventListener('click', ()=>{ errEl.style.display='none'; errEl.textContent=''; });
+            errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block';
           }
           return;
         }
@@ -2806,9 +3003,39 @@ class ThermostatTimelineCard extends HTMLElement {
       if (ov1 || ov2) {
         const errEl = this.shadowRoot.querySelector('.ed-error');
         if (errEl) {
+          const overlap = ov1 || ov2;
           const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end));
-          errEl.innerHTML = `<div>${msg}</div><div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;"><button class="btn ghost ed-fix-cancel" type="button">${this._t('ui.cancel')}</button></div>`; errEl.style.display='block';
-          errEl.querySelector('.ed-fix-cancel')?.addEventListener('click', ()=>{ errEl.style.display='none'; errEl.textContent=''; });
+          const fixStartLab = this._t('ui.fix_start_to').replace('{time}', this._label((ov1?1440:overlap.endMin)));
+          const fixEndLab = this._t('ui.fix_end_to').replace('{time}', this._label((ov2?0:overlap.startMin)));
+          // Relevance: if first part [start..1440] overlaps -> offer start fix; if second part [0..end] overlaps -> offer end fix
+          const showStart = !!ov1;
+          const showEnd = !!ov2;
+          let btns = '';
+          if (showStart) btns += `<button class="btn success ed-fix-start" type="button">${fixStartLab}</button>`;
+          if (showEnd) btns += `<button class="btn success ed-fix-end" type="button">${fixEndLab}</button>`;
+          // No extra cancel here; use the modal cancel button
+          errEl.innerHTML = `<div>${msg}</div><div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;\">${btns}</div>`;
+          errEl.style.display='block';
+          const applyFix = (kind)=>{
+            try {
+              const edFrom = this.shadowRoot.querySelector('.ed-from');
+              const edTo = this.shadowRoot.querySelector('.ed-to');
+              const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer');
+              const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
+              if (kind==='start') {
+                const ns = ov1 ? Math.max(start, (ov1.endMin||start)) : (overlap.endMin||start);
+                if (this._config?.time_12h) { if (edFrom) edFrom.value = this._toTimeInput12h(ns); if (fromMerSel) fromMerSel.value = (ns>=720 && ns<1440)?'PM':'AM'; } else { if (edFrom) edFrom.value = this._toTimeInput(ns); }
+              } else {
+                const ne = ov2 ? Math.min(end, (ov2.startMin||end)) : (overlap.startMin||end);
+                if (this._config?.time_12h) { if (edTo) edTo.value = this._toTimeInput12h(ne); if (toMerSel) toMerSel.value = (ne>=720 && ne<1440)?'PM':'AM'; } else { if (edTo) edTo.value = this._toTimeInput(ne); }
+              }
+            } catch {}
+            try { errEl.style.display='none'; errEl.textContent=''; } catch {}
+            setTimeout(()=>{ this._saveEditor(); }, 0);
+          };
+          errEl.querySelector('.ed-fix-start')?.addEventListener('click', ()=>applyFix('start'));
+          errEl.querySelector('.ed-fix-end')?.addEventListener('click', ()=>applyFix('end'));
+          // No extra cancel handler
         }
         return;
       }
@@ -2833,6 +3060,96 @@ class ThermostatTimelineCard extends HTMLElement {
   _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
   _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
   _toTimeInput12h(min){ if (!Number.isFinite(min)) min=0; const m=((Math.floor(min)%1440)+1440)%1440; let hh=Math.floor(m/60); const mm=Math.floor(m%60); let h=hh%12; if(h===0) h=12; return `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; }
+
+  // ---------- Onboarding ----------
+  _onboardStorageKey(){ return 'thermostat_timeline_onboard_seen_v1'; }
+  _maybeOpenOnboard(){
+    try {
+      const flag = localStorage.getItem(this._onboardStorageKey());
+      if (!flag) this._openOnboard();
+    } catch {}
+  }
+  _openOnboard(){
+    try {
+      this._onboardOpen = true; this._onboardStep = 0; this._renderOnboard();
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-onboard');
+      if (ov) ov.classList.add('open');
+    } catch {}
+  }
+  _closeOnboard(markSeen=false){
+    try {
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-onboard'); if (ov) ov.classList.remove('open');
+      this._onboardOpen = false;
+      // store preference
+      const cb = this.shadowRoot && this.shadowRoot.querySelector('.onb-hide');
+      if (markSeen || (cb && cb.checked)) {
+        try { localStorage.setItem(this._onboardStorageKey(), '1'); } catch {}
+      }
+    } catch {}
+  }
+  _renderOnboard(){
+    try {
+  const img = this.shadowRoot && this.shadowRoot.querySelector('.onb-img');
+  const vid = this.shadowRoot && this.shadowRoot.querySelector('.onb-vid');
+      const hero = this.shadowRoot && this.shadowRoot.querySelector('.ob-hero');
+      const txt = this.shadowRoot && this.shadowRoot.querySelector('.onb-text');
+      const dots = this.shadowRoot && this.shadowRoot.querySelector('.onb-dots');
+      const next = this.shadowRoot && this.shadowRoot.querySelector('.onb-next');
+      const done = this.shadowRoot && this.shadowRoot.querySelector('.onb-done');
+      const step = Math.max(0, Math.min(this._onboardSlides.length-1, this._onboardStep));
+      const slide = this._onboardSlides[step] || { key:'onboard.step_main', img:'', fallback:'' };
+      if (img && vid) {
+        // First try HACS/relative asset; on error, try /local fallback if provided
+        const nextUrl = slide.img || slide.fallback || '';
+        if (this._onboardLastUrl !== nextUrl) {
+          this._onboardLastUrl = nextUrl;
+          const isVideo = /\.(mp4|webm|mov)(\?|#|$)/i.test(nextUrl);
+          // Reset state
+          img.style.display = 'none';
+          vid.style.display = 'none';
+          // Remove any previous message
+          try { const m = hero && hero.querySelector('.onb-missing'); if (m) m.remove(); } catch {}
+          if (isVideo) {
+            // Setup video
+            vid.onerror = null; vid.onloadeddata = null; vid.oncanplay = null;
+            vid.muted = true; vid.playsInline = true; vid.loop = true; vid.autoplay = true;
+            vid.onloadeddata = ()=>{ try { vid.style.display=''; img.style.display='none'; vid.play().catch(()=>{}); } catch{} };
+            vid.onerror = ()=>{
+              try {
+                if (slide.fallback && vid.src !== slide.fallback) { vid.src = slide.fallback; vid.load?.(); return; }
+                vid.style.display='none';
+                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent='Video not found'; }
+              } catch{}
+            };
+            vid.src = nextUrl; vid.load?.();
+          } else {
+            // Setup image
+            img.onerror = null; img.onload = null;
+            img.onerror = ()=>{
+              try {
+                if (slide.fallback && img.src !== slide.fallback) { img.src = slide.fallback; return; }
+                img.style.display='none';
+                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent='Image not found'; }
+              } catch{}
+            };
+            img.onload = ()=>{ try { img.style.display=''; vid.style.display='none'; } catch{} };
+            img.src = nextUrl;
+          }
+        }
+      }
+      if (txt) txt.textContent = this._t(slide.key);
+      if (dots) {
+        dots.innerHTML = '';
+        for (let i=0;i<this._onboardSlides.length;i++){
+          const d = document.createElement('div'); d.className = 'dot' + (i===step?' active':''); dots.append(d);
+        }
+      }
+      if (next) next.style.display = step < this._onboardSlides.length-1 ? '' : 'none';
+      if (done) done.style.display = step === this._onboardSlides.length-1 ? '' : 'none';
+      // Apply i18n for title/buttons
+      this._applyCardI18n();
+    } catch {}
+  }
 
   // ---------- Mutations ----------
   _addBlock(entity){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; const now=this._getNowMin(); const start=this._clamp(Math.round(now),0,1380); const end=this._clamp(Math.round(start+60), start+15, 1440); const id=Math.random().toString(36).slice(2,9); let t=(row.defaultTemp||20)+2; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) t=Math.min(t,mx); const b={id,startMin:start,endMin:end,temp:t}; row.blocks.push(b); this._applyNoOverlapResize(entity,b,"left",b.startMin); this._applyNoOverlapResize(entity,b,"right",b.endMin); this._active={entity,id}; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
@@ -2912,6 +3229,16 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _colorFor(eid, tempC){
     try {
+
+      // Onboarding i18n
+      try {
+        const ttl = this.shadowRoot && this.shadowRoot.querySelector('.onb-title'); if (ttl) ttl.textContent = t('onboard.title');
+        const prev = this.shadowRoot && this.shadowRoot.querySelector('.onb-prev'); if (prev) prev.textContent = t('onboard.prev');
+        const next = this.shadowRoot && this.shadowRoot.querySelector('.onb-next'); if (next) next.textContent = t('onboard.next');
+        const skip = this.shadowRoot && this.shadowRoot.querySelector('.onb-skip'); if (skip) skip.textContent = t('onboard.skip');
+        const done = this.shadowRoot && this.shadowRoot.querySelector('.onb-done'); if (done) done.textContent = t('onboard.done');
+        const hideLbl = this.shadowRoot && this.shadowRoot.querySelector('.onb-hide-lbl'); if (hideLbl) hideLbl.textContent = t('onboard.dont_show');
+      } catch {}
       // Support merged entities by always resolving to primary
       const primary = this._groupPrimaryOf ? this._groupPrimaryOf(eid) : eid;
       const cr = (this._config?.color_ranges) || {};
@@ -3138,6 +3465,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .tab-away .away-person-picker { width: 320px; min-width: 320px; max-width: 320px; }
   /* Colors tab actions row */
   .tab-colors .colors-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:6px; }
+  /* Bottom action row: align heights of buttons */
+  .row-bottom-actions .reset-onboard { padding:4px 8px; border-radius:8px; }
         /* Empty state + attention pulse */
         .empty-box { border:1px dashed var(--divider-color); border-radius:10px; padding:14px; max-width:480px; color: var(--secondary-text-color); display:grid; gap:10px; }
         .pulse-attn { position:relative; }
@@ -3275,12 +3604,10 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   </div>
 </div>
 
-<!-- Bottom action: clear local only -->
-<div class="row">
+<!-- Bottom actions: clear local + reset onboarding (inline) -->
+<div class="row row-bottom-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
   <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
-  <div class="label" style="opacity:.8;">&nbsp;</div>
-  <!-- spacer to align with grid -->
-  
+  <button class="add-entity-btn reset-onboard" type="button"><ha-icon icon="mdi:movie-play"></ha-icon><span>Show welcome again</span></button>
 </div>
 
   </div>
@@ -3478,6 +3805,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const msg = this._t('editor.clear_local_only_confirm');
       if (!confirm(msg)) return;
       try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
+    });
+    // Reset onboarding (show intro again)
+    qs('.reset-onboard')?.addEventListener('click', async () => {
+      try { localStorage.removeItem('thermostat_timeline_onboard_seen_v1'); } catch {}
+      try { alert(this._t('onboard.reset_ok') || 'Welcome will be shown next time.'); } catch {}
     });
     qs('.migrate-to-store')?.addEventListener('click', async () => {
       try {
@@ -4463,6 +4795,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       }
       const clrLocalBtn = root.querySelector('.clear-local-only span');
       if (clrLocalBtn) clrLocalBtn.textContent = t('editor.clear_local_only');
+    const resetOnbBtn = root.querySelector('.reset-onboard span');
+    if (resetOnbBtn) resetOnbBtn.textContent = t('onboard.reset');
 
       // Entities section label (use the .entities container to find its label robustly)
       const entitiesWrap = root.querySelector('.entities');
@@ -4471,9 +4805,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (entitiesLabel) entitiesLabel.textContent = t('editor.select_entities');
       }
 
-      // Add entity button text
-      const addBtn = root.querySelector('.add-entity-btn span');
-      if (addBtn) addBtn.textContent = t('editor.add_entity');
+  // Add room button text (target only the actual add-room control)
+  const addBtn = root.querySelector('.add-room-btn span');
+  if (addBtn) addBtn.textContent = t('editor.add_entity');
 
       // Settings labels (compact inputs)
   const defLbl = root.querySelector('.slabel-def');
@@ -4554,7 +4888,7 @@ customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardE
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Dev Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
 
 function loadCard() {}
 loadCard();
