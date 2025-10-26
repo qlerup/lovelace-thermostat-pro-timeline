@@ -11,46 +11,57 @@ jobs:
   package-and-upload:
     runs-on: ubuntu-latest
     env:
-      BUNDLE: thermostat-pro-timeline.js
+      BUNDLE_NAME: thermostat-pro-timeline.js
       ZIP_NAME: thermostat-pro-timeline.zip
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Hvis du bygger via npm, så indsæt build her (npm ci && npm run build)
+      # FANG bundlens placering (dist/ eller rod)
+      - name: Locate bundle
+        id: locate
+        run: |
+          set -e
+          if [ -f "dist/${BUNDLE_NAME}" ]; then
+            echo "bundle_path=dist/${BUNDLE_NAME}" >> "$GITHUB_OUTPUT"
+            echo "Found bundle in dist/"
+          elif [ -f "${BUNDLE_NAME}" ]; then
+            echo "bundle_path=${BUNDLE_NAME}" >> "$GITHUB_OUTPUT"
+            echo "Found bundle in repo root"
+          else
+            echo "::error ::Bundle not found: ${BUNDLE_NAME} (checked dist/ and repo root)"
+            echo "Root:" && ls -la
+            echo "dist/:" && ls -la dist || true
+            exit 1
+          fi
 
-      - name: Prepare dist (bundle + media)
+      # SAML alt i dist/ (kopiér fra rod hvis nødvendigt; tag media hvis de ligger i rod)
+      - name: Build dist (bundle + media)
         run: |
           set -e
           mkdir -p dist
-          # sikr bundlen findes i dist/
-          if [ -f "dist/${BUNDLE}" ]; then
-            echo "Bundle OK: dist/${BUNDLE}"
-          elif [ -f "${BUNDLE}" ]; then
-            cp "${BUNDLE}" "dist/${BUNDLE}"
-          else
-            echo "::error ::Bundle not found: ${BUNDLE}"
-            exit 1
+          if [ ! -f "dist/${BUNDLE_NAME}" ]; then
+            cp "${{ steps.locate.outputs.bundle_path }}" "dist/${BUNDLE_NAME}"
           fi
-          # kopier evt. mediemapper fra roden ind i dist/
           [ -d media ] && rsync -a media/ dist/media/
           [ -d thermostat-guide ] && rsync -a thermostat-guide/ dist/thermostat-guide/
-
-      - name: Verify dist contents
-        run: |
-          test -f "dist/${BUNDLE}"
+          # (valgfrit) precompress JS
+          gzip -kf "dist/${BUNDLE_NAME}" || true
           echo "Dist tree:"
           find dist -maxdepth 3 -type f | sed 's/^/ - /'
 
-      # Zip INDHOLDET af dist/ (ikke selve mappen)
-      - name: Create ZIP from dist/ contents
+      # ZIP INDHOLDET af dist/ (ikke selve mappen)
+      - name: Create ZIP from dist contents
         run: |
+          set -e
           rm -f "${ZIP_NAME}"
           cd dist
           zip -r "../${ZIP_NAME}" . \
             -x "**/__pycache__/*" "**/*.map" ".DS_Store" ".git/*"
           cd ..
 
-      - name: Upload single ZIP asset to release
+      # Upload KUN denne ene ZIP-asset
+      - name: Upload ZIP asset to release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
