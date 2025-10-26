@@ -1,4 +1,4 @@
-name: Attach JS to Release (HACS)
+name: Build & Attach ZIP for HACS (Release mode)
 
 on:
   release:
@@ -8,34 +8,52 @@ permissions:
   contents: write
 
 jobs:
-  upload-asset:
+  package-and-upload:
     runs-on: ubuntu-latest
     env:
       BUNDLE: thermostat-pro-timeline.js
+      ZIP_NAME: thermostat-pro-timeline.zip
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Hvis du bygger via npm: indsæt build-steps her (npm ci && npm run build)
+      # Hvis du bygger via npm, så indsæt build her (npm ci && npm run build)
 
-      - name: Locate bundle
-        id: locate
+      - name: Prepare dist (bundle + media)
         run: |
+          set -e
+          mkdir -p dist
+          # sikr bundlen findes i dist/
           if [ -f "dist/${BUNDLE}" ]; then
-            echo "path=dist/${BUNDLE}" >> "$GITHUB_OUTPUT"
-            echo "Found: dist/${BUNDLE}"
+            echo "Bundle OK: dist/${BUNDLE}"
           elif [ -f "${BUNDLE}" ]; then
-            echo "path=${BUNDLE}" >> "$GITHUB_OUTPUT"
-            echo "Found: ${BUNDLE}"
+            cp "${BUNDLE}" "dist/${BUNDLE}"
           else
-            echo "::error ::Bundle not found: ${BUNDLE} (checked repo root and dist/)"
+            echo "::error ::Bundle not found: ${BUNDLE}"
             exit 1
           fi
+          # kopier evt. mediemapper fra roden ind i dist/
+          [ -d media ] && rsync -a media/ dist/media/
+          [ -d thermostat-guide ] && rsync -a thermostat-guide/ dist/thermostat-guide/
 
-      - name: Upload JS asset to release
+      - name: Verify dist contents
+        run: |
+          test -f "dist/${BUNDLE}"
+          echo "Dist tree:"
+          find dist -maxdepth 3 -type f | sed 's/^/ - /'
+
+      # Zip INDHOLDET af dist/ (ikke selve mappen)
+      - name: Create ZIP from dist/ contents
+        run: |
+          rm -f "${ZIP_NAME}"
+          cd dist
+          zip -r "../${ZIP_NAME}" . \
+            -x "**/__pycache__/*" "**/*.map" ".DS_Store" ".git/*"
+          cd ..
+
+      - name: Upload single ZIP asset to release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ steps.locate.outputs.path }}
+          files: ${{ env.ZIP_NAME }}
           fail_on_unmatched_files: true
