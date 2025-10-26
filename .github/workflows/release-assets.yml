@@ -1,4 +1,4 @@
-name: Build & Attach ZIP for HACS (Release mode)
+name: Attach JS to Release
 
 on:
   release:
@@ -8,55 +8,17 @@ permissions:
   contents: write
 
 jobs:
-  package-and-upload:
+  upload-asset:
     runs-on: ubuntu-latest
-    env:
-      BUNDLE_NAME: thermostat-pro-timeline.js
-      ZIP_NAME: thermostat-pro-timeline.zip
     steps:
       - uses: actions/checkout@v4
 
-      # (Valgfrit) byg din bundle her, hvis du normalt bygger til dist/
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
-      #     cache: npm
-      # - run: npm ci
-      # - run: npm run build
+      # (valgfrit) tjek at filen findes
+      - run: test -f thermostat-pro-timeline.js
 
-      # Kræv at bundlen ligger i dist/ allerede (ellers giv klar fejl)
-      - name: Sanity check: bundle in dist/
-        run: |
-          if [ ! -f "dist/${BUNDLE_NAME}" ]; then
-            echo "::error ::dist/${BUNDLE_NAME} not found. Place/build your bundle into dist/ before releasing."
-            echo "Root:" && ls -la
-            echo "dist/:" && ls -la dist || true
-            exit 1
-          fi
-
-      # (Valgfrit) hvis du har kildemapper udenfor dist/, kopier dem ind her
-      - name: Ensure media inside dist/
-        run: |
-          mkdir -p dist
-          [ -d media ] && rsync -a media/ dist/media/
-          [ -d thermostat-guide ] && rsync -a thermostat-guide/ dist/thermostat-guide/
-          gzip -kf "dist/${BUNDLE_NAME}" || true
-          echo "Dist tree:" && find dist -maxdepth 3 -type f | sed 's/^/ - /'
-
-      # ZIP INDHOLDET af dist/ (ikke mappen selv)
-      - name: Create ZIP from dist contents
-        run: |
-          rm -f "${ZIP_NAME}"
-          cd dist
-          zip -r "../${ZIP_NAME}" . \
-            -x "**/__pycache__/*" "**/*.map" ".DS_Store" ".git/*"
-          cd ..
-
-      # Upload KUN denne ene ZIP, så HACS altid vælger rigtigt
-      - name: Upload ZIP asset to release
+      - name: Upload JS asset
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ env.ZIP_NAME }}
-          fail_on_unmatched_files: true
+          files: thermostat-pro-timeline.js
