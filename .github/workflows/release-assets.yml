@@ -14,53 +14,45 @@ jobs:
       BUNDLE_NAME: thermostat-pro-timeline.js
       ZIP_NAME: thermostat-pro-timeline.zip
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # FANG bundlens placering (dist/ eller rod)
-      - name: Locate bundle
-        id: locate
+      # (Valgfrit) byg din bundle her, hvis du normalt bygger til dist/
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: npm
+      # - run: npm ci
+      # - run: npm run build
+
+      # Kræv at bundlen ligger i dist/ allerede (ellers giv klar fejl)
+      - name: Sanity check: bundle in dist/
         run: |
-          set -e
-          if [ -f "dist/${BUNDLE_NAME}" ]; then
-            echo "bundle_path=dist/${BUNDLE_NAME}" >> "$GITHUB_OUTPUT"
-            echo "Found bundle in dist/"
-          elif [ -f "${BUNDLE_NAME}" ]; then
-            echo "bundle_path=${BUNDLE_NAME}" >> "$GITHUB_OUTPUT"
-            echo "Found bundle in repo root"
-          else
-            echo "::error ::Bundle not found: ${BUNDLE_NAME} (checked dist/ and repo root)"
+          if [ ! -f "dist/${BUNDLE_NAME}" ]; then
+            echo "::error ::dist/${BUNDLE_NAME} not found. Place/build your bundle into dist/ before releasing."
             echo "Root:" && ls -la
             echo "dist/:" && ls -la dist || true
             exit 1
           fi
 
-      # SAML alt i dist/ (kopiér fra rod hvis nødvendigt; tag media hvis de ligger i rod)
-      - name: Build dist (bundle + media)
+      # (Valgfrit) hvis du har kildemapper udenfor dist/, kopier dem ind her
+      - name: Ensure media inside dist/
         run: |
-          set -e
           mkdir -p dist
-          if [ ! -f "dist/${BUNDLE_NAME}" ]; then
-            cp "${{ steps.locate.outputs.bundle_path }}" "dist/${BUNDLE_NAME}"
-          fi
           [ -d media ] && rsync -a media/ dist/media/
           [ -d thermostat-guide ] && rsync -a thermostat-guide/ dist/thermostat-guide/
-          # (valgfrit) precompress JS
           gzip -kf "dist/${BUNDLE_NAME}" || true
-          echo "Dist tree:"
-          find dist -maxdepth 3 -type f | sed 's/^/ - /'
+          echo "Dist tree:" && find dist -maxdepth 3 -type f | sed 's/^/ - /'
 
-      # ZIP INDHOLDET af dist/ (ikke selve mappen)
+      # ZIP INDHOLDET af dist/ (ikke mappen selv)
       - name: Create ZIP from dist contents
         run: |
-          set -e
           rm -f "${ZIP_NAME}"
           cd dist
           zip -r "../${ZIP_NAME}" . \
             -x "**/__pycache__/*" "**/*.map" ".DS_Store" ".git/*"
           cd ..
 
-      # Upload KUN denne ene ZIP-asset
+      # Upload KUN denne ene ZIP, så HACS altid vælger rigtigt
       - name: Upload ZIP asset to release
         uses: softprops/action-gh-release@v2
         env:
