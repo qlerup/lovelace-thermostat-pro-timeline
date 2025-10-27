@@ -980,7 +980,13 @@ function ttLocalize(key, langOrHass) {
 
 /* eslint-disable no-undef */
 
+// Simple runtime version to help with cache-busting diagnostics in HA.
+// Update this when shipping changes so the version appears in the
+// "Custom cards" panel and in logs.
+const TT_CARD_VERSION = "2025.10.27-3";
+
 class ThermostatTimelineCard extends HTMLElement {
+  static get version() { return TT_CARD_VERSION; }
   static getConfigElement() { return document.createElement("thermostat-timeline-card-editor"); }
   static getStubConfig() {
     return {
@@ -1125,10 +1131,11 @@ class ThermostatTimelineCard extends HTMLElement {
     this._initialized = false;
     this._config = ThermostatTimelineCard.getStubConfig();
 
-    // Temporarily disable all pop-up overlays (block editor, weekday editor, copy-to-rooms, onboarding).
-    // This acts like "commenting out" the popup part without deleting code.
-    // Set to false to re-enable later.
-    this._disablePopups = true;
+  // Pop-up overlays (block editor, weekday editor, copy-to-rooms, onboarding)
+  // Enable by default so Weekday and Add buttons are visible
+  this._disablePopups = false;
+  // Disable the onboarding guide popup explicitly
+  this._disableOnboard = true;
 
     // Data
     this._schedules = {};          // { [entity_id]: { defaultTemp:number, blocks:[{id,startMin,endMin,temp}] } }
@@ -3163,6 +3170,8 @@ class ThermostatTimelineCard extends HTMLElement {
   _onboardStorageKey(){ return 'thermostat_timeline_onboard_seen_v1'; }
   _maybeOpenOnboard(){
     try {
+      // Respect explicit disable flag
+      if (this._disableOnboard) return;
       const flag = localStorage.getItem(this._onboardStorageKey());
       if (!flag) this._openOnboard();
     } catch {}
@@ -3404,6 +3413,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   } catch {}
   // Full render and i18n apply (normal path)
   this._render(); this._applyEditorI18n();
+  // Ensure entity pickers are hydrated with hass after hard refresh
+  try { this._forcePickerRefresh && this._forcePickerRefresh(); } catch {}
   // Also run a lightweight service-availability-only check in case services changed while editor open
   try {
     const root = this.shadowRoot;
@@ -3478,9 +3489,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .seg button.active { background: var(--primary-color); color: var(--text-primary-color, #fff); }
         .inline.open .details { display:grid; }
          ha-textfield { width:100%; max-width:440px; }
-         .label-input { width:100%; max-width:440px; }
+         .label-input { width:100%; max-width:440px; display:block; min-height:48px; }
   /* entity picker width constraint */
-  .inline ha-entity-picker { width: 100%; min-width: 250px; max-width: 440px; overflow: hidden; text-overflow: ellipsis; }
+  .inline ha-entity-picker { width: 100%; min-width: 250px; max-width: 440px; overflow: hidden; text-overflow: ellipsis; display:block; min-height: 48px; }
         /* Add entity button styles */
 .add-entity-btn {
   display:inline-flex; align-items:center; gap:8px;
@@ -3976,7 +3987,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
-      if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); };
+  if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); };
       if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
       if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
     } catch {}
@@ -3987,6 +3998,27 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   _unitSymbol(){ return this._isF() ? '°F' : '°C'; }
   _toDisplayTemp(c){ try { return this._isF() ? Math.round((Number(c)*9/5+32)*10)/10 : Number(c); } catch { return c; } }
   _fromDisplayTemp(v){ try { return this._isF() ? ((Number(v)-32)*5/9) : Number(v); } catch { return Number(v); } }
+
+  // Force re-hydration of entity pickers on the Rooms tab with the latest hass
+  // reference. This helps cases where the tab was hidden during first render
+  // or after a hard refresh and the picker didn't populate.
+  _forcePickerRefresh(){
+    try {
+      const tab = this.shadowRoot && this.shadowRoot.querySelector('.tab-rooms');
+      if (!tab) return;
+      const pickers = Array.from(tab.querySelectorAll('ha-entity-picker'));
+      for (const p of pickers){
+        try {
+          p.hass = this._hass;
+          p.style.display = 'block';
+          p.style.minHeight = '48px';
+          if (typeof p.requestUpdate === 'function') p.requestUpdate();
+          // Fallback: if element still has no height, poke its internal input later
+          setTimeout(()=>{ try { if (p.offsetHeight < 8 && typeof p.requestUpdate === 'function') p.requestUpdate(); } catch {} }, 50);
+        } catch {}
+      }
+    } catch {}
+  }
 
   connectedCallback(){
     this._render();
@@ -4018,6 +4050,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if(!this._hass || !this.shadowRoot || !this._config) return;
     if(this._openCount > 0) return;
 
+    // If HA hasn't registered core editor elements yet (after hard refresh),
+    // re-render once they are defined so pickers/textfields upgrade properly.
+    try {
+      if (!customElements.get('ha-entity-picker')) {
+        customElements.whenDefined('ha-entity-picker').then(()=>{ try { this._render(); } catch {} });
+      }
+      if (!customElements.get('ha-textfield')) {
+        customElements.whenDefined('ha-textfield').then(()=>{ try { this._render(); } catch {} });
+      }
+    } catch {}
+
     // Robust tab delegation (ensure any tab can be opened reliably)
     if (!this._tabHandlersBound) {
       this._tabHandlersBound = true;
@@ -4027,7 +4070,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           const el = t && t.closest ? t.closest('.tab-btn') : null;
           if (!el) return;
           if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
-          if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); }
+          if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); }
           if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
           if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
         });
@@ -4118,6 +4161,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const picker = row.querySelector("ha-entity-picker");
       if (picker) {
         picker.hass = this._hass;
+        try { picker.style.display = 'block'; picker.style.minHeight = '48px'; } catch {}
+        try { if (typeof picker.requestUpdate === 'function') picker.requestUpdate(); } catch {}
         picker.value = this._config.entities[i] || "";
         // Exclude entities already selected in other rows, or linked elsewhere; allow the current selection
         picker.entityFilter = (st) => {
@@ -4763,7 +4808,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const newKey = newPrimary || `#idx:${idx}`;
         if (this._openRows.has(oldKey)) { this._openRows.delete(oldKey); this._openRows.add(newKey); }
       } catch {}
-      try { nameInp.value = (this._config.labels || {})[newPrimary] || ""; } catch {}
+  try { nameInp.value = (this._config.labels || {})[newPrimary] || ""; if (nameInp && typeof nameInp.requestUpdate === 'function') nameInp.requestUpdate(); } catch {}
       if (this._openCount > 0) this._pendingEmit = true; else this._emit(true);
       refreshChips();
       // Also update subtitle on primary change
@@ -5010,7 +5055,7 @@ customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardE
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change" });
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change", version: TT_CARD_VERSION });
 
 function loadCard() {}
 loadCard();
