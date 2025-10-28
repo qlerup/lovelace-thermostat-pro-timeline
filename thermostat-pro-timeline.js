@@ -17,7 +17,7 @@ const TT_I18N = {
     'ui.overlap_msg': 'You selected overlapping times — it overlaps during {start} – {end}.',
     'ui.auto_fix': 'Auto-fix',
     'ui.fix_start_to': 'Fix start to {time}',
-    'ui.fix_end_to': 'Fix end to {time}',
+  'ui.fix_end_to': 'Fix end to {time}',
 
     // GUI editor panel
     'editor.title_label': 'Title',
@@ -51,7 +51,7 @@ const TT_I18N = {
   'editor.store_missing': 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.',
     'editor.clear_store': 'Clear storage',
     'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
-    'editor.migrate_to_store': 'Transfer browser data to storage',
+  'editor.migrate_to_store': 'Transfer data to storage',
     'editor.migrate_confirm': 'Transfer your browser-saved schedules to the selected storage sensor? This will overwrite any existing schedules in storage.',
   'editor.migrate_pull_confirm': 'Import schedules from storage and overwrite local browser data?',
   'editor.select_storage_first': 'Please select a storage sensor first.',
@@ -151,7 +151,7 @@ const TT_I18N = {
       'Du har valgt overlappende tidspunkter — det overlapper i perioden {start} - {end}.',
     'ui.auto_fix': 'Ret automatisk',
     'ui.fix_start_to': 'Ret start til {time}',
-    'ui.fix_end_to': 'Ret slut til {time}',
+  'ui.fix_end_to': 'Ret slut til {time}',
 
     // GUI editor panel
     'editor.title_label': 'Titel',
@@ -185,7 +185,7 @@ const TT_I18N = {
   'editor.store_missing': 'Integrationen "Thermostat Pro Timeline Sync" er ikke installeret. Delt lager er ikke tilgængeligt.',
     'editor.clear_store': 'Ryd lager',
     'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
-    'editor.migrate_to_store': 'Overfør browserdata til lager',
+  'editor.migrate_to_store': 'Overfør data til lager',
     'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
   'editor.migrate_pull_confirm': 'Importér tidsplaner fra lager og overskriv lokale browserdata?',
   'editor.select_storage_first': 'Vælg først en lagersensor.',
@@ -312,7 +312,7 @@ const TT_I18N = {
   'editor.store_missing': 'Integrationen "Thermostat Pro Timeline Sync" är inte installerad. Delad lagring är inte tillgänglig.',
     'editor.clear_store': 'Rensa lagring',
     'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?',
-    'editor.migrate_to_store': 'Överför webbläsardata till lagring',
+  'editor.migrate_to_store': 'Överför data till lagring',
     'editor.migrate_confirm': 'Överför dina webbläsar-sparade scheman till vald sensor? Detta skriver över befintliga scheman i lagringen.',
   'editor.migrate_pull_confirm': 'Importera scheman från lagring och skriv över lokala webbläsardata?',
   'editor.select_storage_first': 'Välj först en lagringssensor.',
@@ -429,7 +429,7 @@ const TT_I18N = {
   'editor.store_missing': 'Integrasjonen "Thermostat Pro Timeline Sync" er ikke installert. Delt lagring er ikke tilgjengelig.',
     'editor.clear_store': 'Tøm lagring',
     'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?',
-    'editor.migrate_to_store': 'Overfør nettleserdata til lagring',
+  'editor.migrate_to_store': 'Overfør data til lagring',
     'editor.migrate_confirm': 'Overfør nettleserlagrede tidsplaner til valgt sensor? Dette overskriver eksisterende tidsplaner i lagringen.',
   'editor.migrate_pull_confirm': 'Importer tidsplaner fra lagring og overskriv lokale nettleserdata?',
   'editor.select_storage_first': 'Velg først en lagringssensor.',
@@ -546,7 +546,7 @@ const TT_I18N = {
   'editor.store_missing': 'Die Integration „Thermostat Pro Timeline Sync“ ist nicht installiert. Geteilter Speicher ist nicht verfügbar.',
     'editor.clear_store': 'Speicher leeren',
     'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?',
-    'editor.migrate_to_store': 'Browserdaten in Speicher übertragen',
+  'editor.migrate_to_store': 'Daten in Speicher übertragen',
     'editor.migrate_confirm': 'Ihre im Browser gespeicherten Pläne in den ausgewählten Sensor übertragen? Vorhandene gespeicherte Pläne werden überschrieben.',
   'editor.migrate_pull_confirm': 'Pläne aus dem Speicher importieren und lokale Browserdaten überschreiben?',
   'editor.select_storage_first': 'Bitte wähle zuerst einen Speichersensor aus.',
@@ -663,7 +663,7 @@ const TT_I18N = {
   'editor.store_missing': 'La integración "Thermostat Pro Timeline Sync" no está instalada. El almacenamiento compartido no está disponible.',
     'editor.clear_store': 'Vaciar almacenamiento',
     'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?',
-    'editor.migrate_to_store': 'Transferir datos del navegador al almacenamiento',
+  'editor.migrate_to_store': 'Transferir datos al almacenamiento',
     'editor.migrate_confirm': '¿Transferir los horarios guardados en tu navegador al sensor seleccionado? Esto sobrescribirá los horarios existentes en el almacenamiento.',
   'editor.migrate_pull_confirm': '¿Importar horarios desde el almacenamiento y sobrescribir los datos locales del navegador?',
   'editor.select_storage_first': 'Selecciona primero un sensor de almacenamiento.',
@@ -780,7 +780,7 @@ const TT_I18N = {
   'editor.store_missing': 'L’intégration « Thermostat Pro Timeline Sync » n’est pas installée. Le stockage partagé n’est pas disponible.',
     'editor.clear_store': 'Vider le stockage',
     'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?',
-    'editor.migrate_to_store': 'Transférer les données du navigateur vers le stockage',
+  'editor.migrate_to_store': 'Transférer les données vers le stockage',
     'editor.migrate_confirm': 'Transférer vos plannings enregistrés dans le navigateur vers le capteur sélectionné ? Cela remplacera les plannings existants dans le stockage.',
   'editor.migrate_pull_confirm': 'Importer les plannings depuis le stockage et remplacer les données locales du navigateur ?',
   'editor.select_storage_first': 'Veuillez d’abord sélectionner un capteur de stockage.',
@@ -897,7 +897,7 @@ const TT_I18N = {
   'editor.store_missing': 'Integraatiota "Thermostat Pro Timeline Sync" ei ole asennettu. Jaettu tallennus ei ole käytettävissä.',
     'editor.clear_store': 'Tyhjennä tallennus',
     'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?',
-    'editor.migrate_to_store': 'Siirrä selaindata tallennukseen',
+  'editor.migrate_to_store': 'Siirrä tiedot tallennukseen',
     'editor.migrate_confirm': 'Siirretäänkö selaimeen tallennetut aikataulut valittuun sensoriin? Tämä korvaa nykyiset aikataulut tallennuksessa.',
   'editor.migrate_pull_confirm': 'Tuo aikataulut tallennuksesta ja korvaa paikalliset selaintiedot?',
   'editor.select_storage_first': 'Valitse ensin tallennussensori.',
@@ -1000,7 +1000,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.10.28-2";
+const TT_CARD_VERSION = "2025.10.28-4";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -1499,9 +1499,17 @@ class ThermostatTimelineCard extends HTMLElement {
     if (bestT == null) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0); }
     const dayOffset = (bestT >= nowMin) ? 0 : 1; const target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset, Math.floor(bestT/60), bestT%60, 0, 0); if (target.getTime() - now.getTime() <= 250) target.setTime(target.getTime() + 60000); return target; }
 
+  // (removed next-boundary-per-row helper)
+
   _scheduleNextApply(){ if (this._transitionTimer) clearTimeout(this._transitionTimer); if (!this._config?.auto_apply) return; const when = this._nextBoundaryDate(); const delay = Math.max(500, when.getTime() - Date.now()); this._transitionTimer = setTimeout(async () => { await this._applyCurrentSetpoints(true); this._scheduleNextApply(); }, delay); }
 
   async _applyCurrentSetpoints(force=false){ if (!this._config?.auto_apply || !this._hass) return; if (this._config?.storage_enabled) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
+    // If this call is from boundary timer (force===true), only apply for entities that have boundary now
+    if (force) {
+      const primary = this._groupPrimaryOf(eid);
+      const row = this._schedules[primary];
+      if (!row || !this._entityHasBoundaryNow(row, nowMin)) { continue; }
+    }
     let desired = this._desiredTempFor(eid, nowMin);
     const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5; if (Number.isFinite(mx)) desired = Math.min(desired, mx); if (Number.isFinite(mn)) desired = Math.max(desired, mn);
       if (desired == null || Number.isNaN(desired)) continue;
@@ -1548,6 +1556,19 @@ class ThermostatTimelineCard extends HTMLElement {
         } catch {}
       }
     } catch {}
+  }
+
+  _entityHasBoundaryNow(row, nowMin){
+    try {
+      let blocks = row.blocks||[];
+      if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || []; }
+      for (const b of (blocks||[])){
+        const s = Number(b.startMin), e = Number(b.endMin);
+        if (Number.isFinite(s) && s === nowMin) return true;
+        if (Number.isFinite(e) && e === nowMin) return true;
+      }
+    } catch {}
+    return false;
   }
 
   // ---------- UI ----------
@@ -1906,10 +1927,12 @@ class ThermostatTimelineCard extends HTMLElement {
   const unit = document.createElement('span');
   unit.textContent = this._unitSymbol();
       meta.append(unit);
+      // (manual indicator removed)
       head.append(meta);
       const buttonsWrap = document.createElement('div');
       buttonsWrap.style.display = 'flex';
       buttonsWrap.style.gap = '6px';
+      // (resume schedule button removed)
   const addBtn = document.createElement('button');
       addBtn.className = 'btn primary';
       addBtn.textContent = '+ ' + this._t('ui.add_block');
@@ -3411,7 +3434,7 @@ customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
 
 /* ----------------- LIGHTWEIGHT PICKER (TTEntityPicker) ----------------- */
 class TTEntityPicker extends HTMLElement {
-  static get observedAttributes(){ return ['include-domains','label']; }
+  static get observedAttributes(){ return ['include-domains','label','disabled']; }
   constructor(){
     super();
     this.attachShadow({ mode: 'open' });
@@ -3419,6 +3442,7 @@ class TTEntityPicker extends HTMLElement {
     this._value = '';
     this._filter = null; // function
     this._domains = [];
+    this._disabled = false;
   }
   set hass(h){ this._hass = h; this._render(); }
   get hass(){ return this._hass; }
@@ -3426,7 +3450,12 @@ class TTEntityPicker extends HTMLElement {
   get value(){ return this._value || ''; }
   set entityFilter(fn){ this._filter = typeof fn === 'function' ? fn : null; this._render(); }
   get entityFilter(){ return this._filter; }
-  attributeChangedCallback(){ this._render(); }
+  set disabled(v){ this._disabled = !!v; this._render(); }
+  get disabled(){ return !!this._disabled; }
+  attributeChangedCallback(name, _old, val){
+    if (name === 'disabled') this._disabled = val !== null;
+    this._render();
+  }
   connectedCallback(){ this._render(); }
   _parseDomains(){
     try {
@@ -3456,13 +3485,20 @@ class TTEntityPicker extends HTMLElement {
     const css = `
       :host{ display:block; }
       .wrap{ width:100%; min-width:250px; max-width:440px; }
-      select{ width:100%; height:36px; min-height:36px; appearance:none; -webkit-appearance:none; -moz-appearance:none; padding:6px 10px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing: border-box; }
+      .sel{ position: relative; }
+      select{ width:100%; height:36px; min-height:36px; appearance:none; -webkit-appearance:none; -moz-appearance:none; padding:6px 34px 6px 10px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing: border-box; }
+      select:focus{ outline:none; border-color: var(--primary-color); box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary-color) 35%, transparent); }
+      select:hover{ border-color: color-mix(in oklab, var(--primary-text-color) 20%, var(--divider-color)); }
+      select:disabled{ opacity:.6; cursor: not-allowed; }
+      .dd-arrow{ position:absolute; right:12px; top:50%; transform: translateY(-50%); width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid var(--secondary-text-color); pointer-events:none; }
+      select:disabled + .dd-arrow{ opacity:.6; }
       .label{ font-size:.85rem; color: var(--secondary-text-color); margin: 2px 0 4px; display:none; }
     `;
-    this.shadowRoot.innerHTML = `<style>${css}</style><div class="wrap"><div class="label"></div><select aria-label="${label}">${selOpts.join('')}</select></div>`;
+    this.shadowRoot.innerHTML = `<style>${css}</style><div class="wrap"><div class="label"></div><div class="sel"><select aria-label="${label}">${selOpts.join('')}</select><span class="dd-arrow" aria-hidden="true"></span></div></div>`;
     const select = this.shadowRoot.querySelector('select');
     if (select) {
       try { select.value = this._value || ''; } catch {}
+      try { select.disabled = !!this._disabled; } catch {}
       select.onchange = (e)=>{
         this._value = e.target.value || '';
         this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: this._value }, bubbles: true, composed: true }));
@@ -3482,7 +3518,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (ae) {
     try {
       if (ae.classList?.contains("def") || ae.classList?.contains("rowh") || ae.classList?.contains("title") || ae.classList?.contains('label-input')) return;
-      if (ae.closest && ae.closest('ha-entity-picker')) return;
+      if (ae.closest && (ae.closest('ha-entity-picker') || ae.closest('tt-entity-picker'))) return;
     } catch {}
   }
   // Keep title preset in sync with language when user hasn't customized it
@@ -3669,13 +3705,18 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         @keyframes tt-pulse { 0% { box-shadow: 0 0 0 0 rgba(var(--rgb-primary-color, 3,155,229), .8); }
           70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
           100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
+        /* Store controls: dropdown above, then buttons side-by-side */
+        .store-controls { display:flex; flex-direction: column; gap:8px; align-items: flex-start; }
+        .store-controls .storage { width: 100%; }
+  .store-controls .store-btns { display:flex; gap:8px; align-items:stretch; flex-wrap: nowrap; justify-content: flex-start; width:100%; }
+  .store-controls .store-btns .remove-btn { flex: 1 1 0; justify-content: center; height:100%; text-align:center; }
         </style>
   <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         <div class="row">
           <div class="label"></div>
-          <div style="display:grid; gap:6px; max-width:480px;">
+          <div class="settings-card store-card">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
               <div style="display:grid; gap:2px;">
                 <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
@@ -3683,11 +3724,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               </div>
               <ha-switch class="store-enable"></ha-switch>
             </div>
-            <div class="store-controls" style="display:flex; gap:8px; align-items:center; flex-wrap: wrap;">
-              <ha-entity-picker class="storage" style="flex:1;" label="sensor.thermostat_timeline" include-domains='["sensor"]'></ha-entity-picker>
-              <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
-              <button type="button" class="remove-btn clear-store"><ha-icon icon="mdi:database-off"></ha-icon><span>Clear storage only</span></button>
-              <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
+            <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
+              <tt-entity-picker class="storage" label="sensor.thermostat_timeline" include-domains='["sensor"]'></tt-entity-picker>
+              <div class="store-btns">
+                <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
+                <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
+              </div>
             </div>
           </div>
         </div>
@@ -3812,8 +3854,6 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       <div class="entities"></div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
         <button class="add-entity-btn add-room-btn" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
-        <button class="add-entity-btn reload-editor-btn" type="button"><ha-icon icon="mdi:refresh"></ha-icon><span>Reload editor</span></button>
-        <button class="add-entity-btn reload-page-btn" type="button"><ha-icon icon="mdi:refresh-circle"></ha-icon><span>Reload dashboard</span></button>
       </div>
     </div>
   </div>
@@ -3929,8 +3969,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     });
     qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
   qs(".add-room-btn")?.addEventListener("click", () => this._addEntity());
-  qs(".reload-editor-btn")?.addEventListener("click", () => this._hardReloadEditor());
-  qs(".reload-page-btn")?.addEventListener("click", () => this._hardReloadPage());
+  // (reload buttons removed)
     qs(".auto")?.addEventListener("change", e => {
       const on = !!e.target.checked;
       this._upd("auto_apply", on);
@@ -3993,19 +4032,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     qs('.week-enable')?.addEventListener('change', e => {
       const on = !!e.target.checked; this._upd('weekdays_enabled', on);
     });
-    // Clear storage only
-    qs('.clear-store')?.addEventListener('click', async () => {
-      const msg = this._t('editor.clear_storage_only_confirm');
-      if (!confirm(msg)) return;
-      try {
-        if (this._hass && this._config.storage_entity) {
-          await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
-        } else {
-          alert(this._t('editor.select_storage_first'));
-          return;
-        }
-      } catch (e) { console.warn('clear-storage-only failed', e); }
-    });
+    // (clear storage only button removed)
 
     // Clear all data (storage + local)
     qs('.clear-all')?.addEventListener('click', async () => {
@@ -4125,7 +4152,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     try {
       // Suspend render while interacting with any entity picker to avoid closing dropdowns
       this.shadowRoot.addEventListener('focusin', (e)=>{
-        try { if (e.target?.closest && e.target.closest('ha-entity-picker')) this._suspendRender = true; } catch {}
+        try { if (e.target?.closest && (e.target.closest('ha-entity-picker') || e.target.closest('tt-entity-picker'))) this._suspendRender = true; } catch {}
         try {
           // Also suspend while editing inputs in Colors tab (prevents HA hass updates from re-rendering and killing focus)
           const t = e.target;
@@ -4141,7 +4168,10 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         setTimeout(()=>{ this._suspendRender = false; }, 150);
       });
       this.shadowRoot.addEventListener('value-changed', (e)=>{
-        try { if (e.target?.tagName?.toLowerCase() === 'ha-entity-picker') { this._suspendRender = false; } } catch {}
+        try {
+          const tag = e.target?.tagName?.toLowerCase();
+          if (tag === 'ha-entity-picker' || tag === 'tt-entity-picker') { this._suspendRender = false; }
+        } catch {}
       });
       // After hard refresh, wait for HA to define pickers and hydrate them
       try {
@@ -4256,11 +4286,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
     if (mn && mn !== this.shadowRoot.activeElement) mn.value = String(this._toDisplayTemp(this._config.min_temp ?? 5));
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
-    if (se) { se.hass = this._hass; se.value = this._config.storage_entity || ""; }
+    if (se) { try { se.hass = this._hass; } catch {} try { se.value = this._config.storage_entity || ""; } catch {} }
     if (seEn) {
       const enabled = !!this._config.storage_enabled;
       seEn.checked = enabled;
-      if (se) se.disabled = !enabled;
+      if (se) { try { se.disabled = !enabled; } catch {} try { if (enabled) se.removeAttribute('disabled'); else se.setAttribute('disabled',''); } catch {} }
       // Ensure controls visibility matches toggle
       try {
         const ctrls = this.shadowRoot.querySelector('.store-controls');
@@ -5165,15 +5195,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (!hasService) {
             warn.style.display = 'block';
             const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
-            const picker = root.querySelector('.storage'); if (picker) picker.disabled = true;
+            const picker = root.querySelector('.storage'); if (picker) { try { picker.disabled = true; picker.setAttribute('disabled',''); } catch {} }
           } else {
             warn.style.display = 'none';
             const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
-            const picker = root.querySelector('.storage'); if (picker) picker.disabled = false;
+            const picker = root.querySelector('.storage'); if (picker) { try { picker.disabled = false; picker.removeAttribute('disabled'); } catch {} }
           }
         } catch {}
-        const clrBtn = root.querySelector('.clear-store span');
-        if (clrBtn) clrBtn.textContent = t('editor.clear_storage_only');
+  // (clear storage only button removed)
         const clrAllBtn = root.querySelector('.clear-all span');
         if (clrAllBtn) clrAllBtn.textContent = t('editor.clear_all');
         const migBtn = root.querySelector('.migrate-to-store span');
@@ -5244,9 +5273,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
-        // Reload button text
-    const reloadBtn = root.querySelector('.reload-editor-btn span'); if (reloadBtn) reloadBtn.textContent = t('editor.reload_editor');
-  const reloadPageBtn = root.querySelector('.reload-page-btn span'); if (reloadPageBtn) reloadPageBtn.textContent = t('editor.reload_dashboard');
+        // (reload buttons removed)
         // Colors tab action labels
         const clrLocalBtn = root.querySelector('.clr-colors-local-btn span'); if (clrLocalBtn) clrLocalBtn.textContent = t('editor.colors.clear_local');
         const clrSharedBtn = root.querySelector('.clr-colors-shared-btn span'); if (clrSharedBtn) clrSharedBtn.textContent = t('editor.colors.clear_shared');
