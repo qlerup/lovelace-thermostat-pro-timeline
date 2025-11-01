@@ -105,6 +105,7 @@ const TT_I18N = {
     , 'editor.tabs.rooms': 'Rooms'
   , 'editor.tabs.colors': 'Colors'
   , 'editor.tabs.away': 'Away from home'
+  , 'editor.tabs.sync': 'Sync Engine'
   , 'away.enable': 'Enable away mode'
   , 'away.desc': 'When no selected people are home, lower thermostats automatically to the set temperature.'
   , 'away.temp': 'Away temperature'
@@ -147,6 +148,22 @@ const TT_I18N = {
   , 'pause.active_indef': 'Paused'
   , 'editor.pausebtn.title': 'Pause button'
   , 'editor.pausebtn.desc': 'Show a global pause button in the card header. While paused, all set_temperature commands are suppressed.'
+  , 'editor.integration.connected': 'Connected to integration'
+  , 'editor.integration.disconnected': 'Not connected to integration'
+  , 'profiles.enable': 'Enable profiles (override)'
+  , 'profiles.enable.desc': 'Allow named daily schedules you can activate to override the main plan.'
+  , 'profiles.button': 'Profiles'
+  , 'profiles.editor.title': 'Profiles'
+  , 'profiles.add': 'Add profile'
+  , 'profiles.rename': 'Rename'
+  , 'profiles.delete': 'Delete'
+  , 'profiles.activate': 'Activate'
+  , 'profiles.deactivate': 'Deactivate'
+  , 'profiles.active': 'Active'
+  , 'profiles.none': 'None'
+  , 'profiles.name_placeholder': 'Profile name'
+  , 'profiles.edit': 'Edit'
+  , 'profiles.preview_note': 'Preview only. Schedules become active when you activate the profile.'
   },
   da: {
     // Kort
@@ -256,6 +273,7 @@ const TT_I18N = {
     , 'editor.tabs.rooms': 'Rum'
   , 'editor.tabs.colors': 'Farver'
     , 'editor.tabs.away': 'Væk fra hjemme'
+    , 'editor.tabs.sync': 'Sync Engine'
     , 'away.enable': 'Aktivér væk-tilstand'
     , 'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.'
     , 'away.temp': 'Væk-temperatur'
@@ -295,6 +313,22 @@ const TT_I18N = {
   , 'pause.active_indef': 'Slukket'
   , 'editor.pausebtn.title': 'Pause‑knap'
   , 'editor.pausebtn.desc': 'Vis en global pauseknap i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.'
+  , 'editor.integration.connected': 'Forbundet til integration'
+  , 'editor.integration.disconnected': 'Ikke forbundet til integration'
+  , 'profiles.enable': 'Aktivér skema overrule'
+  , 'profiles.enable.desc': 'Tillad navngivne dagsskemaer som kan aktiveres og overrule hovedplanen.'
+  , 'profiles.button': 'Skemaer'
+  , 'profiles.editor.title': 'Skemaer'
+  , 'profiles.add': 'Tilføj skema'
+  , 'profiles.rename': 'Omdøb'
+  , 'profiles.delete': 'Slet'
+  , 'profiles.activate': 'Aktivér'
+  , 'profiles.deactivate': 'Deaktivér'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Ingen'
+  , 'profiles.name_placeholder': 'Skemanavn'
+  , 'profiles.edit': 'Redigér'
+  , 'profiles.preview_note': 'Kun forhåndsvisning. Skemaerne bliver først aktive, når profilen aktiveres.'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -414,6 +448,7 @@ const TT_I18N = {
     'editor.select_entities': 'Rum',
   'editor.tabs.rooms': 'Rum',
   'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.',
+  'editor.tabs.sync': 'Sync Engine',
   'pause.menu_title': 'Pausa auto‑apply',
   'pause.off_1h': 'Pausa 1 timme',
   'pause.off_5h': 'Pausa 5 timmar',
@@ -424,7 +459,21 @@ const TT_I18N = {
   'pause.active_until': 'Pausad till {time}',
   'pause.active_indef': 'Pausad',
   'editor.pausebtn.title': 'Pausknapp',
-  'editor.pausebtn.desc': 'Visa en global pausknapp i kortets huvud. När paus är aktiv blockeras alla set_temperature‑kommandon.'
+  'editor.pausebtn.desc': 'Visa en global pausknapp i kortets huvud. När paus är aktiv blockeras alla set_temperature‑kommandon.',
+  'editor.integration.connected': 'Ansluten till integrationen',
+  'editor.integration.disconnected': 'Inte ansluten till integrationen'
+  , 'profiles.button': 'Profiler'
+  , 'profiles.editor.title': 'Profiler'
+  , 'profiles.add': 'Lägg till profil'
+  , 'profiles.rename': 'Byt namn'
+  , 'profiles.delete': 'Ta bort'
+  , 'profiles.activate': 'Aktivera'
+  , 'profiles.deactivate': 'Inaktivera'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Ingen'
+  , 'profiles.name_placeholder': 'Profilnamn'
+  , 'profiles.edit': 'Redigera'
+  , 'profiles.preview_note': 'Endast förhandsvisning. Scheman blir aktiva när du aktiverar profilen.'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -542,8 +591,9 @@ const TT_I18N = {
   'onboard.reset': 'Vis guiden på nytt',
   'onboard.reset_ok': 'Velkomst vises neste gang.',
     'editor.select_entities': 'Rom',
-  'editor.tabs.rooms': 'Rom',
-  'week.enable.desc': 'Aktiver plan per ukedag. Når av, brukes samme plan hver dag.',
+  'editor.tabs.rooms': 'Rum',
+  'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.',
+  'editor.tabs.sync': 'Sync Engine',
   'pause.menu_title': 'Pause auto‑apply',
   'pause.off_1h': 'Pause i 1 time',
   'pause.off_5h': 'Pause i 5 timer',
@@ -554,7 +604,22 @@ const TT_I18N = {
   'pause.active_until': 'Pauset til {time}',
   'pause.active_indef': 'Pauset',
   'editor.pausebtn.title': 'Pauseknapp',
-  'editor.pausebtn.desc': 'Vis en global pauseknapp i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.'
+  'editor.pausebtn.desc': 'Vis en global pauseknapp i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.',
+  'editor.tabs.sync': 'Synk‑motor',
+  'editor.integration.connected': 'Tilkoblet integrasjonen',
+  'editor.integration.disconnected': 'Ikke tilkoblet integrasjonen'
+  , 'profiles.button': 'Profiler'
+  , 'profiles.editor.title': 'Profiler'
+  , 'profiles.add': 'Legg til profil'
+  , 'profiles.rename': 'Gi nytt navn'
+  , 'profiles.delete': 'Slett'
+  , 'profiles.activate': 'Aktiver'
+  , 'profiles.deactivate': 'Deaktiver'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Ingen'
+  , 'profiles.name_placeholder': 'Profilnavn'
+  , 'profiles.edit': 'Rediger'
+  , 'profiles.preview_note': 'Kun forhåndsvisning. Skjemaer blir aktive når profilen aktiveres.'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -674,6 +739,7 @@ const TT_I18N = {
     'editor.select_entities': 'Räume',
   'editor.tabs.rooms': 'Räume',
   'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.',
+  'editor.tabs.sync': 'Sync‑Engine',
   'pause.menu_title': 'Auto‑Anwendung pausieren',
   'pause.off_1h': '1 Stunde pausieren',
   'pause.off_5h': '5 Stunden pausieren',
@@ -684,7 +750,21 @@ const TT_I18N = {
   'pause.active_until': 'Pausiert bis {time}',
   'pause.active_indef': 'Pausiert',
   'editor.pausebtn.title': 'Pause‑Schaltfläche',
-  'editor.pausebtn.desc': 'Zeigt eine globale Pause‑Schaltfläche in der Kopfzeile. Während der Pause werden alle set_temperature‑Befehle unterdrückt.'
+  'editor.pausebtn.desc': 'Zeigt eine globale Pause‑Schaltfläche in der Kopfzeile. Während der Pause werden alle set_temperature‑Befehle unterdrückt.',
+  'editor.integration.connected': 'Mit Integration verbunden',
+  'editor.integration.disconnected': 'Nicht mit Integration verbunden'
+  , 'profiles.button': 'Profile'
+  , 'profiles.editor.title': 'Profile'
+  , 'profiles.add': 'Profil hinzufügen'
+  , 'profiles.rename': 'Umbenennen'
+  , 'profiles.delete': 'Löschen'
+  , 'profiles.activate': 'Aktivieren'
+  , 'profiles.deactivate': 'Deaktivieren'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Keins'
+  , 'profiles.name_placeholder': 'Profilname'
+  , 'profiles.edit': 'Bearbeiten'
+  , 'profiles.preview_note': 'Nur Vorschau. Pläne werden aktiv, wenn Sie das Profil aktivieren.'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -804,6 +884,7 @@ const TT_I18N = {
     'editor.select_entities': 'Habitaciones',
   'editor.tabs.rooms': 'Habitaciones',
   'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.',
+  'editor.tabs.sync': 'Motor de sincronización',
   'pause.menu_title': 'Pausar auto‑aplicación',
   'pause.off_1h': 'Pausar 1 hora',
   'pause.off_5h': 'Pausar 5 horas',
@@ -814,7 +895,21 @@ const TT_I18N = {
   'pause.active_until': 'Pausado hasta {time}',
   'pause.active_indef': 'Pausado',
   'editor.pausebtn.title': 'Botón de pausa',
-  'editor.pausebtn.desc': 'Muestra un botón de pausa global en la cabecera. Mientras está pausado, se suprimen todos los comandos set_temperature.'
+  'editor.pausebtn.desc': 'Muestra un botón de pausa global en la cabecera. Mientras está pausado, se suprimen todos los comandos set_temperature.',
+  'editor.integration.connected': 'Conectado a la integración',
+  'editor.integration.disconnected': 'No conectado a la integración'
+  , 'profiles.button': 'Perfiles'
+  , 'profiles.editor.title': 'Perfiles'
+  , 'profiles.add': 'Agregar perfil'
+  , 'profiles.rename': 'Renombrar'
+  , 'profiles.delete': 'Eliminar'
+  , 'profiles.activate': 'Activar'
+  , 'profiles.deactivate': 'Desactivar'
+  , 'profiles.active': 'Activo'
+  , 'profiles.none': 'Ninguno'
+  , 'profiles.name_placeholder': 'Nombre del perfil'
+  , 'profiles.edit': 'Editar'
+  , 'profiles.preview_note': 'Solo vista previa. Los horarios se activan al activar el perfil.'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -934,6 +1029,7 @@ const TT_I18N = {
     'editor.select_entities': 'Pièces',
   'editor.tabs.rooms': 'Pièces',
   'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.',
+  'editor.tabs.sync': 'Moteur de synchro',
   'pause.menu_title': 'Suspendre l’application automatique',
   'pause.off_1h': 'Suspendre 1 heure',
   'pause.off_5h': 'Suspendre 5 heures',
@@ -944,7 +1040,21 @@ const TT_I18N = {
   'pause.active_until': 'Suspendu jusqu’à {time}',
   'pause.active_indef': 'Suspendu',
   'editor.pausebtn.title': 'Bouton Pause',
-  'editor.pausebtn.desc': 'Affiche un bouton de pause global dans l’en‑tête de la carte. En pause, toutes les commandes set_temperature sont bloquées.'
+  'editor.pausebtn.desc': 'Affiche un bouton de pause global dans l’en‑tête de la carte. En pause, toutes les commandes set_temperature sont bloquées.',
+  'editor.integration.connected': 'Connecté à l’intégration',
+  'editor.integration.disconnected': 'Non connecté à l’intégration'
+  , 'profiles.button': 'Profils'
+  , 'profiles.editor.title': 'Profils'
+  , 'profiles.add': 'Ajouter un profil'
+  , 'profiles.rename': 'Renommer'
+  , 'profiles.delete': 'Supprimer'
+  , 'profiles.activate': 'Activer'
+  , 'profiles.deactivate': 'Désactiver'
+  , 'profiles.active': 'Actif'
+  , 'profiles.none': 'Aucun'
+  , 'profiles.name_placeholder': 'Nom du profil'
+  , 'profiles.edit': 'Modifier'
+  , 'profiles.preview_note': 'Aperçu uniquement. Les plannings deviennent actifs lorsque vous activez le profil.'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -1064,6 +1174,7 @@ const TT_I18N = {
     'editor.select_entities': 'Huoneet',
   'editor.tabs.rooms': 'Huoneet',
   'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.',
+  'editor.tabs.sync': 'Synkronointi‑moottori',
   'pause.menu_title': 'Keskeytä automaattinen asetus',
   'pause.off_1h': 'Keskeytä 1 tunniksi',
   'pause.off_5h': 'Keskeytä 5 tunniksi',
@@ -1074,7 +1185,21 @@ const TT_I18N = {
   'pause.active_until': 'Keskeytetty asti {time}',
   'pause.active_indef': 'Keskeytetty',
   'editor.pausebtn.title': 'Taukopainike',
-  'editor.pausebtn.desc': 'Näytä globaali taukopainike kortin yläreunassa. Tauon aikana kaikki set_temperature‑komennot estetään.'
+  'editor.pausebtn.desc': 'Näytä globaali taukopainike kortin yläreunassa. Tauon aikana kaikki set_temperature‑komennot estetään.',
+  'editor.integration.connected': 'Yhdistetty integraatioon',
+  'editor.integration.disconnected': 'Ei yhteyttä integraatioon'
+  , 'profiles.button': 'Profiilit'
+  , 'profiles.editor.title': 'Profiilit'
+  , 'profiles.add': 'Lisää profiili'
+  , 'profiles.rename': 'Nimeä uudelleen'
+  , 'profiles.delete': 'Poista'
+  , 'profiles.activate': 'Aktivoi'
+  , 'profiles.deactivate': 'Poista käytöstä'
+  , 'profiles.active': 'Aktiivinen'
+  , 'profiles.none': 'Ei mikään'
+  , 'profiles.name_placeholder': 'Profiilin nimi'
+  , 'profiles.edit': 'Muokkaa'
+  , 'profiles.preview_note': 'Vain esikatselu. Aikataulut aktivoituvat, kun aktivoit profiilin.'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb' };
@@ -1106,7 +1231,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.10.30-2";
+const TT_CARD_VERSION = "2025.11.01-profiles-dev5";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -1137,6 +1262,7 @@ class ThermostatTimelineCard extends HTMLElement {
       temp_sensors: {},        // { [primary_eid]: sensor.temperature_entity_id }
   weekdays_enabled: false,
   weekdays_mode: 'weekday_weekend', // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
+      profiles_enabled: false,
       away: { enabled: false, persons: [], target_c: 17 }
     };
   }
@@ -1255,6 +1381,7 @@ class ThermostatTimelineCard extends HTMLElement {
   color_ranges: { ...(config.color_ranges || {}) },
       weekdays_enabled: !!(config.weekdays_enabled ?? false),
   weekdays_mode: (config.weekdays_mode || 'weekday_weekend'),
+    profiles_enabled: !!(config.profiles_enabled ?? false),
     away: { enabled: !!(config.away?.enabled ?? false), persons: [...(config.away?.persons || [])], target_c: Number.isFinite(config.away?.target_c) ? Number(config.away.target_c) : 17 }
     };
 
@@ -1358,6 +1485,16 @@ class ThermostatTimelineCard extends HTMLElement {
       // Pending copy-to-rooms targets (applied on Save)
       this._weeklyCopyTargets = [];
 
+    // Profiles modal state (per-room named daily schedules)
+    this._profilesOpen = false;
+    this._profilesEntity = null;   // entity id for which profiles are managed
+    this._profilesSelected = null; // currently selected profile name
+    this._profilesOverlayHiddenForEditor = false; // track if hidden while block editor is open
+  this._profilesDraft = null;     // { name: string, blocks: [...], defaultTemp:number }
+  this._profilesDirty = false;
+  this._profilesSaveLock = false; // debounce guard to prevent double-prompt on Enter
+  this._profilesRoom = null;      // current room eid being edited in profiles modal
+
     // External refresh hook (from editor button)
     this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
     try { window.addEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
@@ -1427,6 +1564,7 @@ class ThermostatTimelineCard extends HTMLElement {
               if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
               if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
               if (typeof s.show_pause_button === 'boolean' && !this._yamlProvided?.show_pause_button) this._config.show_pause_button = !!s.show_pause_button;
+              if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled;
               if (s.away && typeof s.away === 'object') {
                 try {
                   const a = s.away;
@@ -1476,8 +1614,9 @@ class ThermostatTimelineCard extends HTMLElement {
         this._config.away = { enabled: !!a.enabled, persons: Array.isArray(a.persons) ? [...a.persons] : [], target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17) };
       } catch {}
     }
-    // Load pause flags from local storage copy
+  // Load flags from local storage copy
     try { this._pauseIndef = !!s.pause_indef; const pu = Number(s.pause_until_ms); this._pauseUntilMs = Number.isFinite(pu) ? pu : 0; } catch {}
+  try { if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled; } catch {}
       } else {
         // backward compat: schedules stored directly
         this._schedules = parsed || {};
@@ -1487,15 +1626,15 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   async _saveStore() {
-  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } })); } catch {}
+  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, profiles_enabled: !!this._config.profiles_enabled, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } })); } catch {}
     if (!this._storageAvailable()) return;
     this._saving = true;
     try {
       if (this._config?.storage_enabled) {
-  await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } });
+  await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, profiles_enabled: !!this._config.profiles_enabled, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } });
       } else {
         // disable background apply without touching schedules
-  await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false, show_pause_button: !!(this._config.show_pause_button ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } });
+  await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false, profiles_enabled: !!this._config.profiles_enabled, show_pause_button: !!(this._config.show_pause_button ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } });
       }
     }
     catch (e) { console.error("thermostat-timeline: save failed", e); }
@@ -1618,6 +1757,16 @@ class ThermostatTimelineCard extends HTMLElement {
   _weeklyEditableKeys(mode){ const all = this._weekdayNames(); if (!mode) mode = 'weekday_weekend'; if (mode==='weekday_weekend') return ['weekdays','weekend']; if (mode==='weekday_sat_sun') return ['weekdays','sat','sun']; if (mode==='all_7') return all; return ['weekdays','weekend']; }
   _effectiveDayKey(sel){ if (sel==='weekdays') return 'mon'; if (sel==='weekend') return 'sat'; return sel || 'mon'; }
 
+  // --- Profiles (named daily schedules) helpers ---
+  _ensureProfilesStruct(row){
+    try {
+      if (!row) return row;
+      if (!row.profiles || typeof row.profiles !== 'object') row.profiles = {};
+      if (!('activeProfile' in row)) row.activeProfile = null;
+    } catch {}
+    return row;
+  }
+
   // --- Merge helpers ---
   _groupPrimaryOf(eid){
     const prims = this._config?.entities || [];
@@ -1636,7 +1785,21 @@ class ThermostatTimelineCard extends HTMLElement {
     return Array.from(out);
   }
 
-  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; let blocks = row.blocks||[]; if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey); }
+  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; let blocks = row.blocks||[];
+    // Profiles override take precedence when enabled and active
+    try {
+      if (this._config?.profiles_enabled) {
+        this._ensureProfilesStruct(row);
+        const ap = row.activeProfile;
+        if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+          blocks = row.profiles[ap].blocks || [];
+        } else if (this._config?.weekdays_enabled && row.weekly) {
+          const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey);
+        }
+      } else if (this._config?.weekdays_enabled && row.weekly) {
+        const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey);
+      }
+    } catch { /* fall back to default blocks */ }
     const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); let want = Number(hit ? hit.temp : row.defaultTemp);
     // Apply away override if active
     try {
@@ -1714,9 +1877,21 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _nextBoundaryDate(){ const now = new Date(); const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity; for (const eid of (this._config.entities || [])){
       const row = this._schedules[eid]; if (!row) continue; const times = [];
-      // If weekdays enabled, use today's blocks for boundary detection
+      // Prefer active profile blocks when profiles are enabled
       let blocks = row.blocks||[];
-      if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || []; }
+      try {
+        if (this._config?.profiles_enabled) {
+          this._ensureProfilesStruct(row);
+          const ap = row.activeProfile;
+          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+            blocks = row.profiles[ap].blocks || [];
+          } else if (this._config?.weekdays_enabled && row.weekly) {
+            const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+          }
+        } else if (this._config?.weekdays_enabled && row.weekly) {
+          const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+        }
+      } catch {}
       for (const b of blocks) { times.push(b.startMin, b.endMin); }
       for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } }
     }
@@ -1996,18 +2171,42 @@ class ThermostatTimelineCard extends HTMLElement {
         .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
         .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
         /* Hide all popups and popup-trigger buttons when card has .hide-popups */
-        .card.hide-popups .overlay,
-        .card.hide-popups .overlay-week,
-        .card.hide-popups .overlay-copyrooms,
-        .card.hide-popups .overlay-onboard { display: none !important; }
-        .card.hide-popups [data-role="addbtn"],
-        .card.hide-popups [data-role="weekbtn"] { display: none !important; }
+  .card.hide-popups .overlay,
+  .card.hide-popups .overlay-week,
+  .card.hide-popups .overlay-profiles,
+  .card.hide-popups .overlay-copyrooms,
+  .card.hide-popups .overlay-onboard { display: none !important; }
+  .card.hide-popups [data-role="addbtn"],
+  .card.hide-popups [data-role="weekbtn"],
+  .card.hide-popups [data-role="profbtn"] { display: none !important; }
   /* Global pause button */
   .pause-btn { width:26px; height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--primary-color); color: var(--text-primary-color, #fff); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
   .pause-btn.paused { background: var(--error-color); color: var(--text-primary-color, #fff); border-color: var(--error-color); }
   .pause-btn ha-icon{ --mdc-icon-size: 16px; }
+  .profiles-btn { height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--card-background-color); color: var(--primary-text-color); padding:0 10px; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+  .profiles-btn.primary{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  .prof-toolbar .btn ha-icon{ --mdc-icon-size: 16px; }
+  .prof-toolbar .btn.primary{ background: var(--primary-color) !important; color: var(--text-primary-color, #fff) !important; border-color: var(--primary-color) !important; }
         .modal-pause{ width:min(86vw, 320px); max-width:320px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); }
         .pause-list{ display:grid; gap:8px; }
+  /* Profiles modal */
+  /* Stack controls above preview to give them more space; match Weekly modal width */
+  .modal-profiles{ width:min(95vw, 640px); max-width: 640px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); }
+  .prof-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 6px; }
+  .prof-body{ display:grid; grid-template-columns: 1fr; gap:12px; align-items:start; }
+  .prof-controls{ display:grid; gap:8px; }
+  .prof-list{ display:grid; gap:6px; border:1px solid var(--divider-color); border-radius:8px; padding:6px; max-height:260px; overflow:auto; background: var(--secondary-background-color, transparent); }
+  .prof-item{ display:grid; grid-template-columns: 1fr auto; align-items:center; gap:6px; padding:4px 6px; border-radius:8px; }
+  .prof-item.active{ background: var(--secondary-background-color, rgba(0,0,0,.05)); }
+  .prof-chip{ display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border:1px solid var(--divider-color); border-radius:999px; background: var(--card-background-color); color: var(--primary-text-color); font-weight:600; }
+  .prof-chip:focus, .prof-chip:focus-visible{ outline: none; box-shadow: none; }
+  .prof-actions{ display:flex; gap:6px; align-items:center; }
+  .prof-actions .btn{ height:28px; padding:2px 8px; border-radius:8px; font-size:.78rem; }
+  /* Make profiles preview identical to weekday preview */
+  .modal-profiles .week-scale{ margin: 0 16px; }
+  .modal-profiles .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
+  .modal-profiles .week-track .block .pill{ display:none; }
+  .modal-profiles .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
         </style>
       <ha-card class="card">
   <div class="header"><div class="title"></div><div class="weekday-full" style="display:none;"></div><div class="spacer"></div></div>
@@ -2051,6 +2250,34 @@ class ThermostatTimelineCard extends HTMLElement {
               <div style="display:flex; gap:8px; justify-content:flex-end;">
                 <button class="btn ghost wk-cancel" type="button">Annullér</button>
                 <button class="btn primary wk-save" type="button">Gem</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Copy entire week to other rooms -->
+        <!-- Profiles (named daily schedules per room) -->
+        <div class="overlay overlay-profiles" part="overlay">
+          <div class="modal modal-profiles" role="dialog" aria-modal="true">
+            <div class="prof-head">
+              <h3 class="prof-title">Profiles</h3>
+              <div class="prof-room" style="opacity:.9;"></div>
+            </div>
+            <div class="prof-body">
+              <div class="prof-controls" style="display:grid; gap:8px;">
+                <div class="prof-list"></div>
+                <button type="button" class="add-entity-btn prof-add"><ha-icon icon="mdi:plus"></ha-icon><span>Add profile</span></button>
+              </div>
+              <div style="display:grid; gap:8px; align-items:start;">
+                <div class="prof-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+                <div class="prof-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
+                <div class="week-scale" style="position:relative; height:32px;">
+                  <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+                </div>
+                <div class="week-track" style="position:relative;"></div>
+                <div style="display:flex; gap:8px; justify-content:flex-end;">
+                  <button class="btn primary prof-save" type="button">Gem</button>
+                  <button class="btn ghost prof-close" type="button">Close</button>
+                </div>
               </div>
             </div>
           </div>
@@ -2205,6 +2432,8 @@ class ThermostatTimelineCard extends HTMLElement {
   _ensureSchedules() {
     for (const eid of this._config.entities) {
       if (!this._schedules[eid]) this._schedules[eid] = { defaultTemp: this._config.default_temp, blocks: [] };
+      // Always maintain structures so state is preserved if toggles are flipped later
+      this._ensureProfilesStruct(this._schedules[eid]);
       if (this._config?.weekdays_enabled) this._ensureWeeklyStruct(this._schedules[eid]);
     }
   }
@@ -2303,6 +2532,20 @@ class ThermostatTimelineCard extends HTMLElement {
             wrap.append(btn);
             if (this._countdownTimer) { try { clearInterval(this._countdownTimer); } catch {} this._countdownTimer = null; }
           }
+        }
+        // Global Profiles button next to pause (to the right; pause first as requested)
+        if (this._config?.profiles_enabled) {
+          const pbtn = document.createElement('button');
+          pbtn.className = 'profiles-btn';
+          pbtn.setAttribute('type','button');
+          pbtn.textContent = this._t('profiles.button');
+          try { pbtn.dataset.role = 'profbtn'; if (this._disablePopups) pbtn.style.display = 'none'; } catch {}
+          pbtn.addEventListener('click', ()=>{
+            const first = (this._config?.entities||[])[0] || null;
+            if (first) this._openProfilesEditor(first);
+            else this._openProfilesEditor(this._config?.entities?.[0] || null);
+          });
+          wrap.append(pbtn);
         }
       }
     } catch {}
@@ -2472,6 +2715,7 @@ class ThermostatTimelineCard extends HTMLElement {
         weekBtn.addEventListener('click', () => this._openWeeklyEditor(eid));
         toolsWrap.append(weekBtn);
       }
+      // (Profiles button moved to header)
       toolbar.append(toolsWrap, toggleBtn);
       // Ensure correct initial width for open state without rerendering
       try {
@@ -2488,7 +2732,20 @@ class ThermostatTimelineCard extends HTMLElement {
       track.style.setProperty('--row-height', `${this._config.row_height}px`);
   // Use today's blocks if weekdays enabled
   const dayKey = this._todayKey();
-  const showBlocks = this._config?.weekdays_enabled ? (this._getBlocksForDay(row, dayKey) || []) : (row.blocks || []);
+  let showBlocks = (row.blocks || []);
+  try {
+    if (this._config?.profiles_enabled) {
+      this._ensureProfilesStruct(row);
+      const ap = row.activeProfile;
+      if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+        showBlocks = row.profiles[ap].blocks || [];
+      } else if (this._config?.weekdays_enabled) {
+        showBlocks = this._getBlocksForDay(row, dayKey) || [];
+      }
+    } else if (this._config?.weekdays_enabled) {
+      showBlocks = this._getBlocksForDay(row, dayKey) || [];
+    }
+  } catch {}
   for (const b of showBlocks) {
         const pctStart = (b.startMin / 1440) * 100;
         const pctWidth = ((b.endMin - b.startMin) / 1440) * 100;
@@ -2703,6 +2960,17 @@ class ThermostatTimelineCard extends HTMLElement {
   // Do not close weekly editor on outside click either
   if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) { e.preventDefault(); e.stopPropagation(); } });
 
+    // Profiles overlay events
+  const pov = qs('.overlay-profiles');
+  const pclose = qs('.prof-close');
+  const psave = qs('.prof-save');
+  if (psave) psave.addEventListener('click', () => { this._profilesSave(); });
+  if (pclose) pclose.addEventListener('click', () => { this._closeProfilesEditor(); this._render(); });
+    if (pov) pov.addEventListener('click', (e) => {
+      // Close profiles overlay when clicking outside the modal
+      if (e.target === pov) { e.preventDefault(); this._closeProfilesEditor(); }
+    });
+
     // Onboarding controls
     try {
       const next = qs('.onb-next');
@@ -2865,9 +3133,16 @@ class ThermostatTimelineCard extends HTMLElement {
         this._renderWeeklyModal();
       }
     }
+    // If we hid the profiles modal for editing, restore it on close
+    if (this._profilesOverlayHiddenForEditor && this._profilesOpen) {
+      this._profilesOverlayHiddenForEditor = false;
+      const pov = this.shadowRoot.querySelector('.overlay-profiles');
+      if (pov) pov.classList.add('open');
+      this._renderProfilesModal();
+    }
   }
 
-  _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId, weeklyDay }=this._editing; if (!blockId) { this._closeEditor(); return; }
+  _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId, weeklyDay, profileName }=this._editing; if (!blockId) { this._closeEditor(); return; }
     if (weeklyDay && this._weeklyDraft) {
       const arr = this._weeklyDraft.days?.[weeklyDay] || [];
       const idx = arr.findIndex(x=>x.id===blockId);
@@ -2886,6 +3161,23 @@ class ThermostatTimelineCard extends HTMLElement {
         this._renderWeeklyModal();
         this._closeEditor();
       }
+      return;
+    }
+    if (profileName) {
+      try {
+        // Delete from draft
+        const isNewProf = (profileName === '__new__');
+        if (!this._profilesDraft || (!isNewProf && this._profilesDraft.name !== profileName)) {
+            const row = this._schedules[entity]; const src = (!isNewProf ? (row?.profiles?.[profileName] || { blocks: [] }) : { blocks: [] });
+            const nm = isNewProf ? (this._profilesDraft?.name ?? null) : profileName;
+            this._profilesDraft = { name: nm, blocks: JSON.parse(JSON.stringify(src.blocks||[])), defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+          }
+        const arr = this._profilesDraft.blocks || [];
+        const idx = arr.findIndex(x=>x.id===blockId);
+        if (idx>=0) arr.splice(idx,1);
+        this._profilesDirty = true;
+        this._render(); this._closeEditor(); if (this._profilesOpen) this._renderProfilesModal();
+      } catch { this._closeEditor(); }
       return;
     }
     this._deleteBlock(entity, blockId); this._closeEditor(); }
@@ -3324,6 +3616,298 @@ class ThermostatTimelineCard extends HTMLElement {
   });
     } catch(e){ console.warn('render weekly modal failed', e); }
   }
+  // ---------- Profiles modal ----------
+  _openProfilesEditor(entity){
+    try {
+      this._profilesEntity = entity;
+      const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureProfilesStruct(row);
+      // New creation by default: empty timeline
+  this._profilesSelected = null;
+  // Initialize empty draft for ALL rooms
+  const roomsMap = {}; for (const eid of (this._config?.entities||[])) roomsMap[eid] = [];
+  this._profilesDraft = { name: null, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+      this._profilesDirty = false;
+      this._profilesEditingNew = true;
+  this._profilesRoom = (this._config?.entities||[])[0] || entity;
+      this._profilesOpen = true;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-profiles');
+      if (ov) ov.classList.add('open');
+      this._renderProfilesModal();
+    } catch { /* no-op */ }
+  }
+  _closeProfilesEditor(){
+    this._profilesOpen = false; this._profilesEntity = null; this._profilesSelected = null; this.shadowRoot.querySelector('.overlay-profiles')?.classList.remove('open');
+    // Always re-render main timeline after closing, so fallback (weekdays/base) is visible if no profile is active
+    try { this._render(); } catch {}
+  }
+  _renderProfilesModal(){ try {
+      const title = this.shadowRoot.querySelector('.prof-title'); if (title) title.textContent = this._t('profiles.editor.title');
+      const roomEl = this.shadowRoot.querySelector('.prof-room'); if (roomEl) { const eid = this._profilesEntity; const custom = (this._config?.labels?.[eid]) || null; roomEl.textContent = custom || this._prettyName(eid||''); }
+  const note = this.shadowRoot.querySelector('.prof-note'); if (note) note.textContent = this._t('profiles.preview_note');
+  const list = this.shadowRoot.querySelector('.prof-list');
+  const addBtn = this.shadowRoot.querySelector('.prof-add');
+  const closeBtn = this.shadowRoot.querySelector('.prof-close');
+  const modalProf = this.shadowRoot.querySelector('.modal-profiles');
+  const scale = modalProf?.querySelector('.week-scale-inner') || this.shadowRoot.querySelector('.week-scale-inner');
+  const track = modalProf?.querySelector('.week-track') || this.shadowRoot.querySelector('.week-track');
+  const roomTabs = modalProf?.querySelector('.prof-roomtabs');
+      if (!list || !track || !this._profilesEntity) return;
+      const row = this._schedules[this._profilesEntity] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureProfilesStruct(row);
+      // Build room tabs (one per configured entity)
+      if (roomTabs) {
+        roomTabs.innerHTML = '';
+        const ents = this._config?.entities || [];
+        if (!this._profilesRoom || !ents.includes(this._profilesRoom)) this._profilesRoom = ents[0] || null;
+        for (const eid of ents){
+          const btn = document.createElement('button'); btn.type='button'; btn.className='wk-tab' + (eid===this._profilesRoom?' active':'');
+          let label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid));
+          btn.textContent = label; btn.addEventListener('click', ()=>{ this._profilesRoom = eid; this._renderProfilesModal(); });
+          roomTabs.append(btn);
+        }
+      }
+      // Build list
+      list.innerHTML = '';
+  const names = Object.keys(row.profiles || {});
+      if (!names.length) {
+        const p = document.createElement('div'); p.style.fontSize = '.9rem'; p.style.color='var(--secondary-text-color)'; p.textContent = this._t('profiles.none'); list.append(p);
+      }
+      for (const name of names){
+  const item = document.createElement('div'); item.className = 'prof-item' + (this._profilesSelected===name ? ' active' : '');
+  const left = document.createElement('button'); left.type='button'; left.className='prof-chip'; left.textContent = name; left.addEventListener('click', ()=>{ this._profilesSelected = name; this._profilesEditingNew = false; try { const roomsMap = {}; for (const eid of (this._config?.entities||[])){ const src = this._schedules[eid]?.profiles?.[name]?.blocks || []; roomsMap[eid] = JSON.parse(JSON.stringify(src)); } this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false; } catch { this._profilesDraft=null; this._profilesDirty=false; } this._renderProfilesModal(); });
+        const actions = document.createElement('div'); actions.className = 'prof-actions';
+  const editBtn = document.createElement('button'); editBtn.type='button'; editBtn.className='btn ghost'; editBtn.textContent=this._t('profiles.edit');
+  editBtn.addEventListener('click', ()=>{ this._profilesSelected = name; this._profilesEditingNew = false; try { const roomsMap = {}; for (const eid of (this._config?.entities||[])){ const src = this._schedules[eid]?.profiles?.[name]?.blocks || []; roomsMap[eid] = JSON.parse(JSON.stringify(src)); } this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false; } catch { this._profilesDraft=null; this._profilesDirty=false; } this._renderProfilesModal(); try { const trk = modalProf?.querySelector('.week-track'); trk?.scrollIntoView({ behavior:'smooth', block:'center' }); } catch {} });
+        const act = document.createElement('button'); act.type='button'; act.className = 'btn ' + (row.activeProfile===name?'success':'ghost'); act.textContent = (row.activeProfile===name)? this._t('profiles.deactivate') : this._t('profiles.activate');
+        act.addEventListener('click', async ()=>{
+          const eid = this._profilesEntity;
+          const before = this._desiredNowSnapshot();
+          row.activeProfile = (row.activeProfile===name)? null : name;
+          this._schedules[eid] = row;
+          await this._saveStore();
+          this._render();
+          this._renderProfilesModal();
+          // Immediate apply for now if storage is OFF (on‑device control)
+          try {
+            if (this._config?.auto_apply && !this._config?.storage_enabled && !this._isPaused()) {
+              await this._applyIfDesiredChanged(before);
+            }
+          } catch {}
+          this._scheduleNextApply();
+        });
+        const ren = document.createElement('button'); ren.type='button'; ren.className='btn ghost'; ren.textContent=this._t('profiles.rename'); ren.addEventListener('click', async ()=>{
+          const cur = name; const txt = prompt(this._t('profiles.rename'), cur) || '';
+          const nn = txt.trim(); if (!nn || nn===cur) return;
+          if (row.profiles[nn]) { alert('Name exists'); return; }
+          row.profiles[nn] = row.profiles[cur]; delete row.profiles[cur]; if (row.activeProfile===cur) row.activeProfile = nn; if (this._profilesSelected===cur) this._profilesSelected = nn; await this._saveStore(); this._renderProfilesModal(); this._render();
+        });
+        const del = document.createElement('button'); del.type='button'; del.className='remove-btn'; del.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>'+this._t('profiles.delete')+'</span>';
+  del.addEventListener('click', async ()=>{ if (!confirm(this._t('profiles.delete')+'?')) return; delete row.profiles[name]; if (row.activeProfile===name) row.activeProfile=null; if (this._profilesSelected===name) this._profilesSelected = Object.keys(row.profiles||{})[0]||null; await this._saveStore(); this._renderProfilesModal(); this._render(); this._scheduleNextApply(); });
+  actions.append(editBtn, act, ren, del); item.append(left, actions); list.append(item);
+      }
+  if (addBtn) {
+        try { const sp = addBtn.querySelector('span'); if (sp) sp.textContent = this._t('profiles.add'); } catch {}
+        addBtn.classList.remove('btn','primary'); addBtn.classList.add('add-entity-btn');
+        addBtn.onclick = ()=>{
+          // Reset to a brand‑new draft (empty timeline)
+          try {
+            const eid = this._profilesEntity; const row = this._schedules[eid] || { defaultTemp: this._config.default_temp };
+            this._profilesSelected = null; this._profilesEditingNew = true;
+            this._profilesDraft = { name: null, blocks: [], defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+            this._profilesDirty = false; this._renderProfilesModal();
+          } catch {}
+        };
+      }
+  if (closeBtn) { try { closeBtn.textContent = this._t('ui.cancel') || 'Close'; } catch {} }
+      // Draw scale
+      try {
+        if (scale) {
+          scale.innerHTML = '';
+          // Match the weekly preview: ticks every 2 hours using simple borders and small labels
+          for (let i=0;i<=24;i+=2){
+            const t = document.createElement('div');
+            t.style.position='absolute';
+            t.style.left = (i/24*100)+'%';
+            t.style.top='4px'; t.style.bottom='4px';
+            t.style.borderLeft='1px solid var(--divider-color)';
+            const lab = document.createElement('div');
+            lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+            if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24 ? this._label(0) : this._label(i*60)); }
+            t.append(lab); scale.append(t);
+          }
+        }
+      } catch {}
+      // Draw track for selected profile
+      track.innerHTML = '';
+  const sel = this._profilesSelected;
+  let pblocks = [];
+  const curRoom = this._profilesRoom || this._profilesEntity;
+  if (this._profilesDraft && (!sel || this._profilesDraft.name===sel)) {
+    const rooms = this._profilesDraft.rooms || {}; pblocks = rooms[curRoom] || [];
+  } else if (sel) {
+    // Fallback: show blocks from the current room's saved profile
+    const r = this._schedules[curRoom] || {}; pblocks = (r.profiles?.[sel]?.blocks) || [];
+  }
+      const addBtnInline = document.createElement('button'); addBtnInline.type='button'; addBtnInline.className='btn primary'; addBtnInline.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+this._t('ui.add_block')+'</span>'; addBtnInline.addEventListener('click', ()=>{
+        this._openProfileBlockEditor(null, this._getNowMin());
+      });
+      const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(addBtnInline);
+      // Place toolbar ABOVE the time scale (before the .week-scale container)
+      try {
+        const outerScale = (scale && scale.closest) ? scale.closest('.week-scale') : (modalProf?.querySelector('.week-scale') || null);
+        const parent = outerScale?.parentElement || track.parentElement;
+        if (parent) {
+          Array.from(parent.querySelectorAll('.prof-toolbar')).forEach(el=>el.remove());
+          if (outerScale) parent.insertBefore(toolbar, outerScale); else parent.insertBefore(toolbar, track);
+        }
+      } catch {}
+      // Tooltip (same style as weekdays)
+      let tooltip = this.shadowRoot.querySelector('.wk-tooltip.prof');
+      if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip prof'; tooltip.style.display='none'; modalProf?.append(tooltip); }
+      for (const b of pblocks){
+        const pctStart = (b.startMin/1440)*100; const pctW = ((b.endMin-b.startMin)/1440)*100;
+        const bl = document.createElement('div'); bl.className='block'; bl.style.left=`${pctStart}%`; bl.style.width=`${pctW}%`;
+        try { const clr = this._colorFor(this._profilesEntity, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
+        // Hide pill via CSS; use hover tooltip like weekdays
+        const pillTemp = document.createElement('span'); pillTemp.className='pill'; pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pillTemp);
+        bl.addEventListener('dblclick', ()=> this._openProfileBlockEditor(b.id));
+        const showTip = ()=>{
+          const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+          if (!tooltip) return;
+          try { if (tooltip._hideTimer) { clearTimeout(tooltip._hideTimer); tooltip._hideTimer = null; } } catch {}
+          // Suppress while block editor is open
+          try { const ov = this.shadowRoot.querySelector('.overlay'); if (this._editing || (ov && ov.classList.contains('open'))) return; } catch {}
+          tooltip.textContent = txt;
+          const box = bl.getBoundingClientRect(); const cont = modalProf?.getBoundingClientRect();
+          const left = box.left + box.width/2 - (cont?.left||0); const top = (box.top - (cont?.top||0)) - 8;
+          tooltip.style.left = left + 'px'; tooltip.style.top = top + 'px'; tooltip.style.transform = 'translate(-50%,-100%)'; tooltip.style.display='';
+        };
+        const hideTip = ()=>{ if (!tooltip) return; const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); } catch {}; tooltip._hideTimer = setTimeout(()=>{ try { tooltip.style.display='none'; tooltip._hideTimer=null; } catch{} }, delay); };
+        bl.addEventListener('mouseenter', showTip);
+        bl.addEventListener('mouseleave', hideTip);
+        track.append(bl);
+      }
+    } catch { /* ignore */ }
+  }
+  _openProfileBlockEditor(blockId, atMin=null){
+    try {
+  const eid = this._profilesRoom || this._profilesEntity; const name = this._profilesSelected; if (!eid) return;
+      const row = this._schedules[eid]; this._ensureProfilesStruct(row);
+      // Use draft while editing
+      if (!this._profilesDraft || this._profilesDraft.name !== name) {
+        try {
+          const roomsMap = {};
+          for (const e of (this._config?.entities||[])){
+            const src = name ? (this._schedules[e]?.profiles?.[name]?.blocks || []) : [];
+            roomsMap[e] = JSON.parse(JSON.stringify(src));
+          }
+          this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+          this._profilesDirty = false;
+        } catch {
+          const roomsMap = {}; for (const e of (this._config?.entities||[])) roomsMap[e] = [];
+          this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false;
+        }
+      }
+      const arr = (this._profilesDraft.rooms||{})[eid] || [];
+      const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+      if (!blockId){
+        // New block default around now
+        const now = Number.isFinite(atMin) ? atMin : this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start+60, start+15, 1440);
+  this._editing = { entity: eid, blockId: null, profileName: (name || '__new__') };
+        if (edTemp) { const base = Number(row.defaultTemp||this._config.default_temp||20); edTemp.value = String(this._toDisplayTemp(base)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+        if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(start); if (edTo) edTo.value=this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value=(start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(end>=720 && end<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(start); if (edTo) edTo.value=this._toTimeInput(end); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+        if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
+      } else {
+        const b = arr.find(x=>x.id===blockId); if (!b) return;
+  this._editing = { entity: eid, blockId, profileName: (name || '__new__') };
+        if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+        if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(b.startMin); if (edTo) edTo.value=this._toTimeInput12h(b.endMin); if (fromMer){ fromMer.style.display=''; fromMer.value=(b.startMin>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(b.endMin>=720 && b.endMin<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(b.startMin); if (edTo) edTo.value=this._toTimeInput(b.endMin); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+        if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
+      }
+      // Hide profiles overlay while editing
+      const pov = this.shadowRoot.querySelector('.overlay-profiles'); if (pov) pov.classList.remove('open'); this._profilesOverlayHiddenForEditor = true;
+      try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+      overlay.classList.add('open');
+    } catch {}
+  }
+  async _profilesSaveDraft(){
+    try {
+      const eid = this._profilesEntity; const sel = this._profilesSelected; const d = this._profilesDraft;
+      if (!eid || !sel || !d || d.name !== sel) return;
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureProfilesStruct(row);
+      // Persist current draft into storage structure
+      row.profiles[sel] = { defaultTemp: row.defaultTemp, blocks: JSON.parse(JSON.stringify(d.blocks || [])) };
+      this._schedules[eid] = row;
+      await this._saveStore();
+      // Clear dirty flag and revert Add/Save button immediately
+      this._profilesDirty = false;
+      try {
+        const btn = this.shadowRoot && this.shadowRoot.querySelector('.prof-add');
+        const sp = btn && btn.querySelector && btn.querySelector('span');
+        if (btn && sp) { sp.textContent = this._t('profiles.add'); btn.classList.remove('btn','primary'); btn.classList.add('add-entity-btn'); btn.onclick = null; }
+      } catch {}
+      // Refresh UI and reschedule transitions
+      this._render();
+      this._renderProfilesModal();
+      this._scheduleNextApply();
+    } catch (e) { console.warn('profiles save failed', e); }
+  }
+  async _profilesSave(){
+    try {
+      // Prevent double-trigger when user presses Enter to confirm the prompt
+      if (this._profilesSaveLock) return; this._profilesSaveLock = true;
+  const eid = this._profilesEntity; if (!eid) return;
+  const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensureProfilesStruct(row);
+  const draft = this._profilesDraft || { name:null, rooms:{} };
+      // New profile: prompt for name
+      if (this._profilesEditingNew || !this._profilesSelected) {
+        const base = this._t('profiles.name_placeholder');
+        const txt = prompt(base||'Profile name', 'Profile');
+        const name = (txt||'').trim(); if (!name) return;
+        if (row.profiles[name]) { alert('Name exists'); return; }
+        // Save this profile for ALL rooms from the draft map
+        for (const rid of (this._config?.entities||[])){
+          const rrow = this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] };
+          this._ensureProfilesStruct(rrow);
+          const blocks = (draft.rooms?.[rid] || []);
+          rrow.profiles = rrow.profiles || {}; rrow.profiles[name] = { defaultTemp: rrow.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
+          this._schedules[rid] = rrow;
+        }
+        // Persist and reset timeline for a fresh new draft (ready for next)
+        this._profilesDirty = false;
+        await this._saveStore();
+        try {
+          this._profilesSelected = null; this._profilesEditingNew = true;
+          this._profilesDraft = { name: null, blocks: [], defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        } catch {}
+        // Move focus away from Save to avoid immediate re-click from Enter
+        try { (this.shadowRoot && this.shadowRoot.activeElement && this.shadowRoot.activeElement.blur && this.shadowRoot.activeElement.blur()); } catch {}
+        this._renderProfilesModal(); this._render(); this._scheduleNextApply();
+        return;
+      }
+      // Edit existing: save without renaming, then reset timeline for next
+      const sel = this._profilesSelected;
+      for (const rid of (this._config?.entities||[])){
+        const rrow = this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] };
+        this._ensureProfilesStruct(rrow);
+        const blocks = (draft.rooms?.[rid] || []);
+        rrow.profiles = rrow.profiles || {}; rrow.profiles[sel] = { defaultTemp: rrow.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
+        this._schedules[rid] = rrow;
+      }
+      this._profilesDirty = false;
+      await this._saveStore();
+      try { (this.shadowRoot && this.shadowRoot.activeElement && this.shadowRoot.activeElement.blur && this.shadowRoot.activeElement.blur()); } catch {}
+      // Clear selection and show empty preview ready for a new schedule
+      try {
+        this._profilesSelected = null; this._profilesEditingNew = true;
+        this._profilesDraft = { name: null, blocks: [], defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+      } catch {}
+      this._renderProfilesModal(); this._render(); this._scheduleNextApply();
+    } catch (e) { console.warn('profiles save failed', e); }
+    finally { setTimeout(()=>{ this._profilesSaveLock = false; }, 300); }
+  }
   _openCopyWeekToRooms(){ try {
       // Build list of target rooms (exclude current)
       const list = this.shadowRoot.querySelector('.copyrooms-list');
@@ -3415,7 +3999,7 @@ class ThermostatTimelineCard extends HTMLElement {
     }
   }
 
-  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
+  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay, profileName } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (profileName) { this._ensureProfilesStruct(row); sourceBlocks = (row.profiles?.[profileName]?.blocks) || []; b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
     const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
     const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer'); const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
     const rawFrom = String(edFrom.value || "");
@@ -3506,6 +4090,42 @@ class ThermostatTimelineCard extends HTMLElement {
     }
   temp = this._fromDisplayTemp(temp);
   const before = this._desiredNowSnapshot();
+    if (profileName) {
+      // Save into a draft for the selected profile; persist only when user presses Save
+      const hasOverlap = (arr, s, e, ignoreId=null) => { const othersArr = (arr||[]).filter(x=>!ignoreId || x.id !== ignoreId); return othersArr.find(o => !(e <= o.startMin || s >= o.endMin)); };
+      const crossesMidnight = end <= start;
+      // Ensure draft exists for current room; don't re-init when creating a new (unnamed) profile
+      const isNewProf = (profileName === '__new__');
+      const curRoom = this._profilesRoom || this._profilesEntity || Object.keys(this._schedules)[0];
+      if (!this._profilesDraft || (!isNewProf && this._profilesDraft.name !== profileName)) {
+        try {
+          const roomsMap = {};
+          for (const e of (this._config?.entities||[])){
+            const src = !isNewProf ? (this._schedules[e]?.profiles?.[profileName]?.blocks || []) : [];
+            roomsMap[e] = JSON.parse(JSON.stringify(src));
+          }
+          this._profilesDraft = { name: (isNewProf? null : profileName), rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        } catch {
+          const roomsMap = {}; for (const e of (this._config?.entities||[])) roomsMap[e] = [];
+          this._profilesDraft = { name: (isNewProf? null : profileName), rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        }
+      }
+      const arr = (this._profilesDraft.rooms||{})[curRoom] || [];
+      if (crossesMidnight) {
+        const ov1 = hasOverlap(arr, start, 1440, b?.id);
+        const ov2 = hasOverlap(arr, 0, end, null);
+        if (ov1 || ov2) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const overlap = ov1 || ov2; const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end)); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp: this._fromDisplayTemp(temp) }); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); }
+      } else {
+        const overlap = hasOverlap(arr, start, end, b?.id);
+        if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp:this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=end; }
+      }
+  (this._profilesDraft.rooms||{})[curRoom] = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      this._profilesDirty = true;
+      this._render(); this._closeEditor(); this._renderProfilesModal();
+      return;
+    }
     if (weeklyDay && this._weeklyDraft) {
       if (crossesMidnight) {
         // Split into two parts on the SAME day: [start..1440] and [0..end]
@@ -3793,6 +4413,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (cancel) cancel.textContent = t('ui.cancel');
       const save = this.shadowRoot && this.shadowRoot.querySelector('.ed-save');
       if (save) save.textContent = t('ui.save');
+  // Profiles modal buttons
+  try { const ps = this.shadowRoot && this.shadowRoot.querySelector('.prof-save'); if (ps) ps.textContent = t('ui.save'); const pc = this.shadowRoot && this.shadowRoot.querySelector('.prof-close'); if (pc) pc.textContent = t('ui.cancel'); } catch {}
   // Week modal buttons
   const wcancelBtn = this.shadowRoot && this.shadowRoot.querySelector('.wk-cancel');
   if (wcancelBtn) wcancelBtn.textContent = t('ui.cancel');
@@ -4040,6 +4662,23 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
         const picker = root.querySelector('.storage'); if (picker) picker.disabled = false;
       }
+      // Update integration status chip in tabs
+      try {
+        const chip = root.querySelector('.int-status');
+        const icon = chip?.querySelector('ha-icon');
+        const txt = chip?.querySelector('.text');
+        if (chip && icon && txt) {
+          if (hasService) {
+            chip.classList.remove('bad'); chip.classList.add('ok');
+            icon.setAttribute('icon','mdi:cloud-check-outline');
+            txt.textContent = this._t ? this._t('editor.integration.connected') : 'Connected to integration';
+          } else {
+            chip.classList.remove('ok'); chip.classList.add('bad');
+            icon.setAttribute('icon','mdi:cloud-off-outline');
+            txt.textContent = this._t ? this._t('editor.integration.disconnected') : 'Not connected to integration';
+          }
+        }
+      } catch {}
     }
   } catch {}
  }
@@ -4141,6 +4780,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .tab-btn::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background: transparent; border-radius:2px; }
   .tab-btn.active { color: var(--primary-text-color); }
   .tab-btn.active::after { background: var(--primary-color); }
+  /* Integration availability status (small badge under tabs) */
+  .status-wrap { display:flex; justify-content:flex-start; padding:0 6px 4px; }
+  .int-status { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); }
+  .int-status.ok { color: var(--success-color, #2e7d32); border-color: color-mix(in oklab, var(--success-color, #2e7d32) 50%, var(--divider-color)); }
+  .int-status.bad { color: var(--error-color); border-color: color-mix(in oklab, var(--error-color) 50%, var(--divider-color)); }
+  .int-status ha-icon { --mdc-icon-size: 14px; }
+  .int-status .text { font-size:.8rem; white-space:nowrap; }
   /* Remove blue focus ring on click; keep it for keyboard users only */
   .tab-btn:focus { outline: none; }
   .tab-btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset:2px; border-radius:4px; }
@@ -4182,28 +4828,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .store-controls .store-btns { display:flex; gap:8px; align-items:stretch; flex-wrap: nowrap; justify-content: flex-start; width:100%; }
   .store-controls .store-btns .remove-btn { flex: 1 1 0; justify-content: center; height:100%; text-align:center; }
         </style>
-  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button></div>
+  <div class="status-wrap"><span class="int-status" role="status"><ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon><span class="text">Not connected</span></span></div>
+  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
-        <div class="row">
-          <div class="label"></div>
-          <div class="settings-card store-card">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-              <div style="display:grid; gap:2px;">
-                <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
-                <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);"><span class="store-desc-text">Saves schedules to the selected sensor and enables background control.</span></div>
-              </div>
-              <ha-switch class="store-enable"></ha-switch>
-            </div>
-            <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
-              <tt-entity-picker class="storage" label="sensor.thermostat_timeline" include-domains='["sensor"]'></tt-entity-picker>
-              <div class="store-btns">
-                <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
-                <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         
         
 <style>
@@ -4317,14 +4946,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
     <ha-switch class="week-enable"></ha-switch>
   </div>
+  <div class="setting profiles-setting">
+    <div class="text">
+      <div class="title">Profiles</div>
+      <div class="desc profiles-enable-desc">Allow named daily schedules you can activate to override the main plan.</div>
+    </div>
+    <ha-switch class="profiles-enable"></ha-switch>
+  </div>
 </div>
-
-<!-- Bottom actions: clear local + reset onboarding (inline) -->
-<div class="row row-bottom-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-  <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
-  <button class="add-entity-btn reset-onboard" type="button"><ha-icon icon="mdi:movie-play"></ha-icon><span>Show welcome again</span></button>
-</div>
-
   </div>
   <div class="wrap tab-rooms" style="display:none;">
     <div class="row">
@@ -4362,6 +4991,32 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           <div class="linked-chips away-chips"></div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="wrap tab-sync" style="display:none;">
+    <div class="row">
+      <div class="label"></div>
+      <div class="settings-card store-card">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+          <div style="display:grid; gap:2px;">
+            <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
+            <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);"><span class="store-desc-text">Saves schedules to the selected sensor and enables background control.</span></div>
+          </div>
+          <ha-switch class="store-enable"></ha-switch>
+        </div>
+        <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
+          <tt-entity-picker class="storage" label="sensor.thermostat_timeline" include-domains='["sensor"]'></tt-entity-picker>
+          <div class="store-btns">
+            <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
+            <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom actions: clear local + reset onboarding -->
+    <div class="row row-bottom-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+      <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
+      <button class="add-entity-btn reset-onboard" type="button"><ha-icon icon="mdi:movie-play"></ha-icon><span>Show welcome again</span></button>
     </div>
   </div>`;    this._applyEditorI18n();
 
@@ -4511,6 +5166,10 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     qs('.week-enable')?.addEventListener('change', e => {
       const on = !!e.target.checked; this._upd('weekdays_enabled', on);
     });
+    // Profiles enable
+    qs('.profiles-enable')?.addEventListener('change', e => {
+      const on = !!e.target.checked; this._upd('profiles_enabled', on);
+    });
     // (clear storage only button removed)
 
     // Clear all data (storage + local)
@@ -4518,10 +5177,20 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const msg = this._t('editor.clear_all_confirm');
       if (!confirm(msg)) return;
       try {
+        // Wipe local browser copy
         try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
+        // Also wipe in-memory schedules so UI reflects deletion immediately
+        try {
+          this._schedules = {};
+          // Reset any profiles editing state
+          this._profilesSelected = null; this._profilesDraft = null; this._profilesDirty = false; this._profilesEditingNew = false;
+        } catch {}
         if (this._hass && this._config.storage_entity) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules: {} });
         }
+        // Repaint editor/live cards
+        try { this._emit(true); } catch {}
+        try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
       } catch (e) { console.warn('clear-all failed', e); }
     });
 
@@ -4531,7 +5200,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (this._config?.storage_enabled) { try { ev.preventDefault(); ev.stopPropagation(); } catch {} return; }
       const msg = this._t('editor.clear_local_only_confirm');
       if (!confirm(msg)) return;
-      try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
+      try {
+        localStorage.removeItem('thermostat_timeline_store');
+        // Clear in-memory schedules when using local storage only
+        this._schedules = {};
+        this._profilesSelected = null; this._profilesDraft = null; this._profilesDirty = false; this._profilesEditingNew = false;
+        this._emit(true);
+        try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+      } catch {}
     });
     // Reset onboarding (show intro again)
     qs('.reset-onboard')?.addEventListener('click', async () => {
@@ -4548,7 +5224,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (!ok) return;
     const parsed = JSON.parse(raw || '{}');
     const schedules = parsed.schedules || parsed || {};
-  let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
+  let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled };
   settings = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
         if (this._hass) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
@@ -4592,10 +5268,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
+      const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
       if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
   if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); };
       if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
       if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
+      if (yBtn) yBtn.onclick = ()=> { this._activeTab='sync'; this._render(); };
     } catch {}
   }
 
@@ -4682,6 +5360,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
         show_pause_button: !!(this._config.show_pause_button ?? true),
+        profiles_enabled: !!this._config.profiles_enabled,
         auto_apply_enabled: !!this._config.auto_apply,
         pause_indef: !!this._pauseIndef,
         pause_until_ms: Number(this._pauseUntilMs||0)
@@ -4751,6 +5430,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); }
           if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
           if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
+          if (el.classList.contains('tab-sync-btn')) { this._activeTab = 'sync'; this._render(); }
         });
       } catch {}
     }
@@ -4767,6 +5447,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const adf= this.shadowRoot.querySelector(".applydef");
   const pbe = this.shadowRoot.querySelector('.pausebtn-enable');
   const wek = this.shadowRoot.querySelector('.week-enable');
+  const prf = this.shadowRoot.querySelector('.profiles-enable');
     if (t)  t.value  = this._config.title ?? "";
   if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
   if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
@@ -4799,6 +5480,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (aed){ aed.checked = !!this._config.apply_on_edit; }
     if (adf){ adf.checked = !!this._config.apply_on_default_change; }
   if (wek){ wek.checked = !!this._config.weekdays_enabled; }
+  if (prf){ prf.checked = !!this._config.profiles_enabled; }
   if (pbe){ pbe.checked = !!(this._config.show_pause_button ?? true); }
   // No mode dropdown in editor
 
@@ -5016,7 +5698,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   refresh.onclick = async () => {
           // Persist color settings to local/shared storage so live card instances pick them up
           try {
-            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
+            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled };
             let schedules = {};
             // Prefer current storage sensor schedules when enabled
             try {
@@ -5142,23 +5824,28 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
+      const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
       const sSec = this.shadowRoot.querySelector('.tab-settings');
       const rSec = this.shadowRoot.querySelector('.tab-rooms');
       const cSec = this.shadowRoot.querySelector('.tab-colors');
       const aSec = this.shadowRoot.querySelector('.tab-away');
+      const ySec = this.shadowRoot.querySelector('.tab-sync');
       const isRooms = this._activeTab === 'rooms';
       const isColors = this._activeTab === 'colors';
       const isSettings = this._activeTab === 'settings';
       const isAway = this._activeTab === 'away';
-      if (sBtn && rBtn && cBtn && aBtn && sSec && rSec && cSec && aSec) {
+      const isSync = this._activeTab === 'sync';
+      if (sBtn && rBtn && cBtn && aBtn && sSec && rSec && cSec && aSec && yBtn && ySec) {
         sBtn.classList.toggle('active', isSettings);
         rBtn.classList.toggle('active', isRooms);
         cBtn.classList.toggle('active', isColors);
         aBtn.classList.toggle('active', isAway);
+        yBtn.classList.toggle('active', isSync);
         sSec.style.display = isSettings ? '' : 'none';
         rSec.style.display = isRooms ? '' : 'none';
         cSec.style.display = isColors ? '' : 'none';
         aSec.style.display = isAway ? '' : 'none';
+        ySec.style.display = isSync ? '' : 'none';
       }
     } catch {}
 
@@ -5710,6 +6397,23 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
             const picker = root.querySelector('.storage'); if (picker) { try { picker.disabled = false; picker.removeAttribute('disabled'); } catch {} }
           }
+          // Update small status chip in tabs
+          try {
+            const chip = root.querySelector('.int-status');
+            const icon = chip?.querySelector('ha-icon');
+            const txt = chip?.querySelector('.text');
+            if (chip && icon && txt) {
+              if (hasService) {
+                chip.classList.remove('bad'); chip.classList.add('ok');
+                icon.setAttribute('icon', 'mdi:cloud-check-outline');
+                txt.textContent = t('editor.integration.connected') || 'Connected to integration';
+              } else {
+                chip.classList.remove('ok'); chip.classList.add('bad');
+                icon.setAttribute('icon', 'mdi:cloud-off-outline');
+                txt.textContent = t('editor.integration.disconnected') || 'Not connected to integration';
+              }
+            }
+          } catch {}
         } catch {}
   // (clear storage only button removed)
         const clrAllBtn = root.querySelector('.clear-all span');
@@ -5766,6 +6470,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (de) de.textContent = t('week.enable.desc');
         }
       } catch {}
+      // Profiles enable section
+      try {
+        const ps = root.querySelector('.profiles-setting');
+        if (ps){
+          const ti = ps.querySelector('.title'); if (ti) ti.textContent = t('profiles.enable');
+          const de = ps.querySelector('.profiles-enable-desc') || ps.querySelector('.desc');
+          if (de) de.textContent = t('profiles.enable.desc');
+        }
+      } catch {}
       // Time format section (always last)
       try {
         const tfTitle = root.querySelector('.timefmt-title'); if (tfTitle) tfTitle.textContent = t('editor.timefmt.title');
@@ -5787,6 +6500,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
+    const yBtn = root.querySelector('.tab-sync-btn'); if (yBtn) yBtn.textContent = t('editor.tabs.sync');
         // (reload buttons removed)
         // Colors tab action labels
         const clrLocalBtn = root.querySelector('.clr-colors-local-btn span'); if (clrLocalBtn) clrLocalBtn.textContent = t('editor.colors.clear_local');
