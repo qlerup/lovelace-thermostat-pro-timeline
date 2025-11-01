@@ -148,8 +148,8 @@ const TT_I18N = {
   , 'pause.active_indef': 'Paused'
   , 'editor.pausebtn.title': 'Pause button'
   , 'editor.pausebtn.desc': 'Show a global pause button in the card header. While paused, all set_temperature commands are suppressed.'
-  , 'editor.integration.connected': 'Connected to integration'
-  , 'editor.integration.disconnected': 'Not connected to integration'
+  , 'editor.integration.connected': 'Integration ready'
+  , 'editor.integration.disconnected': 'Integration unavailable'
   , 'profiles.enable': 'Enable profiles (override)'
   , 'profiles.enable.desc': 'Allow named daily schedules you can activate to override the main plan.'
   , 'profiles.button': 'Profiles'
@@ -313,8 +313,8 @@ const TT_I18N = {
   , 'pause.active_indef': 'Slukket'
   , 'editor.pausebtn.title': 'Pause‑knap'
   , 'editor.pausebtn.desc': 'Vis en global pauseknap i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.'
-  , 'editor.integration.connected': 'Forbundet til integration'
-  , 'editor.integration.disconnected': 'Ikke forbundet til integration'
+  , 'editor.integration.connected': 'Integration klar'
+  , 'editor.integration.disconnected': 'Integration ikke tilgængelig'
   , 'profiles.enable': 'Aktivér skema overrule'
   , 'profiles.enable.desc': 'Tillad navngivne dagsskemaer som kan aktiveres og overrule hovedplanen.'
   , 'profiles.button': 'Skemaer'
@@ -460,8 +460,8 @@ const TT_I18N = {
   'pause.active_indef': 'Pausad',
   'editor.pausebtn.title': 'Pausknapp',
   'editor.pausebtn.desc': 'Visa en global pausknapp i kortets huvud. När paus är aktiv blockeras alla set_temperature‑kommandon.',
-  'editor.integration.connected': 'Ansluten till integrationen',
-  'editor.integration.disconnected': 'Inte ansluten till integrationen'
+  'editor.integration.connected': 'Integration klar',
+  'editor.integration.disconnected': 'Integration inte tillgänglig'
   , 'profiles.button': 'Profiler'
   , 'profiles.editor.title': 'Profiler'
   , 'profiles.add': 'Lägg till profil'
@@ -606,8 +606,8 @@ const TT_I18N = {
   'editor.pausebtn.title': 'Pauseknapp',
   'editor.pausebtn.desc': 'Vis en global pauseknapp i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.',
   'editor.tabs.sync': 'Synk‑motor',
-  'editor.integration.connected': 'Tilkoblet integrasjonen',
-  'editor.integration.disconnected': 'Ikke tilkoblet integrasjonen'
+  'editor.integration.connected': 'Integrasjon klar',
+  'editor.integration.disconnected': 'Integrasjon utilgjengelig'
   , 'profiles.button': 'Profiler'
   , 'profiles.editor.title': 'Profiler'
   , 'profiles.add': 'Legg til profil'
@@ -751,8 +751,8 @@ const TT_I18N = {
   'pause.active_indef': 'Pausiert',
   'editor.pausebtn.title': 'Pause‑Schaltfläche',
   'editor.pausebtn.desc': 'Zeigt eine globale Pause‑Schaltfläche in der Kopfzeile. Während der Pause werden alle set_temperature‑Befehle unterdrückt.',
-  'editor.integration.connected': 'Mit Integration verbunden',
-  'editor.integration.disconnected': 'Nicht mit Integration verbunden'
+  'editor.integration.connected': 'Integration bereit',
+  'editor.integration.disconnected': 'Integration nicht verfügbar'
   , 'profiles.button': 'Profile'
   , 'profiles.editor.title': 'Profile'
   , 'profiles.add': 'Profil hinzufügen'
@@ -896,8 +896,8 @@ const TT_I18N = {
   'pause.active_indef': 'Pausado',
   'editor.pausebtn.title': 'Botón de pausa',
   'editor.pausebtn.desc': 'Muestra un botón de pausa global en la cabecera. Mientras está pausado, se suprimen todos los comandos set_temperature.',
-  'editor.integration.connected': 'Conectado a la integración',
-  'editor.integration.disconnected': 'No conectado a la integración'
+  'editor.integration.connected': 'Integración lista',
+  'editor.integration.disconnected': 'Integración no disponible'
   , 'profiles.button': 'Perfiles'
   , 'profiles.editor.title': 'Perfiles'
   , 'profiles.add': 'Agregar perfil'
@@ -1041,8 +1041,8 @@ const TT_I18N = {
   'pause.active_indef': 'Suspendu',
   'editor.pausebtn.title': 'Bouton Pause',
   'editor.pausebtn.desc': 'Affiche un bouton de pause global dans l’en‑tête de la carte. En pause, toutes les commandes set_temperature sont bloquées.',
-  'editor.integration.connected': 'Connecté à l’intégration',
-  'editor.integration.disconnected': 'Non connecté à l’intégration'
+  'editor.integration.connected': 'Intégration prête',
+  'editor.integration.disconnected': 'Intégration indisponible'
   , 'profiles.button': 'Profils'
   , 'profiles.editor.title': 'Profils'
   , 'profiles.add': 'Ajouter un profil'
@@ -1186,8 +1186,8 @@ const TT_I18N = {
   'pause.active_indef': 'Keskeytetty',
   'editor.pausebtn.title': 'Taukopainike',
   'editor.pausebtn.desc': 'Näytä globaali taukopainike kortin yläreunassa. Tauon aikana kaikki set_temperature‑komennot estetään.',
-  'editor.integration.connected': 'Yhdistetty integraatioon',
-  'editor.integration.disconnected': 'Ei yhteyttä integraatioon'
+  'editor.integration.connected': 'Integraatio valmis',
+  'editor.integration.disconnected': 'Integraatio ei käytettävissä'
   , 'profiles.button': 'Profiilit'
   , 'profiles.editor.title': 'Profiilit'
   , 'profiles.add': 'Lisää profiili'
@@ -4677,6 +4677,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             icon.setAttribute('icon','mdi:cloud-off-outline');
             txt.textContent = this._t ? this._t('editor.integration.disconnected') : 'Not connected to integration';
           }
+          // Click to jump to Sync tab
+          try { chip.style.userSelect='none'; chip.onclick = ()=>{ this._activeTab='sync'; this._render(); }; } catch {}
         }
       } catch {}
     }
@@ -4782,7 +4784,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .tab-btn.active::after { background: var(--primary-color); }
   /* Integration availability status (small badge under tabs) */
   .status-wrap { display:flex; justify-content:flex-start; padding:0 6px 4px; }
-  .int-status { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); }
+  .int-status { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); cursor:pointer; }
   .int-status.ok { color: var(--success-color, #2e7d32); border-color: color-mix(in oklab, var(--success-color, #2e7d32) 50%, var(--divider-color)); }
   .int-status.bad { color: var(--error-color); border-color: color-mix(in oklab, var(--error-color) 50%, var(--divider-color)); }
   .int-status ha-icon { --mdc-icon-size: 14px; }
@@ -6412,6 +6414,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
                 icon.setAttribute('icon', 'mdi:cloud-off-outline');
                 txt.textContent = t('editor.integration.disconnected') || 'Not connected to integration';
               }
+              // Make the chip clickable to jump to Sync tab
+              chip.style.userSelect = 'none';
+              chip.addEventListener('click', ()=>{ try { this._activeTab = 'sync'; this._render(); } catch {} });
             }
           } catch {}
         } catch {}
