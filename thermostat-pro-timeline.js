@@ -19,19 +19,18 @@ const TT_I18N = {
     'ui.fix_start_to': 'Fix start to {time}',
   'ui.fix_end_to': 'Fix end to {time}',
     // Inline meta
-    'ui.current_temp': 'Current temperature:' ,
+  'ui.current_temp': 'Current temperature:' ,
 
     // GUI editor panel
     'editor.title_label': 'Title',
-  'editor.add_entity': 'Add room',
     'editor.entity_placeholder': 'Select an entity',
     'editor.drag_reorder': 'Drag to reorder',
     'editor.remove': 'Remove',
     'editor.default_c': 'Default °C',
   'editor.row_height_px': 'Row height (px)',
   'editor.max_c': 'Max °C',
-  'editor.min_c': 'Min °C',
-  'editor.auto_apply.title': 'Automatic apply',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automatic apply',
     'editor.auto_apply.desc':
       'When enabled, the card will try to set the temperature on selected climate entities so it matches the planned value for “right now”.',
     'editor.apply_edit.title': 'On editing',
@@ -124,6 +123,13 @@ const TT_I18N = {
   , 'editor.colors.clear_local_confirm': 'This will delete color ranges saved in your browser for this card. Continue?'
   , 'editor.colors.clear_shared': 'Clear shared color storage'
   , 'editor.colors.clear_shared_confirm': 'This will delete color ranges in the selected storage sensor. Continue?'
+  , 'editor.colors.clear_all': 'Clear all color data'
+  , 'editor.colors.clear_all_confirm': 'This will delete all color ranges from both local storage and the selected storage sensor. Continue?'
+  , 'editor.colors.mode': 'Color mode'
+  , 'editor.colors.mode.desc': 'Choose per-room colors or one set for all rooms.'
+  , 'editor.colors.mode_per_room': 'Per room'
+  , 'editor.colors.mode_global': 'All rooms'
+  , 'editor.colors.global_title': 'All rooms'
   , 'editor.reload_editor': 'Reload editor'
   , 'editor.reload_dashboard': 'Reload dashboard'
   , 'onboard.title': 'Welcome to Thermostat Timeline'
@@ -164,6 +170,20 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Profile name'
   , 'profiles.edit': 'Edit'
   , 'profiles.preview_note': 'Preview only. Schedules become active when you activate the profile.'
+  , 'profiles.active_label': 'Manual profile active:'
+  , 'editor.tabs.holidays': 'Holidays'
+  , 'holidays.enable': 'Enable holidays'
+  , 'holidays.desc': 'Use a special daily schedule on public holidays.'
+  , 'holidays.source': 'Holiday source'
+  , 'holidays.source.calendar': 'Calendar'
+  , 'holidays.source.manual': 'Manual dates'
+  , 'holidays.entity': 'Holiday entity'
+  , 'holidays.entity_desc': 'Select a calendar that reports simple on/off. It should be on on public holidays, and off on other days.'
+  , 'holidays.dates': 'Holiday dates'
+  , 'holidays.add_date': 'Add date'
+  , 'holidays.editor.title': 'Holiday schedule'
+  , 'holidays.edit': 'Edit holiday schedule'
+  , 'holidays.button': 'Holidays'
   },
   da: {
     // Kort
@@ -289,6 +309,13 @@ const TT_I18N = {
     , 'editor.colors.clear_local_confirm': 'Dette sletter farveintervaller gemt i din browser for dette kort. Vil du fortsætte?'
     , 'editor.colors.clear_shared': 'Ryd delt farvelager'
   , 'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?'
+    , 'editor.colors.clear_all': 'Ryd alle farvedata'
+    , 'editor.colors.clear_all_confirm': 'Dette sletter alle farveintervaller både lokalt og i den valgte lagersensor. Vil du fortsætte?'
+  , 'editor.colors.mode': 'Farvetilstand'
+  , 'editor.colors.mode.desc': 'Vælg om farver defineres pr. rum eller ens for alle rum.'
+  , 'editor.colors.mode_per_room': 'Pr. rum'
+  , 'editor.colors.mode_global': 'Samme for alle'
+  , 'editor.colors.global_title': 'Alle rum'
     , 'editor.reload_editor': 'Genindlæs editor'
     , 'editor.reload_dashboard': 'Genindlæs dashboard'
   , 'onboard.title': 'Velkommen til Termostat Tidslinje'
@@ -329,6 +356,20 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Skemanavn'
   , 'profiles.edit': 'Redigér'
   , 'profiles.preview_note': 'Kun forhåndsvisning. Skemaerne bliver først aktive, når profilen aktiveres.'
+  , 'profiles.active_label': 'Manuelt skema aktivt:'
+  , 'editor.tabs.holidays': 'Helligdage'
+  , 'holidays.enable': 'Aktivér helligdage'
+  , 'holidays.desc': 'Brug et særligt dagsskema på helligdage.'
+  , 'holidays.source': 'Kilde til helligdage'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuelle datoer'
+  , 'holidays.entity': 'Helligdags‑entitet'
+  , 'holidays.entity_desc': 'Vælg en kalender, der kun giver on/off. Den skal være on på helligdage og off på andre dage.'
+  , 'holidays.dates': 'Helligdagsdatoer'
+  , 'holidays.add_date': 'Tilføj dato'
+  , 'holidays.editor.title': 'Helligdags‑skema'
+  , 'holidays.edit': 'Redigér helligdags‑skema'
+  , 'holidays.button': 'Helligdage'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -432,6 +473,13 @@ const TT_I18N = {
     'editor.colors.clear_local_confirm': 'Detta tar bort färgintervall som sparats i din webbläsare för detta kort. Vill du fortsätta?',
     'editor.colors.clear_shared': 'Rensa delad färglagring',
   'editor.colors.clear_shared_confirm': 'Detta tar bort färgintervall i den valda lagringssensorn. Vill du fortsätta?',
+  'editor.colors.mode': 'Färgläge',
+  'editor.colors.mode.desc': 'Välj färger per rum eller ett set för alla rum.',
+  'editor.colors.mode_per_room': 'Per rum',
+  'editor.colors.mode_global': 'Alla rum',
+  'editor.colors.global_title': 'Alla rum',
+  'editor.colors.clear_all': 'Rensa all färgdata',
+  'editor.colors.clear_all_confirm': 'Detta tar bort alla färgintervall både lokalt och i vald lagringssensor. Vill du fortsätta?',
   'editor.reload_editor': 'Ladda om redigerare',
   'editor.reload_dashboard': 'Ladda om instrumentpanel',
   'onboard.title': 'Välkommen till Termostat‑tidslinje',
@@ -474,6 +522,19 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Profilnamn'
   , 'profiles.edit': 'Redigera'
   , 'profiles.preview_note': 'Endast förhandsvisning. Scheman blir aktiva när du aktiverar profilen.'
+  , 'editor.tabs.holidays': 'Helgdagar'
+  , 'holidays.enable': 'Aktivera helgdagar'
+  , 'holidays.desc': 'Använd ett särskilt dagsschema på helgdagar.'
+  , 'holidays.source': 'Källa för helgdagar'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuella datum'
+  , 'holidays.entity': 'Helgdags‑entitet'
+  , 'holidays.entity_desc': 'Välj en kalender som bara ger on/off. Den ska vara on på helgdagar och off övriga dagar.'
+  , 'holidays.dates': 'Helgdagsdatum'
+  , 'holidays.add_date': 'Lägg till datum'
+  , 'holidays.editor.title': 'Helgdags‑schema'
+  , 'holidays.edit': 'Redigera helgdags‑schema'
+  , 'holidays.button': 'Helgdagar'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -577,6 +638,13 @@ const TT_I18N = {
     'editor.colors.clear_local_confirm': 'Dette sletter fargeintervaller lagret i nettleseren for dette kortet. Fortsette?',
     'editor.colors.clear_shared': 'Tøm delt fargelagring',
   'editor.colors.clear_shared_confirm': 'Dette sletter fargeintervaller i den valgte lagringssensoren. Fortsette?',
+  'editor.colors.mode': 'Fargemodus',
+  'editor.colors.mode.desc': 'Velg farger per rom eller ett felles sett for alle rom.',
+  'editor.colors.mode_per_room': 'Per rom',
+  'editor.colors.mode_global': 'Alle rom',
+  'editor.colors.global_title': 'Alle rom',
+  'editor.colors.clear_all': 'Tøm alle fargedata',
+  'editor.colors.clear_all_confirm': 'Dette sletter alle fargeintervaller både lokalt og i valgt lagringssenso r. Fortsette?',
   'editor.reload_editor': 'Last inn editor på nytt',
   'editor.reload_dashboard': 'Last inn dashboard på nytt',
   'onboard.title': 'Velkommen til Termostat tidslinje',
@@ -620,6 +688,19 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Profilnavn'
   , 'profiles.edit': 'Rediger'
   , 'profiles.preview_note': 'Kun forhåndsvisning. Skjemaer blir aktive når profilen aktiveres.'
+  , 'editor.tabs.holidays': 'Helligdager'
+  , 'holidays.enable': 'Aktiver helligdager'
+  , 'holidays.desc': 'Bruk en egen dagsplan på helligdager.'
+  , 'holidays.source': 'Kilde for helligdager'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuelle datoer'
+  , 'holidays.entity': 'Helligdags‑entitet'
+  , 'holidays.entity_desc': 'Velg en kalender som kun gir on/off. Den skal være on på helligdager og off ellers.'
+  , 'holidays.dates': 'Helligdagsdatoer'
+  , 'holidays.add_date': 'Legg til dato'
+  , 'holidays.editor.title': 'Helligdags‑skjema'
+  , 'holidays.edit': 'Rediger helligdags‑skjema'
+  , 'holidays.button': 'Helligdager'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -723,6 +804,13 @@ const TT_I18N = {
     'editor.colors.clear_local_confirm': 'Dadurch werden in Ihrem Browser für diese Karte gespeicherte Farbbereiche gelöscht. Fortfahren?',
     'editor.colors.clear_shared': 'Geteilten Farbspeicher löschen',
   'editor.colors.clear_shared_confirm': 'Dadurch werden Farbbereiche im ausgewählten Speichersensor gelöscht. Fortfahren?',
+  'editor.colors.mode': 'Farbmodus',
+  'editor.colors.mode.desc': 'Farben pro Raum oder ein Satz für alle Räume wählen.',
+  'editor.colors.mode_per_room': 'Pro Raum',
+  'editor.colors.mode_global': 'Alle Räume',
+  'editor.colors.global_title': 'Alle Räume',
+  'editor.colors.clear_all': 'Alle Farbdaten löschen',
+  'editor.colors.clear_all_confirm': 'Dies löscht alle Farbbereiche sowohl lokal als auch im ausgewählten Speichersensor. Fortfahren?',
   'editor.reload_editor': 'Editor neu laden',
   'editor.reload_dashboard': 'Dashboard neu laden',
   'onboard.title': 'Willkommen bei Thermostat‑Zeitlinie',
@@ -765,6 +853,19 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Profilname'
   , 'profiles.edit': 'Bearbeiten'
   , 'profiles.preview_note': 'Nur Vorschau. Pläne werden aktiv, wenn Sie das Profil aktivieren.'
+  , 'editor.tabs.holidays': 'Feiertage'
+  , 'holidays.enable': 'Feiertage aktivieren'
+  , 'holidays.desc': 'An Feiertagen einen speziellen Tagesplan verwenden.'
+  , 'holidays.source': 'Feiertagsquelle'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuelle Daten'
+  , 'holidays.entity': 'Feiertags‑Entität'
+  , 'holidays.entity_desc': 'Wähle einen Kalender, der nur Ein/Aus meldet. An Feiertagen sollte er „on“ sein, an anderen Tagen „off“.'
+  , 'holidays.dates': 'Feiertagsdaten'
+  , 'holidays.add_date': 'Datum hinzufügen'
+  , 'holidays.editor.title': 'Feiertags‑Zeitplan'
+  , 'holidays.edit': 'Feiertags‑Zeitplan bearbeiten'
+  , 'holidays.button': 'Feiertage'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -868,6 +969,13 @@ const TT_I18N = {
     'editor.colors.clear_local_confirm': 'Esto eliminará los intervalos de color guardados en tu navegador para esta tarjeta. ¿Continuar?',
     'editor.colors.clear_shared': 'Borrar almacenamiento de color compartido',
   'editor.colors.clear_shared_confirm': 'Esto eliminará los intervalos de color en el sensor de almacenamiento seleccionado. ¿Continuar?',
+  'editor.colors.mode': 'Modo de color',
+  'editor.colors.mode.desc': 'Elige colores por habitación o un conjunto para todas.',
+  'editor.colors.mode_per_room': 'Por habitación',
+  'editor.colors.mode_global': 'Todas las habitaciones',
+  'editor.colors.global_title': 'Todas las habitaciones',
+  'editor.colors.clear_all': 'Borrar todos los datos de color',
+  'editor.colors.clear_all_confirm': 'Esto borrará todos los intervalos de color tanto locales como del sensor de almacenamiento seleccionado. ¿Continuar?',
   'editor.reload_editor': 'Recargar editor',
   'editor.reload_dashboard': 'Recargar panel',
   'onboard.title': 'Bienvenido a la línea de tiempo del termostato',
@@ -910,6 +1018,19 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Nombre del perfil'
   , 'profiles.edit': 'Editar'
   , 'profiles.preview_note': 'Solo vista previa. Los horarios se activan al activar el perfil.'
+  , 'editor.tabs.holidays': 'Festivos'
+  , 'holidays.enable': 'Habilitar festivos'
+  , 'holidays.desc': 'Usa un horario especial en días festivos.'
+  , 'holidays.source': 'Fuente de festivos'
+  , 'holidays.source.calendar': 'Calendario'
+  , 'holidays.source.manual': 'Fechas manuales'
+  , 'holidays.entity': 'Entidad de festivos'
+  , 'holidays.entity_desc': 'Selecciona un calendario que solo informe on/off. Debe estar en on en festivos y en off el resto de días.'
+  , 'holidays.dates': 'Fechas de festivos'
+  , 'holidays.add_date': 'Agregar fecha'
+  , 'holidays.editor.title': 'Horario de festivos'
+  , 'holidays.edit': 'Editar horario de festivos'
+  , 'holidays.button': 'Festivos'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -1013,6 +1134,13 @@ const TT_I18N = {
     'editor.colors.clear_local_confirm': 'Cela supprimera les intervalles de couleur enregistrés dans votre navigateur pour cette carte. Continuer ?',
     'editor.colors.clear_shared': 'Effacer le stockage de couleur partagé',
   'editor.colors.clear_shared_confirm': 'Cela supprimera les intervalles de couleur dans le capteur de stockage sélectionné. Continuer ?',
+  'editor.colors.mode': 'Mode de couleur',
+  'editor.colors.mode.desc': 'Choisir des couleurs par pièce ou un jeu pour toutes les pièces.',
+  'editor.colors.mode_per_room': 'Par pièce',
+  'editor.colors.mode_global': 'Toutes les pièces',
+  'editor.colors.global_title': 'Toutes les pièces',
+  'editor.colors.clear_all': 'Effacer toutes les données de couleur',
+  'editor.colors.clear_all_confirm': 'Ceci supprimera tous les intervalles de couleur à la fois localement et sur le capteur de stockage sélectionné. Continuer ?',
   'editor.reload_editor': 'Recharger l’éditeur',
   'editor.reload_dashboard': 'Recharger le tableau de bord',
   'onboard.title': 'Bienvenue dans la Chronologie du thermostat',
@@ -1055,6 +1183,19 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Nom du profil'
   , 'profiles.edit': 'Modifier'
   , 'profiles.preview_note': 'Aperçu uniquement. Les plannings deviennent actifs lorsque vous activez le profil.'
+  , 'editor.tabs.holidays': 'Jours fériés'
+  , 'holidays.enable': 'Activer les jours fériés'
+  , 'holidays.desc': 'Utiliser un planning spécifique les jours fériés.'
+  , 'holidays.source': 'Source des jours fériés'
+  , 'holidays.source.calendar': 'Calendrier'
+  , 'holidays.source.manual': 'Dates manuelles'
+  , 'holidays.entity': 'Entité jours fériés'
+  , 'holidays.entity_desc': 'Sélectionnez un calendrier ne fournissant que on/off. Il doit être « on » les jours fériés et « off » les autres jours.'
+  , 'holidays.dates': 'Dates des jours fériés'
+  , 'holidays.add_date': 'Ajouter une date'
+  , 'holidays.editor.title': 'Planning jours fériés'
+  , 'holidays.edit': 'Modifier le planning jours fériés'
+  , 'holidays.button': 'Jours fériés'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -1158,6 +1299,13 @@ const TT_I18N = {
     'editor.colors.clear_local_confirm': 'Tämä poistaa tähän korttiin selaimeen tallennetut värihaarukat. Jatketaanko?',
     'editor.colors.clear_shared': 'Tyhjennä jaettu värivarasto',
   'editor.colors.clear_shared_confirm': 'Tämä poistaa värihaarukat valitusta tallennussensorista. Jatketaanko?',
+  'editor.colors.mode': 'Väritila',
+  'editor.colors.mode.desc': 'Valitse värit huoneittain tai yksi yhteinen kaikille.',
+  'editor.colors.mode_per_room': 'Huoneittain',
+  'editor.colors.mode_global': 'Kaikille',
+  'editor.colors.global_title': 'Kaikki huoneet',
+  'editor.colors.clear_all': 'Tyhjennä kaikki väritiedot',
+  'editor.colors.clear_all_confirm': 'Tämä poistaa kaikki värihaarukat sekä paikallisesti että valitusta tallennussensorista. Jatketaanko?',
   'editor.reload_editor': 'Lataa editori uudelleen',
   'editor.reload_dashboard': 'Lataa koontinäyttö uudelleen',
   'onboard.title': 'Tervetuloa Termostaatin aikajanaan',
@@ -1200,6 +1348,19 @@ const TT_I18N = {
   , 'profiles.name_placeholder': 'Profiilin nimi'
   , 'profiles.edit': 'Muokkaa'
   , 'profiles.preview_note': 'Vain esikatselu. Aikataulut aktivoituvat, kun aktivoit profiilin.'
+  , 'editor.tabs.holidays': 'Pyhäpäivät'
+  , 'holidays.enable': 'Ota pyhäpäivät käyttöön'
+  , 'holidays.desc': 'Käytä erityistä päiväaikataulua pyhäpäivinä.'
+  , 'holidays.source': 'Pyhäpäivien lähde'
+  , 'holidays.source.calendar': 'Kalenteri'
+  , 'holidays.source.manual': 'Manuaaliset päivämäärät'
+  , 'holidays.entity': 'Pyhäpäivä‑entiteetti'
+  , 'holidays.entity_desc': 'Valitse kalenteri, joka ilmoittaa vain on/off. Sen tulee olla on pyhäpäivinä ja off muina päivinä.'
+  , 'holidays.dates': 'Pyhäpäivien päivämäärät'
+  , 'holidays.add_date': 'Lisää päivämäärä'
+  , 'holidays.editor.title': 'Pyhäpäivä‑aikataulu'
+  , 'holidays.edit': 'Muokkaa pyhäpäivä‑aikataulua'
+  , 'holidays.button': 'Pyhäpäivät'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb' };
@@ -1231,7 +1392,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.11.01-profiles-dev5";
+const TT_CARD_VERSION = "2025.11.02-hide-holidays-button";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -1248,6 +1409,7 @@ class ThermostatTimelineCard extends HTMLElement {
   temp_unit: null, // 'C' | 'F' | null(auto from HA)
   time_12h: null,
       color_ranges: {}, // { [entity_id]: [ { from: number(C), to: number(C), color: string } ] }
+  color_global: false, // when true, use one global set of colors (key "*") for all rooms
       now_update_ms: 60000,   // kun til UI 'nu'-stregen
       storage_entity: "sensor.thermostat_timeline",     // fx sensor.thermostat_timeline
       storage_enabled: false, // default: off -> only local per user
@@ -1263,13 +1425,37 @@ class ThermostatTimelineCard extends HTMLElement {
   weekdays_enabled: false,
   weekdays_mode: 'weekday_weekend', // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
       profiles_enabled: false,
-      away: { enabled: false, persons: [], target_c: 17 }
+      away: { enabled: false, persons: [], target_c: 17 },
+      holidays_enabled: false,
+      holidays_source: 'calendar', // 'calendar' | 'manual'
+      holidays_entity: '',         // calendar.* or binary_sensor.* that is on/off for holiday
+      holidays_dates: []           // [ 'YYYY-MM-DD', ... ]
     };
   }
 
   // ---------- Home Assistant hook ----------
   set hass(hass) {
     this._hass = hass; this._lang = ttGetLangFromHass(hass);
+    // --- AUTO-DETECT storage entity if not provided ---
+    if (!this._config?.storage_entity) {
+      try {
+        const st = hass.states || {};
+        for (const id in st) {
+          if (!id.startsWith("sensor.")) continue;
+          const a = st[id]?.attributes || {};
+          if (a.schedules && typeof a.schedules === "object" && a.settings && typeof a.settings === "object") {
+            this._config.storage_entity = id;
+            if (typeof this._config.storage_enabled === "undefined") {
+              this._config.storage_enabled = true;
+            }
+            break;
+          }
+        }
+      } catch (e) {}
+    }
+
+    // (Select-based global profile removed)
+
 
     // Detect Away mode changes and apply immediately
     try {
@@ -1290,20 +1476,60 @@ class ThermostatTimelineCard extends HTMLElement {
     if (this._config?.storage_enabled && this._config?.storage_entity) {
       const st = this._hass.states?.[this._config.storage_entity];
       const ver = Number(st?.state || 0);
-      if (!Number.isNaN(ver) && ver !== this._lastVersion && !this._saving) {
+      // Pick up settings changes immediately (profiles_enabled)
+      try {
+        const s = st?.attributes?.settings || {};
+        const prevPE = !!this._config.profiles_enabled;
+        const newPE = typeof s.profiles_enabled === 'boolean' ? !!s.profiles_enabled : prevPE;
+        if (newPE !== prevPE) { this._config.profiles_enabled = newPE; if (!this._inlineEditing && !this._editing) this._render(); }
+      } catch {}
+      const handleUpdate = () => {
         this._lastVersion = ver;
         this._loadStore(true).then(() => {
-          // Overstyr ikke draft-værdi mens man skriver
           if (this._inlineEditing && this._inlineEntity && this._inlineTempDraft !== null) {
-            const row = this._schedules[this._inlineEntity] || { defaultTemp: this._config.default_temp, blocks: [] };row.defaultTemp = this._inlineTempDraft;
+            const row = this._schedules[this._inlineEntity] || { defaultTemp: this._config.default_temp, blocks: [] }; row.defaultTemp = this._inlineTempDraft;
             this._schedules[this._inlineEntity] = row;
           }
           this._ensureSchedules();
           if (!this._inlineEditing && !this._editing) this._render();
           this._scheduleNextApply();
         });
+      };
+      if (!Number.isNaN(ver) && ver !== this._lastVersion) {
+        if (this._saving) {
+          // Retry shortly to avoid missing updates while card is saving
+          clearTimeout(this._verRetryT);
+          this._verRetryT = setTimeout(() => { if (this._hass) { handleUpdate(); } }, 800);
+        } else {
+          handleUpdate();
+        }
       }
     }
+
+    // Even when storage is OFF, watch profiles_enabled in sensor settings (no global select)
+    if (!this._config?.storage_enabled && this._config?.storage_entity) {
+      const st = this._hass.states?.[this._config.storage_entity];
+      const ver = Number(st?.state || 0);
+      const handleUpdate2 = () => {
+        this._lastSettingsVersion = ver;
+        try {
+          const s = st?.attributes?.settings || {};
+          if (typeof s.profiles_enabled === 'boolean') this._config.profiles_enabled = !!s.profiles_enabled;
+        } catch {}
+        if (!this._inlineEditing && !this._editing) this._render();
+        this._scheduleNextApply();
+      };
+      if (!Number.isNaN(ver) && ver !== this._lastSettingsVersion) {
+        if (this._saving) {
+          clearTimeout(this._verRetryT2);
+          this._verRetryT2 = setTimeout(() => { if (this._hass) { handleUpdate2(); } }, 800);
+        } else {
+          handleUpdate2();
+        }
+      }
+    }
+
+    // (Removed select/state subscription; card updates via version change as before)
 
     if (!this._initialized) {
       this._initialized = true;
@@ -1311,11 +1537,14 @@ class ThermostatTimelineCard extends HTMLElement {
       this._loadStore(true).then(() => {
         this._ensureSchedules();
         this._render();
+        // Open deferred Holiday editor right after first render if flagged by editor
+        try { this._maybeOpenDeferredHoliday && this._maybeOpenDeferredHoliday(); } catch {}
         // Ved load sætter vi korrekt setpoint én gang
         this._applyCurrentSetpoints(true);
         this._scheduleNextApply();
         // Push any YAML-provided settings to storage/local after first load
         try { this._debouncedSaveStore(); } catch {}
+  // (Removed polling safety net)
       });
     } else {
       if (!this._inlineEditing && !this._editing) this._render();
@@ -1348,6 +1577,10 @@ class ThermostatTimelineCard extends HTMLElement {
       away: Object.prototype.hasOwnProperty.call(config, 'away'),
       time_12h: Object.prototype.hasOwnProperty.call(config, 'time_12h'),
       temp_unit: Object.prototype.hasOwnProperty.call(config, 'temp_unit'),
+      holidays_enabled: Object.prototype.hasOwnProperty.call(config, 'holidays_enabled'),
+      holidays_source: Object.prototype.hasOwnProperty.call(config, 'holidays_source'),
+      holidays_entity: Object.prototype.hasOwnProperty.call(config, 'holidays_entity'),
+      holidays_dates: Object.prototype.hasOwnProperty.call(config, 'holidays_dates'),
     };
 
     this._config = {
@@ -1379,10 +1612,15 @@ class ThermostatTimelineCard extends HTMLElement {
       merges: { ...(config.merges || {}) },
     temp_sensors: { ...(config.temp_sensors || {}) },
   color_ranges: { ...(config.color_ranges || {}) },
+    color_global: !!(config.color_global ?? this._config?.color_global ?? false),
       weekdays_enabled: !!(config.weekdays_enabled ?? false),
   weekdays_mode: (config.weekdays_mode || 'weekday_weekend'),
     profiles_enabled: !!(config.profiles_enabled ?? false),
     away: { enabled: !!(config.away?.enabled ?? false), persons: [...(config.away?.persons || [])], target_c: Number.isFinite(config.away?.target_c) ? Number(config.away.target_c) : 17 }
+  , holidays_enabled: !!(config.holidays_enabled ?? this._config?.holidays_enabled ?? false)
+  , holidays_source: (config.holidays_source || this._config?.holidays_source || 'calendar')
+  , holidays_entity: String(config.holidays_entity || this._config?.holidays_entity || '')
+  , holidays_dates: Array.isArray(config.holidays_dates) ? [...config.holidays_dates] : ([...(this._config?.holidays_dates || [])])
     };
 
     // If YAML explicitly changed default_temp, update rows that still use the old
@@ -1451,6 +1689,8 @@ class ThermostatTimelineCard extends HTMLElement {
     this._editing = null;          // { entity, blockId }
   // When a weekly block is opened from main timeline, auto-save the weekly draft on block save
   this._autoSaveWeeklyFromTimeline = false;
+  // When a profile block is opened from main timeline, auto-save the profile draft on block save
+  this._autoSaveProfileFromTimeline = false;
 
     // Inline edit hard-lock
     this._inlineEditing = false;   // er et inline input aktivt?
@@ -1462,6 +1702,9 @@ class ThermostatTimelineCard extends HTMLElement {
     this._saveTimer = null;
     this._saveDebounceMs = 300;
     this._lastVersion = 0;
+  // Polling watcher to pick up sensor updates in case frontend misses events
+  this._storeWatchTimer = null;
+  this._storeWatchMs = 1200; // ms
 
     // Auto apply guard
     this._lastApplied = {}; // { [entity_id]: { min:number, temp:number } }
@@ -1495,9 +1738,27 @@ class ThermostatTimelineCard extends HTMLElement {
   this._profilesSaveLock = false; // debounce guard to prevent double-prompt on Enter
   this._profilesRoom = null;      // current room eid being edited in profiles modal
 
+  // Global profile (shared via integration settings)
+  this._globalProfile = null;
+  // Track settings version even when storage is off
+  this._lastSettingsVersion = 0;
+  // HA event subscription (state_changed for storage sensor)
+  this._haEvtUnsub = null;
+  this._subStorageEid = null;
+
+    // Holidays modal state
+    this._holidayOpen = false;
+    this._holidayEntity = null;    // deprecated (use _holidayRoom)
+    this._holidayRoom = null;      // current room eid being edited in holiday modal
+    this._holidayDraft = null;     // { rooms: { [eid]: [blocks] } }
+    this._holidayOverlayHiddenForEditor = false;
+
     // External refresh hook (from editor button)
     this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
     try { window.addEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
+  // External request to open holiday editor for a specific room
+  this._onOpenHoliday = (ev)=>{ try { const eid = ev?.detail?.eid || (this._config?.entities||[])[0] || null; if (eid) { this._openHolidayEditor(eid); } } catch {} };
+  try { window.addEventListener('tt-open-holiday', this._onOpenHoliday); } catch {}
 
     // Onboarding state
     this._onboardOpen = false;
@@ -1521,7 +1782,10 @@ class ThermostatTimelineCard extends HTMLElement {
     if (this._uiTimer) clearInterval(this._uiTimer);
     if (this._transitionTimer) clearTimeout(this._transitionTimer);
     if (this._saveTimer) clearTimeout(this._saveTimer);
+    if (this._storeWatchTimer) clearInterval(this._storeWatchTimer);
     try { if (this._onExternalRefresh) window.removeEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
+    try { if (this._onOpenHoliday) window.removeEventListener('tt-open-holiday', this._onOpenHoliday); } catch {}
+    try { if (this._haEvtUnsub) { this._haEvtUnsub(); this._haEvtUnsub = null; } } catch {}
   }
 
   // Resolve a static asset URL so it works in both dev (/local) and HACS (/hacsfiles/<repo>) installs.
@@ -1558,6 +1822,7 @@ class ThermostatTimelineCard extends HTMLElement {
               // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
               // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
               if (s.color_ranges && typeof s.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...s.color_ranges };
+              if (typeof s.color_global === 'boolean') this._config.color_global = !!s.color_global;
               if (Number.isFinite(s.min_temp) && !this._yamlProvided?.min_temp) this._config.min_temp = Number(s.min_temp);
               if (Number.isFinite(s.max_temp) && !this._yamlProvided?.max_temp) this._config.max_temp = Number(s.max_temp);
               if (s.merges && typeof s.merges === 'object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
@@ -1565,6 +1830,15 @@ class ThermostatTimelineCard extends HTMLElement {
               if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
               if (typeof s.show_pause_button === 'boolean' && !this._yamlProvided?.show_pause_button) this._config.show_pause_button = !!s.show_pause_button;
               if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled;
+              // Holidays shared settings
+              try {
+                if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
+                if (typeof s.holidays_source === 'string' && !this._yamlProvided?.holidays_source) this._config.holidays_source = s.holidays_source === 'manual' ? 'manual' : 'calendar';
+                if (typeof s.holidays_entity === 'string' && !this._yamlProvided?.holidays_entity) this._config.holidays_entity = s.holidays_entity || '';
+                if (Array.isArray(s.holidays_dates) && !this._yamlProvided?.holidays_dates) this._config.holidays_dates = [...s.holidays_dates];
+              } catch {}
+              // Pick up a global profile selection from shared storage
+              try { this._globalProfile = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null; } catch {}
               if (s.away && typeof s.away === 'object') {
                 try {
                   const a = s.away;
@@ -1584,7 +1858,7 @@ class ThermostatTimelineCard extends HTMLElement {
             } catch {}
           }
           this._lastVersion = Number(st.state || 0) || 0;
-          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors } })); } catch {}
+          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, global_profile: this._globalProfile || null } })); } catch {}
           return;
         }
       } catch (e) { /* fallback */ }
@@ -1602,6 +1876,7 @@ class ThermostatTimelineCard extends HTMLElement {
   // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
   // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
   if (s.color_ranges && typeof s.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...s.color_ranges };
+    if (typeof s.color_global === 'boolean') this._config.color_global = !!s.color_global;
     if (Number.isFinite(s.min_temp) && !this._yamlProvided?.min_temp) this._config.min_temp = Number(s.min_temp);
     if (Number.isFinite(s.max_temp) && !this._yamlProvided?.max_temp) this._config.max_temp = Number(s.max_temp);
     if (s.merges && typeof s.merges==='object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
@@ -1617,6 +1892,14 @@ class ThermostatTimelineCard extends HTMLElement {
   // Load flags from local storage copy
     try { this._pauseIndef = !!s.pause_indef; const pu = Number(s.pause_until_ms); this._pauseUntilMs = Number.isFinite(pu) ? pu : 0; } catch {}
   try { if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled; } catch {}
+  try { this._globalProfile = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null; } catch {}
+  // Holidays from local storage
+  try {
+    if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
+    if (typeof s.holidays_source === 'string' && !this._yamlProvided?.holidays_source) this._config.holidays_source = s.holidays_source === 'manual' ? 'manual' : 'calendar';
+    if (typeof s.holidays_entity === 'string' && !this._yamlProvided?.holidays_entity) this._config.holidays_entity = s.holidays_entity || '';
+    if (Array.isArray(s.holidays_dates) && !this._yamlProvided?.holidays_dates) this._config.holidays_dates = [...s.holidays_dates];
+  } catch {}
       } else {
         // backward compat: schedules stored directly
         this._schedules = parsed || {};
@@ -1626,15 +1909,15 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   async _saveStore() {
-  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, profiles_enabled: !!this._config.profiles_enabled, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } })); } catch {}
+  try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] } })); } catch {}
     if (!this._storageAvailable()) return;
     this._saving = true;
     try {
       if (this._config?.storage_enabled) {
-  await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, profiles_enabled: !!this._config.profiles_enabled, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } });
+  await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] } });
       } else {
         // disable background apply without touching schedules
-  await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false, profiles_enabled: !!this._config.profiles_enabled, show_pause_button: !!(this._config.show_pause_button ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) } });
+  await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false, profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, show_pause_button: !!(this._config.show_pause_button ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] } });
       }
     }
     catch (e) { console.error("thermostat-timeline: save failed", e); }
@@ -1767,6 +2050,29 @@ class ThermostatTimelineCard extends HTMLElement {
     return row;
   }
 
+  // --- Holidays helpers ---
+  _ensureHolidayStruct(row){
+    try { if (!row) return row; if (!row.holiday || !Array.isArray(row.holiday.blocks)) row.holiday = { blocks: [] }; } catch {} return row;
+  }
+  _todayISO(){ try { const d=new Date(); const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const dd=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${dd}`; } catch { return ''; } }
+  _isHolidayActive(){
+    try {
+      if (!this._config?.holidays_enabled) return false;
+      const src = this._config.holidays_source || 'calendar';
+      if (src === 'manual') {
+        const list = Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [];
+        const today = this._todayISO();
+        return !!list.find(d=>String(d)===today);
+      }
+      // calendar/binary_sensor entity
+      const eid = this._config.holidays_entity || '';
+      if (!eid) return false;
+      const st = this._hass?.states?.[eid];
+      const s = String(st?.state||'').toLowerCase();
+      return s === 'on';
+    } catch { return false; }
+  }
+
   // --- Merge helpers ---
   _groupPrimaryOf(eid){
     const prims = this._config?.entities || [];
@@ -1785,10 +2091,18 @@ class ThermostatTimelineCard extends HTMLElement {
     return Array.from(out);
   }
 
-  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; let blocks = row.blocks||[];
+  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; this._ensureHolidayStruct(row); let blocks = row.blocks||[];
+    // Holidays override take highest precedence when enabled
+    try {
+      if (this._isHolidayActive() && row.holiday && Array.isArray(row.holiday.blocks) && row.holiday.blocks.length) {
+        blocks = row.holiday.blocks || [];
+      } else {
+        // fall through
+      }
+    } catch {}
     // Profiles override take precedence when enabled and active
     try {
-      if (this._config?.profiles_enabled) {
+      if (this._config?.profiles_enabled && !(this._isHolidayActive() && row?.holiday?.blocks?.length)) {
         this._ensureProfilesStruct(row);
         const ap = row.activeProfile;
         if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
@@ -2006,13 +2320,15 @@ class ThermostatTimelineCard extends HTMLElement {
         :host { display:block; }
     .card{ --pad-x:16px; background: var(--card-background-color); color: var(--primary-text-color); border-radius: var(--ha-card-border-radius, 12px); box-shadow: var(--ha-card-box-shadow, none); overflow:hidden }
   .header{display:grid;align-items:center;grid-template-columns: 1fr auto 1fr;gap:.75rem;padding:12px var(--pad-x);border-bottom:1px solid var(--divider-color); position:relative}
-  .title{font-weight:600;font-size:1rem;color:var(--primary-text-color)}
+  .title{display:flex; align-items:center; gap:8px; font-weight:600;font-size:1rem;color:var(--primary-text-color)}
   /* Right header area aligns content to far right */
   .header .spacer{display:flex; justify-content:flex-end;}
   /* Absolute wrapper to ensure pause stays top-right regardless of center label */
   .header .pause-wrap{ position:absolute; right: var(--pad-x); top: 50%; transform: translateY(-50%); display:flex; align-items:center; gap:8px; }
   .header .pause-wrap .pause-eta{ font-size:.82rem; color: var(--primary-text-color); min-width:58px; text-align:center; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); }
-  .weekday-full{ text-align:center; font-weight:700; font-size:1.15rem; color:var(--primary-text-color)}
+  .weekday-full{ display:flex; align-items:center; justify-content:center; gap:8px; text-align:center; font-weight:700; font-size:1.15rem; color:var(--primary-text-color)}
+  .profile-pill{ font-weight:600; font-size:.85rem; padding:2px 8px; border-radius:999px; border:1px solid var(--divider-color); background: var(--secondary-background-color, rgba(0,0,0,.05)); color: var(--primary-text-color); }
+  .profile-pill.success{ background: var(--success-color, #2e7d32); color:#fff; border-color: var(--success-color, #2e7d32); }
   .scale{position:relative;padding:8px var(--pad-x);z-index:0;margin-bottom:6px;border-bottom:1px solid var(--divider-color)}
         .scale-inner{position:relative;height:48px;display:block}
         .rows{padding:0 var(--pad-x);position:relative}
@@ -2076,8 +2392,13 @@ class ThermostatTimelineCard extends HTMLElement {
         .now-top{position:absolute;top:6px;bottom:6px;width:3px;background:var(--primary-color);border-radius:2px;z-index:40;pointer-events:none}
         .footer{height:28px;position:relative;border-top:1px solid var(--divider-color)}
         .label-end{position:absolute;left:var(--pad-x);right:var(--pad-x);top:4px;display:flex;justify-content:space-between;font-size:.7rem;color:var(--secondary-text-color)}
-        .overlay{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.32);z-index:9999}
+    .overlay{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.32);z-index:2147483000}
         .overlay.open{display:grid}
+
+  /* Ensure modal content is always above any card decorations/lines */
+  .overlay .modal{ position: relative; z-index:2147483001; }
+  .overlay .modal .week-scale,
+  .overlay .modal .week-track{ position:relative; z-index:2147483002; }
 
   .modal{width:min(80vw,320px);max-width:320px;border-radius:8px;padding:10px;background:var(--card-background-color);color:var(--primary-text-color);border:1px solid var(--divider-color)}
   /* Wider modal when 12h editor controls (AM/PM) are shown */
@@ -2107,7 +2428,12 @@ class ThermostatTimelineCard extends HTMLElement {
   .ob-steps .dot{ width:8px; height:8px; border-radius:50%; background: var(--divider-color); }
   .ob-steps .dot.active{ background: var(--primary-color); }
   /* Inline tooltip for weekly blocks */
-  .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
+  .wk-tooltip{ position:absolute; z-index:2147483003; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
+  /* While any overlay is open, hide underlying timeline elements to avoid bleed-through lines from the editor */
+  .card.overlay-open .scale,
+  .card.overlay-open .rows,
+  .card.overlay-open .footer { visibility: hidden; }
+  .card.overlay-open .now { display: none !important; }
   /* Hide temp pill inside weekly preview blocks for cleaner look */
   .modal-week .week-track .block .pill{ display:none; }
   .modal-week .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
@@ -2191,7 +2517,8 @@ class ThermostatTimelineCard extends HTMLElement {
         .pause-list{ display:grid; gap:8px; }
   /* Profiles modal */
   /* Stack controls above preview to give them more space; match Weekly modal width */
-  .modal-profiles{ width:min(95vw, 640px); max-width: 640px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); }
+  /* Make tooltip positions relative to the profiles modal */
+  .modal-profiles, .modal-holiday{ width:min(95vw, 640px); max-width: 640px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); position: relative; }
   .prof-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 6px; }
   .prof-body{ display:grid; grid-template-columns: 1fr; gap:12px; align-items:start; }
   .prof-controls{ display:grid; gap:8px; }
@@ -2202,11 +2529,11 @@ class ThermostatTimelineCard extends HTMLElement {
   .prof-chip:focus, .prof-chip:focus-visible{ outline: none; box-shadow: none; }
   .prof-actions{ display:flex; gap:6px; align-items:center; }
   .prof-actions .btn{ height:28px; padding:2px 8px; border-radius:8px; font-size:.78rem; }
-  /* Make profiles preview identical to weekday preview */
-  .modal-profiles .week-scale{ margin: 0 16px; }
-  .modal-profiles .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
+  /* Make profiles and holidays preview identical to weekday preview */
+  .modal-profiles .week-scale, .modal-holiday .week-scale{ margin: 0 16px; }
+  .modal-profiles .week-track, .modal-holiday .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
   .modal-profiles .week-track .block .pill{ display:none; }
-  .modal-profiles .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
+  .modal-profiles .week-scale-inner .mer, .modal-holiday .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
         </style>
       <ha-card class="card">
   <div class="header"><div class="title"></div><div class="weekday-full" style="display:none;"></div><div class="spacer"></div></div>
@@ -2278,6 +2605,27 @@ class ThermostatTimelineCard extends HTMLElement {
                   <button class="btn primary prof-save" type="button">Gem</button>
                   <button class="btn ghost prof-close" type="button">Close</button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Holidays (single daily schedule per room) -->
+        <div class="overlay overlay-holiday" part="overlay">
+          <div class="modal modal-holiday" role="dialog" aria-modal="true">
+            <div class="prof-head">
+              <h3 class="holiday-title">Holidays</h3>
+              <div class="holiday-room" style="opacity:.9;"></div>
+            </div>
+            <div style="display:grid; gap:8px; align-items:start;">
+              <div class="holiday-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+              <div class="holiday-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
+              <div class="week-scale" style="position:relative; height:32px;">
+                <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+              </div>
+              <div class="week-track" style="position:relative;"></div>
+              <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <button class="btn primary holiday-save" type="button">Gem</button>
+                <button class="btn ghost holiday-close" type="button">Close</button>
               </div>
             </div>
           </div>
@@ -2429,11 +2777,25 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch {}
   }
 
+  // If the editor asked to open the Holiday modal after the user pressed Save,
+  // read the flag from localStorage and open once, then clear the flag.
+  _maybeOpenDeferredHoliday(){
+    try {
+      const flag = localStorage.getItem('tt_defer_holiday_open');
+      if (flag === '1') {
+        localStorage.removeItem('tt_defer_holiday_open');
+        const first = (this._config?.entities||[])[0] || null;
+        this._openHolidayEditor(first);
+      }
+    } catch {}
+  }
+
   _ensureSchedules() {
     for (const eid of this._config.entities) {
       if (!this._schedules[eid]) this._schedules[eid] = { defaultTemp: this._config.default_temp, blocks: [] };
       // Always maintain structures so state is preserved if toggles are flipped later
       this._ensureProfilesStruct(this._schedules[eid]);
+      this._ensureHolidayStruct(this._schedules[eid]);
       if (this._config?.weekdays_enabled) this._ensureWeeklyStruct(this._schedules[eid]);
     }
   }
@@ -2441,6 +2803,39 @@ class ThermostatTimelineCard extends HTMLElement {
   _startUiTimer() {
     if (this._uiTimer) clearInterval(this._uiTimer);
     this._uiTimer = setInterval(() => { if (!this._inlineEditing && !this._editing) this._render(); }, this._config.now_update_ms);
+  }
+
+  _startStoreWatchTimer(){
+    try { if (this._storeWatchTimer) clearInterval(this._storeWatchTimer); } catch {}
+    const ms = Math.max(800, Number(this._storeWatchMs||0) || 1200);
+    this._storeWatchTimer = setInterval(()=>{
+      try {
+        const eid = this._config?.storage_entity; if (!eid) return;
+        const st = this._hass?.states?.[eid]; if (!st) return;
+        const ver = Number(st.state || 0);
+        const s = st.attributes?.settings || {};
+        const newGP = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null;
+        const newPE = typeof s.profiles_enabled === 'boolean' ? !!s.profiles_enabled : this._config?.profiles_enabled;
+        let changed = false;
+        if (newGP !== this._globalProfile) { this._globalProfile = newGP; changed = true; }
+        if (newPE !== this._config.profiles_enabled) { this._config.profiles_enabled = newPE; changed = true; }
+        if (changed) {
+          try {
+            for (const id of (this._config?.entities||[])){
+              const r = this._schedules[id]; if (!r) continue; this._ensureProfilesStruct(r);
+              if (!this._globalProfile) { r.activeProfile = null; continue; }
+              r.activeProfile = (r.profiles && r.profiles[this._globalProfile]) ? this._globalProfile : null;
+            }
+          } catch {}
+          if (!this._inlineEditing && !this._editing) this._render();
+          this._scheduleNextApply();
+        }
+        if (this._config?.storage_enabled && !this._saving && !Number.isNaN(ver) && ver !== this._lastVersion){
+          this._lastVersion = ver;
+          this._loadStore(true).then(()=>{ this._ensureSchedules(); if (!this._inlineEditing && !this._editing) this._render(); this._scheduleNextApply(); });
+        }
+      } catch {}
+    }, ms);
   }
 
   _render() {
@@ -2451,6 +2846,20 @@ class ThermostatTimelineCard extends HTMLElement {
   const scaleEl = qs('.scale-inner');
   const headerEl = qs('.header');
     if (!rowsEl || !scaleEl || !titleEl) return;
+
+    // Determine first active profile (if any) for header pill
+    let _activeProfileName = null;
+    try {
+      if (this._config?.profiles_enabled) {
+        for (const eid of (this._config?.entities || [])) {
+          const row = this._schedules?.[eid];
+          if (!row) continue;
+          this._ensureProfilesStruct(row);
+          const ap = row.activeProfile || null;
+          if (ap) { _activeProfileName = String(ap); break; }
+        }
+      }
+    } catch {}
 
     {
       const isDef = (txt)=>{
@@ -2464,17 +2873,13 @@ class ThermostatTimelineCard extends HTMLElement {
         return false;
       };
       const shown = (!this._config.title || isDef(this._config.title)) ? this._t('card.title_default') : this._config.title;
-      titleEl.textContent = shown;
-    }
-    // Update weekday full label (centered)
-    try {
-      if (this._config?.weekdays_enabled && dayFull) {
-        dayFull.textContent = this._todayFullName();
-        dayFull.style.display = '';
-      } else if (dayFull) {
-        dayFull.style.display = 'none';
+      titleEl.innerHTML = '';
+      const tspan = document.createElement('span'); tspan.className = 'title-text'; tspan.textContent = shown; titleEl.append(tspan);
+      if (_activeProfileName) {
+        const p = document.createElement('span'); p.className = 'profile-pill success'; const prefix = this._t('profiles.active_label') || 'Manual profile active:'; p.textContent = `${prefix} ${_activeProfileName}`; titleEl.append(p);
       }
-    } catch {}
+    }
+    // (Profile pill moved next to title; weekday center shows only day name now)
 
     // Scale ticks
     scaleEl.innerHTML = '';
@@ -2533,19 +2938,27 @@ class ThermostatTimelineCard extends HTMLElement {
             if (this._countdownTimer) { try { clearInterval(this._countdownTimer); } catch {} this._countdownTimer = null; }
           }
         }
-        // Global Profiles button next to pause (to the right; pause first as requested)
-        if (this._config?.profiles_enabled) {
+        // Global Profiles button next to pause (always visible; enables profiles if needed)
+        if ((this._config?.entities || []).length) {
           const pbtn = document.createElement('button');
-          pbtn.className = 'profiles-btn';
+          // Make the Profiles ("Skemaer") button blue like the other primary actions
+          pbtn.className = 'profiles-btn primary';
           pbtn.setAttribute('type','button');
           pbtn.textContent = this._t('profiles.button');
           try { pbtn.dataset.role = 'profbtn'; if (this._disablePopups) pbtn.style.display = 'none'; } catch {}
           pbtn.addEventListener('click', ()=>{
             const first = (this._config?.entities||[])[0] || null;
+            // If profiles feature is off, enable it in-memory and persist so editor appears
+            try { if (!this._config.profiles_enabled) { this._config.profiles_enabled = true; this._debouncedSaveStore(); } } catch {}
             if (first) this._openProfilesEditor(first);
             else this._openProfilesEditor(this._config?.entities?.[0] || null);
           });
           wrap.append(pbtn);
+          // Holidays button removed from header (requested hidden). Holiday editor can still be opened via
+          // a custom event `tt-open-holiday` if needed, but no visible button is rendered here.
+          try {
+            /* intentionally no-op to hide Holidays button */
+          } catch {}
         }
       }
     } catch {}
@@ -2732,9 +3145,12 @@ class ThermostatTimelineCard extends HTMLElement {
       track.style.setProperty('--row-height', `${this._config.row_height}px`);
   // Use today's blocks if weekdays enabled
   const dayKey = this._todayKey();
+  this._ensureHolidayStruct(row);
   let showBlocks = (row.blocks || []);
   try {
-    if (this._config?.profiles_enabled) {
+    if (this._isHolidayActive() && row?.holiday?.blocks?.length) {
+      showBlocks = row.holiday.blocks || [];
+    } else if (this._config?.profiles_enabled) {
       this._ensureProfilesStruct(row);
       const ap = row.activeProfile;
       if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
@@ -2828,7 +3244,24 @@ class ThermostatTimelineCard extends HTMLElement {
         // - Desktop: double-click
         // - Touch/iPad: double-tap within 350ms on the same block
         const openEditor = () => {
-          // If weekdays are enabled, open the weekly editor targeting the correct group/day
+          // If a manual profile is active, edit that profile directly instead of weekdays
+          try {
+            if (this._config?.profiles_enabled) {
+              this._ensureProfilesStruct(row);
+              const ap = row?.activeProfile;
+              if (ap && row?.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+                // Configure profile context and open profile block editor
+                this._profilesEntity = eid;
+                this._profilesSelected = ap;
+                this._profilesRoom = eid;
+                this._autoSaveProfileFromTimeline = true;
+                this._openProfileBlockEditor(b.id);
+                return;
+              }
+            }
+          } catch {}
+
+          // Else if weekdays are enabled, open the weekly editor targeting the correct group/day
           try {
             const rowHasWeekly = !!(this._config?.weekdays_enabled && row?.weekly);
             if (rowHasWeekly) {
@@ -2858,7 +3291,7 @@ class ThermostatTimelineCard extends HTMLElement {
               return;
             }
           } catch {}
-          // Fallback to normal (non-weekly) editor
+          // Fallback to normal (non-weekly/non-profile) editor
           this._openEditor(eid, b.id);
         };
 
@@ -2971,6 +3404,14 @@ class ThermostatTimelineCard extends HTMLElement {
       if (e.target === pov) { e.preventDefault(); this._closeProfilesEditor(); }
     });
 
+    // Holidays overlay events
+    const hov = qs('.overlay-holiday');
+    const hsave = qs('.holiday-save');
+    const hclose = qs('.holiday-close');
+    if (hsave) hsave.addEventListener('click', () => this._holidaySave());
+    if (hclose) hclose.addEventListener('click', () => { this._closeHolidayEditor(); this._render(); });
+    if (hov) hov.addEventListener('click', (e)=>{ if (e.target === hov) { e.preventDefault(); this._closeHolidayEditor(); } });
+
     // Onboarding controls
     try {
       const next = qs('.onb-next');
@@ -3031,6 +3472,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
   overlay.classList.add("open");
+    try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
     try {
       const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
       window.addEventListener('keydown', onKey, { once: true });
@@ -3113,10 +3555,50 @@ class ThermostatTimelineCard extends HTMLElement {
       window.addEventListener('keydown', onKey, { once: true });
     } catch {}
 
+      // Also reflect the current option on the global select entity instantly
+      try {
+        const selOpt = (()=>{
+          const all = this._hass?.states || {};
+          for (const eid in all){
+            if (!Object.prototype.hasOwnProperty.call(all, eid)) continue;
+            if (!eid.startsWith('select.')) continue;
+            const st = all[eid];
+            const fn = String(st?.attributes?.friendly_name || '').toLowerCase();
+            if (fn === 'thermostat profile' || fn.startsWith('thermostat profile')){
+              return String(st?.state || '');
+            }
+          }
+          return null;
+        })();
+        if (selOpt !== null) {
+          const norm = (v)=>{ const s = String(v||'').trim(); return (s.toLowerCase()==='none' || s==='') ? null : s; };
+          const want = norm(selOpt);
+          const changed = want !== this._globalProfile;
+          if (changed) {
+            this._globalProfile = want;
+            if (want) this._config.profiles_enabled = true;
+            // Update local schedules so UI reflects change instantly (no save)
+            try {
+              for (const eid of (this._config?.entities || [])){
+                const r = this._schedules[eid]; if (!r) continue; this._ensureProfilesStruct(r);
+                if (!want) { r.activeProfile = null; continue; }
+                const has = !!(r.profiles && r.profiles[want]);
+                r.activeProfile = has ? want : null;
+              }
+            } catch {}
+            if (!this._inlineEditing && !this._editing) this._render();
+            this._scheduleNextApply();
+            // Persist back to integration so sensor version updates immediately
+            try { this._debouncedSaveStore(); } catch {}
+          }
+        }
+      } catch {}
+
   }
   _closeEditor(){
     this._editing = null;
-    this.shadowRoot.querySelector(".overlay")?.classList.remove("open");
+  this.shadowRoot.querySelector(".overlay")?.classList.remove("open");
+  try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
     // If we hid the weekday modal for editing, decide whether to restore it
     // Only restore when the edit was initiated from inside the weekdays popup.
     // If the edit was initiated from the main timeline (auto-save flow), do not reopen the weekdays popup.
@@ -3140,9 +3622,16 @@ class ThermostatTimelineCard extends HTMLElement {
       if (pov) pov.classList.add('open');
       this._renderProfilesModal();
     }
+    // If we hid the holiday modal for editing, restore it on close
+    if (this._holidayOverlayHiddenForEditor && this._holidayOpen) {
+      this._holidayOverlayHiddenForEditor = false;
+      const hov = this.shadowRoot.querySelector('.overlay-holiday');
+      if (hov) hov.classList.add('open');
+      this._renderHolidayModal();
+    }
   }
 
-  _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId, weeklyDay, profileName }=this._editing; if (!blockId) { this._closeEditor(); return; }
+  async _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId, weeklyDay, profileName }=this._editing; if (!blockId) { this._closeEditor(); return; }
     if (weeklyDay && this._weeklyDraft) {
       const arr = this._weeklyDraft.days?.[weeklyDay] || [];
       const idx = arr.findIndex(x=>x.id===blockId);
@@ -3163,19 +3652,40 @@ class ThermostatTimelineCard extends HTMLElement {
       }
       return;
     }
-    if (profileName) {
+    if (this._editing.holiday && this._holidayDraft && this._holidayDraft.rooms) {
       try {
-        // Delete from draft
-        const isNewProf = (profileName === '__new__');
-        if (!this._profilesDraft || (!isNewProf && this._profilesDraft.name !== profileName)) {
-            const row = this._schedules[entity]; const src = (!isNewProf ? (row?.profiles?.[profileName] || { blocks: [] }) : { blocks: [] });
-            const nm = isNewProf ? (this._profilesDraft?.name ?? null) : profileName;
-            this._profilesDraft = { name: nm, blocks: JSON.parse(JSON.stringify(src.blocks||[])), defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
-          }
-        const arr = this._profilesDraft.blocks || [];
+        const eid = this._editing.entity;
+        const arr = (this._holidayDraft.rooms||{})[eid] || [];
         const idx = arr.findIndex(x=>x.id===blockId);
         if (idx>=0) arr.splice(idx,1);
+        (this._holidayDraft.rooms||{})[eid] = arr;
+        this._render(); this._closeEditor(); this._renderHolidayModal();
+      } catch { this._closeEditor(); }
+      return;
+    }
+    if (profileName) {
+      try {
+        // Ensure draft exists and operate on the current room's draft blocks map
+        const isNewProf = (profileName === '__new__');
+        const curRoom = this._profilesRoom || this._profilesEntity || entity;
+        if (!this._profilesDraft || (!isNewProf && this._profilesDraft.name !== profileName)) {
+          const row = this._schedules[entity];
+          const roomsMap = {};
+          for (const e of (this._config?.entities||[])){
+            const src = !isNewProf ? (this._schedules[e]?.profiles?.[profileName]?.blocks || []) : [];
+            roomsMap[e] = JSON.parse(JSON.stringify(src));
+          }
+          this._profilesDraft = { name: (isNewProf? null : profileName), rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        }
+        const arr = (this._profilesDraft.rooms||{})[curRoom] || [];
+        const idx = arr.findIndex(x=>x.id===blockId);
+        if (idx>=0) arr.splice(idx,1);
+        (this._profilesDraft.rooms||{})[curRoom] = arr;
         this._profilesDirty = true;
+        // If deletion was initiated from the main timeline, persist immediately
+        if (this._autoSaveProfileFromTimeline) {
+          try { this._autoSaveProfileFromTimeline = false; await this._profilesSaveDraft(); } catch {}
+        }
         this._render(); this._closeEditor(); if (this._profilesOpen) this._renderProfilesModal();
       } catch { this._closeEditor(); }
       return;
@@ -3187,7 +3697,8 @@ class ThermostatTimelineCard extends HTMLElement {
   // Hide any tooltips while editing
   try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
   try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
-  overlay.classList.add('open');
+  // Open after a frame to avoid half-rendered UI flash
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
   try { const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer'); if (this._config?.time_12h) { if (edFrom) edFrom.value = this._toTimeInput12h(start); if (edTo) edTo.value = this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value = (start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value = (end>=720 && end<1440)?'PM':'AM'; } } else { if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; } } catch {}
   if (edTemp) { edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
     try {
@@ -3257,11 +3768,15 @@ class ThermostatTimelineCard extends HTMLElement {
     }
     this._weeklyDayKey = this._todayKey();
     this._weeklyOpen = true;
-    const ov = this.shadowRoot.querySelector('.overlay-week');
-    if (ov) ov.classList.add('open');
-    this._renderWeeklyModal();
+  const ov = this.shadowRoot.querySelector('.overlay-week');
+  // Mark overlaying first to hide background artifacts
+  try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+  // Build the modal while hidden
+  this._renderWeeklyModal();
+  // Open after a paint
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
   }
-  _closeWeeklyEditor(){ this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); }
+  _closeWeeklyEditor(){ this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {} }
   _weeklySaveAll(){ try { if (!this._weeklyEntity || !this._weeklyDraft) { this._closeWeeklyEditor(); return; } const entity = this._weeklyEntity; const row = this._schedules[entity]; if (!row) { this._closeWeeklyEditor(); return; }
       // Normalize by mode: propagate grouped days within the selected mode only
       const mode = this._weeklyDraft.mode || 'weekday_weekend';
@@ -3631,15 +4146,18 @@ class ThermostatTimelineCard extends HTMLElement {
       this._profilesEditingNew = true;
   this._profilesRoom = (this._config?.entities||[])[0] || entity;
       this._profilesOpen = true;
-      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-profiles');
-      if (ov) ov.classList.add('open');
-      this._renderProfilesModal();
+  const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-profiles');
+  // Mark overlaying, render while hidden, then open after paint
+  try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+  this._renderProfilesModal();
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
     } catch { /* no-op */ }
   }
   _closeProfilesEditor(){
     this._profilesOpen = false; this._profilesEntity = null; this._profilesSelected = null; this.shadowRoot.querySelector('.overlay-profiles')?.classList.remove('open');
     // Always re-render main timeline after closing, so fallback (weekdays/base) is visible if no profile is active
     try { this._render(); } catch {}
+    try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
   }
   _renderProfilesModal(){ try {
       const title = this.shadowRoot.querySelector('.prof-title'); if (title) title.textContent = this._t('profiles.editor.title');
@@ -3681,14 +4199,30 @@ class ThermostatTimelineCard extends HTMLElement {
   editBtn.addEventListener('click', ()=>{ this._profilesSelected = name; this._profilesEditingNew = false; try { const roomsMap = {}; for (const eid of (this._config?.entities||[])){ const src = this._schedules[eid]?.profiles?.[name]?.blocks || []; roomsMap[eid] = JSON.parse(JSON.stringify(src)); } this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false; } catch { this._profilesDraft=null; this._profilesDirty=false; } this._renderProfilesModal(); try { const trk = modalProf?.querySelector('.week-track'); trk?.scrollIntoView({ behavior:'smooth', block:'center' }); } catch {} });
         const act = document.createElement('button'); act.type='button'; act.className = 'btn ' + (row.activeProfile===name?'success':'ghost'); act.textContent = (row.activeProfile===name)? this._t('profiles.deactivate') : this._t('profiles.activate');
         act.addEventListener('click', async ()=>{
-          const eid = this._profilesEntity;
           const before = this._desiredNowSnapshot();
-          row.activeProfile = (row.activeProfile===name)? null : name;
-          this._schedules[eid] = row;
+          // Toggle global activation: if already globally selected, turn off; else activate this name for all rooms
+          const enable = (this._globalProfile !== name);
+          if (enable) {
+            this._globalProfile = name;
+            this._config.profiles_enabled = true;
+          } else {
+            this._globalProfile = null;
+            // Keep profiles_enabled as-is; user can still have per-room profiles
+          }
+          // Apply across all configured rooms
+          for (const eid of (this._config?.entities || [])){
+            const r = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+            this._ensureProfilesStruct(r);
+            if (enable) {
+              r.activeProfile = (r.profiles && r.profiles[name]) ? name : null;
+            } else {
+              r.activeProfile = null;
+            }
+            this._schedules[eid] = r;
+          }
           await this._saveStore();
           this._render();
           this._renderProfilesModal();
-          // Immediate apply for now if storage is OFF (on‑device control)
           try {
             if (this._config?.auto_apply && !this._config?.storage_enabled && !this._isPaused()) {
               await this._applyIfDesiredChanged(before);
@@ -3828,7 +4362,7 @@ class ThermostatTimelineCard extends HTMLElement {
       // Hide profiles overlay while editing
       const pov = this.shadowRoot.querySelector('.overlay-profiles'); if (pov) pov.classList.remove('open'); this._profilesOverlayHiddenForEditor = true;
       try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
-      overlay.classList.add('open');
+    try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
     } catch {}
   }
   async _profilesSaveDraft(){
@@ -3838,7 +4372,8 @@ class ThermostatTimelineCard extends HTMLElement {
       const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
       this._ensureProfilesStruct(row);
       // Persist current draft into storage structure
-      row.profiles[sel] = { defaultTemp: row.defaultTemp, blocks: JSON.parse(JSON.stringify(d.blocks || [])) };
+      const blocks = (d.rooms && d.rooms[eid]) ? d.rooms[eid] : [];
+      row.profiles[sel] = { defaultTemp: row.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
       this._schedules[eid] = row;
       await this._saveStore();
       // Clear dirty flag and revert Add/Save button immediately
@@ -3880,7 +4415,8 @@ class ThermostatTimelineCard extends HTMLElement {
         await this._saveStore();
         try {
           this._profilesSelected = null; this._profilesEditingNew = true;
-          this._profilesDraft = { name: null, blocks: [], defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+          const roomsMap = {}; for (const rid of (this._config?.entities||[])) roomsMap[rid] = [];
+          this._profilesDraft = { name: null, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
         } catch {}
         // Move focus away from Save to avoid immediate re-click from Enter
         try { (this.shadowRoot && this.shadowRoot.activeElement && this.shadowRoot.activeElement.blur && this.shadowRoot.activeElement.blur()); } catch {}
@@ -3902,7 +4438,8 @@ class ThermostatTimelineCard extends HTMLElement {
       // Clear selection and show empty preview ready for a new schedule
       try {
         this._profilesSelected = null; this._profilesEditingNew = true;
-        this._profilesDraft = { name: null, blocks: [], defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        const roomsMap = {}; for (const rid of (this._config?.entities||[])) roomsMap[rid] = [];
+        this._profilesDraft = { name: null, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
       } catch {}
       this._renderProfilesModal(); this._render(); this._scheduleNextApply();
     } catch (e) { console.warn('profiles save failed', e); }
@@ -3972,7 +4509,7 @@ class ThermostatTimelineCard extends HTMLElement {
       // Hide weekday overlay while editing to avoid double-popups
       const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
   try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
-  overlay.classList.add('open');
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
     } else {
   const b = arr.find(x=>x.id===blockId);
       if (!b) return;
@@ -3999,7 +4536,133 @@ class ThermostatTimelineCard extends HTMLElement {
     }
   }
 
-  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay, profileName } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (profileName) { this._ensureProfilesStruct(row); sourceBlocks = (row.profiles?.[profileName]?.blocks) || []; b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
+  // ---------- Holidays modal ----------
+  _openHolidayEditor(entity){
+    try {
+      const ents = this._config?.entities || [];
+      this._holidayRoom = entity || ents[0] || null;
+      // Build a rooms map draft from all rooms
+      const roomsMap = {};
+      for (const eid of ents){
+        const r = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+        this._ensureHolidayStruct(r);
+        roomsMap[eid] = Array.isArray(r.holiday?.blocks) ? JSON.parse(JSON.stringify(r.holiday.blocks)) : [];
+      }
+      this._holidayDraft = { rooms: roomsMap };
+  this._holidayOpen = true;
+  const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-holiday');
+  // Mark card overlay state first, then render while hidden
+  try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+  this._renderHolidayModal();
+  // Open after a paint so timeline is fully laid out
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
+    } catch {}
+  }
+  _closeHolidayEditor(){ this._holidayOpen = false; this._holidayEntity = null; this._holidayRoom = null; this._holidayDraft = null; this.shadowRoot.querySelector('.overlay-holiday')?.classList.remove('open'); try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {} }
+  _renderHolidayModal(){ try {
+    const title = this.shadowRoot && this.shadowRoot.querySelector('.holiday-title'); if (title) title.textContent = this._t('holidays.editor.title');
+    const roomEl = this.shadowRoot && this.shadowRoot.querySelector('.holiday-room'); if (roomEl) { const eid = this._holidayRoom; const custom = (this._config?.labels?.[eid]) || null; roomEl.textContent = custom || this._prettyName(eid||''); }
+    const note = this.shadowRoot && this.shadowRoot.querySelector('.holiday-note'); if (note) note.textContent = this._t('week.editor.preview_note');
+    try { const sv = this.shadowRoot.querySelector('.holiday-save'); if (sv) sv.textContent = this._t('ui.save'); const cl = this.shadowRoot.querySelector('.holiday-close'); if (cl) cl.textContent = this._t('ui.cancel'); } catch {}
+    const modalHost = this.shadowRoot && this.shadowRoot.querySelector('.modal-holiday');
+    const scale = modalHost?.querySelector('.week-scale-inner') || this.shadowRoot.querySelector('.week-scale-inner');
+    const track = modalHost?.querySelector('.week-track') || this.shadowRoot.querySelector('.week-track');
+    if (!track) return;
+  // Build room tabs
+  const tabs = modalHost?.querySelector('.holiday-roomtabs');
+    if (tabs) {
+      tabs.innerHTML = '';
+      const ents = this._config?.entities || [];
+      if (!this._holidayRoom || !ents.includes(this._holidayRoom)) this._holidayRoom = ents[0] || null;
+      for (const eid of ents){ const btn=document.createElement('button'); btn.type='button'; btn.className='wk-tab'+(eid===this._holidayRoom?' active':''); let label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); btn.textContent=label; btn.addEventListener('click', ()=>{ this._holidayRoom=eid; this._renderHolidayModal(); }); tabs.append(btn); }
+    }
+    // Draw scale every 2 hours
+    if (scale) {
+      scale.innerHTML = '';
+      for (let i=0;i<=24;i+=2){
+        const t = document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)';
+        const lab = document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+        if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24 ? this._label(0) : this._label(i*60)); }
+        t.append(lab); scale.append(t);
+      }
+    }
+    // Toolbar with Add
+  const addBtnInline = document.createElement('button'); addBtnInline.type='button'; addBtnInline.className='btn primary'; addBtnInline.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+this._t('ui.add_block')+'</span>';
+    addBtnInline.addEventListener('click', ()=>{ this._openHolidayBlockEditor(null, this._getNowMin()); });
+    const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(addBtnInline);
+    try {
+      const outerScale = (scale && scale.closest) ? scale.closest('.week-scale') : (modalHost?.querySelector('.week-scale') || null);
+      const parent = outerScale?.parentElement || track.parentElement;
+      if (parent) {
+        Array.from(parent.querySelectorAll('.prof-toolbar')).forEach(el=>el.remove());
+        if (outerScale) parent.insertBefore(toolbar, outerScale); else parent.insertBefore(toolbar, track);
+      }
+    } catch {}
+    // Draw blocks
+    track.innerHTML = '';
+  const blocks = (this._holidayDraft && this._holidayDraft.rooms) ? (this._holidayDraft.rooms[this._holidayRoom] || []) : [];
+    // Tooltip like weekly
+    let tooltip = this.shadowRoot.querySelector('.wk-tooltip.holiday');
+    if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip holiday'; tooltip.style.display='none'; modalHost?.append(tooltip); }
+    for (const b of blocks){
+      const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%';
+  try { const clr=this._colorFor(this._holidayRoom, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
+      const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill);
+      bl.addEventListener('dblclick', ()=> this._openHolidayBlockEditor(b.id));
+      const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; if (!tooltip) return; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); tooltip._hideTimer=null; } catch {} const box=bl.getBoundingClientRect(); const cont=modalHost?.getBoundingClientRect(); const left=box.left+box.width/2-(cont?.left||0); const top=(box.top-(cont?.top||0))-8; tooltip.textContent=txt; tooltip.style.left=left+'px'; tooltip.style.top=top+'px'; tooltip.style.transform='translate(-50%,-100%)'; tooltip.style.display=''; };
+      const hideTip = ()=>{ if (!tooltip) return; const delay=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?3000:120; try{ if(tooltip._hideTimer) clearTimeout(tooltip._hideTimer);}catch{} tooltip._hideTimer=setTimeout(()=>{ try{ tooltip.style.display='none'; tooltip._hideTimer=null; }catch{} }, delay); };
+      bl.addEventListener('mouseenter', showTip); bl.addEventListener('mouseleave', hideTip);
+      track.append(bl);
+    }
+    // Add on empty area
+    track.addEventListener('dblclick', (e)=>{ try { if (e.target && (e.target.closest && e.target.closest('.block'))) return; const box=track.getBoundingClientRect(); const rel=(e.clientX-box.left)/box.width; const min=this._clamp(Math.round(rel*1440),0,1439); this._openHolidayBlockEditor(null, min); } catch { this._openHolidayBlockEditor(null); } });
+  } catch {}
+  }
+  _openHolidayBlockEditor(blockId, atMin=null){ try {
+    const eid = this._holidayRoom; if (!eid) return; const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensureHolidayStruct(row);
+    if (!this._holidayDraft || !this._holidayDraft.rooms) {
+      const roomsMap={}; for (const rid of (this._config?.entities||[])){ const src=this._schedules[rid]?.holiday?.blocks || []; roomsMap[rid]=JSON.parse(JSON.stringify(src)); }
+      this._holidayDraft = { rooms: roomsMap };
+    }
+    const arr = (this._holidayDraft.rooms||{})[eid] || [];
+    const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+    if (!blockId){
+      const now = Number.isFinite(atMin) ? atMin : this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start+60, start+15, 1440);
+  this._editing = { entity: eid, blockId: null, holiday: true };
+      if (edTemp) { const base = Number(row.defaultTemp||this._config.default_temp||20); edTemp.value = String(this._toDisplayTemp(base)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+      if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(start); if (edTo) edTo.value=this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value=(start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(end>=720 && end<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(start); if (edTo) edTo.value=this._toTimeInput(end); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+      if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
+    } else {
+  const b = arr.find(x=>x.id===blockId); if (!b) return; this._editing = { entity: eid, blockId, holiday: true };
+      if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+      if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(b.startMin); if (edTo) edTo.value=this._toTimeInput12h(b.endMin); if (fromMer){ fromMer.style.display=''; fromMer.value=(b.startMin>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(b.endMin>=720 && b.endMin<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(b.startMin); if (edTo) edTo.value=this._toTimeInput(b.endMin); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+      if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
+    }
+    // Hide holiday overlay while editing to avoid double-popups
+    const hov = this.shadowRoot.querySelector('.overlay-holiday'); if (hov) hov.classList.remove('open'); this._holidayOverlayHiddenForEditor = true;
+    try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
+  } catch {}
+  }
+  async _holidaySave(){ try {
+    if (!this._holidayDraft || !this._holidayDraft.rooms) { this._closeHolidayEditor(); return; }
+    const rooms = this._holidayDraft.rooms || {};
+    for (const eid of (this._config?.entities||[])){
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureHolidayStruct(row);
+      row.holiday = { blocks: JSON.parse(JSON.stringify(rooms[eid] || [])) };
+      this._schedules[eid] = row;
+    }
+    const before = this._desiredNowSnapshot();
+    await this._saveStore();
+    this._closeHolidayEditor(); this._render();
+    if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
+    this._scheduleNextApply();
+  } catch {}
+  }
+
+  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay, profileName, holiday } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (profileName) { this._ensureProfilesStruct(row); // Use the current draft for overlap/checks instead of stored profile
+    const curRoom = this._profilesRoom || this._profilesEntity || entity; const draftArr = (this._profilesDraft?.rooms?.[curRoom]) || []; sourceBlocks = draftArr; b = blockId ? draftArr.find(x=>x.id===blockId) : null; } else if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else if (holiday && Array.isArray(this._holidayDraft)) { sourceBlocks = this._holidayDraft; b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
     const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
     const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer'); const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
     const rawFrom = String(edFrom.value || "");
@@ -4031,7 +4694,8 @@ class ThermostatTimelineCard extends HTMLElement {
 
     // If interval crosses midnight (end <= start), split into two blocks
     const crossesMidnight = end <= start;
-    if (!crossesMidnight) {
+  // Early overlap check only for base/weekly/holiday editors; profiles are handled below using the draft state
+  if (!crossesMidnight && !profileName) {
       const overlap = hasOverlap(sourceBlocks, start, end, b?.id);
       if (overlap) {
         const overlapStart = Math.max(start, overlap.startMin);
@@ -4111,6 +4775,8 @@ class ThermostatTimelineCard extends HTMLElement {
         }
       }
       const arr = (this._profilesDraft.rooms||{})[curRoom] || [];
+      // Find the block within the draft, not the stored profile
+      let b = blockId ? arr.find(x=>x.id===blockId) : null;
       if (crossesMidnight) {
         const ov1 = hasOverlap(arr, start, 1440, b?.id);
         const ov2 = hasOverlap(arr, 0, end, null);
@@ -4123,10 +4789,31 @@ class ThermostatTimelineCard extends HTMLElement {
       }
   (this._profilesDraft.rooms||{})[curRoom] = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
       this._profilesDirty = true;
+      // If the profile edit originated from the main timeline, persist immediately
+      if (this._autoSaveProfileFromTimeline) {
+        try {
+          this._autoSaveProfileFromTimeline = false;
+          // Persist draft for current room/profile
+          await this._profilesSaveDraft();
+          // Apply immediately if edit affects current time
+          try {
+            if (this._config?.auto_apply && this._config?.apply_on_edit) {
+              const nowMin = this._getNowMin();
+              const arrNow = Array.isArray((this._profilesDraft?.rooms||{})[curRoom]) ? this._profilesDraft.rooms[curRoom] : [];
+              const hit = arrNow.find(x => nowMin >= x.startMin && nowMin < x.endMin);
+              if (hit) { await this._applyImmediateForEntity(entity, Number(hit.temp), nowMin); this._scheduleNextApply(); }
+            }
+          } catch {}
+          this._closeEditor();
+          return;
+        } catch {
+          // Fall back to non-persisting flow
+        }
+      }
       this._render(); this._closeEditor(); this._renderProfilesModal();
       return;
     }
-    if (weeklyDay && this._weeklyDraft) {
+  if (weeklyDay && this._weeklyDraft) {
       if (crossesMidnight) {
         // Split into two parts on the SAME day: [start..1440] and [0..end]
         const dayKey = weeklyDay;
@@ -4213,6 +4900,23 @@ class ThermostatTimelineCard extends HTMLElement {
           }
         } catch {}
       }
+      return;
+    }
+    if (holiday && Array.isArray(this._holidayDraft)) {
+      // Work on holiday draft only; persist on Holiday Save
+      const arr = this._holidayDraft;
+      if (crossesMidnight) {
+        const ov1 = hasOverlap(arr, start, 1440, b?.id);
+        const ov2 = hasOverlap(arr, 0, end, null);
+        if (ov1 || ov2) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const overlap = ov1 || ov2; const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end)); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp: this._fromDisplayTemp(temp) }); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); }
+      } else {
+        const overlap = hasOverlap(arr, start, end, b?.id);
+        if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp:this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=end; }
+      }
+      this._holidayDraft = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      this._render(); this._closeEditor(); this._renderHolidayModal();
       return;
     }
     // Normal (non-weekly) save
@@ -4484,9 +5188,10 @@ class ThermostatTimelineCard extends HTMLElement {
         const hideLbl = this.shadowRoot && this.shadowRoot.querySelector('.onb-hide-lbl'); if (hideLbl) hideLbl.textContent = t('onboard.dont_show');
       } catch {}
       // Support merged entities by always resolving to primary
-      const primary = this._groupPrimaryOf ? this._groupPrimaryOf(eid) : eid;
-      const cr = (this._config?.color_ranges) || {};
-      const candidates = [primary, eid, '*', 'default'];
+  const primary = this._groupPrimaryOf ? this._groupPrimaryOf(eid) : eid;
+  const cr = (this._config?.color_ranges) || {};
+  const globalFirst = !!this._config?.color_global;
+  const candidates = globalFirst ? ['*', 'default', primary, eid] : [primary, eid, '*', 'default'];
       let ranges = [];
       for (const k of candidates){ if (Array.isArray(cr[k]) && cr[k].length){ ranges = cr[k]; break; } }
       for (const r of ranges){
@@ -4610,7 +5315,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (this._suspendRender) return;
   if (ae) {
     try {
-      if (ae.classList?.contains("def") || ae.classList?.contains("rowh") || ae.classList?.contains("title") || ae.classList?.contains('label-input')) return;
+      if (ae.classList?.contains("def") || ae.classList?.contains("rowh") || ae.classList?.contains("title") || ae.classList?.contains('label-input')
+          || ae.classList?.contains('mi-from') || ae.classList?.contains('mi-to') || ae.classList?.contains('mi-temp')
+          || (ae.closest && ae.closest('.mini-ed'))) return;
       if (ae.closest && (ae.closest('ha-entity-picker') || ae.closest('tt-entity-picker'))) return;
     } catch {}
   }
@@ -4694,6 +5401,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   this._openColorRows = new Set();
   this._suspendRender = false;
   this._activeTab = 'settings';
+  // Holidays inline editor state
+  this._holDraft = null;      // { rooms: { [eid]: [ {id,startMin,endMin,temp} ] } }
+  this._holRoom = null;       // active room eid
+  this._holEditing = null;    // { room, blockId }
+  this._holMini = null;       // { room, blk }
     this.shadowRoot.innerHTML = `
       <style>
         .wrap { padding:8px 12px; display:grid; gap:16px; max-width: 480px; }
@@ -4829,9 +5541,29 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         .store-controls .storage { width: 100%; }
   .store-controls .store-btns { display:flex; gap:8px; align-items:stretch; flex-wrap: nowrap; justify-content: flex-start; width:100%; }
   .store-controls .store-btns .remove-btn { flex: 1 1 0; justify-content: center; height:100%; text-align:center; }
+  /* Holidays inline editor */
+  .holiday-ed { display:grid; gap:8px; }
+  .holiday-ed .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .holiday-ed .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
+  .holiday-ed .week-scale{ position:relative; height:32px; margin:0 6px; }
+  .holiday-ed .week-track{ position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; margin:0 6px; }
+  .holiday-ed .block{ position:absolute; top:6px; bottom:6px; border:1px solid var(--divider-color); border-radius:10px; background: var(--secondary-background-color, rgba(0,0,0,.05)); display:flex; align-items:center; gap:10px; padding:0 10px; box-sizing:border-box; }
+  .holiday-ed .block .pill{ display:none; }
+  .holiday-ed .hol-toolbar{ display:flex; justify-content:flex-end; gap:8px; }
+  .holiday-ed .mini-ed{ border:1px solid var(--divider-color); border-radius:10px; padding:8px; display:grid; gap:8px; max-width: 460px; background: var(--secondary-background-color, transparent); }
+  .holiday-ed .mini-ed .row{ display:flex; gap:8px; align-items:center; }
+  .holiday-ed input[type=time], .holiday-ed input[type=number]{ height:28px; padding:2px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
+  /* Make mini-editor buttons same height */
+  .holiday-ed .mini-ed .row .add-entity-btn,
+  .holiday-ed .mini-ed .row .remove-btn{ height:36px; min-height:36px; display:inline-flex; align-items:center; }
+  /* Match add-date button height to date input */
+  .tab-holidays .settings-card .add-entity-btn { height:36px; min-height:36px; display:inline-flex; align-items:center; }
+  .tab-holidays .settings-card input.tt-input[type=date] { height:36px; min-height:36px; }
+  /* Tooltip style (same as card) */
+  .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
         </style>
   <div class="status-wrap"><span class="int-status" role="status"><ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon><span class="text">Not connected</span></span></div>
-  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button></div>
+  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-holidays-btn" role="tab" aria-selected="false">Holidays</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         
@@ -4955,6 +5687,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
     <ha-switch class="profiles-enable"></ha-switch>
   </div>
+  <div class="setting holidays-setting">
+    <div class="text">
+      <div class="title">Holidays</div>
+      <div class="desc holidays-enable-desc">Use a special daily schedule on public holidays.</div>
+    </div>
+    <ha-switch class="holidays-enable"></ha-switch>
+  </div>
 </div>
   </div>
   <div class="wrap tab-rooms" style="display:none;">
@@ -4967,6 +5706,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
   </div>
   <div class="wrap tab-colors" style="display:none;"></div>
+  <div class="wrap tab-holidays" style="display:none; max-width:480px;"></div>
   <div class="wrap tab-away" style="display:none; max-width:480px;">
     <div class="settings-card">
       <div class="setting">
@@ -5064,7 +5804,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               let parsed = {};
               try { parsed = JSON.parse(localRaw || '{}'); } catch { parsed = {}; }
               let schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : (parsed || {});
-              let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
+              let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
               settings = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
               if (this._hass) {
                 this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
@@ -5077,7 +5817,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
                 let sch = attrs && typeof attrs.schedules === 'object' ? attrs.schedules : {};
                 // Unwrap in case of legacy nested structure
                 if (sch && sch.schedules && typeof sch.schedules === 'object') sch = sch.schedules;
-                let set = attrs && typeof attrs.settings === 'object' ? attrs.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
+                let set = attrs && typeof attrs.settings === 'object' ? attrs.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
                 if (Object.keys(sch || {}).length) {
                   const pull = confirm(this._t('editor.migrate_pull_confirm'));
                   if (pull) {
@@ -5172,6 +5912,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     qs('.profiles-enable')?.addEventListener('change', e => {
       const on = !!e.target.checked; this._upd('profiles_enabled', on);
     });
+      // Holidays enable
+      qs('.holidays-enable')?.addEventListener('change', e => {
+        const on = !!e.target.checked; this._upd('holidays_enabled', on);
+        if (on) { this._activeTab = 'holidays'; this._render(); }
+      });
     // (clear storage only button removed)
 
     // Clear all data (storage + local)
@@ -5226,7 +5971,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (!ok) return;
     const parsed = JSON.parse(raw || '{}');
     const schedules = parsed.schedules || parsed || {};
-  let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled };
+  let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
   settings = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
         if (this._hass) {
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
@@ -5269,11 +6014,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
+      const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
       if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
   if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); };
       if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
+      if (hBtn) hBtn.onclick = ()=> { this._activeTab='holidays'; this._render(); };
       if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
       if (yBtn) yBtn.onclick = ()=> { this._activeTab='sync'; this._render(); };
     } catch {}
@@ -5355,6 +6102,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         time_12h: this._config.time_12h,
         temp_unit: this._config.temp_unit,
         color_ranges: this._config.color_ranges,
+        color_global: !!this._config.color_global,
         min_temp: this._config.min_temp,
         max_temp: this._config.max_temp,
         away: this._config.away,
@@ -5365,7 +6113,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         profiles_enabled: !!this._config.profiles_enabled,
         auto_apply_enabled: !!this._config.auto_apply,
         pause_indef: !!this._pauseIndef,
-        pause_until_ms: Number(this._pauseUntilMs||0)
+        pause_until_ms: Number(this._pauseUntilMs||0),
+        holidays_enabled: !!this._config.holidays_enabled,
+        holidays_source: this._config.holidays_source || 'calendar',
+        holidays_entity: this._config.holidays_entity || '',
+        holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : []
       };
       await this._hass.callService('thermostat_timeline','set_store', { settings });
     } catch {}
@@ -5431,6 +6183,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
           if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); }
           if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
+          if (el.classList.contains('tab-holidays-btn')) { this._activeTab = 'holidays'; this._render(); }
           if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
           if (el.classList.contains('tab-sync-btn')) { this._activeTab = 'sync'; this._render(); }
         });
@@ -5450,6 +6203,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const pbe = this.shadowRoot.querySelector('.pausebtn-enable');
   const wek = this.shadowRoot.querySelector('.week-enable');
   const prf = this.shadowRoot.querySelector('.profiles-enable');
+  const hol = this.shadowRoot.querySelector('.holidays-enable');
     if (t)  t.value  = this._config.title ?? "";
   if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
   if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
@@ -5483,6 +6237,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (adf){ adf.checked = !!this._config.apply_on_default_change; }
   if (wek){ wek.checked = !!this._config.weekdays_enabled; }
   if (prf){ prf.checked = !!this._config.profiles_enabled; }
+  if (hol){ hol.checked = !!this._config.holidays_enabled; }
+  // Hide legacy Holidays toggle in Settings tab (moved to Holidays tab)
+  try { const hs = this.shadowRoot.querySelector('.holidays-setting'); if (hs) hs.style.display = 'none'; } catch {}
   if (pbe){ pbe.checked = !!(this._config.show_pause_button ?? true); }
   // No mode dropdown in editor
 
@@ -5603,7 +6360,35 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const root = this.shadowRoot.querySelector('.tab-colors');
       if (root) {
         root.innerHTML = '';
-        if (want === 0) {
+
+        // Colors mode toggle (Per room | All rooms)
+        const modeWrap = document.createElement('div');
+        modeWrap.style.display = 'flex';
+        modeWrap.style.alignItems = 'center';
+        modeWrap.style.justifyContent = 'space-between';
+        modeWrap.style.gap = '10px';
+        modeWrap.style.marginBottom = '6px';
+        const modeText = document.createElement('div');
+        modeText.style.display = 'grid';
+        modeText.style.gap = '2px';
+        const modeTitle = document.createElement('div'); modeTitle.className = 'colors-mode-title'; modeTitle.style.fontWeight = '600'; modeTitle.textContent = this._t('editor.colors.mode') || 'Color mode';
+        const modeDesc = document.createElement('div'); modeDesc.className = 'colors-mode-desc'; modeDesc.style.fontSize = '.85rem'; modeDesc.style.color = 'var(--secondary-text-color)'; modeDesc.textContent = this._t('editor.colors.mode.desc') || 'Choose per-room colors or one set for all rooms.';
+        modeText.append(modeTitle, modeDesc);
+        const seg = document.createElement('div'); seg.className = 'seg colors-mode';
+        const bRoom = document.createElement('button'); bRoom.type = 'button'; bRoom.className = 'mode-room'; bRoom.textContent = this._t('editor.colors.mode_per_room') || 'Per room';
+        const bGlob = document.createElement('button'); bGlob.type = 'button'; bGlob.className = 'mode-global'; bGlob.textContent = this._t('editor.colors.mode_global') || 'All rooms';
+        const applySegUi = ()=>{ const on = !!this._config.color_global; bGlob.classList.toggle('active', on); bRoom.classList.toggle('active', !on); };
+        bRoom.onclick = ()=>{ this._config.color_global = false; this._emit(true); this._pushSettingsToStoreDebounced(); };
+        bGlob.onclick = ()=>{ this._config.color_global = true; this._emit(true); this._pushSettingsToStoreDebounced(); };
+        seg.append(bRoom, bGlob);
+        applySegUi();
+        modeWrap.append(modeText, seg);
+        root.append(modeWrap);
+
+        const isGlobal = !!this._config.color_global;
+
+        // If per-room mode and there are no rooms yet, show helper box
+        if (!isGlobal && want === 0) {
           const box = document.createElement('div'); box.className = 'empty-box';
           const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
           const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn'; btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
@@ -5614,7 +6399,56 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           };
           box.append(p, btn); root.append(box);
         }
-        for (let i = 0; i < want; i++) {
+
+        // Global mode editor (single set applied to all rooms under key "*")
+        if (isGlobal) {
+          const eid = '*';
+          const line = document.createElement('div'); line.className = 'inline';
+          const summary = document.createElement('div'); summary.className = 'summary';
+          const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+          const exp = document.createElement('button'); exp.className = 'expander'; exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+          const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+          const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = this._t('editor.colors.global_title') || 'All rooms';
+          txtWrap.append(titleSpan); sumLeft.append(exp, txtWrap); summary.append(sumLeft);
+          line.append(summary);
+          const details = document.createElement('div'); details.className = 'details'; line.append(details);
+          const colorsWrap = document.createElement('div'); colorsWrap.style.display = 'grid'; colorsWrap.style.gap = '0px'; details.append(colorsWrap);
+          const head = document.createElement('div'); head.className = 'colors-head';
+          head.innerHTML = `<span>${this._t('editor.colors.col_from')}</span><span>${this._t('editor.colors.col_to')}</span><span>${this._t('editor.colors.col_color')}</span><span></span>`;
+          try { if (this._openColorRows.has(eid)) line.classList.add('open'); } catch {}
+          const renderRanges = () => {
+            colorsWrap.innerHTML = '';
+            const ranges = (this._config.color_ranges?.[eid]) || [];
+            if (ranges.length > 0) colorsWrap.append(head);
+            ranges.forEach((r, ri) => {
+              const outer = document.createElement('div'); outer.className = 'color-item';
+              const row = document.createElement('div'); row.className = 'colors-row';
+              const f = document.createElement('input'); f.type = 'number'; f.step = '0.5'; f.value = String(this._toDisplayTemp(r.from ?? 0)); f.setAttribute('aria-label', this._t('editor.colors.col_from')); f.title = this._t('editor.colors.col_from');
+              const t = document.createElement('input'); t.type = 'number'; t.step = '0.5'; t.value = String(this._toDisplayTemp(r.to ?? 0)); t.setAttribute('aria-label', this._t('editor.colors.col_to')); t.title = this._t('editor.colors.col_to');
+              const c = document.createElement('input'); c.type = 'color'; c.value = r.color || '#ffb347'; c.setAttribute('aria-label', this._t('editor.colors.col_color')); c.title = this._t('editor.colors.col_color');
+              const maxDisp = this._toDisplayTemp(this._config.max_temp ?? 25);
+              const minDisp = this._toDisplayTemp(this._config.min_temp ?? 5);
+              f.min = String(minDisp); t.min = String(minDisp);
+              f.max = String(maxDisp); t.max = String(maxDisp);
+              const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+              const repaint = ()=>{ this._emit(true); try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {} try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {} };
+              f.onchange = () => { let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v); r.from = this._fromDisplayTemp(v); this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] }; repaint(); };
+              t.onchange = () => { let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v); r.to = this._fromDisplayTemp(v); this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] }; repaint(); };
+              c.onchange = () => { r.color = c.value; this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] }; repaint(); };
+              rm.onclick = () => { ranges.splice(ri, 1); this._config.color_ranges[eid] = ranges; this._emit(true); renderRanges(); };
+              row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
+            });
+            const add = document.createElement('button'); add.className = 'add-entity-btn'; add.type = 'button'; add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
+            add.onclick = () => { const arr = [...(this._config.color_ranges?.[eid] || [])]; arr.push({ from: this._config.default_temp || 20, to: this._config.default_temp || 20, color: '#ffb347' }); this._config.color_ranges = { ...(this._config.color_ranges || {}), [eid]: arr }; this._emit(true); renderRanges(); };
+            colorsWrap.append(add);
+          };
+          renderRanges();
+          exp.onclick = () => { line.classList.toggle('open'); const key = eid; if (line.classList.contains('open')) this._openColorRows.add(key); else this._openColorRows.delete(key); };
+          root.append(line);
+        }
+
+        // Per-room editors
+        for (let i = 0; !isGlobal && i < want; i++) {
           const eid = this._config.entities[i]; if (!eid) continue;
           const line = document.createElement('div'); line.className = 'inline';
           const summary = document.createElement('div'); summary.className = 'summary';
@@ -5700,7 +6534,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   refresh.onclick = async () => {
           // Persist color settings to local/shared storage so live card instances pick them up
           try {
-            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled };
+            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
             let schedules = {};
             // Prefer current storage sensor schedules when enabled
             try {
@@ -5744,24 +6578,23 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   // Update schedule button
   root.append(refresh);
 
-        // Clear only LOCAL color data (do not touch shared storage)
-  const clrLocal = document.createElement('button');
-  clrLocal.className = 'remove-btn clr-colors-local-btn';
-  clrLocal.type = 'button';
-    // Prevent grid stretch; keep button compact and left-aligned
-    try { clrLocal.style.width = 'max-content'; clrLocal.style.justifySelf = 'start'; } catch {}
-        clrLocal.innerHTML = '<ha-icon icon="mdi:delete-outline"></ha-icon><span>' + (this._t('editor.colors.clear_local') || 'Clear local color data') + '</span>';
-        clrLocal.onclick = async () => {
-          const ok = confirm(this._t('editor.colors.clear_local_confirm') || 'This will delete color ranges saved in your browser for this card. Continue?');
+        // Single button: clear all color data (local + shared if available)
+        const clrAll = document.createElement('button');
+        clrAll.className = 'remove-btn clr-colors-all-btn';
+        clrAll.type = 'button';
+        try { clrAll.style.width = 'max-content'; clrAll.style.justifySelf = 'start'; } catch {}
+        clrAll.innerHTML = '<ha-icon icon="mdi:delete-alert"></ha-icon><span>' + (this._t('editor.colors.clear_all') || 'Clear all color data') + '</span>';
+        clrAll.onclick = async () => {
+          const ok = confirm(this._t('editor.colors.clear_all_confirm') || 'This will delete all color ranges from both local and shared storage. Continue?');
           if (!ok) return;
           try {
-            // Update local config and emit so UI reflects change
+            // 1) Clear in-memory config
             this._config.color_ranges = {};
-            // Update localStorage copy without touching shared storage
+            // 2) Clear localStorage copy
             try {
               const raw = localStorage.getItem('thermostat_timeline_store') || '';
               let schedules = {};
-              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
+              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
               if (raw) {
                 try {
                   const parsed = JSON.parse(raw || '{}');
@@ -5772,51 +6605,216 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               }
               localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings }));
             } catch {}
+            // 3) Clear shared storage if entity available
+            try {
+              if (this._hass && this._config.storage_entity) {
+                let schedules = {};
+                let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
+                try {
+                  const st = this._hass.states?.[this._config.storage_entity];
+                  const attrs = st?.attributes || {};
+                  if (attrs && typeof attrs.schedules === 'object') schedules = JSON.parse(JSON.stringify(attrs.schedules));
+                  if (attrs && typeof attrs.settings === 'object') settings = { ...attrs.settings, color_ranges: {} };
+                } catch {}
+                await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
+              }
+            } catch (e) { console.warn('clear-all-colors (shared) failed', e); }
           } catch {}
           // Repaint editor + live cards
           this._emit(true);
           try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
           try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
         };
-  // Local clear button (stacked under refresh)
-  root.append(clrLocal);
+        root.append(clrAll);
+      }
+    } catch {}
 
-        // Clear only SHARED color storage (do not touch local browser data)
-  const clrShared = document.createElement('button');
-  clrShared.className = 'remove-btn clr-colors-shared-btn';
-  clrShared.type = 'button';
-    // Prevent grid stretch; keep button compact and left-aligned
-    try { clrShared.style.width = 'max-content'; clrShared.style.justifySelf = 'start'; } catch {}
-        clrShared.innerHTML = '<ha-icon icon="mdi:database-off"></ha-icon><span>' + (this._t('editor.colors.clear_shared') || 'Clear shared color storage') + '</span>';
-        clrShared.onclick = async () => {
-          const ok = confirm(this._t('editor.colors.clear_shared_confirm') || 'This will delete color ranges in the selected storage sensor. Continue?');
-          if (!ok) return;
-          try {
-            if (this._hass && this._config.storage_entity) {
-              // Load current schedules and settings from storage; overwrite color_ranges only
-              let schedules = {};
-              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors };
-              try {
-                const st = this._hass.states?.[this._config.storage_entity];
-                const attrs = st?.attributes || {};
-                if (attrs && typeof attrs.schedules === 'object') schedules = JSON.parse(JSON.stringify(attrs.schedules));
-                if (attrs && typeof attrs.settings === 'object') settings = { ...attrs.settings, color_ranges: {} };
-              } catch {}
-              await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings });
-            } else {
-              alert(this._t('editor.select_storage_first'));
-              return;
-            }
-          } catch (e) {
-            console.warn('clear-shared-colors failed', e);
-          }
-          // Do not modify local config when clearing shared
-        };
-        // Only show the shared clear button when shared storage is enabled
-        if (this._config.storage_enabled) {
-          // Shared clear button (stacked under local)
-          root.append(clrShared);
+    // Build Holidays tab content
+    try {
+      const root = this.shadowRoot.querySelector('.tab-holidays');
+      if (root) {
+        root.innerHTML = '';
+        // Toggle enable inside Holidays tab
+        const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
+        const enRow = document.createElement('div'); enRow.className='setting';
+        const enText = document.createElement('div'); enText.className='text';
+        const enTitle = document.createElement('div'); enTitle.className='title'; enTitle.textContent = this._t('holidays.enable');
+        const enDesc = document.createElement('div'); enDesc.className='desc'; enDesc.textContent = this._t('holidays.desc');
+        enText.append(enTitle, enDesc);
+        const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'holidays-enable'; enSwitch.checked = !!this._config.holidays_enabled;
+        enSwitch.addEventListener('change', (e)=>{ const on = !!e.target.checked; this._upd('holidays_enabled', on); try { contentWrap.style.display = on ? '' : 'none'; } catch {} });
+        enRow.append(enText, enSwitch); enableCard.append(enRow); root.append(enableCard);
+        // Container for remaining content (shown only when enabled)
+        const contentWrap = document.createElement('div'); contentWrap.className='holidays-content'; contentWrap.style.display = this._config.holidays_enabled ? '' : 'none'; root.append(contentWrap);
+        // Enable hint if no rooms
+        if ((this._config.entities||[]).length === 0) {
+          const box = document.createElement('div'); box.className='empty-box';
+          const p = document.createElement('div'); p.textContent = this._t('editor.select_entities');
+          const btn = document.createElement('button'); btn.type='button'; btn.className='add-entity-btn'; btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+(this._t('editor.add_entity')||'Add room')+'</span>';
+          btn.onclick = ()=>{ this._activeTab='rooms'; this._render(); };
+          box.append(p, btn); contentWrap.append(box);
         }
+        // Source selector
+        const sourceWrap = document.createElement('div'); sourceWrap.className='settings-card';
+        const sRow = document.createElement('div'); sRow.className='setting';
+        const sText = document.createElement('div'); sText.className='text';
+        const sTitle = document.createElement('div'); sTitle.className='title'; sTitle.textContent = this._t('holidays.source');
+        const sDesc = document.createElement('div'); sDesc.className='desc'; sDesc.textContent = this._t('holidays.desc');
+        sText.append(sTitle, sDesc);
+  const sSeg = document.createElement('div'); sSeg.className='seg';
+  const bCal = document.createElement('button'); bCal.type='button'; bCal.className='h-src-cal'; bCal.textContent = this._t('holidays.source.calendar');
+  const bMan = document.createElement('button'); bMan.type='button'; bMan.className='h-src-man'; bMan.textContent = this._t('holidays.source.manual');
+  const applySegUi = ()=>{ const src = this._config.holidays_source || 'calendar'; bCal.classList.toggle('active', src==='calendar'); bMan.classList.toggle('active', src==='manual'); };
+  bCal.onclick = ()=>{ this._config.holidays_source='calendar'; applySegUi(); this._emit(true); };
+  bMan.onclick = ()=>{ this._config.holidays_source='manual'; applySegUi(); this._emit(true); };
+  sSeg.append(bCal, bMan); sRow.append(sText, sSeg); sourceWrap.append(sRow); applySegUi();
+        // Calendar entity picker
+        const rowCal = document.createElement('div'); rowCal.className='setting'; rowCal.style.display = (this._config.holidays_source||'calendar')==='calendar' ? 'grid' : 'none';
+        const calTxt = document.createElement('div'); calTxt.className='text';
+        const calTitle = document.createElement('div'); calTitle.className='title'; calTitle.textContent = this._t('holidays.entity');
+  const calDesc = document.createElement('div'); calDesc.className='desc'; calDesc.textContent = this._t('holidays.entity_desc');
+        calTxt.append(calTitle, calDesc);
+  const picker = document.createElement('tt-entity-picker'); picker.className='holiday-entity'; picker.setAttribute('include-domains','["calendar"]'); picker.setAttribute('label', this._t('holidays.entity'));
+        try { picker.hass = this._hass; picker.value = this._config.holidays_entity || ''; } catch {}
+        picker.addEventListener('value-changed', (e)=>{ this._upd('holidays_entity', e.detail.value||''); });
+  rowCal.append(calTxt, picker); sourceWrap.append(rowCal);
+        // Manual dates list
+        const rowMan = document.createElement('div'); rowMan.className='setting'; rowMan.style.display = (this._config.holidays_source||'calendar')==='manual' ? 'grid' : 'none';
+        const manTxt = document.createElement('div'); manTxt.className='text';
+        const manTitle = document.createElement('div'); manTitle.className='title'; manTitle.textContent = this._t('holidays.dates');
+        const manDesc = document.createElement('div'); manDesc.className='desc'; manDesc.textContent=''; manTxt.append(manTitle, manDesc);
+        const manWrap = document.createElement('div'); manWrap.style.display='grid'; manWrap.style.gap='8px';
+        const addRow = document.createElement('div'); addRow.style.display='flex'; addRow.style.gap='8px'; addRow.style.alignItems='center';
+        const inp = document.createElement('input'); inp.type='date'; inp.className='tt-input';
+        const addBtn = document.createElement('button'); addBtn.type='button'; addBtn.className='add-entity-btn'; addBtn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+(this._t('holidays.add_date')||'Add date')+'</span>';
+        addBtn.onclick = ()=>{ const v=inp.value; if (!v) return; const arr = Array.isArray(this._config.holidays_dates)?[...this._config.holidays_dates]:[]; if (!arr.includes(v)) arr.push(v); this._config.holidays_dates = arr.sort(); inp.value=''; this._emit(true); };
+        addRow.append(inp, addBtn); manWrap.append(addRow);
+        const chips = document.createElement('div'); chips.className='linked-chips';
+        const arr = Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[];
+        chips.innerHTML='';
+        for (const d of arr){ const chip=document.createElement('span'); chip.className='pill-chip'; const txt=document.createElement('span'); txt.textContent=d; const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); }); chip.append(txt, rm); chips.append(chip); }
+    manWrap.append(chips); rowMan.append(manTxt, manWrap); sourceWrap.append(rowMan);
+    contentWrap.append(sourceWrap);
+        // Inline Holidays editor (preview + edit) inside editor
+  const edWrap = document.createElement('div'); edWrap.className = 'holiday-ed'; edWrap.style.position = 'relative';
+        // Room tabs
+        const tabs = document.createElement('div'); tabs.className='hol-tabs'; tabs.style.display='flex'; tabs.style.gap='8px'; tabs.style.flexWrap='wrap'; edWrap.append(tabs);
+        const note = document.createElement('div'); note.style.fontSize='.85rem'; note.style.color='var(--secondary-text-color)'; note.textContent = this._t('week.editor.preview_note'); edWrap.append(note);
+        // Scale
+        const scaleOuter = document.createElement('div'); scaleOuter.className='week-scale'; const scale = document.createElement('div'); scale.className='week-scale-inner'; scaleOuter.append(scale); edWrap.append(scaleOuter);
+        // Track
+        const track = document.createElement('div'); track.className='week-track'; edWrap.append(track);
+        // Toolbar
+  const tools = document.createElement('div'); tools.className='hol-toolbar';
+  const addBlkBtn = document.createElement('button'); addBlkBtn.className='add-entity-btn'; addBlkBtn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+ (this._t('ui.add_block') || 'Add block') +'</span>';
+  const saveBtn = document.createElement('button'); saveBtn.className='add-entity-btn'; saveBtn.innerHTML = '<ha-icon icon="mdi:content-save"></ha-icon><span>'+ (this._t('ui.save')||'Save') +'</span>';
+  tools.append(addBlkBtn, saveBtn); edWrap.append(tools);
+        // Inline mini block editor panel
+        const mini = document.createElement('div'); mini.className='mini-ed'; mini.style.display='none'; mini.innerHTML = `
+          <div class="row"><label style="min-width:64px;">${this._t('ui.from')}</label><input class="mi-from" type="time" step="60"></div>
+          <div class="row"><label style="min-width:64px;">${this._t('ui.to')}</label><input class="mi-to" type="time" step="60"></div>
+          <div class="row"><label style="min-width:64px;">${this._t('ui.temperature')}</label><input class="mi-temp" type="number" step="0.5"></div>
+          <div class="row" style="justify-content:flex-end; gap:8px;">
+            <button type="button" class="remove-btn mi-del"><ha-icon icon="mdi:close"></ha-icon><span>${this._t('ui.delete')}</span></button>
+            <button type="button" class="add-entity-btn mi-cancel"><ha-icon icon="mdi:close-circle-outline"></ha-icon><span>${this._t('ui.cancel')}</span></button>
+            <button type="button" class="add-entity-btn mi-save"><ha-icon icon="mdi:content-save"></ha-icon><span>${this._t('ui.save')}</span></button>
+          </div>
+        `;
+  edWrap.append(mini);
+  contentWrap.append(edWrap);
+
+        // Helpers
+        const toTime = (min)=>{ min=(Number(min)||0)%1440; const hh=String(Math.floor(min/60)).padStart(2,'0'); const mm=String(min%60).padStart(2,'0'); return `${hh}:${mm}`; };
+        const fromTime = (s)=>{ const m=(/^(\d{1,2}):(\d{2})$/).exec(String(s||'')); if(!m) return 0; let h=Number(m[1]); let mi=Number(m[2]); h=Math.min(23,Math.max(0,h)); mi=Math.min(59,Math.max(0,mi)); return h*60+mi; };
+        const toDisp = (c)=> this._toDisplayTemp(Number(c));
+        const fromDisp = (v)=> this._fromDisplayTemp(Number(v));
+
+        // Color helpers (mirror of card logic)
+        const colorFor = (eid, tempC)=>{
+          try {
+            const cr = this._config?.color_ranges || {};
+            const list = this._config?.color_global ? (cr['*'] || []) : (cr[eid] || cr['*'] || []);
+            for (const r of (list||[])){
+              const f = Number(r.from); const t = Number(r.to);
+              if (Number.isFinite(f) && Number.isFinite(t) && tempC >= f && tempC <= t) return r.color || null;
+            }
+          } catch {}
+          return null;
+        };
+        const contrastText = (hex)=>{
+          try { const h = String(hex||'').replace('#',''); if (h.length!==6) return '#000000'; const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16); const yiq=(r*299+g*587+b*114)/1000; return yiq>=140 ? '#000000' : '#ffffff'; } catch { return '#000000'; }
+        };
+
+        const ensureHolDraft = ()=>{
+          if (this._holDraft) return;
+          let schedules = {}; let settings={};
+          try { if (this._config.storage_enabled && this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){ const st=this._hass.states[this._config.storage_entity]; const attrs=st?.attributes||{}; schedules=attrs.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=attrs.settings||{}; } } catch {}
+          if (!Object.keys(schedules||{}).length){ try { const raw=localStorage.getItem('thermostat_timeline_store')||''; const parsed=JSON.parse(raw||'{}'); schedules=parsed.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=parsed.settings||{}; } catch {} }
+          const roomsMap={}; for (const eid of (this._config?.entities||[])){ const row=schedules[eid]||{}; const arr=(row.holiday && Array.isArray(row.holiday.blocks))?row.holiday.blocks:[]; roomsMap[eid]=JSON.parse(JSON.stringify(arr)); }
+          this._holDraft={ rooms: roomsMap }; this._holRoom = this._holRoom || (this._config?.entities||[])[0] || null;
+        };
+
+        const paintScale = ()=>{ scale.innerHTML=''; for(let i=0;i<=24;i+=2){ const t=document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)'; const lab=document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)'; lab.textContent=(i===24?'00:00':toTime(i*60)); t.append(lab); scale.append(t);} };
+
+        const paintTabs = ()=>{ tabs.innerHTML=''; const ents=this._config?.entities||[]; if (!this._holRoom || !ents.includes(this._holRoom)) this._holRoom=ents[0]||null; for (const eid of ents){ const b=document.createElement('button'); b.type='button'; b.className='wk-tab'+(eid===this._holRoom?' active':''); let lbl=this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); b.textContent=lbl; b.onclick=()=>{ this._holRoom=eid; paintTrack(); }; tabs.append(b);} };
+
+        const openMini = (blk)=>{ mini.style.display=''; const f=mini.querySelector('.mi-from'); const t=mini.querySelector('.mi-to'); const tmp=mini.querySelector('.mi-temp'); f.value=toTime(blk.startMin); t.value=toTime(blk.endMin%1440); tmp.value=String(toDisp(blk.temp)); this._holMini = { room: this._holRoom, blk: { id: blk.id, startMin: blk.startMin, endMin: blk.endMin, temp: blk.temp } };
+          // Focus first field so global editor render guard keeps panel open
+          try { f.focus(); f.select && f.select(); } catch {}
+          mini.querySelector('.mi-save').onclick=()=>{ const s=fromTime(f.value); let e=fromTime(t.value); if (e===0 && t.value==='00:00') e=1440; const arr=(this._holDraft.rooms||{})[this._holRoom]||[]; let b=arr.find(x=>x.id===blk.id); if (!b) { b = { id: blk.id, startMin:s, endMin:e, temp: fromDisp(tmp.value) }; arr.push(b); } else { b.startMin=Math.max(0,Math.min(1439,s)); b.endMin=Math.max(1,Math.min(1440,e)); b.temp=fromDisp(tmp.value); } arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin); (this._holDraft.rooms||{})[this._holRoom]=arr; this._holMini = null; mini.style.display='none'; paintTrack(); };
+          mini.querySelector('.mi-cancel').onclick=()=>{ this._holMini = null; mini.style.display='none'; };
+          mini.querySelector('.mi-del').onclick=()=>{ const arr=(this._holDraft.rooms||{})[this._holRoom]||[]; const i=arr.findIndex(x=>x.id===blk.id); if (i>=0) { arr.splice(i,1); (this._holDraft.rooms||{})[this._holRoom]=arr; paintTrack(); } this._holMini = null; mini.style.display='none'; };
+        };
+
+        const paintTrack = ()=>{ ensureHolDraft(); paintTabs(); paintScale(); track.innerHTML='';
+          // Ensure tooltip exists once
+          let tip = edWrap.querySelector('.ed-hol-tooltip');
+          if (!tip) { tip = document.createElement('div'); tip.className='wk-tooltip ed-hol-tooltip'; tip.style.display='none'; edWrap.append(tip); }
+          const arr=(this._holDraft.rooms||{})[this._holRoom]||[];
+          for (const b of arr){ const div=document.createElement('div'); div.className='block'; div.style.left=(b.startMin/1440*100)+'%'; div.style.width=((b.endMin-b.startMin)/1440*100)+'%';
+            // Apply heat color if configured
+            try { const clr = colorFor(this._holRoom, Number(b.temp)); if (clr) { div.style.background = clr; div.style.borderColor = clr; const txt=contrastText(clr); if (txt) div.style.color = txt; } } catch {}
+            const showTip = ()=>{
+              const txt = `${toTime(b.startMin)} - ${toTime(b.endMin)} • ${toDisp(b.temp)} ${this._isF()? '°F':'°C'}`;
+              tip.textContent = txt; tip.style.display = '';
+              const box = div.getBoundingClientRect();
+              const cont = edWrap.getBoundingClientRect();
+              const tbox = track.getBoundingClientRect();
+              // Base center: visual center of the hovered block element
+              let center = box.left + box.width/2 - cont.left;
+              const tipW = tip.offsetWidth || 0; const tipH = tip.offsetHeight || 0; const pad = 8;
+              const minC = (tbox.left - cont.left) + pad + tipW/2;
+              const maxC = (tbox.right - cont.left) - pad - tipW/2;
+              center = Math.max(minC, Math.min(maxC, center));
+              // Prefer above the block; if not enough space, flip below
+              const yAbove = box.top - cont.top - 8; // anchor a bit above block
+              const yBelow = box.bottom - cont.top + 8; // a bit below block
+              if (yAbove - tipH < pad) {
+                tip.style.top = Math.min(cont.height - pad, yBelow) + 'px';
+                tip.style.transform = 'translate(-50%,0)';
+              } else {
+                // Place right above the block top edge
+                tip.style.top = Math.max(pad, box.top - cont.top + 6) + 'px';
+                tip.style.transform = 'translate(-50%,-100%)';
+              }
+              tip.style.left = center + 'px';
+            };
+            const hideTip = ()=>{ const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120; if (tip._hideTimer) try{ clearTimeout(tip._hideTimer);}catch{}; tip._hideTimer = setTimeout(()=>{ try { tip.style.display='none'; tip._hideTimer = null; } catch{} }, delay); };
+            div.addEventListener('mouseenter', showTip); div.addEventListener('mouseleave', hideTip);
+            div.ondblclick=()=>openMini(b); track.append(div);
+          }
+          // Re-open mini editor if it was open before a re-render
+          if (this._holMini && this._holMini.room === this._holRoom) {
+            openMini(this._holMini.blk);
+          }
+        };
+
+  addBlkBtn.onclick = ()=>{ ensureHolDraft(); const now=new Date(); const m=now.getHours()*60+now.getMinutes(); const start=Math.max(0,Math.min(1380, Math.round(m))); const end=Math.min(1440,start+60); const blk={ id: Math.random().toString(36).slice(2,9), startMin:start, endMin:end, temp: fromDisp(this._config.default_temp||20) }; openMini(blk); };
+
+        saveBtn.onclick = async ()=>{ ensureHolDraft(); let schedules={}; let settings={}; try { if (this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){ const st=this._hass.states[this._config.storage_entity]; const a=st?.attributes||{}; schedules=a.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=a.settings||{}; } } catch {} if (!Object.keys(schedules||{}).length){ try { const raw=localStorage.getItem('thermostat_timeline_store')||''; const parsed=JSON.parse(raw||'{}'); schedules=parsed.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=parsed.settings||{}; } catch {} } for (const eid of (this._config?.entities||[])){ const row=schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; const arr=(this._holDraft.rooms||{})[eid]||[]; row.holiday={ blocks: JSON.parse(JSON.stringify(arr)) }; schedules[eid]=row; } try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] } })); } catch {} try { if (this._config.storage_enabled && this._config.storage_entity) { await this._hass.callService('thermostat_timeline','set_store',{ schedules, settings: { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] } }); } } catch {} try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {} };
+
+        // Initial render
+        ensureHolDraft(); paintTrack();
       }
     } catch {}
 
@@ -5825,27 +6823,32 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
+      const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
       const sSec = this.shadowRoot.querySelector('.tab-settings');
       const rSec = this.shadowRoot.querySelector('.tab-rooms');
       const cSec = this.shadowRoot.querySelector('.tab-colors');
+      const hSec = this.shadowRoot.querySelector('.tab-holidays');
       const aSec = this.shadowRoot.querySelector('.tab-away');
       const ySec = this.shadowRoot.querySelector('.tab-sync');
       const isRooms = this._activeTab === 'rooms';
       const isColors = this._activeTab === 'colors';
       const isSettings = this._activeTab === 'settings';
+      const isHolidays = this._activeTab === 'holidays';
       const isAway = this._activeTab === 'away';
       const isSync = this._activeTab === 'sync';
       if (sBtn && rBtn && cBtn && aBtn && sSec && rSec && cSec && aSec && yBtn && ySec) {
         sBtn.classList.toggle('active', isSettings);
         rBtn.classList.toggle('active', isRooms);
         cBtn.classList.toggle('active', isColors);
+        if (hBtn) hBtn.classList.toggle('active', isHolidays);
         aBtn.classList.toggle('active', isAway);
         yBtn.classList.toggle('active', isSync);
         sSec.style.display = isSettings ? '' : 'none';
         rSec.style.display = isRooms ? '' : 'none';
         cSec.style.display = isColors ? '' : 'none';
+        if (hSec) hSec.style.display = isHolidays ? '' : 'none';
         aSec.style.display = isAway ? '' : 'none';
         ySec.style.display = isSync ? '' : 'none';
       }
@@ -6484,6 +7487,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (de) de.textContent = t('profiles.enable.desc');
         }
       } catch {}
+      // Holidays enable section
+      try {
+        const hs = root.querySelector('.holidays-setting');
+        if (hs){
+          const ti = hs.querySelector('.title'); if (ti) ti.textContent = t('holidays.enable');
+          const de = hs.querySelector('.holidays-enable-desc') || hs.querySelector('.desc');
+          if (de) de.textContent = t('holidays.desc');
+        }
+      } catch {}
       // Time format section (always last)
       try {
         const tfTitle = root.querySelector('.timefmt-title'); if (tfTitle) tfTitle.textContent = t('editor.timefmt.title');
@@ -6506,10 +7518,26 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
     const yBtn = root.querySelector('.tab-sync-btn'); if (yBtn) yBtn.textContent = t('editor.tabs.sync');
+    const hBtn = root.querySelector('.tab-holidays-btn'); if (hBtn) hBtn.textContent = t('editor.tabs.holidays');
+    // Holidays tab inner labels
+    try {
+      const srcTitle = root.querySelector('.tab-holidays .settings-card .setting .title'); if (srcTitle) srcTitle.textContent = t('holidays.source');
+      const srcDesc = root.querySelector('.tab-holidays .settings-card .setting .desc'); if (srcDesc) srcDesc.textContent = t('holidays.desc');
+      const calTitle = root.querySelector('.tab-holidays .settings-card .setting:nth-child(2) .title'); if (calTitle) calTitle.textContent = t('holidays.entity');
+      const manTitle = root.querySelector('.tab-holidays .settings-card .setting:nth-child(3) .title'); if (manTitle) manTitle.textContent = t('holidays.dates');
+      const editBtns = root.querySelectorAll('.tab-holidays .inline .actions .btn'); editBtns.forEach(b=>{ try { b.textContent = t('holidays.edit'); } catch{} });
+      const segCal = root.querySelector('.tab-holidays .h-src-cal'); if (segCal) segCal.textContent = t('holidays.source.calendar');
+      const segMan = root.querySelector('.tab-holidays .h-src-man'); if (segMan) segMan.textContent = t('holidays.source.manual');
+      const addDate = root.querySelector('.tab-holidays .add-entity-btn span'); if (addDate) addDate.textContent = t('holidays.add_date');
+    } catch {}
         // (reload buttons removed)
-        // Colors tab action labels
-        const clrLocalBtn = root.querySelector('.clr-colors-local-btn span'); if (clrLocalBtn) clrLocalBtn.textContent = t('editor.colors.clear_local');
-        const clrSharedBtn = root.querySelector('.clr-colors-shared-btn span'); if (clrSharedBtn) clrSharedBtn.textContent = t('editor.colors.clear_shared');
+    // Colors mode labels
+    const cmTitle = root.querySelector('.colors-mode-title'); if (cmTitle) cmTitle.textContent = t('editor.colors.mode');
+    const cmDesc = root.querySelector('.colors-mode-desc'); if (cmDesc) cmDesc.textContent = t('editor.colors.mode.desc');
+    const cmRoom = root.querySelector('.colors-mode .mode-room'); if (cmRoom) cmRoom.textContent = t('editor.colors.mode_per_room');
+    const cmGlob = root.querySelector('.colors-mode .mode-global'); if (cmGlob) cmGlob.textContent = t('editor.colors.mode_global');
+  // Colors tab action label (single clear-all button)
+  const clrAllBtn = root.querySelector('.clr-colors-all-btn span'); if (clrAllBtn) clrAllBtn.textContent = t('editor.colors.clear_all');
         // Away tab labels
         const awayTitle = root.querySelector('.away-enable-title'); if (awayTitle) awayTitle.textContent = t('away.enable');
         const awayDesc = root.querySelector('.away-desc'); if (awayDesc) awayDesc.textContent = t('away.desc');
