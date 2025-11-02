@@ -158,7 +158,7 @@ const TT_I18N = {
   , 'editor.integration.disconnected': 'Integration unavailable'
   , 'profiles.enable': 'Enable profiles (override)'
   , 'profiles.enable.desc': 'Allow named daily schedules you can activate to override the main plan.'
-  , 'profiles.button': 'Profiles'
+  , 'profiles.button': 'Manual schedule'
   , 'profiles.editor.title': 'Profiles'
   , 'profiles.add': 'Add profile'
   , 'profiles.rename': 'Rename'
@@ -344,7 +344,7 @@ const TT_I18N = {
   , 'editor.integration.disconnected': 'Integration ikke tilgængelig'
   , 'profiles.enable': 'Aktivér skema overrule'
   , 'profiles.enable.desc': 'Tillad navngivne dagsskemaer som kan aktiveres og overrule hovedplanen.'
-  , 'profiles.button': 'Skemaer'
+  , 'profiles.button': 'Manuelt skema'
   , 'profiles.editor.title': 'Skemaer'
   , 'profiles.add': 'Tilføj skema'
   , 'profiles.rename': 'Omdøb'
@@ -510,7 +510,7 @@ const TT_I18N = {
   'editor.pausebtn.desc': 'Visa en global pausknapp i kortets huvud. När paus är aktiv blockeras alla set_temperature‑kommandon.',
   'editor.integration.connected': 'Integration klar',
   'editor.integration.disconnected': 'Integration inte tillgänglig'
-  , 'profiles.button': 'Profiler'
+  , 'profiles.button': 'Manuellt schema'
   , 'profiles.editor.title': 'Profiler'
   , 'profiles.add': 'Lägg till profil'
   , 'profiles.rename': 'Byt namn'
@@ -676,7 +676,7 @@ const TT_I18N = {
   'editor.tabs.sync': 'Synk‑motor',
   'editor.integration.connected': 'Integrasjon klar',
   'editor.integration.disconnected': 'Integrasjon utilgjengelig'
-  , 'profiles.button': 'Profiler'
+  , 'profiles.button': 'Manuelt skjema'
   , 'profiles.editor.title': 'Profiler'
   , 'profiles.add': 'Legg til profil'
   , 'profiles.rename': 'Gi nytt navn'
@@ -841,7 +841,7 @@ const TT_I18N = {
   'editor.pausebtn.desc': 'Zeigt eine globale Pause‑Schaltfläche in der Kopfzeile. Während der Pause werden alle set_temperature‑Befehle unterdrückt.',
   'editor.integration.connected': 'Integration bereit',
   'editor.integration.disconnected': 'Integration nicht verfügbar'
-  , 'profiles.button': 'Profile'
+  , 'profiles.button': 'Manueller Zeitplan'
   , 'profiles.editor.title': 'Profile'
   , 'profiles.add': 'Profil hinzufügen'
   , 'profiles.rename': 'Umbenennen'
@@ -1006,7 +1006,7 @@ const TT_I18N = {
   'editor.pausebtn.desc': 'Muestra un botón de pausa global en la cabecera. Mientras está pausado, se suprimen todos los comandos set_temperature.',
   'editor.integration.connected': 'Integración lista',
   'editor.integration.disconnected': 'Integración no disponible'
-  , 'profiles.button': 'Perfiles'
+  , 'profiles.button': 'Horario manual'
   , 'profiles.editor.title': 'Perfiles'
   , 'profiles.add': 'Agregar perfil'
   , 'profiles.rename': 'Renombrar'
@@ -1171,7 +1171,7 @@ const TT_I18N = {
   'editor.pausebtn.desc': 'Affiche un bouton de pause global dans l’en‑tête de la carte. En pause, toutes les commandes set_temperature sont bloquées.',
   'editor.integration.connected': 'Intégration prête',
   'editor.integration.disconnected': 'Intégration indisponible'
-  , 'profiles.button': 'Profils'
+  , 'profiles.button': 'Programme manuel'
   , 'profiles.editor.title': 'Profils'
   , 'profiles.add': 'Ajouter un profil'
   , 'profiles.rename': 'Renommer'
@@ -1336,7 +1336,7 @@ const TT_I18N = {
   'editor.pausebtn.desc': 'Näytä globaali taukopainike kortin yläreunassa. Tauon aikana kaikki set_temperature‑komennot estetään.',
   'editor.integration.connected': 'Integraatio valmis',
   'editor.integration.disconnected': 'Integraatio ei käytettävissä'
-  , 'profiles.button': 'Profiilit'
+  , 'profiles.button': 'Manuaalinen aikataulu'
   , 'profiles.editor.title': 'Profiilit'
   , 'profiles.add': 'Lisää profiili'
   , 'profiles.rename': 'Nimeä uudelleen'
@@ -1362,8 +1362,206 @@ const TT_I18N = {
   , 'holidays.edit': 'Muokkaa pyhäpäivä‑aikataulua'
   , 'holidays.button': 'Pyhäpäivät'
   },
+  cs: {
+    // Karta
+    'card.title_default': 'Časová osa termostatu',
+    // Modal / editor (inline)
+    'ui.edit_block': 'Upravit blok',
+    'ui.add_block': 'Přidat blok',
+    'ui.from': 'Od',
+    'ui.to': 'Do',
+    'ui.temperature': 'Teplota',
+    'ui.delete': 'Smazat',
+    'ui.cancel': 'Zrušit',
+    'ui.save': 'Uložit',
+    'ui.error_prefix': 'Chyba: ',
+    'ui.overlap_msg': 'Vybrali jste překrývající se časy — překrývá se mezi {start} – {end}.',
+    'ui.auto_fix': 'Opravit automaticky',
+    'ui.fix_start_to': 'Upravit začátek na {time}',
+    'ui.fix_end_to': 'Upravit konec na {time}',
+    // Inline meta
+    'ui.current_temp': 'Aktuální teplota:',
+
+    // GUI editor panel
+    'editor.title_label': 'Nadpis',
+    'editor.add_entity': 'Přidat místnost',
+    'editor.entity_placeholder': 'Vyberte entitu',
+    'editor.drag_reorder': 'Přetažením změňte pořadí',
+    'editor.remove': 'Odebrat',
+    'editor.default_c': 'Výchozí °C',
+    'editor.row_height_px': 'Výška řádku (px)',
+    'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automatické použití',
+    'editor.auto_apply.desc': 'Je-li zapnuto, karta se pokusí nastavit teplotu vybraných climate entit tak, aby odpovídala plánované hodnotě pro „právě teď“.',
+    'editor.apply_edit.title': 'Při úpravě',
+    'editor.apply_edit.desc': 'Když změníte bloky v časové ose a změna ovlivní aktuální čas, nová teplota se použije okamžitě.',
+    'editor.apply_default.title': 'Při změně Výchozí °C',
+    'editor.apply_default.desc': 'Když se změní „Výchozí °C“ a ovlivní aktuální období, nová teplota se použije okamžitě.',
+    'ui.copy_plan': 'Kopírovat plán',
+    'ui.paste_plan': 'Vložit plán',
+    'ui.copy_day': 'Kopírovat den',
+    'ui.paste_day': 'Vložit den',
+    'editor.merge_label': 'Sloučit s (přidat další termostat)',
+    'editor.display_name_optional': 'Název místnosti (volitelné)',
+    'editor.merged_with': 'Sloučeno s',
+    'editor.store_enable.title': 'Sdílené úložiště + řízení na pozadí',
+    'editor.store_enable.short': 'Ukládá rozvrhy do zvoleného senzoru a umožňuje řízení na pozadí.',
+    'editor.store_enable.desc': 'Ukládá rozvrhy do zvoleného senzoru a zapíná set_temperature na pozadí přes integraci Thermostat Timeline. Termostaty se aktualizují i když karta není otevřená. Také sdílí rozvrhy (tepelné bloky) a nastavení karty mezi uživateli/zařízeními. Když je vypnuto, příkazy se posílají jen když je karta aktivně viditelná na zařízení (tablet/PC/mobil) — musí zůstat otevřená na obrazovce.',
+    'editor.store_missing': 'Integrace „Thermostat Pro Timeline Sync“ není nainstalována. Sdílené úložiště není k dispozici.',
+    'editor.clear_store': 'Vymazat úložiště',
+    'editor.clear_store_confirm': 'Tímto smažete všechny uložené rozvrhy. Pokračovat?',
+    'editor.migrate_to_store': 'Převést data do úložiště',
+    'editor.migrate_confirm': 'Převést vaše rozvrhy uložené v prohlížeči do zvoleného senzoru? Tím se přepíší existující rozvrhy v úložišti.',
+    'editor.migrate_pull_confirm': 'Importovat rozvrhy z úložiště a přepsat lokální data v prohlížeči?',
+    'editor.select_storage_first': 'Nejprve vyberte senzor úložiště.',
+    'editor.no_local_data': 'Nebyla nalezena žádná lokální data v prohlížeči.',
+    'editor.clear_all': 'Smazat všechna data',
+    'editor.clear_all_confirm': 'Tímto smažete rozvrhy jak v úložišti, tak v lokálním prohlížeči. Pokračovat?',
+    'editor.clear_storage_only': 'Smazat jen data v úložišti',
+    'editor.clear_storage_only_confirm': 'Tímto smažete rozvrhy z vybraného senzoru úložiště. Pokračovat?',
+    'editor.clear_local_only': 'Smazat jen lokální data',
+    'editor.clear_local_only_confirm': 'Tímto smažete pouze rozvrhy uložené ve vašem prohlížeči. Pokračovat?',
+    'editor.temp_sensor': 'Teplotní senzor',
+
+    // Týdny
+    'week.enable': 'Povolit pracovní dny',
+    'week.mode': 'Režim dní v týdnu',
+    // removed same_all option from UI
+    'week.mode.weekday_weekend': 'Pracovní dny + Víkend',
+    'week.mode.weekday_sat_sun': 'Pracovní dny + Sobota + Neděle',
+    'week.mode.all_7': 'Všechny dny',
+    'week.button': 'Dny v týdnu',
+    'week.group.weekdays': 'Pracovní dny',
+    'week.group.weekend': 'Víkend',
+    'week.days_full.mon': 'Pondělí',
+    'week.days_full.tue': 'Úterý',
+    'week.days_full.wed': 'Středa',
+    'week.days_full.thu': 'Čtvrtek',
+    'week.days_full.fri': 'Pátek',
+    'week.days_full.sat': 'Sobota',
+    'week.days_full.sun': 'Neděle',
+    'week.days.mon': 'Po',
+    'week.days.tue': 'Út',
+    'week.days.wed': 'St',
+    'week.days.thu': 'Čt',
+    'week.days.fri': 'Pá',
+    'week.days.sat': 'So',
+    'week.days.sun': 'Ne',
+    'week.editor.title': 'Týdenní rozvrh',
+    'week.editor.preview_note': 'Pouze náhled. Změny se použijí po stisknutí Uložit.',
+    'week.copy_to_rooms': 'Kopírovat týden do místností',
+    'week.copy_to_rooms.title': 'Kopírovat týden do místností',
+    'week.copy_to_rooms.select': 'Vyberte místnosti',
+    'week.copy_to_rooms.apply': 'Vložit do místností',
+    'week.enable.desc': 'Povolit plán podle dní v týdnu. Když je vypnuto, používá se stejný plán každý den.',
+
+    // Formáty
+    'editor.timefmt.title': 'Formát času',
+    'editor.timefmt.desc': 'Zvolte 24hodinový nebo 12hodinový (AM/PM) formát pro časy na kartě.',
+    'editor.tempfmt.title': 'Jednotka teploty',
+    'editor.tempfmt.desc': 'Zvolte Celsia (°C) nebo Fahrenheit (°F) pro zobrazení na kartě a v editorech.',
+
+    // Záložky
+    'editor.tabs.settings': 'Nastavení',
+    'editor.tabs.rooms': 'Místnosti',
+    'editor.tabs.colors': 'Barvy',
+    'editor.tabs.away': 'Mimo domov',
+    'editor.tabs.sync': 'Sync engine',
+
+    // Away
+    'away.enable': 'Povolit režim mimo domov',
+    'away.desc': 'Když žádní z vybraných lidí nejsou doma, automaticky snižuje teploty na nastavenou hodnotu.',
+    'away.temp': 'Teplota mimo domov',
+    'away.persons': 'Osoby',
+    'away.add_person': 'Přidat osobu',
+
+    // Barvy tepla
+    'editor.heat_colors.title': 'Barvy tepelných bloků',
+    'editor.heat_colors.add': 'Přidat rozsah barev',
+    'editor.colors.col_from': 'Od °C',
+    'editor.colors.col_to': 'Do °C',
+    'editor.colors.col_color': 'Barva',
+    'editor.colors.empty': 'Zatím nebyly přidány žádné místnosti. Přidejte místnost pro definici barev.',
+    'editor.colors.go_add': 'Přidat místnost',
+    'editor.select_entities': 'Místnosti',
+    'editor.colors.refresh': 'Aktualizovat rozvrh',
+    'editor.colors.clear_local': 'Smazat lokální barevná data',
+    'editor.colors.clear_local_confirm': 'Tímto smažete barevné rozsahy uložené ve vašem prohlížeči pro tuto kartu. Pokračovat?',
+    'editor.colors.clear_shared': 'Smazat sdílené barevné úložiště',
+    'editor.colors.clear_shared_confirm': 'Tímto smažete barevné rozsahy ve vybraném senzoru úložiště. Pokračovat?',
+    'editor.colors.clear_all': 'Smazat všechna barevná data',
+    'editor.colors.clear_all_confirm': 'Tímto smažete všechny barevné rozsahy jak lokálně, tak ve vybraném senzoru úložiště. Pokračovat?',
+    'editor.colors.mode': 'Režim barev',
+    'editor.colors.mode.desc': 'Zvolte barvy pro každou místnost nebo jeden set pro všechny.',
+    'editor.colors.mode_per_room': 'Podle místnosti',
+    'editor.colors.mode_global': 'Všechny místnosti',
+    'editor.colors.global_title': 'Všechny místnosti',
+    'editor.reload_editor': 'Znovu načíst editor',
+    'editor.reload_dashboard': 'Znovu načíst dashboard',
+
+    // Onboarding
+    'onboard.title': 'Vítejte v Časové ose termostatu',
+    'onboard.next': 'Další',
+    'onboard.prev': 'Zpět',
+    'onboard.skip': 'Přeskočit',
+    'onboard.done': 'Hotovo',
+    'onboard.dont_show': 'Nezobrazovat znovu',
+    'onboard.step_main': 'Toto je hlavní časová osa. Zobrazuje požadované teploty během 24 hodin pro každou místnost.',
+    'onboard.step_add': 'Přidejte tepelný blok přes + Přidat blok nebo dvojitým kliknutím na časovou osu.',
+    'onboard.step_edit': 'Upravte nebo smažte blok dvojitým kliknutím. Použijte Dny v týdnu pro různé dny.',
+    'onboard.reset': 'Zobrazit průvodce znovu',
+    'onboard.reset_ok': 'Vítání se zobrazí příště.',
+
+    // Pause
+    'pause.menu_title': 'Pozastavit auto‑apply',
+    'pause.off_1h': 'Pozastavit na 1 hodinu',
+    'pause.off_5h': 'Pozastavit na 5 hodin',
+    'pause.off_custom': 'Vlastní délka…',
+    'pause.off_indef': 'Pozastavit do obnovení',
+    'pause.resume': 'Obnovit nyní',
+    'pause.close': 'Zavřít',
+    'pause.active_until': 'Pozastaveno do {time}',
+    'pause.active_indef': 'Pozastaveno',
+    'editor.pausebtn.title': 'Tlačítko pozastavení',
+    'editor.pausebtn.desc': 'Zobrazí globální tlačítko pozastavení v záhlaví karty. Během pauzy jsou všechny příkazy set_temperature potlačeny.',
+    'editor.integration.connected': 'Integrace připravena',
+    'editor.integration.disconnected': 'Integrace není k dispozici',
+
+    // Profily
+    'profiles.enable': 'Povolit profily (přepis)',
+    'profiles.enable.desc': 'Povolit pojmenované denní rozvrhy, které můžete aktivovat pro přepsání hlavního plánu.',
+  'profiles.button': 'Manuální plán',
+    'profiles.editor.title': 'Profily',
+    'profiles.add': 'Přidat profil',
+    'profiles.rename': 'Přejmenovat',
+    'profiles.delete': 'Smazat',
+    'profiles.activate': 'Aktivovat',
+    'profiles.deactivate': 'Deaktivovat',
+    'profiles.active': 'Aktivní',
+    'profiles.none': 'Žádný',
+    'profiles.name_placeholder': 'Název profilu',
+    'profiles.edit': 'Upravit',
+    'profiles.preview_note': 'Pouze náhled. Rozvrhy se stanou aktivními po aktivaci profilu.',
+    'profiles.active_label': 'Manuální profil aktivní:',
+
+    // Svátky
+    'editor.tabs.holidays': 'Svátky',
+    'holidays.enable': 'Povolit svátky',
+    'holidays.desc': 'Použít speciální denní rozvrh o svátcích.',
+    'holidays.source': 'Zdroj svátků',
+    'holidays.source.calendar': 'Kalendář',
+    'holidays.source.manual': 'Manuální data',
+    'holidays.entity': 'Entita svátků',
+    'holidays.entity_desc': 'Vyberte kalendář, který hlásí pouze on/off. Má být on ve svátky a off v ostatní dny.',
+    'holidays.dates': 'Data svátků',
+    'holidays.add_date': 'Přidat datum',
+    'holidays.editor.title': 'Rozvrh o svátcích',
+    'holidays.edit': 'Upravit rozvrh o svátcích',
+    'holidays.button': 'Svátky',
+  },
 };
-const TT_LANG_ALIAS = { no: 'nb' };
+const TT_LANG_ALIAS = { no: 'nb', cz: 'cs' };
 function ttGetLangFromHass(hass) {
   const raw = hass?.locale?.language || hass?.language || navigator.language || 'en';
   return String(raw).toLowerCase();
@@ -1392,7 +1590,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.11.02-hide-holidays-button";
+const TT_CARD_VERSION = "2025.11.02-profiles-header-visible";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -1506,28 +1704,8 @@ class ThermostatTimelineCard extends HTMLElement {
       }
     }
 
-    // Even when storage is OFF, watch profiles_enabled in sensor settings (no global select)
-    if (!this._config?.storage_enabled && this._config?.storage_entity) {
-      const st = this._hass.states?.[this._config.storage_entity];
-      const ver = Number(st?.state || 0);
-      const handleUpdate2 = () => {
-        this._lastSettingsVersion = ver;
-        try {
-          const s = st?.attributes?.settings || {};
-          if (typeof s.profiles_enabled === 'boolean') this._config.profiles_enabled = !!s.profiles_enabled;
-        } catch {}
-        if (!this._inlineEditing && !this._editing) this._render();
-        this._scheduleNextApply();
-      };
-      if (!Number.isNaN(ver) && ver !== this._lastSettingsVersion) {
-        if (this._saving) {
-          clearTimeout(this._verRetryT2);
-          this._verRetryT2 = setTimeout(() => { if (this._hass) { handleUpdate2(); } }, 800);
-        } else {
-          handleUpdate2();
-        }
-      }
-    }
+    // When Sync is OFF, do not override local editor toggles (profiles_enabled) with sensor values.
+    // Visibility of the Manual schedule button is driven by local config and localStorage only.
 
     // (Removed select/state subscription; card updates via version change as before)
 
@@ -1998,6 +2176,15 @@ class ThermostatTimelineCard extends HTMLElement {
       // Heuristic: if formatter exists, still default to C; most regions outside US use C, but HA already covers primary preference
     } catch {}
     return false;
+  }
+  _getLocalProfilesEnabled(){
+    try {
+      const raw = localStorage.getItem('thermostat_timeline_store') || '';
+      if (!raw) return false;
+      const parsed = JSON.parse(raw);
+      const s = parsed?.settings || {};
+      return !!s.profiles_enabled;
+    } catch { return false; }
   }
   _isF(){ return (this._config?.temp_unit||'C')==='F'; }
   _unitSymbol(){ return this._isF()? '°F' : '°C'; }
@@ -2531,6 +2718,8 @@ class ThermostatTimelineCard extends HTMLElement {
   .prof-actions .btn{ height:28px; padding:2px 8px; border-radius:8px; font-size:.78rem; }
   /* Make profiles and holidays preview identical to weekday preview */
   .modal-profiles .week-scale, .modal-holiday .week-scale{ margin: 0 16px; }
+  /* Hide the "Add profile" button – profiles are created on Save */
+  .modal-profiles .prof-add{ display:none !important; }
   .modal-profiles .week-track, .modal-holiday .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
   .modal-profiles .week-track .block .pill{ display:none; }
   .modal-profiles .week-scale-inner .mer, .modal-holiday .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
@@ -2938,18 +3127,17 @@ class ThermostatTimelineCard extends HTMLElement {
             if (this._countdownTimer) { try { clearInterval(this._countdownTimer); } catch {} this._countdownTimer = null; }
           }
         }
-        // Global Profiles button next to pause (always visible; enables profiles if needed)
-        if ((this._config?.entities || []).length) {
+  // Global Profiles button next to pause (visible only when manual schedule/profiles are enabled)
+  const wantProfilesBtn = !!(this._config?.profiles_enabled || this._getLocalProfilesEnabled());
+  if ((this._config?.entities || []).length && wantProfilesBtn) {
           const pbtn = document.createElement('button');
           // Make the Profiles ("Skemaer") button blue like the other primary actions
           pbtn.className = 'profiles-btn primary';
           pbtn.setAttribute('type','button');
           pbtn.textContent = this._t('profiles.button');
-          try { pbtn.dataset.role = 'profbtn'; if (this._disablePopups) pbtn.style.display = 'none'; } catch {}
+          try { pbtn.dataset.role = 'profbtn-header'; } catch {}
           pbtn.addEventListener('click', ()=>{
             const first = (this._config?.entities||[])[0] || null;
-            // If profiles feature is off, enable it in-memory and persist so editor appears
-            try { if (!this._config.profiles_enabled) { this._config.profiles_enabled = true; this._debouncedSaveStore(); } } catch {}
             if (first) this._openProfilesEditor(first);
             else this._openProfilesEditor(this._config?.entities?.[0] || null);
           });
@@ -3128,6 +3316,17 @@ class ThermostatTimelineCard extends HTMLElement {
         weekBtn.addEventListener('click', () => this._openWeeklyEditor(eid));
         toolsWrap.append(weekBtn);
       }
+      // Row-level Manual schedule button as a fallback (mirrors header button visibility)
+      try {
+        const profOn = !!(this._config?.profiles_enabled || this._getLocalProfilesEnabled());
+        if (profOn) {
+          const prBtn = document.createElement('button');
+          prBtn.className = 'btn ghost';
+          prBtn.textContent = this._t('profiles.button');
+          prBtn.addEventListener('click', () => this._openProfilesEditor(eid));
+          toolsWrap.append(prBtn);
+        }
+      } catch {}
       // (Profiles button moved to header)
       toolbar.append(toolsWrap, toggleBtn);
       // Ensure correct initial width for open state without rerendering
@@ -5910,7 +6109,22 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     });
     // Profiles enable
     qs('.profiles-enable')?.addEventListener('change', e => {
-      const on = !!e.target.checked; this._upd('profiles_enabled', on);
+      const on = !!e.target.checked;
+      this._upd('profiles_enabled', on);
+      // Immediately push the new state to shared storage so all dashboards stay in sync
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+      // If Sync is OFF, persist the flag to local storage only
+      try {
+        if (!this._config?.storage_enabled) {
+          const raw = localStorage.getItem('thermostat_timeline_store') || '';
+          let parsed = {};
+          try { parsed = JSON.parse(raw || '{}'); } catch { parsed = {}; }
+          const schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : {};
+          const prevSettings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : {};
+          const settings = { ...prevSettings, profiles_enabled: !!on };
+          try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
+        }
+      } catch {}
     });
       // Holidays enable
       qs('.holidays-enable')?.addEventListener('change', e => {
