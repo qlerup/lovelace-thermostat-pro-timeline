@@ -73,6 +73,8 @@ A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a 
 | 🇪🇸 Spanish   | ✅         |
 | 🇫🇷 French    | ✅         |
 | 🇫🇮 Finnish   | ✅         |
+| 🇨🇿 Czech     | ✅         |
+
 
 💡 Defaults to **English** if not translated.
 Want to help? Open an issue titled `Locale request: <language>`.
