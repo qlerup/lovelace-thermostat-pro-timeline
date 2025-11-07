@@ -1730,7 +1730,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.11.07-sync-delay-i18n";
+const TT_CARD_VERSION = "2025.11.07b-picker-macos";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -6048,10 +6048,27 @@ class TTEntityPicker extends HTMLElement {
     if (select) {
       try { select.value = this._value || ''; } catch {}
       try { select.disabled = !!this._disabled; } catch {}
+      // Signal picker open early (helps pause editor re-render on macOS in Safari/Chrome)
+      try {
+        select.addEventListener('pointerdown', () => {
+          this.dispatchEvent(new CustomEvent('picker-opened', { bubbles: true, composed: true }));
+        }, { passive: true });
+        select.addEventListener('focus', () => {
+          this.dispatchEvent(new CustomEvent('picker-opened', { bubbles: true, composed: true }));
+        }, { passive: true });
+      } catch {}
       select.onchange = (e)=>{
         this._value = e.target.value || '';
         this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: this._value }, bubbles: true, composed: true }));
+        // Signal picker closed after a selection is made
+        try { this.dispatchEvent(new CustomEvent('picker-closed', { bubbles: true, composed: true })); } catch {}
       };
+      // Also signal closed on blur (if user clicks away without changing)
+      try {
+        select.addEventListener('blur', ()=>{
+          this.dispatchEvent(new CustomEvent('picker-closed', { bubbles: true, composed: true }));
+        });
+      } catch {}
     }
   }
 }
@@ -6942,6 +6959,20 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   connectedCallback(){
     this._render();
     try {
+      // Extra-robust suspend on pointer start inside any entity picker (captures from Shadow DOM)
+      const capHandler = (e)=>{
+        try {
+          const path = typeof e.composedPath === 'function' ? e.composedPath() : [];
+          const hit = path && path.some(n => {
+            const t = (n && n.tagName ? n.tagName.toLowerCase() : '');
+            return t === 'ha-entity-picker' || t === 'tt-entity-picker';
+          });
+          if (hit) this._suspendRender = true;
+        } catch {}
+      };
+      this.shadowRoot.addEventListener('pointerdown', capHandler, { capture: true });
+      this.shadowRoot.addEventListener('touchstart', capHandler, { capture: true, passive: true });
+
       // Suspend render while interacting with any entity picker to avoid closing dropdowns
       this.shadowRoot.addEventListener('focusin', (e)=>{
         try { if (e.target?.closest && (e.target.closest('ha-entity-picker') || e.target.closest('tt-entity-picker'))) this._suspendRender = true; } catch {}
@@ -6959,6 +6990,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         // Give a tiny delay so click into next field doesn't flicker
         setTimeout(()=>{ this._suspendRender = false; }, 150);
       });
+      // React to explicit picker open/close signals (from tt-entity-picker)
+      this.shadowRoot.addEventListener('picker-opened', ()=>{ try { this._suspendRender = true; } catch {} });
+      this.shadowRoot.addEventListener('picker-closed', ()=>{ try { this._suspendRender = false; } catch {} });
       this.shadowRoot.addEventListener('value-changed', (e)=>{
         try {
           const tag = e.target?.tagName?.toLowerCase();
@@ -8558,7 +8592,7 @@ customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardE
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change", version: TT_CARD_VERSION });
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Pro Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change", version: TT_CARD_VERSION });
 
 function loadCard() {}
 loadCard();
