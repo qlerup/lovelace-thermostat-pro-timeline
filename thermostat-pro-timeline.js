@@ -1730,7 +1730,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.11.07b-picker-macos";
+const TT_CARD_VERSION = "2025.11.08-entity-picker-ro-fix";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -8237,7 +8237,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           this._config.temp_sensors = sensors;
         } catch {}
       }
-      this._config.entities[idx] = newPrimary;
+      // Avoid mutating a potentially frozen array (some browsers/HA paths freeze config)
+      try {
+        const ents = [...(this._config.entities || [])];
+        ents[idx] = newPrimary;
+        this._config.entities = ents;
+      } catch {
+        // Fallback (should not happen, but keep previous behavior if cloning fails)
+        try { this._config.entities[idx] = newPrimary; } catch {}
+      }
       // Move open-state key from old -> new entity id
       try {
         const oldKey = oldPrimary || `#idx:${idx}`;
