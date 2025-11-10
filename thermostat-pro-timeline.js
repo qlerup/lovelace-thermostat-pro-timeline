@@ -2404,6 +2404,11 @@ class ThermostatTimelineCard extends HTMLElement {
           // Unwrap if an older/incorrect payload put the entire object under 'schedules'
           let sch = JSON.parse(JSON.stringify(attrs.schedules));
           if (sch && sch.schedules && typeof sch.schedules === 'object') sch = sch.schedules;
+          // Convert incoming schedules to °C if backend stored them in °F
+          try {
+            const storUnit = String(attrs?.settings?.temp_unit||'C').toUpperCase();
+            if (storUnit === 'F') sch = this._convertSchedulesTemps(sch, 'C');
+          } catch {}
           this._schedules = sch;
           // If there is a pending delayed sync (due stored locally), prefer draft schedules
           try {
@@ -2423,7 +2428,24 @@ class ThermostatTimelineCard extends HTMLElement {
           // Optional shared settings
           if (attrs.settings && typeof attrs.settings === 'object') {
             try {
-              const s = attrs.settings;
+              const s0 = attrs.settings;
+              // Convert numeric settings from °F to °C for internal use
+              let s = s0;
+              try {
+                const storUnit = String(s0?.temp_unit||'C').toUpperCase();
+                if (storUnit === 'F') {
+                  const conv = (n)=>{ const v=Number(n); return Number.isFinite(v)? this._fToC(v): n; };
+                  const so = { ...s0 };
+                  if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
+                  if (so.min_temp !== undefined) so.min_temp = conv(so.min_temp);
+                  if (so.max_temp !== undefined) so.max_temp = conv(so.max_temp);
+                  if (so.away && typeof so.away==='object') {
+                    so.away = { ...so.away };
+                    if (so.away.target_c !== undefined) so.away.target_c = conv(so.away.target_c);
+                  }
+                  s = so;
+                }
+              } catch {}
               // Do not override user-selected format/unit from shared storage
               // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
               // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
@@ -2484,7 +2506,7 @@ class ThermostatTimelineCard extends HTMLElement {
             } catch {}
           }
           this._lastVersion = Number(st.state || 0) || 0;
-          try { localStorage.setItem("thermostat_timeline_store", JSON.stringify({ schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, default_temp: Number(this._config.default_temp||20), min_temp: this._config.min_temp, max_temp: this._config.max_temp, per_room_defaults: !!this._config.per_room_defaults, away: this._config.away, away_bypass: !!this._awayBypass, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, global_profile: this._globalProfile || null } })); } catch {}
+          try { const payload = this._makeStoragePayload(true); localStorage.setItem("thermostat_timeline_store", JSON.stringify(payload)); } catch {}
           return;
         }
       } catch (e) { /* fallback */ }
@@ -2496,8 +2518,26 @@ class ThermostatTimelineCard extends HTMLElement {
       if (parsed && typeof parsed === 'object' && parsed.schedules) {
         // Unwrap legacy nested structure if present
         const sch = parsed.schedules && parsed.schedules.schedules ? parsed.schedules.schedules : parsed.schedules;
-        this._schedules = sch || {};
-  const s = parsed.settings || {}; 
+        // If local copy was stored as °F, convert to °C for internal use
+        try {
+          const unit = String(parsed?.settings?.temp_unit||'C').toUpperCase();
+          this._schedules = (unit==='F') ? this._convertSchedulesTemps(sch||{}, 'C') : (sch||{});
+        } catch { this._schedules = sch || {}; }
+  const s0 = parsed.settings || {}; 
+  // Convert numeric settings from °F to °C for internal use
+  let s = s0; 
+  try { 
+    const unit = String(s0?.temp_unit||'C').toUpperCase();
+    if (unit==='F') {
+      const conv = (n)=>{ const v=Number(n); return Number.isFinite(v)? this._fToC(v): n; };
+      const so = { ...s0 };
+      if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
+      if (so.min_temp !== undefined) so.min_temp = conv(so.min_temp);
+      if (so.max_temp !== undefined) so.max_temp = conv(so.max_temp);
+      if (so.away && typeof so.away==='object') { so.away = { ...so.away }; if (so.away.target_c !== undefined) so.away.target_c = conv(so.away.target_c); }
+      s = so;
+    }
+  } catch {}
   // Do not override user-selected format/unit from local browser storage
   // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
   // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
@@ -2554,41 +2594,8 @@ class ThermostatTimelineCard extends HTMLElement {
 
   async _saveStore() {
     try {
-      localStorage.setItem("thermostat_timeline_store", JSON.stringify({
-        schedules: this._schedules,
-        settings: {
-          time_12h: this._config.time_12h,
-          temp_unit: this._config.temp_unit,
-          time_source: this._config.time_source,
-          color_ranges: this._config.color_ranges,
-          color_global: !!this._config.color_global,
-          default_temp: Number(this._config.default_temp||20),
-          min_temp: this._config.min_temp,
-          max_temp: this._config.max_temp,
-          per_room_defaults: !!this._config.per_room_defaults,
-          away: this._config.away,
-          away_bypass: !!this._awayBypass,
-          merges: this._config.merges,
-          labels: this._config.labels,
-          temp_sensors: this._config.temp_sensors,
-          show_pause_button: !!(this._config.show_pause_button ?? true),
-          auto_apply_enabled: !!this._config.auto_apply,
-          apply_on_edit: !!this._config.apply_on_edit,
-          backup_auto_enabled: !!this._config.backup_auto_enabled,
-          backup_interval_days: Number(this._config.backup_interval_days||1),
-          profiles_enabled: !!this._config.profiles_enabled,
-          global_profile: this._globalProfile || null,
-          pause_indef: !!this._pauseIndef,
-          pause_until_ms: Number(this._pauseUntilMs||0),
-          holidays_enabled: !!this._config.holidays_enabled,
-          holidays_source: this._config.holidays_source || 'calendar',
-          holidays_entity: this._config.holidays_entity || '',
-          holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [],
-          sync_mode: (this._config.storage_sync_mode||'instant'),
-          sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))),
-          sync_delay_sec: Number(this._config.storage_sync_sec||0)
-        }
-      }));
+      const payload = this._makeStoragePayload(true);
+      localStorage.setItem("thermostat_timeline_store", JSON.stringify(payload));
     } catch {}
     // Always persist local browser copy immediately
     const writeRemote = async () => {
@@ -2596,7 +2603,8 @@ class ThermostatTimelineCard extends HTMLElement {
       this._saving = true;
       try {
         if (this._config?.storage_enabled) {
-          await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, default_temp: Number(this._config.default_temp||20), min_temp: this._config.min_temp, max_temp: this._config.max_temp, per_room_defaults: !!this._config.per_room_defaults, away: this._config.away, away_bypass: !!this._awayBypass, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, apply_on_edit: !!this._config.apply_on_edit, backup_auto_enabled: !!this._config.backup_auto_enabled, backup_interval_days: Number(this._config.backup_interval_days||1), profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) } });
+          const payload = this._makeStoragePayload(true);
+          await this._hass.callService("thermostat_timeline", "set_store", payload);
         } else {
           // disable background apply without touching schedules
           await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false, apply_on_edit: !!this._config.apply_on_edit, profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, show_pause_button: !!(this._config.show_pause_button ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] } });
@@ -2746,6 +2754,81 @@ class ThermostatTimelineCard extends HTMLElement {
   _unitSymbol(){ return this._isF()? '°F' : '°C'; }
   _toDisplayTemp(c){ return this._isF()? Math.round((c*9/5+32)*10)/10 : c; }
   _fromDisplayTemp(v){ return this._isF()? ( (v-32)*5/9 ) : v; }
+  // --- Temperature conversion helpers (internal storage is °C) ---
+  _cToF(c){ try { return (Number(c)*9/5)+32; } catch { return c; } }
+  _fToC(f){ try { return (Number(f)-32)*5/9; } catch { return f; } }
+  _serviceTempFromC(c){ return this._isF() ? this._cToF(c) : c; }
+  _haIsF(){ try { const u = String(this._hass?.config?.unit_system?.temperature||''); return u.toUpperCase().includes('F'); } catch { return false; } }
+  // Convert a schedules object between units (returns deep clone)
+  _convertSchedulesTemps(schedules, toUnit){
+    try {
+      const clone = JSON.parse(JSON.stringify(schedules||{}));
+      const toF = String(toUnit).toUpperCase()==='F';
+      const conv = (x)=>{ const n = Number(x); if (!Number.isFinite(n)) return x; return toF ? this._cToF(n) : this._fToC(n); };
+      const convertBlocks = (arr)=>{ if (!Array.isArray(arr)) return; for (const b of arr){ if (b && typeof b==='object' && 'temp' in b){ b.temp = conv(b.temp); } } };
+      for (const eid of Object.keys(clone||{})){
+        const row = clone[eid]; if (!row || typeof row!=='object') continue;
+        if ('defaultTemp' in row) row.defaultTemp = conv(row.defaultTemp);
+        convertBlocks(row.blocks);
+        // Weekly
+        try { const days = row?.weekly?.days||{}; for (const k of Object.keys(days)) convertBlocks(days[k]); } catch {}
+        // Profiles
+        try { const prof = row?.profiles||{}; for (const p of Object.keys(prof)){ convertBlocks(prof[p]?.blocks); } } catch {}
+        // Holiday
+        try { convertBlocks(row?.holiday?.blocks); } catch {}
+        // Presence
+        try { const pres = row?.presence||{}; for (const key of Object.keys(pres)){ convertBlocks(pres[key]?.blocks); } } catch {}
+      }
+      return clone;
+    } catch { return schedules; }
+  }
+  // Build payload for shared storage respecting selected unit for numbers
+  _makeStoragePayload(includeSchedules=true){
+    try {
+      const wantF = this._isF();
+      const schedules = includeSchedules ? (wantF ? this._convertSchedulesTemps(this._schedules, 'F') : JSON.parse(JSON.stringify(this._schedules||{}))) : undefined;
+      // Convert numeric settings if storing as °F
+      const toStore = (n)=>{ const v = Number(n); if (!Number.isFinite(v)) return n; return wantF ? this._cToF(v) : v; };
+      const awayCfg = this._config?.away || {};
+      const awayOut = { ...awayCfg };
+      if (typeof awayOut.target_c !== 'undefined') awayOut.target_c = toStore(awayOut.target_c);
+      const settings = {
+        time_12h: this._config.time_12h,
+        temp_unit: this._config.temp_unit,
+        time_source: this._config.time_source,
+        color_ranges: this._config.color_ranges,
+        color_global: !!this._config.color_global,
+        default_temp: toStore(Number(this._config.default_temp||20)),
+        min_temp: toStore(this._config.min_temp),
+        max_temp: toStore(this._config.max_temp),
+        per_room_defaults: !!this._config.per_room_defaults,
+        away: awayOut,
+        away_bypass: !!this._awayBypass,
+        merges: this._config.merges,
+        labels: this._config.labels,
+        temp_sensors: this._config.temp_sensors,
+        show_pause_button: !!(this._config.show_pause_button ?? true),
+        auto_apply_enabled: !!this._config.auto_apply,
+        apply_on_edit: !!this._config.apply_on_edit,
+        backup_auto_enabled: !!this._config.backup_auto_enabled,
+        backup_interval_days: Number(this._config.backup_interval_days||1),
+        profiles_enabled: !!this._config.profiles_enabled,
+        global_profile: this._globalProfile || null,
+        pause_indef: !!this._pauseIndef,
+        pause_until_ms: Number(this._pauseUntilMs||0),
+        holidays_enabled: !!this._config.holidays_enabled,
+        holidays_source: this._config.holidays_source || 'calendar',
+        holidays_entity: this._config.holidays_entity || '',
+        holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [],
+        sync_mode: (this._config.storage_sync_mode||'instant'),
+        sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))),
+        sync_delay_sec: Number(this._config.storage_sync_sec||0)
+      };
+      const out = { settings };
+      if (includeSchedules) out.schedules = schedules;
+      return out;
+    } catch { return { schedules: this._schedules, settings: { temp_unit: this._config.temp_unit } }; }
+  }
   _maxDisplay(){ const c = Number(this._config?.max_temp ?? 25); return this._toDisplayTemp(c); }
   _minDisplay(){ const c = Number(this._config?.min_temp ?? 5); return this._toDisplayTemp(c); }
   _rowDefaultTemp(row){
@@ -2975,9 +3058,16 @@ class ThermostatTimelineCard extends HTMLElement {
       } catch { /* fall back to default blocks */ }
     }
   const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); let want = Number(hit ? hit.temp : this._rowDefaultTemp(row));
-    // Apply away override if active (skip when an advanced presence schedule is in use)
+    // Apply away override if active
+    // Rules:
+    // - If advanced presence is enabled, the simple Away clamp must NEVER apply
+    //   (advanced replaces basic away entirely), regardless of whether a presence
+    //   schedule is currently used.
+    // - If advanced presence is OFF, apply simple Away clamp only when we did not
+    //   use a presence schedule for this room (usedPresence=false).
     try {
-      if (!usedPresence && this._isAwayActive() && !this._awayBypass) {
+      const advOn = !!(this._config?.away?.advanced_enabled);
+      if (!advOn && !usedPresence && this._isAwayActive() && !this._awayBypass) {
         const targetC = Number(this._config?.away?.target_c ?? 17);
         if (Number.isFinite(targetC)) want = Math.min(want, targetC);
       }
@@ -3173,8 +3263,15 @@ class ThermostatTimelineCard extends HTMLElement {
       if (!force && last.min === nowMin && Math.abs((last.temp??NaN) - desired) < 0.05) continue;
       const st = this._hass.states?.[eid];
       const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
-      if (Number.isFinite(cur) && Math.abs(cur - desired) < 0.05){ this._lastApplied[eid] = { min: nowMin, temp: desired }; continue; }
-      try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: desired }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: desired }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: desired }; }
+      const willSendF = this._isF(); const haIsF = this._haIsF();
+      let curU = cur;
+      if (Number.isFinite(curU)) {
+        if (willSendF && !haIsF) curU = this._cToF(curU);
+        else if (!willSendF && haIsF) curU = this._fToC(curU);
+      }
+      const sendTemp = this._serviceTempFromC(desired);
+      if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.05){ this._lastApplied[eid] = { min: nowMin, temp: desired }; continue; }
+      try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: sendTemp }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: desired }; }
       catch (e) { console.warn('thermostat-timeline: set_temperature failed for', eid, e); }
     } }
 
@@ -3190,7 +3287,8 @@ class ThermostatTimelineCard extends HTMLElement {
           if (b == null || Math.abs(a - b) > 0.049){
             if (delayMode) {
               // Immediate one-off apply even while sync is in delay mode
-              try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (delay-mode) failed for', eid, e); }
+              const sendTemp = this._serviceTempFromC(a);
+              try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: sendTemp }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (delay-mode) failed for', eid, e); }
             }
           }
         }
@@ -3198,11 +3296,11 @@ class ThermostatTimelineCard extends HTMLElement {
       } catch {}
       return;
     }
-    for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: a }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: a }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
+  for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ const sendTemp = this._serviceTempFromC(a); try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: sendTemp }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
   }
 
   // Ping backend to apply now without waiting for delayed sync
-  async _nudgeBackgroundApplyNow(){ try { if (!this._hass || !this._config?.storage_enabled || !this._config?.storage_entity) return; const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, default_temp: Number(this._config.default_temp||20), min_temp: this._config.min_temp, max_temp: this._config.max_temp, per_room_defaults: !!this._config.per_room_defaults, away: this._config.away, away_bypass: !!this._awayBypass, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), profiles_enabled: !!this._config.profiles_enabled, auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) }; await this._hass.callService('thermostat_timeline','set_store', { settings, force: true }); } catch {} }
+  async _nudgeBackgroundApplyNow(){ try { if (!this._hass || !this._config?.storage_enabled || !this._config?.storage_entity) return; const _awayCfg = this._config?.away || {}; const _awayOut = { ..._awayCfg }; if (_awayOut.advanced_enabled) _awayOut.enabled = false; const payload = this._makeStoragePayload(false); payload.settings = { ...payload.settings, away: _awayOut }; await this._hass.callService('thermostat_timeline','set_store', { settings: payload.settings, force: true }); } catch {} }
 
   // Apply a setpoint immediately for the given entity (and its merged entities)
   // using the provided temperature (in °C). Honours away override and min/max.
@@ -3214,8 +3312,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (this._config?.storage_enabled && String(this._config.storage_sync_mode||'instant')!=='delay') return;
       if (this._isPaused()) return;
       let desired = Number(tempC);
-      // Away override
-      try { if (this._isAwayActive()) { const a = Number(this._config?.away?.target_c ?? 17); if (Number.isFinite(a)) desired = Math.min(desired, a); } } catch {}
+  // Away override (disabled when advanced presence is enabled)
+  try { const advOn = !!(this._config?.away?.advanced_enabled); if (!advOn && this._isAwayActive()) { const a = Number(this._config?.away?.target_c ?? 17); if (Number.isFinite(a)) desired = Math.min(desired, a); } } catch {}
       // Clamp to min/max
       const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5;
       if (Number.isFinite(mx)) desired = Math.min(desired, mx);
@@ -3229,8 +3327,15 @@ class ThermostatTimelineCard extends HTMLElement {
           // Avoid redundant command if thermostat already at desired
           const st = this._hass.states[__eid];
           const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
-          if (Number.isFinite(cur) && Math.abs(cur - desired) < 0.049) { this._lastApplied[__eid] = { min: nowMin, temp: desired }; continue; }
-          this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: desired });
+          const willSendF = this._isF(); const haIsF = this._haIsF();
+          let curU = cur;
+          if (Number.isFinite(curU)) {
+            if (willSendF && !haIsF) curU = this._cToF(curU);
+            else if (!willSendF && haIsF) curU = this._fToC(curU);
+          }
+          const sendTemp = this._serviceTempFromC(desired);
+          if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.049) { this._lastApplied[__eid] = { min: nowMin, temp: desired }; continue; }
+          this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp });
           this._lastApplied[__eid] = { min: nowMin, temp: desired };
         } catch {}
       }
@@ -3496,6 +3601,9 @@ class ThermostatTimelineCard extends HTMLElement {
   .modal-profiles .week-track, .modal-holiday .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
   .modal-profiles .week-track .block .pill{ display:none; }
   .modal-profiles .week-scale-inner .mer, .modal-holiday .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
+  /* Tabs styling reused (match weekdays look) for presence/profiles modals */
+  .modal-profiles .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .modal-profiles .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
   /* Small confirm popup inside overlays */
   .mini-confirm{ position:fixed; inset:0; display:grid; place-items:center; background: rgba(0,0,0,.32); z-index:2147484000; }
   .mini-confirm .box{ min-width:260px; max-width:420px; border-radius:8px; padding:12px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); box-shadow: var(--ha-card-box-shadow, 0 4px 12px rgba(0,0,0,.2)); }
@@ -3536,6 +3644,7 @@ class ThermostatTimelineCard extends HTMLElement {
           <div class="modal modal-week" role="dialog" aria-modal="true" aria-label="Ugedage">
             <div class="week-head"><h3 class="week-title">Ugedags-tidsplan</h3><div class="week-room"></div></div>
             <div style="display:grid; gap:10px;">
+              <div class="week-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
               <div style="display:grid; gap:4px;">
                 <label style="font-size:.85rem; color: var(--secondary-text-color);" class="week-mode-label">Mode</label>
                 <select class="week-mode" style="padding:6px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color);">
@@ -3797,8 +3906,15 @@ class ThermostatTimelineCard extends HTMLElement {
     this._saving = true;
     const key = this._syncDueKey();
     try {
+      // Build away for backend: if advanced presence is enabled, disable basic away in backend
+      const _awayCfg = this._config?.away || {};
+      const _awayOut = { ..._awayCfg };
+      if (_awayOut.advanced_enabled) _awayOut.enabled = false;
       if (this._config?.storage_enabled) {
-        await this._hass.callService("thermostat_timeline", "set_store", { schedules: this._schedules, settings: { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, apply_on_edit: !!this._config.apply_on_edit, backup_auto_enabled: !!this._config.backup_auto_enabled, backup_interval_days: Number(this._config.backup_interval_days||1), profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) } });
+        const payload = this._makeStoragePayload(true);
+        // Ensure backend gets basic away disabled if advanced presence is enabled
+        payload.settings = { ...payload.settings, away: _awayOut };
+        await this._hass.callService("thermostat_timeline", "set_store", payload);
       } else {
         await this._hass.callService("thermostat_timeline", "set_store", { settings: { auto_apply_enabled: false, apply_on_edit: !!this._config.apply_on_edit, profiles_enabled: !!this._config.profiles_enabled, global_profile: this._globalProfile || null, show_pause_button: !!(this._config.show_pause_button ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] } });
       }
@@ -5071,6 +5187,7 @@ class ThermostatTimelineCard extends HTMLElement {
   const modeSel = this.shadowRoot.querySelector('.week-mode');
   const titleEl = this.shadowRoot.querySelector('.week-title');
   const roomEl = this.shadowRoot.querySelector('.week-room');
+  const roomTabs = this.shadowRoot.querySelector('.week-roomtabs');
     const note = this.shadowRoot.querySelector('.week-note');
     const tabsWrap = this.shadowRoot.querySelector('.week-tabs');
     const pasteBar = this.shadowRoot.querySelector('.week-pastebar');
@@ -5091,6 +5208,26 @@ class ThermostatTimelineCard extends HTMLElement {
             name = custom || this._prettyName(eid);
           }
           roomEl.textContent = name || '';
+        }
+      } catch {}
+      // Build room tabs (switch room in weekdays editor)
+      try {
+        if (roomTabs) {
+          roomTabs.innerHTML = '';
+          const ents = this._config?.entities || [];
+          if (!this._weeklyEntity || !ents.includes(this._weeklyEntity)) this._weeklyEntity = ents[0] || null;
+          for (const eid of ents){
+            const btn = document.createElement('button');
+            btn.type='button';
+            btn.className = 'wk-tab' + (eid===this._weeklyEntity ? ' active' : '');
+            let label = '';
+            try { label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); } catch { label = eid; }
+            btn.textContent = label;
+            btn.addEventListener('click', ()=>{ if (eid!==this._weeklyEntity) this._openWeeklyEditor(eid); });
+            roomTabs.append(btn);
+          }
+          // Hide tabs if only one room
+          roomTabs.style.display = (ents.length>1) ? 'flex' : 'none';
         }
       } catch {}
       const modeLab = this.shadowRoot.querySelector('.week-mode-label');
@@ -5973,6 +6110,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const ents = this._config?.entities || [];
       if (!this._presenceRoom || !ents.includes(this._presenceRoom)) this._presenceRoom = ents[0] || null;
       for (const eid of ents){ const btn=document.createElement('button'); btn.type='button'; btn.className='wk-tab'+(eid===this._presenceRoom?' active':''); let label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); btn.textContent=label; btn.addEventListener('click', ()=>{ this._presenceRoom=eid; this._renderPresenceModal(); }); tabs.append(btn); }
+      try { tabs.style.display = (ents.length>1) ? 'flex' : 'none'; } catch {}
     }
     // Scale
     if (scale) { scale.innerHTML=''; for (let i=0;i<=24;i+=2){ const t=document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)'; const lab=document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)'; if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML=`<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent=(i===24? this._label(0) : this._label(i*60)); } t.append(lab); scale.append(t);} }
@@ -8504,7 +8642,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 
   addBlkBtn.onclick = ()=>{ ensureHolDraft(); const now=new Date(); const m=now.getHours()*60+now.getMinutes(); const start=Math.max(0,Math.min(1380, Math.round(m))); const end=Math.min(1440,start+60); const blk={ id: Math.random().toString(36).slice(2,9), startMin:start, endMin:end, temp: fromDisp(this._config.default_temp||20) }; openMini(blk); };
 
-        saveBtn.onclick = async ()=>{ ensureHolDraft(); let schedules={}; let settings={}; try { if (this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){ const st=this._hass.states[this._config.storage_entity]; const a=st?.attributes||{}; schedules=a.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=a.settings||{}; } } catch {} if (!Object.keys(schedules||{}).length){ try { const raw=localStorage.getItem('thermostat_timeline_store')||''; const parsed=JSON.parse(raw||'{}'); schedules=parsed.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=parsed.settings||{}; } catch {} } for (const eid of (this._config?.entities||[])){ const row=schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; const arr=(this._holDraft.rooms||{})[eid]||[]; row.holiday={ blocks: JSON.parse(JSON.stringify(arr)) }; schedules[eid]=row; } try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] } })); } catch {} try { if (this._config.storage_enabled && this._config.storage_entity) { await this._hass.callService('thermostat_timeline','set_store',{ schedules, settings: { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] } }); } } catch {} try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {} };
+  saveBtn.onclick = async ()=>{ ensureHolDraft(); let schedules={}; let settings={}; try { if (this._config.storage_entity && this._hass?.states?.[this._config.storage_entity]){ const st=this._hass.states[this._config.storage_entity]; const a=st?.attributes||{}; schedules=a.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=a.settings||{}; } } catch {} if (!Object.keys(schedules||{}).length){ try { const raw=localStorage.getItem('thermostat_timeline_store')||''; const parsed=JSON.parse(raw||'{}'); schedules=parsed.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=parsed.settings||{}; } catch {} } for (const eid of (this._config?.entities||[])){ const row=schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; const arr=(this._holDraft.rooms||{})[eid]||[]; row.holiday={ blocks: JSON.parse(JSON.stringify(arr)) }; schedules[eid]=row; } const wantF = this._isF(); const schOut = wantF ? this._convertSchedulesTemps(schedules,'F') : schedules; let settingsOut = { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] }; try { if (wantF) { const toStore=(n)=>{ const v=Number(n); return Number.isFinite(v)? this._cToF(v): n; }; if (settingsOut.default_temp!==undefined) settingsOut.default_temp = toStore(settingsOut.default_temp); if (settingsOut.min_temp!==undefined) settingsOut.min_temp = toStore(settingsOut.min_temp); if (settingsOut.max_temp!==undefined) settingsOut.max_temp = toStore(settingsOut.max_temp); if (settingsOut.away && typeof settingsOut.away==='object' && settingsOut.away.target_c!==undefined) { settingsOut.away = { ...settingsOut.away, target_c: toStore(settingsOut.away.target_c) }; } } } catch {} try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules: schOut, settings: settingsOut })); } catch {} try { if (this._config.storage_enabled && this._config.storage_entity) { await this._hass.callService('thermostat_timeline','set_store',{ schedules: schOut, settings: settingsOut }); } } catch {} try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {} };
 
         // Initial render
         ensureHolDraft(); paintTrack();
