@@ -213,6 +213,8 @@ const TT_I18N = {
   , 'presence.button': 'Presence schedules'
   , 'presence.editor.title': 'Presence schedules'
   , 'presence.enable_advanced': 'Enable advanced away'
+  , 'presence.live_header': 'Show live presence in header'
+  , 'presence.live_header.desc': 'Display chips with who is home/away next to the pause button.'
   , 'presence.combos': 'Combinations'
   , 'presence.enable_combo': 'Enable this combination'
   , 'presence.all_home': 'All home'
@@ -436,6 +438,8 @@ const TT_I18N = {
   , 'presence.button': 'Tilstede skemaer'
   , 'presence.editor.title': 'Tilstede skemaer'
   , 'presence.enable_advanced': 'Aktivér avanceret væk'
+  , 'presence.live_header': 'Vis live personstatus i header'
+  , 'presence.live_header.desc': 'Vis chips ved pause-knappen med hvem der er hjemme/ude.'
   , 'presence.combos': 'Kombinationer'
   , 'presence.enable_combo': 'Aktivér denne kombination'
   , 'presence.all_home': 'Alle hjemme'
@@ -1955,6 +1959,7 @@ class ThermostatTimelineCard extends HTMLElement {
       holidays_entity: '',         // calendar.* or binary_sensor.* that is on/off for holiday
       holidays_dates: []           // [ 'YYYY-MM-DD', ... ]
       , per_room_defaults: false   // Show/use Default °C per room on the timeline
+      , presence_live_header: true // Show live presence chips in header
     };
   }
 
@@ -2173,6 +2178,7 @@ class ThermostatTimelineCard extends HTMLElement {
   color_ranges: { ...(config.color_ranges || {}) },
     color_global: !!(config.color_global ?? this._config?.color_global ?? false),
       per_room_defaults: !!(config.per_room_defaults ?? this._config?.per_room_defaults ?? false),
+      presence_live_header: !!(config.presence_live_header ?? this._config?.presence_live_header ?? true),
       weekdays_enabled: !!(config.weekdays_enabled ?? false),
   weekdays_mode: (config.weekdays_mode || 'weekday_weekend'),
     profiles_enabled: !!(config.profiles_enabled ?? false),
@@ -2808,6 +2814,7 @@ class ThermostatTimelineCard extends HTMLElement {
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
         show_pause_button: !!(this._config.show_pause_button ?? true),
+  presence_live_header: !!(this._config.presence_live_header ?? true),
         auto_apply_enabled: !!this._config.auto_apply,
         apply_on_edit: !!this._config.apply_on_edit,
         backup_auto_enabled: !!this._config.backup_auto_enabled,
@@ -3381,6 +3388,15 @@ class ThermostatTimelineCard extends HTMLElement {
   /* Absolute wrapper to ensure pause stays top-right regardless of center label */
   .header .pause-wrap{ position:absolute; right: var(--pad-x); top: 50%; transform: translateY(-50%); display:flex; align-items:center; gap:8px; }
   .header .pause-wrap .pause-eta{ font-size:.82rem; color: var(--primary-text-color); min-width:58px; text-align:center; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); }
+  /* Presence live chips (away persons status) */
+  .header .pause-wrap .presence-live{ display:flex; align-items:center; gap:6px; flex-wrap:nowrap; max-width:50vw; overflow:hidden; }
+  .header .pause-wrap .presence-live .presence-chip{ display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); font-size:.82rem; max-width:160px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+  .header .pause-wrap .presence-live .presence-chip .presence-dot{ width:8px; height:8px; border-radius:50%; background: var(--divider-color); flex:0 0 8px; }
+  .header .pause-wrap .presence-live .presence-chip.home .presence-dot{ background: var(--success-color, #2e7d32); }
+  .header .pause-wrap .presence-live .presence-chip.away .presence-dot{ background: color-mix(in oklab, var(--error-color, #b00020) 60%, #fff); }
+  @supports not (color-mix(in oklab, #000 0%, #000 0%)){
+    .header .pause-wrap .presence-live .presence-chip.away .presence-dot{ background: var(--error-color, #b00020); }
+  }
   .weekday-full{ display:flex; align-items:center; justify-content:center; gap:8px; text-align:center; font-weight:700; font-size:1.15rem; color:var(--primary-text-color)}
   .profile-pill{ font-weight:600; font-size:.85rem; padding:2px 8px; border-radius:999px; border:1px solid var(--divider-color); background: var(--secondary-background-color, rgba(0,0,0,.05)); color: var(--primary-text-color); }
   .profile-pill.success{ background: var(--success-color, #2e7d32); color:#fff; border-color: var(--success-color, #2e7d32); }
@@ -3622,6 +3638,22 @@ class ThermostatTimelineCard extends HTMLElement {
   .sync-pill.primary { background: var(--primary-color); color: var(--text-primary-color, #fff); border-color: var(--primary-color); }
   .sync-pill.success { background: color-mix(in oklab, #2e7d32 20%, var(--card-background-color)); color: var(--primary-text-color); border-color: color-mix(in oklab, #2e7d32 50%, var(--divider-color)); }
   .sync-pill ha-icon { --mdc-icon-size: 16px; }
+  /* Small red test button next to title */
+  .test-btn { width:22px; height:22px; border-radius:50%; border:1px solid var(--error-color); background: var(--error-color); color: var(--text-primary-color, #fff); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .test-btn ha-icon{ --mdc-icon-size: 14px; }
+  /* Test popup */
+  .modal-test{ width:min(92vw, 520px); max-width:520px; }
+  .test-list{ margin-top:8px; display:grid; gap:8px; max-height:360px; overflow:auto; border:1px solid var(--divider-color); border-radius:8px; padding:8px; }
+  .test-item{ padding:6px 8px; border:1px solid var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
+  .test-item h4{ margin:0 0 4px; font-size:.95rem; overflow-wrap:anywhere; }
+  .test-fields{ margin:0; padding-left:18px; color: var(--secondary-text-color); }
+  .test-empty{ color: var(--secondary-text-color); font-size:.95rem; }
+  /* Ensure test modal never overflows horizontally */
+  .modal-test{ box-sizing: border-box; overflow:hidden; }
+  .modal-test *{ box-sizing: border-box; }
+  .modal-test .test-list{ width:100%; overflow-x:auto; }
+  .modal-test .test-select{ width:100% !important; max-width:100% !important; display:block; }
+  .modal-test .test-picker, .modal-test ha-entity-picker{ width:100% !important; max-width:100% !important; display:block; }
         </style>
       <ha-card class="card">
   <div class="header"><div class="title"></div><div class="weekday-full" style="display:none;"></div><div class="spacer"></div></div>
@@ -3794,6 +3826,25 @@ class ThermostatTimelineCard extends HTMLElement {
               <button type="button" class="btn ghost pause-indef">Pause until resume</button>
               <button type="button" class="btn success pause-resume">Resume</button>
               <button type="button" class="btn danger pause-close">Close</button>
+            </div>
+          </div>
+        </div>
+        <!-- Test popup: entity picker + list of available services for selected entity -->
+        <div class="overlay overlay-test" part="overlay">
+          <div class="modal modal-test" role="dialog" aria-modal="true">
+            <h3 style="margin-bottom:8px;">Testværktøj</h3>
+            <div style="display:grid; gap:6px;">
+              <label style="font-size:.9rem; color: var(--secondary-text-color);">Vælg entitet</label>
+              <ha-entity-picker class="test-picker"></ha-entity-picker>
+              <!-- Simpel fallback hvis ha-entity-picker ikke er tilgængelig -->
+              <select class="test-select" style="display:none; padding:6px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color);"></select>
+              <div class="test-list">
+                <div class="test-empty">Vælg en entitet for at se tilgængelige kommandoer…</div>
+              </div>
+              <div class="actions" style="display:flex; justify-content:flex-end; gap:8px;">
+                <button class="btn primary test-export" type="button" disabled>Export .md</button>
+                <button class="btn ghost test-close" type="button">Luk</button>
+              </div>
             </div>
           </div>
         </div>
@@ -4075,6 +4126,15 @@ class ThermostatTimelineCard extends HTMLElement {
       };
       const shown = (!this._config.title || isDef(this._config.title)) ? this._t('card.title_default') : this._config.title;
       titleEl.innerHTML = '';
+      // Test button (red dot) placed before title text
+      try {
+        const testBtn = document.createElement('button');
+        testBtn.className = 'test-btn';
+        testBtn.setAttribute('title','Test værktøj');
+        testBtn.innerHTML = '<ha-icon icon="mdi:ladybug"></ha-icon>';
+        testBtn.addEventListener('click', ()=>{ try { this._openTestPopup(); } catch {} });
+        titleEl.append(testBtn);
+      } catch {}
       const tspan = document.createElement('span'); tspan.className = 'title-text'; tspan.textContent = shown; titleEl.append(tspan);
       // Sync countdown/dots (left side, next to title)
       try {
@@ -4220,6 +4280,35 @@ class ThermostatTimelineCard extends HTMLElement {
             } else {
               wrap.append(ab);
             }
+          }
+        } catch {}
+        // Presence live status for Away persons
+        try {
+          const persons = (this._presencePersons && typeof this._presencePersons === 'function') ? this._presencePersons().filter(Boolean) : [];
+          const advOn = !!(this._config?.away?.advanced_enabled);
+          const wantLive = advOn && !!(this._config?.presence_live_header ?? true);
+          if (persons.length && wantLive) {
+            let live = wrap.querySelector('.presence-live');
+            if (!live) { live = document.createElement('div'); live.className = 'presence-live';
+              const pauseBtn = wrap.querySelector('.pause-btn');
+              if (pauseBtn && pauseBtn.parentNode === wrap) wrap.insertBefore(live, pauseBtn); else wrap.append(live);
+            }
+            live.innerHTML = '';
+            for (const p of persons) {
+              const st = this._hass?.states?.[p];
+              const state = String(st?.state || 'unknown');
+              const friendly = st?.attributes?.friendly_name || (String(p||'').split('.')[1] || p);
+              const chip = document.createElement('span');
+              chip.className = 'presence-chip ' + (state.toLowerCase() === 'home' ? 'home' : 'away');
+              chip.setAttribute('title', `${friendly}: ${state}`);
+              const dot = document.createElement('span'); dot.className = 'presence-dot';
+              const name = document.createElement('span'); name.className = 'presence-name'; name.textContent = friendly;
+              chip.append(dot, name);
+              live.append(chip);
+            }
+          } else {
+            // Remove if disabled
+            const live = wrap.querySelector('.presence-live'); if (live) live.remove();
           }
         } catch {}
         // Collapsible header tools (Presence / Profiles / Weekdays)
@@ -4482,20 +4571,29 @@ class ThermostatTimelineCard extends HTMLElement {
   // Use today's blocks if weekdays enabled
   const dayKey = this._todayKey();
   this._ensureHolidayStruct(row);
+  this._ensurePresenceStruct(row);
   let showBlocks = (row.blocks || []);
   try {
     if (this._isHolidayActive() && row?.holiday?.blocks?.length) {
       showBlocks = row.holiday.blocks || [];
-    } else if (this._config?.profiles_enabled) {
-      this._ensureProfilesStruct(row);
-      const ap = row.activeProfile;
-      if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
-        showBlocks = row.profiles[ap].blocks || [];
-      } else if (this._config?.weekdays_enabled) {
-        showBlocks = this._getBlocksForDay(row, dayKey) || [];
-      }
-    } else if (this._config?.weekdays_enabled) {
-      showBlocks = this._getBlocksForDay(row, dayKey) || [];
+    } else {
+      // Advanced Presence overrides visual track as well (when a combo is active)
+      try {
+        const key = this._activePresenceComboKey && this._activePresenceComboKey();
+        if (key && row.presence && Array.isArray(row.presence[key]?.blocks) && row.presence[key].blocks.length) {
+          showBlocks = row.presence[key].blocks || [];
+        } else if (this._config?.profiles_enabled) {
+          this._ensureProfilesStruct(row);
+          const ap = row.activeProfile;
+          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+            showBlocks = row.profiles[ap].blocks || [];
+          } else if (this._config?.weekdays_enabled) {
+            showBlocks = this._getBlocksForDay(row, dayKey) || [];
+          }
+        } else if (this._config?.weekdays_enabled) {
+          showBlocks = this._getBlocksForDay(row, dayKey) || [];
+        }
+      } catch { /* fallback below */ }
     }
   } catch {}
   for (const b of showBlocks) {
@@ -4772,6 +4870,169 @@ class ThermostatTimelineCard extends HTMLElement {
       done && (done.onclick = ()=>{ this._closeOnboard(true); });
       ov && ov.addEventListener('click', (e)=>{ if (e.target === ov) { e.preventDefault(); e.stopPropagation(); } });
     } catch {}
+
+    // Test popup events
+    try {
+      const tov = qs('.overlay-test');
+      const tclose = qs('.test-close');
+      const texport = qs('.test-export');
+      if (tclose) tclose.onclick = ()=>{ try { tov?.classList.remove('open'); } catch {} };
+      if (texport) texport.onclick = ()=>{ try { this._exportTestCommands(); } catch {} };
+      if (tov) tov.onclick = (e)=>{ if (e.target === tov) { e.preventDefault(); e.stopPropagation(); } };
+    } catch {}
+  }
+
+  // --- Test popup (entity picker + available services) ---
+  _openTestPopup(){
+    try {
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-test');
+      const picker = this.shadowRoot && this.shadowRoot.querySelector('.test-picker');
+      const select = this.shadowRoot && this.shadowRoot.querySelector('.test-select');
+      if (!ov || !picker) return;
+      ov.classList.add('open');
+      // If HA's entity picker web component isn't loaded, show a simple <select> fallback
+  // Force simple <select> to avoid menu overlays escaping the modal
+  const hasPicker = false && !!customElements.get('ha-entity-picker');
+      if (hasPicker) {
+        try { picker.style.display = ''; } catch {}
+        try { if (select) select.style.display = 'none'; } catch {}
+        // Bind hass to entity picker and set current value
+        try { picker.hass = this._hass; } catch {}
+        try { if (this._testEntity) picker.value = this._testEntity; } catch {}
+        // Attach one-time listener (avoid duplicates)
+        try {
+          if (!picker._ttBound) {
+            picker._ttBound = true;
+            picker.addEventListener('value-changed', (e)=>{ try { this._testEntity = e.detail?.value || e.target?.value || ''; this._renderTestCommands(); } catch {} });
+            picker.addEventListener('change', (e)=>{ try { this._testEntity = e.target?.value || ''; this._renderTestCommands(); } catch {} });
+          }
+        } catch {}
+      } else {
+        // Fallback: populate select with all entity ids
+        try { picker.style.display = 'none'; } catch {}
+        if (select) {
+          try { select.style.display = ''; } catch {}
+          // Build options once per open
+          select.innerHTML = '';
+          const states = this._hass?.states || {};
+          const items = Object.keys(states).map(id=>{
+            const fn = states[id]?.attributes?.friendly_name || id;
+            return { id, fn: String(fn) };
+          }).sort((a,b)=> a.fn.localeCompare(b.fn));
+          const ph = document.createElement('option'); ph.value=''; ph.textContent = '— Vælg —'; select.append(ph);
+          for (const it of items){ const o=document.createElement('option'); o.value=it.id; o.textContent=`${it.fn} (${it.id})`; if (this._testEntity===it.id) o.selected = true; select.append(o); }
+          if (!select._ttBound){ select._ttBound = true; select.addEventListener('change',(e)=>{ try { this._testEntity = e.target?.value || ''; this._renderTestCommands(); } catch {} }); }
+        }
+      }
+      this._renderTestCommands();
+      this._updateTestExportEnabled();
+    } catch {}
+  }
+
+  _renderTestCommands(){
+    try {
+      const list = this.shadowRoot && this.shadowRoot.querySelector('.test-list');
+      if (!list) return;
+      list.innerHTML = '';
+      const eid = String(this._testEntity || '').trim();
+      if (!eid) {
+        const empty = document.createElement('div'); empty.className = 'test-empty'; empty.textContent = 'Vælg en entitet for at se tilgængelige kommandoer…'; list.append(empty); return;
+      }
+      const domain = eid.split('.')[0];
+      const all = (this._hass && this._hass.services) ? this._hass.services : {};
+      const svcObj = all[domain] || {};
+      // If chosen entity is a climate, also show generic homeassistant "set_state" fields? Keep to domain services for now
+      const names = Object.keys(svcObj).sort();
+      if (!names.length) {
+        const empty = document.createElement('div'); empty.className = 'test-empty'; empty.textContent = `Ingen services fundet for domænet "${domain}".`; list.append(empty); return;
+      }
+      for (const s of names){
+        const def = svcObj[s] || {};
+        const item = document.createElement('div'); item.className = 'test-item';
+        const h = document.createElement('h4'); h.textContent = `${domain}.${s}`; item.append(h);
+        const ul = document.createElement('ul'); ul.className = 'test-fields';
+        const fields = def.fields || {};
+        const fNames = Object.keys(fields);
+        if (!fNames.length) {
+          const li = document.createElement('li'); li.textContent = 'Ingen felter'; ul.append(li);
+        } else {
+          for (const fn of fNames){
+            const fd = fields[fn] || {};
+            const li = document.createElement('li');
+            const req = fd.required ? ' (påkrævet)' : '';
+            const desc = fd.description ? ` – ${fd.description}` : '';
+            const ex = typeof fd.example !== 'undefined' ? ` Eksempel: ${JSON.stringify(fd.example)}` : '';
+            li.textContent = `${fn}${req}${desc}${ex}`;
+            ul.append(li);
+          }
+        }
+        item.append(ul);
+        list.append(item);
+      }
+      this._updateTestExportEnabled();
+    } catch {}
+  }
+
+  _updateTestExportEnabled(){
+    try {
+      const btn = this.shadowRoot && this.shadowRoot.querySelector('.test-export');
+      if (!btn) return;
+      const eid = String(this._testEntity || '').trim();
+      const domain = eid && eid.includes('.') ? eid.split('.')[0] : '';
+      const has = domain && this._hass && this._hass.services && this._hass.services[domain] && Object.keys(this._hass.services[domain]).length;
+      btn.disabled = !(eid && has);
+    } catch {}
+  }
+
+  _exportTestCommands(){
+    try {
+      if (this._exporting) return; // throttle to avoid accidental multi-download
+      this._exporting = true; setTimeout(()=>{ this._exporting = false; }, 600);
+      const text = this._buildTestExportText();
+      if (!text) return;
+      const eid = String(this._testEntity || 'entity').replace(/[^a-zA-Z0-9_.-]+/g,'_');
+  const name = `${eid}-commands.md`;
+  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{ try { document.body.removeChild(a); URL.revokeObjectURL(url); } catch {} }, 0);
+    } catch {}
+  }
+
+  _buildTestExportText(){
+    try {
+      const eid = String(this._testEntity || '').trim();
+      if (!eid) return '';
+      const st = this._hass?.states?.[eid];
+      const friendly = st?.attributes?.friendly_name || '';
+      const domain = eid.split('.')[0];
+      const date = new Date();
+      const lines = [];
+      lines.push(`Entity: ${eid}${friendly?` (${friendly})`:''}`);
+      lines.push(`Domain: ${domain}`);
+      lines.push(`Generated: ${date.toISOString()}`);
+      lines.push('');
+      const svcObj = (this._hass?.services?.[domain]) || {};
+      const names = Object.keys(svcObj).sort();
+      if (!names.length) { lines.push('No services for this domain.'); return lines.join('\n'); }
+      for (const s of names){
+        // Mark command in Markdown-style bold for easier reading
+        lines.push(`**${domain}.${s}**`);
+        const fields = (svcObj[s] && svcObj[s].fields) || {};
+        const fNames = Object.keys(fields);
+        if (!fNames.length) { lines.push('  (no fields)'); continue; }
+        for (const fn of fNames){
+          const fd = fields[fn] || {};
+          const req = fd.required ? 'required' : 'optional';
+          const desc = fd.description ? ` - ${fd.description}` : '';
+          const ex = typeof fd.example !== 'undefined' ? ` Example: ${JSON.stringify(fd.example)}` : '';
+          lines.push(`  ${fn} (${req})${desc}${ex}`);
+        }
+        lines.push('');
+      }
+      return lines.join('\n');
+    } catch { return ''; }
   }
 
   // Allow editor to nudge a repaint explicitly
@@ -7363,6 +7624,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         </div>
         <ha-switch class="away-adv-enable"></ha-switch>
       </div>
+      <div class="setting presence-live-row">
+        <div class="text">
+          <div class="title presence-live-title">Show live presence chips</div>
+          <div class="desc presence-live-desc"></div>
+        </div>
+        <ha-switch class="presence-live-enable"></ha-switch>
+      </div>
       <div class="setting away-combos-row" style="grid-template-columns: 1fr;">
         <div class="text">
           <div class="title presence-combos-title">Combinations</div>
@@ -8749,7 +9017,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const cur = { ...(this._config.away || {}) };
         cur.advanced_enabled = !!e.target.checked; this._config.away = cur; this._emit();
         try { this._pushSettingsToStoreDebounced(); } catch {}
-        // Refresh combo list enabled state
+        // If advanced is turned off, also disable live presence chips and remove them
+        if (!cur.advanced_enabled) {
+          this._config.presence_live_header = false; this._emit();
+          try { this._pushSettingsToStoreDebounced(); } catch {}
+        }
+        // Refresh UI
         this._render();
       });
       // Presence combinations checklist
@@ -8791,6 +9064,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           row.append(cb, sp); comboWrap.append(row);
         }
       }
+      // Presence live chips (header) toggle
+      const plive = this.shadowRoot.querySelector('.presence-live-enable');
+      if (plive) {
+        plive.checked = !!(this._config?.presence_live_header ?? true);
+        plive.disabled = !((this._config?.away?.advanced_enabled));
+      }
+      plive?.addEventListener('change', (e)=>{
+        if (!(this._config?.away?.advanced_enabled)) { e.preventDefault?.(); plive.checked = false; return; }
+        this._config.presence_live_header = !!e.target.checked; this._emit();
+        try { this._pushSettingsToStoreDebounced(); } catch {}
+      });
     } catch {}
 
   }
@@ -9475,7 +9759,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         // Presence labels in Away tab
         const advTitle = root.querySelector('.away-adv-title'); if (advTitle) advTitle.textContent = t('presence.enable_advanced');
         const advDesc = root.querySelector('.away-adv-desc'); if (advDesc) advDesc.textContent = '';
-        const pcTitle = root.querySelector('.presence-combos-title'); if (pcTitle) pcTitle.textContent = t('presence.combos');
+  const pcTitle = root.querySelector('.presence-combos-title'); if (pcTitle) pcTitle.textContent = t('presence.combos');
+  const plTitle = root.querySelector('.presence-live-title'); if (plTitle) plTitle.textContent = t('presence.live_header');
+  const plDesc = root.querySelector('.presence-live-desc'); if (plDesc) plDesc.textContent = t('presence.live_header.desc');
         const pcDesc = root.querySelector('.presence-combos-desc'); if (pcDesc) pcDesc.textContent = '';
       } catch {}
 
