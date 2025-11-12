@@ -1914,7 +1914,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.11.08e-advanced-presence-combos";
+const TT_CARD_VERSION = "2025.11.12d-presence-allhome-skip";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -2114,7 +2114,7 @@ class ThermostatTimelineCard extends HTMLElement {
     let rowh = Number(config.row_height ?? 64); rowh = isNaN(rowh) ? 64 : Math.max(40, Math.min(120, Math.round(rowh)));
     let deft = Number(config.default_temp ?? 20); deft = isNaN(deft) ? 20 : Math.max(5, Math.min(35, deft));
   let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
-  let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(50, maxt));
+  let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(80, maxt));
   let mint = Number(config.min_temp ?? 5); mint = isNaN(mint) ? 5 : Math.max(0, Math.min(45, mint));
     const showTop = Boolean(config.show_top_now ?? false);
     let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
@@ -2947,12 +2947,14 @@ class ThermostatTimelineCard extends HTMLElement {
       for (let mask=0; mask < (1<<n); mask++){
         const home=[], away=[];
         for (let i=0;i<n;i++){ ((mask>>i)&1) ? home.push(persons[i]) : away.push(persons[i]); }
+        // Skip the "all home" combination — when everyone is home, the main/weekdays
+        // schedule should be used and advanced presence should not override.
+        if (home.length === persons.length) continue;
         const key = this._presenceComboKey(home, away);
         const homeNames = home.map(e=> this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e)).join(', ');
         const awayNames = away.map(e=> this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e)).join(', ');
         let label;
-        if (home.length === persons.length) label = this._t('presence.all_home');
-        else if (home.length === 0) label = this._t('presence.none_home');
+        if (home.length === 0) label = this._t('presence.none_home');
         else {
           const h = (this._t('presence.home') || 'Home: {names}').replace('{names}', homeNames);
           const a = (this._t('presence.away') || 'Away: {names}').replace('{names}', awayNames);
@@ -2960,10 +2962,8 @@ class ThermostatTimelineCard extends HTMLElement {
         }
         out.push({ key, home:[...home], away:[...away], label });
       }
-      // Sort with "all home" first, "none home" second, then by length of home desc
+      // Sort with "none home" first, then by length of home desc (all‑home is omitted)
       out.sort((x,y)=>{
-        if (x.home.length===persons.length && y.home.length!==persons.length) return -1;
-        if (y.home.length===persons.length && x.home.length!==persons.length) return 1;
         if (x.home.length===0 && y.home.length!==0) return -1;
         if (y.home.length===0 && x.home.length!==0) return 1;
         return y.home.length - x.home.length;
@@ -2977,6 +2977,9 @@ class ThermostatTimelineCard extends HTMLElement {
       const persons = this._presencePersons(); if (!persons.length) return null;
       const home=[], away=[];
       for (const p of persons){ const st = this._hass?.states?.[p]; const s = String(st?.state||'').toLowerCase(); if (s==='home') home.push(p); else away.push(p); }
+      // When everyone is home, do not use advanced presence at all — fall back to
+      // the main/weekdays schedule. No need for an "all home" presence plan.
+      if (home.length === persons.length) return null;
       const key = this._presenceComboKey(home, away);
       const combos = (this._config?.away?.combos) || {};
       const meta = combos[key];
@@ -3031,21 +3034,34 @@ class ThermostatTimelineCard extends HTMLElement {
     return Array.from(out);
   }
 
-  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; this._ensureHolidayStruct(row); this._ensurePresenceStruct(row); let blocks = row.blocks||[]; let usedPresence = false;
+  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; this._ensureHolidayStruct(row); this._ensurePresenceStruct(row); let blocks = row.blocks||[]; let usedPresence = false; let usedHoliday = false; let presenceKeyActive = null; let presenceHasBlocksForRoom = false;
     // Holidays override take highest precedence when enabled
     try {
       if (this._isHolidayActive() && row.holiday && Array.isArray(row.holiday.blocks) && row.holiday.blocks.length) {
         blocks = row.holiday.blocks || [];
+        usedHoliday = true;
       } else {
         // fall through
       }
     } catch {}
     // Advanced presence overrides (if enabled and a combo is active) — below holidays, above profiles/weekdays
     try {
-      const key = this._activePresenceComboKey && this._activePresenceComboKey();
-      if (key && row.presence && Array.isArray(row.presence[key]?.blocks) && row.presence[key].blocks.length) {
-        blocks = row.presence[key].blocks || [];
-        usedPresence = true;
+      presenceKeyActive = this._activePresenceComboKey && this._activePresenceComboKey();
+      if (presenceKeyActive) {
+        const roomBlocks = row.presence && row.presence[presenceKeyActive] && Array.isArray(row.presence[presenceKeyActive].blocks)
+          ? row.presence[presenceKeyActive].blocks : [];
+        if (roomBlocks.length) {
+          blocks = roomBlocks;
+          usedPresence = true;
+          presenceHasBlocksForRoom = true;
+        } else {
+          // Presence combo is active but this room has no presence schedule -> use a virtual all‑day Away block
+          const awayC = Number(this._config?.away?.target_c ?? 17);
+          const fallback = Number.isFinite(awayC) ? awayC : this._rowDefaultTemp(row);
+          blocks = [{ id: '__presence_away__', startMin: 0, endMin: 1440, temp: fallback }];
+          usedPresence = true; // treat as presence so simple away clamp won't run later
+          presenceHasBlocksForRoom = false;
+        }
       }
     } catch {}
     // Profiles/Weekdays fallback if presence not used
@@ -3064,7 +3080,8 @@ class ThermostatTimelineCard extends HTMLElement {
         }
       } catch { /* fall back to default blocks */ }
     }
-  const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin); let want = Number(hit ? hit.temp : this._rowDefaultTemp(row));
+    const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin);
+    let want = Number(hit ? hit.temp : this._rowDefaultTemp(row));
     // Apply away override if active
     // Rules:
     // - If advanced presence is enabled, the simple Away clamp must NEVER apply
@@ -3666,7 +3683,7 @@ class ThermostatTimelineCard extends HTMLElement {
             <div class="grid">
               <div class="time-inline"><label>Fra</label><input class="ed-from" type="time" step="60" /><select class="mer-select ed-from-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
               <div class="time-inline time-right"><label>Til</label><input class="ed-to" type="time" step="60" /><select class="mer-select ed-to-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
-              <div class="rowfull"><label>Temperatur (°C)</label><input class="ed-temp" type="number" step="0.5" min="0" max="50" /></div>
+              <div class="rowfull"><label>Temperatur (°C)</label><input class="ed-temp" type="number" step="0.5" min="0" max="80" /></div>
             </div>
             <div class="ed-error" role="alert" aria-live="assertive" style="color:var(--error-color); display:none; margin-top:8px; font-size:.95rem;"></div>
             <div class="actions"><button class="btn ghost danger ed-delete" type="button">Slet</button><button class="btn ghost ed-cancel" type="button">Annullér</button><button class="btn primary ed-save" type="button">Gem</button></div>
@@ -5709,9 +5726,9 @@ class ThermostatTimelineCard extends HTMLElement {
       track.innerHTML = '';
   const effKey = this._effectiveDayKey(this._weeklyDayKey);
   const blocks = (this._weeklyDraft.days?.[effKey] || []);
-      // Ensure tooltip exists
-      let tooltip = this.shadowRoot.querySelector('.wk-tooltip');
-      if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip'; tooltip.style.display='none'; modalWeek?.append(tooltip); }
+  // Ensure tooltip exists (scoped to the weekly modal to avoid conflicts with other tooltips)
+  let tooltip = (modalWeek?.querySelector('.wk-tooltip.week')) || this.shadowRoot.querySelector('.wk-tooltip.week');
+  if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip week'; tooltip.style.display='none'; modalWeek?.append(tooltip); }
       for (const b of blocks){
         const div = document.createElement('div');
         div.className = 'block';
@@ -5772,7 +5789,7 @@ class ThermostatTimelineCard extends HTMLElement {
         } catch { this._openWeeklyBlockEditor(null); }
       });
   track.addEventListener('mouseleave', ()=>{
-    const tip = this.shadowRoot.querySelector('.wk-tooltip');
+    const tip = modalWeek?.querySelector('.wk-tooltip.week');
     if (!tip) return;
     try { if (tip._hideTimer) { clearTimeout(tip._hideTimer); tip._hideTimer = null; } } catch {}
   const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
@@ -6721,15 +6738,17 @@ class ThermostatTimelineCard extends HTMLElement {
       // Work on presence draft only; persist on Presence Save
       const eid = this._editing.entity;
       const arr = (this._presenceDraft.rooms||{})[eid] || [];
+      // Ensure we reference the correct block when editing (so overlap checks ignore itself)
+      let b = blockId ? arr.find(x=>x.id===blockId) : null;
       if (crossesMidnight) {
         const ov1 = hasOverlap(arr, start, 1440, b?.id);
         const ov2 = hasOverlap(arr, 0, end, null);
         if (ov1 || ov2) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const overlap = ov1 || ov2; const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end)); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
-        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp: this._fromDisplayTemp(temp) }); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); }
+        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp }); arr.push({ id:id2, startMin:0, endMin:end, temp }); } else { b.temp=temp; b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp }); }
       } else {
         const overlap = hasOverlap(arr, start, end, b?.id);
         if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
-        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp:this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=end; }
+        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp }); } else { b.temp=temp; b.startMin=start; b.endMin=end; }
       }
       (this._presenceDraft.rooms||{})[eid] = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
       this._render(); this._closeEditor(); if (this._presenceOpen) this._renderPresenceModal();
@@ -7484,7 +7503,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
     <div class="sfield">
       <div class="slabel slabel-maxc">Max °C</div>
-      <input class="maxc settings-input" type="number" min="5" max="50" step="0.5" />
+  <input class="maxc settings-input" type="number" min="5" max="80" step="0.5" />
     </div>
   </div>
 
@@ -7853,7 +7872,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       let raw=String(e.target.value||"").replace(",",".");
       let vDisp=Number(raw);
       let vC = isNaN(vDisp)? (this._config?.max_temp ?? 25) : this._fromDisplayTemp(vDisp);
-      vC = Math.max(5, Math.min(50, Math.round(vC)));
+  vC = Math.max(5, Math.min(80, Math.round(vC)));
       this._upd('max_temp', vC);
       // Clamp existing color ranges to new max
       try {
@@ -8261,6 +8280,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (t)  t.value  = this._config.title ?? "";
   if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
   if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
+  // Ensure Max °C input respects display units and new allowed bounds (5..80 C -> 41..176 F)
+  try { if (mx) { mx.setAttribute('min', String(this._toDisplayTemp(5))); mx.setAttribute('max', String(this._toDisplayTemp(80))); } } catch {}
     if (mn && mn !== this.shadowRoot.activeElement) mn.value = String(this._toDisplayTemp(this._config.min_temp ?? 5));
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
     if (se) { try { se.hass = this._hass; } catch {} try { se.value = this._config.storage_entity || ""; } catch {} }
@@ -9040,6 +9061,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         for (let mask=0; mask < (1<<n); mask++){
           const home=[], away=[];
           for (let i=0;i<n;i++){ ((mask>>i)&1) ? home.push(persons[i]) : away.push(persons[i]); }
+          // Skip "All home" entry; fallback to main/weekdays when all are home
+          if (home.length===n) continue;
           const key = `H:${home.slice().sort().join(',')}|A:${away.slice().sort().join(',')}`;
           // Row
           const row = document.createElement('label'); row.style.display='flex'; row.style.alignItems='center'; row.style.gap='8px'; row.style.opacity = enabled ? '' : '.6';
@@ -9053,8 +9076,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           });
           const sp = document.createElement('span');
           let lab;
-          if (home.length===n) lab = this._t('presence.all_home');
-          else if (home.length===0) lab = this._t('presence.none_home');
+          if (home.length===0) lab = this._t('presence.none_home');
           else {
             const h = (this._t('presence.home') || 'Home: {names}').replace('{names}', labelOf(home));
             const a = (this._t('presence.away') || 'Away: {names}').replace('{names}', labelOf(away));
