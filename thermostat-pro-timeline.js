@@ -198,6 +198,16 @@ const TT_I18N = {
   , 'backup.interval.desc': 'How many days between automatic backups (min. 1).'
   , 'backup.sensor': 'Backup sensor'
   , 'backup.last': 'Last backup'
+  , 'backup.select': 'Choose what to back up'
+  , 'backup.select.desc': 'Checked items are excluded from backup/restore'
+  , 'backup.opt.all': 'All'
+  , 'backup.select': 'Choose what to back up'
+  , 'backup.opt.main': 'Main schedules'
+  , 'backup.opt.weekday': 'Weekday schedules'
+  , 'backup.opt.presence': 'Presence schedules'
+  , 'backup.opt.settings': 'Editor settings'
+  , 'backup.opt.holiday': 'Holiday schedules'
+  , 'backup.opt.colors': 'Color blocks'
   , 'holidays.enable': 'Enable holidays'
   , 'holidays.desc': 'Use a special daily schedule on public holidays.'
   , 'holidays.source': 'Holiday source'
@@ -212,7 +222,7 @@ const TT_I18N = {
   , 'holidays.button': 'Holidays'
   , 'presence.button': 'Presence schedules'
   , 'presence.editor.title': 'Presence schedules'
-  , 'presence.enable_advanced': 'Enable advanced away'
+  , 'presence.enable_advanced': 'Enable advanced presence'
   , 'presence.live_header': 'Show live presence in header'
   , 'presence.live_header.desc': 'Display chips with who is home/away next to the pause button.'
   , 'presence.combos': 'Combinations'
@@ -357,6 +367,16 @@ const TT_I18N = {
   , 'backup.interval.desc': 'Hvor mange dage der skal gå mellem automatiske backups (min. 1).'
   , 'backup.sensor': 'Backup sensor'
   , 'backup.last': 'Sidste backup'
+  , 'backup.select': 'Vælg hvad der skal tages backup af'
+  , 'backup.select.desc': 'Markerede punkter udelades fra backup/gendannelse'
+  , 'backup.opt.all': 'Alt'
+  , 'backup.select': 'Vælg hvad der skal tages backup af'
+  , 'backup.opt.main': 'Hovedskemaer'
+  , 'backup.opt.weekday': 'Ugedagsskemaer'
+  , 'backup.opt.presence': 'Tilstede skemaer'
+  , 'backup.opt.settings': 'Editor-indstillinger'
+  , 'backup.opt.holiday': 'Helligdags-skemaer'
+  , 'backup.opt.colors': 'Farveblokke'
     , 'away.enable': 'Aktivér væk-tilstand'
     , 'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.'
     , 'away.temp': 'Væk-temperatur'
@@ -437,7 +457,7 @@ const TT_I18N = {
   , 'holidays.button': 'Helligdage'
   , 'presence.button': 'Tilstede skemaer'
   , 'presence.editor.title': 'Tilstede skemaer'
-  , 'presence.enable_advanced': 'Aktivér avanceret væk'
+  , 'presence.enable_advanced': 'Aktivér avanceret tilstedeværelse'
   , 'presence.live_header': 'Vis live personstatus i header'
   , 'presence.live_header.desc': 'Vis chips ved pause-knappen med hvem der er hjemme/ude.'
   , 'presence.combos': 'Kombinationer'
@@ -639,7 +659,7 @@ const TT_I18N = {
   , 'away.resume_away': 'Återuppta bortatemperatur'
   , 'presence.button': 'Närvaroscheman'
   , 'presence.editor.title': 'Närvaroscheman'
-  , 'presence.enable_advanced': 'Aktivera avancerat bortaläge'
+  , 'presence.enable_advanced': 'Aktivera avancerad närvaro'
   , 'presence.combos': 'Kombinationer'
   , 'presence.enable_combo': 'Aktivera denna kombination'
   , 'presence.all_home': 'Alla hemma'
@@ -840,7 +860,7 @@ const TT_I18N = {
   , 'away.resume_away': 'Gjenoppta borte‑temperatur'
   , 'presence.button': 'Tilstede‑skjemaer'
   , 'presence.editor.title': 'Tilstede‑skjemaer'
-  , 'presence.enable_advanced': 'Aktiver avansert borte'
+  , 'presence.enable_advanced': 'Aktiver avansert tilstedeværelse'
   , 'presence.combos': 'Kombinasjoner'
   , 'presence.enable_combo': 'Aktiver denne kombinasjonen'
   , 'presence.all_home': 'Alle hjemme'
@@ -1040,7 +1060,7 @@ const TT_I18N = {
   , 'away.resume_away': 'Abwesenheits‑Temperatur fortsetzen'
   , 'presence.button': 'Anwesenheitspläne'
   , 'presence.editor.title': 'Anwesenheitspläne'
-  , 'presence.enable_advanced': 'Erweitertes Abwesenheitsprofil aktivieren'
+  , 'presence.enable_advanced': 'Erweiterte Anwesenheit aktivieren'
   , 'presence.combos': 'Kombinationen'
   , 'presence.enable_combo': 'Diese Kombination aktivieren'
   , 'presence.all_home': 'Alle zu Hause'
@@ -1240,7 +1260,7 @@ const TT_I18N = {
   , 'away.resume_away': 'Reanudar temperatura de ausencia'
   , 'presence.button': 'Horarios de presencia'
   , 'presence.editor.title': 'Horarios de presencia'
-  , 'presence.enable_advanced': 'Habilitar ausencia avanzada'
+  , 'presence.enable_advanced': 'Habilitar presencia avanzada'
   , 'presence.combos': 'Combinaciones'
   , 'presence.enable_combo': 'Habilitar esta combinación'
   , 'presence.all_home': 'Todos en casa'
@@ -1440,7 +1460,7 @@ const TT_I18N = {
   , 'away.resume_away': 'Reprendre la température d’absence'
   , 'presence.button': 'Programmes de présence'
   , 'presence.editor.title': 'Programmes de présence'
-  , 'presence.enable_advanced': 'Activer l’absence avancée'
+  , 'presence.enable_advanced': 'Activer la présence avancée'
   , 'presence.combos': 'Combinaisons'
   , 'presence.enable_combo': 'Activer cette combinaison'
   , 'presence.all_home': 'Tous à la maison'
@@ -1640,7 +1660,7 @@ const TT_I18N = {
   , 'away.resume_away': 'Jatka poissaololämpötilaa'
   , 'presence.button': 'Läsnäoloaikataulut'
   , 'presence.editor.title': 'Läsnäoloaikataulut'
-  , 'presence.enable_advanced': 'Ota käyttöön edistynyt poissaolo'
+  , 'presence.enable_advanced': 'Ota käyttöön edistynyt läsnäolo'
   , 'presence.combos': 'Yhdistelmät'
   , 'presence.enable_combo': 'Ota tämä yhdistelmä käyttöön'
   , 'presence.all_home': 'Kaikki kotona'
@@ -1873,7 +1893,7 @@ const TT_I18N = {
     'away.resume_away': 'Obnovit teplotu mimo domov',
     'presence.button': 'Plány přítomnosti',
     'presence.editor.title': 'Plány přítomnosti',
-    'presence.enable_advanced': 'Povolit pokročilý režim mimo domov',
+    'presence.enable_advanced': 'Povolit pokročilou přítomnost',
     'presence.combos': 'Kombinace',
     'presence.enable_combo': 'Povolit tuto kombinaci',
     'presence.all_home': 'Všichni doma',
@@ -2114,7 +2134,7 @@ class ThermostatTimelineCard extends HTMLElement {
     let rowh = Number(config.row_height ?? 64); rowh = isNaN(rowh) ? 64 : Math.max(40, Math.min(120, Math.round(rowh)));
     let deft = Number(config.default_temp ?? 20); deft = isNaN(deft) ? 20 : Math.max(5, Math.min(35, deft));
   let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
-  let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(80, maxt));
+  let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(120, maxt));
   let mint = Number(config.min_temp ?? 5); mint = isNaN(mint) ? 5 : Math.max(0, Math.min(45, mint));
     const showTop = Boolean(config.show_top_now ?? false);
     let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
@@ -3683,7 +3703,7 @@ class ThermostatTimelineCard extends HTMLElement {
             <div class="grid">
               <div class="time-inline"><label>Fra</label><input class="ed-from" type="time" step="60" /><select class="mer-select ed-from-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
               <div class="time-inline time-right"><label>Til</label><input class="ed-to" type="time" step="60" /><select class="mer-select ed-to-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
-              <div class="rowfull"><label>Temperatur (°C)</label><input class="ed-temp" type="number" step="0.5" min="0" max="80" /></div>
+              <div class="rowfull"><label>Temperatur (°C)</label><input class="ed-temp" type="number" step="0.5" min="0" max="120" /></div>
             </div>
             <div class="ed-error" role="alert" aria-live="assertive" style="color:var(--error-color); display:none; margin-top:8px; font-size:.95rem;"></div>
             <div class="actions"><button class="btn ghost danger ed-delete" type="button">Slet</button><button class="btn ghost ed-cancel" type="button">Annullér</button><button class="btn primary ed-save" type="button">Gem</button></div>
@@ -7503,7 +7523,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
     <div class="sfield">
       <div class="slabel slabel-maxc">Max °C</div>
-  <input class="maxc settings-input" type="number" min="5" max="80" step="0.5" />
+  <input class="maxc settings-input" type="number" min="5" max="120" step="0.5" />
     </div>
   </div>
 
@@ -7714,6 +7734,38 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         </div>
         <div></div>
       </div>
+      <div class="setting">
+        <div class="text">
+          <div class="title backup-select-title">Choose what to back up</div>
+          <div class="desc backup-select-desc"></div>
+        </div>
+        <div class="inline" style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" class="bk-main" checked />
+            <span class="bk-main-label">Main schedules</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" class="bk-week" checked />
+            <span class="bk-week-label">Weekday schedules</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" class="bk-pres" checked />
+            <span class="bk-pres-label">Presence schedules</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" class="bk-set" checked />
+            <span class="bk-set-label">Editor settings</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" class="bk-hol" checked />
+            <span class="bk-hol-label">Holiday schedules</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" class="bk-col" checked />
+            <span class="bk-col-label">Color blocks</span>
+          </label>
+        </div>
+      </div>
       <div class="setting" style="grid-template-columns: 1fr 1fr;">
         <button type="button" class="add-entity-btn btn-backup-now"><ha-icon icon="mdi:archive-arrow-down"></ha-icon><span class="backup-now-label">Backup now</span></button>
         <button type="button" class="remove-btn btn-restore-now"><ha-icon icon="mdi:archive-arrow-up"></ha-icon><span class="backup-restore-label">Restore</span></button>
@@ -7872,7 +7924,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       let raw=String(e.target.value||"").replace(",",".");
       let vDisp=Number(raw);
       let vC = isNaN(vDisp)? (this._config?.max_temp ?? 25) : this._fromDisplayTemp(vDisp);
-  vC = Math.max(5, Math.min(80, Math.round(vC)));
+  vC = Math.max(5, Math.min(120, Math.round(vC)));
       this._upd('max_temp', vC);
       // Clamp existing color ranges to new max
       try {
@@ -8280,8 +8332,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if (t)  t.value  = this._config.title ?? "";
   if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
   if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
-  // Ensure Max °C input respects display units and new allowed bounds (5..80 C -> 41..176 F)
-  try { if (mx) { mx.setAttribute('min', String(this._toDisplayTemp(5))); mx.setAttribute('max', String(this._toDisplayTemp(80))); } } catch {}
+  // Ensure Max °C input respects display units and new allowed bounds (5..120 C -> 41..248 F)
+  try { if (mx) { mx.setAttribute('min', String(this._toDisplayTemp(5))); mx.setAttribute('max', String(this._toDisplayTemp(120))); } } catch {}
     if (mn && mn !== this.shadowRoot.activeElement) mn.value = String(this._toDisplayTemp(this._config.min_temp ?? 5));
     if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
     if (se) { try { se.hass = this._hass; } catch {} try { se.value = this._config.storage_entity || ""; } catch {} }
@@ -8338,20 +8390,67 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const bAuto = this.shadowRoot.querySelector('.backup-auto');
   const bMin = this.shadowRoot.querySelector('.backup-days');
   const bRow = this.shadowRoot.querySelector('.backup-interval-row');
+  const bMain = this.shadowRoot.querySelector('.bk-main');
+  const bWeek = this.shadowRoot.querySelector('.bk-week');
+  const bPres = this.shadowRoot.querySelector('.bk-pres');
+  const bSet = this.shadowRoot.querySelector('.bk-set');
+  const bHol = this.shadowRoot.querySelector('.bk-hol');
+  const bCol = this.shadowRoot.querySelector('.bk-col');
     const bBtn = this.shadowRoot.querySelector('.btn-backup-now');
     const rBtn = this.shadowRoot.querySelector('.btn-restore-now');
     const lastDesc = this.shadowRoot.querySelector('.last-backup-desc');
   if (bAuto) bAuto.checked = !!this._config.backup_auto_enabled;
   if (bRow) bRow.style.display = (!!this._config.backup_auto_enabled) ? '' : 'none';
     if (bMin && bMin !== this.shadowRoot.activeElement) bMin.value = String(this._config.backup_interval_days || 1);
+    // No master toggle; all individual checkboxes remain enabled
     if (lastDesc && this._hass){
       const st=this._hass.states['sensor.thermostat_timeline_backup'];
       const ts=st?.attributes?.last_backup_ts;
       const fmt = (iso)=>{ try{ if(!iso) return ''; const d=new Date(iso); const lang = ttGetLangFromHass(this._hass || this._lang || 'en'); const opts={ dateStyle:'medium', timeStyle:'short' }; if (this._config?.time_source==='ha' && this._hass?.config?.time_zone) opts.timeZone=this._hass.config.time_zone; return new Intl.DateTimeFormat(lang, opts).format(d);} catch{ return String(iso||''); } };
       lastDesc.textContent = ts ? fmt(ts) : '';
     }
-  bBtn && (bBtn.onclick = async ()=>{ try { await this._hass.callService('thermostat_timeline','backup_now',{}); setTimeout(()=>{ try { this._render(); } catch{} }, 800); } catch {} });
-  rBtn && (rBtn.onclick = async ()=>{ try { if (confirm('Restore from backup? This will overwrite current schedules and settings.')) { await this._hass.callService('thermostat_timeline','restore_now',{}); setTimeout(()=>{ try { this._render(); } catch{} }, 800); } } catch {} });
+  bBtn && (bBtn.onclick = async ()=>{
+    try {
+      // Exclude semantics: checked means EXCLUDE; include = !checked
+      const main = !this.shadowRoot.querySelector('.bk-main')?.checked;
+      const weekday = !this.shadowRoot.querySelector('.bk-week')?.checked;
+      const presence = !this.shadowRoot.querySelector('.bk-pres')?.checked;
+      const settings = !this.shadowRoot.querySelector('.bk-set')?.checked;
+      const holiday = !this.shadowRoot.querySelector('.bk-hol')?.checked;
+      const colors = !this.shadowRoot.querySelector('.bk-col')?.checked;
+      const allInclude = [main,weekday,presence,settings,holiday,colors].every(v=>v);
+      if (allInclude) {
+        // Full backup (no flags = backend treats as full)
+        await this._hass.callService('thermostat_timeline','backup_now', {});
+      } else {
+        await this._hass.callService('thermostat_timeline','backup_now', { main, weekday, presence, settings, holiday, colors });
+      }
+      setTimeout(()=>{ try { this._render(); } catch{} }, 800);
+    } catch {}
+  });
+  rBtn && (rBtn.onclick = async ()=>{
+    try {
+      // Exclude semantics: include = !checked
+      const main = !this.shadowRoot.querySelector('.bk-main')?.checked;
+      const weekday = !this.shadowRoot.querySelector('.bk-week')?.checked;
+      const presence = !this.shadowRoot.querySelector('.bk-pres')?.checked;
+      const settings = !this.shadowRoot.querySelector('.bk-set')?.checked;
+      const holiday = !this.shadowRoot.querySelector('.bk-hol')?.checked;
+      const colors = !this.shadowRoot.querySelector('.bk-col')?.checked;
+      const allSel = [main,weekday,presence,settings,holiday,colors].every(v=>v);
+      if (allSel) {
+        if (confirm('Restore from backup? This will overwrite current schedules and settings.')) {
+          await this._hass.callService('thermostat_timeline','restore_now', { mode: 'replace' });
+          setTimeout(()=>{ try { this._render(); } catch{} }, 800);
+        }
+      } else {
+        if (confirm('Restore selected sections from backup? This will merge into current data.')) {
+          await this._hass.callService('thermostat_timeline','restore_now', { mode: 'merge', main, weekday, presence, settings, holiday, colors });
+          setTimeout(()=>{ try { this._render(); } catch{} }, 800);
+        }
+      }
+    } catch {}
+  });
   bAuto && bAuto.addEventListener('change', (e)=>{ const on=!!e.target.checked; this._upd('backup_auto_enabled', on); if (bRow) bRow.style.display = on? '' : 'none'; try { this._pushSettingsToStoreDebounced(); } catch {} });
     bMin && bMin.addEventListener('change', (e)=>{ let v=Math.round(Number(e.target.value||1)); if(!Number.isFinite(v)) v=1; v=Math.max(1, Math.min(365, v)); e.target.value=String(v); this._upd('backup_interval_days', v); try { this._pushSettingsToStoreDebounced(); } catch {} });
   } catch {}
@@ -8993,10 +9092,29 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const en = this.shadowRoot.querySelector('.away-enable');
       if (en) en.checked = !!(this._config.away?.enabled);
       en?.addEventListener('change', (e)=>{
+        const enabled = !!e.target.checked;
         const cur = { ...(this._config.away || {}) };
-        cur.enabled = !!e.target.checked; this._config.away = cur; this._emit();
+        cur.enabled = enabled;
+        // If Away is turned OFF, also disable Advanced Away and live presence chips
+        if (!enabled) {
+          cur.advanced_enabled = false;
+          this._config.presence_live_header = false;
+        }
+        this._config.away = cur; this._emit();
         try { this._pushSettingsToStoreDebounced(); } catch {}
+        // Re-render to update visibility of dependent controls
+        this._render();
       });
+      // Show/hide dependent Away controls based on master toggle
+      const awayOn = !!(this._config.away?.enabled);
+      try {
+        const tempRow = this.shadowRoot.querySelector('.away-temp')?.closest('.setting');
+        const personsRow = this.shadowRoot.querySelector('.away-person-picker')?.closest('.setting');
+        const advRow = this.shadowRoot.querySelector('.away-adv-row');
+        const liveRow = this.shadowRoot.querySelector('.presence-live-row');
+        const combosRow = this.shadowRoot.querySelector('.away-combos-row');
+        [tempRow, personsRow, advRow, liveRow, combosRow].forEach(r=>{ if (r) r.style.display = awayOn ? '' : 'none'; });
+      } catch {}
       const temp = this.shadowRoot.querySelector('.away-temp');
       if (temp && temp !== this.shadowRoot.activeElement) temp.value = String(this._toDisplayTemp(this._config.away?.target_c ?? 17));
       temp?.setAttribute('min', String(this._toDisplayTemp(this._config.min_temp ?? 5)));
@@ -9805,6 +9923,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       try {
         const bt = root.querySelector('.backup-title'); if (bt) bt.textContent = t('backup.title') || 'Backup';
         const bd = root.querySelector('.backup-desc'); if (bd) bd.textContent = t('backup.desc') || 'Copy schedules/settings to backup and restore when needed.';
+        const bsel = root.querySelector('.backup-select-title'); if (bsel) bsel.textContent = t('backup.select') || 'Choose what to back up';
+        const bselD = root.querySelector('.backup-select-desc'); if (bselD) bselD.textContent = t('backup.select.desc') || 'Checked items are excluded from backup/restore';
+        const blMain = root.querySelector('.bk-main-label'); if (blMain) blMain.textContent = t('backup.opt.main') || 'Main schedules';
+        const blWeek = root.querySelector('.bk-week-label'); if (blWeek) blWeek.textContent = t('backup.opt.weekday') || 'Weekday schedules';
+        const blPres = root.querySelector('.bk-pres-label'); if (blPres) blPres.textContent = t('backup.opt.presence') || 'Presence schedules';
+        const blSet = root.querySelector('.bk-set-label'); if (blSet) blSet.textContent = t('backup.opt.settings') || 'Editor settings';
+        const blHol = root.querySelector('.bk-hol-label'); if (blHol) blHol.textContent = t('backup.opt.holiday') || 'Holiday schedules';
+        const blCol = root.querySelector('.bk-col-label'); if (blCol) blCol.textContent = t('backup.opt.colors') || 'Color blocks';
         const bn = root.querySelector('.backup-now-label'); if (bn) bn.textContent = t('backup.now') || 'Backup now';
         const brl = root.querySelector('.backup-restore-label'); if (brl) brl.textContent = t('backup.restore') || 'Restore';
         const bat = root.querySelector('.backup-auto-title'); if (bat) bat.textContent = t('backup.auto');
