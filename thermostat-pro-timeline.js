@@ -2785,6 +2785,49 @@ class ThermostatTimelineCard extends HTMLElement {
   _fToC(f){ try { return (Number(f)-32)*5/9; } catch { return f; } }
   _serviceTempFromC(c){ return this._isF() ? this._cToF(c) : c; }
   _haIsF(){ try { const u = String(this._hass?.config?.unit_system?.temperature||''); return u.toUpperCase().includes('F'); } catch { return false; } }
+  async _applySetpointForEntity(eid, desiredC){
+    try {
+      const st = this._hass?.states?.[eid]; if (!st) return;
+      const attrs = st.attributes || {};
+      let hvacMode = String(attrs.hvac_mode ?? st.state ?? '').toLowerCase();
+      const hvacModes = Array.isArray(attrs.hvac_modes) ? attrs.hvac_modes.map(x=>String(x).toLowerCase()) : [];
+      const presetMode = String(attrs.preset_mode || '').toLowerCase();
+      const presetModes = Array.isArray(attrs.preset_modes) ? attrs.preset_modes.map(x=>String(x).toLowerCase()) : [];
+
+      // Optional: enable manual/hold preset to avoid schedule overrides
+      try {
+        const want = presetModes.includes('manual') ? 'manual' : (presetModes.includes('hold') ? 'hold' : null);
+        if (want && presetMode !== want){
+          await this._hass.callService('climate','set_preset_mode',{ entity_id: eid, preset_mode: want });
+        }
+      } catch {}
+
+      // If mode ignores setpoint, try switching to heat/cool
+      try {
+        if (['off','dry','fan_only'].includes(hvacMode)){
+          let newMode = null;
+          if (hvacModes.includes('heat')) newMode = 'heat'; else if (hvacModes.includes('cool')) newMode = 'cool';
+          if (newMode){ await this._hass.callService('climate','set_hvac_mode',{ entity_id: eid, hvac_mode: newMode }); hvacMode = newMode; }
+        }
+      } catch {}
+
+      // Decide between single setpoint vs range
+      const hasLow = Object.prototype.hasOwnProperty.call(attrs, 'target_temp_low');
+      const hasHigh = Object.prototype.hasOwnProperty.call(attrs, 'target_temp_high');
+      const modeSuggestsRange = (hvacMode === 'heat_cool') || (hvacMode === 'auto' && hasLow && hasHigh);
+      if (modeSuggestsRange && (hasLow || hasHigh)){
+        let band = 1.0; // °C total band
+        try { const b = Number(this._config?.range_band_c); if (Number.isFinite(b) && b > 0.2 && b <= 10) band = b; } catch {}
+        const half = Math.max(0.2, band/2);
+        const lowC = desiredC - half;
+        const highC = desiredC + half;
+        const data = { entity_id: eid, target_temp_low: this._serviceTempFromC(lowC), target_temp_high: this._serviceTempFromC(highC) };
+        await this._hass.callService('climate','set_temperature', data);
+        return;
+      }
+      await this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: this._serviceTempFromC(desiredC) });
+    } catch {}
+  }
   // Convert a schedules object between units (returns deep clone)
   _convertSchedulesTemps(schedules, toUnit){
     try {
@@ -3090,7 +3133,7 @@ class ThermostatTimelineCard extends HTMLElement {
         if (this._config?.profiles_enabled && !(this._isHolidayActive() && row?.holiday?.blocks?.length)) {
           this._ensureProfilesStruct(row);
           const ap = row.activeProfile;
-          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
             blocks = row.profiles[ap].blocks || [];
           } else if (this._config?.weekdays_enabled && row.weekly) {
             const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey);
@@ -3202,7 +3245,7 @@ class ThermostatTimelineCard extends HTMLElement {
             if (this._config?.profiles_enabled) {
               this._ensureProfilesStruct(row);
               const ap = row.activeProfile;
-              if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+              if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
                 blocks = row.profiles[ap].blocks || [];
               } else if (this._config?.weekdays_enabled && row.weekly) {
                 const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
@@ -3244,7 +3287,7 @@ class ThermostatTimelineCard extends HTMLElement {
           if (this._config?.profiles_enabled) {
             this._ensureProfilesStruct(row);
             const ap = row.activeProfile;
-            if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+            if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
               blocks = row.profiles[ap].blocks || [];
             } else if (this._config?.weekdays_enabled && row.weekly) {
               const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
@@ -3315,32 +3358,15 @@ class ThermostatTimelineCard extends HTMLElement {
       }
       const sendTemp = this._serviceTempFromC(desired);
       if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.05){ this._lastApplied[eid] = { min: nowMin, temp: desired }; continue; }
-      try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: sendTemp }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: desired }; }
+      try { await this._applySetpointForEntity(eid, desired); this._lastApplied[eid] = { min: nowMin, temp: desired }; }
       catch (e) { console.warn('thermostat-timeline: set_temperature failed for', eid, e); }
     } }
 
   // ---------- "Apply on change" helper ----------
   _desiredNowSnapshot(){ const nowMin = this._getNowMin(); const snap = {}; for (const eid of this._allTargetEntities()) snap[eid] = this._desiredTempFor(eid, nowMin); return snap; }
   async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; if (this._isPaused()) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin();
-    if (this._config?.storage_enabled) {
-      const delayMode = String(this._config.storage_sync_mode||'instant')==='delay';
-      try {
-        for (const eid of Object.keys(after)){
-          let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue;
-          const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn);
-          if (b == null || Math.abs(a - b) > 0.049){
-            if (delayMode) {
-              // Immediate one-off apply even while sync is in delay mode
-              const sendTemp = this._serviceTempFromC(a);
-              try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: sendTemp }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (delay-mode) failed for', eid, e); }
-            }
-          }
-        }
-        if (delayMode) { await this._nudgeBackgroundApplyNow(); }
-      } catch {}
-      return;
-    }
-  for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ const sendTemp = this._serviceTempFromC(a); try { await /* guarded */ (async()=>{ try { const __args = { entity_id: eid, temperature: sendTemp }; const __eid = __args.entity_id; if (typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid]) { this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp }); } } catch(e){ console.warn('set_temperature skipped/failed', e); } })(); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
+    if (this._config?.storage_enabled) { return; }
+  for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ try { await this._applySetpointForEntity(eid, a); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){ console.warn('thermostat-timeline: set_temperature (on-change) failed for', eid, e); } } }
   }
 
   // Ping backend to apply now without waiting for delayed sync
@@ -3352,8 +3378,7 @@ class ThermostatTimelineCard extends HTMLElement {
     try {
       if (!this._config?.auto_apply || !this._config?.apply_on_edit || !this._hass) return;
       // When shared storage is enabled, integration handles the apply; card should not send
-      // Exception: in delay mode we apply immediately once for better UX
-      if (this._config?.storage_enabled && String(this._config.storage_sync_mode||'instant')!=='delay') return;
+      if (this._config?.storage_enabled) return;
       if (this._isPaused()) return;
       let desired = Number(tempC);
   // Away override (disabled when advanced presence is enabled)
@@ -3379,7 +3404,7 @@ class ThermostatTimelineCard extends HTMLElement {
           }
           const sendTemp = this._serviceTempFromC(desired);
           if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.049) { this._lastApplied[__eid] = { min: nowMin, temp: desired }; continue; }
-          this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: sendTemp });
+          await this._applySetpointForEntity(eid, desired);
           this._lastApplied[__eid] = { min: nowMin, temp: desired };
         } catch {}
       }
@@ -4622,7 +4647,7 @@ class ThermostatTimelineCard extends HTMLElement {
         } else if (this._config?.profiles_enabled) {
           this._ensureProfilesStruct(row);
           const ap = row.activeProfile;
-          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
             showBlocks = row.profiles[ap].blocks || [];
           } else if (this._config?.weekdays_enabled) {
             showBlocks = this._getBlocksForDay(row, dayKey) || [];
@@ -4720,7 +4745,7 @@ class ThermostatTimelineCard extends HTMLElement {
             if (this._config?.profiles_enabled) {
               this._ensureProfilesStruct(row);
               const ap = row?.activeProfile;
-              if (ap && row?.profiles && Array.isArray(row.profiles[ap]?.blocks)) {
+              if (ap && row?.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
                 // Configure profile context and open profile block editor
                 this._profilesEntity = eid;
                 this._profilesSelected = ap;
