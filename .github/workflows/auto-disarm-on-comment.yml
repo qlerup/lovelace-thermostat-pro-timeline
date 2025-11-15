@@ -25,13 +25,13 @@ jobs:
             const issue = context.payload.issue;
             const newComment = context.payload.comment;
 
-            // Kun issues, ikke PRs
+            // Issues only, not PRs
             if (issue.pull_request) {
               core.info(`PR #${issue.number} – skipping`);
               return;
             }
 
-            // Spring bots over
+            // Skip bots
             if ((newComment.user?.type === 'Bot')) {
               core.info('Bot comment – skipping');
               return;
@@ -39,7 +39,7 @@ jobs:
 
             const sender = (newComment.user?.login || "").toLowerCase();
 
-            // Kun hvis trigger-label faktisk sidder på sagen
+            // Only if trigger label is actually on the issue
             const trigger = (process.env.TRIGGER_LABEL || "").toLowerCase();
             const hasTriggerLabel = (issue.labels || [])
               .some(l => (l.name || "").toLowerCase() === trigger);
@@ -49,7 +49,7 @@ jobs:
               return;
             }
 
-            // Maintainer(e), der må "arme" – de skal IKKE auto-disarme
+            // Maintainer(s) who are allowed to "arm" – they should NOT auto-disarm
             const allowed = new Set((process.env.ALLOWED_STARTERS || "")
               .split(",").map(s => s.trim().toLowerCase()).filter(Boolean));
 
@@ -62,7 +62,7 @@ jobs:
               return;
             }
 
-            // Hent alle kommentarer for at finde seneste marker
+            // Fetch all comments to find the latest marker
             const comments = await github.paginate(
               github.rest.issues.listComments,
               { owner, repo, issue_number: issue.number, per_page: 100 }
@@ -79,7 +79,7 @@ jobs:
               return;
             }
 
-            // Kun disarme, hvis DENNE kommentar er nyere end markeren
+            // Only disarm if THIS comment is newer than the marker
             const markerTime = new Date(marker.created_at);
             const thisCommentTime = new Date(newComment.created_at);
 
@@ -88,7 +88,7 @@ jobs:
               return;
             }
 
-            // Alt OK ⇒ fjern label og skriv besked
+            // All good ⇒ remove label and post message
             try {
               await github.rest.issues.removeLabel({
                 owner,
@@ -101,8 +101,10 @@ jobs:
             }
 
             await github.rest.issues.createComment({
-              owner, repo, issue_number: issue.number,
-              body: `Tak for svaret! Auto-close er nu **dearmet** (label **${process.env.TRIGGER_LABEL}** er fjernet).`
+              owner,
+              repo,
+              issue_number: issue.number,
+              body: `Thanks for your reply! Auto-close has now been **disarmed** (label **${process.env.TRIGGER_LABEL}** has been removed).`
             });
 
             core.info(`#${issue.number}: reply from non-maintainer – auto-close disarmed`);
