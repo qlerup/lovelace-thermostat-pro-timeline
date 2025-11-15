@@ -48,8 +48,10 @@ jobs:
 
             const nowIso = new Date().toISOString();
             await github.rest.issues.createComment({
-              owner, repo, issue_number: issue.number,
-              body: `Auto-close armed via label **${process.env.TRIGGER_LABEL}**. If there's no reply from the reporter, this issue will close in **${process.env.GRACE_DAYS} day(s)** (+${process.env.BUFFER_MINUTES} min buffer).\n\n<!-- autoclose:start:${nowIso} -->`
+              owner,
+              repo,
+              issue_number: issue.number,
+              body: `Auto-close armed via label **${process.env.TRIGGER_LABEL}**. If there's no reply, this issue will be auto-closed in **${process.env.GRACE_DAYS} day(s)**.\n\n<!-- autoclose:start:${nowIso} -->`
             });
 
             core.info(`Armed auto-close for #${issue.number} at ${nowIso}.`);
