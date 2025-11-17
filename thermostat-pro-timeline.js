@@ -2194,6 +2194,254 @@ const TT_I18N = {
     , 'week.view.days_one_room': 'Všechny dny • jedna místnost'
     , 'week.select_room': 'Vyberte místnost'
   },
+  it: {
+    // Card
+    'card.title_default': 'Thermostat Timeline',
+    // Modal / editor (inline)
+    'ui.edit_block': 'Modifica intervallo',
+    'ui.add_block': 'Aggiungi intervallo',
+    'ui.from': 'Da',
+    'ui.to': 'A',
+    'ui.temperature': 'Temperatura',
+    'ui.delete': 'Elimina',
+    'ui.cancel': 'Annulla',
+  'ui.close': 'Chiudi',
+  'ui.unsaved_confirm': 'Ci sono modifiche non salvate. Conferma la chiusura?',
+  'ui.discard_changes': 'Annulla modifiche',
+  'ui.keep_editing': 'Continua a modificare',
+    'ui.save': 'Salva',
+    'ui.error_prefix': 'Errore: ',
+    'ui.overlap_msg': 'Hai selezionato orari che si sovrappongono — la sovrapposizione è a {start} – {end}.',
+    'ui.auto_fix': 'Auto-correzione',
+    'ui.fix_start_to': 'Correggi inizio a {time}',
+  'ui.fix_end_to': 'Correggi fine a {time}',
+    // Inline meta
+  'ui.current_temp': 'Temperatura corrente:' ,
+
+    // GUI editor panel
+  'editor.title_label': 'Titolo',
+  'editor.add_entity': 'Aggiungi stanza',
+    'editor.entity_placeholder': 'Seleziona un\'entità',
+    'editor.drag_reorder': 'Trascina per riordinare',
+    'editor.remove': 'Elimina',
+    'editor.default_c': 'Temperatura di default',
+  'editor.row_height_px': 'Altezza riga (px)',
+  'editor.max_c': 'Max temp',
+    'editor.min_c': 'Min temp',
+    'editor.auto_apply.title': 'Applica automaticamente',
+    'editor.auto_apply.desc':
+      'Se abilitata, la scheda tenterà di impostare la temperatura sulle entità climatiche selezionate in modo che corrisponda al valore pianificato per "adesso".',
+    'editor.apply_edit.title': 'Dopo la modifica',
+    'editor.apply_edit.desc':
+      'Quando si modificano gli intervalli della sequenza temporale e la modifica influisce sull\'ora corrente, la nuova temperatura viene impostata immediatamente.',
+    'editor.apply_default.title': 'Dopo il cambio della temperatura di Default',
+    'editor.apply_default.desc':
+      'When “La temperatura di default viene impostata e si applical all\'intervallo corrente, la nuova temperatura viene impostata immediatamente.',
+    'editor.perroom.title': 'Temperatura di default per stanza',
+    'editor.perroom.desc': 'Mostra un campo per temperatura di default in ogni stanza. Se spento, la temperatura di default globale verrà usata in ogni stanza.',
+      'ui.copy_plan': 'Copia programma',
+      'ui.paste_plan': 'Incolla programma',
+      'ui.copy_day': 'Copia giorno',
+      'ui.paste_day': 'Incolla giorno',
+  'editor.merge_label': 'Integrato con (aggiungi altro termostato)',
+  'editor.display_name_optional': 'Nome della stanza (opzionale)',
+    'editor.merged_with': 'Integrato con'
+  , 'editor.store_enable.title': 'Archiviazione condivisa + controllo automatico',
+  'editor.store_enable.short': 'Salva la programmazione per il dispositivo selezionato e abilita il controllo automatico.',
+  'editor.store_enable.desc': 'Salva le programmazioni sul dispositivo selezionato e abilita la funzione "set_temperature" in background tramite l\'integrazione "Thermostat Pro Timeline Sync". I termostati si aggiornano anche quando la scheda è chiusa. Condivide inoltre le programmazioni (intervalli di riscaldamento) e le impostazioni della scheda tra utenti/dispositivi. Quando è disattivato, i comandi di impostazione della temperatura vengono inviati solo quando la scheda è visibile su un dispositivo (tablet/PC/cellulare): deve rimanere aperta sullo schermo.',
+  'editor.store_missing': 'L\'integrazione "Thermostat Pro Timeline Sync" non è installata. L\'archiviazione condivisa non è disponibile.',
+    'editor.clear_store': 'Elimina i dati da archiviazione',
+    'editor.clear_store_confirm': 'Questo cancellerà tutta la programmazione archiviata. Continuo?',
+  'editor.migrate_to_store': 'Sposta i dati in archiviazione',
+    'editor.migrate_confirm': 'Sposta i programmi salvati nel browser sul sensodispositivore di storage? Questo sovrascriverà i programmi già presenti nello storage.',
+  'editor.migrate_pull_confirm': 'Importare le programmazioni dall\'archivio e sovrascrivere i dati del browser locale?',
+  'editor.select_storage_first': 'Per favore prima seleziona un dispositivo di archiviazione.',
+    'editor.no_local_data': 'Nessun dato nel browser locale.',
+    'editor.clear_all': 'Elimina tutti i dati',
+    'editor.clear_all_confirm': 'Questo eliminerà sia l\'archiviazione che le pianificazioni del browser locale. Continua?',
+  'editor.clear_storage_only': 'Elimina i dati dal solo spazio di archiviazione',
+    'editor.clear_storage_only_confirm': 'Questo eliminerà le pianificazioni dal dispositivo di archiviazione selezionato. Continua?',
+  'editor.clear_local_only': 'Cancella TUTTI i dati locali',
+    'editor.clear_local_only_confirm': 'Questo eliminerà solo le programmazioni salvate sul browser locale. Continua?',
+  'editor.temp_sensor': 'Sensore di temperatura',
+    'editor.test_tool': 'Strumento di Test',
+    'editor.test_select_entity': 'Seleziona entità',
+    'editor.test_empty': 'Seleziona un\'entità per visualizzare i comandi disponibili…',
+    'editor.test_export': 'Esporta .md',
+    'editor.test_no_fields': 'Nessun campo',
+    'editor.test_select_placeholder': '— Seleziona —',
+    'editor.error_prefix': 'Errore: ',
+    'editor.open_in_hacs': 'Apri in HACS',													   
+    'week.enable': 'Abilita giorni feriali',
+    'week.mode': 'Modo settimanale',
+  // removed same_all option from UI
+  'week.mode.weekday_weekend': 'Feriali + Fine settimana',
+  'week.mode.weekday_sat_sun': 'Feriali + Sabato + Domenica',
+  'week.mode.all_7': 'Tutti i giorni',
+    'week.button': 'Feriali',
+  'week.group.weekdays': 'Feriali',
+  'week.group.weekend': 'Fine settimana',
+  'week.days_full.mon': 'Lunedì',
+  'week.days_full.tue': 'Martedì',
+  'week.days_full.wed': 'Mercoledì',
+  'week.days_full.thu': 'Giovedì',
+  'week.days_full.fri': 'Venerdì',
+  'week.days_full.sat': 'Sabato',
+  'week.days_full.sun': 'Domenica',
+  'week.group.weekdays': 'Feriali',
+  'week.group.weekend': 'Fine settimana',
+    'week.days.mon': 'Lun',
+    'week.days.tue': 'Mar',
+    'week.days.wed': 'Mer',
+    'week.days.thu': 'Gio',
+    'week.days.fri': 'Ven',
+    'week.days.sat': 'Sab',
+    'week.days.sun': 'Dom',
+    'week.editor.title': 'Programmazione giorni feriali',
+  'week.editor.preview_note': 'Anteprima. I cambiamenti verranno applicati quando premi Salva.'
+  , 'week.view.title': 'Vista settimanale'
+  , 'week.view.rooms_one_day': 'Tutte òe stanza • singolo giorno'
+  , 'week.view.days_one_room': 'Tutti i giorni • singola stanza'
+  , 'week.select_room': 'Seleziona stanza'
+  , 'week.copy_to_rooms': 'Copia la settimana nelle stanze'
+  , 'week.copy_to_rooms.title': 'Copia la settimana nelle stanze'
+  , 'week.copy_to_rooms.select': 'Seleziona stanze'
+  , 'week.copy_to_rooms.apply': 'Inserisci nelle stanze'
+  , 'week.enable.desc': 'Abilita la programmazione giornaliera. Se spento, lo stesso programma viene utilizzato ogni giorno.'
+    , 'editor.timefmt.title': 'Formato Ore'
+    , 'editor.timefmt.desc': 'Scegli visualizzazione 24-ore o 12-ore (AM/PM) per gli orari.'
+    , 'editor.tempfmt.title': 'Unità di misura temperatura'
+    , 'editor.tempfmt.desc': 'Scegli Celsius (°C) o Fahrenheit (°F) per le temperature.'
+  , 'editor.timesrc.title': 'Fonte dell\'orario'
+  , 'editor.timesrc.desc': 'Scegli se utilizzare l\'orario del browser o quello di Home Assistant per “adesso”.'
+  , 'editor.timesrc.browser': 'Browser'
+  , 'editor.timesrc.ha': 'Home Assistant'
+  , 'editor.tabs.settings': 'Impostazioni'
+  , 'editor.tabs.weekdays': 'Weekdays'							  
+    , 'editor.tabs.rooms': 'Stanze'
+  , 'editor.tabs.colors': 'Colori'
+  , 'editor.tabs.away': 'Fuori casa'
+  , 'editor.tabs.sync': 'Sincronizzazione'
+  , 'sync.delay.title_sec': 'Ritardo (secondi)'
+  , 'sync.delay.desc_sec': 'Salva dopo che non ci sono state modifiche per questi secondi.'
+  , 'sync.running': 'Sincronizzazionenc in corso…'
+  , 'sync.completed': 'Sincronizzazione completata'
+  , 'away.enable': 'Abilita modalità fuori casa'
+  , 'away.desc': 'Quando non ci sono persone  in casa, abbassa automaticamente i termostati alla temperatura \'fuori casa\' impostata.'
+  , 'away.temp': 'Temperatura modalità fuori casa'
+  , 'away.persons': 'Persone'
+  , 'away.add_person': 'Aggiungi persona'
+  , 'away.resume_schedule': 'Ripristina programmazione'
+  , 'away.resume_away': 'Ripristina temperatura fuori casa'
+    , 'editor.heat_colors.title': 'Colori per gli intervalli di riscaldamento'
+  , 'editor.heat_colors.add': 'Aggiungi colore per intervallo'
+    , 'editor.colors.col_from': 'Da °C'
+    , 'editor.colors.col_to': 'A °C'
+    , 'editor.colors.col_color': 'Colore'
+  , 'editor.colors.empty': 'Nessuna stanza presente. Aggiungi una stanza per definire i colori degli intervalli.'
+  , 'editor.colors.go_add': 'Aggiungi stanza'
+  , 'editor.select_entities': 'Stanze'
+  , 'editor.colors.refresh': 'Aggiorna programmazione'
+  , 'editor.colors.clear_local': 'Elimina le impostazioni dei colori dal browser locale'
+  , 'editor.colors.clear_local_confirm': 'Verranno eliminate le impostazioni dei colori dal browser locale. Continua?'
+  , 'editor.colors.clear_shared': 'Elimina le impostazioni dei colori dallo storage'
+  , 'editor.colors.clear_shared_confirm': 'Verranno eliminate le impostazioni dei colori dal dispositivo di storage. Continua?'
+  , 'editor.colors.clear_all': 'Elimina tutte le impostazioni dei colori'
+  , 'editor.colors.clear_all_confirm': 'Verranno eliminate le impostazioni dei colori dal browser locale e dal dispositivo di storage. Continua?'
+  , 'editor.colors.mode': 'Modalità colore'
+  , 'editor.colors.mode.desc': 'Scegli i colori per ogni stanza o un insieme per tutte le stanze.'
+  , 'editor.colors.mode_per_room': 'Per stanza'
+  , 'editor.colors.mode_global': 'Tutte le stanze'
+  , 'editor.colors.global_title': 'Tutte le stanze'
+  , 'editor.reload_editor': 'Ricarica editor'
+  , 'editor.reload_dashboard': 'Ricarica pannello'
+  , 'onboard.title': 'Benvenuto in Thermostat Timeline'
+  , 'onboard.next': 'Prossimo'
+  , 'onboard.prev': 'Precedente'
+  , 'onboard.skip': 'Salta'
+  , 'onboard.done': 'Fine'
+  , 'onboard.dont_show': "Non mostrare più"
+  , 'onboard.step_main': 'Questa è la programmazione principale. Mostra le temperature desiderate nell\'arco di 24 ore per ogni stanza.'
+  , 'onboard.step_add': 'Aggiungi un intervallo termico premendo \'+\' e \'Aggiungi intervallo\' o facendo doppio clic sulla sequenza temporale.'
+  , 'onboard.step_edit': 'Modifica o elimina un intervallo facendo doppio clic su di esso. Utilizza \'Giorni feriali\' per pianificare giorni diversi.'
+  , 'onboard.reset': 'Mostra nuovamente la guida'
+  , 'onboard.reset_ok': 'Il \'Benvenuto\' verrà mostrato la prossima volta.'
+  , 'pause.menu_title': 'Imposta automaticamente la pausa'
+  , 'pause.off_1h': 'Pausa 1 ora'
+  , 'pause.off_5h': 'Pausa 5 ore'
+  , 'pause.off_custom': 'Durata personalizzata…'
+  , 'pause.off_indef': 'Pausa fino a che non ripristino'
+  , 'pause.resume': 'Ripristina ora'
+  , 'pause.close': 'Chiudi'
+  , 'pause.active_until': 'Pausa fino a {time}'
+  , 'pause.active_indef': 'Pausa'
+  , 'editor.pausebtn.title': 'Pulsante Pausa'
+  , 'editor.pausebtn.desc': 'Mostra un pulsante di pausa globale nell\'intestazione della scheda. Durante la pausa, tutti i comandi set_temperature vengono soppressi.'
+  , 'editor.integration.connected': 'Integrazione pronta'
+  , 'editor.integration.disconnected': 'Integrazione non disponibile'
+  , 'profiles.enable': 'Abilita profili (override)'
+  , 'profiles.enable.desc': 'Consenti pianificazioni giornaliere denominate che puoi attivare per sovrascrivere il programma principale.'
+  , 'profiles.button': 'Programmazione manuale'
+  , 'profiles.editor.title': 'Profili'
+  , 'profiles.add': 'Aggiungi profilo'
+  , 'profiles.rename': 'Rinomina'
+  , 'profiles.delete': 'Elimina'
+  , 'profiles.activate': 'Attiva'
+  , 'profiles.deactivate': 'Disattiva'
+  , 'profiles.active': 'Attivo'
+  , 'profiles.none': 'Nessuno'
+  , 'profiles.name_placeholder': 'Nome del profilo'
+  , 'profiles.edit': 'Modifica'
+  , 'profiles.preview_note': 'Solo anteprima. Le pianificazioni diventano attive quando attivi il profilo.'
+  , 'profiles.active_label': 'Profilo manuale attivo:'
+  , 'editor.tabs.holidays': 'Festività'
+  , 'editor.tabs.backup': 'Copia di sicurezza'
+  , 'backup.title': 'Copia di sicurezza'
+  , 'backup.desc': 'Copiare pianificazioni/impostazioni per eseguire il backup e ripristinare quando necessario.'
+  , 'backup.now': 'Effettua copia ora'
+  , 'backup.restore': 'Ripristina'
+  , 'backup.auto': 'Copia di sizurezza automatica'
+  , 'backup.auto.desc': 'Effettua copia di sicurezza programmata.'
+  , 'backup.interval': 'Intervallo (giorni)'
+  , 'backup.interval.desc': 'Giorni tra le copie di sicurezza automatiche (min. 1).'
+  , 'backup.sensor': 'Dispositivo per la copia di sicurezza'
+  , 'backup.last': 'Ultima copia di sicurezza'
+  , 'backup.select': 'Seleziona elementi per la copia'
+  , 'backup.select.desc': 'Gli elementi selezionati sono esclusi da copia/ripristino'
+  , 'backup.opt.all': 'Tutto'
+  , 'backup.opt.main': 'Programmazione principale'
+  , 'backup.opt.weekday': 'Programmazione feriali'
+  , 'backup.opt.presence': 'Programmazione presenza'
+  , 'backup.opt.settings': 'Impostazioni dell\'editor'
+  , 'backup.opt.holiday': 'Programmazione festività'
+  , 'backup.opt.colors': 'Colori degli intervalli'
+  , 'holidays.enable': 'Abilita festività'
+  , 'holidays.desc': 'Usa una programmazione dedicata per le festività nazionali.'
+  , 'holidays.source': 'Fonte per le festività'
+  , 'holidays.source.calendar': 'Calendario'
+  , 'holidays.source.manual': 'Date manuali'
+  , 'holidays.entity': 'Festività'
+  , 'holidays.entity_desc': 'Seleziona un calendario che contenga semplicemente on/off. Dovrebbe essere attivo nei giorni festivi e disattivato negli altri giorni.'
+  , 'holidays.dates': 'Date delle festività'
+  , 'holidays.add_date': 'Aggiungi data'
+  , 'holidays.editor.title': 'Programmazione festività'
+  , 'holidays.edit': 'Modifica programmazione delle fetività'
+  , 'holidays.button': 'Festività'
+  , 'presence.button': 'Programmazione presenze'
+  , 'presence.editor.title': 'Programmazione delle presenze'
+  , 'presence.enable_advanced': 'Abilita \'fuori casa\' avanzato'
+  , 'presence.live_header': 'Mostra la presenza in tempo reale nell\'intestazione'
+  , 'presence.live_header.desc': 'Visualizza le fiches con chi è in casa/fuori casa accanto al pulsante di pausa.'
+  , 'presence.combos': 'Combinazioni'
+  , 'presence.enable_combo': 'Abilita questa combinazione'
+  , 'presence.all_home': 'Tutti a casa'
+  , 'presence.none_home': 'Nessuno in casa'
+  , 'presence.home': 'A casa: {names}'
+  , 'presence.away': 'Fuori casa: {names}'
+  , 'presence.manage': 'Gestione combinazioni'
+  , 'presence.who_home': 'A casa'
+  , 'presence.who_away': 'Fuori casa'
+  },  
 };
 const TT_LANG_ALIAS = { no: 'nb', cz: 'cs' };
 function ttGetLangFromHass(hass) {
