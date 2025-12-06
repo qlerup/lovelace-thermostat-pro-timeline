@@ -2,6 +2,19 @@
 
 [![hacs\_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 
+## Support this project
+
+If you find this project useful, you can support me on Ko-fi 💙  
+
+[![Buy me some debugging time on Ko-fi](https://img.shields.io/badge/%F0%9F%90%9E_Buy_me_some_debugging_time_on-Ko--fi-2ea44f?style=for-the-badge)](https://ko-fi.com/qlerup)
+
+
+
+
+
+
+
+
 A **Lovelace card** for **Home Assistant** that lets you plan temperatures on a simple timeline🏡🔕️️ — and automatically apply them to your `climate.*` entities.
 
 <img width="2288" height="476" alt="image" src="https://github.com/user-attachments/assets/95a17e9d-e404-4bad-ba93-5af0a6cff6d5" />
