@@ -129,8 +129,6 @@ const TT_I18N = {
   , 'editor.tabs.colors': 'Colors'
   , 'editor.tabs.away': 'Away from home'
   , 'editor.tabs.sync': 'Sync Engine'
-  , 'sync.delay.title_sec': 'Delay (seconds)'
-  , 'sync.delay.desc_sec': 'Save after no changes for this many seconds.'
   , 'sync.running': 'Sync in progress…'
   , 'sync.completed': 'Sync completed'
   , 'away.enable': 'Enable away mode'
@@ -388,8 +386,6 @@ const TT_I18N = {
   , 'editor.tabs.colors': 'Farver'
     , 'editor.tabs.away': 'Væk fra hjemme'
     , 'editor.tabs.sync': 'Sync Engine'
-    , 'sync.delay.title_sec': 'Forsinkelse (sekunder)'
-    , 'sync.delay.desc_sec': 'Gem efter ingen ændringer i så mange sekunder.'
     , 'sync.running': 'Igangværende sync…'
     , 'sync.completed': 'Sync gennemført'
   , 'editor.tabs.backup': 'Backup'
@@ -748,8 +744,6 @@ const TT_I18N = {
   , 'profiles.enable': 'Aktivera profiler (åsidosättning)'
   , 'profiles.enable.desc': 'Tillåt namngivna dagsscheman som kan aktiveras för att åsidosätta huvudplanen.'
   , 'profiles.active_label': 'Manuell profil aktiv:'
-  , 'sync.delay.title_sec': 'Fördröjning (sekunder)'
-  , 'sync.delay.desc_sec': 'Spara efter att inga ändringar skett under så här många sekunder.'
   , 'week.view.title': 'Veckovy'
   , 'week.view.rooms_one_day': 'Alla rum • en dag'
   , 'week.view.days_one_room': 'Alla dagar • ett rum'
@@ -992,8 +986,6 @@ const TT_I18N = {
   , 'profiles.enable': 'Aktiver profiler (overstyring)'
   , 'profiles.enable.desc': 'Tillat navngitte dagsskjemaer som kan aktiveres for å overstyre hovedplanen.'
   , 'profiles.active_label': 'Manuell profil aktiv:'
-  , 'sync.delay.title_sec': 'Forsinkelse (sekunder)'
-  , 'sync.delay.desc_sec': 'Lagre etter ingen endringer i så mange sekunder.'
   , 'week.view.title': 'Ukevisning'
   , 'week.view.rooms_one_day': 'Alle rom • én dag'
   , 'week.view.days_one_room': 'Alle dager • ett rom'
@@ -1235,8 +1227,6 @@ const TT_I18N = {
   , 'profiles.enable': 'Profile aktivieren (Überschreiben)'
   , 'profiles.enable.desc': 'Benannte Tagespläne erlauben, die den Hauptplan bei Aktivierung überschreiben.'
   , 'profiles.active_label': 'Manuelles Profil aktiv:'
-  , 'sync.delay.title_sec': 'Verzögerung (Sekunden)'
-  , 'sync.delay.desc_sec': 'Speichern, wenn für so viele Sekunden keine Änderungen erfolgen.'
   , 'week.view.title': 'Wochenansicht'
   , 'week.view.rooms_one_day': 'Alle Räume • ein Tag'
   , 'week.view.days_one_room': 'Alle Tage • ein Raum'
@@ -1478,8 +1468,6 @@ const TT_I18N = {
   , 'profiles.enable': 'Habilitar perfiles (sobrescribir)'
   , 'profiles.enable.desc': 'Permitir horarios diarios con nombre que puedas activar para sobrescribir el plan principal.'
   , 'profiles.active_label': 'Perfil manual activo:'
-  , 'sync.delay.title_sec': 'Retraso (segundos)'
-  , 'sync.delay.desc_sec': 'Guardar tras no haber cambios durante tantos segundos.'
   , 'week.view.title': 'Vista semanal'
   , 'week.view.rooms_one_day': 'Todas las habitaciones • un día'
   , 'week.view.days_one_room': 'Todos los días • una habitación'
@@ -1713,8 +1701,6 @@ const TT_I18N = {
   , 'profiles.enable': 'Activer les profils (remplacement)'
   , 'profiles.enable.desc': 'Autoriser des plannings journaliers nommés pouvant remplacer le plan principal lorsque vous les activez.'
   , 'profiles.active_label': 'Profil manuel actif :'
-  , 'sync.delay.title_sec': 'Délai (secondes)'
-  , 'sync.delay.desc_sec': 'Enregistrer après aucune modification durant autant de secondes.'
   , 'week.view.title': 'Vue semaine'
   , 'week.view.rooms_one_day': 'Toutes les pièces • un jour'
   , 'week.view.days_one_room': 'Tous les jours • une pièce'
@@ -1837,8 +1823,6 @@ const TT_I18N = {
   , 'editor.tabs.colors': 'Colori'
   , 'editor.tabs.away': 'Fuori casa'
   , 'editor.tabs.sync': 'Motore di sincronizzazione'
-  , 'sync.delay.title_sec': 'Ritardo (secondi)'
-  , 'sync.delay.desc_sec': 'Salva dopo questo numero di secondi senza modifiche.'
   , 'sync.running': 'Sincronizzazione in corso…'
   , 'sync.completed': 'Sincronizzazione completata'
   , 'away.enable': 'Abilita modalità assenza'
@@ -2196,8 +2180,6 @@ const TT_I18N = {
   , 'profiles.enable': 'Ota profiilit käyttöön (ohitus)'
   , 'profiles.enable.desc': 'Salli nimettyjä päiväaikatauluja, jotka voit aktivoida ohittaaksesi pääsuunnitelman.'
   , 'profiles.active_label': 'Manuaalinen profiili aktiivinen:'
-  , 'sync.delay.title_sec': 'Viive (sekuntia)'
-  , 'sync.delay.desc_sec': 'Tallenna, kun muutoksia ei ole tapahtunut näin moneen sekuntiin.'
   , 'week.view.title': 'Viikkonäkymä'
   , 'week.view.rooms_one_day': 'Kaikki huoneet • yksi päivä'
   , 'week.view.days_one_room': 'Kaikki päivät • yksi huone'
@@ -2460,8 +2442,6 @@ const TT_I18N = {
     , 'editor.tabs.weekdays': 'Dny v týdnu'
     , 'presence.live_header': 'Zobrazit živou přítomnost v záhlaví'
     , 'presence.live_header.desc': 'Zobrazit štítky u tlačítka pauzy s tím, kdo je doma/pryč.'
-    , 'sync.delay.title_sec': 'Zpoždění (sekundy)'
-    , 'sync.delay.desc_sec': 'Uložit po tolika sekundách bez změn.'
     , 'week.view.title': 'Pohled na týden'
     , 'week.view.rooms_one_day': 'Všechny místnosti • jeden den'
     , 'week.view.days_one_room': 'Všechny dny • jedna místnost'
@@ -2584,8 +2564,6 @@ const TT_I18N = {
   , 'editor.tabs.colors': 'Barve'
   , 'editor.tabs.away': 'Odsotnost'
   , 'editor.tabs.sync': 'Sinhronizacijski pogon'
-  , 'sync.delay.title_sec': 'Zamik (sekunde)'
-  , 'sync.delay.desc_sec': 'Shrani po tolikih sekundah brez sprememb.'
   , 'sync.running': 'Sinhronizacija poteka…'
   , 'sync.completed': 'Sinhronizacija končana'
   , 'away.enable': 'Omogoči način odsotnosti'
@@ -3063,6 +3041,9 @@ class ThermostatTimelineCard extends HTMLElement {
   // Delayed sync scheduler
   this._storeDelayTimer = null;
   this._storeDelayDue = 0;
+    // Defer writes while an editor is open to avoid rapid file churn
+    this._pendingSaveAfterEdit = false;
+    this._markPendingSave = ()=>{ this._pendingSaveAfterEdit = true; try { this._persistDraftNow(); } catch {} try { this._render(); } catch {} };
     this._lastVersion = 0;
     this._lastProfileVersion = 0;
   // Polling watcher to pick up sensor updates in case frontend misses events
@@ -3530,7 +3511,24 @@ class ThermostatTimelineCard extends HTMLElement {
     catch { this._schedules = {}; }
   }
 
-  async _saveStore() {
+  _editSessionActive(){ return !!(this._editing || this._inlineEditing || this._weeklyOpen || this._profilesOpen || this._holidayOpen || this._presenceOpen); }
+  _ensureEditModeOn(){ this._pendingSaveAfterEdit = true; }
+  _flushPendingSave(){
+    try {
+      if (!this._pendingSaveAfterEdit) return;
+      if (this._editSessionActive()) return;
+      this._pendingSaveAfterEdit = false;
+      this._saveStore(true);
+    } catch {}
+  }
+
+  async _saveStore(force = false) {
+    if (!force && this._editSessionActive()) {
+      this._markPendingSave();
+      return;
+    }
+    if (!force && this._pendingSaveAfterEdit) return;
+    this._pendingSaveAfterEdit = false;
     try {
       const payload = this._makeStoragePayload(true);
       localStorage.setItem("thermostat_timeline_store", JSON.stringify(payload));
@@ -4626,6 +4624,7 @@ class ThermostatTimelineCard extends HTMLElement {
   .pause-btn ha-icon{ --mdc-icon-size: 16px; }
   .profiles-btn { height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--card-background-color); color: var(--primary-text-color); padding:0 10px; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
   .profiles-btn.primary{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  .profiles-btn.success{ background: var(--success-color, #4caf50); color: var(--text-primary-color, #fff); border-color: var(--success-color, #4caf50); }
   .prof-toolbar .btn ha-icon{ --mdc-icon-size: 16px; }
   .prof-toolbar .btn.primary{ background: var(--primary-color) !important; color: var(--text-primary-color, #fff) !important; border-color: var(--primary-color) !important; }
         .modal-pause{ width:min(86vw, 320px); max-width:320px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); }
@@ -5440,6 +5439,39 @@ class ThermostatTimelineCard extends HTMLElement {
           htools.innerHTML = '';
           const toggleBtn = document.createElement('button'); toggleBtn.className='tools-toggle'; toggleBtn.type='button'; toggleBtn.setAttribute('aria-label','Toggle header tools'); toggleBtn.textContent = this._headToolsOpen ? '✕' : '❮';
           const toolsWrap = document.createElement('div'); toolsWrap.className = 'tools-wrap';
+          const hasPending = !!this._pendingSaveAfterEdit;
+          const recentlySaved = (this._syncJustUntil || 0) > Date.now();
+          const showButton = hasPending || this._saving || recentlySaved;
+          // Explicit Save button that writes all pending changes to storage; always visible (outside fold), only when pending changes exist
+          let saveBtn = null;
+          try {
+            saveBtn = document.createElement('button');
+            saveBtn.className = 'profiles-btn success';
+            saveBtn.type = 'button';
+            saveBtn.style.marginRight = '6px';
+            const idleLabel = this._t('ui.save') || 'Save';
+            const savingLabel = this._t('sync.running') || 'Saving…';
+            const doneLabel = this._t('sync.completed') || 'Saved';
+            const setState = (state)=>{
+              if (state==='saving') { saveBtn.disabled = true; saveBtn.textContent = savingLabel; }
+              else if (state==='done') { saveBtn.disabled = false; saveBtn.textContent = doneLabel; }
+              else { saveBtn.disabled = false; saveBtn.textContent = idleLabel; }
+            };
+            setState(this._saving ? 'saving' : (recentlySaved ? 'done' : 'idle'));
+            if (!showButton) saveBtn.style.display = 'none';
+            saveBtn.addEventListener('click', async ()=>{
+              try {
+                setState('saving');
+                const savePromise = this._saveStore(true);
+                const delayPromise = new Promise(r => setTimeout(r, 800));
+                await Promise.all([savePromise, delayPromise]);
+                setState('done');
+                setTimeout(()=>{ setState('idle'); this._render(); }, 1000);
+              } catch {
+                setState('idle');
+              }
+            });
+          } catch {}
           // Presence button
           if (this._config?.away?.advanced_enabled) {
             const prb = document.createElement('button'); prb.className='profiles-btn primary'; prb.type='button'; prb.textContent=this._t('presence.button'); prb.addEventListener('click', ()=>{ const first=(this._config?.entities||[])[0]||null; if (first) this._openPresenceEditor(first); }); toolsWrap.append(prb);
@@ -5472,7 +5504,8 @@ class ThermostatTimelineCard extends HTMLElement {
           toggleBtn.addEventListener('click', ()=>{
             this._headToolsOpen = !this._headToolsOpen; if (this._headToolsOpen) { htools.classList.add('open'); toggleBtn.textContent='✕'; requestAnimationFrame(()=>{ try { toolsWrap.style.maxWidth=(toolsWrap.scrollWidth+2)+'px'; } catch {} }); } else { try { toolsWrap.style.maxWidth=(toolsWrap.scrollWidth+2)+'px'; } catch {}; htools.classList.remove('open'); toggleBtn.textContent='❮'; requestAnimationFrame(()=>{ toolsWrap.style.maxWidth='0px'; }); }
           });
-          // Place tools first, then the toggle button so the toggle stays at far right
+          // Place Save (if any) before collapsible tools, then toggle on the far right
+          if (saveBtn) htools.append(saveBtn);
           htools.append(toolsWrap, toggleBtn);
           // Hide toggle button if toolsWrap is empty
           if (toolsWrap.children.length === 0) {
@@ -6376,6 +6409,7 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   _openEditor(entity, blockId) {
+    this._ensureEditModeOn();
     if (!blockId) return this._openNewEditor(entity);
     this._editing = { entity, blockId };
     // Hide any tooltips while editing
@@ -6630,7 +6664,7 @@ class ThermostatTimelineCard extends HTMLElement {
           this._config.weekdays_mode = mode;
           const before = this._desiredNowSnapshot();
           try { this._persistDraftNow(); } catch {}
-          this._saveStore();
+          this._markPendingSave();
           if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
           this._scheduleNextApply();
         }
@@ -6698,7 +6732,7 @@ class ThermostatTimelineCard extends HTMLElement {
     }
     this._deleteBlock(entity, blockId); this._closeEditor(); }
 
-  _openNewEditor(entity){ this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; }
+  _openNewEditor(entity){ this._ensureEditModeOn(); this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; }
   /* popups visible: continue */
   // Hide any tooltips while editing
   try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
@@ -6756,6 +6790,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   // ---------- Weekdays modal ----------
   _openWeeklyEditor(entity){
+    this._ensureEditModeOn();
     this._weeklyEntity = entity;
     const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
     this._ensureWeeklyStruct(row);
@@ -6829,7 +6864,7 @@ class ThermostatTimelineCard extends HTMLElement {
       this._weeklyCopyTargets = [];
       const before = this._desiredNowSnapshot();
   try { this._persistDraftNow(); } catch {}
-  this._saveStore();
+  this._markPendingSave();
   this._closeWeeklyEditor();
   this._render();
       if (this._config.apply_on_edit) this._applyIfDesiredChanged(before);
@@ -7179,6 +7214,7 @@ class ThermostatTimelineCard extends HTMLElement {
   // ---------- Profiles modal ----------
   _openProfilesEditor(entity){
     try {
+      this._ensureEditModeOn();
       this._profilesEntity = entity;
       const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
       this._ensureProfilesStruct(row);
@@ -7279,7 +7315,7 @@ class ThermostatTimelineCard extends HTMLElement {
             }
             this._schedules[eid] = r;
           }
-          await this._saveStore();
+          this._markPendingSave();
           this._render();
           this._renderProfilesModal();
           try {
@@ -7293,12 +7329,12 @@ class ThermostatTimelineCard extends HTMLElement {
         });
         const ren = document.createElement('button'); ren.type='button'; ren.className='btn ghost'; ren.textContent=this._t('profiles.rename'); ren.addEventListener('click', async ()=>{
           const cur = name; const txt = prompt(this._t('profiles.rename'), cur) || '';
-          const nn = txt.trim(); if (!nn || nn===cur) return;
-          if (row.profiles[nn]) { alert('Name exists'); return; }
-          row.profiles[nn] = row.profiles[cur]; delete row.profiles[cur]; if (row.activeProfile===cur) row.activeProfile = nn; if (this._profilesSelected===cur) this._profilesSelected = nn; await this._saveStore(); this._renderProfilesModal(); this._render();
+            const nn = txt.trim(); if (!nn || nn===cur) return;
+            if (row.profiles[nn]) { alert('Name exists'); return; }
+            row.profiles[nn] = row.profiles[cur]; delete row.profiles[cur]; if (row.activeProfile===cur) row.activeProfile = nn; if (this._profilesSelected===cur) this._profilesSelected = nn; this._markPendingSave(); this._renderProfilesModal(); this._render();
         });
         const del = document.createElement('button'); del.type='button'; del.className='remove-btn'; del.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>'+this._t('profiles.delete')+'</span>';
-  del.addEventListener('click', async ()=>{ if (!confirm(this._t('profiles.delete')+'?')) return; delete row.profiles[name]; if (row.activeProfile===name) row.activeProfile=null; if (this._profilesSelected===name) this._profilesSelected = Object.keys(row.profiles||{})[0]||null; await this._saveStore(); this._renderProfilesModal(); this._render(); this._scheduleNextApply(); });
+          del.addEventListener('click', async ()=>{ if (!confirm(this._t('profiles.delete')+'?')) return; delete row.profiles[name]; if (row.activeProfile===name) row.activeProfile=null; if (this._profilesSelected===name) this._profilesSelected = Object.keys(row.profiles||{})[0]||null; this._markPendingSave(); this._renderProfilesModal(); this._render(); this._scheduleNextApply(); });
   actions.append(editBtn, act, ren, del); item.append(left, actions); list.append(item);
       }
   if (addBtn) {
@@ -7387,6 +7423,7 @@ class ThermostatTimelineCard extends HTMLElement {
   }
   _openProfileBlockEditor(blockId, atMin=null){
     try {
+      this._ensureEditModeOn();
   const eid = this._profilesRoom || this._profilesEntity; const name = this._profilesSelected; if (!eid) return;
       const row = this._schedules[eid]; this._ensureProfilesStruct(row);
       // Use draft while editing
@@ -7436,7 +7473,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const blocks = (d.rooms && d.rooms[eid]) ? d.rooms[eid] : [];
       row.profiles[sel] = { defaultTemp: row.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
       this._schedules[eid] = row;
-      await this._saveStore();
+      this._markPendingSave();
       // Clear dirty flag and revert Add/Save button immediately
       this._profilesDirty = false;
       try {
@@ -7473,7 +7510,7 @@ class ThermostatTimelineCard extends HTMLElement {
         }
         // Persist and reset timeline for a fresh new draft (ready for next)
         this._profilesDirty = false;
-        await this._saveStore();
+        this._markPendingSave();
         try {
           this._profilesSelected = null; this._profilesEditingNew = true;
           const roomsMap = {}; for (const rid of (this._config?.entities||[])) roomsMap[rid] = [];
@@ -7494,7 +7531,7 @@ class ThermostatTimelineCard extends HTMLElement {
         this._schedules[rid] = rrow;
       }
       this._profilesDirty = false;
-      await this._saveStore();
+      this._markPendingSave();
       try { (this.shadowRoot && this.shadowRoot.activeElement && this.shadowRoot.activeElement.blur && this.shadowRoot.activeElement.blur()); } catch {}
       // Clear selection and show empty preview ready for a new schedule
       try {
@@ -7545,7 +7582,7 @@ class ThermostatTimelineCard extends HTMLElement {
       this._renderWeeklyModal();
     } catch(e){}
   }
-  _openWeeklyBlockEditor(blockId, atMin=null){ if (!this._weeklyDraft) return; const day = this._effectiveDayKey(this._weeklyDayKey || 'mon'); const arr = this._weeklyDraft.days?.[day] || []; if (!blockId){
+  _openWeeklyBlockEditor(blockId, atMin=null){ if (!this._weeklyDraft) return; this._ensureEditModeOn(); const day = this._effectiveDayKey(this._weeklyDayKey || 'mon'); const arr = this._weeklyDraft.days?.[day] || []; if (!blockId){
       // open new
       const start = Number.isFinite(atMin) ? this._clamp(Math.round(atMin),0,1380) : this._clamp(Math.round(this._getNowMin()),0,1380);
       const end = this._clamp(start+60, start+15, 1440);
@@ -7612,6 +7649,7 @@ class ThermostatTimelineCard extends HTMLElement {
   // ---------- Holidays modal ----------
   _openHolidayEditor(entity){
     try {
+      this._ensureEditModeOn();
       const ents = this._config?.entities || [];
       this._holidayRoom = entity || ents[0] || null;
       // Build a rooms map draft from all rooms
@@ -7695,6 +7733,7 @@ class ThermostatTimelineCard extends HTMLElement {
   // ---------- Presence (advanced away) modal ----------
   _openPresenceEditor(entity){
     try {
+      this._ensureEditModeOn();
       // Default to first room
       const ents = this._config?.entities || [];
       this._presenceRoom = entity || ents[0] || null;
@@ -7807,6 +7846,7 @@ class ThermostatTimelineCard extends HTMLElement {
   } catch {}
   }
   _openPresenceBlockEditor(blockId, atMin=null){ try {
+    this._ensureEditModeOn();
     const eid = this._presenceRoom; if (!eid) return;
     if (!this._presenceDraft || !this._presenceDraft.rooms) {
       const roomsMap={}; for (const rid of (this._config?.entities||[])){ const r=this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensurePresenceStruct(r); const arr=(this._presenceCombo && r.presence && r.presence[this._presenceCombo]) ? (r.presence[this._presenceCombo].blocks || []) : []; roomsMap[rid]=JSON.parse(JSON.stringify(arr)); }
@@ -7834,12 +7874,13 @@ class ThermostatTimelineCard extends HTMLElement {
       this._schedules[eid] = row;
     }
     const before = this._desiredNowSnapshot();
-    await this._saveStore();
+    this._markPendingSave();
     this._closePresenceEditor(); this._render();
     if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply();
   } catch {}
   }
   _openHolidayBlockEditor(blockId, atMin=null){ try {
+    this._ensureEditModeOn();
     const eid = this._holidayRoom; if (!eid) return; const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensureHolidayStruct(row);
     if (!this._holidayDraft || !this._holidayDraft.rooms) {
       const roomsMap={}; for (const rid of (this._config?.entities||[])){ const src=this._schedules[rid]?.holiday?.blocks || []; roomsMap[rid]=JSON.parse(JSON.stringify(src)); }
@@ -7875,7 +7916,7 @@ class ThermostatTimelineCard extends HTMLElement {
       this._schedules[eid] = row;
     }
     const before = this._desiredNowSnapshot();
-    await this._saveStore();
+    this._markPendingSave();
     this._closeHolidayEditor(); this._render();
     if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
     this._scheduleNextApply();
@@ -8222,7 +8263,7 @@ class ThermostatTimelineCard extends HTMLElement {
     }
   // Persist local draft immediately for resilience
   try { this._persistDraftNow(); } catch {}
-  await this._saveStore(); this._render(); this._closeEditor();
+  this._markPendingSave(); this._render(); this._closeEditor();
     // Immediate apply if a block now covers the current time (non-weekly path)
     try {
       if (this._config?.auto_apply && this._config?.apply_on_edit) {
@@ -9172,24 +9213,6 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         
         <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
           <!-- Note: Entity pickers removed - file-based storage is always used -->
-          <!-- Sync policy controls -->
-          <div class="setting" style="grid-template-columns: 1fr auto; width:100%;">
-            <div class="text">
-              <div class="title">Sync frequency</div>
-              <div class="desc">Choose instant save or delay writes to storage.</div>
-            </div>
-            <div class="seg syncmode">
-              <button type="button" class="sync-inst">Instant</button>
-              <button type="button" class="sync-del">Delay</button>
-            </div>
-          </div>
-          <div class="setting sync-delay-row" style="grid-template-columns: 1fr auto; width:100%; display:none;">
-        <div class="text">
-          <div class="title sync-delay-title">Delay (seconds)</div>
-          <div class="desc sync-delay-desc">Save after no changes for this many seconds.</div>
-            </div>
-            <input class="sync-sec settings-input" type="number" min="5" max="86400" step="1" value="15" />
-          </div>
           <div class="store-btns">
             <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
             <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
@@ -9273,15 +9296,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const ctrls = this.shadowRoot.querySelector('.store-controls');
         if (ctrls) ctrls.style.display = on ? 'flex' : 'none';
       } catch {}
-      // Disable sync controls when off
-      try {
-        const seg = this.shadowRoot.querySelector('.syncmode');
-  const row = this.shadowRoot.querySelector('.sync-delay-row');
-  const min = this.shadowRoot.querySelector('.sync-sec');
-        if (seg) seg.style.opacity = on ? '' : '.6';
-        if (row) row.style.opacity = on ? '' : '.6';
-        if (min) min.disabled = !on;
-      } catch {}
+      // Sync controls removed (instant-only via Save button)
   this._applyEditorI18n();
       // Re-render so Colors tab shared-clear button visibility updates immediately
   try { this._render(); } catch {}
@@ -9330,24 +9345,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         } catch {}
       })();
     });
-  // Sync mode controls
-  try {
-  const seg = this.shadowRoot.querySelector('.syncmode');
-  const bI = this.shadowRoot.querySelector('.sync-inst');
-  const bD = this.shadowRoot.querySelector('.sync-del');
-  const row = this.shadowRoot.querySelector('.sync-delay-row');
-  const min = this.shadowRoot.querySelector('.sync-sec');
-    const applyUi = ()=>{
-      const mode = this._config.storage_sync_mode || 'instant';
-      if (bI && bD){ bI.classList.toggle('active', mode==='instant'); bD.classList.toggle('active', mode==='delay'); }
-  if (row) row.style.display = mode==='delay' ? '' : 'none';
-  if (min && min !== this.shadowRoot.activeElement) min.value = String(this._config.storage_sync_sec || 15);
-    };
-    if (bI) bI.onclick = ()=>{ this._upd('storage_sync_mode','instant'); applyUi(); try { this._pushSettingsToStoreDebounced(); } catch {} };
-    if (bD) bD.onclick = ()=>{ this._upd('storage_sync_mode','delay'); applyUi(); try { this._pushSettingsToStoreDebounced(); } catch {} };
-  if (min) min.addEventListener('change', (e)=>{ let v = Math.round(Number(e.target.value||15)); if (!Number.isFinite(v)) v = 15; v = Math.max(5, Math.min(86400, v)); this._upd('storage_sync_sec', v); e.target.value = String(v); try { this._pushSettingsToStoreDebounced(); } catch {} });
-    applyUi();
-  } catch {}
+  // Sync mode controls removed (instant-only via Save button)
   qs(".def")  ?.addEventListener("change", e => {
       let raw=String(e.target.value||"").replace(",",".");
       let vDisp=Number(raw);
@@ -9473,7 +9471,20 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     });
     // Per-room default toggle
     qs('.perroom-enable')?.addEventListener('change', e => {
-      const on = !!e.target.checked; this._upd('per_room_defaults', on); try { this._pushSettingsToStoreDebounced(); } catch {}
+      const on = !!e.target.checked;
+      this._upd('per_room_defaults', on);
+      // Push to shared storage immediately (and also keep the debounced call as a backup)
+      try { this._pushSettingsToStore(); } catch {}
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+      // Always persist to localStorage so re-render/refresh doesn't drop the value
+      try {
+        const raw = localStorage.getItem('thermostat_timeline_store') || '';
+        let parsed = {}; try { parsed = JSON.parse(raw || '{}'); } catch { parsed = {}; }
+        const schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : {};
+        const prevSettings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : {};
+        const settings = { ...prevSettings, per_room_defaults: !!on };
+        try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
+      } catch {}
       // Re-render so inputs show/hide immediately
       this._render();
     });
@@ -9842,6 +9853,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         weekdays_selected_room: this._config.weekdays_selected_room || '',
         min_temp: this._config.min_temp,
         max_temp: this._config.max_temp,
+        per_room_defaults: !!this._config.per_room_defaults,
         away: this._config.away,
         merges: this._config.merges,
         labels: this._config.labels,
@@ -9965,22 +9977,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const ctrls = this.shadowRoot.querySelector('.store-controls');
         if (ctrls) ctrls.style.display = enabled ? 'flex' : 'none';
       } catch {}
-      // Reflect sync controls state
-      try {
-        const seg = this.shadowRoot.querySelector('.syncmode');
-        const row = this.shadowRoot.querySelector('.sync-delay-row');
-        const min = this.shadowRoot.querySelector('.sync-min');
-        if (seg) seg.style.opacity = enabled ? '' : '.6';
-        if (row) row.style.opacity = enabled ? '' : '.6';
-        if (min) min.disabled = !enabled;
-        // Also set button active states and input value
-        const bI = this.shadowRoot.querySelector('.sync-inst');
-        const bD = this.shadowRoot.querySelector('.sync-del');
-        const mode = this._config.storage_sync_mode || 'instant';
-        if (bI && bD){ bI.classList.toggle('active', mode==='instant'); bD.classList.toggle('active', mode==='delay'); }
-  if (row) row.style.display = (mode==='delay' && enabled) ? '' : 'none';
-  if (min && min !== this.shadowRoot.activeElement) min.value = String(this._config.storage_sync_sec || 15);
-      } catch {}
+      // Sync controls removed (instant-only via Save button)
       // Reflect state for bottom "Clear local only" button
       try {
         const clrLocal = this.shadowRoot.querySelector('.clear-local-only');
@@ -11657,19 +11654,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const wenDesc = root.querySelector('.tab-weekdays .week-setting-inline .week-enable-desc'); if (wenDesc) wenDesc.textContent = t('week.enable.desc');
       } catch {}
 
-      // Sync delay labels (seconds)
-      try {
-        const sdT = root.querySelector('.sync-delay-title');
-        if (sdT) {
-          const tx = t('sync.delay.title_sec');
-          sdT.textContent = (tx && tx !== 'sync.delay.title_sec') ? tx : 'Delay (seconds)';
-        }
-        const sdD = root.querySelector('.sync-delay-desc');
-        if (sdD) {
-          const dx = t('sync.delay.desc_sec');
-          sdD.textContent = (dx && dx !== 'sync.delay.desc_sec') ? dx : 'Save after no changes for this many seconds.';
-        }
-      } catch {}
+      // Sync delay labels removed (controls removed)
 
       // Backup tab labels
       try {
