@@ -10240,6 +10240,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
      }
 
     // Build colors tab content (always render once, even with zero rooms)
+    // Build colors tab content (always render once, even with zero rooms)
     try {
       const root = this.shadowRoot.querySelector('.tab-colors');
       if (root) {
@@ -10284,7 +10285,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           box.append(p, btn); root.append(box);
         }
 
-        // Global mode editor (single set applied to all rooms under key "*")
+        // --- FIXED: GLOBAL EDITOR ---
         if (isGlobal) {
           const eid = '*';
           const line = document.createElement('div'); line.className = 'inline';
@@ -10302,6 +10303,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           try { if (this._openColorRows.has(eid)) line.classList.add('open'); } catch {}
           const renderRanges = () => {
             colorsWrap.innerHTML = '';
+            // Get current list (treat as read-only)
             const ranges = (this._config.color_ranges?.[eid]) || [];
             if (ranges.length > 0) colorsWrap.append(head);
             ranges.forEach((r, ri) => {
@@ -10315,11 +10317,40 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               f.min = String(minDisp); t.min = String(minDisp);
               f.max = String(maxDisp); t.max = String(maxDisp);
               const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+              
               const repaint = ()=>{ this._emit(true); try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {} try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {} };
-              f.onchange = () => { let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v); r.from = this._fromDisplayTemp(v); this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] }; repaint(); };
-              t.onchange = () => { let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v); r.to = this._fromDisplayTemp(v); this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] }; repaint(); };
-              c.onchange = () => { r.color = c.value; this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] }; repaint(); };
-              rm.onclick = () => { ranges.splice(ri, 1); this._config.color_ranges[eid] = ranges; this._emit(true); renderRanges(); };
+              
+              // --- SAFE IMMUTABLE UPDATES ---
+              f.onchange = () => { 
+                let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v); 
+                // Copy array
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                // Copy object and update
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], from: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                repaint(); 
+              };
+              t.onchange = () => { 
+                let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v); 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], to: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                repaint(); 
+              };
+              c.onchange = () => { 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], color: c.value };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                repaint(); 
+              };
+              rm.onclick = () => { 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                copied_config.splice(ri, 1);
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                this._emit(true); renderRanges(); 
+              };
+              // -----------------------------
+
               row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
             });
             const add = document.createElement('button'); add.className = 'add-entity-btn'; add.type = 'button'; add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
@@ -10331,7 +10362,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           root.append(line);
         }
 
-        // Per-room editors
+        // --- FIXED: PER-ROOM EDITOR ---
         for (let i = 0; !isGlobal && i < want; i++) {
           const eid = this._config.entities[i]; if (!eid) continue;
           const line = document.createElement('div'); line.className = 'inline';
@@ -10349,13 +10380,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           line.append(summary);
           const details = document.createElement('div'); details.className = 'details'; line.append(details);
           const colorsWrap = document.createElement('div'); colorsWrap.style.display = 'grid'; colorsWrap.style.gap = '0px'; details.append(colorsWrap);
-          // Header labels for inputs (appended only when ranges exist)
           const head = document.createElement('div'); head.className = 'colors-head';
           head.innerHTML = `<span>${this._t('editor.colors.col_from')}</span><span>${this._t('editor.colors.col_to')}</span><span>${this._t('editor.colors.col_color')}</span><span></span>`;
-          // Restore open state for this entity in Colors tab
           try { if (this._openColorRows.has(eid)) line.classList.add('open'); } catch {}
           const renderRanges = () => {
             colorsWrap.innerHTML = '';
+            // Get current list (treat as read-only)
             const ranges = (this._config.color_ranges?.[eid]) || [];
             if (ranges.length > 0) colorsWrap.append(head);
             ranges.forEach((r, ri) => {
@@ -10364,36 +10394,47 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               const f = document.createElement('input'); f.type = 'number'; f.step = '0.5'; f.value = String(this._toDisplayTemp(r.from ?? 0)); f.setAttribute('aria-label', this._t('editor.colors.col_from')); f.title = this._t('editor.colors.col_from');
               const t = document.createElement('input'); t.type = 'number'; t.step = '0.5'; t.value = String(this._toDisplayTemp(r.to ?? 0)); t.setAttribute('aria-label', this._t('editor.colors.col_to')); t.title = this._t('editor.colors.col_to');
               const c = document.createElement('input'); c.type = 'color'; c.value = r.color || '#ffb347'; c.setAttribute('aria-label', this._t('editor.colors.col_color')); c.title = this._t('editor.colors.col_color');
-              // Apply min/max constraints based on max_temp (respect display units)
               const maxDisp = this._toDisplayTemp(this._config.max_temp ?? 25);
               const minDisp = this._toDisplayTemp(this._config.min_temp ?? 5);
               f.min = String(minDisp); t.min = String(minDisp);
               f.max = String(maxDisp); t.max = String(maxDisp);
               const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+              
               const repaint = ()=>{
                 this._emit(true);
                 try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
                 try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
               };
+
+              // --- SAFE IMMUTABLE UPDATES ---
               f.onchange = () => {
                 let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v);
-                r.from = this._fromDisplayTemp(v);
-                // replace with new objects to ensure HA detects changes
-                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] };
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], from: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
                 repaint();
               };
               t.onchange = () => {
                 let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v);
-                r.to = this._fromDisplayTemp(v);
-                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] };
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], to: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
                 repaint();
               };
               c.onchange = () => {
-                r.color = c.value;
-                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: [...ranges] };
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], color: c.value };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
                 repaint();
               };
-              rm.onclick = () => { ranges.splice(ri, 1); this._config.color_ranges[eid] = ranges; this._emit(true); renderRanges(); };
+              rm.onclick = () => { 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                copied_config.splice(ri, 1);
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
+                this._emit(true); renderRanges(); 
+              };
+              // -----------------------------
+
               row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
             });
             const add = document.createElement('button'); add.className = 'add-entity-btn'; add.type = 'button'; add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
