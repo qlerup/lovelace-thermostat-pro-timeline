@@ -52,6 +52,8 @@ const TT_I18N = {
       'ui.paste_day': 'Paste day',
   'editor.merge_label': 'Merge with (add extra thermostat)',
   'editor.display_name_optional': 'Room name (optional)',
+  'editor.room_mode.title': 'Use input_number instead of climate',
+  'editor.room_mode.desc': 'When enabled, this room controls an input_number and the card will set its value instead of calling climate.set_temperature.',
     'editor.merged_with': 'Merged with'
   , 'editor.store_enable.title': 'Shared storage + background control',
   'editor.store_enable.short': 'Saves schedules to the selected sensor and enables background control.',
@@ -126,9 +128,17 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Settings'
   , 'editor.tabs.weekdays': 'Weekdays'
     , 'editor.tabs.rooms': 'Rooms'
+  , 'editor.tabs.boiler': 'Boiler'
   , 'editor.tabs.colors': 'Colors'
   , 'editor.tabs.away': 'Away from home'
   , 'editor.tabs.sync': 'Sync Engine'
+  , 'boiler.switch': 'Boiler switch'
+  , 'boiler.enable': 'Enable boiler controls'
+  , 'boiler.enable.desc': 'Show boiler settings in this card editor.'
+  , 'boiler.temp_sensor': 'Boiler temperature sensor'
+  , 'boiler.temp_sensor.desc': 'Temperature sensor used to control the boiler switch.'
+  , 'boiler.min_temp': 'Min boiler temp (°C)'
+  , 'boiler.max_temp': 'Max boiler temp (°C)'
   , 'sync.running': 'Sync in progress…'
   , 'sync.completed': 'Sync completed'
   , 'away.enable': 'Enable away mode'
@@ -306,6 +316,8 @@ const TT_I18N = {
       'ui.paste_day': 'Indsæt dag',
   'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
   'editor.display_name_optional': 'Rumnavn (valgfrit)',
+  'editor.room_mode.title': 'Brug input_number i stedet for climate',
+  'editor.room_mode.desc': 'Når slået til, styrer dette rum en input_number, og kortet sætter værdien i stedet for at sende climate.set_temperature.',
     'editor.merged_with': 'Flettet med',
   'editor.store_enable.title': 'Delt lager + baggrundsstyring',
   'editor.store_enable.short': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring.',
@@ -383,9 +395,17 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Indstillinger'
     , 'editor.tabs.weekdays': 'Ugedage'
     , 'editor.tabs.rooms': 'Rum'
+  , 'editor.tabs.boiler': 'Boiler'
   , 'editor.tabs.colors': 'Farver'
     , 'editor.tabs.away': 'Væk fra hjemme'
     , 'editor.tabs.sync': 'Sync Engine'
+  , 'boiler.switch': 'Boiler switch'
+  , 'boiler.enable': 'Aktivér kedelstyring'
+  , 'boiler.enable.desc': 'Vis kedelindstillinger i denne cards editor.'
+  , 'boiler.temp_sensor': 'Kedel temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor som styrer kedel‑switchen.'
+  , 'boiler.min_temp': 'Min kedeltemp (°C)'
+  , 'boiler.max_temp': 'Maks kedeltemp (°C)'
     , 'sync.running': 'Igangværende sync…'
     , 'sync.completed': 'Sync gennemført'
   , 'editor.tabs.backup': 'Backup'
@@ -738,6 +758,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Veckodagar'
   , 'editor.tabs.colors': 'Färger'
   , 'editor.tabs.away': 'Borta hemifrån'
+  , 'editor.tabs.boiler': 'Panna'
+  , 'boiler.switch': 'Pannbrytare'
+  , 'boiler.enable': 'Aktivera pannstyrning'
+  , 'boiler.enable.desc': 'Visa panninställningar i den här korteditorn.'
+  , 'boiler.temp_sensor': 'Pannans temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor som styr pannbrytaren.'
+  , 'boiler.min_temp': 'Min pann‑temp (°C)'
+  , 'boiler.max_temp': 'Max pann‑temp (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Visa live‑närvaro i rubriken'
   , 'presence.live_header.desc': 'Visa chips vid pausknappen med vilka som är hemma/borta.'
@@ -980,6 +1008,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Ukedager'
   , 'editor.tabs.colors': 'Farger'
   , 'editor.tabs.away': 'Borte fra hjemmet'
+  , 'editor.tabs.boiler': 'Kjel'
+  , 'boiler.switch': 'Kjelbryter'
+  , 'boiler.enable': 'Aktiver kjelstyring'
+  , 'boiler.enable.desc': 'Vis kjelinnstillinger i denne kort‑editoren.'
+  , 'boiler.temp_sensor': 'Kjelens temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor som styrer kjelbryteren.'
+  , 'boiler.min_temp': 'Min kjeltemperatur (°C)'
+  , 'boiler.max_temp': 'Maks kjeltemperatur (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Vis live tilstedeværelse i headeren'
   , 'presence.live_header.desc': 'Vis chips ved pause‑knappen med hvem som er hjemme/borte.'
@@ -1221,6 +1257,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Wochentage'
   , 'editor.tabs.colors': 'Farben'
   , 'editor.tabs.away': 'Abwesend von zu Hause'
+  , 'editor.tabs.boiler': 'Kessel'
+  , 'boiler.switch': 'Kesselschalter'
+  , 'boiler.enable': 'Kesselsteuerung aktivieren'
+  , 'boiler.enable.desc': 'Kesseleinstellungen in diesem Karten‑Editor anzeigen.'
+  , 'boiler.temp_sensor': 'Kessel‑Temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor zur Steuerung des Kesselschalters.'
+  , 'boiler.min_temp': 'Min. Kesseltemperatur (°C)'
+  , 'boiler.max_temp': 'Max. Kesseltemperatur (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Live‑Anwesenheit in Kopfzeile anzeigen'
   , 'presence.live_header.desc': 'Chips neben der Pause‑Taste anzeigen, wer zu Hause/abwesend ist.'
@@ -1462,6 +1506,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Días de la semana'
   , 'editor.tabs.colors': 'Colores'
   , 'editor.tabs.away': 'Fuera de casa'
+  , 'editor.tabs.boiler': 'Caldera'
+  , 'boiler.switch': 'Interruptor de caldera'
+  , 'boiler.enable': 'Activar control de caldera'
+  , 'boiler.enable.desc': 'Mostrar ajustes de caldera en el editor de esta tarjeta.'
+  , 'boiler.temp_sensor': 'Sensor de temperatura de caldera'
+  , 'boiler.temp_sensor.desc': 'Sensor de temperatura usado para controlar el interruptor de la caldera.'
+  , 'boiler.min_temp': 'Temp. mínima de caldera (°C)'
+  , 'boiler.max_temp': 'Temp. máxima de caldera (°C)'
   , 'editor.temp_sensor': 'Sensor de temperatura'
   , 'presence.live_header': 'Mostrar presencia en vivo en la cabecera'
   , 'presence.live_header.desc': 'Mostrar chips junto al botón de pausa con quién está en casa/ausente.'
@@ -1695,6 +1747,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Jours de semaine'
   , 'editor.tabs.colors': 'Couleurs'
   , 'editor.tabs.away': 'Absence du domicile'
+  , 'editor.tabs.boiler': 'Chaudière'
+  , 'boiler.switch': 'Interrupteur de chaudière'
+  , 'boiler.enable': 'Activer le contrôle chaudière'
+  , 'boiler.enable.desc': 'Afficher les réglages de chaudière dans l’éditeur de cette carte.'
+  , 'boiler.temp_sensor': 'Capteur de température chaudière'
+  , 'boiler.temp_sensor.desc': 'Capteur de température utilisé pour piloter l’interrupteur de la chaudière.'
+  , 'boiler.min_temp': 'Temp. min. chaudière (°C)'
+  , 'boiler.max_temp': 'Temp. max. chaudière (°C)'
   , 'editor.temp_sensor': 'Capteur de température'
   , 'presence.live_header': 'Afficher la présence en direct dans l’en‑tête'
   , 'presence.live_header.desc': 'Afficher des chips près du bouton Pause indiquant qui est présent/absent.'
@@ -1822,6 +1882,14 @@ const TT_I18N = {
     , 'editor.tabs.rooms': 'Stanze'
   , 'editor.tabs.colors': 'Colori'
   , 'editor.tabs.away': 'Fuori casa'
+  , 'editor.tabs.boiler': 'Caldaia'
+  , 'boiler.switch': 'Interruttore caldaia'
+  , 'boiler.enable': 'Attiva controllo caldaia'
+  , 'boiler.enable.desc': 'Mostra le impostazioni caldaia nell’editor di questa scheda.'
+  , 'boiler.temp_sensor': 'Sensore temperatura caldaia'
+  , 'boiler.temp_sensor.desc': 'Sensore di temperatura usato per controllare l’interruttore della caldaia.'
+  , 'boiler.min_temp': 'Temperatura min. caldaia (°C)'
+  , 'boiler.max_temp': 'Temperatura max. caldaia (°C)'
   , 'editor.tabs.sync': 'Motore di sincronizzazione'
   , 'sync.running': 'Sincronizzazione in corso…'
   , 'sync.completed': 'Sincronizzazione completata'
@@ -2174,6 +2242,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Viikonpäivät'
   , 'editor.tabs.colors': 'Värit'
   , 'editor.tabs.away': 'Poissa kotoa'
+  , 'editor.tabs.boiler': 'Kattila'
+  , 'boiler.switch': 'Kattilakytkin'
+  , 'boiler.enable': 'Ota kattilan ohjaus käyttöön'
+  , 'boiler.enable.desc': 'Näytä kattila-asetukset tämän kortin editorissa.'
+  , 'boiler.temp_sensor': 'Kattilan lämpötila‑anturi'
+  , 'boiler.temp_sensor.desc': 'Lämpötila‑anturi, joka ohjaa kattilakytkintä.'
+  , 'boiler.min_temp': 'Kattilan minimi (°C)'
+  , 'boiler.max_temp': 'Kattilan maksimi (°C)'
   , 'editor.temp_sensor': 'Lämpötila‑anturi'
   , 'presence.live_header': 'Näytä live‑läsnäolo yläreunassa'
   , 'presence.live_header.desc': 'Näytä sirut taukopainikkeen vieressä siitä, kuka on kotona/poissa.'
@@ -2296,6 +2372,14 @@ const TT_I18N = {
     // Záložky
     'editor.tabs.settings': 'Nastavení',
     'editor.tabs.rooms': 'Místnosti',
+    'editor.tabs.boiler': 'Kotel',
+    'boiler.switch': 'Spínač kotle',
+    'boiler.enable': 'Povolit ovládání kotle',
+    'boiler.enable.desc': 'Zobrazit nastavení kotle v editoru této karty.',
+    'boiler.temp_sensor': 'Teplotní senzor kotle',
+    'boiler.temp_sensor.desc': 'Teplotní senzor používaný k ovládání spínače kotle.',
+    'boiler.min_temp': 'Min. teplota kotle (°C)',
+    'boiler.max_temp': 'Max. teplota kotle (°C)',
     'editor.test_tool': 'Testovací nástroj',
     'editor.test_select_entity': 'Vybrat entitu',
     'editor.test_empty': 'Vyberte entitu pro zobrazení dostupných příkazů…',
@@ -2563,6 +2647,14 @@ const TT_I18N = {
     , 'editor.tabs.rooms': 'Prostori'
   , 'editor.tabs.colors': 'Barve'
   , 'editor.tabs.away': 'Odsotnost'
+  , 'editor.tabs.boiler': 'Kotel'
+  , 'boiler.switch': 'Stikalo kotla'
+  , 'boiler.enable': 'Omogoči krmiljenje kotla'
+  , 'boiler.enable.desc': 'Prikaži nastavitve kotla v urejevalniku te kartice.'
+  , 'boiler.temp_sensor': 'Temperaturni senzor kotla'
+  , 'boiler.temp_sensor.desc': 'Temperaturni senzor za krmiljenje stikala kotla.'
+  , 'boiler.min_temp': 'Min. temperatura kotla (°C)'
+  , 'boiler.max_temp': 'Maks. temperatura kotla (°C)'
   , 'editor.tabs.sync': 'Sinhronizacijski pogon'
   , 'sync.running': 'Sinhronizacija poteka…'
   , 'sync.completed': 'Sinhronizacija končana'
@@ -2749,6 +2841,11 @@ class ThermostatTimelineCard extends HTMLElement {
       labels: {},
       merges: {},              // { [primary_eid]: [linked_eid, ...] }
       temp_sensors: {},        // { [primary_eid]: sensor.temperature_entity_id }
+      boiler_enabled: false,   // enable boiler controls in editor and runtime
+      boiler_switch: '',       // optional switch.* entity used for boiler control
+      boiler_temp_sensor: '',  // optional sensor.* entity used for boiler temperature control
+      boiler_min_temp: 20,     // boiler min temp (stored internally as °C)
+      boiler_max_temp: 25,     // boiler max temp (stored internally as °C)
       weekdays_enabled: false,
       weekdays_mode: 'weekday_weekend', // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
       weekdays_view: 'all_rooms_one_day', // 'all_rooms_one_day' | 'one_room_all_days'
@@ -2761,6 +2858,7 @@ class ThermostatTimelineCard extends HTMLElement {
       holidays_dates: [],          // [ 'YYYY-MM-DD', ... ]
       per_room_defaults: false,   // Show/use Default °C per room on the timeline
       presence_live_header: true // Show live presence chips in header
+      , room_use_input_number: [] // per-room toggle: show/select input_number instead of climate (matches entities[] index)
     };
   }
 
@@ -2834,6 +2932,9 @@ class ThermostatTimelineCard extends HTMLElement {
       else if (this._storeWatchTimer) { clearInterval(this._storeWatchTimer); this._storeWatchTimer = null; }
     } catch {}
 
+    // Boiler control (frontend only when Sync is OFF)
+    try { this._setupBoilerControl(); } catch {}
+
     // (Removed select/state subscription; card updates via version change as before)
 
     if (!this._initialized) {
@@ -2874,6 +2975,16 @@ class ThermostatTimelineCard extends HTMLElement {
   let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
   let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(120, maxt));
   let mint = Number(config.min_temp ?? 5); mint = isNaN(mint) ? 5 : Math.max(0, Math.min(45, mint));
+    // Boiler limits default to 20/25°C. Keep previous values when not provided.
+    const prevBMin = (this._config && Object.prototype.hasOwnProperty.call(this._config, 'boiler_min_temp')) ? this._config.boiler_min_temp : null;
+    const prevBMax = (this._config && Object.prototype.hasOwnProperty.call(this._config, 'boiler_max_temp')) ? this._config.boiler_max_temp : null;
+    const clampBoiler = (n)=>{ const v = Number(n); return Number.isFinite(v) ? Math.max(0, Math.min(120, v)) : null; };
+    let boilerMin = (config.boiler_min_temp === undefined)
+      ? (Number.isFinite(Number(prevBMin)) ? Number(prevBMin) : 20)
+      : ((config.boiler_min_temp === null || config.boiler_min_temp === '') ? 20 : clampBoiler(config.boiler_min_temp));
+    let boilerMax = (config.boiler_max_temp === undefined)
+      ? (Number.isFinite(Number(prevBMax)) ? Number(prevBMax) : 25)
+      : ((config.boiler_max_temp === null || config.boiler_max_temp === '') ? 25 : clampBoiler(config.boiler_max_temp));
     const showTop = Boolean(config.show_top_now ?? false);
     let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
 
@@ -2887,6 +2998,11 @@ class ThermostatTimelineCard extends HTMLElement {
       min_temp: Object.prototype.hasOwnProperty.call(config, 'min_temp'),
       max_temp: Object.prototype.hasOwnProperty.call(config, 'max_temp'),
       temp_sensors: Object.prototype.hasOwnProperty.call(config, 'temp_sensors'),
+      boiler_enabled: Object.prototype.hasOwnProperty.call(config, 'boiler_enabled'),
+      boiler_switch: Object.prototype.hasOwnProperty.call(config, 'boiler_switch'),
+      boiler_temp_sensor: Object.prototype.hasOwnProperty.call(config, 'boiler_temp_sensor'),
+      boiler_min_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_min_temp'),
+      boiler_max_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_max_temp'),
       show_pause_button: Object.prototype.hasOwnProperty.call(config, 'show_pause_button'),
       away: Object.prototype.hasOwnProperty.call(config, 'away'),
       time_12h: Object.prototype.hasOwnProperty.call(config, 'time_12h'),
@@ -2934,6 +3050,11 @@ class ThermostatTimelineCard extends HTMLElement {
   labels: { ...(config.labels || {}) },
       merges: { ...(config.merges || {}) },
     temp_sensors: { ...(config.temp_sensors || {}) },
+  boiler_enabled: !!(config.boiler_enabled ?? this._config?.boiler_enabled ?? false),
+  boiler_switch: String(config.boiler_switch ?? this._config?.boiler_switch ?? ''),
+  boiler_temp_sensor: String(config.boiler_temp_sensor ?? this._config?.boiler_temp_sensor ?? ''),
+  boiler_min_temp: boilerMin,
+  boiler_max_temp: boilerMax,
   color_ranges: { ...(config.color_ranges || {}) },
     color_global: !!(config.color_global ?? this._config?.color_global ?? false),
       per_room_defaults: !!(config.per_room_defaults ?? this._config?.per_room_defaults ?? false),
@@ -2990,9 +3111,15 @@ class ThermostatTimelineCard extends HTMLElement {
       this._scheduleNextApply();
       // Persist shared settings to storage so other users/dashboards pick them up
       this._debouncedSaveStore();
+
+      // Boiler control (frontend only when Sync is OFF)
+      try { this._setupBoilerControl(); } catch {}
     }
     // Mark config as ready
     this._hasConfig = true;
+
+    // Boiler control (frontend only when Sync is OFF)
+    try { this._setupBoilerControl(); } catch {}
   }
 
   getCardSize() { return 3 + (this._config?.entities?.length || 0) * 2; }
@@ -3050,6 +3177,9 @@ class ThermostatTimelineCard extends HTMLElement {
   this._storeWatchTimer = null;
   this._storeWatchMs = 10000; // ms
   this._storeWatchBusy = false; // avoid overlapping polls
+
+  // Boiler hysteresis control tick (frontend only when Sync is OFF)
+  this._boilerTimer = null;
 
     // Auto apply guard
     this._lastApplied = {}; // { [entity_id]: { min:number, temp:number } }
@@ -3302,6 +3432,8 @@ class ThermostatTimelineCard extends HTMLElement {
                 if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
                 if (so.min_temp !== undefined) so.min_temp = conv(so.min_temp);
                 if (so.max_temp !== undefined) so.max_temp = conv(so.max_temp);
+                if (so.boiler_min_temp !== undefined) so.boiler_min_temp = conv(so.boiler_min_temp);
+                if (so.boiler_max_temp !== undefined) so.boiler_max_temp = conv(so.boiler_max_temp);
                 if (so.away && typeof so.away==='object') {
                   so.away = { ...so.away };
                   if (so.away.target_c !== undefined) so.away.target_c = conv(so.away.target_c);
@@ -3322,6 +3454,17 @@ class ThermostatTimelineCard extends HTMLElement {
             if (s.merges && typeof s.merges === 'object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
             if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
             if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+            if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
+            if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
+            if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
+            if (!this._yamlProvided?.boiler_min_temp) {
+              if (s.boiler_min_temp === null) this._config.boiler_min_temp = 20;
+              else { const v = Number(s.boiler_min_temp); if (Number.isFinite(v)) this._config.boiler_min_temp = v; }
+            }
+            if (!this._yamlProvided?.boiler_max_temp) {
+              if (s.boiler_max_temp === null) this._config.boiler_max_temp = 25;
+              else { const v = Number(s.boiler_max_temp); if (Number.isFinite(v)) this._config.boiler_max_temp = v; }
+            }
             try { this._awayBypass = !!s.away_bypass; } catch {}
             if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
             if (typeof s.show_pause_button === 'boolean' && !this._yamlProvided?.show_pause_button) this._config.show_pause_button = !!s.show_pause_button;
@@ -3446,6 +3589,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
       if (so.min_temp !== undefined) so.min_temp = conv(so.min_temp);
       if (so.max_temp !== undefined) so.max_temp = conv(so.max_temp);
+      if (so.boiler_min_temp !== undefined) so.boiler_min_temp = conv(so.boiler_min_temp);
+      if (so.boiler_max_temp !== undefined) so.boiler_max_temp = conv(so.boiler_max_temp);
       if (so.away && typeof so.away==='object') { so.away = { ...so.away }; if (so.away.target_c !== undefined) so.away.target_c = conv(so.away.target_c); }
       s = so;
     }
@@ -3461,6 +3606,17 @@ class ThermostatTimelineCard extends HTMLElement {
     if (s.merges && typeof s.merges==='object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
     if (s.labels && typeof s.labels==='object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
   if (s.temp_sensors && typeof s.temp_sensors==='object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+    if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
+    if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
+    if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
+  if (!this._yamlProvided?.boiler_min_temp) {
+      if (s.boiler_min_temp === null) this._config.boiler_min_temp = 20;
+    else { const v = Number(s.boiler_min_temp); if (Number.isFinite(v)) this._config.boiler_min_temp = v; }
+  }
+  if (!this._yamlProvided?.boiler_max_temp) {
+      if (s.boiler_max_temp === null) this._config.boiler_max_temp = 25;
+    else { const v = Number(s.boiler_max_temp); if (Number.isFinite(v)) this._config.boiler_max_temp = v; }
+  }
   try { this._awayBypass = !!s.away_bypass; } catch {}
   // Weekdays flags and view (persist across refresh) — skip if editor preview forbids overrides
   if (this._config?.respect_storage_weekdays !== false) {
@@ -3544,6 +3700,11 @@ class ThermostatTimelineCard extends HTMLElement {
               apply_on_edit: !!this._config.apply_on_edit, 
               profiles_enabled: !!this._config.profiles_enabled, 
               global_profile: this._globalProfile || null, 
+              boiler_enabled: !!this._config.boiler_enabled,
+              boiler_switch: String(this._config.boiler_switch || ''), 
+              boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
+              boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : Number(this._config.boiler_min_temp),
+              boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : Number(this._config.boiler_max_temp),
               show_pause_button: !!(this._config.show_pause_button ?? true), 
               pause_indef: !!this._pauseIndef, 
               pause_until_ms: Number(this._pauseUntilMs||0), 
@@ -3713,6 +3874,14 @@ class ThermostatTimelineCard extends HTMLElement {
   _haIsF(){ try { const u = String(this._hass?.config?.unit_system?.temperature||''); return u.toUpperCase().includes('F'); } catch { return false; } }
   async _applySetpointForEntity(eid, desiredC){
     try {
+      const dom = String(eid||'').split('.')[0] || '';
+      if (dom === 'input_number') {
+        // Mirror climate behavior: send in configured display/service unit (°C or °F)
+        const val = this._serviceTempFromC(desiredC);
+        await this._hass.callService('input_number','set_value', { entity_id: eid, value: val });
+        return;
+      }
+      if (dom !== 'climate') return;
       const st = this._hass?.states?.[eid]; if (!st) return;
       const attrs = st.attributes || {};
       let hvacMode = String(attrs.hvac_mode ?? st.state ?? '').toLowerCase();
@@ -3837,6 +4006,11 @@ class ThermostatTimelineCard extends HTMLElement {
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
+        boiler_enabled: !!this._config.boiler_enabled,
+          boiler_switch: String(this._config.boiler_switch || ''),
+        boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
+        boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : toStore(this._config.boiler_min_temp),
+        boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : toStore(this._config.boiler_max_temp),
         show_pause_button: !!(this._config.show_pause_button ?? true),
   presence_live_header: !!(this._config.presence_live_header ?? true),
         auto_apply_enabled: !!this._config.auto_apply,
@@ -4163,7 +4337,7 @@ class ThermostatTimelineCard extends HTMLElement {
       this._resumeTimer = setTimeout(async ()=>{
         // Resume reached: re-render UI and apply immediately once
         try { this._render(); } catch {}
-        await this._applyCurrentSetpoints(true);
+        await this._applyCurrentSetpoints(true, true);
         this._scheduleNextApply();
       }, delay);
     } catch {}
@@ -4296,19 +4470,88 @@ class ThermostatTimelineCard extends HTMLElement {
     const boundary = this._nextBoundaryDate();
     let targetMs = boundary.getTime();
     const resumeMs = this._resumeAtMs();
-    if (resumeMs && resumeMs < targetMs) targetMs = resumeMs;
+    const isResume = !!(resumeMs && resumeMs < targetMs);
+    if (isResume) targetMs = resumeMs;
     const delay = Math.max(500, targetMs - Date.now());
     this._transitionTimer = setTimeout(async () => {
-      await this._applyCurrentSetpoints(true);
+      await this._applyCurrentSetpoints(true, isResume);
       this._scheduleNextApply();
     }, delay);
     // Also make sure we have a standalone resume timer if paused
     this._scheduleResumeTimer();
   }
 
-  async _applyCurrentSetpoints(force=false){ if (!this._config?.auto_apply || !this._hass) return; if (!this._hasConfig) return; if (this._config?.storage_enabled) return; if (this._isPaused()) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
-    // If this call is from boundary timer (force===true), only apply for entities that have boundary now
-    if (force) {
+  _setupBoilerControl(){
+    try {
+      if (this._boilerTimer) { clearInterval(this._boilerTimer); this._boilerTimer = null; }
+      if (!this._hass || !this._config) return;
+      // Boiler control runs in frontend only when Sync is OFF.
+      if (this._config?.storage_enabled) return;
+      if (!this._config?.auto_apply) return;
+      if (!this._config?.boiler_enabled) return;
+      const sw = String(this._config.boiler_switch || '');
+      const sens = String(this._config.boiler_temp_sensor || '');
+      if (!sw || !sw.startsWith('switch.')) return;
+      if (!sens || !sens.includes('.')) return;
+
+      // Run once immediately + then every minute.
+      try { this._boilerTick(); } catch {}
+      this._boilerTimer = setInterval(() => { try { this._boilerTick(); } catch {} }, 60000);
+    } catch {}
+  }
+
+  _boilerTick(){
+    try {
+      if (!this._hass || !this._config) return;
+      if (this._config?.storage_enabled) return;
+      if (!this._config?.auto_apply) return;
+      if (!this._config?.boiler_enabled) return;
+      if (this._isPaused && this._isPaused()) return;
+
+      const sw = String(this._config.boiler_switch || '');
+      const sens = String(this._config.boiler_temp_sensor || '');
+      if (!sw || !sens) return;
+
+      const stSens = this._hass.states?.[sens];
+      if (!stSens) return;
+      const raw = Number(stSens.state);
+      if (!Number.isFinite(raw)) return;
+
+      // Convert sensor value to °C for comparisons
+      let vC = raw;
+      try {
+        const u = String(stSens.attributes?.unit_of_measurement || '').trim();
+        const haU = String(this._hass?.config?.unit_system?.temperature || '').trim();
+        const isF = (u === '°F' || u === 'F') || (!u && (haU === '°F' || haU === 'F'));
+        if (isF) vC = this._fToC(raw);
+      } catch {}
+
+      let minC = Number(this._config.boiler_min_temp);
+      let maxC = Number(this._config.boiler_max_temp);
+      if (!Number.isFinite(minC)) minC = 20;
+      if (!Number.isFinite(maxC)) maxC = 25;
+      const lo = Math.min(minC, maxC);
+      const hi = Math.max(minC, maxC);
+
+      let want = null;
+      if (vC < lo) want = 'on';
+      else if (vC > hi) want = 'off';
+      else return;
+
+      const stSw = this._hass.states?.[sw];
+      const cur = String(stSw?.state || '');
+      if (want === 'on' && cur === 'on') return;
+      if (want === 'off' && cur === 'off') return;
+
+      if (want === 'on') this._hass.callService('switch', 'turn_on', { entity_id: sw });
+      else this._hass.callService('switch', 'turn_off', { entity_id: sw });
+    } catch {}
+  }
+
+  async _applyCurrentSetpoints(force=false, reconcile=false){ if (!this._config?.auto_apply || !this._hass) return; if (!this._hasConfig) return; if (this._config?.storage_enabled) return; if (this._isPaused()) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
+    // If this call is from boundary timer (force===true), only apply for entities that have boundary now.
+    // On resume from pause (reconcile=true), reconcile across all entities.
+    if (force && !reconcile) {
       const primary = this._groupPrimaryOf(eid);
       const row = this._schedules[primary];
       if (!row || !this._entityHasBoundaryNow(row, nowMin)) { continue; }
@@ -4317,7 +4560,9 @@ class ThermostatTimelineCard extends HTMLElement {
     const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5; if (Number.isFinite(mx)) desired = Math.min(desired, mx); if (Number.isFinite(mn)) desired = Math.max(desired, mn);
       if (desired == null || Number.isNaN(desired)) continue;
       const last = this._lastApplied[eid] || {};
-      if (!force && last.min === nowMin && Math.abs((last.temp??NaN) - desired) < 0.05) continue;
+      // Only send when desired setpoint changes for this entity.
+      // Prevents overriding manual changes in other rooms.
+      if (!reconcile && Number.isFinite(last.temp) && Math.abs(Number(last.temp) - desired) < 0.05) continue;
       const st = this._hass.states?.[eid];
       const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
       const willSendF = this._isF(); const haIsF = this._haIsF();
@@ -4358,23 +4603,33 @@ class ThermostatTimelineCard extends HTMLElement {
       if (Number.isFinite(mx)) desired = Math.min(desired, mx);
       if (Number.isFinite(mn)) desired = Math.max(desired, mn);
       const nowMin = Number.isFinite(nowMinOverride) ? nowMinOverride : this._getNowMin();
-      const targets = [entity, ...(this._config?.merges?.[entity] || [])];
+      const dom = String(entity||'').split('.')[0] || '';
+      const targets = (dom === 'climate') ? [entity, ...(this._config?.merges?.[entity] || [])] : [entity];
       for (const eid of targets){
         try {
           const __eid = eid;
-          if (!(typeof __eid==='string' && __eid.includes('.') && __eid.split('.')[0]==='climate' && this._hass?.states?.[__eid])) continue;
-          // Avoid redundant command if thermostat already at desired
-          const st = this._hass.states[__eid];
-          const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
-          const willSendF = this._isF(); const haIsF = this._haIsF();
-          let curU = cur;
-          if (Number.isFinite(curU)) {
-            if (willSendF && !haIsF) curU = this._cToF(curU);
-            else if (!willSendF && haIsF) curU = this._fToC(curU);
-          }
+          if (!(typeof __eid==='string' && __eid.includes('.') && this._hass?.states?.[__eid])) continue;
+          const dom2 = __eid.split('.')[0];
+          // Avoid redundant command if already at desired
+          let curU = NaN;
+          try {
+            const st = this._hass.states[__eid];
+            if (dom2 === 'climate') {
+              const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
+              const willSendF = this._isF(); const haIsF = this._haIsF();
+              curU = cur;
+              if (Number.isFinite(curU)) {
+                if (willSendF && !haIsF) curU = this._cToF(curU);
+                else if (!willSendF && haIsF) curU = this._fToC(curU);
+              }
+            } else if (dom2 === 'input_number') {
+              const raw = Number(st?.state);
+              curU = raw;
+            }
+          } catch {}
           const sendTemp = this._serviceTempFromC(desired);
           if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.049) { this._lastApplied[__eid] = { min: nowMin, temp: desired }; continue; }
-          await this._applySetpointForEntity(eid, desired);
+          await this._applySetpointForEntity(__eid, desired);
           this._lastApplied[__eid] = { min: nowMin, temp: desired };
         } catch {}
       }
@@ -5049,7 +5304,7 @@ class ThermostatTimelineCard extends HTMLElement {
       this._render();
       this._scheduleNextApply();
       // Apply immediately to match plan "now"
-      this._applyCurrentSetpoints(true);
+      this._applyCurrentSetpoints(true, true);
       try { if (this._config?.storage_enabled) this._saveStore(); } catch {}
       try { this.shadowRoot.querySelector('.overlay-pause')?.classList.remove('open'); } catch {}
     } catch {}
@@ -5947,8 +6202,16 @@ class ThermostatTimelineCard extends HTMLElement {
       // Advanced Presence overrides visual track as well (when a combo is active)
       try {
         const key = this._activePresenceComboKey && this._activePresenceComboKey();
-        if (key && row.presence && Array.isArray(row.presence[key]?.blocks) && row.presence[key].blocks.length) {
-          showBlocks = row.presence[key].blocks || [];
+        if (key) {
+          const roomBlocks = (row.presence && Array.isArray(row.presence[key]?.blocks)) ? (row.presence[key].blocks || []) : [];
+          if (roomBlocks.length) {
+            showBlocks = roomBlocks;
+          } else {
+            // Presence combo active but no schedule for this room -> show a virtual all-day Away block
+            const awayC = Number(this._config?.away?.target_c ?? 17);
+            const fallback = Number.isFinite(awayC) ? awayC : this._rowDefaultTemp(row);
+            showBlocks = [{ id: '__presence_away__', startMin: 0, endMin: 1440, temp: fallback }];
+          }
         } else if (this._config?.profiles_enabled) {
           this._ensureProfilesStruct(row);
           const ap = row.activeProfile;
@@ -8967,7 +9230,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
         </style>
   <div class="status-wrap"><span class="int-status" role="status"><ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon><span class="text">Not connected</span></span></div>
-  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-weekdays-btn" role="tab" aria-selected="false">Weekdays</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-holidays-btn" role="tab" aria-selected="false">Holidays</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button><button class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
+  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-weekdays-btn" role="tab" aria-selected="false">Weekdays</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-boiler-btn" role="tab" aria-selected="false">Boiler</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-holidays-btn" role="tab" aria-selected="false">Holidays</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button><button class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         
@@ -9124,6 +9387,43 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       <div class="entities"></div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
         <button class="add-entity-btn add-room-btn" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap tab-boiler" style="display:none; max-width:480px;">
+    <div class="settings-card">
+      <div class="setting boiler-enable-setting" style="grid-template-columns: 1fr;">
+        <div class="text">
+          <div class="title boiler-enable-title">Enable boiler controls</div>
+          <div class="desc boiler-enable-desc"></div>
+        </div>
+        <ha-switch class="boiler-enable"></ha-switch>
+      </div>
+      <div class="setting boiler-switch-setting" style="grid-template-columns: 1fr;">
+        <div class="text">
+          <div class="title boiler-switch-title">Boiler switch</div>
+          <div class="desc boiler-switch-desc"></div>
+        </div>
+        <tt-entity-picker class="boiler-switch-picker" include-domains='["switch"]'></tt-entity-picker>
+      </div>
+      <div class="setting boiler-sensor-setting" style="grid-template-columns: 1fr;">
+        <div class="text">
+          <div class="title boiler-sensor-title">Boiler temperature sensor</div>
+          <div class="desc boiler-sensor-desc"></div>
+        </div>
+        <tt-entity-picker class="boiler-temp-sensor-picker" include-domains='["sensor"]'></tt-entity-picker>
+      </div>
+      <div class="setting boiler-temps-setting" style="grid-template-columns: 1fr;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+          <div class="sfield">
+            <div class="slabel boiler-min-temp-label">Min boiler temp (°C)</div>
+            <input class="boiler-min-temp settings-input" type="number" min="0" max="120" step="0.5" placeholder="20" />
+          </div>
+          <div class="sfield">
+            <div class="slabel boiler-max-temp-label">Max boiler temp (°C)</div>
+            <input class="boiler-max-temp settings-input" type="number" min="0" max="120" step="0.5" placeholder="25" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -9733,18 +10033,73 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
       const wBtn = this.shadowRoot.querySelector('.tab-weekdays-btn');
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
+      const oBtn = this.shadowRoot.querySelector('.tab-boiler-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
+      const bBtn = this.shadowRoot.querySelector('.tab-backup-btn');
       if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
       if (wBtn) wBtn.onclick = ()=> { this._activeTab='weekdays'; this._render(); };
   if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); };
+      if (oBtn) oBtn.onclick = ()=> { this._activeTab='boiler'; this._render(); };
       if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
       if (hBtn) hBtn.onclick = ()=> { this._activeTab='holidays'; this._render(); };
       if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
       if (yBtn) yBtn.onclick = ()=> { this._activeTab='sync'; this._render(); };
+      if (bBtn) bBtn.onclick = ()=> { this._activeTab='backup'; this._render(); };
     } catch {}
+  }
+
+  _roomUsesInputNumber(idx){
+    try {
+      const ent = (this._config?.entities||[])[idx] || '';
+      const inferred = String(ent).startsWith('input_number.');
+      const arr = Array.isArray(this._config?.room_use_input_number) ? this._config.room_use_input_number : [];
+      const explicit = (typeof arr[idx] === 'boolean') ? arr[idx] : null;
+      return (explicit === null) ? inferred : explicit;
+    } catch { return false; }
+  }
+
+  _setRoomUseInputNumber(idx, on){
+    try {
+      const ents = [...(this._config.entities||[])];
+      const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+      while (modes.length < ents.length) modes.push(false);
+      modes[idx] = !!on;
+
+      const oldEid = ents[idx];
+      // If existing selection doesn't match new mode, clear and clean mappings
+      const mismatch = !!oldEid && ((!!on && !String(oldEid).startsWith('input_number.')) || (!on && !String(oldEid).startsWith('climate.')));
+      if (mismatch) {
+        // Clean up labels/merges/temp_sensors for the old primary
+        try {
+          const labels = { ...(this._config.labels || {}) };
+          if (oldEid && labels[oldEid]) delete labels[oldEid];
+          this._config.labels = labels;
+        } catch {}
+        try {
+          const merges = { ...(this._config.merges || {}) };
+          if (oldEid && merges[oldEid]) delete merges[oldEid];
+          for (const k of Object.keys(merges)) {
+            merges[k] = (merges[k] || []).filter((e) => e !== oldEid);
+            if (!merges[k].length) delete merges[k];
+          }
+          this._config.merges = merges;
+        } catch {}
+        try {
+          const sensors = { ...(this._config.temp_sensors || {}) };
+          if (oldEid && sensors[oldEid]) delete sensors[oldEid];
+          this._config.temp_sensors = sensors;
+        } catch {}
+        ents[idx] = '';
+      }
+
+      this._config.entities = ents;
+      this._config.room_use_input_number = modes;
+      this._emit(true);
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+    } catch { this._emit(true); }
   }
 
   // --- Local helpers for unit/time conversions (editor context) ---
@@ -9858,6 +10213,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
+        boiler_enabled: !!this._config.boiler_enabled,
+        boiler_switch: String(this._config.boiler_switch || ''),
+        boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
+        boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : Number(this._config.boiler_min_temp),
+        boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : Number(this._config.boiler_max_temp),
         show_pause_button: !!(this._config.show_pause_button ?? true),
         profiles_enabled: !!this._config.profiles_enabled,
         backup_auto_enabled: !!this._config.backup_auto_enabled,
@@ -9937,6 +10297,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
             if (el.classList.contains('tab-weekdays-btn')) { this._activeTab = 'weekdays'; this._render(); }
           if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); }
+          if (el.classList.contains('tab-boiler-btn')) { this._activeTab = 'boiler'; this._render(); }
           if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
           if (el.classList.contains('tab-holidays-btn')) { this._activeTab = 'holidays'; this._render(); }
           if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
@@ -10816,6 +11177,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
       const wBtn = this.shadowRoot.querySelector('.tab-weekdays-btn');
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
+      const oBtn = this.shadowRoot.querySelector('.tab-boiler-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
       const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
@@ -10824,6 +11186,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const sSec = this.shadowRoot.querySelector('.tab-settings');
       const wSec = this.shadowRoot.querySelector('.tab-weekdays');
       const rSec = this.shadowRoot.querySelector('.tab-rooms');
+      const oSec = this.shadowRoot.querySelector('.tab-boiler');
       const cSec = this.shadowRoot.querySelector('.tab-colors');
       const hSec = this.shadowRoot.querySelector('.tab-holidays');
       const aSec = this.shadowRoot.querySelector('.tab-away');
@@ -10831,6 +11194,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const bSec = this.shadowRoot.querySelector('.tab-backup');
       const isWeekdays = this._activeTab === 'weekdays';
       const isRooms = this._activeTab === 'rooms';
+      const isBoiler = this._activeTab === 'boiler';
       const isColors = this._activeTab === 'colors';
       const isSettings = this._activeTab === 'settings';
       const isHolidays = this._activeTab === 'holidays';
@@ -10846,6 +11210,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         sBtn.classList.toggle('active', isSettings);
         if (wBtn) wBtn.classList.toggle('active', isWeekdays);
         rBtn.classList.toggle('active', isRooms);
+        if (oBtn) oBtn.classList.toggle('active', isBoiler);
         cBtn.classList.toggle('active', isColors);
         if (hBtn) hBtn.classList.toggle('active', isHolidays);
         aBtn.classList.toggle('active', isAway);
@@ -10858,12 +11223,115 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         sSec.style.display = isSettings ? '' : 'none';
         if (wSec) wSec.style.display = isWeekdays ? '' : 'none';
         rSec.style.display = isRooms ? '' : 'none';
+        if (oSec) oSec.style.display = isBoiler ? '' : 'none';
         cSec.style.display = isColors ? '' : 'none';
         if (hSec) hSec.style.display = isHolidays ? '' : 'none';
         aSec.style.display = isAway ? '' : 'none';
         ySec.style.display = (this._activeTab === 'sync') ? '' : 'none';
         if (bSec) bSec.style.display = (showBackup && this._activeTab === 'backup') ? '' : 'none';
       }
+    } catch {}
+
+    // Populate Boiler tab controls
+    try {
+      const en = this.shadowRoot.querySelector('.boiler-enable');
+      if (en) en.checked = !!this._config.boiler_enabled;
+      if (en && !en._ttBound) {
+        en._ttBound = true;
+        en.addEventListener('change', (e)=>{
+          this._config.boiler_enabled = !!e.target.checked;
+          this._emit();
+          try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
+          // Re-render to update visibility of dependent controls
+          this._render();
+        });
+      }
+
+      // Show/hide dependent Boiler controls based on master toggle
+      const boilerOn = !!this._config.boiler_enabled;
+      try {
+        const switchRow = this.shadowRoot.querySelector('.boiler-switch-setting');
+        const sensorRow = this.shadowRoot.querySelector('.boiler-sensor-setting');
+        const tempsRow = this.shadowRoot.querySelector('.boiler-temps-setting');
+        [switchRow, sensorRow, tempsRow].forEach(r=>{ if (r) r.style.display = boilerOn ? '' : 'none'; });
+      } catch {}
+
+      const p = this.shadowRoot.querySelector('.boiler-switch-picker');
+      if (p) {
+        p.hass = this._hass;
+        p.value = String(this._config.boiler_switch || '');
+        if (!p._ttBound) {
+          p._ttBound = true;
+          p.addEventListener('value-changed', (e)=>{
+            this._upd('boiler_switch', e.detail.value || '');
+            try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
+          });
+        }
+      }
+
+      const sp = this.shadowRoot.querySelector('.boiler-temp-sensor-picker');
+      if (sp) {
+        sp.hass = this._hass;
+        sp.value = String(this._config.boiler_temp_sensor || '');
+        if (!sp._ttBound) {
+          sp._ttBound = true;
+          sp.addEventListener('value-changed', (e)=>{
+            this._upd('boiler_temp_sensor', e.detail.value || '');
+            try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
+          });
+        }
+      }
+
+      const minInp = this.shadowRoot.querySelector('.boiler-min-temp');
+      const maxInp = this.shadowRoot.querySelector('.boiler-max-temp');
+      const setDisp = (el, vC)=>{
+        if (!el) return;
+        if (el === this.shadowRoot.activeElement) return;
+        el.value = (vC === null || vC === undefined || !Number.isFinite(Number(vC))) ? '' : String(this._toDisplayTemp(Number(vC)));
+      };
+      setDisp(minInp, this._config.boiler_min_temp);
+      setDisp(maxInp, this._config.boiler_max_temp);
+      // Keep input constraints in display units
+      try {
+        const dMin = String(this._toDisplayTemp(0));
+        const dMax = String(this._toDisplayTemp(120));
+        if (minInp) { minInp.setAttribute('min', dMin); minInp.setAttribute('max', dMax); }
+        if (maxInp) { maxInp.setAttribute('min', dMin); maxInp.setAttribute('max', dMax); }
+      } catch {}
+
+      const bindNum = (el, key)=>{
+        if (!el || el._ttBound) return;
+        el._ttBound = true;
+        el.addEventListener('change', (e)=>{
+          const raw = String(e.target.value||'').trim().replace(',', '.');
+          let vC = null;
+          if (raw !== '') {
+            const vDisp = Number(raw);
+            if (!isNaN(vDisp)) {
+              vC = this._fromDisplayTemp(vDisp);
+              vC = Math.max(0, Math.min(120, vC));
+            }
+          } else {
+            vC = (key === 'boiler_min_temp') ? 20 : 25;
+          }
+          // Cross-clamp so min <= max when both are set
+          if (key === 'boiler_min_temp') {
+            this._config.boiler_min_temp = vC;
+            const mx = this._config.boiler_max_temp;
+            if (vC !== null && Number.isFinite(Number(mx)) && vC > Number(mx)) this._config.boiler_max_temp = vC;
+          } else {
+            this._config.boiler_max_temp = vC;
+            const mn = this._config.boiler_min_temp;
+            if (vC !== null && Number.isFinite(Number(mn)) && vC < Number(mn)) this._config.boiler_min_temp = vC;
+          }
+          this._emit();
+          try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
+          // Re-render to update paired value if it was clamped
+          this._render();
+        });
+      };
+      bindNum(minInp, 'boiler_min_temp');
+      bindNum(maxInp, 'boiler_max_temp');
     } catch {}
 
     // Populate Away tab controls
@@ -11055,13 +11523,18 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const from = idx;
       const to = Array.prototype.indexOf.call(wrap.children, placeholder);
       const arr = [...(this._config.entities||[])];
+      const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+      while (modes.length < arr.length) modes.push(false);
       const [item] = arr.splice(from,1);
+      const [mItem] = modes.splice(from,1);
       const correctedTo = Math.max(0, Math.min(to, arr.length));
       arr.splice(correctedTo, 0, item);
+      modes.splice(correctedTo, 0, mItem);
       placeholder.remove();
       line.style.display = '';
       this._pointerDndActive = false;
       this._config.entities = arr;
+      this._config.room_use_input_number = modes;
       try { this._suspendRender = false; } catch {}
       this._emit(true);
     };
@@ -11131,11 +11604,36 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     // Left column: entity picker + optional label + merge UI
     const left = document.createElement("div"); left.style.display = "grid"; left.style.gap = "6px";
 
+    const useInput = this._roomUsesInputNumber(idx);
+
+    // Per-room mode toggle
+    const modeRow = document.createElement('div');
+    modeRow.style.display = 'flex';
+    modeRow.style.alignItems = 'center';
+    modeRow.style.justifyContent = 'space-between';
+    modeRow.style.gap = '10px';
+    const modeText = document.createElement('div');
+    modeText.style.display = 'grid';
+    modeText.style.gap = '2px';
+    const modeTitle = document.createElement('div');
+    modeTitle.style.fontWeight = '600';
+    modeTitle.textContent = this._t('editor.room_mode.title') || 'Use input_number instead of climate';
+    const modeDesc = document.createElement('div');
+    modeDesc.style.fontSize = '.85rem';
+    modeDesc.style.color = 'var(--secondary-text-color)';
+    modeDesc.textContent = this._t('editor.room_mode.desc') || '';
+    modeText.append(modeTitle, modeDesc);
+    const modeSwitch = document.createElement('ha-switch');
+    modeSwitch.className = 'room-mode-switch';
+    modeSwitch.checked = !!useInput;
+    modeSwitch.addEventListener('change', (e)=>{ this._setRoomUseInputNumber(idx, !!e.target.checked); });
+    modeRow.append(modeText, modeSwitch);
+
   const pick = document.createElement("tt-entity-picker");
   try { pick.style.display = 'block'; pick.style.minHeight = '48px'; } catch {}
   try { pick.hass = this._hass; } catch {}
   try { pick.value = this._config.entities[idx] || ""; } catch {}
-    pick.setAttribute("include-domains", '["climate"]');
+    pick.setAttribute("include-domains", useInput ? '["input_number"]' : '["climate"]');
     pick.setAttribute("label", this._t("editor.entity_placeholder"));
     // Filter out already-selected entities in other pickers (but allow the current one)
     pick.entityFilter = (st) => {
@@ -11229,6 +11727,10 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     chips.className = 'linked-chips';
 
   left.append(pick, nameInp, linkWrap, chips);
+  // Insert mode toggle at the top
+  try { left.insertBefore(modeRow, left.firstChild); } catch { left.prepend(modeRow); }
+  // Hide merge UI when controlling input_number
+  try { if (useInput) { linkWrap.style.display = 'none'; chips.style.display = 'none'; } } catch {}
     details.append(left);
 
     // Expand/collapse
@@ -11309,15 +11811,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     };
 
     // Initial render of merge section
-    refreshChips();
+    if (!useInput) refreshChips();
 
     // Remove this room/entity
     del.addEventListener('click', () => {
       try {
         const arr = [...(this._config.entities || [])];
+        const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
         const primary = arr[idx];
         // Remove the primary from entities
         arr.splice(idx, 1);
+        try { if (modes.length) modes.splice(idx, 1); } catch {}
         // Clean up labels
         const labels = { ...(this._config.labels || {}) };
         if (primary && labels[primary]) delete labels[primary];
@@ -11329,6 +11833,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (!merges[k].length) delete merges[k];
         }
         this._config.entities = arr;
+        this._config.room_use_input_number = modes;
         this._config.labels = labels;
         this._config.merges = merges;
         this._emit(true);
@@ -11339,6 +11844,18 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     pick.addEventListener("value-changed", (e)=>{
       const oldPrimary = this._config.entities[idx];
       const newPrimary = e.detail.value;
+
+      // Auto-sync mode based on chosen domain (defensive)
+      try {
+        const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+        const ents = [...(this._config.entities || [])];
+        while (modes.length < ents.length) modes.push(false);
+        if (typeof newPrimary === 'string') {
+          if (newPrimary.startsWith('input_number.')) modes[idx] = true;
+          else if (newPrimary.startsWith('climate.')) modes[idx] = false;
+        }
+        this._config.room_use_input_number = modes;
+      } catch {}
       if (oldPrimary && newPrimary && oldPrimary !== newPrimary){
         const merges = { ...(this._config.merges || {}) };
         if (merges[oldPrimary] && !merges[newPrimary]) { merges[newPrimary] = merges[oldPrimary]; delete merges[oldPrimary]; }
@@ -11370,7 +11887,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   try { nameInp.value = (this._config.labels || {})[newPrimary] || ""; if (nameInp && typeof nameInp.requestUpdate === 'function') nameInp.requestUpdate(); } catch {}
   if (this._openCount > 0) this._pendingEmit = true; else this._emit(true);
   try { this._pushSettingsToStoreDebounced(); } catch {}
-      refreshChips();
+      if (!this._roomUsesInputNumber(idx)) refreshChips();
       // Also update subtitle on primary change
       try {
         const subEl = line.querySelector('.summary-sub');
@@ -11388,7 +11905,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 
   // (Removed unused pointer-driven drag & drop prototype)
 
-  _addEntity(){ this._config.entities = [...(this._config.entities||[]), ""]; this._emit(true); }
+  _addEntity(){
+    this._config.entities = [...(this._config.entities||[]), ""]; 
+    try {
+      const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+      modes.push(false);
+      this._config.room_use_input_number = modes;
+    } catch {}
+    this._emit(true);
+  }
   _upd(key,val){ this._config[key] = val; this._emit(); }
   _emit(repaint=false){
     if (this._openCount > 0) { this._pendingEmit = true; return; }
@@ -11569,6 +12094,18 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       if (maxLbl) maxLbl.textContent = t('editor.max_c').replace('°C', this._unitSymbol());
   const minLbl = root.querySelector('.slabel-minc');
   if (minLbl) minLbl.textContent = t('editor.min_c').replace('°C', this._unitSymbol());
+  const bMinLbl = root.querySelector('.boiler-min-temp-label');
+  if (bMinLbl) bMinLbl.textContent = (t('boiler.min_temp') || 'Min boiler temp (°C)').replace('°C', this._unitSymbol());
+  const bMaxLbl = root.querySelector('.boiler-max-temp-label');
+  if (bMaxLbl) bMaxLbl.textContent = (t('boiler.max_temp') || 'Max boiler temp (°C)').replace('°C', this._unitSymbol());
+  const bEnTitle = root.querySelector('.boiler-enable-title');
+  if (bEnTitle) bEnTitle.textContent = t('boiler.enable') || 'Enable boiler controls';
+  const bEnDesc = root.querySelector('.boiler-enable-desc');
+  if (bEnDesc) bEnDesc.textContent = t('boiler.enable.desc') || '';
+  const bSensTitle = root.querySelector('.boiler-sensor-title');
+  if (bSensTitle) bSensTitle.textContent = t('boiler.temp_sensor') || 'Boiler temperature sensor';
+  const bSensDesc = root.querySelector('.boiler-sensor-desc');
+  if (bSensDesc) bSensDesc.textContent = t('boiler.temp_sensor.desc') || '';
 
       // Settings titles/descriptions
       const settings = Array.from(root.querySelectorAll('.settings-card .setting'));
@@ -11646,11 +12183,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
   const wBtn = root.querySelector('.tab-weekdays-btn'); if (wBtn) wBtn.textContent = t('editor.tabs.weekdays') || 'Weekdays';
   const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
+      const oBtn = root.querySelector('.tab-boiler-btn'); if (oBtn) oBtn.textContent = t('editor.tabs.boiler') || 'Boiler';
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
     const yBtn = root.querySelector('.tab-sync-btn'); if (yBtn) yBtn.textContent = t('editor.tabs.sync');
     const bBtn = root.querySelector('.tab-backup-btn'); if (bBtn) bBtn.textContent = t('editor.tabs.backup') || 'Backup';
     const hBtn = root.querySelector('.tab-holidays-btn'); if (hBtn) hBtn.textContent = t('editor.tabs.holidays');
+      const boTitle = root.querySelector('.boiler-switch-title'); if (boTitle) boTitle.textContent = t('boiler.switch') || 'Boiler switch';
     // Holidays tab inner labels
     try {
       const srcTitle = root.querySelector('.tab-holidays .settings-card .setting .title'); if (srcTitle) srcTitle.textContent = t('holidays.source');
