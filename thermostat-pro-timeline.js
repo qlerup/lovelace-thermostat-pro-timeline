@@ -130,6 +130,14 @@ const TT_I18N = {
     , 'editor.tabs.rooms': 'Rooms'
   , 'editor.tabs.boiler': 'Boiler'
   , 'editor.tabs.colors': 'Colors'
+    , 'editor.tabs.owd': 'Open Window Detection'
+    , 'owd.enable': 'Open Window Detection'
+    , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+    , 'owd.sensors': 'Window/Door sensors'
+    , 'owd.delays.title': 'Delays'
+    , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+    , 'owd.open_delay': 'After open (min)'
+    , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Away from home'
   , 'editor.tabs.sync': 'Sync Engine'
   , 'boiler.switch': 'Boiler switch'
@@ -397,6 +405,14 @@ const TT_I18N = {
     , 'editor.tabs.rooms': 'Rum'
   , 'editor.tabs.boiler': 'Boiler'
   , 'editor.tabs.colors': 'Farver'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Slår termostaterne fra i et rum når valgte vindue-/dørsensorer er åbne.'
+  , 'owd.sensors': 'Vindue-/dørsensorer'
+  , 'owd.delays.title': 'Forsinkelser'
+  , 'owd.delays.desc': 'Minutter før der slukkes (åben) og før skemaet genoptages (lukket).'
+  , 'owd.open_delay': 'Efter åbnet (min)'
+  , 'owd.close_delay': 'Efter lukket (min)'
     , 'editor.tabs.away': 'Væk fra hjemme'
     , 'editor.tabs.sync': 'Sync Engine'
   , 'boiler.switch': 'Boiler switch'
@@ -757,6 +773,14 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Inställningar'
   , 'editor.tabs.weekdays': 'Veckodagar'
   , 'editor.tabs.colors': 'Färger'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Borta hemifrån'
   , 'editor.tabs.boiler': 'Panna'
   , 'boiler.switch': 'Pannbrytare'
@@ -1007,6 +1031,14 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Innstillinger'
   , 'editor.tabs.weekdays': 'Ukedager'
   , 'editor.tabs.colors': 'Farger'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Borte fra hjemmet'
   , 'editor.tabs.boiler': 'Kjel'
   , 'boiler.switch': 'Kjelbryter'
@@ -1256,6 +1288,14 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Einstellungen'
   , 'editor.tabs.weekdays': 'Wochentage'
   , 'editor.tabs.colors': 'Farben'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Abwesend von zu Hause'
   , 'editor.tabs.boiler': 'Kessel'
   , 'boiler.switch': 'Kesselschalter'
@@ -1505,6 +1545,14 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Ajustes'
   , 'editor.tabs.weekdays': 'Días de la semana'
   , 'editor.tabs.colors': 'Colores'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Fuera de casa'
   , 'editor.tabs.boiler': 'Caldera'
   , 'boiler.switch': 'Interruptor de caldera'
@@ -1746,6 +1794,14 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Paramètres'
   , 'editor.tabs.weekdays': 'Jours de semaine'
   , 'editor.tabs.colors': 'Couleurs'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Absence du domicile'
   , 'editor.tabs.boiler': 'Chaudière'
   , 'boiler.switch': 'Interrupteur de chaudière'
@@ -1881,6 +1937,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Giorni feriali'
     , 'editor.tabs.rooms': 'Stanze'
   , 'editor.tabs.colors': 'Colori'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Fuori casa'
   , 'editor.tabs.boiler': 'Caldaia'
   , 'boiler.switch': 'Interruttore caldaia'
@@ -2241,6 +2305,14 @@ const TT_I18N = {
   , 'editor.tabs.settings': 'Asetukset'
   , 'editor.tabs.weekdays': 'Viikonpäivät'
   , 'editor.tabs.colors': 'Värit'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Poissa kotoa'
   , 'editor.tabs.boiler': 'Kattila'
   , 'boiler.switch': 'Kattilakytkin'
@@ -2389,6 +2461,14 @@ const TT_I18N = {
     'editor.error_prefix': 'Chyba: ',
     'editor.open_in_hacs': 'Otevřít v HACS',
     'editor.tabs.colors': 'Barvy',
+    'editor.tabs.owd': 'Open Window Detection',
+    'owd.enable': 'Open Window Detection',
+    'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.',
+    'owd.sensors': 'Window/Door sensors',
+    'owd.delays.title': 'Delays',
+    'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).',
+    'owd.open_delay': 'After open (min)',
+    'owd.close_delay': 'After closed (min)',
     'editor.tabs.away': 'Mimo domov',
   'editor.tabs.sync': 'Sync engine',
   'sync.running': 'Probíhá synchronizace…',
@@ -2646,6 +2726,14 @@ const TT_I18N = {
   , 'editor.tabs.weekdays': 'Dnevi v tednu'
     , 'editor.tabs.rooms': 'Prostori'
   , 'editor.tabs.colors': 'Barve'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Odsotnost'
   , 'editor.tabs.boiler': 'Kotel'
   , 'boiler.switch': 'Stikalo kotla'
@@ -2807,7 +2895,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.10-debug-v2";
+const TT_CARD_VERSION = "2025.12.15-open-window-detection";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -2852,6 +2940,8 @@ class ThermostatTimelineCard extends HTMLElement {
       weekdays_selected_room: '',
       profiles_enabled: false,
       away: { enabled: false, persons: [], target_c: 17, advanced_enabled: false, combos: {} },
+      // Open Window Detection (editor + shared settings)
+      open_window: { enabled: false, sensors: {}, open_delay_min: 2, close_delay_min: 5 },
       holidays_enabled: false,
       holidays_source: 'calendar', // 'calendar' | 'manual'
       holidays_entity: '',         // calendar.* or binary_sensor.* that is on/off for holiday
@@ -8959,6 +9049,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
           if (typeof s.backup_auto_enabled === 'boolean') this._config.backup_auto_enabled = !!s.backup_auto_enabled;
           if (Number.isFinite(s.backup_interval_days)) this._config.backup_interval_days = s.backup_interval_days;
+          if (s.open_window && typeof s.open_window === 'object') this._config.open_window = s.open_window;
         }
         // Re-render after merging settings so UI (time source, etc.) reflects storage values
         try {
@@ -9061,6 +9152,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     this._pendingEmit = false;
   this._openRows = new Set();
   this._openColorRows = new Set();
+  this._openOwdRows = new Set();
   this._suspendRender = false;
   this._activeTab = 'settings';
   // Holidays inline editor state
@@ -9071,6 +9163,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         .wrap { padding:8px 12px; display:grid; gap:16px; max-width: 480px; }
+        .owd-content { display:grid; gap:16px; }
         .row { display:grid; gap:10px; }
         .label { font-size:.85rem; color: var(--secondary-text-color); }
         .entities { display:grid; gap:10px; }
@@ -9230,7 +9323,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
         </style>
   <div class="status-wrap"><span class="int-status" role="status"><ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon><span class="text">Not connected</span></span></div>
-  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-weekdays-btn" role="tab" aria-selected="false">Weekdays</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-boiler-btn" role="tab" aria-selected="false">Boiler</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-holidays-btn" role="tab" aria-selected="false">Holidays</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button><button class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
+  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-weekdays-btn" role="tab" aria-selected="false">Weekdays</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-boiler-btn" role="tab" aria-selected="false">Boiler</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-owd-btn" role="tab" aria-selected="false">Open Window Detection</button><button class="tab-btn tab-holidays-btn" role="tab" aria-selected="false">Holidays</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button><button class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         
@@ -9449,6 +9542,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     </div>
   </div>
   <div class="wrap tab-colors" style="display:none;"></div>
+  <div class="wrap tab-owd" style="display:none; max-width:480px;"></div>
   <div class="wrap tab-holidays" style="display:none; max-width:480px;"></div>
   <div class="wrap tab-away" style="display:none; max-width:480px;">
     <div class="settings-card">
@@ -10035,6 +10129,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const oBtn = this.shadowRoot.querySelector('.tab-boiler-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
+      const owBtn = this.shadowRoot.querySelector('.tab-owd-btn');
       const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
@@ -10044,6 +10139,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); };
       if (oBtn) oBtn.onclick = ()=> { this._activeTab='boiler'; this._render(); };
       if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
+      if (owBtn) owBtn.onclick = ()=> { this._activeTab='owd'; this._render(); };
       if (hBtn) hBtn.onclick = ()=> { this._activeTab='holidays'; this._render(); };
       if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
       if (yBtn) yBtn.onclick = ()=> { this._activeTab='sync'; this._render(); };
@@ -10210,6 +10306,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         max_temp: this._config.max_temp,
         per_room_defaults: !!this._config.per_room_defaults,
         away: this._config.away,
+        open_window: this._config.open_window,
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
@@ -10299,6 +10396,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); }
           if (el.classList.contains('tab-boiler-btn')) { this._activeTab = 'boiler'; this._render(); }
           if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
+          if (el.classList.contains('tab-owd-btn')) { this._activeTab = 'owd'; this._render(); }
           if (el.classList.contains('tab-holidays-btn')) { this._activeTab = 'holidays'; this._render(); }
           if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
           if (el.classList.contains('tab-sync-btn')) { this._activeTab = 'sync'; this._render(); }
@@ -10918,6 +11016,199 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       }
     } catch {}
 
+    // Build Open Window Detection tab content
+    try {
+      const root = this.shadowRoot.querySelector('.tab-owd');
+      if (root) {
+        root.innerHTML = '';
+
+        // Ensure config shape
+        const cur = (this._config.open_window && typeof this._config.open_window === 'object') ? { ...this._config.open_window } : {};
+        if (typeof cur.enabled !== 'boolean') cur.enabled = false;
+        if (!cur.sensors || typeof cur.sensors !== 'object') cur.sensors = {};
+        if (!Number.isFinite(Number(cur.open_delay_min))) cur.open_delay_min = 2;
+        if (!Number.isFinite(Number(cur.close_delay_min))) cur.close_delay_min = 5;
+        this._config.open_window = cur;
+
+        // Enable toggle (always shown)
+        const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
+        const enRow = document.createElement('div'); enRow.className = 'setting';
+        const enText = document.createElement('div'); enText.className = 'text';
+        const enTitle = document.createElement('div'); enTitle.className = 'title owd-enable-title'; enTitle.textContent = this._t('owd.enable') || 'Open Window Detection';
+        const enDesc = document.createElement('div'); enDesc.className = 'desc owd-enable-desc'; enDesc.textContent = this._t('owd.enable.desc') || '';
+        enText.append(enTitle, enDesc);
+        const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'owd-enable'; enSwitch.checked = !!cur.enabled;
+        enSwitch.addEventListener('change', (e)=>{
+          const next = { ...(this._config.open_window || {}) };
+          next.enabled = !!e.target.checked;
+          if (!next.sensors || typeof next.sensors !== 'object') next.sensors = {};
+          if (!Number.isFinite(Number(next.open_delay_min))) next.open_delay_min = 2;
+          if (!Number.isFinite(Number(next.close_delay_min))) next.close_delay_min = 5;
+          this._config.open_window = next;
+          this._emit(true);
+          try { this._pushSettingsToStoreDebounced(); } catch {}
+          this._render();
+        });
+        enRow.append(enText, enSwitch); enableCard.append(enRow); root.append(enableCard);
+
+        // Container for remaining content (shown only when enabled)
+        const contentWrap = document.createElement('div'); contentWrap.className = 'owd-content';
+        contentWrap.style.display = cur.enabled ? '' : 'none';
+        root.append(contentWrap);
+
+        // Rooms foldouts (like Colors tab)
+        const ents = Array.isArray(this._config.entities) ? this._config.entities : [];
+        if (!ents.length) {
+          const box = document.createElement('div'); box.className = 'empty-box';
+          const p = document.createElement('div'); p.textContent = this._t('editor.select_entities') || 'Rooms';
+          const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
+          btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.add_entity') || 'Add room') + '</span>';
+          btn.onclick = ()=>{ this._activeTab = 'rooms'; this._render(); };
+          box.append(p, btn);
+          contentWrap.append(box);
+        }
+
+        for (const eid of ents) {
+          if (!eid) continue;
+          const line = document.createElement('div'); line.className = 'inline';
+          const summary = document.createElement('div'); summary.className = 'summary';
+          const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+          const exp = document.createElement('button'); exp.className = 'expander'; exp.type='button'; exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+          const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+          const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+          try {
+            const labels = this._config.labels || {};
+            const display = labels[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+            titleSpan.textContent = display;
+          } catch { titleSpan.textContent = this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid); }
+          txtWrap.append(titleSpan);
+          sumLeft.append(exp, txtWrap);
+          summary.append(sumLeft);
+          line.append(summary);
+
+          const details = document.createElement('div'); details.className = 'details';
+          line.append(details);
+
+          // Restore open/closed UI state
+          try { if (this._openOwdRows.has(eid)) line.classList.add('open'); } catch {}
+          exp.onclick = ()=>{
+            line.classList.toggle('open');
+            if (line.classList.contains('open')) this._openOwdRows.add(eid);
+            else this._openOwdRows.delete(eid);
+          };
+
+          // Picker + chips
+          const wrap = document.createElement('div');
+          wrap.style.display = 'grid';
+          wrap.style.gap = '8px';
+          const lab = document.createElement('div'); lab.className = 'label owd-sensors-label'; lab.style.display='block';
+          lab.textContent = this._t('owd.sensors') || 'Window/Door sensors';
+
+          const picker = document.createElement('tt-entity-picker');
+          picker.className = 'owd-sensor-picker';
+          picker.setAttribute('include-domains', '["binary_sensor"]');
+          try { picker.hass = this._hass; } catch {}
+          try { picker.value = ''; } catch {}
+
+          const chips = document.createElement('div'); chips.className = 'linked-chips owd-chips';
+
+          const renderChips = ()=>{
+            chips.innerHTML = '';
+            const map = (this._config.open_window && this._config.open_window.sensors && typeof this._config.open_window.sensors === 'object') ? this._config.open_window.sensors : {};
+            const arr = Array.isArray(map[eid]) ? map[eid] : [];
+            for (const sEid of arr) {
+              const chip = document.createElement('span'); chip.className = 'pill-chip';
+              const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[sEid]?.attributes?.friendly_name || (sEid.split('.')[1]||sEid);
+              const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.setAttribute('aria-label', this._t('editor.remove'));
+              rm.addEventListener('click', ()=>{
+                const next = { ...(this._config.open_window || {}) };
+                next.sensors = { ...(next.sensors || {}) };
+                const curArr = Array.isArray(next.sensors[eid]) ? next.sensors[eid] : [];
+                next.sensors[eid] = curArr.filter(x => x !== sEid);
+                if (!next.sensors[eid].length) delete next.sensors[eid];
+                this._config.open_window = next;
+                this._emit(true);
+                try { this._pushSettingsToStoreDebounced(); } catch {}
+                renderChips();
+              });
+              chip.append(txt, rm);
+              chips.append(chip);
+            }
+          };
+          renderChips();
+
+          picker.addEventListener('value-changed', (e)=>{
+            const val = e.detail?.value || '';
+            if (!val) return;
+            try { picker.value = ''; } catch {}
+            const next = { ...(this._config.open_window || {}) };
+            next.sensors = { ...(next.sensors || {}) };
+            const set = new Set(Array.isArray(next.sensors[eid]) ? next.sensors[eid] : []);
+            set.add(val);
+            next.sensors[eid] = Array.from(set);
+            this._config.open_window = next;
+            this._emit(true);
+            try { this._pushSettingsToStoreDebounced(); } catch {}
+            renderChips();
+          });
+
+          wrap.append(lab, picker, chips);
+          details.append(wrap);
+          contentWrap.append(line);
+        }
+
+        // Global delay settings (placed after rooms)
+        const delayCard = document.createElement('div'); delayCard.className = 'settings-card';
+        const row = document.createElement('div'); row.className = 'setting'; row.style.gridTemplateColumns = '1fr';
+        const txt = document.createElement('div'); txt.className = 'text';
+        const title = document.createElement('div'); title.className = 'title owd-delays-title'; title.textContent = this._t('owd.delays.title') || 'Delays';
+        const desc = document.createElement('div'); desc.className = 'desc owd-delays-desc'; desc.textContent = this._t('owd.delays.desc') || '';
+        txt.append(title, desc);
+        row.append(txt);
+        delayCard.append(row);
+
+        const grid = document.createElement('div');
+        grid.style.display = 'flex';
+        grid.style.gap = '10px';
+        grid.style.flexWrap = 'wrap';
+        grid.style.alignItems = 'flex-end';
+
+        const mkField = (cls, labelKey, value, onChange)=>{
+          const f = document.createElement('div'); f.className = 'sfield';
+          const l = document.createElement('div'); l.className = 'slabel'; l.textContent = (this._t(labelKey) || labelKey);
+          const inp = document.createElement('input'); inp.className = `${cls} settings-input`; inp.type = 'number'; inp.min='0'; inp.max='1440'; inp.step='1';
+          if (inp !== this.shadowRoot.activeElement) inp.value = String(value);
+          inp.addEventListener('change', (e)=>{
+            let v = Math.round(Number(String(e.target.value||'').replace(',','.')));
+            if (!Number.isFinite(v)) v = 0;
+            v = Math.max(0, Math.min(1440, v));
+            e.target.value = String(v);
+            onChange(v);
+          });
+          f.append(l, inp);
+          return f;
+        };
+
+        const openField = mkField('owd-open-delay', 'owd.open_delay', Number(cur.open_delay_min||0), (v)=>{
+          const next = { ...(this._config.open_window || {}) };
+          next.open_delay_min = v;
+          this._config.open_window = next;
+          this._emit(true);
+          try { this._pushSettingsToStoreDebounced(); } catch {}
+        });
+        const closeField = mkField('owd-close-delay', 'owd.close_delay', Number(cur.close_delay_min||0), (v)=>{
+          const next = { ...(this._config.open_window || {}) };
+          next.close_delay_min = v;
+          this._config.open_window = next;
+          this._emit(true);
+          try { this._pushSettingsToStoreDebounced(); } catch {}
+        });
+        grid.append(openField, closeField);
+        delayCard.append(grid);
+        contentWrap.append(delayCard);
+      }
+    } catch {}
+
     // Build Holidays tab content
     try {
       const root = this.shadowRoot.querySelector('.tab-holidays');
@@ -10931,7 +11222,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const enDesc = document.createElement('div'); enDesc.className='desc'; enDesc.textContent = this._t('holidays.desc');
         enText.append(enTitle, enDesc);
         const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'holidays-enable'; enSwitch.checked = !!this._config.holidays_enabled;
-        enSwitch.addEventListener('change', (e)=>{ const on = !!e.target.checked; this._upd('holidays_enabled', on); try { contentWrap.style.display = on ? '' : 'none'; } catch {} });
+        enSwitch.addEventListener('change', (e)=>{ const on = !!e.target.checked; this._upd('holidays_enabled', on); try { contentWrap.style.display = on ? '' : 'none'; } catch {} try { this._pushSettingsToStoreDebounced(); } catch {} });
         enRow.append(enText, enSwitch); enableCard.append(enRow); root.append(enableCard);
         // Container for remaining content (shown only when enabled)
         const contentWrap = document.createElement('div'); contentWrap.className='holidays-content'; contentWrap.style.display = this._config.holidays_enabled ? '' : 'none'; root.append(contentWrap);
@@ -10954,8 +11245,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const bCal = document.createElement('button'); bCal.type='button'; bCal.className='h-src-cal'; bCal.textContent = this._t('holidays.source.calendar');
   const bMan = document.createElement('button'); bMan.type='button'; bMan.className='h-src-man'; bMan.textContent = this._t('holidays.source.manual');
   const applySegUi = ()=>{ const src = this._config.holidays_source || 'calendar'; bCal.classList.toggle('active', src==='calendar'); bMan.classList.toggle('active', src==='manual'); };
-  bCal.onclick = ()=>{ this._config.holidays_source='calendar'; applySegUi(); this._emit(true); };
-  bMan.onclick = ()=>{ this._config.holidays_source='manual'; applySegUi(); this._emit(true); };
+  bCal.onclick = ()=>{ this._config.holidays_source='calendar'; applySegUi(); this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
+  bMan.onclick = ()=>{ this._config.holidays_source='manual'; applySegUi(); this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
   sSeg.append(bCal, bMan); sRow.append(sText, sSeg); sourceWrap.append(sRow); applySegUi();
         // Calendar entity picker
     const rowCal = document.createElement('div'); rowCal.className='setting'; rowCal.style.display = (this._config.holidays_source||'calendar')==='calendar' ? 'grid' : 'none';
@@ -10966,7 +11257,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     calTxt.append(calTitle);
   const picker = document.createElement('tt-entity-picker'); picker.className='holiday-entity'; picker.setAttribute('include-domains','["calendar"]'); picker.setAttribute('label', this._t('holidays.entity'));
         try { picker.hass = this._hass; picker.value = this._config.holidays_entity || ''; } catch {}
-        picker.addEventListener('value-changed', (e)=>{ this._upd('holidays_entity', e.detail.value||''); });
+        picker.addEventListener('value-changed', (e)=>{ this._upd('holidays_entity', e.detail.value||''); try { this._pushSettingsToStoreDebounced(); } catch {} });
     // Description moved below the dropdown to avoid cramped layout
     const calDesc = document.createElement('div'); calDesc.className='desc'; calDesc.textContent = this._t('holidays.entity_desc');
   rowCal.append(calTxt, picker, calDesc); sourceWrap.append(rowCal);
@@ -10979,12 +11270,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const addRow = document.createElement('div'); addRow.style.display='flex'; addRow.style.gap='8px'; addRow.style.alignItems='center';
         const inp = document.createElement('input'); inp.type='date'; inp.className='tt-input';
         const addBtn = document.createElement('button'); addBtn.type='button'; addBtn.className='add-entity-btn'; addBtn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+(this._t('holidays.add_date')||'Add date')+'</span>';
-        addBtn.onclick = ()=>{ const v=inp.value; if (!v) return; const arr = Array.isArray(this._config.holidays_dates)?[...this._config.holidays_dates]:[]; if (!arr.includes(v)) arr.push(v); this._config.holidays_dates = arr.sort(); inp.value=''; this._emit(true); };
+        addBtn.onclick = ()=>{ const v=inp.value; if (!v) return; const arr = Array.isArray(this._config.holidays_dates)?[...this._config.holidays_dates]:[]; if (!arr.includes(v)) arr.push(v); this._config.holidays_dates = arr.sort(); inp.value=''; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
         addRow.append(inp, addBtn); manWrap.append(addRow);
         const chips = document.createElement('div'); chips.className='linked-chips';
         const arr = Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[];
         chips.innerHTML='';
-        for (const d of arr){ const chip=document.createElement('span'); chip.className='pill-chip'; const txt=document.createElement('span'); txt.textContent=d; const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); }); chip.append(txt, rm); chips.append(chip); }
+        for (const d of arr){ const chip=document.createElement('span'); chip.className='pill-chip'; const txt=document.createElement('span'); txt.textContent=d; const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} }); chip.append(txt, rm); chips.append(chip); }
     manWrap.append(chips); rowMan.append(manTxt, manWrap); sourceWrap.append(rowMan);
     contentWrap.append(sourceWrap);
         // Inline Holidays editor (preview + edit) inside editor
@@ -11179,6 +11470,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
       const oBtn = this.shadowRoot.querySelector('.tab-boiler-btn');
       const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
+      const owBtn = this.shadowRoot.querySelector('.tab-owd-btn');
       const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
       const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
       const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
@@ -11188,6 +11480,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const rSec = this.shadowRoot.querySelector('.tab-rooms');
       const oSec = this.shadowRoot.querySelector('.tab-boiler');
       const cSec = this.shadowRoot.querySelector('.tab-colors');
+      const owSec = this.shadowRoot.querySelector('.tab-owd');
       const hSec = this.shadowRoot.querySelector('.tab-holidays');
       const aSec = this.shadowRoot.querySelector('.tab-away');
       const ySec = this.shadowRoot.querySelector('.tab-sync');
@@ -11196,6 +11489,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const isRooms = this._activeTab === 'rooms';
       const isBoiler = this._activeTab === 'boiler';
       const isColors = this._activeTab === 'colors';
+      const isOwd = this._activeTab === 'owd';
       const isSettings = this._activeTab === 'settings';
       const isHolidays = this._activeTab === 'holidays';
       const isAway = this._activeTab === 'away';
@@ -11212,6 +11506,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         rBtn.classList.toggle('active', isRooms);
         if (oBtn) oBtn.classList.toggle('active', isBoiler);
         cBtn.classList.toggle('active', isColors);
+        if (owBtn) owBtn.classList.toggle('active', isOwd);
         if (hBtn) hBtn.classList.toggle('active', isHolidays);
         aBtn.classList.toggle('active', isAway);
         yBtn.classList.toggle('active', this._activeTab === 'sync');
@@ -11225,6 +11520,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         rSec.style.display = isRooms ? '' : 'none';
         if (oSec) oSec.style.display = isBoiler ? '' : 'none';
         cSec.style.display = isColors ? '' : 'none';
+        if (owSec) owSec.style.display = isOwd ? '' : 'none';
         if (hSec) hSec.style.display = isHolidays ? '' : 'none';
         aSec.style.display = isAway ? '' : 'none';
         ySec.style.display = (this._activeTab === 'sync') ? '' : 'none';
@@ -12185,6 +12481,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
       const oBtn = root.querySelector('.tab-boiler-btn'); if (oBtn) oBtn.textContent = t('editor.tabs.boiler') || 'Boiler';
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
+        const owBtn = root.querySelector('.tab-owd-btn'); if (owBtn) owBtn.textContent = t('editor.tabs.owd') || 'Open Window Detection';
         const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
     const yBtn = root.querySelector('.tab-sync-btn'); if (yBtn) yBtn.textContent = t('editor.tabs.sync');
     const bBtn = root.querySelector('.tab-backup-btn'); if (bBtn) bBtn.textContent = t('editor.tabs.backup') || 'Backup';
