@@ -12,82 +12,78 @@ const TT_I18N = {
     'ui.temperature': 'Temperature',
     'ui.delete': 'Delete',
     'ui.cancel': 'Cancel',
-  'ui.close': 'Close',
-  'ui.unsaved_confirm': 'You have unsaved changes. Close anyway?',
-  'ui.discard_changes': 'Discard changes',
-  'ui.keep_editing': 'Keep editing',
+    'ui.close': 'Close',
+    'ui.unsaved_confirm': 'You have unsaved changes. Close anyway?',
+    'ui.discard_changes': 'Discard changes',
+    'ui.keep_editing': 'Keep editing',
     'ui.save': 'Save',
     'ui.error_prefix': 'Error: ',
-    'ui.overlap_msg': 'You selected overlapping times — it overlaps during {start} – {end}.',
+    'ui.overlap_msg': 'You selected overlapping times — overlap is {start} – {end}.',
     'ui.auto_fix': 'Auto-fix',
-    'ui.fix_start_to': 'Fix start to {time}',
-  'ui.fix_end_to': 'Fix end to {time}',
-    // Inline meta
-  'ui.current_temp': 'Current temperature:' ,
+    'ui.fix_start_to': 'Set start to {time}',
+    'ui.fix_end_to': 'Set end to {time}',
+    'ui.current_temp': 'Current temperature:',
+    'ui.copy_plan': 'Copy plan',
+    'ui.paste_plan': 'Paste plan',
+    'ui.copy_day': 'Copy day',
+    'ui.paste_day': 'Paste day',
 
-    // GUI editor panel
-  'editor.title_label': 'Title',
-  'editor.add_entity': 'Add room',
+    'editor.title_label': 'Title',
+    'editor.add_entity': 'Add room',
     'editor.entity_placeholder': 'Select an entity',
     'editor.drag_reorder': 'Drag to reorder',
     'editor.remove': 'Remove',
     'editor.default_c': 'Default °C',
-  'editor.row_height_px': 'Row height (px)',
-  'editor.max_c': 'Max °C',
+    'editor.row_height_px': 'Row height (px)',
+    'editor.max_c': 'Max °C',
     'editor.min_c': 'Min °C',
-    'editor.auto_apply.title': 'Automatic apply',
-    'editor.auto_apply.desc':
-      'When enabled, the card will try to set the temperature on selected climate entities so it matches the planned value for “right now”.',
-    'editor.apply_edit.title': 'On editing',
-    'editor.apply_edit.desc':
-      'When you change timeline blocks and the change affects the current time, the new temperature is applied immediately.',
-    'editor.apply_default.title': 'On Default °C change',
-    'editor.apply_default.desc':
-      'When “Default °C” changes and it affects the current period, the new temperature is applied immediately.',
+    'editor.auto_apply.title': 'Auto apply',
+    'editor.auto_apply.desc': 'When enabled, the card tries to set temperature on the selected climate entities to match the scheduled value for “now”.',
+    'editor.apply_edit.title': 'On edit',
+    'editor.apply_edit.desc': 'When you edit blocks and it affects the current time, apply the new temperature immediately.',
+    'editor.apply_default.title': 'On default temperature change',
+    'editor.apply_default.desc': 'When “Default °C” changes and it affects the current period, apply the new temperature immediately.',
     'editor.perroom.title': 'Default °C per room',
-    'editor.perroom.desc': 'Show a Default °C input on each room. When off, the global Default °C is used for all rooms.',
-      'ui.copy_plan': 'Copy plan',
-      'ui.paste_plan': 'Paste plan',
-      'ui.copy_day': 'Copy day',
-      'ui.paste_day': 'Paste day',
-  'editor.merge_label': 'Merge with (add extra thermostat)',
-  'editor.display_name_optional': 'Room name (optional)',
-  'editor.room_mode.title': 'Use input_number instead of climate',
-  'editor.room_mode.desc': 'When enabled, this room controls an input_number and the card will set its value instead of calling climate.set_temperature.',
-    'editor.merged_with': 'Merged with'
-  , 'editor.store_enable.title': 'Shared storage + background control',
-  'editor.store_enable.short': 'Saves schedules to the selected sensor and enables background control.',
-  'editor.store_enable.desc': 'Saves schedules to the selected sensor and enables background set_temperature via the Thermostat Timeline integration. Thermostats update even when the card is closed. Also shares schedules (heat blocks) and card settings across users/devices. When off, set temperature commands are sent only while the card is actively visible on a device (tablet/PC/mobile) — it must remain open on screen.',
-  'editor.store_missing': 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.',
+    'editor.perroom.desc': 'Shows a Default °C field on each row. When off, the global Default °C is used for all rooms.',
+
+    'editor.room_mode.title': 'Room entity type',
+    'editor.room_mode.desc': 'When enabled, select an input_number (target temperature). When disabled, select a climate entity.',
+
+    'editor.merge_label': 'Merge with (add extra thermostat)',
+    'editor.display_name_optional': 'Room name (optional)',
+    'editor.merged_with': 'Merged with',
+
+    'editor.store_enable.title': 'Shared storage + background control',
+    'editor.store_enable.short': 'Stores schedules in the selected sensor and enables background control.',
+    'editor.store_enable.desc': 'Stores schedules in the selected sensor and enables set_temperature in the background. Thermostats are also updated when the card is closed. Shares schedules and card settings across users/devices. When off: commands are only sent while the card is visible on a device and must remain open.',
+    'editor.store_missing': 'The integration “Thermostat Pro Timeline Sync” is not installed. Shared storage is unavailable.',
+    'editor.open_in_hacs': 'Open in HACS',
     'editor.clear_store': 'Clear storage',
     'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
-  'editor.migrate_to_store': 'Transfer data to storage',
-    'editor.migrate_confirm': 'Transfer your browser-saved schedules to the selected storage sensor? This will overwrite any existing schedules in storage.',
-  'editor.migrate_pull_confirm': 'Import schedules from storage and overwrite local browser data?',
-  'editor.select_storage_first': 'Please select a storage sensor first.',
-    'editor.no_local_data': 'No local browser data found.',
+    'editor.migrate_to_store': 'Transfer data to storage',
+    'editor.migrate_confirm': 'Transfer your browser-saved schedules to the selected sensor? This overwrites existing schedules in storage.',
+    'editor.migrate_pull_confirm': 'Import schedules from storage and overwrite local browser data?',
+    'editor.select_storage_first': 'Select a storage sensor first.',
+    'editor.no_local_data': 'No local browser data was found.',
     'editor.clear_all': 'Clear all data',
-    'editor.clear_all_confirm': 'This will delete both storage and local browser schedules. Continue?',
-  'editor.clear_storage_only': 'Clear storage data only',
-    'editor.clear_storage_only_confirm': 'This will delete schedules from the selected storage sensor. Continue?',
-  'editor.clear_local_only': 'Clear ALL local data only',
-    'editor.clear_local_only_confirm': 'This will delete schedules saved in your browser only. Continue?',
-  'editor.temp_sensor': 'Temperature sensor',
-  'editor.test_tool': 'Test tool',
-  'editor.test_select_entity': 'Select entity',
-  'editor.test_empty': 'Select an entity to see available commands…',
-  'editor.test_export': 'Export .md',
-  'editor.test_no_fields': 'No fields',
-  'editor.test_select_placeholder': '— Select —',
-  'editor.error_prefix': 'Error: ',
-  'editor.open_in_hacs': 'Open in HACS'
-    , 'week.enable': 'Enable weekdays',
+    'editor.clear_all_confirm': 'This deletes both storage and local/browser schedules. Continue?',
+    'editor.clear_storage_only': 'Clear storage data only',
+    'editor.clear_storage_only_confirm': 'This deletes schedules from the selected storage sensor. Continue?',
+    'editor.clear_local_only': 'Clear ALL local data (local only)',
+    'editor.clear_local_only_confirm': 'This deletes only schedules saved in your browser. Continue?',
+
+    'editor.select_entities': 'Rooms',
+    'editor.colors.empty': 'No rooms added yet. Add a room to define colors.',
+    'editor.colors.go_add': 'Add room',
+
+    'week.enable': 'Enable weekdays',
+    'week.enable.desc': 'Enable per-weekday planning. When off, the same plan is used every day.',
     'week.mode': 'Weekday mode',
   // removed same_all option from UI
   'week.mode.weekday_weekend': 'Weekdays + Weekend',
   'week.mode.weekday_sat_sun': 'Weekdays + Saturday + Sunday',
   'week.mode.all_7': 'All days',
-    'week.button': 'Weekdays',
+  'week.button': 'Weekdays',
   'week.group.weekdays': 'Weekdays',
   'week.group.weekend': 'Weekend',
   'week.days_full.mon': 'Monday',
@@ -97,252 +93,209 @@ const TT_I18N = {
   'week.days_full.fri': 'Friday',
   'week.days_full.sat': 'Saturday',
   'week.days_full.sun': 'Sunday',
-  'week.group.weekdays': 'Weekdays',
-  'week.group.weekend': 'Weekend',
-    'week.days.mon': 'Mon',
-    'week.days.tue': 'Tue',
-    'week.days.wed': 'Wed',
-    'week.days.thu': 'Thu',
-    'week.days.fri': 'Fri',
-    'week.days.sat': 'Sat',
-    'week.days.sun': 'Sun',
-    'week.editor.title': 'Weekday schedule',
-  'week.editor.preview_note': 'Preview only. Changes apply when you press Save.'
-  , 'week.view.title': 'Week view'
-  , 'week.view.rooms_one_day': 'All rooms • one day'
-  , 'week.view.days_one_room': 'All days • one room'
-  , 'week.select_room': 'Select room'
-  , 'week.copy_to_rooms': 'Copy week to rooms'
-  , 'week.copy_to_rooms.title': 'Copy week to rooms'
-  , 'week.copy_to_rooms.select': 'Select rooms'
-  , 'week.copy_to_rooms.apply': 'Insert into rooms'
-  , 'week.enable.desc': 'Enable per-weekday scheduling. When off, the same plan is used every day.'
-    , 'editor.timefmt.title': 'Time format'
-    , 'editor.timefmt.desc': 'Choose 24-hour or 12-hour (AM/PM) display for times on the card.'
-    , 'editor.tempfmt.title': 'Temperature unit'
-    , 'editor.tempfmt.desc': 'Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.'
-  , 'editor.timesrc.title': 'Time source'
-  , 'editor.timesrc.desc': 'Choose whether the card uses the browser time or Home Assistant time zone for “now”.'
-  , 'editor.timesrc.browser': 'Browser'
-  , 'editor.timesrc.ha': 'Home Assistant'
-  , 'editor.tabs.settings': 'Settings'
-  , 'editor.tabs.weekdays': 'Weekdays'
-    , 'editor.tabs.rooms': 'Rooms'
-  , 'editor.tabs.boiler': 'Boiler'
-  , 'editor.tabs.colors': 'Colors'
-    , 'editor.tabs.owd': 'Open Window Detection'
-    , 'owd.enable': 'Open Window Detection'
-    , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
-    , 'owd.sensors': 'Window/Door sensors'
-    , 'owd.delays.title': 'Delays'
-    , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
-    , 'owd.open_delay': 'After open (min)'
-    , 'owd.close_delay': 'After closed (min)'
-  , 'editor.tabs.away': 'Away from home'
-  , 'editor.tabs.sync': 'Sync Engine'
-  , 'boiler.switch': 'Boiler switch'
-  , 'boiler.enable': 'Enable boiler controls'
-  , 'boiler.enable.desc': 'Show boiler settings in this card editor.'
-  , 'boiler.temp_sensor': 'Boiler temperature sensor'
-  , 'boiler.temp_sensor.desc': 'Temperature sensor used to control the boiler switch.'
-  , 'boiler.min_temp': 'Min boiler temp (°C)'
-  , 'boiler.max_temp': 'Max boiler temp (°C)'
-  , 'sync.running': 'Sync in progress…'
-  , 'sync.completed': 'Sync completed'
-  , 'away.enable': 'Enable away mode'
-  , 'away.desc': 'When no selected people are home, lower thermostats automatically to the set temperature.'
-  , 'away.temp': 'Away temperature'
-  , 'away.persons': 'People'
-  , 'away.add_person': 'Add person'
-  , 'away.resume_schedule': 'Resume schedule'
-  , 'away.resume_away': 'Resume away temperature'
-    , 'editor.heat_colors.title': 'Heat block colors'
-  , 'editor.heat_colors.add': 'Add color range'
-    , 'editor.colors.col_from': 'From °C'
-    , 'editor.colors.col_to': 'To °C'
-    , 'editor.colors.col_color': 'Color'
-  , 'editor.colors.empty': 'No rooms added yet. Add a room to define heat block colors.'
-  , 'editor.colors.go_add': 'Add room'
-  , 'editor.select_entities': 'Rooms'
-  , 'editor.colors.refresh': 'Update schedule'
-  , 'editor.colors.clear_local': 'Clear local color data'
-  , 'editor.colors.clear_local_confirm': 'This will delete color ranges saved in your browser for this card. Continue?'
-  , 'editor.colors.clear_shared': 'Clear shared color storage'
-  , 'editor.colors.clear_shared_confirm': 'This will delete color ranges in the selected storage sensor. Continue?'
-  , 'editor.colors.clear_all': 'Clear all color data'
-  , 'editor.colors.clear_all_confirm': 'This will delete all color ranges from both local storage and the selected storage sensor. Continue?'
-  , 'editor.colors.mode': 'Color mode'
-  , 'editor.colors.mode.desc': 'Choose per-room colors or one set for all rooms.'
-  , 'editor.colors.mode_per_room': 'Per room'
-  , 'editor.colors.mode_global': 'All rooms'
-  , 'editor.colors.global_title': 'All rooms'
-  , 'editor.reload_editor': 'Reload editor'
-  , 'editor.reload_dashboard': 'Reload dashboard'
-  , 'onboard.title': 'Welcome to Thermostat Timeline'
-  , 'onboard.next': 'Next'
-  , 'onboard.prev': 'Back'
-  , 'onboard.skip': 'Skip'
-  , 'onboard.done': 'Done'
-  , 'onboard.dont_show': "Don't show again"
-  , 'onboard.step_main': 'This is the main timeline. It shows desired temperatures over 24 hours for each room.'
-  , 'onboard.step_add': 'Add a heat block by pressing + Add block or by double‑clicking on the timeline.'
-  , 'onboard.step_edit': 'Edit or delete a block by double‑clicking it. Use Weekdays to plan different days.'
-  , 'onboard.reset': 'Show guide again'
-  , 'onboard.reset_ok': 'Welcome will be shown next time.'
-  , 'pause.menu_title': 'Auto apply pause'
-  , 'pause.off_1h': 'Pause 1 hour'
-  , 'pause.off_5h': 'Pause 5 hours'
-  , 'pause.off_custom': 'Custom duration…'
-  , 'pause.off_indef': 'Pause until I resume'
-  , 'pause.resume': 'Resume now'
-  , 'pause.close': 'Close'
-  , 'pause.active_until': 'Paused until {time}'
-  , 'pause.active_indef': 'Paused'
-  , 'editor.pausebtn.title': 'Pause button'
-  , 'editor.pausebtn.desc': 'Show a global pause button in the card header. While paused, all set_temperature commands are suppressed.'
-  , 'editor.integration.connected': 'Integration ready'
-  , 'editor.integration.disconnected': 'Integration unavailable'
-  , 'profiles.enable': 'Enable profiles (override)'
-  , 'profiles.enable.desc': 'Allow named daily schedules you can activate to override the main plan.'
-  , 'profiles.button': 'Manual schedule'
-  , 'profiles.editor.title': 'Profiles'
-  , 'profiles.add': 'Add profile'
-  , 'profiles.rename': 'Rename'
-  , 'profiles.delete': 'Delete'
-  , 'profiles.activate': 'Activate'
-  , 'profiles.deactivate': 'Deactivate'
-  , 'profiles.active': 'Active'
-  , 'profiles.none': 'None'
-  , 'profiles.name_placeholder': 'Profile name'
-  , 'profiles.edit': 'Edit'
-  , 'profiles.preview_note': 'Preview only. Schedules become active when you activate the profile.'
-  , 'profiles.active_label': 'Manual profile active:'
-  , 'editor.tabs.holidays': 'Holidays'
-  , 'editor.tabs.backup': 'Backup'
-  , 'backup.title': 'Backup'
-  , 'backup.desc': 'Copy schedules/settings to backup and restore when needed.'
-  , 'backup.now': 'Backup now'
-  , 'backup.restore': 'Restore'
-  , 'backup.delete': 'Delete backup'
-  , 'backup.delete.confirm': 'Delete selected backup?'
-  , 'backup.new': 'New backup'
-  , 'backup.auto': 'Auto backup'
-  , 'backup.auto.desc': 'Make automatic backups on a schedule.'
-  , 'backup.slot.title': 'Choose backup'
-  , 'backup.slot.desc': 'Select which backup slot to restore.'
-  , 'backup.slot.empty': 'No backups yet'
-  , 'backup.interval': 'Interval (days)'
-  , 'backup.interval.desc': 'How many days between automatic backups (min. 1).'
-  , 'backup.sensor': 'Backup sensor'
-  , 'backup.last': 'Last backup'
-  , 'backup.select': 'Choose what to back up'
-  , 'backup.select.desc': 'Checked items are included in backup/restore'
-  , 'backup.opt.all': 'All'
-  , 'backup.select': 'Choose what to back up'
-  , 'backup.opt.main': 'Main schedules'
-  , 'backup.opt.weekday': 'Weekday schedules'
-  , 'backup.opt.presence': 'Presence schedules'
-  , 'backup.opt.settings': 'Editor settings'
-  , 'backup.opt.holiday': 'Holiday schedules'
-  , 'backup.opt.colors': 'Color blocks'
-  , 'holidays.enable': 'Enable holidays'
-  , 'holidays.desc': 'Use a special daily schedule on public holidays.'
-  , 'holidays.source': 'Holiday source'
-  , 'holidays.source.calendar': 'Calendar'
-  , 'holidays.source.manual': 'Manual dates'
-  , 'holidays.entity': 'Holiday entity'
-  , 'holidays.entity_desc': 'Select a calendar that reports simple on/off. It should be on on public holidays, and off on other days.'
-  , 'holidays.dates': 'Holiday dates'
-  , 'holidays.add_date': 'Add date'
-  , 'holidays.editor.title': 'Holiday schedule'
-  , 'holidays.edit': 'Edit holiday schedule'
-  , 'holidays.button': 'Holidays'
-  , 'presence.button': 'Presence schedules'
-  , 'presence.editor.title': 'Presence schedules'
-  , 'presence.enable_advanced': 'Enable advanced presence'
-  , 'presence.live_header': 'Show live presence in header'
-  , 'presence.live_header.desc': 'Display chips with who is home/away next to the pause button.'
-  , 'presence.combos': 'Combinations'
-  , 'presence.enable_combo': 'Enable this combination'
-  , 'presence.all_home': 'All home'
-  , 'presence.none_home': 'None home'
-  , 'presence.home': 'Home: {names}'
-  , 'presence.away': 'Away: {names}'
-  , 'presence.manage': 'Manage combinations'
-  , 'presence.who_home': 'Who is home'
-  , 'presence.who_away': 'Who is not home'
+  'week.days.mon': 'Mon',
+  'week.days.tue': 'Tue',
+  'week.days.wed': 'Wed',
+  'week.days.thu': 'Thu',
+  'week.days.fri': 'Fri',
+  'week.days.sat': 'Sat',
+  'week.days.sun': 'Sun',
+  'week.editor.title': 'Weekday schedule',
+  'week.editor.preview_note': 'Preview only. Changes are applied when you press Save.',
+  'week.view.title': 'Weekdays view',
+  'week.view.rooms_one_day': 'All rooms • one day',
+  'week.view.days_one_room': 'All days • one room',
+  'week.select_room': 'Select room',
+  'week.copy_to_rooms': 'Copy weekdays to rooms',
+  'week.copy_to_rooms.title': 'Copy weekdays to rooms',
+  'week.copy_to_rooms.select': 'Select rooms',
+  'week.copy_to_rooms.apply': 'Apply to rooms',
+
+  'editor.timefmt.title': 'Time format',
+  'editor.timefmt.desc': 'Choose 24-hour or 12-hour (AM/PM) display for times.',
+  'editor.tempfmt.title': 'Temperature unit',
+  'editor.tempfmt.desc': 'Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.',
+  'editor.timesrc.title': 'Time source',
+  'editor.timesrc.desc': 'Choose whether the card uses the browser time or the Home Assistant time zone for “now”.',
+  'editor.timesrc.browser': 'Browser',
+  'editor.timesrc.ha': 'Home Assistant',
+
+  'editor.tabs.settings': 'Settings',
+  'editor.tabs.weekdays': 'Weekdays',
+  'editor.tabs.rooms': 'Rooms',
+  'editor.tabs.boiler': 'Boiler',
+  'editor.tabs.colors': 'Colors',
+  'editor.tabs.owd': 'Open Window Detection',
+  'editor.tabs.away': 'Away from home',
+  'editor.tabs.sync': 'Sync Engine',
+  'editor.tabs.backup': 'Backup',
+
+  'owd.enable': 'Open Window Detection',
+  'owd.enable.desc': 'Turns off thermostats in a room when selected window/door sensors are open.',
+  'owd.sensors': 'Window/Door sensors',
+  'owd.delays.title': 'Delays',
+  'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).',
+  'owd.open_delay': 'After open (min)',
+  'owd.close_delay': 'After closed (min)',
+
+  'boiler.switch': 'Boiler switch',
+  'boiler.enable': 'Enable boiler control',
+  'boiler.enable.desc': 'Show boiler settings in this card editor.',
+  'boiler.temp_sensor': 'Boiler temperature sensor',
+  'boiler.temp_sensor.desc': 'Temperature sensor that controls the boiler switch.',
+  'boiler.min_temp': 'Min boiler temp (°C)',
+  'boiler.max_temp': 'Max boiler temp (°C)',
+
+  'sync.running': 'Sync in progress…',
+  'sync.completed': 'Sync completed',
+
+  'backup.title': 'Backup',
+  'backup.desc': 'Copy the full content of your sync sensor to the backup sensor and restore it when needed.',
+  'backup.now': 'Backup now',
+  'backup.restore': 'Restore',
+  'backup.delete': 'Delete backup',
+  'backup.delete.confirm': 'Delete selected backup?',
+  'backup.new': 'New backup',
+  'backup.auto': 'Auto backup',
+  'backup.auto.desc': 'Create backups automatically at a fixed interval.',
+  'backup.interval': 'Interval (days)',
+  'backup.interval.desc': 'How many days between automatic backups (min 1).',
+  'backup.sensor': 'Backup sensor',
+  'backup.last': 'Last backup',
+  'backup.slot.title': 'Select backup',
+  'backup.slot.desc': 'Select which backup slot to restore.',
+  'backup.slot.empty': 'No backups yet',
+  'backup.select': 'Select what to back up',
+  'backup.select.desc': 'Checked items are included in backup/restore',
+  'backup.opt.all': 'All',
+  'backup.opt.main': 'Main schedules',
+  'backup.opt.weekday': 'Weekday schedules',
+  'backup.opt.presence': 'Presence schedules',
+  'backup.opt.settings': 'Editor settings',
+  'backup.opt.holiday': 'Holiday schedules',
+  'backup.opt.colors': 'Color blocks',
+
+  'away.enable': 'Enable Away mode',
+  'away.desc': 'When none of the selected persons are home, thermostats are automatically lowered to the specified temperature.',
+  'away.temp': 'Away temperature',
+  'away.persons': 'Persons',
+  'away.add_person': 'Add person',
+  'away.resume_schedule': 'Resume schedule',
+  'away.resume_away': 'Resume away temperature',
+
+  'editor.heat_colors.title': 'Colors for heat blocks',
+  'editor.heat_colors.add': 'Add color interval',
+  'editor.colors.col_from': 'From °C',
+  'editor.colors.col_to': 'To °C',
+  'editor.colors.col_color': 'Color',
+  'editor.colors.refresh': 'Refresh schedule',
+  'editor.colors.clear_local': 'Clear local color data',
+  'editor.colors.clear_local_confirm': 'This deletes color intervals stored in your browser for this card. Continue?',
+  'editor.colors.clear_shared': 'Clear shared color storage',
+  'editor.colors.clear_shared_confirm': 'This deletes color intervals in the selected storage sensor. Continue?',
+  'editor.colors.clear_all': 'Clear all color data',
+  'editor.colors.clear_all_confirm': 'This deletes all color intervals both locally and in the selected storage sensor. Continue?',
+  'editor.colors.mode': 'Color mode',
+  'editor.colors.mode.desc': 'Choose per-room colors or one set for all rooms.',
+  'editor.colors.mode_per_room': 'Per room',
+  'editor.colors.mode_global': 'All rooms',
+  'editor.colors.global_title': 'All rooms',
+
+  'editor.reload_editor': 'Reload editor',
+  'editor.reload_dashboard': 'Reload dashboard',
+
+  'onboard.title': 'Welcome to Thermostat Timeline',
+  'onboard.next': 'Next',
+  'onboard.prev': 'Back',
+  'onboard.skip': 'Skip',
+  'onboard.done': 'Done',
+  'onboard.dont_show': 'Don’t show again',
+  'onboard.step_main': 'This is the main timeline. It shows target temperatures over 24 hours for each room.',
+  'onboard.step_add': 'Add a heat block via + Add block or by double-clicking the timeline.',
+  'onboard.step_edit': 'Edit or delete a block by double-clicking it. Use Weekdays for different days.',
+  'onboard.reset': 'Show guide again',
+  'onboard.reset_ok': 'The guide will show next time.',
+
+  'pause.menu_title': 'Pause auto-apply',
+  'pause.off_1h': 'Pause for 1 hour',
+  'pause.off_5h': 'Pause for 5 hours',
+  'pause.off_custom': 'Custom duration…',
+  'pause.off_indef': 'Pause until I resume',
+  'pause.resume': 'Resume now',
+  'pause.close': 'Close',
+  'pause.active_until': 'Paused until {time}',
+  'pause.active_indef': 'Paused',
+
+  'editor.pausebtn.title': 'Pause button',
+  'editor.pausebtn.desc': 'Show a global pause button in the card header. When pause is active, all set_temperature commands are suppressed.',
+  'editor.integration.connected': 'Connected to integration',
+  'editor.integration.disconnected': 'Not connected to integration',
+
+  'profiles.enable': 'Enable profiles (override)',
+  'profiles.enable.desc': 'Allow named day schedules that can be activated to override the main plan.',
+  'profiles.button': 'Profiles',
+  'profiles.editor.title': 'Profiles',
+  'profiles.add': 'Add profile',
+  'profiles.rename': 'Rename',
+  'profiles.delete': 'Delete',
+  'profiles.activate': 'Activate',
+  'profiles.deactivate': 'Deactivate',
+  'profiles.active': 'Active',
+  'profiles.none': 'None',
+  'profiles.name_placeholder': 'Profile name',
+  'profiles.edit': 'Edit',
+  'profiles.preview_note': 'Preview only. Profiles become active when you activate them.',
+  'profiles.active_label': 'Active profile:',
+
+  'editor.tabs.holidays': 'Holidays',
+  'holidays.enable': 'Enable holidays',
+  'holidays.desc': 'Use a special day schedule on holidays.',
+  'holidays.source': 'Holiday source',
+  'holidays.source.calendar': 'Calendar',
+  'holidays.source.manual': 'Manual dates',
+  'holidays.entity': 'Holiday entity',
+  'holidays.entity_desc': 'Select a calendar that only provides on/off. It must be on on holidays and off on other days.',
+  'holidays.dates': 'Holiday dates',
+  'holidays.add_date': 'Add date',
+  'holidays.editor.title': 'Holiday schedule',
+  'holidays.edit': 'Edit holiday schedule',
+  'holidays.button': 'Holidays',
+
+  'presence.button': 'Presence schedules',
+  'presence.editor.title': 'Presence schedules',
+  'presence.enable_advanced': 'Enable advanced presence',
+  'presence.live_header': 'Show live presence in header',
+  'presence.live_header.desc': 'Show chips next to the pause button with who is home/away.',
+  'presence.combos': 'Combinations',
+  'presence.enable_combo': 'Enable this combination',
+  'presence.all_home': 'All home',
+  'presence.none_home': 'Nobody home',
+  'presence.home': 'Home: {names}',
+  'presence.away': 'Away: {names}',
+  'presence.manage': 'Manage combinations',
+  'presence.who_home': 'Who is home',
+  'presence.who_away': 'Who is away'
   },
   da: {
-    // Kort
-    'card.title_default': 'Termostat Tidslinje',
-    // Modal
-    'ui.edit_block': 'Redigér blok',
-    'ui.add_block': 'Tilføj blok',
-    'ui.from': 'Fra',
-    'ui.to': 'Til',
-    'ui.temperature': 'Temperatur',
-    'ui.delete': 'Slet',
-    'ui.cancel': 'Annullér',
-  'ui.close': 'Luk',
-  'ui.unsaved_confirm': 'Du har ugemte ændringer. Vil du lukke alligevel?',
-  'ui.discard_changes': 'Kassér ændringer',
-  'ui.keep_editing': 'Fortsæt redigering',
+    // Card
+    'card.title_default': 'Thermostat Timeline',
+    // Modal / editor (inline)
+    'ui.edit_block': 'Edit block',
+    'ui.add_block': 'Add block',
+    'ui.from': 'From',
+    'ui.to': 'To',
+    'ui.cancel': 'Annuller',
+    'ui.close': 'Luk',
     'ui.save': 'Gem',
-    'ui.error_prefix': 'Fejl: ',
-    'ui.overlap_msg':
-      'Du har valgt overlappende tidspunkter — det overlapper i perioden {start} - {end}.',
-    'ui.auto_fix': 'Ret automatisk',
-    'ui.fix_start_to': 'Ret start til {time}',
-  'ui.fix_end_to': 'Ret slut til {time}',
-    // Inline meta
-    'ui.current_temp': 'Nuværende temperatur:',
-
-    // GUI editor panel
-    'editor.title_label': 'Titel',
-  'editor.add_entity': 'Tilføj rum',
-    'editor.entity_placeholder': 'Vælg en entitet',
-    'editor.drag_reorder': 'Træk for at ændre rækkefølge',
-    'editor.remove': 'Fjern',
-    'editor.default_c': 'Standard °C',
-  'editor.row_height_px': 'Rækkens højde (px)',
-  'editor.max_c': 'Maks °C',
-    'editor.min_c': 'Min °C',
-    'editor.auto_apply.title': 'Automatisk anvendelse',
-    'editor.auto_apply.desc':
-      'Når slået til forsøger kortet automatisk at sætte temperaturen på de valgte climate-entities, så den matcher den planlagte værdi for “lige nu”.',
-    'editor.apply_edit.title': 'Ved redigering',
-    'editor.apply_edit.desc':
-      'Når du ændrer blokke i tidslinjen, og ændringen påvirker den aktuelle tid, anvendes den nye temperatur med det samme.',
-    'editor.apply_default.title': 'Ved Standard °C ændring',
-    'editor.apply_default.desc':
-      'Når “Standard °C” ændres og det påvirker temperaturen for nuværende tidsrum, anvendes den nye temperatur straks.',
-    'editor.perroom.title': 'Standard °C pr. rum',
-    'editor.perroom.desc': 'Vis en temperatur‑input på hver række. Når slået fra bruges global Standard °C for alle rum.',
-      'ui.copy_plan': 'Kopiér skema',
-      'ui.paste_plan': 'Indsæt skema',
-      'ui.copy_day': 'Kopiér dag',
-      'ui.paste_day': 'Indsæt dag',
-  'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
-  'editor.display_name_optional': 'Rumnavn (valgfrit)',
-  'editor.room_mode.title': 'Brug input_number i stedet for climate',
-  'editor.room_mode.desc': 'Når slået til, styrer dette rum en input_number, og kortet sætter værdien i stedet for at sende climate.set_temperature.',
-    'editor.merged_with': 'Flettet med',
-  'editor.store_enable.title': 'Delt lager + baggrundsstyring',
-  'editor.store_enable.short': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring.',
-  'editor.store_enable.desc': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring (set_temperature) via Thermostat Timeline-integrationen. Termostaterne opdateres også når kortet ikke er åbent. Deler desuden tidsplaner (heat-blokke) og kortets indstillinger på tværs af brugere/enheder. Når slået fra, sendes set_temperature-kommandoer kun mens kortet er aktivt vist på en enhed (tablet/PC/mobil) — det er ikke nok at kortet blot er tilføjet; det skal være åbent på skærmen hele tiden.',
-  'editor.store_missing': 'Integrationen "Thermostat Pro Timeline Sync" er ikke installeret. Delt lager er ikke tilgængeligt.',
-    'editor.clear_store': 'Ryd lager',
-    'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
-  'editor.migrate_to_store': 'Overfør data til lager',
     'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
-  'editor.migrate_pull_confirm': 'Importér tidsplaner fra lager og overskriv lokale browserdata?',
-  'editor.select_storage_first': 'Vælg først en lagersensor.',
+    'editor.migrate_pull_confirm': 'Importér tidsplaner fra lager og overskriv lokale browserdata?',
+    'editor.select_storage_first': 'Vælg først en lagersensor.',
     'editor.no_local_data': 'Ingen lokale browserdata blev fundet.',
-  'editor.clear_all': 'Ryd alt data',
+    'editor.clear_all': 'Ryd alt data',
     'editor.clear_all_confirm': 'Dette sletter både lager og lokale/browser tidsplaner. Vil du fortsætte?',
-  'editor.clear_storage_only': 'Ryd kun lagerdata',
+    'editor.clear_storage_only': 'Ryd kun lagerdata',
     'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
-  'editor.clear_local_only': 'Ryd ALLE lokale data (kun lokalt)',
+    'editor.clear_local_only': 'Ryd ALLE lokale data (kun lokalt)',
     'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner gemt i din browser. Vil du fortsætte?',
     'editor.temp_sensor': 'Temperatursensor',
     'editor.test_tool': 'Testværktøj',
@@ -352,28 +305,46 @@ const TT_I18N = {
     'editor.test_no_fields': 'Ingen felter',
     'editor.test_select_placeholder': '— Vælg —',
     'editor.error_prefix': 'Fejl: ',
-    'editor.open_in_hacs': 'Åbn i HACS'
-    , 'editor.colors.empty': 'Der er endnu ikke oprettet rum. Tilføj et rum for at definere farver.'
-    , 'editor.colors.go_add': 'Tilføj rum'
-  , 'editor.select_entities': 'Rum'
-    , 'week.enable': 'Aktivér ugedage',
+    'editor.open_in_hacs': 'Åbn i HACS',
+    'editor.add_entity': 'Tilføj rum',
+    'editor.entity_placeholder': 'Vælg en entitet',
+    'editor.drag_reorder': 'Træk for at ændre rækkefølge',
+    'editor.remove': 'Fjern',
+    'editor.default_c': 'Standard °C',
+    'editor.row_height_px': 'Rækkehøjde (px)',
+    'editor.min_c': 'Min °C',
+    'editor.max_c': 'Maks °C',
+    'editor.auto_apply.title': 'Auto apply',
+    'editor.auto_apply.desc': 'Når slået til forsøger kortet at sætte temperaturen på de valgte climate‑entiteter til den planlagte værdi for “nu”.',
+    'editor.apply_edit.title': 'Ved redigering',
+    'editor.apply_edit.desc': 'Når du redigerer blokke og det påvirker nuværende tidspunkt, så anvend den nye temperatur med det samme.',
+    'editor.apply_default.title': 'Ved ændring af Standard °C',
+    'editor.apply_default.desc': 'Når “Standard °C” ændres og det påvirker den aktuelle periode, så anvend den nye temperatur med det samme.',
+    'editor.perroom.title': 'Standard °C pr. rum',
+    'editor.perroom.desc': 'Vis et Standard °C‑felt på hver række. Når slået fra, bruges global Standard °C for alle rum.',
+    'editor.room_mode.title': 'Rumtype (entitet)',
+    'editor.room_mode.desc': 'Når slået til vælger du en input_number (måltemperatur). Når slået fra vælger du en climate‑entitet.',
+    'editor.display_name_optional': 'Rum navn (valgfri)',
+    'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
+    'editor.merged_with': 'Flettet med',
+    'editor.colors.empty': 'Der er endnu ikke oprettet rum. Tilføj et rum for at definere farver.',
+    'editor.colors.go_add': 'Tilføj rum',
+    'editor.select_entities': 'Rum',
+    'week.enable': 'Aktivér ugedage',
     'week.mode': 'Ugedags-tilstand',
-  // removed same_all option from UI
-  'week.mode.weekday_weekend': 'Hverdage + Weekend',
-  'week.mode.weekday_sat_sun': 'Hverdage + Lørdag + Søndag',
-  'week.mode.all_7': 'Alle dage',
+    'week.mode.weekday_weekend': 'Hverdage + Weekend',
+    'week.mode.weekday_sat_sun': 'Hverdage + Lørdag + Søndag',
+    'week.mode.all_7': 'Alle dage',
     'week.button': 'Ugedage',
-  'week.group.weekdays': 'Hverdage',
-  'week.group.weekend': 'Weekend',
-  'week.days_full.mon': 'Mandag',
-  'week.days_full.tue': 'Tirsdag',
-  'week.days_full.wed': 'Onsdag',
-  'week.days_full.thu': 'Torsdag',
-  'week.days_full.fri': 'Fredag',
-  'week.days_full.sat': 'Lørdag',
-  'week.days_full.sun': 'Søndag',
-  'week.group.weekdays': 'Hverdage',
-  'week.group.weekend': 'Weekend',
+    'week.group.weekdays': 'Hverdage',
+    'week.group.weekend': 'Weekend',
+    'week.days_full.mon': 'Mandag',
+    'week.days_full.tue': 'Tirsdag',
+    'week.days_full.wed': 'Onsdag',
+    'week.days_full.thu': 'Torsdag',
+    'week.days_full.fri': 'Fredag',
+    'week.days_full.sat': 'Lørdag',
+    'week.days_full.sun': 'Søndag',
     'week.days.mon': 'Man',
     'week.days.tue': 'Tir',
     'week.days.wed': 'Ons',
@@ -382,167 +353,166 @@ const TT_I18N = {
     'week.days.sat': 'Lør',
     'week.days.sun': 'Søn',
     'week.editor.title': 'Ugedags-tidsplan',
-  'week.editor.preview_note': 'Kun forhåndsvisning. Ændringer gemmes først når du trykker Gem.'
-  , 'week.view.title': 'Ugedage-visning'
-  , 'week.view.rooms_one_day': 'Alle rum • én dag'
-  , 'week.view.days_one_room': 'Alle dage • ét rum'
-  , 'week.select_room': 'Vælg rum'
-  , 'week.copy_to_rooms': 'Kopiér ugedage til rum'
-  , 'week.copy_to_rooms.title': 'Kopiér ugedage til rum'
-  , 'week.copy_to_rooms.select': 'Vælg rum'
-  , 'week.copy_to_rooms.apply': 'Indsæt i rum'
-  , 'week.enable.desc': 'Aktivér plan per ugedag. Når slået fra, bruges samme plan hver dag.'
-    , 'editor.timefmt.title': 'Tidsformat'
-    , 'editor.timefmt.desc': 'Vælg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.'
-    , 'editor.tempfmt.title': 'Temperaturenhed'
-    , 'editor.tempfmt.desc': 'Vælg Celsius (°C) eller Fahrenheit (°F) til visning i kortet og editorer.'
-  , 'editor.timesrc.title': 'Tidskilde'
-  , 'editor.timesrc.desc': 'Vælg om kortet skal bruge browserens tid eller Home Assistant-tidszone til “nu”.'
-  , 'editor.timesrc.browser': 'Browser'
-  , 'editor.timesrc.ha': 'Home Assistant'
-  , 'editor.tabs.settings': 'Indstillinger'
-    , 'editor.tabs.weekdays': 'Ugedage'
-    , 'editor.tabs.rooms': 'Rum'
-  , 'editor.tabs.boiler': 'Boiler'
-  , 'editor.tabs.colors': 'Farver'
-  , 'editor.tabs.owd': 'Open Window Detection'
-  , 'owd.enable': 'Open Window Detection'
-  , 'owd.enable.desc': 'Slår termostaterne fra i et rum når valgte vindue-/dørsensorer er åbne.'
-  , 'owd.sensors': 'Vindue-/dørsensorer'
-  , 'owd.delays.title': 'Forsinkelser'
-  , 'owd.delays.desc': 'Minutter før der slukkes (åben) og før skemaet genoptages (lukket).'
-  , 'owd.open_delay': 'Efter åbnet (min)'
-  , 'owd.close_delay': 'Efter lukket (min)'
-    , 'editor.tabs.away': 'Væk fra hjemme'
-    , 'editor.tabs.sync': 'Sync Engine'
-  , 'boiler.switch': 'Boiler switch'
-  , 'boiler.enable': 'Aktivér kedelstyring'
-  , 'boiler.enable.desc': 'Vis kedelindstillinger i denne cards editor.'
-  , 'boiler.temp_sensor': 'Kedel temperatursensor'
-  , 'boiler.temp_sensor.desc': 'Temperatursensor som styrer kedel‑switchen.'
-  , 'boiler.min_temp': 'Min kedeltemp (°C)'
-  , 'boiler.max_temp': 'Maks kedeltemp (°C)'
-    , 'sync.running': 'Igangværende sync…'
-    , 'sync.completed': 'Sync gennemført'
-  , 'editor.tabs.backup': 'Backup'
-  , 'backup.title': 'Backup'
-  , 'backup.desc': 'Kopiér hele indholdet af din sync‑sensor til backup‑sensoren og gendan den igen ved behov.'
-  , 'backup.now': 'Backup nu'
-  , 'backup.restore': 'Gendan'
-  , 'backup.delete': 'Slet backup'
-  , 'backup.delete.confirm': 'Slet valgt backup?'
-  , 'backup.new': 'Ny backup'
-  , 'backup.auto': 'Auto backup'
-  , 'backup.auto.desc': 'Lav automatisk backup med faste intervaller.'
-  , 'backup.interval': 'Interval (dage)'
-  , 'backup.interval.desc': 'Hvor mange dage der skal gå mellem automatiske backups (min. 1).'
-  , 'backup.sensor': 'Backup sensor'
-  , 'backup.last': 'Sidste backup'
-  , 'backup.slot.title': 'Vælg backup'
-  , 'backup.slot.desc': 'Vælg hvilken backup-slot der skal gendannes.'
-  , 'backup.slot.empty': 'Ingen backups endnu'
-  , 'backup.select': 'Vælg hvad der skal tages backup af'
-  , 'backup.select.desc': 'Markerede punkter tages med i backup/gendannelse'
-  , 'backup.opt.all': 'Alt'
-  , 'backup.select': 'Vælg hvad der skal tages backup af'
-  , 'backup.opt.main': 'Hovedskemaer'
-  , 'backup.opt.weekday': 'Ugedagsskemaer'
-  , 'backup.opt.presence': 'Tilstede skemaer'
-  , 'backup.opt.settings': 'Editor-indstillinger'
-  , 'backup.opt.holiday': 'Helligdags-skemaer'
-  , 'backup.opt.colors': 'Farveblokke'
-    , 'away.enable': 'Aktivér væk-tilstand'
-    , 'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.'
-    , 'away.temp': 'Væk-temperatur'
-    , 'away.persons': 'Personer'
-    , 'away.add_person': 'Tilføj person'
-  , 'away.resume_schedule': 'Genoptag skema'
-  , 'away.resume_away': 'Genoptag væk‑temperatur'
-    , 'editor.heat_colors.title': 'Farver for varmeblokke'
-    , 'editor.heat_colors.add': 'Tilføj farveinterval'
-    , 'editor.colors.col_from': 'Fra °C'
-    , 'editor.colors.col_to': 'Til °C'
-    , 'editor.colors.col_color': 'Farve'
-    , 'editor.colors.refresh': 'Opdater skema'
-    , 'editor.colors.clear_local': 'Ryd lokale farvedata'
-    , 'editor.colors.clear_local_confirm': 'Dette sletter farveintervaller gemt i din browser for dette kort. Vil du fortsætte?'
-    , 'editor.colors.clear_shared': 'Ryd delt farvelager'
-  , 'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?'
-    , 'editor.colors.clear_all': 'Ryd alle farvedata'
-    , 'editor.colors.clear_all_confirm': 'Dette sletter alle farveintervaller både lokalt og i den valgte lagersensor. Vil du fortsætte?'
-  , 'editor.colors.mode': 'Farvetilstand'
-  , 'editor.colors.mode.desc': 'Vælg om farver defineres pr. rum eller ens for alle rum.'
-  , 'editor.colors.mode_per_room': 'Pr. rum'
-  , 'editor.colors.mode_global': 'Samme for alle'
-  , 'editor.colors.global_title': 'Alle rum'
-    , 'editor.reload_editor': 'Genindlæs editor'
-    , 'editor.reload_dashboard': 'Genindlæs dashboard'
-  , 'onboard.title': 'Velkommen til Termostat Tidslinje'
-  , 'onboard.next': 'Næste'
-  , 'onboard.prev': 'Tilbage'
-  , 'onboard.skip': 'Spring over'
-  , 'onboard.done': 'Færdig'
-  , 'onboard.dont_show': 'Vis ikke igen'
-  , 'onboard.step_main': 'Dette er hovedtidslinjen. Den viser ønskede temperaturer over 24 timer for hvert rum.'
-  , 'onboard.step_add': 'Tilføj en varmeblok via + Tilføj blok eller ved at dobbeltklikke på tidslinjen.'
-  , 'onboard.step_edit': 'Redigér eller slet en blok ved dobbeltklik. Brug Ugedage til forskellige dage.'
-  , 'onboard.reset': 'Vis guide igen'
-  , 'onboard.reset_ok': 'Guiden vises næste gang.'
-  , 'pause.menu_title': 'Pause auto-apply'
-  , 'pause.off_1h': 'Sluk i 1 time'
-  , 'pause.off_5h': 'Sluk i 5 timer'
-  , 'pause.off_custom': 'Tilpasset varighed…'
-  , 'pause.off_indef': 'Sluk til jeg tænder'
-  , 'pause.resume': 'Tænd igen nu'
-  , 'pause.close': 'Luk'
-  , 'pause.active_until': 'Slukket til {time}'
-  , 'pause.active_indef': 'Slukket'
-  , 'editor.pausebtn.title': 'Pause‑knap'
-  , 'editor.pausebtn.desc': 'Vis en global pauseknap i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.'
-  , 'editor.integration.connected': 'Integration klar'
-  , 'editor.integration.disconnected': 'Integration ikke tilgængelig'
-  , 'profiles.enable': 'Aktivér skema overrule'
-  , 'profiles.enable.desc': 'Tillad navngivne dagsskemaer som kan aktiveres og overrule hovedplanen.'
-  , 'profiles.button': 'Manuelt skema'
-  , 'profiles.editor.title': 'Skemaer'
-  , 'profiles.add': 'Tilføj skema'
-  , 'profiles.rename': 'Omdøb'
-  , 'profiles.delete': 'Slet'
-  , 'profiles.activate': 'Aktivér'
-  , 'profiles.deactivate': 'Deaktivér'
-  , 'profiles.active': 'Aktiv'
-  , 'profiles.none': 'Ingen'
-  , 'profiles.name_placeholder': 'Skemanavn'
-  , 'profiles.edit': 'Redigér'
-  , 'profiles.preview_note': 'Kun forhåndsvisning. Skemaerne bliver først aktive, når profilen aktiveres.'
-  , 'profiles.active_label': 'Manuelt skema aktivt:'
-  , 'editor.tabs.holidays': 'Helligdage'
-  , 'holidays.enable': 'Aktivér helligdage'
-  , 'holidays.desc': 'Brug et særligt dagsskema på helligdage.'
-  , 'holidays.source': 'Kilde til helligdage'
-  , 'holidays.source.calendar': 'Kalender'
-  , 'holidays.source.manual': 'Manuelle datoer'
-  , 'holidays.entity': 'Helligdags‑entitet'
-  , 'holidays.entity_desc': 'Vælg en kalender, der kun giver on/off. Den skal være on på helligdage og off på andre dage.'
-  , 'holidays.dates': 'Helligdagsdatoer'
-  , 'holidays.add_date': 'Tilføj dato'
-  , 'holidays.editor.title': 'Helligdags‑skema'
-  , 'holidays.edit': 'Redigér helligdags‑skema'
-  , 'holidays.button': 'Helligdage'
-  , 'presence.button': 'Tilstede skemaer'
-  , 'presence.editor.title': 'Tilstede skemaer'
-  , 'presence.enable_advanced': 'Aktivér avanceret tilstedeværelse'
-  , 'presence.live_header': 'Vis live personstatus i header'
-  , 'presence.live_header.desc': 'Vis chips ved pause-knappen med hvem der er hjemme/ude.'
-  , 'presence.combos': 'Kombinationer'
-  , 'presence.enable_combo': 'Aktivér denne kombination'
-  , 'presence.all_home': 'Alle hjemme'
-  , 'presence.none_home': 'Ingen hjemme'
-  , 'presence.home': 'Hjemme: {names}'
-  , 'presence.away': 'Ude: {names}'
-  , 'presence.manage': 'Administrér kombinationer'
-  , 'presence.who_home': 'Hvem er hjemme'
-  , 'presence.who_away': 'Hvem er ikke hjemme'
+    'week.editor.preview_note': 'Kun forhåndsvisning. Ændringer gemmes først når du trykker Gem.',
+    'week.view.title': 'Ugedage-visning',
+    'week.view.rooms_one_day': 'Alle rum • én dag',
+    'week.view.days_one_room': 'Alle dage • ét rum',
+    'week.select_room': 'Vælg rum',
+    'week.copy_to_rooms': 'Kopiér ugedage til rum',
+    'week.copy_to_rooms.title': 'Kopiér ugedage til rum',
+    'week.copy_to_rooms.select': 'Vælg rum',
+    'week.copy_to_rooms.apply': 'Indsæt i rum',
+    'week.enable.desc': 'Aktivér plan per ugedag. Når slået fra, bruges samme plan hver dag.',
+    'editor.timefmt.title': 'Tidsformat',
+    'editor.timefmt.desc': 'Vælg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.',
+    'editor.tempfmt.title': 'Temperaturenhed',
+    'editor.tempfmt.desc': 'Vælg Celsius (°C) eller Fahrenheit (°F) til visning i kortet og editorer.',
+    'editor.timesrc.title': 'Tidskilde',
+    'editor.timesrc.desc': 'Vælg om kortet skal bruge browserens tid eller Home Assistant-tidszone til “nu”.',
+    'editor.timesrc.browser': 'Browser',
+    'editor.timesrc.ha': 'Home Assistant',
+    'editor.tabs.settings': 'Indstillinger',
+    'editor.tabs.weekdays': 'Ugedage',
+    'editor.tabs.rooms': 'Rum',
+    'editor.tabs.boiler': 'Boiler',
+    'editor.tabs.colors': 'Farver',
+    'editor.tabs.owd': 'Open Window Detection',
+    'owd.enable': 'Open Window Detection',
+    'owd.enable.desc': 'Slår termostaterne fra i et rum når valgte vindue-/dørsensorer er åbne.',
+    'owd.sensors': 'Vindue-/dørsensorer',
+    'owd.delays.title': 'Forsinkelser',
+    'owd.delays.desc': 'Minutter før der slukkes (åben) og før skemaet genoptages (lukket).',
+    'owd.open_delay': 'Efter åbnet (min)',
+    'owd.close_delay': 'Efter lukket (min)',
+    'editor.tabs.away': 'Væk fra hjemme',
+    'editor.tabs.sync': 'Sync Engine',
+    'boiler.switch': 'Boiler switch',
+    'boiler.enable': 'Aktivér kedelstyring',
+    'boiler.enable.desc': 'Vis kedelindstillinger i denne cards editor.',
+    'boiler.temp_sensor': 'Kedel temperatursensor',
+    'boiler.temp_sensor.desc': 'Temperatursensor som styrer kedel‑switchen.',
+    'boiler.min_temp': 'Min kedeltemp (°C)',
+    'boiler.max_temp': 'Maks kedeltemp (°C)',
+    'sync.running': 'Igangværende sync…',
+    'sync.completed': 'Sync gennemført',
+    'editor.tabs.backup': 'Backup',
+    'backup.title': 'Backup',
+    'backup.desc': 'Kopiér hele indholdet af din sync‑sensor til backup‑sensoren og gendan den igen ved behov.',
+    'backup.now': 'Backup nu',
+    'backup.restore': 'Gendan',
+    'backup.delete': 'Slet backup',
+    'backup.delete.confirm': 'Slet valgt backup?',
+    'backup.new': 'Ny backup',
+    'backup.auto': 'Auto backup',
+    'backup.auto.desc': 'Lav automatisk backup med faste intervaller.',
+    'backup.interval': 'Interval (dage)',
+    'backup.interval.desc': 'Hvor mange dage der skal gå mellem automatiske backups (min. 1).',
+    'backup.sensor': 'Backup sensor',
+    'backup.last': 'Sidste backup',
+    'backup.slot.title': 'Vælg backup',
+    'backup.slot.desc': 'Vælg hvilken backup-slot der skal gendannes.',
+    'backup.slot.empty': 'Ingen backups endnu',
+    'backup.select': 'Vælg hvad der skal tages backup af',
+    'backup.select.desc': 'Markerede punkter tages med i backup/gendannelse',
+    'backup.opt.all': 'Alt',
+    'backup.opt.main': 'Hovedskemaer',
+    'backup.opt.weekday': 'Ugedagsskemaer',
+    'backup.opt.presence': 'Tilstede skemaer',
+    'backup.opt.settings': 'Editor-indstillinger',
+    'backup.opt.holiday': 'Helligdags-skemaer',
+    'backup.opt.colors': 'Farveblokke',
+    'away.enable': 'Aktivér væk-tilstand',
+    'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.',
+    'away.temp': 'Væk-temperatur',
+    'away.persons': 'Personer',
+    'away.add_person': 'Tilføj person',
+    'away.resume_schedule': 'Genoptag skema',
+    'away.resume_away': 'Genoptag væk‑temperatur',
+    'editor.heat_colors.title': 'Farver for varmeblokke',
+    'editor.heat_colors.add': 'Tilføj farveinterval',
+    'editor.colors.col_from': 'Fra °C',
+    'editor.colors.col_to': 'Til °C',
+    'editor.colors.col_color': 'Farve',
+    'editor.colors.refresh': 'Opdater skema',
+    'editor.colors.clear_local': 'Ryd lokale farvedata',
+    'editor.colors.clear_local_confirm': 'Dette sletter farveintervaller gemt i din browser for dette kort. Vil du fortsætte?',
+    'editor.colors.clear_shared': 'Ryd delt farvelager',
+    'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?',
+    'editor.colors.clear_all': 'Ryd alle farvedata',
+    'editor.colors.clear_all_confirm': 'Dette sletter alle farveintervaller både lokalt og i den valgte lagersensor. Vil du fortsætte?',
+    'editor.colors.mode': 'Farvetilstand',
+    'editor.colors.mode.desc': 'Vælg om farver defineres pr. rum eller ens for alle rum.',
+    'editor.colors.mode_per_room': 'Pr. rum',
+    'editor.colors.mode_global': 'Samme for alle',
+    'editor.colors.global_title': 'Alle rum',
+    'editor.reload_editor': 'Genindlæs editor',
+    'editor.reload_dashboard': 'Genindlæs dashboard',
+    'onboard.title': 'Velkommen til Termostat Tidslinje',
+    'onboard.next': 'Næste',
+    'onboard.prev': 'Tilbage',
+    'onboard.skip': 'Spring over',
+    'onboard.done': 'Færdig',
+    'onboard.dont_show': 'Vis ikke igen',
+    'onboard.step_main': 'Dette er hovedtidslinjen. Den viser ønskede temperaturer over 24 timer for hvert rum.',
+    'onboard.step_add': 'Tilføj en varmeblok via + Tilføj blok eller ved at dobbeltklikke på tidslinjen.',
+    'onboard.step_edit': 'Redigér eller slet en blok ved dobbeltklik. Brug Ugedage til forskellige dage.',
+    'onboard.reset': 'Vis guide igen',
+    'onboard.reset_ok': 'Guiden vises næste gang.',
+    'pause.menu_title': 'Pause auto-apply',
+    'pause.off_1h': 'Sluk i 1 time',
+    'pause.off_5h': 'Sluk i 5 timer',
+    'pause.off_custom': 'Tilpasset varighed…',
+    'pause.off_indef': 'Sluk til jeg tænder',
+    'pause.resume': 'Tænd igen nu',
+    'pause.close': 'Luk',
+    'pause.active_until': 'Slukket til {time}',
+    'pause.active_indef': 'Slukket',
+    'editor.pausebtn.title': 'Pause‑knap',
+    'editor.pausebtn.desc': 'Vis en global pauseknap i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.',
+    'editor.integration.connected': 'Integration klar',
+    'editor.integration.disconnected': 'Integration ikke tilgængelig',
+    'profiles.enable': 'Aktivér skema overrule',
+    'profiles.enable.desc': 'Tillad navngivne dagsskemaer som kan aktiveres og overrule hovedplanen.',
+    'profiles.button': 'Manuelt skema',
+    'profiles.editor.title': 'Skemaer',
+    'profiles.add': 'Tilføj skema',
+    'profiles.rename': 'Omdøb',
+    'profiles.delete': 'Slet',
+    'profiles.activate': 'Aktivér',
+    'profiles.deactivate': 'Deaktivér',
+    'profiles.active': 'Aktiv',
+    'profiles.none': 'Ingen',
+    'profiles.name_placeholder': 'Skemanavn',
+    'profiles.edit': 'Redigér',
+    'profiles.preview_note': 'Kun forhåndsvisning. Skemaerne bliver først aktive, når profilen aktiveres.',
+    'profiles.active_label': 'Manuelt skema aktivt:',
+    'editor.tabs.holidays': 'Helligdage',
+    'holidays.enable': 'Aktivér helligdage',
+    'holidays.desc': 'Brug et særligt dagsskema på helligdage.',
+    'holidays.source': 'Kilde til helligdage',
+    'holidays.source.calendar': 'Kalender',
+    'holidays.source.manual': 'Manuelle datoer',
+    'holidays.entity': 'Helligdags‑entitet',
+    'holidays.entity_desc': 'Vælg en kalender, der kun giver on/off. Den skal være on på helligdage og off på andre dage.',
+    'holidays.dates': 'Helligdagsdatoer',
+    'holidays.add_date': 'Tilføj dato',
+    'holidays.editor.title': 'Helligdags‑skema',
+    'holidays.edit': 'Redigér helligdags‑skema',
+    'holidays.button': 'Helligdage',
+    'presence.button': 'Tilstede skemaer',
+    'presence.editor.title': 'Tilstede skemaer',
+    'presence.enable_advanced': 'Aktivér avanceret tilstedeværelse',
+    'presence.live_header': 'Vis live personstatus i header',
+    'presence.live_header.desc': 'Vis chips ved pause-knappen med hvem der er hjemme/ude.',
+    'presence.combos': 'Kombinationer',
+    'presence.enable_combo': 'Aktivér denne kombination',
+    'presence.all_home': 'Alle hjemme',
+    'presence.none_home': 'Ingen hjemme',
+    'presence.home': 'Hjemme: {names}',
+    'presence.away': 'Ude: {names}',
+    'presence.manage': 'Administrér kombinationer',
+    'presence.who_home': 'Hvem er hjemme',
+    'presence.who_away': 'Hvem er ikke hjemme'
   },
   sv: {
     'card.title_default': 'Termostat-tidslinje',
@@ -2866,14 +2836,18 @@ const TT_I18N = {
   , 'presence.who_away': 'Kdo ni doma'
   },
 };
-const TT_LANG_ALIAS = { no: 'nb', cz: 'cs' };
+const TT_LANG_ALIAS = { no: 'nb', cz: 'cs', dk: 'da' };
 function ttGetLangFromHass(hass) {
-  const raw = hass?.locale?.language || hass?.language || navigator.language || 'en';
-  return String(raw).toLowerCase();
+  // Home Assistant can report locales like "da_DK"; normalize to BCP-47 ("da-DK").
+  const raw =
+    (typeof hass === 'string' ? hass : (hass?.locale?.language || hass?.language)) ||
+    navigator.language ||
+    'en';
+  return String(raw).replace(/_/g, '-').toLowerCase();
 }
 function ttLocalize(key, langOrHass) {
   const raw = typeof langOrHass === 'string' ? langOrHass : ttGetLangFromHass(langOrHass);
-  const lang = String(raw).toLowerCase();
+  const lang = String(raw).replace(/_/g, '-').toLowerCase();
   const parts = lang.split('-');
   const candidates = [
     lang,
@@ -2886,6 +2860,7 @@ function ttLocalize(key, langOrHass) {
     const dict = TT_I18N[c];
     if (dict && dict[key]) return dict[key];
   }
+  // Default/fallback language is English.
   return TT_I18N.en[key] || key;
 }
 // ---- end i18n ----
@@ -2895,7 +2870,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.15-open-window-detection";
+const TT_CARD_VERSION = "2025.12.26-remove-testbtn-1";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -2905,27 +2880,16 @@ class ThermostatTimelineCard extends HTMLElement {
       // Localize default title based on browser language; editor will further adapt to HA language
       title: ttLocalize('card.title_default', navigator.language || 'en'),
       entities: [],
-      row_height: 64,
-      default_temp: 20,
-      max_temp: 25,
-      min_temp: 5,
       time_12h: null,
       time_source: 'browser', // 'browser' | 'ha'
-      color_ranges: {}, // { [entity_id]: [ { from: number(C), to: number(C), color: string } ] }
       color_global: false, // when true, use one global set of colors (key "*") for all rooms
       now_update_ms: 60000,   // kun til UI 'nu'-stregen
       storage_enabled: true, // default: on -> uses file storage via API
-      storage_sync_mode: 'instant', // 'instant' | 'delay'
       storage_sync_min: 5,          // minutes when mode = 'delay' (legacy)
-      storage_sync_sec: 15,         // seconds when mode = 'delay' (preferred, min 5s)
       backup_auto_enabled: false,
       backup_interval_days: 1,
       show_top_now: false,
       now_extend_px: 76,
-      show_pause_button: true,
-      auto_apply: true,        // sæt automatisk setpoint via climate.set_temperature
-      apply_on_edit: true,     // NYT: anvend straks hvis den ønskede temp *nu* ændres af en redigering
-      apply_on_default_change: true, // NYT: anvend straks hvis Standard °C ændrer den ønskede temp *nu*,
       labels: {},
       merges: {},              // { [primary_eid]: [linked_eid, ...] }
       temp_sensors: {},        // { [primary_eid]: sensor.temperature_entity_id }
@@ -2946,7 +2910,6 @@ class ThermostatTimelineCard extends HTMLElement {
       holidays_source: 'calendar', // 'calendar' | 'manual'
       holidays_entity: '',         // calendar.* or binary_sensor.* that is on/off for holiday
       holidays_dates: [],          // [ 'YYYY-MM-DD', ... ]
-      per_room_defaults: false,   // Show/use Default °C per room on the timeline
       presence_live_header: true // Show live presence chips in header
       , room_use_input_number: [] // per-room toggle: show/select input_number instead of climate (matches entities[] index)
     };
@@ -3231,6 +3194,10 @@ class ThermostatTimelineCard extends HTMLElement {
   this._disablePopups = false;
   // Disable the onboarding guide popup explicitly
   this._disableOnboard = true;
+
+  // In-card settings popup state (draft; only saved on Save button)
+  this._settingsPopupTab = 'settings';
+  this._settingsDraft = null;
 
     // Data
     this._schedules = {};          // { [entity_id]: { defaultTemp:number, blocks:[{id,startMin,endMin,temp}] } }
@@ -3531,16 +3498,33 @@ class ThermostatTimelineCard extends HTMLElement {
                 s = so;
               }
             } catch {}
-            // Do not override user-selected format/unit from shared storage
-            // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
-            // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+            // Pick up format/unit from shared storage when not YAML-provided
+            if (typeof s.time_12h === 'boolean' && !this._yamlProvided?.time_12h) this._config.time_12h = !!s.time_12h;
+            if (typeof s.temp_unit === 'string' && !this._yamlProvided?.temp_unit) this._config.temp_unit = (String(s.temp_unit).toUpperCase()==='F' ? 'F' : 'C');
             // Pick up time_source from shared storage when not YAML-provided
             if (typeof s.time_source === 'string' && !this._yamlProvided?.time_source) this._config.time_source = (s.time_source === 'ha' ? 'ha' : 'browser');
             if (s.color_ranges && typeof s.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...s.color_ranges };
             if (typeof s.color_global === 'boolean') this._config.color_global = !!s.color_global;
-            if (Number.isFinite(s.default_temp) && !this._yamlProvided?.default_temp) this._config.default_temp = Number(s.default_temp);
-            if (Number.isFinite(s.min_temp) && !this._yamlProvided?.min_temp) this._config.min_temp = Number(s.min_temp);
-            if (Number.isFinite(s.max_temp) && !this._yamlProvided?.max_temp) this._config.max_temp = Number(s.max_temp);
+            if (Number.isFinite(s.default_temp)) this._config.default_temp = Number(s.default_temp);
+            if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
+            if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+            if (Number.isFinite(s.row_height)) this._config.row_height = Math.max(30, Math.min(200, Math.round(Number(s.row_height))));
+
+            // Rooms from shared storage (used by Settings popup)
+            try {
+              if (Array.isArray(s.entities)) {
+                const ents = s.entities.filter(Boolean).map(String);
+                this._config.entities = ents;
+                const rawModes = Array.isArray(s.room_use_input_number) ? s.room_use_input_number.map(v=>!!v) : [];
+                while (rawModes.length < ents.length) rawModes.push(false);
+                this._config.room_use_input_number = ents.map((eid, idx)=>{
+                  if (String(eid).startsWith('input_number.')) return true;
+                  if (String(eid).startsWith('climate.')) return false;
+                  return !!rawModes[idx];
+                });
+              }
+            } catch {}
+
             if (s.merges && typeof s.merges === 'object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
             if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
             if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
@@ -3557,9 +3541,11 @@ class ThermostatTimelineCard extends HTMLElement {
             }
             try { this._awayBypass = !!s.away_bypass; } catch {}
             if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
-            if (typeof s.show_pause_button === 'boolean' && !this._yamlProvided?.show_pause_button) this._config.show_pause_button = !!s.show_pause_button;
+            if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
             if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled;
+            if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
             if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
+            if (typeof s.apply_on_default_change === 'boolean') this._config.apply_on_default_change = !!s.apply_on_default_change;
             // Holidays shared settings
             try {
               if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
@@ -3685,14 +3671,30 @@ class ThermostatTimelineCard extends HTMLElement {
       s = so;
     }
   } catch {}
-  // Do not override user-selected format/unit from local browser storage
-  // if (s.time_12h !== undefined) this._config.time_12h = !!s.time_12h;
-  // if (s.temp_unit) this._config.temp_unit = String(s.temp_unit).toUpperCase()==='F'?'F':'C';
+  // Pick up format/unit from local browser storage when not YAML-provided
+  if (typeof s.time_12h === 'boolean' && !this._yamlProvided?.time_12h) this._config.time_12h = !!s.time_12h;
+  if (typeof s.temp_unit === 'string' && !this._yamlProvided?.temp_unit) this._config.temp_unit = (String(s.temp_unit).toUpperCase()==='F' ? 'F' : 'C');
   if (s.color_ranges && typeof s.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...s.color_ranges };
     if (typeof s.color_global === 'boolean') this._config.color_global = !!s.color_global;
   if (Number.isFinite(s.default_temp) && !this._yamlProvided?.default_temp) this._config.default_temp = Number(s.default_temp);
     if (Number.isFinite(s.min_temp) && !this._yamlProvided?.min_temp) this._config.min_temp = Number(s.min_temp);
     if (Number.isFinite(s.max_temp) && !this._yamlProvided?.max_temp) this._config.max_temp = Number(s.max_temp);
+
+    // Rooms from local browser storage (used by Settings popup)
+    try {
+      if (Array.isArray(s.entities)) {
+        const ents = s.entities.filter(Boolean).map(String);
+        this._config.entities = ents;
+        const rawModes = Array.isArray(s.room_use_input_number) ? s.room_use_input_number.map(v=>!!v) : [];
+        while (rawModes.length < ents.length) rawModes.push(false);
+        this._config.room_use_input_number = ents.map((eid, idx)=>{
+          if (String(eid).startsWith('input_number.')) return true;
+          if (String(eid).startsWith('climate.')) return false;
+          return !!rawModes[idx];
+        });
+      }
+    } catch {}
+
     if (s.merges && typeof s.merges==='object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
     if (s.labels && typeof s.labels==='object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
   if (s.temp_sensors && typeof s.temp_sensors==='object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
@@ -4080,12 +4082,28 @@ class ThermostatTimelineCard extends HTMLElement {
       const awayOut = { ...awayCfg };
       if (typeof awayOut.target_c !== 'undefined') awayOut.target_c = toStore(awayOut.target_c);
       const settings = {
+        // Rooms (used by Settings popup)
+        entities: Array.isArray(this._config.entities) ? this._config.entities.filter(Boolean).map(String) : [],
+        room_use_input_number: (()=>{
+          try {
+            const ents = Array.isArray(this._config.entities) ? this._config.entities.filter(Boolean).map(String) : [];
+            const raw = Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number.slice() : [];
+            while (raw.length < ents.length) raw.push(false);
+            return ents.map((eid, idx)=>{
+              if (String(eid).startsWith('input_number.')) return true;
+              if (String(eid).startsWith('climate.')) return false;
+              return !!raw[idx];
+            });
+          } catch { return []; }
+        })(),
+
         time_12h: this._config.time_12h,
         temp_unit: this._config.temp_unit,
         time_source: this._config.time_source,
+        row_height: Number(this._config.row_height ?? 64),
         default_temp: toStore(Number(this._config.default_temp||20)),
-        min_temp: toStore(this._config.min_temp),
-        max_temp: toStore(this._config.max_temp),
+        min_temp: toStore(Number(this._config.min_temp ?? 5)),
+        max_temp: toStore(Number(this._config.max_temp ?? 25)),
         weekdays_enabled: !!this._config.weekdays_enabled,
         weekdays_mode: this._config.weekdays_mode || 'weekday_weekend',
         weekdays_view: this._config.weekdays_view || 'all_rooms_one_day',
@@ -4096,6 +4114,7 @@ class ThermostatTimelineCard extends HTMLElement {
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
+        open_window: this._config.open_window,
         boiler_enabled: !!this._config.boiler_enabled,
           boiler_switch: String(this._config.boiler_switch || ''),
         boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
@@ -4105,6 +4124,7 @@ class ThermostatTimelineCard extends HTMLElement {
   presence_live_header: !!(this._config.presence_live_header ?? true),
         auto_apply_enabled: !!this._config.auto_apply,
         apply_on_edit: !!this._config.apply_on_edit,
+        apply_on_default_change: !!this._config.apply_on_default_change,
         backup_auto_enabled: !!this._config.backup_auto_enabled,
         backup_interval_days: Number(this._config.backup_interval_days||1),
         profiles_enabled: !!this._config.profiles_enabled,
@@ -4958,15 +4978,20 @@ class ThermostatTimelineCard extends HTMLElement {
   .card.hide-popups .overlay,
   .card.hide-popups .overlay-week,
   .card.hide-popups .overlay-profiles,
+        .card.hide-popups .overlay-settings,
   .card.hide-popups .overlay-copyrooms,
   .card.hide-popups .overlay-onboard { display: none !important; }
   .card.hide-popups [data-role="addbtn"],
   .card.hide-popups [data-role="weekbtn"],
-  .card.hide-popups [data-role="profbtn"] { display: none !important; }
+        .card.hide-popups [data-role="profbtn"],
+        .card.hide-popups [data-role="settingsbtn"] { display: none !important; }
   /* Global pause button */
   .pause-btn { width:26px; height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--primary-color); color: var(--text-primary-color, #fff); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
   .pause-btn.paused { background: var(--error-color); color: var(--text-primary-color, #fff); border-color: var(--error-color); }
   .pause-btn ha-icon{ --mdc-icon-size: 16px; }
+  /* Settings button (header, top-right) */
+  .settings-btn { width:26px; height:26px; border-radius:999px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .settings-btn ha-icon{ --mdc-icon-size: 16px; }
   .profiles-btn { height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--card-background-color); color: var(--primary-text-color); padding:0 10px; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
   .profiles-btn.primary{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
   .profiles-btn.success{ background: var(--success-color, #4caf50); color: var(--text-primary-color, #fff); border-color: var(--success-color, #4caf50); }
@@ -4995,9 +5020,11 @@ class ThermostatTimelineCard extends HTMLElement {
   .modal-profiles .week-track, .modal-holiday .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
   .modal-profiles .week-track .block .pill{ display:none; }
   .modal-profiles .week-scale-inner .mer, .modal-holiday .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
-  /* Tabs styling reused (match weekdays look) for presence/profiles modals */
-  .modal-profiles .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
-  .modal-profiles .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
+  /* Tabs styling reused (match weekdays look) */
+  .modal-profiles .wk-tab,
+  .modal-holiday .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .modal-profiles .wk-tab.active,
+  .modal-holiday .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
   /* Small confirm popup inside overlays */
   .mini-confirm{ position:fixed; inset:0; display:grid; place-items:center; background: rgba(0,0,0,.32); z-index:2147484000; }
   .mini-confirm .box{ min-width:260px; max-width:420px; border-radius:8px; padding:12px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); box-shadow: var(--ha-card-box-shadow, 0 4px 12px rgba(0,0,0,.2)); }
@@ -5021,6 +5048,90 @@ class ThermostatTimelineCard extends HTMLElement {
   .test-btn ha-icon{ --mdc-icon-size: 14px; }
   /* Test popup */
   .modal-test{ width:min(92vw, 520px); max-width:520px; }
+  /* Settings popup */
+  .modal-settings{
+    width:min(95vw, 640px);
+    max-width:640px;
+    height:min(90vh, 720px);
+    max-height:min(90vh, 720px);
+    display:flex;
+    flex-direction:column;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+  .overlay-settings .settings-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 8px; }
+  .overlay-settings .settings-head .settings-title{ margin:0; }
+  .overlay-settings .settings-head .int-status{ cursor: default; }
+  .overlay-settings .int-status{ display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); }
+  .overlay-settings .int-status.ok{ color: var(--success-color, #2e7d32); border-color: color-mix(in oklab, var(--success-color, #2e7d32) 50%, var(--divider-color)); }
+  .overlay-settings .int-status.bad{ color: var(--error-color); border-color: color-mix(in oklab, var(--error-color) 50%, var(--divider-color)); }
+  .overlay-settings .int-status ha-icon{ --mdc-icon-size: 14px; }
+  .overlay-settings .int-status .text{ font-size:.8rem; white-space:nowrap; }
+  /* Keep header/tabs/buttons fixed; scroll content instead */
+  .overlay-settings .modal-settings .settings-body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow:auto;
+  }
+  .overlay-settings .modal-settings .actions{ flex:0 0 auto; }
+  .settings-tabs{ display:flex; flex-wrap:wrap; gap:12px 18px; align-items:flex-end; padding:0 6px; margin:8px 0 4px; border-bottom: 1px solid var(--divider-color); }
+  .settings-tab-btn{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); padding:10px 2px; margin:0; cursor:pointer; font-weight:600; position:relative; max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .settings-tab-btn::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background: transparent; border-radius:2px; }
+  .settings-tab-btn.active{ color: var(--primary-text-color); }
+  .settings-tab-btn.active::after{ background: var(--primary-color); }
+  .settings-tab-btn:focus{ outline:none; }
+  .settings-tab-btn:focus-visible{ outline: 2px solid var(--primary-color); outline-offset:2px; border-radius:4px; }
+  /* Popup settings content (reuse editor look) */
+  .settings-card{ border:1px solid var(--divider-color); border-radius:12px; background: var(--card-background-color); padding:12px; display:grid; gap:10px; }
+  .settings-card .grid4{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom: 6px; }
+  .settings-card .sfield{ display:grid; gap:2px; align-items:start; }
+  .settings-card .slabel{ font-size:.8rem; color: var(--secondary-text-color); line-height:1; padding-left:4px; }
+  .settings-card .settings-input{ width:88px; height:28px; padding:4px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing:border-box; }
+  .settings-card .setting{ display:grid; grid-template-columns: 1fr auto; align-items:center; gap:10px; padding:10px 4px; }
+  .settings-card .setting + .setting{ border-top: 1px solid var(--divider-color); }
+  .settings-card .title{ font-weight:600; }
+  .settings-card .desc{ font-size:.85rem; color: var(--secondary-text-color); margin-top:2px; }
+  /* Segmented control (used by popup Settings: time format/source, temperature unit) */
+  .settings-card .seg{ display:inline-flex; border:1px solid var(--divider-color); border-radius:10px; overflow:hidden; }
+  .settings-card .seg button{ padding:6px 10px; background: var(--card-background-color); color: var(--primary-text-color); border:0; cursor:pointer; }
+  .settings-card .seg button.active{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  /* Popup inputs (used in Rooms, Holidays etc.) */
+  .overlay-settings input.tt-input{
+    width:100%;
+    height:36px;
+    min-height:36px;
+    padding:6px 10px;
+    box-sizing:border-box;
+    border:1px solid var(--divider-color);
+    border-radius:8px;
+    background: var(--card-background-color);
+    color: var(--primary-text-color);
+    display:block;
+  }
+  .overlay-settings input.tt-input.tt-input-lg{
+    height:48px;
+    min-height:48px;
+    max-height:48px;
+    padding:0 14px;
+    border-radius:10px;
+    background: var(--card-background-color);
+  }
+  .overlay-settings input.tt-input::placeholder{ color: var(--secondary-text-color); opacity: 1; }
+  .overlay-settings input.tt-input:focus{ outline:none; }
+  .overlay-settings input.tt-input:focus-visible{ outline: 2px solid var(--primary-color); outline-offset:2px; }
+
+  /* Popup entity pickers should match the Rooms details width */
+  .overlay-settings .inline tt-entity-picker,
+  .overlay-settings .inline ha-entity-picker{
+    width:100%;
+    min-width:250px;
+    max-width:440px;
+    min-height:48px;
+    display:block;
+  }
+  .settings-body{ display:grid; gap:10px; }
+  .settings-page{ display:none; }
+  .settings-page.active{ display:block; }
   .test-list{ margin-top:8px; display:grid; gap:8px; max-height:360px; overflow:auto; border:1px solid var(--divider-color); border-radius:8px; padding:8px; }
   .test-item{ padding:6px 8px; border:1px solid var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
   .test-item h4{ margin:0 0 4px; font-size:.95rem; overflow-wrap:anywhere; }
@@ -5204,6 +5315,144 @@ class ThermostatTimelineCard extends HTMLElement {
               <button type="button" class="btn ghost pause-indef"></button>
               <button type="button" class="btn success pause-resume"></button>
               <button type="button" class="btn danger pause-close"></button>
+            </div>
+          </div>
+        </div>
+        <!-- In-card Settings (moved out of HA editor over time) -->
+        <div class="overlay overlay-settings" part="overlay">
+          <div class="modal modal-settings" role="dialog" aria-modal="true">
+            <div class="settings-head">
+              <h3 class="settings-title"></h3>
+              <span class="int-status sp-int-status" role="status">
+                <ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon>
+                <span class="text"></span>
+              </span>
+            </div>
+            <div class="settings-tabs" role="tablist">
+              <button type="button" class="settings-tab-btn" data-tab="settings" role="tab" aria-selected="true"></button>
+              <button type="button" class="settings-tab-btn" data-tab="weekdays" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="rooms" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="boiler" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="colors" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="owd" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="holidays" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="away" role="tab" aria-selected="false"></button>
+            </div>
+            <div class="settings-body" style="min-height:80px;">
+              <div class="settings-page" data-page="settings">
+                <div class="settings-card">
+                  <div class="grid4">
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-def"></div>
+                      <input class="settings-input sp-def" type="number" step="0.5" />
+                    </div>
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-rowh"></div>
+                      <input class="settings-input sp-rowh" type="number" step="1" min="40" max="120" />
+                    </div>
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-minc"></div>
+                      <input class="settings-input sp-minc" type="number" step="0.5" />
+                    </div>
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-maxc"></div>
+                      <input class="settings-input sp-maxc" type="number" step="0.5" />
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-auto-title"></div>
+                      <div class="desc sp-auto-desc"></div>
+                    </div>
+                    <ha-switch class="sp-auto"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-applyedit-title"></div>
+                      <div class="desc sp-applyedit-desc"></div>
+                    </div>
+                    <ha-switch class="sp-applyedit"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-applydef-title"></div>
+                      <div class="desc sp-applydef-desc"></div>
+                    </div>
+                    <ha-switch class="sp-applydef"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-perroom-title"></div>
+                      <div class="desc sp-perroom-desc"></div>
+                    </div>
+                    <ha-switch class="sp-perroom"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-pausebtn-title"></div>
+                      <div class="desc sp-pausebtn-desc"></div>
+                    </div>
+                    <ha-switch class="sp-pausebtn"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-timefmt-title"></div>
+                      <div class="desc sp-timefmt-desc"></div>
+                    </div>
+                    <div class="seg sp-timefmt">
+                      <button type="button" class="sp-fmt24">24h</button>
+                      <button type="button" class="sp-fmt12">12h</button>
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-timesrc-title"></div>
+                      <div class="desc sp-timesrc-desc"></div>
+                    </div>
+                    <div class="seg sp-timesrc">
+                      <button type="button" class="sp-srcBrowser"></button>
+                      <button type="button" class="sp-srcHa"></button>
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-tempfmt-title"></div>
+                      <div class="desc sp-tempfmt-desc"></div>
+                    </div>
+                    <div class="seg sp-tempfmt">
+                      <button type="button" class="sp-unitC">°C</button>
+                      <button type="button" class="sp-unitF">°F</button>
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-profiles-title"></div>
+                      <div class="desc sp-profiles-desc"></div>
+                    </div>
+                    <ha-switch class="sp-profiles"></ha-switch>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-page" data-page="weekdays"></div>
+              <div class="settings-page" data-page="rooms"></div>
+              <div class="settings-page" data-page="boiler"></div>
+              <div class="settings-page" data-page="colors"></div>
+              <div class="settings-page" data-page="owd"></div>
+              <div class="settings-page" data-page="holidays"></div>
+              <div class="settings-page" data-page="away"></div>
+            </div>
+            <div class="actions" style="margin-top:10px; display:flex; justify-content:flex-end; gap:8px;">
+              <button class="btn primary settings-save" type="button"></button>
+              <button class="btn ghost settings-close" type="button"></button>
             </div>
           </div>
         </div>
@@ -5529,15 +5778,6 @@ class ThermostatTimelineCard extends HTMLElement {
       };
       const shown = (!this._config.title || isDef(this._config.title)) ? this._t('card.title_default') : this._config.title;
       titleEl.innerHTML = '';
-      // Test button (red dot) placed before title text
-      try {
-        const testBtn = document.createElement('button');
-        testBtn.className = 'test-btn';
-        testBtn.setAttribute('title','Test værktøj');
-        testBtn.innerHTML = '<ha-icon icon="mdi:ladybug"></ha-icon>';
-        testBtn.addEventListener('click', ()=>{ try { this._openTestPopup(); } catch {} });
-        titleEl.append(testBtn);
-      } catch {}
       const tspan = document.createElement('span'); tspan.className = 'title-text'; tspan.textContent = shown; titleEl.append(tspan);
       // Sync countdown/dots (left side, next to title)
       try {
@@ -5689,6 +5929,22 @@ class ThermostatTimelineCard extends HTMLElement {
         let wrap = headerEl.querySelector('.pause-wrap');
         if (!wrap) { wrap = document.createElement('div'); wrap.className = 'pause-wrap'; headerEl.append(wrap); }
         wrap.innerHTML = '';
+
+        // Settings button (top-right)
+        try {
+          if (!this._disablePopups) {
+            const sbtn = document.createElement('button');
+            sbtn.className = 'settings-btn';
+            sbtn.type = 'button';
+            try { sbtn.dataset.role = 'settingsbtn'; } catch {}
+            const lab = this._t('editor.tabs.settings') || 'Settings';
+            sbtn.setAttribute('title', lab);
+            sbtn.setAttribute('aria-label', lab);
+            sbtn.innerHTML = '<ha-icon icon="mdi:cog-outline"></ha-icon>';
+            sbtn.addEventListener('click', ()=>{ try { this._openSettingsPopup(); } catch {} });
+            wrap.append(sbtn);
+          }
+        } catch {}
         
         if (this._config?.show_pause_button ?? true) {
           const btn = document.createElement('button');
@@ -5869,6 +6125,8 @@ class ThermostatTimelineCard extends HTMLElement {
         try {
           const pauseBtn = wrap.querySelector('.pause-btn');
           if (pauseBtn) wrap.appendChild(pauseBtn);
+          const settingsBtn = wrap.querySelector('.settings-btn');
+          if (settingsBtn) wrap.appendChild(settingsBtn);
         } catch {}
       }
     } catch {}
@@ -6600,6 +6858,2854 @@ class ThermostatTimelineCard extends HTMLElement {
       if (texport) texport.onclick = ()=>{ try { this._exportTestCommands(); } catch {} };
       if (tov) tov.onclick = (e)=>{ if (e.target === tov) { e.preventDefault(); e.stopPropagation(); } };
     } catch {}
+
+    // Settings popup events
+    try {
+      const sov = qs('.overlay-settings');
+      const sclose = qs('.settings-close');
+      const ssave = qs('.settings-save');
+      const stabs = qs('.settings-tabs');
+      if (sclose) sclose.onclick = ()=>{ try { this._closeSettingsPopup(false); } catch {} };
+      if (ssave) ssave.onclick = ()=>{ try { this._saveSettingsPopup(); } catch {} };
+      if (stabs) stabs.onclick = (ev)=>{
+        try {
+          // In Shadow DOM, the click target can be a Text node inside the button.
+          // Use composedPath() to reliably find the originating button.
+          const path = typeof ev.composedPath === 'function' ? ev.composedPath() : [];
+          let btn = null;
+          for (const n of path) {
+            if (n && n.classList && n.classList.contains('settings-tab-btn')) { btn = n; break; }
+          }
+          if (!btn) btn = (ev.target && ev.target.closest) ? ev.target.closest('.settings-tab-btn') : null;
+          if (!btn) return;
+          const tab = btn.getAttribute('data-tab') || 'settings';
+          this._setSettingsPopupTab(tab);
+        } catch {}
+      };
+      if (sov) sov.onclick = (e)=>{ if (e.target === sov) { e.preventDefault(); e.stopPropagation(); } };
+
+      // Prevent scroll wheel from accidentally changing number inputs (which triggers "unsaved" state)
+      try {
+        const scroller = qs('.overlay-settings .settings-body') || sov;
+        const onWheel = (ev)=>{
+          try {
+            const t = ev?.target;
+            if (!t || t.tagName !== 'INPUT' || t.type !== 'number') return;
+            // Stop number increment/decrement and treat it as scroll
+            try { t.blur?.(); } catch {}
+            ev.preventDefault();
+            const s = t.closest('.settings-body') || scroller;
+            if (s && typeof s.scrollTop === 'number') s.scrollTop += (Number(ev.deltaY) || 0);
+          } catch {}
+        };
+        try {
+          if (this._settingsPopupWheelHandler?.el && this._settingsPopupWheelHandler?.fn) {
+            this._settingsPopupWheelHandler.el.removeEventListener('wheel', this._settingsPopupWheelHandler.fn);
+          }
+        } catch {}
+        if (scroller) {
+          scroller.addEventListener('wheel', onWheel, { passive: false });
+          this._settingsPopupWheelHandler = { el: scroller, fn: onWheel };
+        }
+      } catch {}
+
+      // Settings tab controls (draft-only)
+      const onNum = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const v = e && e.target ? e.target.value : '';
+          if (v === '') return;
+          const n = Number(v);
+          if (!Number.isFinite(n)) return;
+          this._settingsDraft[key] = n;
+        } catch {}
+      };
+      const onTempNum = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const v = e && e.target ? e.target.value : '';
+          if (v === '') return;
+          const raw = String(v).trim().replace(',', '.');
+          const nDisp = Number(raw);
+          if (!Number.isFinite(nDisp)) return;
+          // Convert based on draft unit (config unit may not match while popup is open)
+          const wantF = String(this._settingsDraft?.temp_unit || 'C').toUpperCase() === 'F';
+          const nC = wantF ? ((nDisp - 32) * 5/9) : nDisp;
+          if (!Number.isFinite(nC)) return;
+          this._settingsDraft[key] = nC;
+        } catch {}
+      };
+      const onSw = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const checked = !!(e && e.target && e.target.checked);
+          this._settingsDraft[key] = checked;
+        } catch {}
+      };
+
+      const spDef = qs('.overlay-settings .sp-def');
+      const spRowH = qs('.overlay-settings .sp-rowh');
+      const spMinC = qs('.overlay-settings .sp-minc');
+      const spMaxC = qs('.overlay-settings .sp-maxc');
+      if (spDef) spDef.oninput = onTempNum('default_temp');
+      if (spRowH) spRowH.oninput = onNum('row_height');
+      if (spMinC) spMinC.oninput = onTempNum('min_temp');
+      if (spMaxC) spMaxC.oninput = onTempNum('max_temp');
+
+      const swAuto = qs('.overlay-settings .sp-auto');
+      const swApplyEdit = qs('.overlay-settings .sp-applyedit');
+      const swApplyDef = qs('.overlay-settings .sp-applydef');
+      const swPerRoom = qs('.overlay-settings .sp-perroom');
+      const swPauseBtn = qs('.overlay-settings .sp-pausebtn');
+      if (swAuto) swAuto.onchange = onSw('auto_apply');
+      if (swApplyEdit) swApplyEdit.onchange = onSw('apply_on_edit');
+      if (swApplyDef) swApplyDef.onchange = onSw('apply_on_default_change');
+      if (swPerRoom) swPerRoom.onchange = onSw('per_room_defaults');
+      if (swPauseBtn) swPauseBtn.onchange = onSw('show_pause_button');
+
+      // Segmented controls + profiles enable
+      const fmt24 = qs('.overlay-settings .sp-fmt24');
+      const fmt12 = qs('.overlay-settings .sp-fmt12');
+      const srcB = qs('.overlay-settings .sp-srcBrowser');
+      const srcH = qs('.overlay-settings .sp-srcHa');
+      const unitC = qs('.overlay-settings .sp-unitC');
+      const unitF = qs('.overlay-settings .sp-unitF');
+      const swProfiles = qs('.overlay-settings .sp-profiles');
+      if (fmt24) fmt24.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_12h = false; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (fmt12) fmt12.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_12h = true; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (srcB) srcB.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_source = 'browser'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (srcH) srcH.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_source = 'ha'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (unitC) unitC.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'C'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (unitF) unitF.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'F'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (swProfiles) swProfiles.onchange = onSw('profiles_enabled');
+    } catch {}
+  }
+
+  // --- Settings popup (in-card, not HA editor) ---
+  _openSettingsPopup(){
+    try {
+      if (this._disablePopups) return;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (!ov) return;
+      ov.classList.add('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+      try { if (!this._settingsPopupTab) this._settingsPopupTab = 'settings'; } catch {}
+      try { this._initSettingsPopupDraft(); } catch {}
+      try { this._applyCardI18n(); } catch {}
+      try { this._renderSettingsPopupTabs(); } catch {}
+      try { this._renderSettingsPopupTab(); } catch {}
+      try {
+        const onKey = (ev) => { if (ev.key === 'Escape') { this._closeSettingsPopup(false); } };
+        try { if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler); } catch {}
+        this._settingsPopupKeyHandler = onKey;
+        window.addEventListener('keydown', onKey);
+      } catch {}
+    } catch {}
+  }
+
+  _setSettingsPopupTab(tab){
+    try {
+      const allowed = new Set(['settings','weekdays','rooms','boiler','colors','owd','holidays','away']);
+      const next = allowed.has(String(tab)) ? String(tab) : 'settings';
+      this._settingsPopupTab = next;
+      this._renderSettingsPopupTabs();
+      this._renderSettingsPopupTab();
+    } catch {}
+  }
+
+  _renderSettingsPopupTabs(){
+    try {
+      const active = String(this._settingsPopupTab || 'settings');
+      const btns = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-tab-btn')) : [];
+      for (const b of btns){
+        const isActive = (b.getAttribute('data-tab') === active);
+        try { b.classList.toggle('active', isActive); } catch {}
+        try { b.setAttribute('aria-selected', isActive ? 'true' : 'false'); } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupTab(){
+    try {
+      const active = String(this._settingsPopupTab || 'settings');
+      const pages = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-page')) : [];
+      for (const p of pages){
+        const isActive = (p.getAttribute('data-page') === active);
+        try { p.classList.toggle('active', isActive); } catch {}
+        // Some tab renderers apply inline display styles (e.g. grid). Clear those on inactive tabs
+        // so CSS `.settings-page{display:none}` can hide them properly.
+        if (!isActive) {
+          try { p.style.display = ''; } catch {}
+        }
+      }
+      if (active === 'settings') {
+        this._renderSettingsPopupSettingsTab();
+      } else if (active === 'weekdays') {
+        this._renderSettingsPopupWeekdaysTab();
+      } else if (active === 'rooms') {
+        this._renderSettingsPopupRoomsTab();
+      } else if (active === 'boiler') {
+        this._renderSettingsPopupBoilerTab();
+      } else if (active === 'colors') {
+        this._renderSettingsPopupColorsTab();
+      } else if (active === 'owd') {
+        this._renderSettingsPopupOwdTab();
+      } else if (active === 'holidays') {
+        this._renderSettingsPopupHolidaysTab();
+      } else if (active === 'away') {
+        this._renderSettingsPopupAwayTab();
+      }
+      // Some pages (like Weekdays) are built dynamically; re-apply i18n after rendering.
+      try { this._applyCardI18n(); } catch {}
+    } catch {}
+  }
+
+  _initSettingsPopupDraft(){
+    try {
+      const cfg = this._config || {};
+      const ow = (cfg.open_window && typeof cfg.open_window === 'object') ? cfg.open_window : {};
+      const owEnabled = (typeof ow.enabled === 'boolean') ? ow.enabled : false;
+      const owSensors = (ow.sensors && typeof ow.sensors === 'object') ? ow.sensors : {};
+      const owOpenDelay = Number.isFinite(Number(ow.open_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.open_delay_min)))) : 2;
+      const owCloseDelay = Number.isFinite(Number(ow.close_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.close_delay_min)))) : 5;
+      let owSensorsClone = {};
+      try {
+        for (const k of Object.keys(owSensors||{})) {
+          const arr = Array.isArray(owSensors[k]) ? owSensors[k].filter(Boolean).map(String) : [];
+          if (arr.length) owSensorsClone[String(k)] = Array.from(new Set(arr));
+        }
+      } catch {}
+
+      // Holidays
+      let holDates = [];
+      try {
+        holDates = Array.isArray(cfg.holidays_dates) ? cfg.holidays_dates.filter(Boolean).map(String) : [];
+        holDates = Array.from(new Set(holDates)).sort();
+      } catch {}
+
+      // Away
+      const awayCfg = (cfg.away && typeof cfg.away === 'object') ? cfg.away : {};
+      const awayPersons = Array.isArray(awayCfg.persons) ? awayCfg.persons.filter(Boolean).map(String) : [];
+      const awayCombos = (awayCfg.combos && typeof awayCfg.combos === 'object') ? awayCfg.combos : {};
+      const awayCombosClone = (()=>{
+        try {
+          const out = {};
+          for (const k of Object.keys(awayCombos||{})) {
+            const v = awayCombos[k];
+            if (v && typeof v === 'object' && v.enabled) out[String(k)] = { enabled: true };
+          }
+          return out;
+        } catch { return {}; }
+      })();
+
+      this._settingsDraft = {
+        // Rooms (edited in popup, persisted via store)
+        entities: (()=>{
+          try { return Array.isArray(cfg.entities) ? cfg.entities.map(String) : []; } catch { return []; }
+        })(),
+        room_use_input_number: (()=>{
+          try {
+            const ents = Array.isArray(cfg.entities) ? cfg.entities.map(String) : [];
+            const modes = Array.isArray(cfg.room_use_input_number) ? cfg.room_use_input_number.slice() : [];
+            while (modes.length < ents.length) modes.push(false);
+            return modes.map(v => !!v).slice(0, ents.length);
+          } catch { return []; }
+        })(),
+        labels: (()=>{ try { return (cfg.labels && typeof cfg.labels === 'object') ? JSON.parse(JSON.stringify(cfg.labels)) : {}; } catch { return {}; } })(),
+        merges: (()=>{
+          try {
+            const src = (cfg.merges && typeof cfg.merges === 'object') ? cfg.merges : {};
+            const out = {};
+            for (const k of Object.keys(src||{})) {
+              const arr = Array.isArray(src[k]) ? src[k].filter(Boolean).map(String) : [];
+              if (arr.length) out[String(k)] = Array.from(new Set(arr));
+            }
+            return out;
+          } catch { return {}; }
+        })(),
+        temp_sensors: (()=>{ try { return (cfg.temp_sensors && typeof cfg.temp_sensors === 'object') ? JSON.parse(JSON.stringify(cfg.temp_sensors)) : {}; } catch { return {}; } })(),
+
+        default_temp: this._ttCoerceNum(cfg.default_temp, 20),
+        row_height: this._ttCoerceNum(cfg.row_height, 64),
+        min_temp: this._ttCoerceNum(cfg.min_temp, 5),
+        max_temp: this._ttCoerceNum(cfg.max_temp, 25),
+        auto_apply: !!cfg.auto_apply,
+        apply_on_edit: !!cfg.apply_on_edit,
+        apply_on_default_change: !!cfg.apply_on_default_change,
+        per_room_defaults: !!cfg.per_room_defaults,
+        show_pause_button: cfg.show_pause_button !== false,
+        time_12h: !!cfg.time_12h,
+        time_source: (cfg.time_source === 'ha') ? 'ha' : 'browser',
+        temp_unit: (String(cfg.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C',
+        profiles_enabled: !!cfg.profiles_enabled,
+
+        weekdays_enabled: !!cfg.weekdays_enabled,
+        weekdays_view: String(cfg.weekdays_view || 'all_rooms_one_day'),
+        weekdays_selected_room: String(cfg.weekdays_selected_room || ''),
+
+        boiler_enabled: !!cfg.boiler_enabled,
+        boiler_switch: String(cfg.boiler_switch || ''),
+        boiler_temp_sensor: String(cfg.boiler_temp_sensor || ''),
+        boiler_min_temp: this._ttCoerceNum(cfg.boiler_min_temp, 20),
+        boiler_max_temp: this._ttCoerceNum(cfg.boiler_max_temp, 25),
+
+        color_ranges: (()=>{
+          try {
+            const src = (cfg.color_ranges && typeof cfg.color_ranges === 'object') ? cfg.color_ranges : {};
+            const out = {};
+            for (const k of Object.keys(src||{})) {
+              const arr = Array.isArray(src[k]) ? src[k] : [];
+              out[String(k)] = arr.map(r => ({
+                from: Number.isFinite(Number(r?.from)) ? Number(r.from) : (this._ttCoerceNum(cfg.default_temp, 20)),
+                to: Number.isFinite(Number(r?.to)) ? Number(r.to) : (this._ttCoerceNum(cfg.default_temp, 20)),
+                color: String(r?.color || '#ffb347')
+              }));
+            }
+            return out;
+          } catch { return {}; }
+        })(),
+        color_global: !!cfg.color_global,
+
+        open_window: {
+          enabled: !!owEnabled,
+          sensors: owSensorsClone,
+          open_delay_min: owOpenDelay,
+          close_delay_min: owCloseDelay,
+        },
+
+        holidays_enabled: !!cfg.holidays_enabled,
+        holidays_source: (cfg.holidays_source === 'manual') ? 'manual' : 'calendar',
+        holidays_entity: String(cfg.holidays_entity || ''),
+        holidays_dates: holDates,
+
+        away: {
+          enabled: !!awayCfg.enabled,
+          target_c: this._ttCoerceNum(awayCfg.target_c, 17),
+          persons: Array.from(new Set(awayPersons)),
+          advanced_enabled: !!awayCfg.advanced_enabled,
+          combos: awayCombosClone,
+        },
+        presence_live_header: !!(cfg.presence_live_header ?? true),
+      };
+    } catch { this._settingsDraft = null; }
+  }
+
+  _applySettingsPopupDraftToConfig(){
+    try {
+      const d = this._settingsDraft;
+      if (!d) return;
+      const cfg = { ...(this._config || {}) };
+
+      // Rooms settings (entities + per-room mode + merges/labels)
+      try {
+        const rawEnts = Array.isArray(d.entities) ? d.entities.map(x => String(x||'').trim()) : [];
+        const ents = rawEnts.filter(Boolean);
+        const rawModes = Array.isArray(d.room_use_input_number) ? d.room_use_input_number.slice() : [];
+        while (rawModes.length < rawEnts.length) rawModes.push(false);
+        const modes = ents.map((eid, idx) => {
+          // If the entity domain is explicit, prefer it to avoid inconsistent mode state
+          if (String(eid).startsWith('input_number.')) return true;
+          if (String(eid).startsWith('climate.')) return false;
+          // Otherwise, take draft mode
+          return !!rawModes[idx];
+        });
+        cfg.entities = ents;
+        cfg.room_use_input_number = modes;
+
+        // Labels: keep only for active rooms and only non-empty strings
+        try {
+          const src = (d.labels && typeof d.labels === 'object') ? d.labels : {};
+          const out = {};
+          for (const eid of ents) {
+            const v = (src && Object.prototype.hasOwnProperty.call(src, eid)) ? String(src[eid]||'').trim() : '';
+            if (v) out[eid] = v;
+          }
+          cfg.labels = out;
+        } catch {}
+
+        // Merges: only keep mappings for active primaries, only climate rooms, and only linked climate.* entities
+        try {
+          const src = (d.merges && typeof d.merges === 'object') ? d.merges : {};
+          const out = {};
+          const primSet = new Set(ents);
+          for (let i=0;i<ents.length;i++) {
+            const primary = ents[i];
+            const isInput = !!modes[i] || String(primary).startsWith('input_number.');
+            if (isInput) continue;
+            const arr = Array.isArray(src[primary]) ? src[primary].filter(Boolean).map(String) : [];
+            const cleaned = Array.from(new Set(arr.filter(x => String(x).startsWith('climate.') && !primSet.has(String(x)))));
+            if (cleaned.length) out[primary] = cleaned;
+          }
+          cfg.merges = out;
+        } catch {}
+
+        // Temp sensors: keep only for active rooms
+        try {
+          const src = (d.temp_sensors && typeof d.temp_sensors === 'object') ? d.temp_sensors : {};
+          const out = {};
+          for (const eid of ents) {
+            const v = (src && Object.prototype.hasOwnProperty.call(src, eid)) ? String(src[eid]||'').trim() : '';
+            if (v) out[eid] = v;
+          }
+          cfg.temp_sensors = out;
+        } catch {}
+      } catch {}
+
+      cfg.default_temp = this._ttClampNum(d.default_temp, -50, 80, cfg.default_temp);
+      cfg.row_height = this._ttClampNum(d.row_height, 30, 200, cfg.row_height);
+      cfg.min_temp = this._ttClampNum(d.min_temp, -50, 80, cfg.min_temp);
+      cfg.max_temp = this._ttClampNum(d.max_temp, -50, 80, cfg.max_temp);
+
+      // Normalize min/max if user swapped them
+      if (Number.isFinite(cfg.min_temp) && Number.isFinite(cfg.max_temp) && cfg.min_temp > cfg.max_temp) {
+        const tmp = cfg.min_temp;
+        cfg.min_temp = cfg.max_temp;
+        cfg.max_temp = tmp;
+      }
+
+      cfg.auto_apply = !!d.auto_apply;
+      cfg.apply_on_edit = !!d.apply_on_edit;
+      cfg.apply_on_default_change = !!d.apply_on_default_change;
+      cfg.per_room_defaults = !!d.per_room_defaults;
+      cfg.show_pause_button = !!d.show_pause_button;
+
+      cfg.time_12h = !!d.time_12h;
+      cfg.time_source = (d.time_source === 'ha') ? 'ha' : 'browser';
+      cfg.temp_unit = (String(d.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C';
+      cfg.profiles_enabled = !!d.profiles_enabled;
+
+      cfg.weekdays_enabled = !!d.weekdays_enabled;
+      cfg.weekdays_view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+      // If per-room view, ensure we have a selected room
+      try {
+        const ents = Array.isArray(cfg.entities) ? cfg.entities.filter(Boolean) : [];
+        const want = String(d.weekdays_selected_room || '');
+        if (cfg.weekdays_view === 'one_room_all_days') {
+          cfg.weekdays_selected_room = (want && ents.includes(want)) ? want : (ents[0] || '');
+        } else {
+          cfg.weekdays_selected_room = '';
+        }
+      } catch {}
+
+      // Boiler settings
+      cfg.boiler_enabled = !!d.boiler_enabled;
+      cfg.boiler_switch = String(d.boiler_switch || '');
+      cfg.boiler_temp_sensor = String(d.boiler_temp_sensor || '');
+      const clampBoiler = (n, fallback)=>{
+        const v = Number(n);
+        if (!Number.isFinite(v)) return fallback;
+        return Math.max(0, Math.min(120, v));
+      };
+      cfg.boiler_min_temp = clampBoiler(d.boiler_min_temp, cfg.boiler_min_temp);
+      cfg.boiler_max_temp = clampBoiler(d.boiler_max_temp, cfg.boiler_max_temp);
+      // Normalize min/max if user swapped them
+      if (Number.isFinite(Number(cfg.boiler_min_temp)) && Number.isFinite(Number(cfg.boiler_max_temp)) && Number(cfg.boiler_min_temp) > Number(cfg.boiler_max_temp)) {
+        const tmpB = cfg.boiler_min_temp;
+        cfg.boiler_min_temp = cfg.boiler_max_temp;
+        cfg.boiler_max_temp = tmpB;
+      }
+
+      // Colors settings
+      try {
+        cfg.color_global = !!d.color_global;
+        const src = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+        const out = {};
+        const minC = Number.isFinite(Number(cfg.min_temp)) ? Number(cfg.min_temp) : 5;
+        const maxC = Number.isFinite(Number(cfg.max_temp)) ? Number(cfg.max_temp) : 25;
+        const clampC = (n, fallback)=>{
+          const v = Number(n);
+          if (!Number.isFinite(v)) return fallback;
+          return Math.max(minC, Math.min(maxC, v));
+        };
+        for (const k of Object.keys(src||{})) {
+          const arr = Array.isArray(src[k]) ? src[k] : [];
+          const cleaned = [];
+          for (const r of arr) {
+            const def = Number.isFinite(Number(cfg.default_temp)) ? Number(cfg.default_temp) : 20;
+            const from = clampC(r?.from, def);
+            const to = clampC(r?.to, def);
+            const color = String(r?.color || '#ffb347');
+            cleaned.push({ from, to, color });
+          }
+          out[String(k)] = cleaned;
+        }
+        cfg.color_ranges = out;
+      } catch {}
+
+      // Open Window Detection settings
+      try {
+        const ow = (d.open_window && typeof d.open_window === 'object') ? d.open_window : {};
+        const out = {};
+        out.enabled = !!ow.enabled;
+        out.open_delay_min = Number.isFinite(Number(ow.open_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.open_delay_min)))) : 2;
+        out.close_delay_min = Number.isFinite(Number(ow.close_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.close_delay_min)))) : 5;
+        out.sensors = {};
+        const sMap = (ow.sensors && typeof ow.sensors === 'object') ? ow.sensors : {};
+        for (const k of Object.keys(sMap||{})) {
+          const arr = Array.isArray(sMap[k]) ? sMap[k].filter(Boolean).map(String) : [];
+          if (arr.length) out.sensors[String(k)] = Array.from(new Set(arr));
+        }
+        cfg.open_window = out;
+      } catch {}
+
+      // Holidays settings
+      try {
+        cfg.holidays_enabled = !!d.holidays_enabled;
+        cfg.holidays_source = (d.holidays_source === 'manual') ? 'manual' : 'calendar';
+        cfg.holidays_entity = String(d.holidays_entity || '');
+        let dates = [];
+        try {
+          dates = Array.isArray(d.holidays_dates) ? d.holidays_dates.filter(Boolean).map(String) : [];
+          // Keep only YYYY-MM-DD (simple/strict)
+          dates = dates.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x)));
+          dates = Array.from(new Set(dates)).sort();
+        } catch {}
+        cfg.holidays_dates = dates;
+      } catch {}
+
+      // Away settings
+      try {
+        const src = (d.away && typeof d.away === 'object') ? d.away : {};
+        const cur = { ...(cfg.away || {}) };
+        cur.enabled = !!src.enabled;
+
+        // Clamp target C to min/max from draft (stored in C)
+        const mn = Number.isFinite(Number(d.min_temp)) ? Number(d.min_temp) : (Number.isFinite(Number(cfg.min_temp)) ? Number(cfg.min_temp) : 5);
+        const mx = Number.isFinite(Number(d.max_temp)) ? Number(d.max_temp) : (Number.isFinite(Number(cfg.max_temp)) ? Number(cfg.max_temp) : 25);
+        const tC = Number(src.target_c);
+        const safeTC = Number.isFinite(tC) ? Math.max(mn, Math.min(mx, tC)) : (Number.isFinite(Number(cur.target_c)) ? Number(cur.target_c) : 17);
+        cur.target_c = safeTC;
+
+        const persons = Array.isArray(src.persons) ? src.persons.filter(Boolean).map(String) : [];
+        cur.persons = Array.from(new Set(persons));
+        cur.advanced_enabled = !!src.advanced_enabled;
+
+        // Normalize combos (only keep enabled entries)
+        const combosSrc = (src.combos && typeof src.combos === 'object') ? src.combos : {};
+        const combosOut = {};
+        for (const k of Object.keys(combosSrc||{})) {
+          const v = combosSrc[k];
+          if (v && typeof v === 'object' && v.enabled) combosOut[String(k)] = { enabled: true };
+        }
+        cur.combos = combosOut;
+
+        // If Away is turned OFF, also disable Advanced Away and live presence chips
+        if (!cur.enabled) {
+          cur.advanced_enabled = false;
+          cfg.presence_live_header = false;
+        } else {
+          // Presence live header respects advanced toggle
+          const live = !!(d.presence_live_header ?? true);
+          cfg.presence_live_header = cur.advanced_enabled ? live : false;
+        }
+
+        cfg.away = cur;
+      } catch {}
+
+      this._config = cfg;
+    } catch {}
+  }
+
+  _renderSettingsPopupRoomsTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="rooms"]');
+      if (!page) return;
+
+      // Build base markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card" style="padding:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div class="text" style="display:grid; gap:2px;">
+                <div class="title sp-rooms-title"></div>
+                <div class="desc sp-rooms-desc"></div>
+              </div>
+              <button type="button" class="btn ghost sp-rooms-add"></button>
+            </div>
+            <div class="sp-rooms-list" style="display:grid; gap:10px;"></div>
+          </div>
+        `;
+      }
+
+      // Ensure draft shape
+      if (!Array.isArray(d.entities)) d.entities = [];
+      if (!Array.isArray(d.room_use_input_number)) d.room_use_input_number = [];
+      while (d.room_use_input_number.length < d.entities.length) d.room_use_input_number.push(false);
+      if (!d.labels || typeof d.labels !== 'object') d.labels = {};
+      if (!d.merges || typeof d.merges !== 'object') d.merges = {};
+      if (!d.temp_sensors || typeof d.temp_sensors !== 'object') d.temp_sensors = {};
+      try { if (!this._openPopupRooms) this._openPopupRooms = new Set(); } catch {}
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const list = q('.overlay-settings .sp-rooms-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      const ents = d.entities.map(x => String(x||''));
+      const usedPrimary = new Set(ents.filter(Boolean));
+      const usedLinked = new Set(Object.values(d.merges||{}).flat().filter(Boolean).map(String));
+
+      const titleEl = q('.overlay-settings .sp-rooms-title');
+      if (titleEl) titleEl.textContent = this._t('editor.tabs.rooms') || 'Rooms';
+      const descEl = q('.overlay-settings .sp-rooms-desc');
+      if (descEl) descEl.textContent = this._t('editor.select_entities') || 'Select rooms';
+      const addBtn = q('.overlay-settings .sp-rooms-add');
+      if (addBtn) addBtn.textContent = this._t('editor.add_entity') || 'Add room';
+
+      const getRowKey = (idx)=>{
+        const eid = ents[idx] || '';
+        return eid ? String(eid) : `#idx:${idx}`;
+      };
+
+      const pretty = (eid)=>{
+        try {
+          const lbl = d.labels?.[eid];
+          if (lbl) return String(lbl);
+        } catch {}
+        return this._prettyName(eid);
+      };
+
+      const mkFoldout = (idx)=>{
+        const line = document.createElement('div');
+        line.className = 'inline';
+
+        const summary = document.createElement('div');
+        summary.className = 'summary';
+        const sumLeft = document.createElement('div');
+        sumLeft.className = 'summary-left';
+        const exp = document.createElement('button');
+        exp.type = 'button';
+        exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+
+        const txtWrap = document.createElement('div');
+        txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'summary-title';
+        const subSpan = document.createElement('span');
+        subSpan.className = 'summary-sub';
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+        const handle = document.createElement('button');
+        handle.type = 'button';
+        handle.className = 'drag-handle';
+        try { handle.setAttribute('title', this._t('editor.drag_reorder') || 'Drag to reorder'); } catch {}
+        handle.innerHTML = '<ha-icon icon="mdi:drag"></ha-icon>';
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'remove-btn';
+        del.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+        actions.append(handle, del);
+
+        txtWrap.append(titleSpan, subSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft, actions);
+        line.append(summary);
+
+        const details = document.createElement('div');
+        details.className = 'details';
+        line.append(details);
+
+        // Inline styles (keep consistent with other popup foldouts)
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          subSpan.style.fontSize = '.85rem';
+          subSpan.style.color = 'var(--secondary-text-color)';
+          subSpan.style.overflow = 'hidden';
+          subSpan.style.textOverflow = 'ellipsis';
+          subSpan.style.whiteSpace = 'nowrap';
+          subSpan.style.maxWidth = '320px';
+
+          // Match the Colors foldout expander styling
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 520px)';
+          details.style.gap = '8px';
+          details.style.padding = '8px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const rowKey = getRowKey(idx);
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openPopupRooms) this._openPopupRooms = new Set();
+            if (nextOpen) this._openPopupRooms.add(String(rowKey));
+            else this._openPopupRooms.delete(String(rowKey));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea, tt-entity-picker, ha-entity-picker, ha-switch')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openPopupRooms?.has(String(rowKey))); } catch {}
+
+        // Build details content
+        const left = document.createElement('div');
+        left.style.display = 'grid';
+        left.style.gap = '6px';
+
+        const useInput = (()=>{
+          try {
+            const eid = String(ents[idx]||'');
+            if (eid.startsWith('input_number.')) return true;
+            if (eid.startsWith('climate.')) return false;
+            return !!d.room_use_input_number?.[idx];
+          } catch { return false; }
+        })();
+
+        const modeRow = document.createElement('div');
+        modeRow.style.display = 'flex';
+        modeRow.style.alignItems = 'center';
+        modeRow.style.justifyContent = 'space-between';
+        modeRow.style.gap = '10px';
+        const modeText = document.createElement('div');
+        modeText.style.display = 'grid';
+        modeText.style.gap = '2px';
+        const modeTitle = document.createElement('div');
+        modeTitle.style.fontWeight = '600';
+        modeTitle.textContent = this._t('editor.room_mode.title') || 'Use input_number instead of climate';
+        const modeDesc = document.createElement('div');
+        modeDesc.style.fontSize = '.85rem';
+        modeDesc.style.color = 'var(--secondary-text-color)';
+        modeDesc.textContent = this._t('editor.room_mode.desc') || '';
+        modeText.append(modeTitle, modeDesc);
+        const modeSwitch = document.createElement('ha-switch');
+        modeSwitch.className = 'sp-room-mode-switch';
+        modeSwitch.checked = !!useInput;
+        modeSwitch.addEventListener('change', (e)=>{
+          try {
+            const on = !!e.target.checked;
+            if (!Array.isArray(this._settingsDraft?.room_use_input_number)) this._settingsDraft.room_use_input_number = [];
+            while (this._settingsDraft.room_use_input_number.length < this._settingsDraft.entities.length) this._settingsDraft.room_use_input_number.push(false);
+            this._settingsDraft.room_use_input_number[idx] = on;
+
+            const oldEid = String(this._settingsDraft.entities[idx]||'').trim();
+            const mismatch = !!oldEid && ((on && !oldEid.startsWith('input_number.')) || (!on && !oldEid.startsWith('climate.')));
+            if (mismatch) {
+              // Clean mappings tied to old primary
+              try { if (this._settingsDraft.labels && this._settingsDraft.labels[oldEid]) { const next = { ...(this._settingsDraft.labels||{}) }; delete next[oldEid]; this._settingsDraft.labels = next; } } catch {}
+              try {
+                const merges = { ...(this._settingsDraft.merges||{}) };
+                if (merges[oldEid]) delete merges[oldEid];
+                for (const k of Object.keys(merges)) {
+                  merges[k] = (merges[k] || []).filter(x => String(x) !== String(oldEid));
+                  if (!merges[k].length) delete merges[k];
+                }
+                this._settingsDraft.merges = merges;
+              } catch {}
+              try { if (this._settingsDraft.temp_sensors && this._settingsDraft.temp_sensors[oldEid]) { const next = { ...(this._settingsDraft.temp_sensors||{}) }; delete next[oldEid]; this._settingsDraft.temp_sensors = next; } } catch {}
+              this._settingsDraft.entities[idx] = '';
+            }
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+        modeRow.append(modeText, modeSwitch);
+
+        const pick = document.createElement('tt-entity-picker');
+        try { pick.style.display = 'block'; pick.style.minHeight = '48px'; pick.style.maxWidth = '440px'; } catch {}
+        try { pick.hass = this._hass; } catch {}
+        pick.setAttribute('include-domains', useInput ? '["input_number"]' : '["climate"]');
+        pick.setAttribute('label', this._t('editor.entity_placeholder') || 'Entity');
+        try { pick.value = String(ents[idx] || ''); } catch {}
+        pick.entityFilter = (st) => {
+          try {
+            const id = st?.entity_id || st?.entityId || st?.entityID || '';
+            if (!id) return false;
+            const current = String(ents[idx] || '');
+            const blocked = new Set([...usedPrimary, ...usedLinked]);
+            return !blocked.has(id) || id === current;
+          } catch { return true; }
+        };
+
+        const nameLabel = document.createElement('div');
+        nameLabel.className = 'label';
+        nameLabel.textContent = this._t('editor.display_name_optional') || 'Room name (optional)';
+
+        const nameInp = document.createElement('input');
+        nameInp.type = 'text';
+        nameInp.className = 'label-input tt-input tt-input-lg';
+        try { nameInp.style.width = '100%'; nameInp.style.maxWidth = '440px'; } catch {}
+        nameInp.setAttribute('placeholder', this._t('editor.display_name_optional') || 'Room name (optional)');
+        try {
+          const curEid = String(ents[idx] || '');
+          nameInp.value = (d.labels && curEid && d.labels[curEid]) ? String(d.labels[curEid]) : '';
+        } catch {}
+        const onNameChange = (e)=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '').trim();
+            if (!eid) return;
+            const labels = { ...(this._settingsDraft.labels || {}) };
+            const val = String(e?.target?.value || '').trim();
+            if (val) labels[eid] = val; else delete labels[eid];
+            this._settingsDraft.labels = labels;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        };
+        nameInp.addEventListener('change', onNameChange);
+        nameInp.addEventListener('input', onNameChange);
+
+        // Merge UI
+        const linkWrap = document.createElement('div');
+        linkWrap.style.display = 'grid';
+        linkWrap.style.gap = '6px';
+        const linkLabel = document.createElement('div');
+        linkLabel.className = 'label';
+        linkLabel.textContent = this._t('editor.merge_label') || 'Merge with';
+        const linkPicker = document.createElement('tt-entity-picker');
+        try { linkPicker.style.display = 'block'; linkPicker.style.minHeight = '48px'; linkPicker.style.width = '100%'; linkPicker.style.maxWidth = '440px'; } catch {}
+        linkPicker.className = 'merge-picker';
+        linkPicker.setAttribute('include-domains', '["climate"]');
+        linkPicker.setAttribute('label', this._t('editor.merge_label') || 'Merge with');
+        try { linkPicker.hass = this._hass; } catch {}
+        linkPicker.entityFilter = (st) => {
+          try {
+            const id = st?.entity_id || st?.entityId || st?.entityID || '';
+            if (!id) return false;
+            const prims = (this._settingsDraft?.entities || []).filter(Boolean).map(String);
+            const allLinked = Object.values(this._settingsDraft?.merges || {}).flat().filter(Boolean).map(String);
+            const used = new Set([...prims, ...allLinked]);
+            const cur = String(this._settingsDraft?.entities?.[idx] || '');
+            return !used.has(id) && id !== cur;
+          } catch { return true; }
+        };
+
+        const chips = document.createElement('div');
+        chips.className = 'linked-chips';
+
+        const refreshSubtitle = ()=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '');
+            const links = (this._settingsDraft?.merges?.[eid] || []).map(String);
+            const linkedNames = links.map(id => this._prettyName(id));
+            const parts = [];
+            if (eid) parts.push(eid);
+            if (linkedNames.length) parts.push(`${this._t('editor.merged_with') || 'Merged with'}: ${linkedNames.join(', ')}`);
+            subSpan.textContent = parts.join(' • ');
+          } catch { subSpan.textContent = ''; }
+        };
+
+        const refreshChips = ()=>{
+          try {
+            chips.innerHTML = '';
+            const primary = String(this._settingsDraft?.entities?.[idx] || '');
+            const links = (this._settingsDraft?.merges?.[primary] || []).map(String);
+            for (const l of links) {
+              const chip = document.createElement('span');
+              chip.className = 'pill-chip';
+              const txt = document.createElement('span');
+              txt.textContent = this._prettyName(l);
+              const rm = document.createElement('button');
+              rm.type = 'button';
+              rm.className = 'rm';
+              rm.textContent = '×';
+              try { rm.setAttribute('aria-label', this._t('editor.remove') || 'Remove'); } catch {}
+              rm.addEventListener('click', ()=>{
+                try {
+                  const merges = { ...(this._settingsDraft.merges || {}) };
+                  merges[primary] = (merges[primary] || []).filter(x => String(x) !== String(l));
+                  if (!merges[primary]?.length) delete merges[primary];
+                  this._settingsDraft.merges = merges;
+                  this._renderSettingsPopupRoomsTab();
+                } catch {}
+              });
+              chip.append(txt, rm);
+              chips.append(chip);
+            }
+            refreshSubtitle();
+          } catch {}
+        };
+
+        linkPicker.addEventListener('value-changed', (e)=>{
+          try {
+            const toAdd = String(e?.detail?.value || '');
+            try { linkPicker.value = ''; } catch {}
+            const primary = String(this._settingsDraft?.entities?.[idx] || '');
+            if (!primary || !toAdd) return;
+            const merges = { ...(this._settingsDraft.merges || {}) };
+            const arr = Array.from(new Set([...(merges[primary] || []).map(String), toAdd]));
+            merges[primary] = arr;
+            this._settingsDraft.merges = merges;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        left.append(modeRow, pick, nameLabel, nameInp, linkWrap, chips);
+        try { linkWrap.append(linkLabel, linkPicker); } catch {}
+        details.append(left);
+
+        // Summary title
+        try {
+          const eid = String(ents[idx] || '').trim();
+          titleSpan.textContent = eid ? pretty(eid) : (this._t('editor.entity_placeholder') || 'Select entity');
+        } catch { titleSpan.textContent = this._t('editor.entity_placeholder') || 'Select entity'; }
+        refreshSubtitle();
+
+        // Remove room
+        del.addEventListener('click', (ev)=>{
+          try { ev.stopPropagation?.(); } catch {}
+          try {
+            const arr = [...(this._settingsDraft.entities || [])];
+            const modes = Array.isArray(this._settingsDraft.room_use_input_number) ? [...this._settingsDraft.room_use_input_number] : [];
+            const primary = String(arr[idx] || '');
+            arr.splice(idx, 1);
+            try { if (modes.length) modes.splice(idx, 1); } catch {}
+
+            // Clean labels
+            try {
+              const labels = { ...(this._settingsDraft.labels || {}) };
+              if (primary && labels[primary]) delete labels[primary];
+              this._settingsDraft.labels = labels;
+            } catch {}
+            // Clean merges
+            try {
+              const merges = { ...(this._settingsDraft.merges || {}) };
+              if (primary && merges[primary]) delete merges[primary];
+              for (const k of Object.keys(merges)) {
+                merges[k] = (merges[k] || []).filter(e => String(e) !== String(primary));
+                if (!merges[k].length) delete merges[k];
+              }
+              this._settingsDraft.merges = merges;
+            } catch {}
+            // Clean temp sensors
+            try {
+              const sensors = { ...(this._settingsDraft.temp_sensors || {}) };
+              if (primary && sensors[primary]) delete sensors[primary];
+              this._settingsDraft.temp_sensors = sensors;
+            } catch {}
+
+            this._settingsDraft.entities = arr;
+            this._settingsDraft.room_use_input_number = modes;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        // Primary picker change
+        pick.addEventListener('value-changed', (e)=>{
+          try {
+            const newPrimary = String(e?.detail?.value || '').trim();
+            const oldPrimary = String(this._settingsDraft?.entities?.[idx] || '').trim();
+
+            // Auto-sync mode based on chosen domain
+            try {
+              while (this._settingsDraft.room_use_input_number.length < this._settingsDraft.entities.length) this._settingsDraft.room_use_input_number.push(false);
+              if (newPrimary.startsWith('input_number.')) this._settingsDraft.room_use_input_number[idx] = true;
+              else if (newPrimary.startsWith('climate.')) this._settingsDraft.room_use_input_number[idx] = false;
+            } catch {}
+
+            // Migrate merges/temp sensors when primary changes
+            if (oldPrimary && newPrimary && oldPrimary !== newPrimary) {
+              try {
+                const merges = { ...(this._settingsDraft.merges || {}) };
+                if (merges[oldPrimary] && !merges[newPrimary]) { merges[newPrimary] = merges[oldPrimary]; delete merges[oldPrimary]; }
+                else if (merges[oldPrimary] && merges[newPrimary]) {
+                  merges[newPrimary] = Array.from(new Set([...(merges[newPrimary]||[]), ...(merges[oldPrimary]||[])]));
+                  delete merges[oldPrimary];
+                }
+                this._settingsDraft.merges = merges;
+              } catch {}
+              try {
+                const sensors = { ...(this._settingsDraft.temp_sensors || {}) };
+                if (sensors[oldPrimary] && !sensors[newPrimary]) sensors[newPrimary] = sensors[oldPrimary];
+                if (sensors[oldPrimary]) delete sensors[oldPrimary];
+                this._settingsDraft.temp_sensors = sensors;
+              } catch {}
+              try {
+                const labels = { ...(this._settingsDraft.labels || {}) };
+                if (labels[oldPrimary] && !labels[newPrimary]) labels[newPrimary] = labels[oldPrimary];
+                if (labels[oldPrimary]) delete labels[oldPrimary];
+                this._settingsDraft.labels = labels;
+              } catch {}
+              // Move open-state key old -> new
+              try {
+                if (this._openPopupRooms && this._openPopupRooms.has(oldPrimary)) { this._openPopupRooms.delete(oldPrimary); this._openPopupRooms.add(newPrimary); }
+              } catch {}
+            }
+
+            const next = [...(this._settingsDraft.entities || [])];
+            next[idx] = newPrimary;
+            this._settingsDraft.entities = next;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        // Drag reorder
+        handle.addEventListener('mousedown', (ev)=>{
+          try { ev.preventDefault(); } catch {}
+          try {
+            const wrap = line.parentElement;
+            const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+            this._startSettingsPopupRoomsPointerDnd(line, curIdx, ev);
+          } catch { this._startSettingsPopupRoomsPointerDnd(line, idx, ev); }
+        });
+        handle.addEventListener('touchstart', (ev)=>{
+          try { ev.preventDefault(); } catch {}
+          try {
+            const wrap = line.parentElement;
+            const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+            this._startSettingsPopupRoomsPointerDnd(line, curIdx, ev);
+          } catch { this._startSettingsPopupRoomsPointerDnd(line, idx, ev); }
+        }, { passive: false });
+
+        return line;
+      };
+
+      // Add rows
+      for (let i=0;i<ents.length;i++) {
+        list.append(mkFoldout(i));
+      }
+
+      // Bind top-level events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+        try {
+          const btn = q('.overlay-settings .sp-rooms-add');
+          if (btn) btn.addEventListener('click', ()=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.entities = [...(this._settingsDraft.entities || []), ''];
+              const modes = Array.isArray(this._settingsDraft.room_use_input_number) ? [...this._settingsDraft.room_use_input_number] : [];
+              modes.push(false);
+              this._settingsDraft.room_use_input_number = modes;
+              this._renderSettingsPopupRoomsTab();
+            } catch {}
+          });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _startSettingsPopupRoomsPointerDnd(line, idx, startEv){
+    try {
+      const wrap = line.parentElement;
+      if (!wrap) return;
+      if (this._settingsPopupPointerDndActive) return;
+      this._settingsPopupPointerDndActive = true;
+
+      const rect = line.getBoundingClientRect();
+      const ghost = line.cloneNode(true);
+      ghost.classList.add('drag-ghost');
+      ghost.style.width = rect.width + 'px';
+      ghost.style.height = rect.height + 'px';
+      ghost.style.top = rect.top + 'px';
+      ghost.style.left = rect.left + 'px';
+
+      const placeholder = document.createElement('div');
+      placeholder.className = 'placeholder';
+      placeholder.style.height = rect.height + 'px';
+
+      // place placeholder where line was, and hide line
+      wrap.insertBefore(placeholder, line);
+      line.style.display = 'none';
+      document.body.appendChild(ghost);
+
+      const readClient = (e)=>{
+        if (e?.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e?.clientX, y: e?.clientY };
+      };
+
+      const onMove = (ev)=>{
+        try { ev.preventDefault(); } catch {}
+        const { y, x } = readClient(ev);
+        if (!Number.isFinite(y) || !Number.isFinite(x)) return;
+        ghost.style.top = (y - rect.height/2) + 'px';
+
+        // find element under pointer within this shadowRoot
+        let el = this.shadowRoot && this.shadowRoot.elementFromPoint(x, y);
+        // climb to row in the same wrap
+        while (el && el !== wrap && !el.classList?.contains('inline')) el = el.parentElement;
+        if (!el || el===placeholder || el===wrap) return;
+        const targetRect = el.getBoundingClientRect();
+        const before = (y - targetRect.top) < targetRect.height/2;
+        if (before) wrap.insertBefore(placeholder, el);
+        else wrap.insertBefore(placeholder, el.nextSibling);
+      };
+
+      const endDrag = ()=>{
+        window.removeEventListener('mousemove', onMove, true);
+        window.removeEventListener('mouseup', onUp, true);
+        window.removeEventListener('touchmove', onMove, true);
+        window.removeEventListener('touchend', onUp, true);
+        try { ghost.remove(); } catch {}
+
+        try {
+          const from = idx;
+          const to = Array.prototype.indexOf.call(wrap.children, placeholder);
+          const arr = [...(this._settingsDraft?.entities || [])];
+          const modes = Array.isArray(this._settingsDraft?.room_use_input_number) ? [...this._settingsDraft.room_use_input_number] : [];
+          while (modes.length < arr.length) modes.push(false);
+          const [item] = arr.splice(from,1);
+          const [mItem] = modes.splice(from,1);
+          const correctedTo = Math.max(0, Math.min(to, arr.length));
+          arr.splice(correctedTo, 0, item);
+          modes.splice(correctedTo, 0, mItem);
+          this._settingsDraft.entities = arr;
+          this._settingsDraft.room_use_input_number = modes;
+        } catch {}
+
+        try { placeholder.remove(); } catch {}
+        try { line.style.display = ''; } catch {}
+        this._settingsPopupPointerDndActive = false;
+        try { this._renderSettingsPopupRoomsTab(); } catch {}
+      };
+
+      const onUp = (ev)=>{ try { ev.preventDefault?.(); } catch {} endDrag(); };
+
+      window.addEventListener('mousemove', onMove, true);
+      window.addEventListener('mouseup', onUp, true);
+      window.addEventListener('touchmove', onMove, true);
+      window.addEventListener('touchend', onUp, true);
+
+      // Initial nudge so the ghost doesn't feel stuck under finger
+      try {
+        const { x, y } = readClient(startEv || {});
+        if (Number.isFinite(y) && Number.isFinite(x)) ghost.style.top = (y - rect.height/2) + 'px';
+      } catch {}
+    } catch { this._settingsPopupPointerDndActive = false; }
+  }
+
+  _renderSettingsPopupAwayTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="away"]');
+      if (!page) return;
+
+      // Build markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-away-enable-title"></div>
+                <div class="desc sp-away-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-away-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-away-temp-row">
+              <div class="text">
+                <div class="title sp-away-temp-title"></div>
+                <div class="desc sp-away-temp-desc"></div>
+              </div>
+              <input class="settings-input sp-away-temp" type="number" step="0.5" />
+            </div>
+
+            <div class="setting sp-away-persons-row">
+              <div class="text">
+                <div class="title sp-away-persons-title"></div>
+                <div class="desc sp-away-persons-desc"></div>
+              </div>
+              <div style="display:grid; gap:8px;">
+                <tt-entity-picker class="sp-away-person-picker" include-domains='["person","device_tracker"]'></tt-entity-picker>
+                <div class="linked-chips sp-away-chips"></div>
+              </div>
+            </div>
+
+            <div class="setting sp-away-adv-row">
+              <div class="text">
+                <div class="title sp-away-adv-title"></div>
+                <div class="desc sp-away-adv-desc"></div>
+              </div>
+              <ha-switch class="sp-away-adv-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-presence-live-row">
+              <div class="text">
+                <div class="title sp-presence-live-title"></div>
+                <div class="desc sp-presence-live-desc"></div>
+              </div>
+              <ha-switch class="sp-presence-live-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-away-combos-row" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-presence-combos-title"></div>
+                <div class="desc sp-presence-combos-desc"></div>
+              </div>
+              <div class="sp-presence-combo-list" style="margin-top:6px; border:1px solid var(--divider-color); border-radius:8px; padding:6px; display:grid; gap:6px; max-height:180px; overflow:auto;"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Ensure draft shape
+      if (!d.away || typeof d.away !== 'object') d.away = { enabled:false, target_c:17, persons:[], advanced_enabled:false, combos:{} };
+      if (!Array.isArray(d.away.persons)) d.away.persons = [];
+      if (!d.away.combos || typeof d.away.combos !== 'object') d.away.combos = {};
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const awayOn = !!d.away.enabled;
+      const advOn = !!d.away.advanced_enabled;
+
+      // Show/hide dependent controls based on master toggle
+      try {
+        const tempRow = q('.overlay-settings .sp-away-temp-row');
+        const personsRow = q('.overlay-settings .sp-away-persons-row');
+        const advRow = q('.overlay-settings .sp-away-adv-row');
+        const liveRow = q('.overlay-settings .sp-presence-live-row');
+        const combosRow = q('.overlay-settings .sp-away-combos-row');
+        [tempRow, personsRow, advRow, liveRow, combosRow].forEach(r=>{ if (r) r.style.display = awayOn ? '' : 'none'; });
+      } catch {}
+
+      // Toggle states
+      try {
+        const sw = q('.overlay-settings .sp-away-enable');
+        if (sw) sw.checked = awayOn;
+      } catch {}
+      try {
+        const adv = q('.overlay-settings .sp-away-adv-enable');
+        if (adv) adv.checked = advOn;
+      } catch {}
+      try {
+        const pl = q('.overlay-settings .sp-presence-live-enable');
+        if (pl) {
+          pl.checked = !!(d.presence_live_header ?? true);
+          pl.disabled = !advOn;
+        }
+      } catch {}
+
+      // Temperature field formatting based on draft unit
+      try {
+        const inp = q('.overlay-settings .sp-away-temp');
+        if (inp) {
+          const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+          const toDisp = (c)=> wantF ? ((Number(c) * 9/5) + 32) : Number(c);
+          const mnC = Number.isFinite(Number(d.min_temp)) ? Number(d.min_temp) : (Number.isFinite(Number(this._config?.min_temp)) ? Number(this._config.min_temp) : 5);
+          const mxC = Number.isFinite(Number(d.max_temp)) ? Number(d.max_temp) : (Number.isFinite(Number(this._config?.max_temp)) ? Number(this._config.max_temp) : 25);
+          inp.setAttribute('min', String(toDisp(mnC)));
+          inp.setAttribute('max', String(toDisp(mxC)));
+          if (inp !== this.shadowRoot.activeElement) {
+            const v = Number.isFinite(Number(d.away.target_c)) ? Number(d.away.target_c) : 17;
+            inp.value = String(Math.round(toDisp(v) * 2) / 2);
+          }
+        }
+      } catch {}
+
+      // Entity picker
+      try {
+        const picker = q('.overlay-settings .sp-away-person-picker');
+        if (picker) {
+          picker.hass = this._hass;
+          picker.value = '';
+          try { picker.setAttribute('label', this._t('away.add_person') || 'Add person'); } catch {}
+        }
+      } catch {}
+
+      // Chips
+      try {
+        const chips = q('.overlay-settings .sp-away-chips');
+        if (chips) {
+          chips.innerHTML = '';
+          const arr = Array.isArray(d.away.persons) ? d.away.persons.filter(Boolean).map(String) : [];
+          for (const p of arr) {
+            const chip = document.createElement('span'); chip.className = 'pill-chip';
+            const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[p]?.attributes?.friendly_name || (p.split('.')[1]||p);
+            const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×';
+            try { rm.setAttribute('aria-label', this._t('editor.remove') || 'Remove'); } catch {}
+            rm.addEventListener('click', ()=>{
+              try {
+                if (!this._settingsDraft?.away) return;
+                this._settingsDraft.away.persons = (this._settingsDraft.away.persons||[]).filter(x=>String(x)!==String(p));
+                this._renderSettingsPopupAwayTab();
+              } catch {}
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        }
+      } catch {}
+
+      // Presence combinations checklist
+      try {
+        const comboWrap = q('.overlay-settings .sp-presence-combo-list');
+        if (comboWrap) {
+          comboWrap.innerHTML = '';
+          const persons = (d.away.persons || []).map(String);
+          const enabled = !!d.away.advanced_enabled;
+          const conf = (d.away.combos && typeof d.away.combos === 'object') ? d.away.combos : {};
+          const n = persons.length;
+          const labelOf = (arr)=> arr.map(e => (this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e))).join(', ');
+          for (let mask=0; mask < (1<<n); mask++){
+            const home=[], away=[];
+            for (let i=0;i<n;i++){ ((mask>>i)&1) ? home.push(persons[i]) : away.push(persons[i]); }
+            // Skip "All home" entry; fallback to main/weekdays when all are home
+            if (home.length===n) continue;
+            const key = `H:${home.slice().sort().join(',')}|A:${away.slice().sort().join(',')}`;
+            const row = document.createElement('label');
+            row.style.display='flex';
+            row.style.alignItems='center';
+            row.style.gap='8px';
+            row.style.opacity = enabled ? '' : '.6';
+            const cb = document.createElement('input');
+            cb.type='checkbox';
+            cb.disabled = !enabled || !persons.length;
+            cb.checked = !!conf[key]?.enabled;
+            cb.addEventListener('change', ()=>{
+              try {
+                if (!this._settingsDraft?.away) return;
+                const map = { ...(this._settingsDraft.away.combos || {}) };
+                if (cb.checked) map[key] = { ...(map[key]||{}), enabled:true };
+                else delete map[key];
+                this._settingsDraft.away.combos = map;
+              } catch {}
+            });
+            const sp = document.createElement('span');
+            let lab;
+            if (home.length===0) lab = this._t('presence.none_home');
+            else {
+              const h = (this._t('presence.home') || 'Home: {names}').replace('{names}', labelOf(home));
+              const a = (this._t('presence.away') || 'Away: {names}').replace('{names}', labelOf(away));
+              lab = `${h} • ${a}`;
+            }
+            sp.textContent = lab;
+            row.append(cb, sp);
+            comboWrap.append(row);
+          }
+        }
+      } catch {}
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+
+        try {
+          const sw = q('.overlay-settings .sp-away-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away) return;
+              const enabled = !!e.target.checked;
+              this._settingsDraft.away.enabled = enabled;
+              // If Away is turned OFF, also disable Advanced Away and live presence chips
+              if (!enabled) {
+                this._settingsDraft.away.advanced_enabled = false;
+                this._settingsDraft.presence_live_header = false;
+              }
+              this._renderSettingsPopupAwayTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const inp = q('.overlay-settings .sp-away-temp');
+          if (inp) inp.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away) return;
+              let raw = String(e.target.value||'').trim().replace(',', '.');
+              const vDisp = Number(raw);
+              if (!Number.isFinite(vDisp)) return;
+              const wantF = String(this._settingsDraft.temp_unit || 'C').toUpperCase() === 'F';
+              const fromDisp = (x)=> wantF ? ((Number(x) - 32) * 5/9) : Number(x);
+              let vC = fromDisp(vDisp);
+              const mn = Number.isFinite(Number(this._settingsDraft.min_temp)) ? Number(this._settingsDraft.min_temp) : 5;
+              const mx = Number.isFinite(Number(this._settingsDraft.max_temp)) ? Number(this._settingsDraft.max_temp) : 25;
+              vC = Math.max(mn, Math.min(mx, vC));
+              this._settingsDraft.away.target_c = vC;
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const picker = q('.overlay-settings .sp-away-person-picker');
+          if (picker) picker.addEventListener('value-changed', (e)=>{
+            try {
+              const val = e?.detail?.value;
+              if (!val || !this._settingsDraft?.away) return;
+              picker.value = '';
+              const set = new Set((this._settingsDraft.away.persons || []).map(String));
+              set.add(String(val));
+              this._settingsDraft.away.persons = Array.from(set);
+              this._renderSettingsPopupAwayTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const adv = q('.overlay-settings .sp-away-adv-enable');
+          if (adv) adv.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away) return;
+              this._settingsDraft.away.advanced_enabled = !!e.target.checked;
+              if (!this._settingsDraft.away.advanced_enabled) {
+                this._settingsDraft.presence_live_header = false;
+              }
+              this._renderSettingsPopupAwayTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const pl = q('.overlay-settings .sp-presence-live-enable');
+          if (pl) pl.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away?.advanced_enabled) {
+                e.preventDefault?.();
+                pl.checked = false;
+                this._settingsDraft.presence_live_header = false;
+                return;
+              }
+              this._settingsDraft.presence_live_header = !!e.target.checked;
+            } catch {}
+          });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupOwdTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="owd"]');
+      if (!page) return;
+      page.innerHTML = '';
+      try { page.style.display = 'grid'; page.style.gap = '16px'; } catch {}
+
+      // Ensure draft shape
+      const cur = (d.open_window && typeof d.open_window === 'object') ? d.open_window : (d.open_window = { enabled:false, sensors:{}, open_delay_min:2, close_delay_min:5 });
+      if (typeof cur.enabled !== 'boolean') cur.enabled = false;
+      if (!cur.sensors || typeof cur.sensors !== 'object') cur.sensors = {};
+      if (!Number.isFinite(Number(cur.open_delay_min))) cur.open_delay_min = 2;
+      if (!Number.isFinite(Number(cur.close_delay_min))) cur.close_delay_min = 5;
+      cur.open_delay_min = Math.max(0, Math.min(1440, Math.round(Number(cur.open_delay_min))));
+      cur.close_delay_min = Math.max(0, Math.min(1440, Math.round(Number(cur.close_delay_min))));
+
+      // Enable toggle
+      const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
+      const enRow = document.createElement('div'); enRow.className = 'setting';
+      const enText = document.createElement('div'); enText.className = 'text';
+      const enTitle = document.createElement('div'); enTitle.className = 'title sp-owd-enable-title';
+      const enDesc = document.createElement('div'); enDesc.className = 'desc sp-owd-enable-desc';
+      enText.append(enTitle, enDesc);
+      const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'sp-owd-enable'; enSwitch.checked = !!cur.enabled;
+      enSwitch.addEventListener('change', (e)=>{
+        try {
+          if (!this._settingsDraft?.open_window) return;
+          this._settingsDraft.open_window.enabled = !!e.target.checked;
+          try { contentWrap.style.display = this._settingsDraft.open_window.enabled ? 'grid' : 'none'; } catch {}
+        } catch {}
+      });
+      enRow.append(enText, enSwitch);
+      enableCard.append(enRow);
+      page.append(enableCard);
+
+      // Remaining content shown only when enabled
+      const contentWrap = document.createElement('div'); contentWrap.className = 'owd-content';
+      try { contentWrap.style.display = cur.enabled ? 'grid' : 'none'; contentWrap.style.gap = '16px'; } catch {}
+      page.append(contentWrap);
+
+      // Rooms foldouts
+      const ents = Array.isArray(this._config?.entities) ? this._config.entities : [];
+
+      const roomsWrap = document.createElement('div');
+      try { roomsWrap.style.display = 'grid'; roomsWrap.style.gap = '10px'; } catch {}
+      contentWrap.append(roomsWrap);
+
+      if (!ents.length) {
+        const box = document.createElement('div'); box.className = 'empty-box';
+        const p = document.createElement('div'); p.textContent = this._t('editor.select_entities') || 'Rooms';
+        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
+        btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.add_entity') || 'Add room') + '</span>';
+        btn.onclick = ()=>{ this._setSettingsPopupTab('rooms'); };
+        box.append(p, btn);
+        roomsWrap.append(box);
+      }
+
+      // Remember open/closed state while popup is open
+      try { if (!this._openOwdRooms) this._openOwdRooms = new Set(); } catch {}
+
+      for (const eid of ents) {
+        if (!eid) continue;
+        // Foldout (same UI pattern as HA editor sections)
+        const line = document.createElement('div'); line.className = 'inline';
+        const summary = document.createElement('div'); summary.className = 'summary';
+        const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+        const exp = document.createElement('button'); exp.type = 'button'; exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+        const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+
+        // Inline styles to match the editor foldout appearance (robust across contexts)
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+        try {
+          const labels = this._config.labels || {};
+          const display = labels[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+          titleSpan.textContent = display;
+        } catch { titleSpan.textContent = this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid); }
+        txtWrap.append(titleSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft);
+        line.append(summary);
+
+        const details = document.createElement('div'); details.className = 'details';
+        line.append(details);
+
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 440px)';
+          details.style.gap = '6px';
+          details.style.padding = '6px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openOwdRooms) this._openOwdRooms = new Set();
+            if (nextOpen) this._openOwdRooms.add(String(eid));
+            else this._openOwdRooms.delete(String(eid));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          // Allow clicking the row header to toggle as well
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea, tt-entity-picker, ha-entity-picker')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openOwdRooms?.has(String(eid))); } catch {}
+
+        const wrap = document.createElement('div');
+        wrap.style.display = 'grid';
+        wrap.style.gap = '8px';
+        const lab = document.createElement('div'); lab.className = 'label sp-owd-sensors-label'; lab.style.display='block';
+        const picker = document.createElement('tt-entity-picker');
+        picker.className = 'sp-owd-sensor-picker';
+        picker.setAttribute('include-domains', '["binary_sensor"]');
+        try { picker.hass = this._hass; } catch {}
+        try { picker.value = ''; } catch {}
+        const chips = document.createElement('div'); chips.className = 'linked-chips sp-owd-chips';
+
+        const renderChips = ()=>{
+          chips.innerHTML = '';
+          const map = (this._settingsDraft?.open_window?.sensors && typeof this._settingsDraft.open_window.sensors === 'object') ? this._settingsDraft.open_window.sensors : {};
+          const arr = Array.isArray(map[eid]) ? map[eid] : [];
+          for (const sEid of arr) {
+            const chip = document.createElement('span'); chip.className = 'pill-chip';
+            const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[sEid]?.attributes?.friendly_name || (sEid.split('.')[1]||sEid);
+            const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.setAttribute('aria-label', this._t('editor.remove'));
+            rm.addEventListener('click', ()=>{
+              try {
+                const ow = this._settingsDraft?.open_window;
+                if (!ow || !ow.sensors) return;
+                const next = { ...(ow.sensors || {}) };
+                const curArr = Array.isArray(next[eid]) ? next[eid] : [];
+                const out = curArr.filter(x => x !== sEid);
+                if (out.length) next[eid] = out; else delete next[eid];
+                ow.sensors = next;
+                renderChips();
+              } catch {}
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        };
+        renderChips();
+
+        picker.addEventListener('value-changed', (e)=>{
+          const val = e.detail?.value || '';
+          if (!val) return;
+          try { picker.value = ''; } catch {}
+          try {
+            const ow = this._settingsDraft?.open_window;
+            if (!ow) return;
+            const next = { ...(ow.sensors || {}) };
+            const set = new Set(Array.isArray(next[eid]) ? next[eid] : []);
+            set.add(String(val));
+            next[eid] = Array.from(set);
+            ow.sensors = next;
+            renderChips();
+          } catch {}
+        });
+
+        wrap.append(lab, picker, chips);
+        details.append(wrap);
+        roomsWrap.append(line);
+      }
+
+      // Global delay settings
+      const delayCard = document.createElement('div'); delayCard.className = 'settings-card';
+      const row = document.createElement('div'); row.className = 'setting'; row.style.gridTemplateColumns = '1fr';
+      const txt = document.createElement('div'); txt.className = 'text';
+      const title = document.createElement('div'); title.className = 'title sp-owd-delays-title';
+      const desc = document.createElement('div'); desc.className = 'desc sp-owd-delays-desc';
+      txt.append(title, desc);
+      row.append(txt);
+      delayCard.append(row);
+      const grid = document.createElement('div');
+      grid.style.display = 'flex';
+      grid.style.gap = '10px';
+      grid.style.flexWrap = 'wrap';
+      grid.style.alignItems = 'flex-end';
+
+      const mkField = (cls, labelKey, value, onChange)=>{
+        const f = document.createElement('div'); f.className = 'sfield';
+        const l = document.createElement('div'); l.className = 'slabel ' + cls + '-label'; l.textContent = (this._t(labelKey) || labelKey);
+        const inp = document.createElement('input'); inp.className = cls + ' settings-input'; inp.type = 'number'; inp.min='0'; inp.max='1440'; inp.step='1';
+        if (inp !== this.shadowRoot.activeElement) inp.value = String(value);
+        inp.addEventListener('change', (e)=>{
+          let v = Math.round(Number(String(e.target.value||'').replace(',','.')));
+          if (!Number.isFinite(v)) v = 0;
+          v = Math.max(0, Math.min(1440, v));
+          e.target.value = String(v);
+          onChange(v);
+        });
+        f.append(l, inp);
+        return f;
+      };
+
+      const openField = mkField('sp-owd-open-delay', 'owd.open_delay', Number(cur.open_delay_min||0), (v)=>{ try { if (!this._settingsDraft?.open_window) return; this._settingsDraft.open_window.open_delay_min = v; } catch {} });
+      const closeField = mkField('sp-owd-close-delay', 'owd.close_delay', Number(cur.close_delay_min||0), (v)=>{ try { if (!this._settingsDraft?.open_window) return; this._settingsDraft.open_window.close_delay_min = v; } catch {} });
+      grid.append(openField, closeField);
+      delayCard.append(grid);
+      contentWrap.append(delayCard);
+    } catch {}
+  }
+
+  _renderSettingsPopupHolidaysTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="holidays"]');
+      if (!page) return;
+
+      // Build markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-holidays-enable-title"></div>
+                <div class="desc sp-holidays-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-holidays-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-holidays-source-setting">
+              <div class="text">
+                <div class="title sp-holidays-source-title"></div>
+              </div>
+              <div class="seg sp-holidays-source-seg">
+                <button type="button" class="sp-holidays-source-cal"></button>
+                <button type="button" class="sp-holidays-source-man"></button>
+              </div>
+            </div>
+
+            <div class="setting sp-holidays-entity-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-holidays-entity-title"></div>
+                <div class="desc sp-holidays-entity-desc"></div>
+              </div>
+              <tt-entity-picker class="sp-holidays-entity-picker" include-domains='["calendar"]'></tt-entity-picker>
+            </div>
+
+            <div class="setting sp-holidays-dates-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-holidays-dates-title"></div>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                <input class="settings-input sp-holidays-date-input" type="date" />
+                <button type="button" class="btn ghost sp-holidays-add-date"></button>
+              </div>
+              <div class="linked-chips sp-holidays-date-chips"></div>
+            </div>
+
+            <div class="setting sp-holidays-edit-setting">
+              <div class="text">
+                <div class="title sp-holidays-edit-title"></div>
+              </div>
+              <button type="button" class="btn ghost sp-holidays-edit-btn"></button>
+            </div>
+          </div>
+        `;
+      }
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+
+      // Ensure draft shape
+      if (!Array.isArray(d.holidays_dates)) d.holidays_dates = [];
+      if (d.holidays_source !== 'manual') d.holidays_source = 'calendar';
+
+      // Visibility of dependent controls
+      const holOn = !!d.holidays_enabled;
+      const src = (d.holidays_source === 'manual') ? 'manual' : 'calendar';
+      try {
+        const editRow = q('.overlay-settings .sp-holidays-edit-setting');
+        const srcRow = q('.overlay-settings .sp-holidays-source-setting');
+        const entRow = q('.overlay-settings .sp-holidays-entity-setting');
+        const datesRow = q('.overlay-settings .sp-holidays-dates-setting');
+        if (editRow) editRow.style.display = holOn ? '' : 'none';
+        if (srcRow) srcRow.style.display = holOn ? '' : 'none';
+        if (entRow) entRow.style.display = (holOn && src === 'calendar') ? '' : 'none';
+        if (datesRow) datesRow.style.display = (holOn && src === 'manual') ? '' : 'none';
+      } catch {}
+
+      // Segmented UI state
+      try {
+        const bCal = q('.overlay-settings .sp-holidays-source-cal');
+        const bMan = q('.overlay-settings .sp-holidays-source-man');
+        if (bCal) bCal.classList.toggle('active', src === 'calendar');
+        if (bMan) bMan.classList.toggle('active', src === 'manual');
+      } catch {}
+
+      // Master toggle state
+      try {
+        const sw = q('.overlay-settings .sp-holidays-enable');
+        if (sw) sw.checked = !!d.holidays_enabled;
+      } catch {}
+
+      // Entity picker
+      try {
+        const p = q('.overlay-settings .sp-holidays-entity-picker');
+        if (p) {
+          p.hass = this._hass;
+          p.value = String(d.holidays_entity || '');
+          try { p.setAttribute('label', this._t('holidays.entity') || 'Holiday entity'); } catch {}
+        }
+      } catch {}
+
+      // Dates chips
+      const chips = q('.overlay-settings .sp-holidays-date-chips');
+      const renderChips = ()=>{
+        try {
+          if (!chips) return;
+          chips.innerHTML = '';
+          const arr = Array.isArray(this._settingsDraft?.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
+          const sorted = Array.from(new Set(arr.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+          for (const dt of sorted) {
+            const chip = document.createElement('span'); chip.className = 'pill-chip';
+            const txt = document.createElement('span'); txt.textContent = dt;
+            const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+            try { rm.setAttribute('aria-label', this._t('editor.remove') || 'Remove'); } catch {}
+            rm.addEventListener('click', ()=>{
+              try {
+                if (!this._settingsDraft) return;
+                const cur = Array.isArray(this._settingsDraft.holidays_dates) ? this._settingsDraft.holidays_dates : [];
+                this._settingsDraft.holidays_dates = cur.filter(x => String(x) !== dt);
+                renderChips();
+              } catch {}
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        } catch {}
+      };
+      renderChips();
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+
+        try {
+          const sw = q('.overlay-settings .sp-holidays-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.holidays_enabled = !!e.target.checked;
+              this._renderSettingsPopupHolidaysTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const btn = q('.overlay-settings .sp-holidays-edit-btn');
+          if (btn) btn.addEventListener('click', ()=>{
+            try {
+              const eid = (this._config?.entities || [])[0] || null;
+              if (!eid) return;
+              this._resumeSettingsAfterHoliday = true;
+              this._suspendSettingsPopup();
+              this._openHolidayEditor(eid);
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const bCal = q('.overlay-settings .sp-holidays-source-cal');
+          const bMan = q('.overlay-settings .sp-holidays-source-man');
+          if (bCal) bCal.addEventListener('click', ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.holidays_source = 'calendar'; this._renderSettingsPopupHolidaysTab(); } catch {} });
+          if (bMan) bMan.addEventListener('click', ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.holidays_source = 'manual'; this._renderSettingsPopupHolidaysTab(); } catch {} });
+        } catch {}
+
+        try {
+          const p = q('.overlay-settings .sp-holidays-entity-picker');
+          if (p) p.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.holidays_entity = e.detail?.value || ''; } catch {} });
+        } catch {}
+
+        try {
+          const inp = q('.overlay-settings .sp-holidays-date-input');
+          const add = q('.overlay-settings .sp-holidays-add-date');
+          const onAdd = ()=>{
+            try {
+              if (!this._settingsDraft || !inp) return;
+              const v = String(inp.value || '').trim();
+              if (!v) return;
+              if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return;
+              const cur = Array.isArray(this._settingsDraft.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
+              const next = Array.from(new Set(cur.concat([v]))).sort();
+              this._settingsDraft.holidays_dates = next;
+              try { inp.value = ''; } catch {}
+              renderChips();
+            } catch {}
+          };
+          if (add) add.addEventListener('click', onAdd);
+          if (inp) inp.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { try { e.preventDefault(); } catch {} onAdd(); } });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupColorsTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="colors"]');
+      if (!page) return;
+      page.innerHTML = '';
+
+      // Wrap the entire Colors tab in one settings-card (border around everything)
+      const outerCard = document.createElement('div');
+      outerCard.className = 'settings-card';
+      try {
+        outerCard.style.padding = '10px';
+        outerCard.style.display = 'grid';
+        outerCard.style.gap = '10px';
+      } catch {}
+      page.append(outerCard);
+
+      // Ensure draft shape
+      try {
+        if (typeof d.color_global !== 'boolean') d.color_global = !!(this._config?.color_global);
+        if (!d.color_ranges || typeof d.color_ranges !== 'object') d.color_ranges = {};
+      } catch {}
+
+      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+      const toDisp = (c)=>{ const v = Number(c); if (!Number.isFinite(v)) return 0; return wantF ? Math.round((v*9/5+32)*10)/10 : v; };
+      const fromDisp = (v)=>{ const n = Number(v); if (!Number.isFinite(n)) return NaN; return wantF ? ((n-32)*5/9) : n; };
+      const minC = Number.isFinite(Number(d.min_temp)) ? Number(d.min_temp) : (Number.isFinite(Number(this._config?.min_temp)) ? Number(this._config.min_temp) : 5);
+      const maxC = Number.isFinite(Number(d.max_temp)) ? Number(d.max_temp) : (Number.isFinite(Number(this._config?.max_temp)) ? Number(this._config.max_temp) : 25);
+      const minDisp = toDisp(minC);
+      const maxDisp = toDisp(maxC);
+      const defC = Number.isFinite(Number(d.default_temp)) ? Number(d.default_temp) : (Number.isFinite(Number(this._config?.default_temp)) ? Number(this._config.default_temp) : 20);
+
+      // Mode toggle (Per room | All rooms)
+      const modeWrap = document.createElement('div');
+      modeWrap.style.display = 'flex';
+      modeWrap.style.alignItems = 'center';
+      modeWrap.style.justifyContent = 'space-between';
+      modeWrap.style.gap = '10px';
+      const modeText = document.createElement('div');
+      modeText.style.display = 'grid';
+      modeText.style.gap = '2px';
+      const modeTitle = document.createElement('div');
+      modeTitle.className = 'colors-mode-title';
+      modeTitle.style.fontWeight = '600';
+      modeTitle.textContent = this._t('editor.colors.mode') || 'Color mode';
+      const modeDesc = document.createElement('div');
+      modeDesc.className = 'colors-mode-desc';
+      modeDesc.style.fontSize = '.85rem';
+      modeDesc.style.color = 'var(--secondary-text-color)';
+      modeDesc.textContent = this._t('editor.colors.mode.desc') || 'Choose per-room colors or one set for all rooms.';
+      modeText.append(modeTitle, modeDesc);
+      const seg = document.createElement('div'); seg.className = 'seg colors-mode';
+      const bRoom = document.createElement('button'); bRoom.type = 'button'; bRoom.className = 'mode-room';
+      bRoom.textContent = this._t('editor.colors.mode_per_room') || 'Per room';
+      const bGlob = document.createElement('button'); bGlob.type = 'button'; bGlob.className = 'mode-global';
+      bGlob.textContent = this._t('editor.colors.mode_global') || 'All rooms';
+      const applySegUi = ()=>{
+        const on = !!d.color_global;
+        bGlob.classList.toggle('active', on);
+        bRoom.classList.toggle('active', !on);
+      };
+      bRoom.onclick = ()=>{ try { d.color_global = false; applySegUi(); this._renderSettingsPopupColorsTab(); } catch {} };
+      bGlob.onclick = ()=>{ try { d.color_global = true; applySegUi(); this._renderSettingsPopupColorsTab(); } catch {} };
+      seg.append(bRoom, bGlob);
+      applySegUi();
+      modeWrap.append(modeText, seg);
+      outerCard.append(modeWrap);
+
+      const isGlobal = !!d.color_global;
+      const ents = Array.isArray(this._config?.entities) ? this._config.entities.filter(Boolean) : [];
+
+      // If per-room mode and there are no rooms yet, show helper box
+      if (!isGlobal && ents.length === 0) {
+        const box = document.createElement('div'); box.className = 'empty-box';
+        const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
+        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
+        btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
+        btn.onclick = ()=>{ this._setSettingsPopupTab('rooms'); };
+        box.append(p, btn);
+        outerCard.append(box);
+      }
+
+      // Remember open/closed state while popup is open
+      try { if (!this._openPopupColorRows) this._openPopupColorRows = new Set(); } catch {}
+
+      const roomsWrap = document.createElement('div');
+      try { roomsWrap.style.display = 'grid'; roomsWrap.style.gap = '10px'; } catch {}
+      outerCard.append(roomsWrap);
+
+      const buildFoldout = (key, titleText)=>{
+        const line = document.createElement('div'); line.className = 'inline';
+        const summary = document.createElement('div'); summary.className = 'summary';
+        const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+        const exp = document.createElement('button'); exp.type = 'button'; exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+        const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+        titleSpan.textContent = titleText;
+
+        // Inline styles to match the editor foldout appearance (robust across contexts)
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+
+        txtWrap.append(titleSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft);
+        line.append(summary);
+
+        const details = document.createElement('div'); details.className = 'details';
+        line.append(details);
+
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 440px)';
+          details.style.gap = '6px';
+          details.style.padding = '6px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openPopupColorRows) this._openPopupColorRows = new Set();
+            if (nextOpen) this._openPopupColorRows.add(String(key));
+            else this._openPopupColorRows.delete(String(key));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openPopupColorRows?.has(String(key))); } catch {}
+
+        return { line, details };
+      };
+
+      const renderRangesForKey = (key, details)=>{
+        details.innerHTML = '';
+        const card = document.createElement('div');
+        card.className = 'settings-card';
+        try { card.style.padding = '10px'; card.style.gap = '8px'; } catch {}
+        details.append(card);
+
+        const head = document.createElement('div');
+        head.className = 'colors-head';
+        try {
+          head.style.display = 'grid';
+          head.style.gridTemplateColumns = '88px 88px 70px 1fr';
+          head.style.gap = '8px';
+          head.style.alignItems = 'end';
+        } catch {}
+        const mkHead = (k)=>{
+          const el = document.createElement('div');
+          el.className = 'slabel';
+          el.textContent = this._t(k) || k;
+          return el;
+        };
+        head.append(
+          mkHead('editor.colors.col_from'),
+          mkHead('editor.colors.col_to'),
+          mkHead('editor.colors.col_color'),
+          document.createElement('div')
+        );
+
+        const getArr = ()=>{
+          const map = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+          return Array.isArray(map[key]) ? map[key] : [];
+        };
+        const setArr = (arr)=>{
+          try {
+            const map = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+            d.color_ranges = { ...map, [key]: arr };
+          } catch {}
+        };
+
+        const ranges = getArr();
+        if (ranges.length > 0) card.append(head);
+
+        ranges.forEach((r, ri)=>{
+          const outer = document.createElement('div'); outer.className = 'color-item';
+          const row = document.createElement('div'); row.className = 'colors-row';
+          try {
+            row.style.display = 'grid';
+            row.style.gridTemplateColumns = '88px 88px 70px 1fr';
+            row.style.gap = '8px';
+            row.style.alignItems = 'center';
+          } catch {}
+          const f = document.createElement('input');
+          f.type = 'number'; f.step = '0.5';
+          f.className = 'settings-input';
+          f.value = String(toDisp(r?.from ?? defC));
+          f.setAttribute('aria-label', this._t('editor.colors.col_from'));
+          f.title = this._t('editor.colors.col_from');
+          const t = document.createElement('input');
+          t.type = 'number'; t.step = '0.5';
+          t.className = 'settings-input';
+          t.value = String(toDisp(r?.to ?? defC));
+          t.setAttribute('aria-label', this._t('editor.colors.col_to'));
+          t.title = this._t('editor.colors.col_to');
+          const c = document.createElement('input');
+          c.type = 'color'; c.value = String(r?.color || '#ffb347');
+          c.setAttribute('aria-label', this._t('editor.colors.col_color'));
+          c.title = this._t('editor.colors.col_color');
+          try {
+            c.style.height = '28px';
+            c.style.width = '70px';
+            c.style.padding = '0';
+            c.style.borderRadius = '8px';
+            c.style.border = '1px solid var(--divider-color)';
+            c.style.background = 'var(--card-background-color)';
+            c.style.boxSizing = 'border-box';
+          } catch {}
+
+          f.min = String(minDisp); t.min = String(minDisp);
+          f.max = String(maxDisp); t.max = String(maxDisp);
+
+          const rm = document.createElement('button');
+          rm.type = 'button';
+          rm.className = 'btn ghost danger';
+          rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+          try {
+            rm.style.height = '28px';
+            rm.style.padding = '2px 10px';
+            rm.style.borderRadius = '8px';
+            rm.style.justifySelf = 'end';
+            rm.style.width = 'max-content';
+            rm.style.display = 'inline-flex';
+            rm.style.alignItems = 'center';
+            rm.style.gap = '6px';
+            rm.querySelector?.('ha-icon')?.style && (rm.querySelector('ha-icon').style.setProperty('--mdc-icon-size','16px'));
+          } catch {}
+
+          const updateAt = (idx, patch)=>{
+            const arr = getArr();
+            const next = arr.map((x, i)=> (i===idx ? ({ ...x, ...patch }) : x));
+            setArr(next);
+          };
+
+          f.onchange = ()=>{
+            let v = parseFloat(String(f.value||'').replace(',','.'));
+            if (!Number.isFinite(v)) v = minDisp;
+            v = Math.max(minDisp, Math.min(maxDisp, v));
+            f.value = String(v);
+            const vC = fromDisp(v);
+            const clampC = Math.max(minC, Math.min(maxC, Number.isFinite(vC) ? vC : defC));
+            updateAt(ri, { from: clampC });
+          };
+          t.onchange = ()=>{
+            let v = parseFloat(String(t.value||'').replace(',','.'));
+            if (!Number.isFinite(v)) v = minDisp;
+            v = Math.max(minDisp, Math.min(maxDisp, v));
+            t.value = String(v);
+            const vC = fromDisp(v);
+            const clampC = Math.max(minC, Math.min(maxC, Number.isFinite(vC) ? vC : defC));
+            updateAt(ri, { to: clampC });
+          };
+          c.onchange = ()=>{ updateAt(ri, { color: c.value }); };
+          rm.onclick = ()=>{
+            const arr = getArr();
+            const next = [...arr];
+            next.splice(ri, 1);
+            setArr(next);
+            renderRangesForKey(key, details);
+          };
+
+          row.append(f, t, c, rm);
+          outer.append(row);
+          card.append(outer);
+        });
+
+        const add = document.createElement('button');
+        add.className = 'add-entity-btn';
+        add.type = 'button';
+        add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
+        try { add.style.width = 'max-content'; add.style.justifySelf = 'start'; } catch {}
+        add.onclick = ()=>{
+          const arr = getArr();
+          const next = [...arr, { from: defC, to: defC, color: '#ffb347' }];
+          setArr(next);
+          renderRangesForKey(key, details);
+        };
+        card.append(add);
+      };
+
+      if (isGlobal) {
+        const key = '*';
+        const f = buildFoldout(key, this._t('editor.colors.global_title') || 'All rooms');
+        roomsWrap.append(f.line);
+        renderRangesForKey(key, f.details);
+      } else {
+        for (const eid of ents) {
+          const labels = this._config?.labels || {};
+          const title = labels?.[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+          const f = buildFoldout(eid, title);
+          roomsWrap.append(f.line);
+          renderRangesForKey(eid, f.details);
+        }
+      }
+
+      // Actions (Update schedule + Clear all)
+      const actions = document.createElement('div');
+      actions.className = 'colors-actions';
+      actions.style.display = 'flex';
+      actions.style.gap = '8px';
+      actions.style.alignItems = 'center';
+      actions.style.flexWrap = 'wrap';
+
+      const clrAll = document.createElement('button');
+      clrAll.className = 'remove-btn clr-colors-all-btn';
+      clrAll.type = 'button';
+      try { clrAll.style.width = 'max-content'; clrAll.style.justifySelf = 'start'; } catch {}
+      clrAll.innerHTML = '<ha-icon icon="mdi:delete-alert"></ha-icon><span>' + (this._t('editor.colors.clear_all') || 'Clear all color data') + '</span>';
+      clrAll.onclick = ()=>{
+        const ok = confirm(this._t('editor.colors.clear_all_confirm') || 'This will delete all color ranges. Continue?');
+        if (!ok) return;
+        try { d.color_ranges = {}; } catch {}
+        this._renderSettingsPopupColorsTab();
+      };
+
+      actions.append(clrAll);
+      outerCard.append(actions);
+    } catch {}
+  }
+
+  _renderSettingsPopupBoilerTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="boiler"]');
+      if (!page) return;
+
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-boiler-enable-title"></div>
+                <div class="desc sp-boiler-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-boiler-enable"></ha-switch>
+            </div>
+            <div class="setting sp-boiler-switch-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-boiler-switch-title"></div>
+              </div>
+              <tt-entity-picker class="sp-boiler-switch-picker" include-domains='["switch"]'></tt-entity-picker>
+            </div>
+            <div class="setting sp-boiler-sensor-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-boiler-sensor-title"></div>
+                <div class="desc sp-boiler-sensor-desc"></div>
+              </div>
+              <tt-entity-picker class="sp-boiler-temp-sensor-picker" include-domains='["sensor"]'></tt-entity-picker>
+            </div>
+            <div class="setting sp-boiler-temps-setting" style="grid-template-columns: 1fr;">
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+                <div class="sfield">
+                  <div class="slabel sp-boiler-min-temp-label"></div>
+                  <input class="settings-input sp-boiler-min-temp" type="number" step="0.5" placeholder="20" />
+                </div>
+                <div class="sfield">
+                  <div class="slabel sp-boiler-max-temp-label"></div>
+                  <input class="settings-input sp-boiler-max-temp" type="number" step="0.5" placeholder="25" />
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+
+      // Visibility of dependent controls
+      const boilerOn = !!d.boiler_enabled;
+      try {
+        const switchRow = q('.overlay-settings .sp-boiler-switch-setting');
+        const sensorRow = q('.overlay-settings .sp-boiler-sensor-setting');
+        const tempsRow = q('.overlay-settings .sp-boiler-temps-setting');
+        [switchRow, sensorRow, tempsRow].forEach(r=>{ if (r) r.style.display = boilerOn ? '' : 'none'; });
+      } catch {}
+
+      // Master toggle
+      try {
+        const sw = q('.overlay-settings .sp-boiler-enable');
+        if (sw) sw.checked = !!d.boiler_enabled;
+      } catch {}
+
+      // Pickers
+      try {
+        const p = q('.overlay-settings .sp-boiler-switch-picker');
+        if (p) {
+          p.hass = this._hass;
+          p.value = String(d.boiler_switch || '');
+        }
+      } catch {}
+      try {
+        const sp = q('.overlay-settings .sp-boiler-temp-sensor-picker');
+        if (sp) {
+          sp.hass = this._hass;
+          sp.value = String(d.boiler_temp_sensor || '');
+        }
+      } catch {}
+
+      // Temps (show in draft unit, store in °C)
+      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+      const toDisp = (c)=>{ try { const v = Number(c); if (!Number.isFinite(v)) return ''; return wantF ? Math.round((v*9/5+32)*10)/10 : v; } catch { return ''; } };
+      const toC = (vDisp)=>{ try { const v = Number(vDisp); if (!Number.isFinite(v)) return null; return wantF ? ((v-32)*5/9) : v; } catch { return null; } };
+      const setDisp = (sel, vC)=>{
+        const el = q(sel);
+        if (!el) return;
+        if (el === this.shadowRoot.activeElement) return;
+        el.value = (vC === null || vC === undefined || !Number.isFinite(Number(vC))) ? '' : String(toDisp(Number(vC)));
+      };
+      setDisp('.overlay-settings .sp-boiler-min-temp', d.boiler_min_temp);
+      setDisp('.overlay-settings .sp-boiler-max-temp', d.boiler_max_temp);
+      try {
+        const dMin = String(toDisp(0));
+        const dMax = String(toDisp(120));
+        const minEl = q('.overlay-settings .sp-boiler-min-temp');
+        const maxEl = q('.overlay-settings .sp-boiler-max-temp');
+        if (minEl) { minEl.setAttribute('min', dMin); minEl.setAttribute('max', dMax); }
+        if (maxEl) { maxEl.setAttribute('min', dMin); maxEl.setAttribute('max', dMax); }
+      } catch {}
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+        try {
+          const sw = q('.overlay-settings .sp-boiler-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.boiler_enabled = !!e.target.checked;
+              this._renderSettingsPopupBoilerTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const p = q('.overlay-settings .sp-boiler-switch-picker');
+          if (p) p.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.boiler_switch = e.detail?.value || ''; } catch {} });
+        } catch {}
+        try {
+          const sp = q('.overlay-settings .sp-boiler-temp-sensor-picker');
+          if (sp) sp.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.boiler_temp_sensor = e.detail?.value || ''; } catch {} });
+        } catch {}
+
+        const bindNum = (sel, key)=>{
+          try {
+            const el = q(sel);
+            if (!el) return;
+            el.addEventListener('change', (e)=>{
+              try {
+                if (!this._settingsDraft) return;
+                const raw = String(e.target.value||'').trim().replace(',', '.');
+                let vC = null;
+                if (raw !== '') {
+                  const vDisp = Number(raw);
+                  vC = toC(vDisp);
+                  if (vC !== null && Number.isFinite(Number(vC))) vC = Math.max(0, Math.min(120, Number(vC)));
+                } else {
+                  vC = (key === 'boiler_min_temp') ? 20 : 25;
+                }
+
+                if (key === 'boiler_min_temp') {
+                  this._settingsDraft.boiler_min_temp = vC;
+                  const mx = this._settingsDraft.boiler_max_temp;
+                  if (vC !== null && Number.isFinite(Number(mx)) && Number(vC) > Number(mx)) this._settingsDraft.boiler_max_temp = vC;
+                } else {
+                  this._settingsDraft.boiler_max_temp = vC;
+                  const mn = this._settingsDraft.boiler_min_temp;
+                  if (vC !== null && Number.isFinite(Number(mn)) && Number(vC) < Number(mn)) this._settingsDraft.boiler_min_temp = vC;
+                }
+                this._renderSettingsPopupBoilerTab();
+              } catch {}
+            });
+          } catch {}
+        };
+        bindNum('.overlay-settings .sp-boiler-min-temp', 'boiler_min_temp');
+        bindNum('.overlay-settings .sp-boiler-max-temp', 'boiler_max_temp');
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupWeekdaysTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="weekdays"]');
+      if (!page) return;
+
+      // Build markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-week-enable-title"></div>
+                <div class="desc sp-week-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-week-enable"></ha-switch>
+            </div>
+            <div class="setting sp-week-view-setting">
+              <div class="text">
+                <div class="title sp-week-view-title"></div>
+              </div>
+              <div class="seg sp-week-view">
+                <button type="button" class="sp-week-view-rooms"></button>
+                <button type="button" class="sp-week-view-days"></button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
+      setChk('.overlay-settings .sp-week-enable', d.weekdays_enabled);
+
+      const view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+      try {
+        const bRooms = q('.overlay-settings .sp-week-view-rooms');
+        const bDays = q('.overlay-settings .sp-week-view-days');
+        bRooms && bRooms.classList.toggle('active', view === 'all_rooms_one_day');
+        bDays && bDays.classList.toggle('active', view === 'one_room_all_days');
+        // Disable when weekdays are off (match editor behavior)
+        const on = !!d.weekdays_enabled;
+        const row = q('.overlay-settings .sp-week-view-setting');
+        if (row) row.style.opacity = on ? '' : '.5';
+        if (bRooms) { bRooms.disabled = !on; bRooms.setAttribute('aria-disabled', (!on).toString()); }
+        if (bDays)  { bDays.disabled  = !on; bDays.setAttribute('aria-disabled', (!on).toString()); }
+      } catch {}
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+        try {
+          const sw = q('.overlay-settings .sp-week-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              const on = !!e.target.checked;
+              this._settingsDraft.weekdays_enabled = on;
+              // When enabling, default view to all rooms
+              if (on && (!this._settingsDraft.weekdays_view || this._settingsDraft.weekdays_view === 'undefined')) {
+                this._settingsDraft.weekdays_view = 'all_rooms_one_day';
+              }
+              this._renderSettingsPopupWeekdaysTab();
+            } catch {}
+          });
+        } catch {}
+
+        const applyView = (mode)=>{
+          try {
+            if (!this._settingsDraft) return;
+            if (!this._settingsDraft.weekdays_enabled) return;
+            this._settingsDraft.weekdays_view = (mode === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+            this._renderSettingsPopupWeekdaysTab();
+          } catch {}
+        };
+        try {
+          const bRooms = q('.overlay-settings .sp-week-view-rooms');
+          const bDays = q('.overlay-settings .sp-week-view-days');
+          if (bRooms) bRooms.addEventListener('click', ()=>applyView('all_rooms_one_day'));
+          if (bDays) bDays.addEventListener('click', ()=>applyView('one_room_all_days'));
+        } catch {}
+        try {
+          const seg = q('.overlay-settings .sp-week-view');
+          if (seg) seg.addEventListener('click', (ev)=>{
+            try {
+              const el = ev.target && ev.target.closest ? ev.target.closest('.sp-week-view-rooms, .sp-week-view-days') : null;
+              if (!el) return;
+              if (el.classList.contains('sp-week-view-rooms')) applyView('all_rooms_one_day');
+              else if (el.classList.contains('sp-week-view-days')) applyView('one_room_all_days');
+            } catch {}
+          });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupSettingsTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const setVal = (sel, v)=>{ const el=q(sel); if (el) el.value = (v ?? '') + ''; };
+      const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
+      // Show temps in display unit based on draft.temp_unit, but keep draft values in °C
+      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+      const toDisp = (c)=>{ try { const v = Number(c); if (!Number.isFinite(v)) return c; return wantF ? this._toDisplayTemp(v) : v; } catch { return c; } };
+      setVal('.overlay-settings .sp-def', toDisp(d.default_temp));
+      setVal('.overlay-settings .sp-rowh', d.row_height);
+      setVal('.overlay-settings .sp-minc', toDisp(d.min_temp));
+      setVal('.overlay-settings .sp-maxc', toDisp(d.max_temp));
+      setChk('.overlay-settings .sp-auto', d.auto_apply);
+      setChk('.overlay-settings .sp-applyedit', d.apply_on_edit);
+      setChk('.overlay-settings .sp-applydef', d.apply_on_default_change);
+      setChk('.overlay-settings .sp-perroom', d.per_room_defaults);
+      setChk('.overlay-settings .sp-pausebtn', d.show_pause_button);
+
+      // Segmented controls: active state
+      try {
+        const b24 = q('.overlay-settings .sp-fmt24');
+        const b12 = q('.overlay-settings .sp-fmt12');
+        const is12 = !!d.time_12h;
+        b24 && b24.classList.toggle('active', !is12);
+        b12 && b12.classList.toggle('active', is12);
+      } catch {}
+      try {
+        const bB = q('.overlay-settings .sp-srcBrowser');
+        const bH = q('.overlay-settings .sp-srcHa');
+        const useHa = String(d.time_source||'browser')==='ha';
+        bB && bB.classList.toggle('active', !useHa);
+        bH && bH.classList.toggle('active', useHa);
+      } catch {}
+      try {
+        const bC = q('.overlay-settings .sp-unitC');
+        const bF = q('.overlay-settings .sp-unitF');
+        bC && bC.classList.toggle('active', !wantF);
+        bF && bF.classList.toggle('active', wantF);
+      } catch {}
+      setChk('.overlay-settings .sp-profiles', d.profiles_enabled);
+
+      // Keep temp field labels in sync with draft unit
+      try {
+        const unitSym = wantF ? '°F' : '°C';
+        const t = (k)=> (this._t ? this._t(k) : k);
+        const setLbl = (sel, key)=>{ const el=q(sel); if (!el) return; const s = String(t(key)||''); el.textContent = s.includes('°C') ? s.replace('°C', unitSym) : (s + (s.includes('(') ? '' : '')); };
+        setLbl('.overlay-settings .sp-slabel-def', 'editor.default_c');
+        setLbl('.overlay-settings .sp-slabel-minc', 'editor.min_c');
+        setLbl('.overlay-settings .sp-slabel-maxc', 'editor.max_c');
+      } catch {}
+    } catch {}
+  }
+
+  _ttCoerceNum(v, fallback){
+    const n = Number(v);
+    return Number.isFinite(n) ? n : fallback;
+  }
+  _ttClampNum(v, min, max, fallback){
+    const n = Number(v);
+    if (!Number.isFinite(n)) return fallback;
+    return Math.max(min, Math.min(max, n));
+  }
+  _settingsPopupHasUnsaved(){
+    try {
+      const d = this._settingsDraft;
+      const c = this._config || {};
+      if (!d) return false;
+      const eqNum = (a,b)=>{
+        const na = Number(a);
+        const nb = Number(b);
+        if (!Number.isFinite(na) && !Number.isFinite(nb)) return true;
+        return Math.abs(na - nb) < 0.0001;
+      };
+      // Normalize undefined config fields to the same defaults used in _initSettingsPopupDraft
+      const cDefaultTemp = this._ttCoerceNum(c.default_temp, 20);
+      const cRowHeight = this._ttCoerceNum(c.row_height, 64);
+      const cMinTemp = this._ttCoerceNum(c.min_temp, 5);
+      const cMaxTemp = this._ttCoerceNum(c.max_temp, 25);
+
+      if (!eqNum(d.default_temp, cDefaultTemp)) return true;
+      if (!eqNum(d.row_height, cRowHeight)) return true;
+      if (!eqNum(d.min_temp, cMinTemp)) return true;
+      if (!eqNum(d.max_temp, cMaxTemp)) return true;
+      if (!!d.auto_apply !== !!c.auto_apply) return true;
+      if (!!d.apply_on_edit !== !!c.apply_on_edit) return true;
+      if (!!d.apply_on_default_change !== !!c.apply_on_default_change) return true;
+      if (!!d.per_room_defaults !== !!c.per_room_defaults) return true;
+      if (!!d.show_pause_button !== !!(c.show_pause_button !== false)) return true;
+      if (!!d.time_12h !== !!c.time_12h) return true;
+      if (String(d.time_source||'browser') !== String(c.time_source||'browser')) return true;
+      if (String(d.temp_unit||'C').toUpperCase() !== String(c.temp_unit||'C').toUpperCase()) return true;
+      if (!!d.profiles_enabled !== !!c.profiles_enabled) return true;
+
+      if (!!d.weekdays_enabled !== !!c.weekdays_enabled) return true;
+      if (String(d.weekdays_view||'all_rooms_one_day') !== String(c.weekdays_view||'all_rooms_one_day')) return true;
+      if (String(d.weekdays_selected_room||'') !== String(c.weekdays_selected_room||'')) return true;
+
+      if (!!d.boiler_enabled !== !!c.boiler_enabled) return true;
+      if (String(d.boiler_switch||'') !== String(c.boiler_switch||'')) return true;
+      if (String(d.boiler_temp_sensor||'') !== String(c.boiler_temp_sensor||'')) return true;
+      const cBoilerMin = this._ttCoerceNum(c.boiler_min_temp, 20);
+      const cBoilerMax = this._ttCoerceNum(c.boiler_max_temp, 25);
+      if (!eqNum(d.boiler_min_temp, cBoilerMin)) return true;
+      if (!eqNum(d.boiler_max_temp, cBoilerMax)) return true;
+
+      // Colors
+      if (!!d.color_global !== !!c.color_global) return true;
+      try {
+        const dm = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+        const cm = (c.color_ranges && typeof c.color_ranges === 'object') ? c.color_ranges : {};
+        const keys = new Set([...Object.keys(dm||{}), ...Object.keys(cm||{})]);
+        for (const k of keys) {
+          const a = Array.isArray(dm[k]) ? dm[k] : [];
+          const b = Array.isArray(cm[k]) ? cm[k] : [];
+          if (a.length !== b.length) return true;
+          for (let i=0;i<a.length;i++) {
+            const ra = a[i] || {};
+            const rb = b[i] || {};
+            if (!eqNum(ra.from, rb.from)) return true;
+            if (!eqNum(ra.to, rb.to)) return true;
+            if (String(ra.color||'') !== String(rb.color||'')) return true;
+          }
+        }
+      } catch {}
+
+      // Open Window Detection
+      try {
+        const dn = (d.open_window && typeof d.open_window === 'object') ? d.open_window : {};
+        const cn = (c.open_window && typeof c.open_window === 'object') ? c.open_window : {};
+        if (!!dn.enabled !== !!cn.enabled) return true;
+        const clampOw = (v, fallback)=>{
+          const n = Number(v);
+          if (!Number.isFinite(n)) return fallback;
+          return Math.max(0, Math.min(1440, Math.round(n)));
+        };
+        if (!eqNum(dn.open_delay_min, clampOw(cn.open_delay_min, 2))) return true;
+        if (!eqNum(dn.close_delay_min, clampOw(cn.close_delay_min, 5))) return true;
+        const ds = (dn.sensors && typeof dn.sensors === 'object') ? dn.sensors : {};
+        const cs = (cn.sensors && typeof cn.sensors === 'object') ? cn.sensors : {};
+        const keys = new Set([...Object.keys(ds||{}), ...Object.keys(cs||{})]);
+        for (const k of keys) {
+          const a = Array.isArray(ds[k]) ? ds[k].filter(Boolean).map(String) : [];
+          const b = Array.isArray(cs[k]) ? cs[k].filter(Boolean).map(String) : [];
+          const sa = Array.from(new Set(a)).sort();
+          const sb = Array.from(new Set(b)).sort();
+          if (sa.length !== sb.length) return true;
+          for (let i=0;i<sa.length;i++){ if (sa[i] !== sb[i]) return true; }
+        }
+      } catch {}
+
+      // Holidays
+      try {
+        if (!!d.holidays_enabled !== !!c.holidays_enabled) return true;
+        const ds = (d.holidays_source === 'manual') ? 'manual' : 'calendar';
+        const cs = (c.holidays_source === 'manual') ? 'manual' : 'calendar';
+        if (ds !== cs) return true;
+        if (String(d.holidays_entity||'') !== String(c.holidays_entity||'')) return true;
+        const da = Array.isArray(d.holidays_dates) ? d.holidays_dates.filter(Boolean).map(String) : [];
+        const ca = Array.isArray(c.holidays_dates) ? c.holidays_dates.filter(Boolean).map(String) : [];
+        const sd = Array.from(new Set(da.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+        const sc = Array.from(new Set(ca.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+        if (sd.length !== sc.length) return true;
+        for (let i=0;i<sd.length;i++){ if (sd[i] !== sc[i]) return true; }
+      } catch {}
+
+      // Away
+      try {
+        const da = (d.away && typeof d.away === 'object') ? d.away : {};
+        const ca = (c.away && typeof c.away === 'object') ? c.away : {};
+        if (!!da.enabled !== !!ca.enabled) return true;
+        if (!eqNum(da.target_c, this._ttCoerceNum(ca.target_c, 17))) return true;
+        if (!!da.advanced_enabled !== !!ca.advanced_enabled) return true;
+        const dp = Array.isArray(da.persons) ? da.persons.filter(Boolean).map(String) : [];
+        const cp = Array.isArray(ca.persons) ? ca.persons.filter(Boolean).map(String) : [];
+        const sdp = Array.from(new Set(dp)).sort();
+        const scp = Array.from(new Set(cp)).sort();
+        if (sdp.length !== scp.length) return true;
+        for (let i=0;i<sdp.length;i++){ if (sdp[i] !== scp[i]) return true; }
+        const dcmb = (da.combos && typeof da.combos === 'object') ? da.combos : {};
+        const ccmb = (ca.combos && typeof ca.combos === 'object') ? ca.combos : {};
+        const dk = Object.keys(dcmb||{}).filter(k => !!dcmb[k]?.enabled).map(String).sort();
+        const ck = Object.keys(ccmb||{}).filter(k => !!ccmb[k]?.enabled).map(String).sort();
+        if (dk.length !== ck.length) return true;
+        for (let i=0;i<dk.length;i++){ if (dk[i] !== ck[i]) return true; }
+        const dlive = !!(d.presence_live_header ?? true);
+        const clive = !!(c.presence_live_header ?? true);
+        const effD = da.advanced_enabled ? dlive : false;
+        const effC = ca.advanced_enabled ? clive : false;
+        if (effD !== effC) return true;
+      } catch {}
+
+      // Rooms
+      try {
+        const de = Array.isArray(d.entities) ? d.entities.map(x=>String(x||'').trim()).filter(Boolean) : [];
+        const ce = Array.isArray(c.entities) ? c.entities.map(x=>String(x||'').trim()).filter(Boolean) : [];
+        if (JSON.stringify(de) !== JSON.stringify(ce)) return true;
+
+        const dm0 = Array.isArray(d.room_use_input_number) ? d.room_use_input_number.map(v=>!!v) : [];
+        const cm0 = Array.isArray(c.room_use_input_number) ? c.room_use_input_number.map(v=>!!v) : [];
+        const normModes = (ents, raw)=> ents.map((eid, idx)=>{
+          if (String(eid).startsWith('input_number.')) return true;
+          if (String(eid).startsWith('climate.')) return false;
+          return !!raw[idx];
+        });
+        const dm = normModes(de, dm0);
+        const cm = normModes(ce, cm0);
+        if (JSON.stringify(dm) !== JSON.stringify(cm)) return true;
+
+        const dl = (d.labels && typeof d.labels === 'object') ? d.labels : {};
+        const cl = (c.labels && typeof c.labels === 'object') ? c.labels : {};
+        const normMap = (src)=>{
+          const out = {};
+          for (const eid of de) {
+            const v = Object.prototype.hasOwnProperty.call(src, eid) ? String(src[eid]||'').trim() : '';
+            if (v) out[eid] = v;
+          }
+          return out;
+        };
+        if (JSON.stringify(normMap(dl)) !== JSON.stringify(normMap(cl))) return true;
+
+        const dmrg = (d.merges && typeof d.merges === 'object') ? d.merges : {};
+        const cmrg = (c.merges && typeof c.merges === 'object') ? c.merges : {};
+        const primSet = new Set(de);
+        const normMerges = (src)=>{
+          const out = {};
+          for (let i=0;i<de.length;i++) {
+            const primary = de[i];
+            const isInput = dm[i] || String(primary).startsWith('input_number.');
+            if (isInput) continue;
+            const arr = Array.isArray(src?.[primary]) ? src[primary].filter(Boolean).map(String) : [];
+            const cleaned = Array.from(new Set(arr.filter(x=>String(x).startsWith('climate.') && !primSet.has(String(x))))).sort();
+            if (cleaned.length) out[primary] = cleaned;
+          }
+          return out;
+        };
+        if (JSON.stringify(normMerges(dmrg)) !== JSON.stringify(normMerges(cmrg))) return true;
+
+        const dts = (d.temp_sensors && typeof d.temp_sensors === 'object') ? d.temp_sensors : {};
+        const cts = (c.temp_sensors && typeof c.temp_sensors === 'object') ? c.temp_sensors : {};
+        if (JSON.stringify(normMap(dts)) !== JSON.stringify(normMap(cts))) return true;
+      } catch {}
+      return false;
+    } catch { return false; }
+  }
+
+  _closeSettingsPopup(force){
+    try {
+      const mustConfirm = !force && this._settingsPopupHasUnsaved();
+      if (mustConfirm) {
+        const msg = this._t('ui.unsaved_confirm') || 'You have unsaved changes. Close anyway?';
+        const ok = window.confirm(msg);
+        if (!ok) return;
+      }
+      try {
+        if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler);
+      } catch {}
+      this._settingsPopupKeyHandler = null;
+      try {
+        if (this._settingsPopupWheelHandler?.el && this._settingsPopupWheelHandler?.fn) {
+          this._settingsPopupWheelHandler.el.removeEventListener('wheel', this._settingsPopupWheelHandler.fn);
+        }
+      } catch {}
+      this._settingsPopupWheelHandler = null;
+      this._settingsPopupSuspended = false;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (ov) ov.classList.remove('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+      this._settingsDraft = null;
+    } catch {}
+  }
+
+  _suspendSettingsPopup(){
+    try {
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (ov) ov.classList.remove('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+      this._settingsPopupSuspended = true;
+      try {
+        if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler);
+      } catch {}
+    } catch {}
+  }
+
+  _resumeSettingsPopup(){
+    try {
+      if (this._disablePopups) return;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (!ov) return;
+      ov.classList.add('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+      this._settingsPopupSuspended = false;
+      try { this._applyCardI18n(); } catch {}
+      try { this._renderSettingsPopupTabs(); } catch {}
+      try { this._renderSettingsPopupTab(); } catch {}
+      try {
+        const onKey = (ev) => { if (ev.key === 'Escape') { this._closeSettingsPopup(false); } };
+        try { if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler); } catch {}
+        this._settingsPopupKeyHandler = onKey;
+        window.addEventListener('keydown', onKey);
+      } catch {}
+    } catch {}
+  }
+
+  async _saveSettingsPopup(){
+    try {
+      // IMPORTANT: do not persist on toggle/input; only commit+save here.
+      this._applySettingsPopupDraftToConfig();
+      if (this._config?.storage_enabled && typeof this._saveStore === 'function') {
+        await this._saveStore(true);
+      } else {
+        try { if (typeof this._debouncedSaveStore === 'function') this._debouncedSaveStore(); } catch {}
+      }
+    } catch {}
+    try { this._closeSettingsPopup(true); } catch {}
+    try { this._render(); } catch {}
+    // Ensure other card instances update immediately after Save (used for Colors "Update schedule")
+    try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+    try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
   }
 
   // --- Test popup (entity picker + available services) ---
@@ -8022,7 +11128,17 @@ class ThermostatTimelineCard extends HTMLElement {
   try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
     } catch {}
   }
-  _closeHolidayEditor(){ this._holidayOpen = false; this._holidayEntity = null; this._holidayRoom = null; this._holidayDraft = null; this.shadowRoot.querySelector('.overlay-holiday')?.classList.remove('open'); try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {} }
+  _closeHolidayEditor(){
+    try { this._holidayOpen = false; this._holidayEntity = null; this._holidayRoom = null; this._holidayDraft = null; } catch {}
+    try { this.shadowRoot.querySelector('.overlay-holiday')?.classList.remove('open'); } catch {}
+    try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+    try {
+      if (this._resumeSettingsAfterHoliday) {
+        this._resumeSettingsAfterHoliday = false;
+        this._resumeSettingsPopup?.();
+      }
+    } catch {}
+  }
   _renderHolidayModal(){ try {
     const title = this.shadowRoot && this.shadowRoot.querySelector('.holiday-title'); if (title) title.textContent = this._t('holidays.editor.title');
     const roomEl = this.shadowRoot && this.shadowRoot.querySelector('.holiday-room'); if (roomEl) { const eid = this._holidayRoom; const custom = (this._config?.labels?.[eid]) || null; roomEl.textContent = custom || this._prettyName(eid||''); }
@@ -8728,13 +11844,13 @@ class ThermostatTimelineCard extends HTMLElement {
   _addBlock(entity){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; const now=this._getNowMin(); const start=this._clamp(Math.round(now),0,1380); const end=this._clamp(Math.round(start+60), start+15, 1440); const id=Math.random().toString(36).slice(2,9); let t=(row.defaultTemp||20)+2; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) t=Math.min(t,mx); const b={id,startMin:start,endMin:end,temp:t}; row.blocks.push(b); this._applyNoOverlapResize(entity,b,"left",b.startMin); this._applyNoOverlapResize(entity,b,"right",b.endMin); this._active={entity,id}; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
   _deleteBlock(entity,id){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; row.blocks=row.blocks.filter(b=>b.id!==id); if(this._active&&this._active.entity===entity&&this._active.id===id) this._active=null; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
 
-  _t(k){ return ttLocalize(k, this._lang || this._hass || 'en'); }
+  _t(k){ return ttLocalize(k, this._hass || this._lang || 'en'); }
 
   _applyCardI18n(){
     try {
       const t = (k)=> this._t(k);
       // Main modal: Edit block
-      const modal = this.shadowRoot && this.shadowRoot.querySelector('.overlay:not(.overlay-week):not(.overlay-profiles):not(.overlay-holiday):not(.overlay-presence):not(.overlay-copyrooms):not(.overlay-onboard):not(.overlay-pause):not(.overlay-test) .modal');
+      const modal = this.shadowRoot && this.shadowRoot.querySelector('.overlay:not(.overlay-week):not(.overlay-profiles):not(.overlay-holiday):not(.overlay-presence):not(.overlay-copyrooms):not(.overlay-onboard):not(.overlay-pause):not(.overlay-test):not(.overlay-settings) .modal');
       if (modal) {
         modal.setAttribute('aria-label', t('ui.edit_block'));
         const h3 = modal.querySelector('.ed-modal-title');
@@ -8869,6 +11985,213 @@ class ThermostatTimelineCard extends HTMLElement {
         const testclose = this.shadowRoot && this.shadowRoot.querySelector('.test-close');
         if (testclose) testclose.textContent = t('ui.close');
       } catch {}
+
+      // Settings modal (in-card)
+      try {
+        const sm = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .modal');
+        if (sm) sm.setAttribute('aria-label', t('editor.tabs.settings'));
+        const st = this.shadowRoot && this.shadowRoot.querySelector('.settings-title');
+        if (st) st.textContent = t('editor.tabs.settings');
+
+        // Integration availability status chip (moved from HA editor into popup header)
+        try {
+          const chip = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-int-status');
+          const icon = chip?.querySelector('ha-icon');
+          const txt = chip?.querySelector('.text');
+          const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
+          if (chip && icon && txt) {
+            if (hasService) {
+              chip.classList.remove('bad'); chip.classList.add('ok');
+              icon.setAttribute('icon','mdi:cloud-check-outline');
+              txt.textContent = t('editor.integration.connected') || 'Connected to integration';
+            } else {
+              chip.classList.remove('ok'); chip.classList.add('bad');
+              icon.setAttribute('icon','mdi:cloud-off-outline');
+              txt.textContent = t('editor.integration.disconnected') || 'Not connected to integration';
+            }
+          }
+        } catch {}
+
+        // Use the draft unit while the popup is open (so unit toggles update labels immediately).
+        const popupUnit = (() => {
+          try {
+            if (this._settingsPopupOpen && this._settingsDraft && this._settingsDraft.temp_unit != null) {
+              const u = String(this._settingsDraft.temp_unit).toUpperCase();
+              if (u === 'F' || u === 'FAHRENHEIT') return '°F';
+              if (u === 'C' || u === 'CELSIUS') return '°C';
+            }
+          } catch {}
+          try {
+            return this._unitSymbol();
+          } catch {}
+          return '°C';
+        })();
+
+        // Tab strip (same labels as editor tabs; excludes Sync/Backup intentionally)
+        const tabMap = {
+          settings: 'editor.tabs.settings',
+          weekdays: 'editor.tabs.weekdays',
+          rooms: 'editor.tabs.rooms',
+          boiler: 'editor.tabs.boiler',
+          colors: 'editor.tabs.colors',
+          owd: 'editor.tabs.owd',
+          holidays: 'editor.tabs.holidays',
+          away: 'editor.tabs.away'
+        };
+        const btns = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-tab-btn')) : [];
+        for (const b of btns){
+          const key = tabMap[b.getAttribute('data-tab')] || null;
+          if (!key) continue;
+          b.textContent = t(key);
+        }
+        const ss = this.shadowRoot && this.shadowRoot.querySelector('.settings-save');
+        if (ss) ss.textContent = t('ui.save');
+        const sc = this.shadowRoot && this.shadowRoot.querySelector('.settings-close');
+        if (sc) sc.textContent = t('ui.close');
+
+        // Settings tab content labels
+        const defLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-def');
+        if (defLab) defLab.textContent = String(t('editor.default_c')||'').replace('°C', this._unitSymbol());
+        const rowHLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-rowh');
+        if (rowHLab) rowHLab.textContent = t('editor.row_height_px');
+        const minLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-minc');
+        if (minLab) minLab.textContent = String(t('editor.min_c')||'').replace('°C', this._unitSymbol());
+        const maxLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-maxc');
+        if (maxLab) maxLab.textContent = String(t('editor.max_c')||'').replace('°C', this._unitSymbol());
+
+        const at = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-auto-title');
+        if (at) at.textContent = t('editor.auto_apply.title');
+        const ad = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-auto-desc');
+        if (ad) ad.textContent = t('editor.auto_apply.desc');
+
+        const et = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applyedit-title');
+        if (et) et.textContent = t('editor.apply_edit.title');
+        const ed = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applyedit-desc');
+        if (ed) ed.textContent = t('editor.apply_edit.desc');
+
+        const dt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applydef-title');
+        if (dt) dt.textContent = t('editor.apply_default.title');
+        const dd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applydef-desc');
+        if (dd) dd.textContent = t('editor.apply_default.desc');
+
+        const prt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-perroom-title');
+        if (prt) prt.textContent = t('editor.perroom.title');
+        const prd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-perroom-desc');
+        if (prd) prd.textContent = t('editor.perroom.desc');
+
+        const pbt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausebtn-title');
+        if (pbt) pbt.textContent = t('editor.pausebtn.title');
+        const pbd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausebtn-desc');
+        if (pbd) pbd.textContent = t('editor.pausebtn.desc');
+
+        // New popup-only settings (moved from HA editor)
+        const tft = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timefmt-title');
+        if (tft) tft.textContent = t('editor.timefmt.title');
+        const tfd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timefmt-desc');
+        if (tfd) tfd.textContent = t('editor.timefmt.desc');
+        const tst = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timesrc-title');
+        if (tst) tst.textContent = t('editor.timesrc.title');
+        const tsd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timesrc-desc');
+        if (tsd) tsd.textContent = t('editor.timesrc.desc');
+        const sb = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-srcBrowser');
+        if (sb) sb.textContent = t('editor.timesrc.browser');
+        const sh = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-srcHa');
+        if (sh) sh.textContent = t('editor.timesrc.ha');
+        const tut = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-tempfmt-title');
+        if (tut) tut.textContent = t('editor.tempfmt.title');
+        const tud = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-tempfmt-desc');
+        if (tud) tud.textContent = t('editor.tempfmt.desc');
+        const pt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-profiles-title');
+        if (pt) pt.textContent = t('profiles.enable');
+        const pd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-profiles-desc');
+        if (pd) pd.textContent = t('profiles.enable.desc');
+
+        // Weekdays tab content labels
+        const weT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-enable-title');
+        if (weT) weT.textContent = t('week.enable');
+        const weD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-enable-desc');
+        if (weD) weD.textContent = t('week.enable.desc');
+        const wvT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-title');
+        if (wvT) wvT.textContent = t('week.view.title');
+        const wvR = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-rooms');
+        if (wvR) wvR.textContent = t('week.view.rooms_one_day');
+        const wvD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-days');
+        if (wvD) wvD.textContent = t('week.view.days_one_room');
+
+        // Boiler tab content labels
+        const beT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-enable-title');
+        if (beT) beT.textContent = t('boiler.enable');
+        const beD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-enable-desc');
+        if (beD) beD.textContent = t('boiler.enable.desc');
+        const bsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-switch-title');
+        if (bsT) bsT.textContent = t('boiler.switch');
+        const btT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-sensor-title');
+        if (btT) btT.textContent = t('boiler.temp_sensor');
+        const btD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-sensor-desc');
+        if (btD) btD.textContent = t('boiler.temp_sensor.desc');
+        const bmin = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-min-temp-label');
+        if (bmin) bmin.textContent = String(t('boiler.min_temp')||'').replace('°C', popupUnit);
+        const bmax = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-max-temp-label');
+        if (bmax) bmax.textContent = String(t('boiler.max_temp')||'').replace('°C', popupUnit);
+
+        // Open Window Detection tab content labels
+        const owdT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-enable-title');
+        if (owdT) owdT.textContent = t('owd.enable');
+        const owdD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-enable-desc');
+        if (owdD) owdD.textContent = t('owd.enable.desc');
+        const owdS = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .sp-owd-sensors-label')) : [];
+        for (const el of owdS) { try { el.textContent = t('owd.sensors'); } catch {} }
+        const owdDT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-delays-title');
+        if (owdDT) owdDT.textContent = t('owd.delays.title');
+        const owdDD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-delays-desc');
+        if (owdDD) owdDD.textContent = t('owd.delays.desc');
+        const owdOpen = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-open-delay-label');
+        if (owdOpen) owdOpen.textContent = t('owd.open_delay');
+        const owdClose = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-close-delay-label');
+        if (owdClose) owdClose.textContent = t('owd.close_delay');
+
+        // Holidays tab content labels
+        const heT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-enable-title');
+        if (heT) heT.textContent = t('holidays.enable');
+        const heD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-enable-desc');
+        if (heD) heD.textContent = t('holidays.desc');
+        const hsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-source-title');
+        if (hsT) hsT.textContent = t('holidays.source');
+        const hCal = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-source-cal');
+        if (hCal) hCal.textContent = t('holidays.source.calendar');
+        const hMan = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-source-man');
+        if (hMan) hMan.textContent = t('holidays.source.manual');
+        const hEntT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-entity-title');
+        if (hEntT) hEntT.textContent = t('holidays.entity');
+        const hEntD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-entity-desc');
+        if (hEntD) hEntD.textContent = t('holidays.entity_desc');
+        const hDatesT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-dates-title');
+        if (hDatesT) hDatesT.textContent = t('holidays.dates');
+        const hAdd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-add-date');
+        if (hAdd) hAdd.textContent = t('holidays.add_date');
+        const hEditT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-edit-title');
+        if (hEditT) hEditT.textContent = t('holidays.editor.title');
+        const hEditB = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-edit-btn');
+        if (hEditB) hEditB.textContent = t('holidays.edit');
+
+        // Away tab content labels
+        const aeT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-enable-title');
+        if (aeT) aeT.textContent = t('away.enable');
+        const aeD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-enable-desc');
+        if (aeD) aeD.textContent = t('away.desc');
+        const atT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-temp-title');
+        if (atT) atT.textContent = String(t('away.temp')||'').replace('°C', popupUnit);
+        const apT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-persons-title');
+        if (apT) apT.textContent = t('away.persons');
+        const aaT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-adv-title');
+        if (aaT) aaT.textContent = t('presence.enable_advanced');
+        const plT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-live-title');
+        if (plT) plT.textContent = t('presence.live_header');
+        const plD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-live-desc');
+        if (plD) plD.textContent = t('presence.live_header.desc');
+        const pcT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-combos-title');
+        if (pcT) pcT.textContent = t('presence.combos');
+      } catch {}
       
     } catch (e) { /* ignore */ }
   }
@@ -8926,7 +12249,12 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
 }
-customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
+// Avoid hard failures if the resource is loaded multiple times.
+try {
+  if (!customElements.get("thermostat-timeline-card")) {
+    customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
+  }
+} catch {}
 
 /* ----------------- LIGHTWEIGHT PICKER (TTEntityPicker) ----------------- */
 class TTEntityPicker extends HTMLElement {
@@ -9023,7 +12351,12 @@ class TTEntityPicker extends HTMLElement {
     }
   }
 }
-customElements.define('tt-entity-picker', TTEntityPicker);
+// Avoid hard failures if another resource already defined the picker.
+try {
+  if (!customElements.get('tt-entity-picker')) {
+    customElements.define('tt-entity-picker', TTEntityPicker);
+  }
+} catch {}
 
 /* ----------------- CONFIG EDITOR ----------------- */
 class ThermostatTimelineCardEditor extends HTMLElement {
@@ -9042,24 +12375,25 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         if (s && typeof s === 'object') {
           if (typeof s.time_source === 'string') this._config.time_source = (s.time_source === 'ha' ? 'ha' : 'browser');
           if (typeof s.time_12h === 'boolean') this._config.time_12h = !!s.time_12h;
+          if (typeof s.temp_unit === 'string') this._config.temp_unit = (String(s.temp_unit).toUpperCase()==='F' ? 'F' : 'C');
+          if (Number.isFinite(s.default_temp)) this._config.default_temp = Number(s.default_temp);
+          if (Number.isFinite(s.row_height)) this._config.row_height = Math.max(30, Math.min(200, Math.round(Number(s.row_height))));
+          if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
+          if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+          if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
           if (typeof s.profiles_enabled === 'boolean') this._config.profiles_enabled = !!s.profiles_enabled;
           if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled;
           if (typeof s.holidays_enabled === 'boolean') this._config.holidays_enabled = !!s.holidays_enabled;
           if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
           if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
+          if (typeof s.apply_on_default_change === 'boolean') this._config.apply_on_default_change = !!s.apply_on_default_change;
+          if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
           if (typeof s.backup_auto_enabled === 'boolean') this._config.backup_auto_enabled = !!s.backup_auto_enabled;
           if (Number.isFinite(s.backup_interval_days)) this._config.backup_interval_days = s.backup_interval_days;
           if (s.open_window && typeof s.open_window === 'object') this._config.open_window = s.open_window;
         }
-        // Re-render after merging settings so UI (time source, etc.) reflects storage values
-        try {
-          this._render();
-          const srcB = this.shadowRoot?.querySelector('.srcBrowser');
-          const srcH = this.shadowRoot?.querySelector('.srcHa');
-          const useHa = String(this._config?.time_source||'browser')==='ha';
-          try { srcB && srcB.classList.toggle('active', !useHa); } catch {}
-          try { srcH && srcH.classList.toggle('active', useHa); } catch {}
-        } catch {}
+        // Re-render after merging settings
+        try { this._render(); } catch {}
       } catch (err) {}
     })();
   }
@@ -9068,7 +12402,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (this._suspendRender) return;
   if (ae) {
     try {
-      if (ae.classList?.contains("def") || ae.classList?.contains("rowh") || ae.classList?.contains("title") || ae.classList?.contains('label-input')
+      if (ae.classList?.contains("title") || ae.classList?.contains('label-input')
           || ae.classList?.contains('mi-from') || ae.classList?.contains('mi-to') || ae.classList?.contains('mi-temp')
           || (ae.closest && ae.closest('.mini-ed'))) return;
       if (ae.closest && (ae.closest('ha-entity-picker') || ae.closest('tt-entity-picker'))) return;
@@ -9191,6 +12525,16 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     .label-input { width:100%; max-width:440px; display:block; }
     /* Custom input style matching pickers */
     .tt-input { height:36px; min-height:36px; padding:6px 10px; box-sizing:border-box; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
+    .tt-input.tt-input-lg {
+      height:48px;
+      min-height:48px;
+      padding:0 14px;
+      border-radius:10px;
+      background: var(--secondary-background-color, transparent);
+    }
+    .tt-input.tt-input-lg::placeholder { color: var(--secondary-text-color); opacity: 1; }
+    .tt-input.tt-input-lg:focus { outline: none; }
+    .tt-input.tt-input-lg:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
   /* entity picker width constraint */
   .inline ha-entity-picker, .inline tt-entity-picker { width: 100%; min-width: 250px; max-width: 440px; overflow: hidden; text-overflow: ellipsis; display:block; min-height: 48px; }
         /* Add entity button styles */
@@ -9322,8 +12666,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   /* Tooltip style (same as card) */
   .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
         </style>
-  <div class="status-wrap"><span class="int-status" role="status"><ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon><span class="text">Not connected</span></span></div>
-  <div class="tabs" role="tablist"><button class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button class="tab-btn tab-weekdays-btn" role="tab" aria-selected="false">Weekdays</button><button class="tab-btn tab-rooms-btn" role="tab" aria-selected="false">Rooms</button><button class="tab-btn tab-boiler-btn" role="tab" aria-selected="false">Boiler</button><button class="tab-btn tab-colors-btn" role="tab" aria-selected="false">Colors</button><button class="tab-btn tab-owd-btn" role="tab" aria-selected="false">Open Window Detection</button><button class="tab-btn tab-holidays-btn" role="tab" aria-selected="false">Holidays</button><button class="tab-btn tab-away-btn" role="tab" aria-selected="false">Away</button><button class="tab-btn tab-sync-btn" role="tab" aria-selected="false">Sync</button><button class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
+  <div class="tabs" role="tablist"><button type="button" class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button type="button" class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
       <div class="wrap tab-settings">
         <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
         
@@ -9362,263 +12705,33 @@ class ThermostatTimelineCardEditor extends HTMLElement {
 .settings-card .title { font-weight:600; }
 .settings-card .desc { font-size:.85rem; color: var(--secondary-text-color); margin-top:2px; }
 </style>
-<div class="settings-card">
-  <div class="grid2">
-    <div class="sfield">
-      <div class="slabel slabel-def">Standard °C</div>
-      <input class="def settings-input" type="number" min="5" max="35" step="0.5" />
-    </div>
-    <div class="sfield">
-      <div class="slabel slabel-rowh">Rækkens højde (px)</div>
-      <input class="rowh settings-input" type="number" min="40" max="120" step="1" />
-    </div>
-    <div class="sfield">
-      <div class="slabel slabel-minc">Min °C</div>
-      <input class="minc settings-input" type="number" min="0" max="45" step="0.5" />
-    </div>
-    <div class="sfield">
-      <div class="slabel slabel-maxc">Max °C</div>
-  <input class="maxc settings-input" type="number" min="5" max="120" step="0.5" />
-    </div>
-  </div>
 
-  <div class="setting">
-    <div class="text">
-      <div class="title">Auto apply</div>
-      <div class="desc">Når slået til forsøger kortet automatisk at sætte temperaturen på de valgte <code>climate</code>-entities, så den matcher den planlagte værdi for “lige nu”.</div>
-    </div>
-    <ha-switch class="auto"></ha-switch>
-  </div>
-
-  <div class="setting">
-    <div class="text">
-      <div class="title">Ved redigering</div>
-      <div class="desc">Når du ændrer blokke i tidslinjen, og ændringen påvirker den aktuelle tid, anvendes den nye temperatur med det samme.</div>
-    </div>
-    <ha-switch class="applyedit"></ha-switch>
-  </div>
-
-  <div class="setting">
-    <div class="text">
-      <div class="title">Ved Standard °C ændring</div>
-      <div class="desc">Når “Standard °C” ændres og det påvirker temperaturen for nuværende tidsrum, anvendes den nye temperatur straks.</div>
-    </div>
-    <ha-switch class="applydef"></ha-switch>
-  </div>
-  <div class="setting perroom-setting">
-    <div class="text">
-      <div class="title perroom-title">Default °C pr. rum</div>
-      <div class="desc perroom-desc">Vis en input på hver række til Standard °C. Når slået fra bruges global Standard °C for alle rum.</div>
-    </div>
-    <ha-switch class="perroom-enable"></ha-switch>
-  </div>
-  <div class="setting pausebtn-setting">
-    <div class="text">
-      <div class="title pausebtn-title">Pause button</div>
-      <div class="desc pausebtn-desc">Show global pause button in the card header.</div>
-    </div>
-    <ha-switch class="pausebtn-enable"></ha-switch>
-  </div>
-  <div class="setting">
-    <div class="text">
-      <div class="title timefmt-title">Time format</div>
-      <div class="desc timefmt-desc">Choose 24-hour or 12-hour (AM/PM) display for times on the card.</div>
-    </div>
-    <div class="seg timefmt">
-      <button type="button" class="fmt24">24h</button>
-      <button type="button" class="fmt12">12h</button>
-    </div>
-  </div>
-
-  <div class="setting">
-    <div class="text">
-      <div class="title timesrc-title">Time source</div>
-      <div class="desc timesrc-desc">Choose whether the card uses the browser time or Home Assistant time zone for “now”.</div>
-    </div>
-    <div class="seg timesrc">
-      <button type="button" class="srcBrowser">Browser</button>
-      <button type="button" class="srcHa">Home Assistant</button>
-    </div>
-  </div>
-
-  <div class="setting">
-    <div class="text">
-      <div class="title tempfmt-title">Temperature unit</div>
-      <div class="desc tempfmt-desc">Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.</div>
-    </div>
-    <div class="seg tempfmt">
-      <button type="button" class="unitC">°C</button>
-      <button type="button" class="unitF">°F</button>
-    </div>
-  </div>
-  <div class="setting week-setting">
-    <div class="text">
-      <div class="title">Ugedage</div>
-      <div class="desc week-enable-desc">Aktivér plan per ugedag. Hvis slået fra, bruges samme plan hver dag.</div>
-    </div>
-    <ha-switch class="week-enable"></ha-switch>
-  </div>
-  <div class="setting profiles-setting">
-    <div class="text">
-      <div class="title">Profiles</div>
-      <div class="desc profiles-enable-desc">Allow named daily schedules you can activate to override the main plan.</div>
-    </div>
-    <ha-switch class="profiles-enable"></ha-switch>
-  </div>
-  <div class="setting holidays-setting">
-    <div class="text">
-      <div class="title">Holidays</div>
-      <div class="desc holidays-enable-desc">Use a special daily schedule on public holidays.</div>
-    </div>
-    <ha-switch class="holidays-enable"></ha-switch>
-  </div>
-</div>
-  </div>
-  <div class="wrap tab-rooms" style="display:none;">
-    <div class="row">
-      <div class="label">Rooms</div>
-      <div class="entities"></div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-        <button class="add-entity-btn add-room-btn" type="button"><ha-icon icon="mdi:plus"></ha-icon><span>Tilføj entity</span></button>
-      </div>
-    </div>
-  </div>
-  <div class="wrap tab-boiler" style="display:none; max-width:480px;">
-    <div class="settings-card">
-      <div class="setting boiler-enable-setting" style="grid-template-columns: 1fr;">
-        <div class="text">
-          <div class="title boiler-enable-title">Enable boiler controls</div>
-          <div class="desc boiler-enable-desc"></div>
-        </div>
-        <ha-switch class="boiler-enable"></ha-switch>
-      </div>
-      <div class="setting boiler-switch-setting" style="grid-template-columns: 1fr;">
-        <div class="text">
-          <div class="title boiler-switch-title">Boiler switch</div>
-          <div class="desc boiler-switch-desc"></div>
-        </div>
-        <tt-entity-picker class="boiler-switch-picker" include-domains='["switch"]'></tt-entity-picker>
-      </div>
-      <div class="setting boiler-sensor-setting" style="grid-template-columns: 1fr;">
-        <div class="text">
-          <div class="title boiler-sensor-title">Boiler temperature sensor</div>
-          <div class="desc boiler-sensor-desc"></div>
-        </div>
-        <tt-entity-picker class="boiler-temp-sensor-picker" include-domains='["sensor"]'></tt-entity-picker>
-      </div>
-      <div class="setting boiler-temps-setting" style="grid-template-columns: 1fr;">
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
-          <div class="sfield">
-            <div class="slabel boiler-min-temp-label">Min boiler temp (°C)</div>
-            <input class="boiler-min-temp settings-input" type="number" min="0" max="120" step="0.5" placeholder="20" />
-          </div>
-          <div class="sfield">
-            <div class="slabel boiler-max-temp-label">Max boiler temp (°C)</div>
-            <input class="boiler-max-temp settings-input" type="number" min="0" max="120" step="0.5" placeholder="25" />
+        <!-- Sync Engine (moved into Settings tab) -->
+        <div class="row">
+          <div class="label"></div>
+          <div class="settings-card store-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div style="display:grid; gap:2px;">
+                <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
+                <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);"><span class="store-desc-text">Saves schedules to file storage and enables background control.</span></div>
+              </div>
+              <ha-switch class="store-enable"></ha-switch>
+            </div>
+            
+            <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
+              <!-- Note: Entity pickers removed - file-based storage is always used -->
+              <div class="store-btns">
+                <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
+                <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="wrap tab-weekdays" style="display:none; max-width:480px;">
-    <div class="settings-card">
-      <div class="setting week-setting-inline">
-        <div class="text">
-          <div class="title">Ugedage</div>
-          <div class="desc week-enable-desc">Aktivér plan per ugedag. Hvis slået fra, bruges samme plan hver dag.</div>
+        <!-- Bottom actions: clear local + reset onboarding -->
+        <div class="row row-bottom-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
+          <button class="add-entity-btn reset-onboard" type="button"><ha-icon icon="mdi:movie-play"></ha-icon><span>Show welcome again</span></button>
         </div>
-        <ha-switch class="week-enable"></ha-switch>
-      </div>
-      <div class="setting week-view-setting">
-        <div class="text">
-          <div class="title week-view-title">Week view</div>
-          <div class="desc"></div>
-        </div>
-        <div class="seg week-view">
-          <button type="button" class="week-view-rooms">All rooms • one day</button>
-          <button type="button" class="week-view-days">All days • one room</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="wrap tab-colors" style="display:none;"></div>
-  <div class="wrap tab-owd" style="display:none; max-width:480px;"></div>
-  <div class="wrap tab-holidays" style="display:none; max-width:480px;"></div>
-  <div class="wrap tab-away" style="display:none; max-width:480px;">
-    <div class="settings-card">
-      <div class="setting">
-        <div class="text">
-          <div class="title away-enable-title">Away</div>
-          <div class="desc away-desc">Lower temperature when nobody is home.</div>
-        </div>
-        <ha-switch class="away-enable"></ha-switch>
-      </div>
-      <div class="setting">
-        <div class="text">
-          <div class="title away-temp-title">Away temperature</div>
-          <div class="desc away-temp-desc"></div>
-        </div>
-        <input class="away-temp settings-input" type="number" step="0.5" />
-      </div>
-      <div class="setting">
-        <div class="text">
-          <div class="title away-persons-title">People</div>
-          <div class="desc away-persons-desc"></div>
-        </div>
-        <div style="display:grid; gap:8px;">
-          <tt-entity-picker class="away-person-picker" include-domains='["person","device_tracker"]'></tt-entity-picker>
-          <div class="linked-chips away-chips"></div>
-        </div>
-      </div>
-      <div class="setting away-adv-row">
-        <div class="text">
-          <div class="title away-adv-title">Advanced away</div>
-          <div class="desc away-adv-desc"></div>
-        </div>
-        <ha-switch class="away-adv-enable"></ha-switch>
-      </div>
-      <div class="setting presence-live-row">
-        <div class="text">
-          <div class="title presence-live-title">Show live presence chips</div>
-          <div class="desc presence-live-desc"></div>
-        </div>
-        <ha-switch class="presence-live-enable"></ha-switch>
-      </div>
-      <div class="setting away-combos-row" style="grid-template-columns: 1fr;">
-        <div class="text">
-          <div class="title presence-combos-title">Combinations</div>
-          <div class="desc presence-combos-desc"></div>
-        </div>
-        <div class="presence-combo-list" style="margin-top:6px; border:1px solid var(--divider-color); border-radius:8px; padding:6px; display:grid; gap:6px; max-height:180px; overflow:auto;"></div>
-      </div>
-    </div>
-  </div>
-  <div class="wrap tab-sync" style="display:none;">
-    <div class="row">
-      <div class="label"></div>
-      <div class="settings-card store-card">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-          <div style="display:grid; gap:2px;">
-            <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
-            <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);"><span class="store-desc-text">Saves schedules to file storage and enables background control.</span></div>
-          </div>
-          <ha-switch class="store-enable"></ha-switch>
-        </div>
-        
-        <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
-          <!-- Note: Entity pickers removed - file-based storage is always used -->
-          <div class="store-btns">
-            <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
-            <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Bottom actions: clear local + reset onboarding -->
-    <div class="row row-bottom-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-      <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
-      <button class="add-entity-btn reset-onboard" type="button"><ha-icon icon="mdi:movie-play"></ha-icon><span>Show welcome again</span></button>
-    </div>
   </div>
   <!-- Backup tab (top-level sibling) -->
   <div class="wrap tab-backup" style="display:none; max-width:640px;">
@@ -9709,9 +12822,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
                 let parsed = {};
                 try { parsed = JSON.parse(localRaw || '{}'); } catch { parsed = {}; }
                 let schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : (parsed || {});
-                let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, default_temp: Number(this._config.default_temp||20), min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!this._config.per_room_defaults, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
+                let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, entities: Array.isArray(this._config.entities) ? this._config.entities : [], room_use_input_number: Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : [], color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
                 let colors = parsed && typeof parsed === 'object' && parsed.colors ? parsed.colors : { color_ranges: settings?.color_ranges || this._config.color_ranges, color_global: typeof settings?.color_global === 'boolean' ? settings.color_global : !!this._config.color_global };
-                settings = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+                settings = { ...settings, entities: Array.isArray(settings?.entities) ? settings.entities : (Array.isArray(this._config.entities) ? this._config.entities : []), room_use_input_number: Array.isArray(settings?.room_use_input_number) ? settings.room_use_input_number : (Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : []), row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
                 if (this._hass) {
                   // Use set_store service directly - file-based storage
                   await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings, colors });
@@ -9723,7 +12836,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
                   const resp = await this._apiFetchState();
                   if (resp && typeof resp === 'object') {
                     let sch = resp.schedules || {};
-                    let set = resp.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, default_temp: Number(this._config.default_temp||20), min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!this._config.per_room_defaults, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
+                    let set = resp.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, entities: Array.isArray(this._config.entities) ? this._config.entities : [], room_use_input_number: Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : [], color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
                     let colors = resp.colors || { color_ranges: set.color_ranges || this._config.color_ranges, color_global: !!set.color_global };
                     if (Object.keys(sch || {}).length) {
                       const pull = confirm(this._t('editor.migrate_pull_confirm'));
@@ -9740,173 +12853,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       })();
     });
   // Sync mode controls removed (instant-only via Save button)
-  qs(".def")  ?.addEventListener("change", e => {
-      let raw=String(e.target.value||"").replace(",",".");
-      let vDisp=Number(raw);
-      // Convert from display units to Celsius for storage
-      let vC = isNaN(vDisp)? (this._config?.default_temp ?? 20) : this._fromDisplayTemp(vDisp);
-      const mxC = Number(this._config?.max_temp ?? 25);
-      const mnC = Number(this._config?.min_temp ?? 5);
-      vC = Math.max(mnC, Math.min(mxC, vC));
-  this._upd("default_temp", vC);
-  try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
-      // reflect display value after clamp
-      const input = qs(".def"); if (input) input.value = String(this._toDisplayTemp(vC));
-    });
-    qs(".rowh") ?.addEventListener("change", e => { let v=Number(e.target.value); v=isNaN(v)?64:Math.max(40,Math.min(120,Math.round(v))); this._upd("row_height",v); qs(".rowh").value=String(v); });
-  qs(".add-room-btn")?.addEventListener("click", () => this._addEntity());
   // (reload buttons removed)
-    qs(".auto")?.addEventListener("change", e => {
-      const on = !!e.target.checked;
-      this._upd("auto_apply", on);
-      try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
-    });
-  qs(".applyedit")?.addEventListener("change", e => { this._upd("apply_on_edit", e.target.checked); try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {} });
-  qs(".applydef")?.addEventListener("change", e => this._upd("apply_on_default_change", e.target.checked));
-  qs('.pausebtn-enable')?.addEventListener('change', e => { this._upd('show_pause_button', !!e.target.checked); try { this._pushSettingsToStoreDebounced(); } catch {} });
-  qs('.maxc')?.addEventListener('change', e => {
-      let raw=String(e.target.value||"").replace(",",".");
-      let vDisp=Number(raw);
-      let vC = isNaN(vDisp)? (this._config?.max_temp ?? 25) : this._fromDisplayTemp(vDisp);
-  vC = Math.max(5, Math.min(120, Math.round(vC)));
-      this._upd('max_temp', vC);
-      // Clamp existing color ranges to new max
-      try {
-        const cr = { ...(this._config.color_ranges || {}) };
-        for (const k of Object.keys(cr)){
-          cr[k] = (cr[k]||[]).map(r=>({
-            ...r,
-            from: Math.min(Number(r.from ?? 0), vC),
-            to: Math.min(Number(r.to ?? 0), vC)
-          }));
-        }
-        this._config.color_ranges = cr;
-      } catch {}
-      const mxEl=this.shadowRoot.querySelector('.maxc'); if(mxEl) mxEl.value=String(this._toDisplayTemp(vC));
-      // Repaint so Colors inputs pick up new max attribute
-      this._render();
-    });
-
-    qs('.minc')?.addEventListener('change', e => {
-      let raw=String(e.target.value||"").replace(",",".");
-      let vDisp=Number(raw);
-      let vC = isNaN(vDisp)? (this._config?.min_temp ?? 5) : this._fromDisplayTemp(vDisp);
-      // Keep within 0..(max-1)
-      const mxC = Number(this._config?.max_temp ?? 25);
-      vC = Math.max(0, Math.min(mxC, Math.round(vC)));
-      this._upd('min_temp', vC);
-      // Clamp defaults and color ranges to new min
-      try {
-        // Default temp
-        const defEl = this.shadowRoot.querySelector('.def');
-        if (defEl) {
-          let d= this._fromDisplayTemp(Number(defEl.value));
-          if (!isNaN(d) && d < vC) { d = vC; defEl.value = String(this._toDisplayTemp(d)); this._upd('default_temp', d); }
-        }
-        const cr = { ...(this._config.color_ranges || {}) };
-        for (const k of Object.keys(cr)){
-          cr[k] = (cr[k]||[]).map(r=>({
-            ...r,
-            from: Math.max(Number(r.from ?? vC), vC)
-          }));
-        }
-        this._config.color_ranges = cr;
-      } catch {}
-      const mnEl=this.shadowRoot.querySelector('.minc'); if(mnEl) mnEl.value=String(this._toDisplayTemp(vC));
-      this._render();
-    });
-    // Weekdays enable (mode selection removed from editor)
-    qs('.tab-weekdays .week-enable')?.addEventListener('change', e => {
-      const on = !!e.target.checked;
-      this._upd('weekdays_enabled', on);
-      // If turning OFF weekdays, force view back to All rooms and clear selected room
-      if (!on) {
-        this._upd('weekdays_view', 'all_rooms_one_day');
-        this._upd('weekdays_selected_room', '');
-      }
-      // If turning ON: ensure a sane default and seed data structures
-      if (on) {
-        this._upd('weekdays_view', 'all_rooms_one_day');
-        try {
-          const ents = this._config?.entities || [];
-          if (!this._config.weekdays_selected_room && ents.length) this._upd('weekdays_selected_room', ents[0]);
-          for (const eid of ents){ this._ensureWeeklyStruct(this._schedules[eid] || (this._schedules[eid]={ defaultTemp:this._config.default_temp, blocks:[] })); }
-        } catch {}
-        // Force weekdays_view to be set (in case it was undefined)
-        if (!this._config.weekdays_view || this._config.weekdays_view === 'undefined') {
-          this._config.weekdays_view = 'all_rooms_one_day';
-        }
-      }
-      // Persist to shared/local storage so preview doesn't revert
-      try { this._pushSettingsToStoreDebounced(); } catch {}
-      try {
-        const raw = localStorage.getItem('thermostat_timeline_store') || '';
-        let parsed = {}; try { parsed = JSON.parse(raw||'{}'); } catch { parsed = {}; }
-        const schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : {};
-        const prevSettings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : {};
-        const settings = { ...prevSettings, weekdays_enabled: !!on, weekdays_view: String(this._config?.weekdays_view||'all_rooms_one_day'), weekdays_selected_room: String(this._config?.weekdays_selected_room||'') };
-        try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
-      } catch {}
-      // Repaint controls (always visible; disable when OFF)
-      try {
-        const wvs = this.shadowRoot.querySelector('.week-view-setting');
-        const bRooms = this.shadowRoot.querySelector('.week-view-rooms');
-        const bDays  = this.shadowRoot.querySelector('.week-view-days');
-        if (wvs) { wvs.style.display = ''; wvs.style.opacity = on ? '' : '.5'; }
-        if (bRooms) { bRooms.disabled = !on; bRooms.setAttribute('aria-disabled', (!on).toString()); }
-        if (bDays)  { bDays.disabled  = !on; bDays.setAttribute('aria-disabled', (!on).toString()); }
-        // Set active button state: when enabling OR disabling weekdays, show All rooms as selected
-        if (bRooms && bDays) {
-          bRooms.classList.add('active');
-          bDays.classList.remove('active');
-        }
-      } catch {}
-      this._render();
-    });
-    // Per-room default toggle
-    qs('.perroom-enable')?.addEventListener('change', e => {
-      const on = !!e.target.checked;
-      this._upd('per_room_defaults', on);
-      // Push to shared storage immediately (and also keep the debounced call as a backup)
-      try { this._pushSettingsToStore(); } catch {}
-      try { this._pushSettingsToStoreDebounced(); } catch {}
-      // Always persist to localStorage so re-render/refresh doesn't drop the value
-      try {
-        const raw = localStorage.getItem('thermostat_timeline_store') || '';
-        let parsed = {}; try { parsed = JSON.parse(raw || '{}'); } catch { parsed = {}; }
-        const schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : {};
-        const prevSettings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : {};
-        const settings = { ...prevSettings, per_room_defaults: !!on };
-        try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
-      } catch {}
-      // Re-render so inputs show/hide immediately
-      this._render();
-    });
-    // Profiles enable
-    qs('.profiles-enable')?.addEventListener('change', e => {
-      const on = !!e.target.checked;
-      this._upd('profiles_enabled', on);
-      // Immediately push the new state to shared storage so all dashboards stay in sync
-      // Use non-debounced call to ensure it fires without being swallowed
-      try { this._pushSettingsToStore(); } catch {}
-      // If Sync is OFF, persist the flag to local storage only
-      try {
-        if (!this._config?.storage_enabled) {
-          const raw = localStorage.getItem('thermostat_timeline_store') || '';
-          let parsed = {};
-          try { parsed = JSON.parse(raw || '{}'); } catch { parsed = {}; }
-          const schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : {};
-          const prevSettings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : {};
-          const settings = { ...prevSettings, profiles_enabled: !!on };
-          try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
-        }
-      } catch {}
-    });
-      // Holidays enable
-      qs('.holidays-enable')?.addEventListener('change', e => {
-        const on = !!e.target.checked; this._upd('holidays_enabled', on);
-        if (on) { this._activeTab = 'holidays'; this._render(); }
-      });
+      // Holidays enable (migrated into in-card settings popup)
     // (clear storage only button removed)
 
     // Clear all data (storage + local)
@@ -9968,183 +12916,16 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const schedules = parsed.schedules || parsed || {};
         const weekdays = parsed.weekdays || {};
         const profiles = parsed.profiles || {};
-        let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
+        let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
         let colors = parsed.colors || { color_ranges: settings?.color_ranges || this._config.color_ranges, color_global: typeof settings?.color_global === 'boolean' ? settings.color_global : !!this._config.color_global };
-        settings = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+        settings = { ...settings, row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
         if (this._hass) {
           // Use set_store service directly - file-based storage
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules, weekdays, profiles, settings, colors });
         }
       } catch (e) {}
     });
-    // Time format segmented control
-    try {
-      const fmt24 = this.shadowRoot.querySelector('.fmt24');
-      const fmt12 = this.shadowRoot.querySelector('.fmt12');
-      const applyFmtUi = ()=>{
-        if (!fmt24 || !fmt12) return;
-        const on12 = !!this._config.time_12h;
-        fmt12.classList.toggle('active', on12);
-        fmt24.classList.toggle('active', !on12);
-      };
-      if (fmt24) fmt24.addEventListener('click', ()=>{ this._upd('time_12h', false); applyFmtUi(); });
-      if (fmt12) fmt12.addEventListener('click', ()=>{ this._upd('time_12h', true); applyFmtUi(); });
-
-      // Time source buttons
-      const srcB = this.shadowRoot.querySelector('.srcBrowser');
-      const srcH = this.shadowRoot.querySelector('.srcHa');
-      const applySrcUi = ()=>{
-        const useHa = String(this._config?.time_source||'browser')==='ha';
-        try { srcB && srcB.classList.toggle('active', !useHa); } catch {}
-        try { srcH && srcH.classList.toggle('active', useHa); } catch {}
-      };
-      if (srcB) srcB.addEventListener('click', ()=>{ this._upd('time_source','browser'); applySrcUi(); try { this._startUiTimer(); this._render(); this._scheduleNextApply(); } catch {} });
-      if (srcH) srcH.addEventListener('click', ()=>{ this._upd('time_source','ha'); applySrcUi(); try { this._startUiTimer(); this._render(); this._scheduleNextApply(); } catch {} });
-      applySrcUi();
-      applyFmtUi();
-    } catch {}
-    // Temperature unit segmented control
-    try {
-      const uC = this.shadowRoot.querySelector('.unitC');
-      const uF = this.shadowRoot.querySelector('.unitF');
-      const applyUnitUi = ()=>{
-        const isF = (this._config.temp_unit||'C')==='F';
-        if (uC && uF){
-          uF.classList.toggle('active', isF);
-          uC.classList.toggle('active', !isF);
-        }
-      };
-      if (uC) uC.addEventListener('click', ()=>{ this._upd('temp_unit','C'); applyUnitUi(); });
-      if (uF) uF.addEventListener('click', ()=>{ this._upd('temp_unit','F'); applyUnitUi(); });
-      applyUnitUi();
-    } catch {}
-    // Weekdays tab controls: apply initial UI state and bind events
-    try {
-      // Highlight selected view mode
-      const btnRooms = this.shadowRoot.querySelector('.week-view-rooms');
-      const btnDays = this.shadowRoot.querySelector('.week-view-days');
-      const rowRoom = this.shadowRoot.querySelector('.week-room-row');
-      const sel = this.shadowRoot.querySelector('.week-room-select');
-      const enabled = !!this._config?.weekdays_enabled;
-      const curView = String(this._config?.weekdays_view || 'all_rooms_one_day');
-      if (btnRooms && btnDays) {
-        // When weekdays are enabled, ensure All rooms is selected by default
-        const isAllRooms = enabled && (curView === 'all_rooms_one_day' || (!curView || curView === 'undefined'));
-        const isOneRoom = enabled && curView === 'one_room_all_days';
-        
-        if (isAllRooms) {
-          btnRooms.classList.add('active');
-          btnDays.classList.remove('active');
-        } else if (isOneRoom) {
-          btnDays.classList.add('active');
-          btnRooms.classList.remove('active');
-        } else {
-          btnRooms.classList.remove('active');
-          btnDays.classList.remove('active');
-        }
-        // Support click + keyboard on both buttons
-        const applyView = (mode)=>{
-          this._upd('weekdays_view', mode);
-          if (mode === 'all_rooms_one_day') {
-            try { this._upd('weekdays_selected_room', ''); } catch {}
-          }
-          // Persist to store/local so preview updates consistently
-          try { this._pushSettingsToStoreDebounced(); } catch {}
-          try {
-            const raw = localStorage.getItem('thermostat_timeline_store') || '';
-            let parsed = {}; try { parsed = JSON.parse(raw||'{}'); } catch { parsed = {}; }
-            const schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : {};
-            const prevSettings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : {};
-            const settings = { ...prevSettings, weekdays_view: String(mode), weekdays_selected_room: String(this._config?.weekdays_selected_room||''), weekdays_enabled: !!this._config?.weekdays_enabled };
-            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings })); } catch {}
-          } catch {}
-          // Immediate UI feedback without waiting for full re-render
-          try {
-            btnRooms.classList.toggle('active', mode==='all_rooms_one_day');
-            btnDays.classList.toggle('active', mode==='one_room_all_days');
-            if (rowRoom) rowRoom.style.display = (mode==='one_room_all_days') ? '' : 'none';
-          } catch {}
-          this._render();
-        };
-        btnRooms.setAttribute('tabindex','0');
-        btnDays.setAttribute('tabindex','0');
-        btnRooms.onclick = ()=> applyView('all_rooms_one_day');
-        btnDays.onclick = ()=> applyView('one_room_all_days');
-        btnRooms.onkeydown = (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); applyView('all_rooms_one_day'); } };
-        btnDays.onkeydown = (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); applyView('one_room_all_days'); } };
-        // Delegate on the container as a safety net (in case of overlays)
-        const seg = this.shadowRoot.querySelector('.seg.week-view');
-        if (seg && !seg._bound) {
-          seg._bound = true;
-          seg.addEventListener('click', (ev)=>{
-            const t = ev.target; if (!t || !t.classList) return;
-            if (t.classList.contains('week-view-rooms')) applyView('all_rooms_one_day');
-            if (t.classList.contains('week-view-days')) applyView('one_room_all_days');
-          });
-        }
-      }
-      // Defensive: delegate on the whole Weekdays tab to catch clicks
-      try {
-        const tab = this.shadowRoot.querySelector('.tab-weekdays');
-        if (tab && !tab._wl_bound) {
-          tab._wl_bound = true;
-          tab.addEventListener('click', (ev)=>{
-            const el = ev.target && ev.target.closest ? ev.target.closest('.week-view-rooms, .week-view-days') : null;
-            if (!el) return;
-            if (!this._config?.weekdays_enabled) return; // ignore when hidden/off
-            if (el.classList.contains('week-view-rooms')) applyView('all_rooms_one_day');
-            else if (el.classList.contains('week-view-days')) applyView('one_room_all_days');
-          });
-        }
-      } catch {}
-      // Populate room list from configured entities
-      if (sel) {
-        const ents = (this._config?.entities || []).slice();
-        sel.innerHTML = '';
-        for (const eid of ents) {
-          const opt = document.createElement('option');
-          const label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid));
-          opt.value = eid; opt.textContent = label; sel.append(opt);
-        }
-        const want = this._config?.weekdays_selected_room || ents[0] || '';
-        sel.value = want;
-        sel.onchange = (e)=>{ const v = String(e.target.value||''); this._upd('weekdays_selected_room', v); try { this._pushSettingsToStoreDebounced(); } catch {} this._render(); };
-      }
-      if (rowRoom) rowRoom.style.display = (curView === 'one_room_all_days') ? '' : 'none';
-      // Week view selector: visible always; disable when weekdays are OFF
-      try {
-        const wvs = this.shadowRoot.querySelector('.week-view-setting');
-        const on = !!this._config?.weekdays_enabled;
-        const bRooms = this.shadowRoot.querySelector('.week-view-rooms');
-        const bDays  = this.shadowRoot.querySelector('.week-view-days');
-        if (wvs) { wvs.style.display = ''; wvs.style.opacity = on ? '' : '.5'; }
-        if (bRooms) { bRooms.disabled = !on; bRooms.setAttribute('aria-disabled', (!on).toString()); }
-        if (bDays)  { bDays.disabled  = !on; bDays.setAttribute('aria-disabled', (!on).toString()); }
-      } catch {}
-    } catch {}
-    // Tabs behavior
-    try {
-      const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
-      const wBtn = this.shadowRoot.querySelector('.tab-weekdays-btn');
-      const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
-      const oBtn = this.shadowRoot.querySelector('.tab-boiler-btn');
-      const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
-      const owBtn = this.shadowRoot.querySelector('.tab-owd-btn');
-      const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
-      const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
-      const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
-      const bBtn = this.shadowRoot.querySelector('.tab-backup-btn');
-      if (sBtn) sBtn.onclick = ()=> { this._activeTab='settings'; this._render(); };
-      if (wBtn) wBtn.onclick = ()=> { this._activeTab='weekdays'; this._render(); };
-  if (rBtn) rBtn.onclick = ()=> { this._activeTab='rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); };
-      if (oBtn) oBtn.onclick = ()=> { this._activeTab='boiler'; this._render(); };
-      if (cBtn) cBtn.onclick = ()=> { this._activeTab='colors'; this._render(); };
-      if (owBtn) owBtn.onclick = ()=> { this._activeTab='owd'; this._render(); };
-      if (hBtn) hBtn.onclick = ()=> { this._activeTab='holidays'; this._render(); };
-      if (aBtn) aBtn.onclick = ()=> { this._activeTab='away'; this._render(); };
-      if (yBtn) yBtn.onclick = ()=> { this._activeTab='sync'; this._render(); };
-      if (bBtn) bBtn.onclick = ()=> { this._activeTab='backup'; this._render(); };
-    } catch {}
+    // Tabs behavior is handled via robust click delegation in _render()
   }
 
   _roomUsesInputNumber(idx){
@@ -10292,43 +13073,33 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   async _pushSettingsToStore(){
     try {
       if (!this._hass || !this._config?.storage_enabled) { return; }
+      // IMPORTANT: The backend replaces the entire settings object when provided.
+      // Base our write on the current stored settings to avoid wiping popup-managed keys.
+      const resp = await this._apiFetchState();
+      const base = resp?.settings;
+      if (!base || typeof base !== 'object') return;
+
       const settings = {
-        time_12h: this._config.time_12h,
-        temp_unit: this._config.temp_unit,
-        time_source: this._config.time_source,
-        color_ranges: this._config.color_ranges,
-        color_global: !!this._config.color_global,
-        weekdays_enabled: !!this._config.weekdays_enabled,
-        weekdays_mode: this._config.weekdays_mode || 'weekday_weekend',
-        weekdays_view: this._config.weekdays_view || 'all_rooms_one_day',
-        weekdays_selected_room: this._config.weekdays_selected_room || '',
-        min_temp: this._config.min_temp,
-        max_temp: this._config.max_temp,
-        per_room_defaults: !!this._config.per_room_defaults,
+        ...base,
+
+        // Editor-managed settings only (popup-managed keys are preserved from base)
         away: this._config.away,
-        open_window: this._config.open_window,
+        // open_window is now configured via in-card popup; preserve base.open_window
+
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
-        boiler_enabled: !!this._config.boiler_enabled,
-        boiler_switch: String(this._config.boiler_switch || ''),
-        boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
-        boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : Number(this._config.boiler_min_temp),
-        boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : Number(this._config.boiler_max_temp),
-        show_pause_button: !!(this._config.show_pause_button ?? true),
-        profiles_enabled: !!this._config.profiles_enabled,
+
         backup_auto_enabled: !!this._config.backup_auto_enabled,
         backup_interval_min: Number(this._config.backup_interval_min||1440),
-        apply_on_edit: !!this._config.apply_on_edit,
-        auto_apply_enabled: !!this._config.auto_apply,
-        pause_indef: !!this._pauseIndef,
-        pause_until_ms: Number(this._pauseUntilMs||0),
+
         holidays_enabled: !!this._config.holidays_enabled,
-        holidays_source: this._config.holidays_source || 'calendar',
+        holidays_source: this._config.holidays_source || base.holidays_source || 'calendar',
         holidays_entity: this._config.holidays_entity || '',
-        holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [],
-        sync_mode: (this._config.storage_sync_mode||'instant'),
-        sync_delay_min: Number(this._config.storage_sync_min||0)
+        holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : (Array.isArray(base.holidays_dates) ? base.holidays_dates : []),
+
+        sync_mode: (this._config.storage_sync_mode||base.sync_mode||'instant'),
+        sync_delay_min: Number(this._config.storage_sync_min ?? base.sync_delay_min ?? 0),
       };
       await this._hass.callService('thermostat_timeline','set_store', { settings });
     } catch (err) {}
@@ -10372,6 +13143,24 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     if(!this._hass || !this.shadowRoot || !this._config) return;
     if(this._openCount > 0) return;
 
+    // Boiler tab was migrated into the in-card settings popup
+    if (this._activeTab === 'boiler') this._activeTab = 'settings';
+
+    // Open Window Detection tab was migrated into the in-card settings popup
+    if (this._activeTab === 'owd') this._activeTab = 'settings';
+
+    // Colors tab was migrated into the in-card settings popup
+    if (this._activeTab === 'colors') this._activeTab = 'settings';
+
+    // Holidays tab was migrated into the in-card settings popup
+    if (this._activeTab === 'holidays') this._activeTab = 'settings';
+
+    // Away tab was migrated into the in-card settings popup
+    if (this._activeTab === 'away') this._activeTab = 'settings';
+
+    // Rooms tab was migrated into the in-card settings popup
+    if (this._activeTab === 'rooms') this._activeTab = 'settings';
+
     // If HA hasn't registered core editor elements yet (after hard refresh),
     // re-render once they are defined so pickers/textfields upgrade properly.
     try {
@@ -10388,45 +13177,29 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       this._tabHandlersBound = true;
       try {
         this.shadowRoot.addEventListener('click', (ev)=>{
-          const t = ev.target && ev.target.closest ? ev.target : (ev.composedPath && ev.composedPath()[0]);
-          const el = t && t.closest ? t.closest('.tab-btn') : null;
+          // Shadow DOM can yield a Text node as event.target; use composedPath()
+          // to find the actual button element.
+          const path = typeof ev.composedPath === 'function' ? ev.composedPath() : [];
+          let el = null;
+          for (const n of path) {
+            if (n && n.classList && n.classList.contains('tab-btn')) { el = n; break; }
+          }
+          if (!el) {
+            const t = (ev.target && ev.target.closest) ? ev.target : null;
+            el = t && t.closest ? t.closest('.tab-btn') : null;
+          }
           if (!el) return;
           if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
-            if (el.classList.contains('tab-weekdays-btn')) { this._activeTab = 'weekdays'; this._render(); }
-          if (el.classList.contains('tab-rooms-btn')) { this._activeTab = 'rooms'; this._render(); setTimeout(()=>this._forcePickerRefresh(), 0); }
-          if (el.classList.contains('tab-boiler-btn')) { this._activeTab = 'boiler'; this._render(); }
-          if (el.classList.contains('tab-colors-btn')) { this._activeTab = 'colors'; this._render(); }
-          if (el.classList.contains('tab-owd-btn')) { this._activeTab = 'owd'; this._render(); }
-          if (el.classList.contains('tab-holidays-btn')) { this._activeTab = 'holidays'; this._render(); }
-          if (el.classList.contains('tab-away-btn')) { this._activeTab = 'away'; this._render(); }
-          if (el.classList.contains('tab-sync-btn')) { this._activeTab = 'sync'; this._render(); }
           if (el.classList.contains('tab-backup-btn')) { this._activeTab = 'backup'; this._render(); }
         });
       } catch {}
     }
 
   const t = this.shadowRoot.querySelector(".title");
-  const d = this.shadowRoot.querySelector(".def");
-  const mx= this.shadowRoot.querySelector('.maxc');
-  const mn= this.shadowRoot.querySelector('.minc');
-    const rh= this.shadowRoot.querySelector(".rowh");
   // Note: storage entity pickers removed - file-based storage is always used
   const seEn = this.shadowRoot.querySelector('.store-enable');
-    const au= this.shadowRoot.querySelector(".auto");
-    const aed= this.shadowRoot.querySelector(".applyedit");
-    const adf= this.shadowRoot.querySelector(".applydef");
-  const pbe = this.shadowRoot.querySelector('.pausebtn-enable');
-  const prd = this.shadowRoot.querySelector('.perroom-enable');
-  const wek = this.shadowRoot.querySelector('.tab-weekdays .week-enable');
-  const prf = this.shadowRoot.querySelector('.profiles-enable');
   const hol = this.shadowRoot.querySelector('.holidays-enable');
-    if (t)  t.value  = this._config.title ?? "";
-  if (d && d !== this.shadowRoot.activeElement) d.value = String(this._toDisplayTemp(this._config.default_temp ?? 20));
-  if (mx && mx !== this.shadowRoot.activeElement) mx.value = String(this._toDisplayTemp(this._config.max_temp ?? 25));
-  // Ensure Max °C input respects display units and new allowed bounds (5..120 C -> 41..248 F)
-  try { if (mx) { mx.setAttribute('min', String(this._toDisplayTemp(5))); mx.setAttribute('max', String(this._toDisplayTemp(120))); } } catch {}
-    if (mn && mn !== this.shadowRoot.activeElement) mn.value = String(this._toDisplayTemp(this._config.min_temp ?? 5));
-    if (rh && rh !== this.shadowRoot.activeElement) rh.value = String(this._config.row_height ?? 64);
+  if (t)  t.value  = this._config.title ?? "";
     if (seEn) {
       const enabled = !!this._config.storage_enabled;
       seEn.checked = enabled;
@@ -10450,18 +13223,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       } catch {}
     }
     this._applyEditorI18n();
-    if (au) { au.checked = !!this._config.auto_apply; }
-    if (aed){ aed.checked = !!this._config.apply_on_edit; }
-    if (adf){ adf.checked = !!this._config.apply_on_default_change; }
-  if (wek){ wek.checked = !!this._config.weekdays_enabled; }
-  if (prf){ prf.checked = !!this._config.profiles_enabled; }
   if (hol){ hol.checked = !!this._config.holidays_enabled; }
-  // Hide legacy Holidays toggle in Settings tab (moved to Holidays tab)
-  try { const hs = this.shadowRoot.querySelector('.holidays-setting'); if (hs) hs.style.display = 'none'; } catch {}
-  // Hide legacy Weekdays toggle in Settings tab (moved to Weekdays tab)
-  try { const ws = this.shadowRoot.querySelector('.tab-settings .week-setting'); if (ws) ws.style.display = 'none'; } catch {}
-  if (pbe){ pbe.checked = !!(this._config.show_pause_button ?? true); }
-  if (prd){ prd.checked = !!this._config.per_room_defaults; }
   // Note: storage entity pickers removed - file-based storage is always used
   // Backup tab controls
   try {
@@ -10583,64 +13345,42 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   } catch {}
   // No mode dropdown in editor
 
-    // Reflect time format segmented control state
-    try {
-      const fmt24 = this.shadowRoot.querySelector('.fmt24');
-      const fmt12 = this.shadowRoot.querySelector('.fmt12');
-      if (fmt24 && fmt12) {
-        const on12 = !!this._config.time_12h;
-        fmt12.classList.toggle('active', on12);
-        fmt24.classList.toggle('active', !on12);
-      }
-    } catch {}
-    // Reflect temperature unit segmented control state
-    try {
-      const uC = this.shadowRoot.querySelector('.unitC');
-      const uF = this.shadowRoot.querySelector('.unitF');
-      if (uC && uF) {
-        const isF = (this._config.temp_unit||'C')==='F';
-        uF.classList.toggle('active', isF);
-        uC.classList.toggle('active', !isF);
-      }
-    } catch {}
-
     const wrap = this.shadowRoot.querySelector(".entities");
-    if(!wrap) return;
-
-    // Rebuild rows; preserve which are open using a stable key per row (entity id or placeholder)
     const want = (this._config.entities || []).length;
-    wrap.innerHTML = '';
-    for (let i=0;i<want;i++) {
-      const line = this._makeEntityRow(i);
-      const key = (this._config.entities?.[i]) || `#idx:${i}`;
-      if (this._openRows.has(key)) line.classList.add('open');
-      wrap.append(line);
-    }
-
-    // If Rooms tab is visible, proactively hydrate all pickers
-    try { if (this._activeTab === 'rooms') this._forcePickerRefresh(); } catch {}
-
-  for (let i=0;i<want;i++){
-      const row = wrap.children[i];
-      const picker = row.querySelector("tt-entity-picker, ha-entity-picker");
-      if (picker) {
-        picker.hass = this._hass;
-        try { picker.style.display = 'block'; picker.style.minHeight = '48px'; } catch {}
-        try { if (typeof picker.requestUpdate === 'function') picker.requestUpdate(); } catch {}
-        picker.value = this._config.entities[i] || "";
-        // Exclude entities already selected in other rows, or linked elsewhere; allow the current selection
-        picker.entityFilter = (st) => {
-          try {
-            const id = st?.entity_id || st?.entityId || st?.entityID || "";
-            if (!id) return false;
-            const chosenPrim = (this._config.entities || []).filter(Boolean);
-            const allLinked = Object.values(this._config.merges || {}).flat();
-            const blocked = new Set([...chosenPrim, ...allLinked]);
-            const current = this._config.entities[i];
-            return !blocked.has(id) || id === current;
-          } catch { return true; }
-        };
+    if (wrap) {
+      // Rebuild rows; preserve which are open using a stable key per row (entity id or placeholder)
+      wrap.innerHTML = '';
+      for (let i=0;i<want;i++) {
+        const line = this._makeEntityRow(i);
+        const key = (this._config.entities?.[i]) || `#idx:${i}`;
+        if (this._openRows.has(key)) line.classList.add('open');
+        wrap.append(line);
       }
+
+      // If Rooms tab is visible, proactively hydrate all pickers
+      try { if (this._activeTab === 'rooms') this._forcePickerRefresh(); } catch {}
+
+      for (let i=0;i<want;i++){
+        const row = wrap.children[i];
+        const picker = row.querySelector("tt-entity-picker, ha-entity-picker");
+        if (picker) {
+          picker.hass = this._hass;
+          try { picker.style.display = 'block'; picker.style.minHeight = '48px'; } catch {}
+          try { if (typeof picker.requestUpdate === 'function') picker.requestUpdate(); } catch {}
+          picker.value = this._config.entities[i] || "";
+          // Exclude entities already selected in other rows, or linked elsewhere; allow the current selection
+          picker.entityFilter = (st) => {
+            try {
+              const id = st?.entity_id || st?.entityId || st?.entityID || "";
+              if (!id) return false;
+              const chosenPrim = (this._config.entities || []).filter(Boolean);
+              const allLinked = Object.values(this._config.merges || {}).flat();
+              const blocked = new Set([...chosenPrim, ...allLinked]);
+              const current = this._config.entities[i];
+              return !blocked.has(id) || id === current;
+            } catch { return true; }
+          };
+        }
 
       // Update header title and label input to reflect current selection/override
       try {
@@ -10697,6 +13437,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           // (colors tab content and visibility now rendered once outside the entity loop)
       } catch {}
      }
+    }
 
     // Build colors tab content (always render once, even with zero rooms)
     // Build colors tab content (always render once, even with zero rooms)
@@ -10918,7 +13659,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   refresh.onclick = async () => {
           // Persist color settings to local/shared storage so live card instances pick them up
           try {
-            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
             const colors = { color_ranges: this._config.color_ranges, color_global: !!this._config.color_global };
             let schedules = {};
             // Prefer current file storage schedules when enabled - use API
@@ -10941,11 +13682,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               } catch {}
             }
             // Write local copy
-            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) }, colors })); } catch {}
+            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) }, colors })); } catch {}
             // And update shared file storage if available
             try {
               if (this._config.storage_enabled) {
-                const setPayload = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!this._config.auto_apply, pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+                const setPayload = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
                 await this._hass.callService('thermostat_timeline','set_store', { schedules, settings: setPayload, colors });
               }
             } catch {}
@@ -10975,7 +13716,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             try {
               const raw = localStorage.getItem('thermostat_timeline_store') || '';
               let schedules = {};
-              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), color_ranges: {}, color_global: !!this._config.color_global, min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
               let colors = { color_ranges: {}, color_global: !!this._config.color_global };
               if (raw) {
                 try {
@@ -10992,7 +13733,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
             try {
               if (this._hass && this._config?.storage_enabled) {
                 let schedules = {};
-                let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: {}, color_global: !!this._config.color_global, min_temp: this._config.min_temp, max_temp: this._config.max_temp, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+                let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), color_ranges: {}, color_global: !!this._config.color_global, min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
                 let colors = { color_ranges: {}, color_global: !!this._config.color_global };
                 // Fetch current schedules from API to preserve them while clearing colors
                 try {
@@ -11013,199 +13754,6 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
         };
         root.append(clrAll);
-      }
-    } catch {}
-
-    // Build Open Window Detection tab content
-    try {
-      const root = this.shadowRoot.querySelector('.tab-owd');
-      if (root) {
-        root.innerHTML = '';
-
-        // Ensure config shape
-        const cur = (this._config.open_window && typeof this._config.open_window === 'object') ? { ...this._config.open_window } : {};
-        if (typeof cur.enabled !== 'boolean') cur.enabled = false;
-        if (!cur.sensors || typeof cur.sensors !== 'object') cur.sensors = {};
-        if (!Number.isFinite(Number(cur.open_delay_min))) cur.open_delay_min = 2;
-        if (!Number.isFinite(Number(cur.close_delay_min))) cur.close_delay_min = 5;
-        this._config.open_window = cur;
-
-        // Enable toggle (always shown)
-        const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
-        const enRow = document.createElement('div'); enRow.className = 'setting';
-        const enText = document.createElement('div'); enText.className = 'text';
-        const enTitle = document.createElement('div'); enTitle.className = 'title owd-enable-title'; enTitle.textContent = this._t('owd.enable') || 'Open Window Detection';
-        const enDesc = document.createElement('div'); enDesc.className = 'desc owd-enable-desc'; enDesc.textContent = this._t('owd.enable.desc') || '';
-        enText.append(enTitle, enDesc);
-        const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'owd-enable'; enSwitch.checked = !!cur.enabled;
-        enSwitch.addEventListener('change', (e)=>{
-          const next = { ...(this._config.open_window || {}) };
-          next.enabled = !!e.target.checked;
-          if (!next.sensors || typeof next.sensors !== 'object') next.sensors = {};
-          if (!Number.isFinite(Number(next.open_delay_min))) next.open_delay_min = 2;
-          if (!Number.isFinite(Number(next.close_delay_min))) next.close_delay_min = 5;
-          this._config.open_window = next;
-          this._emit(true);
-          try { this._pushSettingsToStoreDebounced(); } catch {}
-          this._render();
-        });
-        enRow.append(enText, enSwitch); enableCard.append(enRow); root.append(enableCard);
-
-        // Container for remaining content (shown only when enabled)
-        const contentWrap = document.createElement('div'); contentWrap.className = 'owd-content';
-        contentWrap.style.display = cur.enabled ? '' : 'none';
-        root.append(contentWrap);
-
-        // Rooms foldouts (like Colors tab)
-        const ents = Array.isArray(this._config.entities) ? this._config.entities : [];
-        if (!ents.length) {
-          const box = document.createElement('div'); box.className = 'empty-box';
-          const p = document.createElement('div'); p.textContent = this._t('editor.select_entities') || 'Rooms';
-          const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
-          btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.add_entity') || 'Add room') + '</span>';
-          btn.onclick = ()=>{ this._activeTab = 'rooms'; this._render(); };
-          box.append(p, btn);
-          contentWrap.append(box);
-        }
-
-        for (const eid of ents) {
-          if (!eid) continue;
-          const line = document.createElement('div'); line.className = 'inline';
-          const summary = document.createElement('div'); summary.className = 'summary';
-          const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
-          const exp = document.createElement('button'); exp.className = 'expander'; exp.type='button'; exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
-          const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
-          const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
-          try {
-            const labels = this._config.labels || {};
-            const display = labels[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
-            titleSpan.textContent = display;
-          } catch { titleSpan.textContent = this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid); }
-          txtWrap.append(titleSpan);
-          sumLeft.append(exp, txtWrap);
-          summary.append(sumLeft);
-          line.append(summary);
-
-          const details = document.createElement('div'); details.className = 'details';
-          line.append(details);
-
-          // Restore open/closed UI state
-          try { if (this._openOwdRows.has(eid)) line.classList.add('open'); } catch {}
-          exp.onclick = ()=>{
-            line.classList.toggle('open');
-            if (line.classList.contains('open')) this._openOwdRows.add(eid);
-            else this._openOwdRows.delete(eid);
-          };
-
-          // Picker + chips
-          const wrap = document.createElement('div');
-          wrap.style.display = 'grid';
-          wrap.style.gap = '8px';
-          const lab = document.createElement('div'); lab.className = 'label owd-sensors-label'; lab.style.display='block';
-          lab.textContent = this._t('owd.sensors') || 'Window/Door sensors';
-
-          const picker = document.createElement('tt-entity-picker');
-          picker.className = 'owd-sensor-picker';
-          picker.setAttribute('include-domains', '["binary_sensor"]');
-          try { picker.hass = this._hass; } catch {}
-          try { picker.value = ''; } catch {}
-
-          const chips = document.createElement('div'); chips.className = 'linked-chips owd-chips';
-
-          const renderChips = ()=>{
-            chips.innerHTML = '';
-            const map = (this._config.open_window && this._config.open_window.sensors && typeof this._config.open_window.sensors === 'object') ? this._config.open_window.sensors : {};
-            const arr = Array.isArray(map[eid]) ? map[eid] : [];
-            for (const sEid of arr) {
-              const chip = document.createElement('span'); chip.className = 'pill-chip';
-              const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[sEid]?.attributes?.friendly_name || (sEid.split('.')[1]||sEid);
-              const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.setAttribute('aria-label', this._t('editor.remove'));
-              rm.addEventListener('click', ()=>{
-                const next = { ...(this._config.open_window || {}) };
-                next.sensors = { ...(next.sensors || {}) };
-                const curArr = Array.isArray(next.sensors[eid]) ? next.sensors[eid] : [];
-                next.sensors[eid] = curArr.filter(x => x !== sEid);
-                if (!next.sensors[eid].length) delete next.sensors[eid];
-                this._config.open_window = next;
-                this._emit(true);
-                try { this._pushSettingsToStoreDebounced(); } catch {}
-                renderChips();
-              });
-              chip.append(txt, rm);
-              chips.append(chip);
-            }
-          };
-          renderChips();
-
-          picker.addEventListener('value-changed', (e)=>{
-            const val = e.detail?.value || '';
-            if (!val) return;
-            try { picker.value = ''; } catch {}
-            const next = { ...(this._config.open_window || {}) };
-            next.sensors = { ...(next.sensors || {}) };
-            const set = new Set(Array.isArray(next.sensors[eid]) ? next.sensors[eid] : []);
-            set.add(val);
-            next.sensors[eid] = Array.from(set);
-            this._config.open_window = next;
-            this._emit(true);
-            try { this._pushSettingsToStoreDebounced(); } catch {}
-            renderChips();
-          });
-
-          wrap.append(lab, picker, chips);
-          details.append(wrap);
-          contentWrap.append(line);
-        }
-
-        // Global delay settings (placed after rooms)
-        const delayCard = document.createElement('div'); delayCard.className = 'settings-card';
-        const row = document.createElement('div'); row.className = 'setting'; row.style.gridTemplateColumns = '1fr';
-        const txt = document.createElement('div'); txt.className = 'text';
-        const title = document.createElement('div'); title.className = 'title owd-delays-title'; title.textContent = this._t('owd.delays.title') || 'Delays';
-        const desc = document.createElement('div'); desc.className = 'desc owd-delays-desc'; desc.textContent = this._t('owd.delays.desc') || '';
-        txt.append(title, desc);
-        row.append(txt);
-        delayCard.append(row);
-
-        const grid = document.createElement('div');
-        grid.style.display = 'flex';
-        grid.style.gap = '10px';
-        grid.style.flexWrap = 'wrap';
-        grid.style.alignItems = 'flex-end';
-
-        const mkField = (cls, labelKey, value, onChange)=>{
-          const f = document.createElement('div'); f.className = 'sfield';
-          const l = document.createElement('div'); l.className = 'slabel'; l.textContent = (this._t(labelKey) || labelKey);
-          const inp = document.createElement('input'); inp.className = `${cls} settings-input`; inp.type = 'number'; inp.min='0'; inp.max='1440'; inp.step='1';
-          if (inp !== this.shadowRoot.activeElement) inp.value = String(value);
-          inp.addEventListener('change', (e)=>{
-            let v = Math.round(Number(String(e.target.value||'').replace(',','.')));
-            if (!Number.isFinite(v)) v = 0;
-            v = Math.max(0, Math.min(1440, v));
-            e.target.value = String(v);
-            onChange(v);
-          });
-          f.append(l, inp);
-          return f;
-        };
-
-        const openField = mkField('owd-open-delay', 'owd.open_delay', Number(cur.open_delay_min||0), (v)=>{
-          const next = { ...(this._config.open_window || {}) };
-          next.open_delay_min = v;
-          this._config.open_window = next;
-          this._emit(true);
-          try { this._pushSettingsToStoreDebounced(); } catch {}
-        });
-        const closeField = mkField('owd-close-delay', 'owd.close_delay', Number(cur.close_delay_min||0), (v)=>{
-          const next = { ...(this._config.open_window || {}) };
-          next.close_delay_min = v;
-          this._config.open_window = next;
-          this._emit(true);
-          try { this._pushSettingsToStoreDebounced(); } catch {}
-        });
-        grid.append(openField, closeField);
-        delayCard.append(grid);
-        contentWrap.append(delayCard);
       }
     } catch {}
 
@@ -11463,301 +14011,40 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       }
     } catch {}
 
-    // Apply tab visibility/class based on state (always run)
+    // Apply tab visibility/class based on current state
     try {
-  const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
-      const wBtn = this.shadowRoot.querySelector('.tab-weekdays-btn');
-      const rBtn = this.shadowRoot.querySelector('.tab-rooms-btn');
-      const oBtn = this.shadowRoot.querySelector('.tab-boiler-btn');
-      const cBtn = this.shadowRoot.querySelector('.tab-colors-btn');
-      const owBtn = this.shadowRoot.querySelector('.tab-owd-btn');
-      const hBtn = this.shadowRoot.querySelector('.tab-holidays-btn');
-      const aBtn = this.shadowRoot.querySelector('.tab-away-btn');
-      const yBtn = this.shadowRoot.querySelector('.tab-sync-btn');
-  const bBtn = this.shadowRoot.querySelector('.tab-backup-btn');
-  const sSec = this.shadowRoot.querySelector('.tab-settings');
-      const wSec = this.shadowRoot.querySelector('.tab-weekdays');
-      const rSec = this.shadowRoot.querySelector('.tab-rooms');
-      const oSec = this.shadowRoot.querySelector('.tab-boiler');
-      const cSec = this.shadowRoot.querySelector('.tab-colors');
-      const owSec = this.shadowRoot.querySelector('.tab-owd');
-      const hSec = this.shadowRoot.querySelector('.tab-holidays');
-      const aSec = this.shadowRoot.querySelector('.tab-away');
-      const ySec = this.shadowRoot.querySelector('.tab-sync');
-  const bSec = this.shadowRoot.querySelector('.tab-backup');
-      const isWeekdays = this._activeTab === 'weekdays';
-      const isRooms = this._activeTab === 'rooms';
-      const isBoiler = this._activeTab === 'boiler';
-      const isColors = this._activeTab === 'colors';
-      const isOwd = this._activeTab === 'owd';
-      const isSettings = this._activeTab === 'settings';
-      const isHolidays = this._activeTab === 'holidays';
-      const isAway = this._activeTab === 'away';
-      const isSync = this._activeTab === 'sync';
-      const isBackup = this._activeTab === 'backup';
+      const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
+      const bBtn = this.shadowRoot.querySelector('.tab-backup-btn');
+
+      const sSec = this.shadowRoot.querySelector('.tab-settings');
+      const bSec = this.shadowRoot.querySelector('.tab-backup');
+
+      const setActive = (btn, on) => {
+        if (!btn) return;
+        try { btn.classList.toggle('active', !!on); } catch {}
+        try { btn.setAttribute('aria-selected', on ? 'true' : 'false'); } catch {}
+      };
+      const setShow = (sec, on) => {
+        if (!sec) return;
+        try { sec.style.display = on ? '' : 'none'; } catch {}
+      };
+
       const showBackup = !!this._config.storage_enabled;
-      // If backup is not allowed, ensure we don't stay on that tab
-      if (!showBackup && this._activeTab === 'backup') {
-        this._activeTab = 'sync';
-      }
-      if (sBtn && rBtn && cBtn && aBtn && sSec && rSec && cSec && aSec && yBtn && ySec) {
-        sBtn.classList.toggle('active', isSettings);
-        if (wBtn) wBtn.classList.toggle('active', isWeekdays);
-        rBtn.classList.toggle('active', isRooms);
-        if (oBtn) oBtn.classList.toggle('active', isBoiler);
-        cBtn.classList.toggle('active', isColors);
-        if (owBtn) owBtn.classList.toggle('active', isOwd);
-        if (hBtn) hBtn.classList.toggle('active', isHolidays);
-        aBtn.classList.toggle('active', isAway);
-        yBtn.classList.toggle('active', this._activeTab === 'sync');
-        if (bBtn) {
-          bBtn.classList.toggle('active', this._activeTab === 'backup');
-          // Hide/show backup tab button based on storage_enabled
-          bBtn.style.display = showBackup ? '' : 'none';
-        }
-        sSec.style.display = isSettings ? '' : 'none';
-        if (wSec) wSec.style.display = isWeekdays ? '' : 'none';
-        rSec.style.display = isRooms ? '' : 'none';
-        if (oSec) oSec.style.display = isBoiler ? '' : 'none';
-        cSec.style.display = isColors ? '' : 'none';
-        if (owSec) owSec.style.display = isOwd ? '' : 'none';
-        if (hSec) hSec.style.display = isHolidays ? '' : 'none';
-        aSec.style.display = isAway ? '' : 'none';
-        ySec.style.display = (this._activeTab === 'sync') ? '' : 'none';
-        if (bSec) bSec.style.display = (showBackup && this._activeTab === 'backup') ? '' : 'none';
-      }
-    } catch {}
+      if (!showBackup && this._activeTab === 'backup') this._activeTab = 'settings';
+      if (this._activeTab === 'sync') this._activeTab = 'settings';
+      if (!['settings', 'backup'].includes(this._activeTab)) this._activeTab = 'settings';
 
-    // Populate Boiler tab controls
-    try {
-      const en = this.shadowRoot.querySelector('.boiler-enable');
-      if (en) en.checked = !!this._config.boiler_enabled;
-      if (en && !en._ttBound) {
-        en._ttBound = true;
-        en.addEventListener('change', (e)=>{
-          this._config.boiler_enabled = !!e.target.checked;
-          this._emit();
-          try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
-          // Re-render to update visibility of dependent controls
-          this._render();
-        });
+      const isSettings = this._activeTab === 'settings';
+      const isBackup = this._activeTab === 'backup';
+
+      setActive(sBtn, isSettings);
+      if (bBtn) {
+        setActive(bBtn, isBackup);
+        try { bBtn.style.display = showBackup ? '' : 'none'; } catch {}
       }
 
-      // Show/hide dependent Boiler controls based on master toggle
-      const boilerOn = !!this._config.boiler_enabled;
-      try {
-        const switchRow = this.shadowRoot.querySelector('.boiler-switch-setting');
-        const sensorRow = this.shadowRoot.querySelector('.boiler-sensor-setting');
-        const tempsRow = this.shadowRoot.querySelector('.boiler-temps-setting');
-        [switchRow, sensorRow, tempsRow].forEach(r=>{ if (r) r.style.display = boilerOn ? '' : 'none'; });
-      } catch {}
-
-      const p = this.shadowRoot.querySelector('.boiler-switch-picker');
-      if (p) {
-        p.hass = this._hass;
-        p.value = String(this._config.boiler_switch || '');
-        if (!p._ttBound) {
-          p._ttBound = true;
-          p.addEventListener('value-changed', (e)=>{
-            this._upd('boiler_switch', e.detail.value || '');
-            try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
-          });
-        }
-      }
-
-      const sp = this.shadowRoot.querySelector('.boiler-temp-sensor-picker');
-      if (sp) {
-        sp.hass = this._hass;
-        sp.value = String(this._config.boiler_temp_sensor || '');
-        if (!sp._ttBound) {
-          sp._ttBound = true;
-          sp.addEventListener('value-changed', (e)=>{
-            this._upd('boiler_temp_sensor', e.detail.value || '');
-            try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
-          });
-        }
-      }
-
-      const minInp = this.shadowRoot.querySelector('.boiler-min-temp');
-      const maxInp = this.shadowRoot.querySelector('.boiler-max-temp');
-      const setDisp = (el, vC)=>{
-        if (!el) return;
-        if (el === this.shadowRoot.activeElement) return;
-        el.value = (vC === null || vC === undefined || !Number.isFinite(Number(vC))) ? '' : String(this._toDisplayTemp(Number(vC)));
-      };
-      setDisp(minInp, this._config.boiler_min_temp);
-      setDisp(maxInp, this._config.boiler_max_temp);
-      // Keep input constraints in display units
-      try {
-        const dMin = String(this._toDisplayTemp(0));
-        const dMax = String(this._toDisplayTemp(120));
-        if (minInp) { minInp.setAttribute('min', dMin); minInp.setAttribute('max', dMax); }
-        if (maxInp) { maxInp.setAttribute('min', dMin); maxInp.setAttribute('max', dMax); }
-      } catch {}
-
-      const bindNum = (el, key)=>{
-        if (!el || el._ttBound) return;
-        el._ttBound = true;
-        el.addEventListener('change', (e)=>{
-          const raw = String(e.target.value||'').trim().replace(',', '.');
-          let vC = null;
-          if (raw !== '') {
-            const vDisp = Number(raw);
-            if (!isNaN(vDisp)) {
-              vC = this._fromDisplayTemp(vDisp);
-              vC = Math.max(0, Math.min(120, vC));
-            }
-          } else {
-            vC = (key === 'boiler_min_temp') ? 20 : 25;
-          }
-          // Cross-clamp so min <= max when both are set
-          if (key === 'boiler_min_temp') {
-            this._config.boiler_min_temp = vC;
-            const mx = this._config.boiler_max_temp;
-            if (vC !== null && Number.isFinite(Number(mx)) && vC > Number(mx)) this._config.boiler_max_temp = vC;
-          } else {
-            this._config.boiler_max_temp = vC;
-            const mn = this._config.boiler_min_temp;
-            if (vC !== null && Number.isFinite(Number(mn)) && vC < Number(mn)) this._config.boiler_min_temp = vC;
-          }
-          this._emit();
-          try { if (this._config?.storage_enabled) this._pushSettingsToStoreDebounced(); } catch {}
-          // Re-render to update paired value if it was clamped
-          this._render();
-        });
-      };
-      bindNum(minInp, 'boiler_min_temp');
-      bindNum(maxInp, 'boiler_max_temp');
-    } catch {}
-
-    // Populate Away tab controls
-    try {
-      const en = this.shadowRoot.querySelector('.away-enable');
-      if (en) en.checked = !!(this._config.away?.enabled);
-      en?.addEventListener('change', (e)=>{
-        const enabled = !!e.target.checked;
-        const cur = { ...(this._config.away || {}) };
-        cur.enabled = enabled;
-        // If Away is turned OFF, also disable Advanced Away and live presence chips
-        if (!enabled) {
-          cur.advanced_enabled = false;
-          this._config.presence_live_header = false;
-        }
-        this._config.away = cur; this._emit();
-        try { this._pushSettingsToStoreDebounced(); } catch {}
-        // Re-render to update visibility of dependent controls
-        this._render();
-      });
-      // Show/hide dependent Away controls based on master toggle
-      const awayOn = !!(this._config.away?.enabled);
-      try {
-        const tempRow = this.shadowRoot.querySelector('.away-temp')?.closest('.setting');
-        const personsRow = this.shadowRoot.querySelector('.away-person-picker')?.closest('.setting');
-        const advRow = this.shadowRoot.querySelector('.away-adv-row');
-        const liveRow = this.shadowRoot.querySelector('.presence-live-row');
-        const combosRow = this.shadowRoot.querySelector('.away-combos-row');
-        [tempRow, personsRow, advRow, liveRow, combosRow].forEach(r=>{ if (r) r.style.display = awayOn ? '' : 'none'; });
-      } catch {}
-      const temp = this.shadowRoot.querySelector('.away-temp');
-      if (temp && temp !== this.shadowRoot.activeElement) temp.value = String(this._toDisplayTemp(this._config.away?.target_c ?? 17));
-      temp?.setAttribute('min', String(this._toDisplayTemp(this._config.min_temp ?? 5)));
-      temp?.setAttribute('max', String(this._toDisplayTemp(this._config.max_temp ?? 25)));
-      temp?.addEventListener('change', (e)=>{
-        let raw = String(e.target.value||"").replace(",",".");
-        let vDisp = Number(raw);
-        let vC = isNaN(vDisp) ? (this._config.away?.target_c ?? 17) : this._fromDisplayTemp(vDisp);
-        const mn = this._config.min_temp ?? 5; const mx = this._config.max_temp ?? 25;
-        vC = Math.max(mn, Math.min(mx, vC));
-        const cur = { ...(this._config.away || {}) };
-        cur.target_c = vC; this._config.away = cur; this._emit();
-        try { this._pushSettingsToStoreDebounced(); } catch {}
-      });
-      const picker = this.shadowRoot.querySelector('.away-person-picker');
-      if (picker) { picker.hass = this._hass; picker.value = ''; }
-      picker?.addEventListener('value-changed', (e)=>{
-        const val = e.detail.value; if (!val) return; picker.value = '';
-        const cur = { ...(this._config.away || { enabled:false, persons:[], target_c:17 }) };
-        const set = new Set(cur.persons || []); set.add(val); cur.persons = Array.from(set); this._config.away = cur; this._emit(true);
-        try { this._pushSettingsToStoreDebounced(); } catch {}
-      });
-      const chips = this.shadowRoot.querySelector('.away-chips');
-      if (chips) {
-        chips.innerHTML = '';
-        const arr = (this._config.away?.persons || []);
-        for (const p of arr) {
-          const chip = document.createElement('span'); chip.className = 'pill-chip';
-          const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[p]?.attributes?.friendly_name || (p.split('.')[1]||p);
-          const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.setAttribute('aria-label', this._t('editor.remove'));
-          rm.addEventListener('click', ()=>{ const cur = { ...(this._config.away || {}) }; cur.persons = (cur.persons||[]).filter(x=>x!==p); this._config.away = cur; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} });
-          chip.append(txt, rm); chips.append(chip);
-        }
-      }
-      // Advanced away toggle
-      const adv = this.shadowRoot.querySelector('.away-adv-enable');
-      if (adv) adv.checked = !!(this._config.away?.advanced_enabled);
-      adv?.addEventListener('change', (e)=>{
-        const cur = { ...(this._config.away || {}) };
-        cur.advanced_enabled = !!e.target.checked; this._config.away = cur; this._emit();
-        try { this._pushSettingsToStoreDebounced(); } catch {}
-        // If advanced is turned off, also disable live presence chips and remove them
-        if (!cur.advanced_enabled) {
-          this._config.presence_live_header = false; this._emit();
-          try { this._pushSettingsToStoreDebounced(); } catch {}
-        }
-        // Refresh UI
-        this._render();
-      });
-      // Presence combinations checklist
-      const comboWrap = this.shadowRoot.querySelector('.presence-combo-list');
-      if (comboWrap) {
-        comboWrap.innerHTML = '';
-        const persons = (this._config.away?.persons || []).map(String);
-        const enabled = !!(this._config.away?.advanced_enabled);
-        const conf = (this._config.away?.combos) || {};
-        // Helper label
-        const title = this.shadowRoot.querySelector('.presence-combos-title'); if (title) title.textContent = this._t('presence.combos');
-        const desc = this.shadowRoot.querySelector('.presence-combos-desc'); if (desc) desc.textContent = persons.length ? '' : '';
-        const n = persons.length;
-        const labelOf = (arr)=> arr.map(e => (this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e))).join(', ');
-        for (let mask=0; mask < (1<<n); mask++){
-          const home=[], away=[];
-          for (let i=0;i<n;i++){ ((mask>>i)&1) ? home.push(persons[i]) : away.push(persons[i]); }
-          // Skip "All home" entry; fallback to main/weekdays when all are home
-          if (home.length===n) continue;
-          const key = `H:${home.slice().sort().join(',')}|A:${away.slice().sort().join(',')}`;
-          // Row
-          const row = document.createElement('label'); row.style.display='flex'; row.style.alignItems='center'; row.style.gap='8px'; row.style.opacity = enabled ? '' : '.6';
-          const cb = document.createElement('input'); cb.type='checkbox'; cb.disabled = !enabled || !persons.length; cb.checked = !!conf[key]?.enabled;
-          cb.addEventListener('change', ()=>{
-            const map = { ...(this._config.away?.combos || {}) };
-            if (cb.checked) map[key] = { ...(map[key]||{}), enabled:true };
-            else delete map[key];
-            const cur = { ...(this._config.away || {}) }; cur.combos = map; this._config.away = cur; this._emit();
-            try { this._pushSettingsToStoreDebounced(); } catch {}
-          });
-          const sp = document.createElement('span');
-          let lab;
-          if (home.length===0) lab = this._t('presence.none_home');
-          else {
-            const h = (this._t('presence.home') || 'Home: {names}').replace('{names}', labelOf(home));
-            const a = (this._t('presence.away') || 'Away: {names}').replace('{names}', labelOf(away));
-            lab = `${h} • ${a}`;
-          }
-          sp.textContent = lab;
-          row.append(cb, sp); comboWrap.append(row);
-        }
-      }
-      // Presence live chips (header) toggle
-      const plive = this.shadowRoot.querySelector('.presence-live-enable');
-      if (plive) {
-        plive.checked = !!(this._config?.presence_live_header ?? true);
-        plive.disabled = !((this._config?.away?.advanced_enabled));
-      }
-      plive?.addEventListener('change', (e)=>{
-        if (!(this._config?.away?.advanced_enabled)) { e.preventDefault?.(); plive.checked = false; return; }
-        this._config.presence_live_header = !!e.target.checked; this._emit();
-        try { this._pushSettingsToStoreDebounced(); } catch {}
-      });
+      setShow(sSec, isSettings);
+      setShow(bSec, showBackup && isBackup);
     } catch {}
 
   }
@@ -12218,11 +14505,18 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     let cfg;
     try { cfg = JSON.parse(JSON.stringify(this._config)); }
     catch { cfg = { ...this._config }; }
+    // These settings are now edited in the in-card popup + stored in shared/local storage,
+    // so they should not be emitted into YAML config.
+    try {
+      for (const k of ['row_height','default_temp','min_temp','max_temp','auto_apply','apply_on_edit','apply_on_default_change','per_room_defaults','show_pause_button','time_12h','time_source','temp_unit','profiles_enabled','weekdays_enabled','weekdays_view','weekdays_selected_room','boiler_enabled','boiler_switch','boiler_temp_sensor','boiler_min_temp','boiler_max_temp','open_window','color_ranges','color_global','respect_storage_weekdays']) {
+        if (k in cfg) delete cfg[k];
+      }
+    } catch {}
     this.dispatchEvent(new CustomEvent("config-changed", { detail:{ config: cfg }, bubbles:true, composed:true }));
     if (repaint) this._render();
   }
 
-  _t(k){ return ttLocalize(k, this._lang || this._hass || 'en'); }
+  _t(k){ return ttLocalize(k, this._hass || this._lang || 'en'); }
 
   _applyEditorI18n(){
     try {
@@ -12353,9 +14647,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
                 icon.setAttribute('icon', 'mdi:cloud-off-outline');
                 txt.textContent = t('editor.integration.disconnected') || 'Not connected to integration';
               }
-              // Make the chip clickable to jump to Sync tab
+              // Make the chip clickable to jump to Settings (Sync is inside Settings)
               chip.style.userSelect = 'none';
-              chip.addEventListener('click', ()=>{ try { this._activeTab = 'sync'; this._render(); } catch {} });
+              chip.addEventListener('click', ()=>{ try { this._activeTab = 'settings'; this._render(); } catch {} });
             }
           } catch {}
         } catch {}
@@ -12381,15 +14675,6 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   const addBtn = root.querySelector('.add-room-btn span');
   if (addBtn) addBtn.textContent = t('editor.add_entity');
 
-      // Settings labels (compact inputs)
-  const defLbl = root.querySelector('.slabel-def');
-      if (defLbl) defLbl.textContent = t('editor.default_c').replace('°C', this._unitSymbol());
-      const rowLbl = root.querySelector('.slabel-rowh');
-      if (rowLbl) rowLbl.textContent = t('editor.row_height_px');
-      const maxLbl = root.querySelector('.slabel-maxc');
-      if (maxLbl) maxLbl.textContent = t('editor.max_c').replace('°C', this._unitSymbol());
-  const minLbl = root.querySelector('.slabel-minc');
-  if (minLbl) minLbl.textContent = t('editor.min_c').replace('°C', this._unitSymbol());
   const bMinLbl = root.querySelector('.boiler-min-temp-label');
   if (bMinLbl) bMinLbl.textContent = (t('boiler.min_temp') || 'Min boiler temp (°C)').replace('°C', this._unitSymbol());
   const bMaxLbl = root.querySelector('.boiler-max-temp-label');
@@ -12402,88 +14687,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (bSensTitle) bSensTitle.textContent = t('boiler.temp_sensor') || 'Boiler temperature sensor';
   const bSensDesc = root.querySelector('.boiler-sensor-desc');
   if (bSensDesc) bSensDesc.textContent = t('boiler.temp_sensor.desc') || '';
-
-      // Settings titles/descriptions
-      const settings = Array.from(root.querySelectorAll('.settings-card .setting'));
-      if (settings[0]) { // Auto apply
-        const ti = settings[0].querySelector('.title'); if (ti) ti.textContent = t('editor.auto_apply.title');
-        const de = settings[0].querySelector('.desc'); if (de) de.textContent = t('editor.auto_apply.desc');
-      }
-      // Per-room defaults section
-      try {
-        const pr = root.querySelector('.perroom-setting');
-        if (pr){
-          const ti = pr.querySelector('.perroom-title'); if (ti) ti.textContent = t('editor.perroom.title') || 'Default °C per room';
-          const de = pr.querySelector('.perroom-desc'); if (de) de.textContent = t('editor.perroom.desc') || 'Show a Default °C input on each row. When off, the global Default °C is used for all rooms.';
-        }
-      } catch {}
-      if (settings[1]) { // On editing
-        const ti = settings[1].querySelector('.title'); if (ti) ti.textContent = t('editor.apply_edit.title');
-        const de = settings[1].querySelector('.desc'); if (de) de.textContent = t('editor.apply_edit.desc');
-      }
-      if (settings[2]) { // On Default change
-        const ti = settings[2].querySelector('.title'); if (ti) ti.textContent = t('editor.apply_default.title');
-        const de = settings[2].querySelector('.desc'); if (de) de.textContent = t('editor.apply_default.desc');
-      }
-      // Weekdays enable section (select by class to avoid index issues)
-      try {
-        const ws = root.querySelector('.week-setting');
-        if (ws){
-          const ti = ws.querySelector('.title'); if (ti) ti.textContent = t('week.enable');
-          const de = ws.querySelector('.week-enable-desc') || ws.querySelector('.desc');
-          if (de) de.textContent = t('week.enable.desc');
-        }
-      } catch {}
-      // Profiles enable section
-      try {
-        const ps = root.querySelector('.profiles-setting');
-        if (ps){
-          const ti = ps.querySelector('.title'); if (ti) ti.textContent = t('profiles.enable');
-          const de = ps.querySelector('.profiles-enable-desc') || ps.querySelector('.desc');
-          if (de) de.textContent = t('profiles.enable.desc');
-        }
-      } catch {}
-      // Holidays enable section
-      try {
-        const hs = root.querySelector('.holidays-setting');
-        if (hs){
-          const ti = hs.querySelector('.title'); if (ti) ti.textContent = t('holidays.enable');
-          const de = hs.querySelector('.holidays-enable-desc') || hs.querySelector('.desc');
-          if (de) de.textContent = t('holidays.desc');
-        }
-      } catch {}
-      // Time format section (always last)
-      try {
-        const tfTitle = root.querySelector('.timefmt-title'); if (tfTitle) tfTitle.textContent = t('editor.timefmt.title');
-        const tfDesc = root.querySelector('.timefmt-desc'); if (tfDesc) tfDesc.textContent = t('editor.timefmt.desc');
-      } catch {}
-      // Time source section
-      try {
-        const tsTitle = root.querySelector('.timesrc-title'); if (tsTitle) tsTitle.textContent = t('editor.timesrc.title');
-        const tsDesc = root.querySelector('.timesrc-desc'); if (tsDesc) tsDesc.textContent = t('editor.timesrc.desc');
-        const b1 = root.querySelector('.srcBrowser'); if (b1) b1.textContent = t('editor.timesrc.browser');
-        const b2 = root.querySelector('.srcHa'); if (b2) b2.textContent = t('editor.timesrc.ha');
-      } catch {}
-      // Temperature unit section
-      try {
-        const tuTitle = root.querySelector('.tempfmt-title'); if (tuTitle) tuTitle.textContent = t('editor.tempfmt.title');
-        const tuDesc = root.querySelector('.tempfmt-desc'); if (tuDesc) tuDesc.textContent = t('editor.tempfmt.desc');
-      } catch {}
-      // Pause button section
-      try {
-        const pTitle = root.querySelector('.pausebtn-title'); if (pTitle) pTitle.textContent = t('editor.pausebtn.title');
-        const pDesc = root.querySelector('.pausebtn-desc'); if (pDesc) pDesc.textContent = t('editor.pausebtn.desc');
-      } catch {}
       // Tabs labels
       try {
   const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
-  const wBtn = root.querySelector('.tab-weekdays-btn'); if (wBtn) wBtn.textContent = t('editor.tabs.weekdays') || 'Weekdays';
   const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
       const oBtn = root.querySelector('.tab-boiler-btn'); if (oBtn) oBtn.textContent = t('editor.tabs.boiler') || 'Boiler';
         const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
         const owBtn = root.querySelector('.tab-owd-btn'); if (owBtn) owBtn.textContent = t('editor.tabs.owd') || 'Open Window Detection';
-        const aBtn = root.querySelector('.tab-away-btn'); if (aBtn) aBtn.textContent = t('editor.tabs.away');
-    const yBtn = root.querySelector('.tab-sync-btn'); if (yBtn) yBtn.textContent = t('editor.tabs.sync');
     const bBtn = root.querySelector('.tab-backup-btn'); if (bBtn) bBtn.textContent = t('editor.tabs.backup') || 'Backup';
     const hBtn = root.querySelector('.tab-holidays-btn'); if (hBtn) hBtn.textContent = t('editor.tabs.holidays');
       const boTitle = root.querySelector('.boiler-switch-title'); if (boTitle) boTitle.textContent = t('boiler.switch') || 'Boiler switch';
@@ -12520,17 +14730,6 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const pcDesc = root.querySelector('.presence-combos-desc'); if (pcDesc) pcDesc.textContent = '';
       } catch {}
 
-      // Weekdays tab labels
-      try {
-        const wTitle = root.querySelector('.week-view-title'); if (wTitle) wTitle.textContent = t('week.view.title') || 'Week view';
-        const bRooms = root.querySelector('.week-view-rooms'); if (bRooms) bRooms.textContent = t('week.view.rooms_one_day') || 'All rooms • one day';
-        const bDays = root.querySelector('.week-view-days'); if (bDays) bDays.textContent = t('week.view.days_one_room') || 'All days • one room';
-        const wrTitle = root.querySelector('.week-select-room-title'); if (wrTitle) wrTitle.textContent = t('week.select_room') || 'Select room';
-        // Also localize the enable section title/desc
-        const wenTitle = root.querySelector('.tab-weekdays .week-setting-inline .title'); if (wenTitle) wenTitle.textContent = t('week.enable');
-        const wenDesc = root.querySelector('.tab-weekdays .week-setting-inline .week-enable-desc'); if (wenDesc) wenDesc.textContent = t('week.enable.desc');
-      } catch {}
-
       // Sync delay labels removed (controls removed)
 
       // Backup tab labels
@@ -12565,7 +14764,12 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   }
 
 }
-customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardEditor);
+// Avoid hard failures if the editor gets registered elsewhere/earlier.
+try {
+  if (!customElements.get("thermostat-timeline-card-editor")) {
+    customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardEditor);
+  }
+} catch {}
 
 // Registrér i “Custom cards”
 window.customCards = window.customCards || [];
