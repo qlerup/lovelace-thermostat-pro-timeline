@@ -1,0 +1,38 @@
+name: Label issue on new external comment
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+
+jobs:
+  add_label:
+    # Kører kun for issues (ikke PRs) og kun når kommentaren ikke er fra dig
+    if: >
+      github.event.issue.pull_request == null &&
+      github.actor != 'DIT_GITHUB_BRUGERNAVN' &&
+      !endsWith(github.actor, '[bot]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add "New comment" label
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const label = 'New comment';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = context.payload.issue.number;
+
+            const { data: issue } = await github.rest.issues.get({ owner, repo, issue_number });
+            const hasLabel = issue.labels.some(l => (typeof l === 'string' ? l : l.name) === label);
+
+            if (!hasLabel) {
+              await github.rest.issues.addLabels({ owner, repo, issue_number, labels: [label] });
+              core.info(`Added label: ${label}`);
+            } else {
+              core.info(`Label already present: ${label}`);
+            }
