@@ -102,6 +102,8 @@ const TT_I18N = {
   'week.days.sun': 'Sun',
   'week.editor.title': 'Weekday schedule',
   'week.editor.preview_note': 'Preview only. Changes are applied when you press Save.',
+  'week.open_editor.desc': 'Open the weekdays editor popup.',
+  'week.open_editor.btn': 'Open',
   'week.view.title': 'Weekdays view',
   'week.view.rooms_one_day': 'All rooms • one day',
   'week.view.days_one_room': 'All days • one room',
@@ -284,9 +286,32 @@ const TT_I18N = {
     'ui.add_block': 'Add block',
     'ui.from': 'From',
     'ui.to': 'To',
+    'ui.temperature': 'Temperatur',
+    'ui.delete': 'Slet',
     'ui.cancel': 'Annuller',
     'ui.close': 'Luk',
+    'ui.unsaved_confirm': 'Du har ændringer, der ikke er gemt. Vil du lukke alligevel?',
+    'ui.discard_changes': 'Forkast ændringer',
+    'ui.keep_editing': 'Fortsæt redigering',
     'ui.save': 'Gem',
+    'ui.error_prefix': 'Fejl: ',
+    'ui.overlap_msg': 'Du har valgt overlappende tider — overlap er {start} – {end}.',
+    'ui.auto_fix': 'Ret automatisk',
+    'ui.fix_start_to': 'Sæt start til {time}',
+    'ui.fix_end_to': 'Sæt slut til {time}',
+    'ui.current_temp': 'Nuværende temperatur:',
+    'ui.copy_plan': 'Kopiér plan',
+    'ui.paste_plan': 'Indsæt plan',
+    'ui.copy_day': 'Kopiér dag',
+    'ui.paste_day': 'Indsæt dag',
+    'editor.title_label': 'Titel',
+    'editor.store_enable.title': 'Delt lager + baggrundsstyring',
+    'editor.store_enable.short': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring.',
+    'editor.store_enable.desc': 'Gemmer tidsplaner i den valgte sensor og aktiverer set_temperature i baggrunden. Termostater opdateres også når kortet er lukket. Deler tidsplaner og kortindstillinger på tværs af brugere/enheder. Når slået fra: kommandoer sendes kun mens kortet er synligt på en enhed og skal forblive åbent.',
+    'editor.store_missing': 'Integrationen “Thermostat Pro Timeline Sync” er ikke installeret. Delt lager er ikke tilgængeligt.',
+    'editor.clear_store': 'Ryd lager',
+    'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
+    'editor.migrate_to_store': 'Overfør data til lager',
     'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
     'editor.migrate_pull_confirm': 'Importér tidsplaner fra lager og overskriv lokale browserdata?',
     'editor.select_storage_first': 'Vælg først en lagersensor.',
@@ -354,6 +379,8 @@ const TT_I18N = {
     'week.days.sun': 'Søn',
     'week.editor.title': 'Ugedags-tidsplan',
     'week.editor.preview_note': 'Kun forhåndsvisning. Ændringer gemmes først når du trykker Gem.',
+    'week.open_editor.desc': 'Åbn ugedags-editoren.',
+    'week.open_editor.btn': 'Åbn',
     'week.view.title': 'Ugedage-visning',
     'week.view.rooms_one_day': 'Alle rum • én dag',
     'week.view.days_one_room': 'Alle dage • ét rum',
@@ -551,6 +578,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'När du ändrar tidslinjeblock och ändringen påverkar aktuell tid, tillämpas den nya temperaturen omedelbart.',
     'editor.apply_default.title': 'Vid ändring av Standard °C',
     'editor.apply_default.desc': 'När ”Standard °C” ändras och det påverkar den aktuella perioden, tillämpas den nya temperaturen omedelbart.',
+    'editor.room_mode.title': 'Typ av rumentitet',
+    'editor.room_mode.desc': 'När aktiverat, välj en input_number (måltemperatur). När av, välj en climate-entitet.',
   'ui.copy_plan': 'Kopiera schema',
   'ui.paste_plan': 'Klistra in schema',
   'ui.copy_day': 'Kopiera dag',
@@ -591,6 +620,8 @@ const TT_I18N = {
     'week.days.sun': 'Sön',
     'week.editor.title': 'Veckoschema',
     'week.editor.preview_note': 'Endast förhandsvisning. Ändringar tillämpas när du trycker Spara.',
+    'week.open_editor.desc': 'Öppna veckodagsredigeraren.',
+    'week.open_editor.btn': 'Öppna',
   'week.copy_to_rooms': 'Kopiera vecka till rum',
   'week.copy_to_rooms.title': 'Kopiera vecka till rum',
   'week.copy_to_rooms.select': 'Välj rum',
@@ -672,6 +703,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Hur många dagar mellan automatiska säkerhetskopior (min. 1).',
   'backup.sensor': 'Backup‑sensor',
   'backup.last': 'Senaste backup',
+  'backup.slot.title': 'Välj backup',
+  'backup.slot.desc': 'Välj vilken backupplats som ska återställas.',
+  'backup.slot.empty': 'Inga backups ännu',
   'pause.menu_title': 'Pausa auto‑apply',
   'pause.off_1h': 'Pausa 1 timme',
   'pause.off_5h': 'Pausa 5 timmar',
@@ -808,6 +842,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Når du endrer blokker i tidslinjen og endringen påvirker aktuell tid, tilpasses den nye temperaturen umiddelbart.',
     'editor.apply_default.title': 'Ved Standard °C-endring',
     'editor.apply_default.desc': 'Når «Standard °C» endres og det påvirker gjeldende periode, brukes den nye temperaturen umiddelbart.',
+    'editor.room_mode.title': 'Type rom-entitet',
+    'editor.room_mode.desc': 'Når aktivert, velg en input_number (måltemperatur). Når deaktivert, velg en climate-entitet.',
   'ui.copy_plan': 'Kopier plan',
   'ui.paste_plan': 'Lim inn plan',
   'ui.copy_day': 'Kopier dag',
@@ -848,6 +884,8 @@ const TT_I18N = {
     'week.days.sun': 'Søn',
     'week.editor.title': 'Ukeplan',
     'week.editor.preview_note': 'Kun forhåndsvisning. Endringer brukes når du trykker Lagre.',
+    'week.open_editor.desc': 'Åpne ukedagseditoren.',
+    'week.open_editor.btn': 'Åpne',
   'week.copy_to_rooms': 'Kopier ukeplan til rom',
   'week.copy_to_rooms.title': 'Kopier ukeplan til rom',
   'week.copy_to_rooms.select': 'Velg rom',
@@ -941,6 +979,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Antall dager mellom automatiske sikkerhetskopier (min. 1).',
   'backup.sensor': 'Backup‑sensor',
   'backup.last': 'Siste backup',
+  'backup.slot.title': 'Velg sikkerhetskopi',
+  'backup.slot.desc': 'Velg hvilken backup-slot som skal gjenopprettes.',
+  'backup.slot.empty': 'Ingen sikkerhetskopier ennå',
   'editor.integration.connected': 'Integrasjon klar',
   'editor.integration.disconnected': 'Integrasjon utilgjengelig'
   , 'profiles.button': 'Manuelt skjema'
@@ -1066,6 +1107,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Wenn Sie Blöcke der Zeitlinie ändern und die Änderung die aktuelle Zeit betrifft, wird die neue Temperatur sofort angewendet.',
     'editor.apply_default.title': 'Bei Änderung von Standard °C',
     'editor.apply_default.desc': 'Wenn „Standard °C“ geändert wird und dies den aktuellen Zeitraum betrifft, wird die neue Temperatur sofort angewendet.',
+    'editor.room_mode.title': 'Raum-Entitätstyp',
+    'editor.room_mode.desc': 'Wenn aktiviert, wählen Sie eine input_number (Zieltemperatur). Wenn deaktiviert, wählen Sie eine climate-Entität.',
   'ui.copy_plan': 'Plan kopieren',
   'ui.paste_plan': 'Plan einfügen',
   'ui.copy_day': 'Tag kopieren',
@@ -1106,6 +1149,8 @@ const TT_I18N = {
     'week.days.sun': 'So',
     'week.editor.title': 'Wochenschema',
     'week.editor.preview_note': 'Nur Vorschau. Änderungen werden erst beim Speichern angewendet.',
+    'week.open_editor.desc': 'Wochentags-Editor öffnen.',
+    'week.open_editor.btn': 'Öffnen',
   'week.copy_to_rooms': 'Wochenschema in Räume kopieren',
   'week.copy_to_rooms.title': 'Wochenschema in Räume kopieren',
   'week.copy_to_rooms.select': 'Räume auswählen',
@@ -1187,6 +1232,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Anzahl der Tage zwischen automatischen Sicherungen (min. 1).',
   'backup.sensor': 'Backup‑Sensor',
   'backup.last': 'Letztes Backup',
+  'backup.slot.title': 'Backup auswählen',
+  'backup.slot.desc': 'Wählen Sie, welcher Backup-Slot wiederhergestellt werden soll.',
+  'backup.slot.empty': 'Noch keine Backups',
   'pause.menu_title': 'Auto‑Anwendung pausieren',
   'pause.off_1h': '1 Stunde pausieren',
   'pause.off_5h': '5 Stunden pausieren',
@@ -1323,6 +1371,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Cuando cambias bloques de la línea de tiempo y el cambio afecta a la hora actual, la nueva temperatura se aplica inmediatamente.',
     'editor.apply_default.title': 'Al cambiar Predeterminado °C',
     'editor.apply_default.desc': 'Cuando “Predeterminado °C” cambia y afecta al período actual, la nueva temperatura se aplica inmediatamente.',
+    'editor.room_mode.title': 'Tipo de entidad de habitación',
+    'editor.room_mode.desc': 'Cuando está activado, selecciona un input_number (temperatura objetivo). Cuando está desactivado, selecciona una entidad climate.',
   'ui.copy_plan': 'Copiar plan',
   'ui.paste_plan': 'Pegar plan',
   'ui.copy_day': 'Copiar día',
@@ -1363,6 +1413,8 @@ const TT_I18N = {
     'week.days.sun': 'Dom',
     'week.editor.title': 'Programación por días',
     'week.editor.preview_note': 'Solo vista previa. Los cambios se aplican al pulsar Guardar.',
+    'week.open_editor.desc': 'Abrir el editor de días de la semana.',
+    'week.open_editor.btn': 'Abrir',
   'week.copy_to_rooms': 'Copiar semana a habitaciones',
   'week.copy_to_rooms.title': 'Copiar semana a habitaciones',
   'week.copy_to_rooms.select': 'Seleccionar habitaciones',
@@ -1444,6 +1496,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Cuántos días entre copias de seguridad automáticas (mín. 1).',
   'backup.sensor': 'Sensor de copia de seguridad',
   'backup.last': 'Última copia de seguridad',
+  'backup.slot.title': 'Seleccionar copia de seguridad',
+  'backup.slot.desc': 'Selecciona qué ranura de copia de seguridad restaurar.',
+  'backup.slot.empty': 'Aún no hay copias de seguridad',
   'pause.menu_title': 'Pausar auto‑aplicación',
   'pause.off_1h': 'Pausar 1 hora',
   'pause.off_5h': 'Pausar 5 horas',
@@ -1568,6 +1623,8 @@ const TT_I18N = {
     'editor.title_label': 'Titre',
   'editor.add_entity': 'Ajouter une pièce',
     'editor.entity_placeholder': 'Sélectionnez une entité',
+    'editor.room_mode.title': 'Type d’entité de pièce',
+    'editor.room_mode.desc': 'Activé : sélectionnez un input_number (température cible). Désactivé : sélectionnez une entité climate.',
     'editor.drag_reorder': 'Glisser pour réorganiser',
     'editor.remove': 'Supprimer',
     'editor.default_c': 'Par défaut °C',
@@ -1620,6 +1677,8 @@ const TT_I18N = {
     'week.days.sun': 'Dim',
     'week.editor.title': 'Planification par jour',
     'week.editor.preview_note': 'Aperçu uniquement. Les modifications s’appliquent lors de l’enregistrement.',
+    'week.open_editor.desc': 'Ouvrir l’éditeur des jours.',
+    'week.open_editor.btn': 'Ouvrir',
   'week.copy_to_rooms': 'Copier la semaine vers des pièces',
   'week.copy_to_rooms.title': 'Copier la semaine vers des pièces',
   'week.copy_to_rooms.select': 'Sélectionner des pièces',
@@ -1693,6 +1752,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Nombre de jours entre les sauvegardes automatiques (min. 1).',
   'backup.sensor': 'Capteur de sauvegarde',
   'backup.last': 'Dernière sauvegarde',
+  'backup.slot.title': 'Sélectionner une sauvegarde',
+  'backup.slot.desc': 'Sélectionnez l’emplacement de sauvegarde à restaurer.',
+  'backup.slot.empty': 'Aucune sauvegarde pour l’instant',
   'pause.menu_title': 'Suspendre l’application automatique',
   'pause.off_1h': 'Suspendre 1 heure',
   'pause.off_5h': 'Suspendre 5 heures',
@@ -1706,6 +1768,7 @@ const TT_I18N = {
   'editor.pausebtn.desc': 'Affiche un bouton de pause global dans l’en‑tête de la carte. En pause, toutes les commandes set_temperature sont bloquées.',
   'editor.integration.connected': 'Intégration prête',
   'editor.integration.disconnected': 'Intégration indisponible'
+  , 'editor.open_in_hacs': 'Ouvrir dans HACS'
   , 'profiles.button': 'Programme manuel'
   , 'profiles.editor.title': 'Profils'
   , 'profiles.add': 'Ajouter un profil'
@@ -1817,9 +1880,13 @@ const TT_I18N = {
     'editor.title_label': 'Titolo',
   'editor.add_entity': 'Aggiungi stanza',
     'editor.entity_placeholder': 'Seleziona un\'entità',
+      'editor.room_mode.title': 'Tipo di entità stanza',
+      'editor.room_mode.desc': 'Quando è attivo, seleziona un input_number (temperatura obiettivo). Quando è disattivo, seleziona un\'entità climate.',
     'editor.drag_reorder': 'Trascina per riordinare',
     'editor.remove': 'Rimuovi',
     'editor.default_c': '°C predefinita',
+      'editor.perroom.title': '°C predefinita per stanza',
+      'editor.perroom.desc': 'Mostra un campo °C predefinita su ogni riga. Se disattivato, viene usata la °C predefinita globale per tutte le stanze.',
   'editor.row_height_px': 'Altezza riga (px)',
   'editor.max_c': '°C max',
     'editor.min_c': '°C min',
@@ -1886,6 +1953,8 @@ const TT_I18N = {
     , 'week.days.sun': 'Dom'
     , 'week.editor.title': 'Programma settimanale'
   , 'week.editor.preview_note': 'Solo anteprima. Le modifiche si applicano quando premi Salva.'
+    , 'week.open_editor.desc': 'Apri l’editor dei giorni della settimana.'
+    , 'week.open_editor.btn': 'Apri'
   , 'week.view.title': 'Vista settimanale'
   , 'week.view.rooms_one_day': 'Tutte le stanze • un giorno'
   , 'week.view.days_one_room': 'Tutti i giorni • una stanza'
@@ -2010,6 +2079,9 @@ const TT_I18N = {
   , 'backup.interval.desc': 'Numero di giorni tra i backup automatici (min. 1).'
   , 'backup.sensor': 'Sensore di backup'
   , 'backup.last': 'Ultimo backup'
+  , 'backup.slot.title': 'Seleziona backup'
+  , 'backup.slot.desc': 'Seleziona quale slot di backup ripristinare.'
+  , 'backup.slot.empty': 'Nessun backup ancora'
   , 'backup.select': 'Scegli cosa includere nel backup'
   , 'backup.select.desc': 'Gli elementi selezionati sono inclusi nel backup/ripristino'
   , 'backup.opt.all': 'Tutto'
@@ -2083,6 +2155,8 @@ const TT_I18N = {
     'editor.apply_edit.desc': 'Kun muutat aikajanan lohkoja ja muutos koskee nykyhetkeä, uusi lämpötila otetaan käyttöön heti.',
     'editor.apply_default.title': 'Kun Oletus °C muuttuu',
     'editor.apply_default.desc': 'Kun ”Oletus °C” muuttuu ja se vaikuttaa meneillään olevaan ajanjaksoon, uusi lämpötila otetaan käyttöön heti.',
+    'editor.room_mode.title': 'Huoneen entiteettityyppi',
+    'editor.room_mode.desc': 'Kun käytössä, valitse input_number (tavoitelämpötila). Kun pois päältä, valitse climate-entiteetti.',
   'ui.copy_plan': 'Kopioi aikataulu',
   'ui.paste_plan': 'Liitä aikataulu',
   'ui.copy_day': 'Kopioi päivä',
@@ -2123,6 +2197,8 @@ const TT_I18N = {
     'week.days.sun': 'Su',
     'week.editor.title': 'Viikkosuunnitelma',
     'week.editor.preview_note': 'Vain esikatselu. Muutokset otetaan käyttöön, kun painat Tallenna.',
+    'week.open_editor.desc': 'Avaa viikonpäiväeditori.',
+    'week.open_editor.btn': 'Avaa',
   'week.copy_to_rooms': 'Kopioi viikkosuunnitelma huoneisiin',
   'week.copy_to_rooms.title': 'Kopioi viikkosuunnitelma huoneisiin',
   'week.copy_to_rooms.select': 'Valitse huoneet',
@@ -2204,6 +2280,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Kuinka monta päivää automaattisten varmuuskopioiden välillä (min. 1).',
   'backup.sensor': 'Varmuuskopioanturi',
   'backup.last': 'Viimeisin varmuuskopio',
+  'backup.slot.title': 'Valitse varmuuskopio',
+  'backup.slot.desc': 'Valitse mikä varmuuskopiointipaikka palautetaan.',
+  'backup.slot.empty': 'Ei varmuuskopioita vielä',
   'pause.menu_title': 'Keskeytä automaattinen asetus',
   'pause.off_1h': 'Keskeytä 1 tunniksi',
   'pause.off_5h': 'Keskeytä 5 tunniksi',
@@ -2331,6 +2410,8 @@ const TT_I18N = {
     'editor.title_label': 'Nadpis',
     'editor.add_entity': 'Přidat místnost',
     'editor.entity_placeholder': 'Vyberte entitu',
+    'editor.room_mode.title': 'Typ entity místnosti',
+    'editor.room_mode.desc': 'Když je zapnuto, vyberte input_number (cílová teplota). Když je vypnuto, vyberte entitu climate.',
     'editor.drag_reorder': 'Přetažením změňte pořadí',
     'editor.remove': 'Odebrat',
     'editor.default_c': 'Výchozí °C',
@@ -2395,6 +2476,8 @@ const TT_I18N = {
     'week.days.sun': 'Ne',
     'week.editor.title': 'Týdenní rozvrh',
     'week.editor.preview_note': 'Pouze náhled. Změny se použijí po stisknutí Uložit.',
+    'week.open_editor.desc': 'Otevřít editor dnů v týdnu.',
+    'week.open_editor.btn': 'Otevřít',
     'week.copy_to_rooms': 'Kopírovat týden do místností',
     'week.copy_to_rooms.title': 'Kopírovat týden do místností',
     'week.copy_to_rooms.select': 'Vyberte místnosti',
@@ -2457,6 +2540,9 @@ const TT_I18N = {
   'backup.interval.desc': 'Počet dnů mezi automatickými zálohami (min. 1).',
   'backup.sensor': 'Záložní senzor',
   'backup.last': 'Poslední záloha',
+  'backup.slot.title': 'Vybrat zálohu',
+  'backup.slot.desc': 'Vyberte, kterou zálohu obnovit.',
+  'backup.slot.empty': 'Zatím žádné zálohy',
 
     // Away
     'away.enable': 'Povolit režim mimo domov',
@@ -2606,9 +2692,13 @@ const TT_I18N = {
     'editor.title_label': 'Naslov',
   'editor.add_entity': 'Dodaj prostor',
     'editor.entity_placeholder': 'Izberite entiteto',
+      'editor.room_mode.title': 'Vrsta entitete prostora',
+      'editor.room_mode.desc': 'Ko je omogočeno, izberite input_number (ciljna temperatura). Ko je onemogočeno, izberite climate entiteto.',
     'editor.drag_reorder': 'Povleci za spremembo vrstnega reda',
     'editor.remove': 'Odstrani',
     'editor.default_c': 'Privzeta °C',
+      'editor.perroom.title': 'Privzeta °C po prostoru',
+      'editor.perroom.desc': 'Prikaže polje Privzeta °C v vsaki vrstici. Ko je izklopljeno, se globalna Privzeta °C uporabi za vse prostore.',
   'editor.row_height_px': 'Višina vrstice (px)',
   'editor.max_c': 'Največ °C',
     'editor.min_c': 'Najmanj °C',
@@ -2675,6 +2765,8 @@ const TT_I18N = {
     , 'week.days.sun': 'Ned'
     , 'week.editor.title': 'Urnik po dnevih'
   , 'week.editor.preview_note': 'Samo predogled. Spremembe se uporabijo, ko pritisnete Shrani.'
+    , 'week.open_editor.desc': 'Odpri urejevalnik urnika po dnevih.'
+    , 'week.open_editor.btn': 'Odpri'
   , 'week.view.title': 'Pogled tedna'
   , 'week.view.rooms_one_day': 'Vsi prostori • en dan'
   , 'week.view.days_one_room': 'Vsi dnevi • en prostor'
@@ -2799,6 +2891,9 @@ const TT_I18N = {
   , 'backup.interval.desc': 'Število dni med samodejnimi kopijami (min. 1).'
   , 'backup.sensor': 'Senzor varnostne kopije'
   , 'backup.last': 'Zadnja kopija'
+  , 'backup.slot.title': 'Izberi varnostno kopijo'
+  , 'backup.slot.desc': 'Izberite, kateri slot varnostne kopije želite obnoviti.'
+  , 'backup.slot.empty': 'Še ni varnostnih kopij'
   , 'backup.select': 'Izberi, kaj kopirati'
   , 'backup.select.desc': 'Označene postavke so vključene v kopiranje/obnovo'
   , 'backup.opt.all': 'Vse'
@@ -2870,7 +2965,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.26-remove-testbtn-1";
+const TT_CARD_VERSION = "2025.12.26-i18n-complete-1";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -3255,6 +3350,8 @@ class ThermostatTimelineCard extends HTMLElement {
     this._weeklyDraft = null; // { mode, days: { mon:[], ... } }
     this._weeklyDayKey = null;
     this._weeklyOverlayHiddenForEditor = false;
+    // Weekdays timeline view state (browse day when showing one day across rooms)
+    this._weekdaysViewDayKey = null;
       // Weekly copy/paste by group (weekdays/weekend/sat/sun/mon..sun)
       this._weeklyCopyFromGroup = null;
       this._weeklyCopyPayload = null;
@@ -4177,6 +4274,27 @@ class ThermostatTimelineCard extends HTMLElement {
     }
   }
 
+  _weekdayFullName(dayKey){
+    try {
+      const k = String(dayKey || '').toLowerCase();
+      const map = {
+        mon: 'week.days_full.mon',
+        tue: 'week.days_full.tue',
+        wed: 'week.days_full.wed',
+        thu: 'week.days_full.thu',
+        fri: 'week.days_full.fri',
+        sat: 'week.days_full.sat',
+        sun: 'week.days_full.sun'
+      };
+      const t = map[k] ? this._t(map[k]) : '';
+      if (t) return String(t);
+    } catch {}
+    try {
+      const names = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
+      return names[String(dayKey||'').toLowerCase()] || this._todayFullName();
+    } catch { return this._todayFullName(); }
+  }
+
   // Format ISO timestamp in a readable, localized way
   _fmtDateTimeIso(iso){
     try {
@@ -4191,6 +4309,38 @@ class ThermostatTimelineCard extends HTMLElement {
 
   // --- Weekday helpers ---
   _weekdayNames(){ return ['mon','tue','wed','thu','fri','sat','sun']; }
+
+  _timelineDisplayDayKey(){
+    try {
+      const enabled = !!this._config?.weekdays_enabled;
+      const view = String(this._config?.weekdays_view || 'all_rooms_one_day');
+      if (enabled && view === 'all_rooms_one_day') {
+        const names = this._weekdayNames();
+        const cur = String(this._weekdaysViewDayKey || '').toLowerCase();
+        if (names.includes(cur)) return cur;
+        const today = this._todayKey();
+        this._weekdaysViewDayKey = today;
+        return today;
+      }
+    } catch {}
+    return this._todayKey();
+  }
+
+  _setTimelineDisplayDayKey(dayKey){
+    try {
+      const k = String(dayKey || '').toLowerCase();
+      if (this._weekdayNames().includes(k)) this._weekdaysViewDayKey = k;
+    } catch {}
+  }
+
+  _weekdaysStorageDayKeyForMode(displayDayKey, mode){
+    const d = String(displayDayKey || 'mon').toLowerCase();
+    const isWk = ['mon','tue','wed','thu','fri'].includes(d);
+    const m = String(mode || 'weekday_weekend');
+    if (m === 'weekday_weekend') return isWk ? 'mon' : 'sat';
+    if (m === 'weekday_sat_sun') return isWk ? 'mon' : d; // sat/sun
+    return d; // all_7
+  }
   _todayKey(){
     try {
       if (this._useHaTime() && this._hass?.config?.time_zone) {
@@ -5825,8 +5975,9 @@ class ThermostatTimelineCard extends HTMLElement {
         // Prefer a Holiday label if holidays are active
         try { if (this._isHolidayActive && this._isHolidayActive()) { label = this._t('holidays.button') || 'Holidays'; } } catch {}
         if (!label && this._config?.weekdays_enabled) {
-          // Localized full weekday, e.g., "Mandag"
-          const dayName = this._todayFullName();
+          // Localized full weekday, e.g., "Mandag" (or browsed day in weekdays view)
+          const viewDayKey = this._timelineDisplayDayKey();
+          const dayName = this._weekdayFullName(viewDayKey) || this._todayFullName();
           // If viewing all days for a single room, append room name for clarity
           try {
             const perRoomAllDays = String(this._config?.weekdays_view||'all_rooms_one_day') === 'one_room_all_days';
@@ -5844,20 +5995,39 @@ class ThermostatTimelineCard extends HTMLElement {
         }
         if (label) {
           dayFull.innerHTML = '';
-          
-          // Add room navigation arrows around the label (only if multiple rooms)
+
           const ents = (this._config?.entities || []);
-          if (ents.length > 1 && this._config?.weekdays_enabled) {
+          const isWeekEnabled = !!this._config?.weekdays_enabled;
+          const viewMode = String(this._config?.weekdays_view || 'all_rooms_one_day');
+          const mkArrow = (dir)=>{
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = dir < 0 ? '◀' : '▶';
+            btn.style.cssText = 'background:none; border:none; color:var(--primary-text-color); cursor:pointer; padding:0 8px; font-size:inherit;';
+            return btn;
+          };
+
+          // In "Alle rum • én dag" view: arrows browse days (Mon..Sun)
+          if (isWeekEnabled && viewMode === 'all_rooms_one_day') {
+            const prevBtn = mkArrow(-1);
+            prevBtn.title = 'Previous day';
+            prevBtn.addEventListener('click', () => {
+              const names = this._weekdayNames();
+              const cur = this._timelineDisplayDayKey();
+              const idx = Math.max(0, names.indexOf(cur));
+              const newIdx = (idx - 1 + names.length) % names.length;
+              this._setTimelineDisplayDayKey(names[newIdx]);
+              this._render();
+            });
+            dayFull.appendChild(prevBtn);
+          }
+          // In "Alle dage • ét rum" view: keep room navigation arrows (only if multiple rooms)
+          else if (isWeekEnabled && viewMode === 'one_room_all_days' && ents.length > 1) {
             const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room))
               ? this._config.weekdays_selected_room
               : (ents[0]||'');
             const roomIdx = ents.indexOf(roomEid);
-            
-            // Previous arrow (loops to end)
-            const prevBtn = document.createElement('button');
-            prevBtn.type = 'button';
-            prevBtn.textContent = '◀';
-            prevBtn.style.cssText = 'background:none; border:none; color:var(--primary-text-color); cursor:pointer; padding:0 8px; font-size:inherit;';
+            const prevBtn = mkArrow(-1);
             prevBtn.title = 'Previous room';
             prevBtn.addEventListener('click', () => {
               const newIdx = roomIdx <= 0 ? ents.length - 1 : roomIdx - 1;
@@ -5871,18 +6041,25 @@ class ThermostatTimelineCard extends HTMLElement {
           const labelSpan = document.createElement('span');
           labelSpan.textContent = label;
           dayFull.appendChild(labelSpan);
-          
-          // Add next arrow (loops to start)
-          if (ents.length > 1 && this._config?.weekdays_enabled) {
+
+          if (isWeekEnabled && viewMode === 'all_rooms_one_day') {
+            const nextBtn = mkArrow(1);
+            nextBtn.title = 'Next day';
+            nextBtn.addEventListener('click', () => {
+              const names = this._weekdayNames();
+              const cur = this._timelineDisplayDayKey();
+              const idx = Math.max(0, names.indexOf(cur));
+              const newIdx = (idx + 1) % names.length;
+              this._setTimelineDisplayDayKey(names[newIdx]);
+              this._render();
+            });
+            dayFull.appendChild(nextBtn);
+          } else if (isWeekEnabled && viewMode === 'one_room_all_days' && ents.length > 1) {
             const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room))
               ? this._config.weekdays_selected_room
               : (ents[0]||'');
             const roomIdx = ents.indexOf(roomEid);
-            
-            const nextBtn = document.createElement('button');
-            nextBtn.type = 'button';
-            nextBtn.textContent = '▶';
-            nextBtn.style.cssText = 'background:none; border:none; color:var(--primary-text-color); cursor:pointer; padding:0 8px; font-size:inherit;';
+            const nextBtn = mkArrow(1);
             nextBtn.title = 'Next room';
             nextBtn.addEventListener('click', () => {
               const newIdx = roomIdx >= ents.length - 1 ? 0 : roomIdx + 1;
@@ -6438,7 +6615,7 @@ class ThermostatTimelineCard extends HTMLElement {
             // Ensure weekly structures exist
             this._ensureWeeklyStruct(row);
             const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
-            const today = this._todayKey();
+            const today = this._timelineDisplayDayKey();
             const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
             let sel = today;
             if (mode === 'weekday_weekend') sel = isWeekday ? 'weekdays' : 'weekend';
@@ -6538,8 +6715,15 @@ class ThermostatTimelineCard extends HTMLElement {
       const track = document.createElement('div');
       track.className = 'track';
       track.style.setProperty('--row-height', `${this._config.row_height}px`);
-  // Use today's blocks if weekdays enabled
-  const dayKey = this._todayKey();
+  // Use browsed day in weekdays view (all rooms • one day)
+  const displayDayKey = this._timelineDisplayDayKey();
+  let dayKey = displayDayKey;
+  try {
+    if (this._config?.weekdays_enabled && row?.weekly) {
+      const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+      dayKey = this._weekdaysStorageDayKeyForMode(displayDayKey, mode);
+    }
+  } catch { dayKey = displayDayKey; }
   this._ensureHolidayStruct(row);
   this._ensurePresenceStruct(row);
   let showBlocks = (row.blocks || []);
@@ -6680,7 +6864,7 @@ class ThermostatTimelineCard extends HTMLElement {
               // Prepare an in‑memory weekly draft for the current mode
               this._ensureWeeklyStruct(row);
               const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
-              const today = dayKey; // computed earlier
+              const today = displayDayKey; // computed earlier
               const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
               let sel = today;
               if (mode === 'weekday_weekend') sel = isWeekday ? 'weekdays' : 'weekend';
@@ -7682,19 +7866,35 @@ class ThermostatTimelineCard extends HTMLElement {
           const curEid = String(ents[idx] || '');
           nameInp.value = (d.labels && curEid && d.labels[curEid]) ? String(d.labels[curEid]) : '';
         } catch {}
-        const onNameChange = (e)=>{
+        const setDraftLabel = (eid, value)=>{
+          try {
+            if (!eid) return;
+            const labels = { ...(this._settingsDraft.labels || {}) };
+            if (value) labels[eid] = value;
+            else delete labels[eid];
+            this._settingsDraft.labels = labels;
+          } catch {}
+        };
+        // Important: don't re-render the whole Rooms tab on every keystroke,
+        // otherwise the input element gets recreated and loses focus.
+        nameInp.addEventListener('input', (e)=>{
           try {
             const eid = String(this._settingsDraft?.entities?.[idx] || '').trim();
             if (!eid) return;
-            const labels = { ...(this._settingsDraft.labels || {}) };
-            const val = String(e?.target?.value || '').trim();
-            if (val) labels[eid] = val; else delete labels[eid];
-            this._settingsDraft.labels = labels;
+            const raw = String(e?.target?.value ?? '');
+            setDraftLabel(eid, raw ? raw : '');
+          } catch {}
+        });
+        nameInp.addEventListener('change', (e)=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '').trim();
+            if (!eid) return;
+            const val = String(e?.target?.value ?? '').trim();
+            setDraftLabel(eid, val);
+            try { e.target.value = val; } catch {}
             this._renderSettingsPopupRoomsTab();
           } catch {}
-        };
-        nameInp.addEventListener('change', onNameChange);
-        nameInp.addEventListener('input', onNameChange);
+        });
 
         // Merge UI
         const linkWrap = document.createElement('div');
@@ -9316,6 +9516,14 @@ class ThermostatTimelineCard extends HTMLElement {
                 <button type="button" class="sp-week-view-days"></button>
               </div>
             </div>
+
+            <div class="setting sp-week-open-setting">
+              <div class="text">
+                <div class="title sp-week-open-title"></div>
+                <div class="desc sp-week-open-desc"></div>
+              </div>
+              <button type="button" class="btn ghost sp-week-open-btn"></button>
+            </div>
           </div>
         `;
       }
@@ -9336,6 +9544,13 @@ class ThermostatTimelineCard extends HTMLElement {
         if (row) row.style.opacity = on ? '' : '.5';
         if (bRooms) { bRooms.disabled = !on; bRooms.setAttribute('aria-disabled', (!on).toString()); }
         if (bDays)  { bDays.disabled  = !on; bDays.setAttribute('aria-disabled', (!on).toString()); }
+
+        // Open weekdays editor button
+        const hasEnts = Array.isArray(this._config?.entities) && this._config.entities.filter(Boolean).length > 0;
+        const openRow = q('.overlay-settings .sp-week-open-setting');
+        if (openRow) openRow.style.display = (on && hasEnts) ? '' : 'none';
+        const openBtn = q('.overlay-settings .sp-week-open-btn');
+        if (openBtn) { openBtn.disabled = !(on && hasEnts); openBtn.setAttribute('aria-disabled', (!(on && hasEnts)).toString()); }
       } catch {}
 
       // Bind events once
@@ -9379,6 +9594,22 @@ class ThermostatTimelineCard extends HTMLElement {
               if (!el) return;
               if (el.classList.contains('sp-week-view-rooms')) applyView('all_rooms_one_day');
               else if (el.classList.contains('sp-week-view-days')) applyView('one_room_all_days');
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const btn = q('.overlay-settings .sp-week-open-btn');
+          if (btn) btn.addEventListener('click', ()=>{
+            try {
+              const ents = Array.isArray(this._config?.entities) ? this._config.entities.filter(Boolean).map(String) : [];
+              if (!ents.length) return;
+              const want = String(this._settingsDraft?.weekdays_selected_room || this._config?.weekdays_selected_room || '');
+              const eid = (want && ents.includes(want)) ? want : (ents[0] || null);
+              if (!eid) return;
+              this._resumeSettingsAfterWeekdays = true;
+              this._suspendSettingsPopup();
+              this._openWeeklyEditor(eid);
             } catch {}
           });
         } catch {}
@@ -10276,7 +10507,17 @@ class ThermostatTimelineCard extends HTMLElement {
   // Open after a paint
   try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
   }
-  _closeWeeklyEditor(){ this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {} }
+  _closeWeeklyEditor(){
+    try { this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; } catch {}
+    try { this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); } catch {}
+    try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+    try {
+      if (this._resumeSettingsAfterWeekdays) {
+        this._resumeSettingsAfterWeekdays = false;
+        this._resumeSettingsPopup?.();
+      }
+    } catch {}
+  }
   _weeklySaveAll(){ try { if (!this._weeklyEntity || !this._weeklyDraft) { this._closeWeeklyEditor(); return; } const entity = this._weeklyEntity; const row = this._schedules[entity]; if (!row) { this._closeWeeklyEditor(); return; }
       // Normalize by mode: propagate grouped days within the selected mode only
       const mode = this._weeklyDraft.mode || 'weekday_weekend';
@@ -12117,6 +12358,13 @@ class ThermostatTimelineCard extends HTMLElement {
         if (wvR) wvR.textContent = t('week.view.rooms_one_day');
         const wvD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-days');
         if (wvD) wvD.textContent = t('week.view.days_one_room');
+
+        const woT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-title');
+        if (woT) woT.textContent = t('week.editor.title');
+        const woD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-desc');
+        if (woD) woD.textContent = t('week.open_editor.desc');
+        const woB = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-btn');
+        if (woB) woB.textContent = t('week.open_editor.btn');
 
         // Boiler tab content labels
         const beT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-enable-title');
