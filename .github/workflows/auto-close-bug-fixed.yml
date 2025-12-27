@@ -48,12 +48,14 @@ jobs:
               state: "closed"
             });
 
-            // Optional: leave a comment explaining why it was closed
+            // Leave a comment explaining why it was closed + how to reopen
             await github.rest.issues.createComment({
               owner,
               repo,
               issue_number: issue.number,
-              body: `Closing this issue because it has been labeled **"${targetLabel}"** (bug fixed).`
+              body: `✅ This issue was automatically closed because it was labeled **"${targetLabel}"**.
+
+            If the problem still exists, reply with **reopen** to automatically open it again.`
             });
 
             core.info(`#${issue.number} closed due to label "${targetLabel}".`);
