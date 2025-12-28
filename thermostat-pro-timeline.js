@@ -84,6 +84,7 @@ const TT_I18N = {
   'week.mode.weekday_sat_sun': 'Weekdays + Saturday + Sunday',
   'week.mode.all_7': 'All days',
   'week.button': 'Weekdays',
+  'week.title': 'Weekdays',
   'week.group.weekdays': 'Weekdays',
   'week.group.weekend': 'Weekend',
   'week.days_full.mon': 'Monday',
@@ -107,6 +108,8 @@ const TT_I18N = {
   'week.view.title': 'Weekdays view',
   'week.view.rooms_one_day': 'All rooms • one day',
   'week.view.days_one_room': 'All days • one room',
+  'week.view_switch.title': 'Switch view from timeline',
+  'week.view_switch.desc': 'Show a toggle in the timeline header to switch between the two Weekdays view modes.',
   'week.select_room': 'Select room',
   'week.copy_to_rooms': 'Copy weekdays to rooms',
   'week.copy_to_rooms.title': 'Copy weekdays to rooms',
@@ -123,6 +126,7 @@ const TT_I18N = {
   'editor.timesrc.ha': 'Home Assistant',
 
   'editor.tabs.settings': 'Settings',
+  'editor.tabs.pause': 'Pause',
   'editor.tabs.weekdays': 'Weekdays',
   'editor.tabs.rooms': 'Rooms',
   'editor.tabs.boiler': 'Boiler',
@@ -230,6 +234,10 @@ const TT_I18N = {
 
   'editor.pausebtn.title': 'Pause button',
   'editor.pausebtn.desc': 'Show a global pause button in the card header. When pause is active, all set_temperature commands are suppressed.',
+  'editor.pause_sensor.title': 'Pause via binary sensor',
+  'editor.pause_sensor.desc': 'Automatically pause while the selected binary sensor is on.',
+  'editor.pause_sensor.entity_title': 'Pause sensor',
+  'editor.pause_sensor.entity_desc': 'Binary sensor that controls pause (on = pause, off = resume).',
   'editor.integration.connected': 'Connected to integration',
   'editor.integration.disconnected': 'Not connected to integration',
 
@@ -361,6 +369,7 @@ const TT_I18N = {
     'week.mode.weekday_sat_sun': 'Hverdage + Lørdag + Søndag',
     'week.mode.all_7': 'Alle dage',
     'week.button': 'Ugedage',
+    'week.title': 'Ugedage',
     'week.group.weekdays': 'Hverdage',
     'week.group.weekend': 'Weekend',
     'week.days_full.mon': 'Mandag',
@@ -384,6 +393,8 @@ const TT_I18N = {
     'week.view.title': 'Ugedage-visning',
     'week.view.rooms_one_day': 'Alle rum • én dag',
     'week.view.days_one_room': 'Alle dage • ét rum',
+    'week.view_switch.title': 'Skift visning fra tidslinjen',
+    'week.view_switch.desc': 'Vis en toggle i tidslinjens header, så du kan skifte ugedags-visning uden at åbne indstillinger.',
     'week.select_room': 'Vælg rum',
     'week.copy_to_rooms': 'Kopiér ugedage til rum',
     'week.copy_to_rooms.title': 'Kopiér ugedage til rum',
@@ -399,6 +410,7 @@ const TT_I18N = {
     'editor.timesrc.browser': 'Browser',
     'editor.timesrc.ha': 'Home Assistant',
     'editor.tabs.settings': 'Indstillinger',
+    'editor.tabs.pause': 'Pause',
     'editor.tabs.weekdays': 'Ugedage',
     'editor.tabs.rooms': 'Rum',
     'editor.tabs.boiler': 'Boiler',
@@ -496,6 +508,10 @@ const TT_I18N = {
     'pause.active_indef': 'Slukket',
     'editor.pausebtn.title': 'Pause‑knap',
     'editor.pausebtn.desc': 'Vis en global pauseknap i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.',
+    'editor.pause_sensor.title': 'Pause via binary sensor',
+    'editor.pause_sensor.desc': 'Sæt automatisk pause mens den valgte binary sensor er on.',
+    'editor.pause_sensor.entity_title': 'Pause sensor',
+    'editor.pause_sensor.entity_desc': 'Binary sensor som styrer pause (on = pause, off = genoptag).',
     'editor.integration.connected': 'Integration klar',
     'editor.integration.disconnected': 'Integration ikke tilgængelig',
     'profiles.enable': 'Aktivér skema overrule',
@@ -775,6 +791,7 @@ const TT_I18N = {
   , 'backup.opt.holiday': 'Helgdags‑scheman'
   , 'backup.opt.colors': 'Färgblock'
   , 'editor.tabs.settings': 'Inställningar'
+  , 'editor.tabs.pause': 'Paus'
   , 'editor.tabs.weekdays': 'Veckodagar'
   , 'editor.tabs.colors': 'Färger'
   , 'editor.tabs.owd': 'Open Window Detection'
@@ -803,6 +820,9 @@ const TT_I18N = {
   , 'week.view.title': 'Veckovy'
   , 'week.view.rooms_one_day': 'Alla rum • en dag'
   , 'week.view.days_one_room': 'Alla dagar • ett rum'
+  , 'week.view_switch.title': 'Byt vy från tidslinjen'
+  , 'week.view_switch.desc': 'Visa en växlare i tidslinjens rubrik så att du kan byta mellan de två veckodagsvisningarna.'
+  , 'week.title': 'Veckodagar'
   , 'week.select_room': 'Välj rum'
   },
   nb: {
@@ -1040,6 +1060,7 @@ const TT_I18N = {
   , 'backup.opt.holiday': 'Helligdags‑skjemaer'
   , 'backup.opt.colors': 'Fargeblokker'
   , 'editor.tabs.settings': 'Innstillinger'
+  , 'editor.tabs.pause': 'Pause'
   , 'editor.tabs.weekdays': 'Ukedager'
   , 'editor.tabs.colors': 'Farger'
   , 'editor.tabs.owd': 'Open Window Detection'
@@ -1068,6 +1089,9 @@ const TT_I18N = {
   , 'week.view.title': 'Ukevisning'
   , 'week.view.rooms_one_day': 'Alle rom • én dag'
   , 'week.view.days_one_room': 'Alle dager • ett rom'
+  , 'week.view_switch.title': 'Bytt visning fra tidslinjen'
+  , 'week.view_switch.desc': 'Vis en bryter i tidslinjens toppfelt for å bytte mellom de to ukedagsvisningene.'
+  , 'week.title': 'Ukedager'
   , 'week.select_room': 'Velg rom'
   },
   de: {
@@ -1304,6 +1328,7 @@ const TT_I18N = {
   , 'backup.opt.holiday': 'Feiertags‑Zeitpläne'
   , 'backup.opt.colors': 'Farbblöcke'
   , 'editor.tabs.settings': 'Einstellungen'
+  , 'editor.tabs.pause': 'Pause'
   , 'editor.tabs.weekdays': 'Wochentage'
   , 'editor.tabs.colors': 'Farben'
   , 'editor.tabs.owd': 'Open Window Detection'
@@ -1332,6 +1357,9 @@ const TT_I18N = {
   , 'week.view.title': 'Wochenansicht'
   , 'week.view.rooms_one_day': 'Alle Räume • ein Tag'
   , 'week.view.days_one_room': 'Alle Tage • ein Raum'
+  , 'week.view_switch.title': 'Ansicht in der Zeitleiste wechseln'
+  , 'week.view_switch.desc': 'Zeigt einen Umschalter in der Kopfzeile der Zeitleiste, um zwischen den beiden Wochentagsansichten zu wechseln.'
+  , 'week.title': 'Wochentage'
   , 'week.select_room': 'Raum auswählen'
   },
   es: {
@@ -1568,6 +1596,7 @@ const TT_I18N = {
   , 'backup.opt.holiday': 'Horarios de festivos'
   , 'backup.opt.colors': 'Bloques de color'
   , 'editor.tabs.settings': 'Ajustes'
+  , 'editor.tabs.pause': 'Pausa'
   , 'editor.tabs.weekdays': 'Días de la semana'
   , 'editor.tabs.colors': 'Colores'
   , 'editor.tabs.owd': 'Open Window Detection'
@@ -1596,6 +1625,9 @@ const TT_I18N = {
   , 'week.view.title': 'Vista semanal'
   , 'week.view.rooms_one_day': 'Todas las habitaciones • un día'
   , 'week.view.days_one_room': 'Todos los días • una habitación'
+  , 'week.view_switch.title': 'Cambiar vista desde la línea de tiempo'
+  , 'week.view_switch.desc': 'Muestra un selector en el encabezado de la línea de tiempo para alternar entre los dos modos de vista de los días de la semana.'
+  , 'week.title': 'Días de la semana'
   , 'week.select_room': 'Seleccionar habitación'
   },
   fr: {
@@ -1825,6 +1857,7 @@ const TT_I18N = {
   , 'backup.opt.holiday': 'Plannings jours fériés'
   , 'backup.opt.colors': 'Blocs de couleur'
   , 'editor.tabs.settings': 'Paramètres'
+  , 'editor.tabs.pause': 'Pause'
   , 'editor.tabs.weekdays': 'Jours de semaine'
   , 'editor.tabs.colors': 'Couleurs'
   , 'editor.tabs.owd': 'Open Window Detection'
@@ -1853,6 +1886,9 @@ const TT_I18N = {
   , 'week.view.title': 'Vue semaine'
   , 'week.view.rooms_one_day': 'Toutes les pièces • un jour'
   , 'week.view.days_one_room': 'Tous les jours • une pièce'
+  , 'week.view_switch.title': 'Changer la vue depuis la frise'
+  , 'week.view_switch.desc': 'Affiche un sélecteur dans l’en-tête de la frise pour basculer entre les deux modes de vue des jours de semaine.'
+  , 'week.title': 'Jours de semaine'
   , 'week.select_room': 'Sélectionner une pièce'
   },
   it: {
@@ -1958,6 +1994,9 @@ const TT_I18N = {
   , 'week.view.title': 'Vista settimanale'
   , 'week.view.rooms_one_day': 'Tutte le stanze • un giorno'
   , 'week.view.days_one_room': 'Tutti i giorni • una stanza'
+  , 'week.view_switch.title': 'Cambia vista dalla timeline'
+  , 'week.view_switch.desc': 'Mostra un selettore nell’intestazione della timeline per passare tra le due modalità di visualizzazione dei giorni feriali.'
+  , 'week.title': 'Giorni feriali'
   , 'week.select_room': 'Seleziona stanza'
   , 'week.copy_to_rooms': 'Copia settimana nelle stanze'
   , 'week.copy_to_rooms.title': 'Copia settimana nelle stanze'
@@ -1973,6 +2012,7 @@ const TT_I18N = {
   , 'editor.timesrc.browser': 'Browser'
   , 'editor.timesrc.ha': 'Home Assistant'
   , 'editor.tabs.settings': 'Impostazioni'
+  , 'editor.tabs.pause': 'Pausa'
   , 'editor.tabs.weekdays': 'Giorni feriali'
     , 'editor.tabs.rooms': 'Stanze'
   , 'editor.tabs.colors': 'Colori'
@@ -2352,6 +2392,7 @@ const TT_I18N = {
   , 'backup.opt.holiday': 'Pyhäpäiväaikataulut'
   , 'backup.opt.colors': 'Värilohkot'
   , 'editor.tabs.settings': 'Asetukset'
+  , 'editor.tabs.pause': 'Tauko'
   , 'editor.tabs.weekdays': 'Viikonpäivät'
   , 'editor.tabs.colors': 'Värit'
   , 'editor.tabs.owd': 'Open Window Detection'
@@ -2380,6 +2421,9 @@ const TT_I18N = {
   , 'week.view.title': 'Viikkonäkymä'
   , 'week.view.rooms_one_day': 'Kaikki huoneet • yksi päivä'
   , 'week.view.days_one_room': 'Kaikki päivät • yksi huone'
+  , 'week.view_switch.title': 'Vaihda näkymää aikajanasta'
+  , 'week.view_switch.desc': 'Näyttää valitsimen aikajanan otsikossa, jolla voi vaihtaa kahden viikonpäivänäkymän välillä.'
+  , 'week.title': 'Viikonpäivät'
   , 'week.select_room': 'Valitse huone'
   },
   cs: {
@@ -2496,6 +2540,7 @@ const TT_I18N = {
 
     // Záložky
     'editor.tabs.settings': 'Nastavení',
+    'editor.tabs.pause': 'Pauza',
     'editor.tabs.rooms': 'Místnosti',
     'editor.tabs.boiler': 'Kotel',
     'boiler.switch': 'Spínač kotle',
@@ -2665,6 +2710,9 @@ const TT_I18N = {
     , 'week.view.title': 'Pohled na týden'
     , 'week.view.rooms_one_day': 'Všechny místnosti • jeden den'
     , 'week.view.days_one_room': 'Všechny dny • jedna místnost'
+    , 'week.view_switch.title': 'Přepnout zobrazení z časové osy'
+    , 'week.view_switch.desc': 'Zobrazí přepínač v záhlaví časové osy pro přepínání mezi dvěma režimy zobrazení dnů v týdnu.'
+    , 'week.title': 'Dny v týdnu'
     , 'week.select_room': 'Vyberte místnost'
   },
   sl: {
@@ -2770,6 +2818,9 @@ const TT_I18N = {
   , 'week.view.title': 'Pogled tedna'
   , 'week.view.rooms_one_day': 'Vsi prostori • en dan'
   , 'week.view.days_one_room': 'Vsi dnevi • en prostor'
+  , 'week.view_switch.title': 'Preklopi pogled na časovnici'
+  , 'week.view_switch.desc': 'Prikaže preklopnik v glavi časovnice za preklapljanje med obema načinoma pogleda za dneve v tednu.'
+  , 'week.title': 'Dnevi v tednu'
   , 'week.select_room': 'Izberi prostor'
   , 'week.copy_to_rooms': 'Kopiraj teden v prostore'
   , 'week.copy_to_rooms.title': 'Kopiraj teden v prostore'
@@ -2785,6 +2836,7 @@ const TT_I18N = {
   , 'editor.timesrc.browser': 'Brskalnik'
   , 'editor.timesrc.ha': 'Home Assistant'
   , 'editor.tabs.settings': 'Nastavitve'
+  , 'editor.tabs.pause': 'Premor'
   , 'editor.tabs.weekdays': 'Dnevi v tednu'
     , 'editor.tabs.rooms': 'Prostori'
   , 'editor.tabs.colors': 'Barve'
@@ -2965,7 +3017,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.26-i18n-complete-1";
+const TT_CARD_VERSION = "2025.12.28-weekdays-view-switch-1";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -2985,6 +3037,9 @@ class ThermostatTimelineCard extends HTMLElement {
       backup_interval_days: 1,
       show_top_now: false,
       now_extend_px: 76,
+      show_pause_button: true,
+      pause_sensor_enabled: false,
+      pause_sensor_entity: '',
       labels: {},
       merges: {},              // { [primary_eid]: [linked_eid, ...] }
       temp_sensors: {},        // { [primary_eid]: sensor.temperature_entity_id }
@@ -2996,6 +3051,7 @@ class ThermostatTimelineCard extends HTMLElement {
       weekdays_enabled: false,
       weekdays_mode: 'weekday_weekend', // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
       weekdays_view: 'all_rooms_one_day', // 'all_rooms_one_day' | 'one_room_all_days'
+      weekdays_view_switch_in_timeline: false,
       weekdays_selected_room: '',
       profiles_enabled: false,
       away: { enabled: false, persons: [], target_c: 17, advanced_enabled: false, combos: {} },
@@ -3066,6 +3122,28 @@ class ThermostatTimelineCard extends HTMLElement {
           this._applyCurrentSetpoints(true);
           try { if (this._config?.storage_enabled) this._nudgeBackgroundApplyNow(); } catch {}
           this._scheduleNextApply();
+        }
+      }
+    } catch {}
+
+    // Detect pause sensor transitions (UI responsiveness + frontend-only behavior when Sync is OFF)
+    try {
+      const cur = this._isPausedBySensor ? !!this._isPausedBySensor() : false;
+      if (this._lastPauseSensorOn === null || this._lastPauseSensorOn === undefined) {
+        this._lastPauseSensorOn = cur;
+      } else if (this._initialized && cur !== this._lastPauseSensorOn) {
+        this._lastPauseSensorOn = cur;
+        try { if (!this._inlineEditing && !this._editing) this._render(); } catch {}
+        if (this._config?.auto_apply) {
+          if (cur) {
+            // Pause: cancel any pending boundary timer
+            try { this._scheduleNextApply(); } catch {}
+          } else {
+            // Resume: reconcile once + schedule next
+            this._applyCurrentSetpoints(true, true);
+            try { if (this._config?.storage_enabled) this._nudgeBackgroundApplyNow(); } catch {}
+            this._scheduleNextApply();
+          }
         }
       }
     } catch {}
@@ -3152,6 +3230,8 @@ class ThermostatTimelineCard extends HTMLElement {
       boiler_min_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_min_temp'),
       boiler_max_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_max_temp'),
       show_pause_button: Object.prototype.hasOwnProperty.call(config, 'show_pause_button'),
+      pause_sensor_enabled: Object.prototype.hasOwnProperty.call(config, 'pause_sensor_enabled'),
+      pause_sensor_entity: Object.prototype.hasOwnProperty.call(config, 'pause_sensor_entity'),
       away: Object.prototype.hasOwnProperty.call(config, 'away'),
       time_12h: Object.prototype.hasOwnProperty.call(config, 'time_12h'),
       time_source: Object.prototype.hasOwnProperty.call(config, 'time_source'),
@@ -3192,6 +3272,8 @@ class ThermostatTimelineCard extends HTMLElement {
       show_top_now: showTop,
       now_extend_px: extendPx,
   show_pause_button: !!(config.show_pause_button ?? true),
+  pause_sensor_enabled: !!(config.pause_sensor_enabled ?? this._config?.pause_sensor_enabled ?? false),
+  pause_sensor_entity: String(config.pause_sensor_entity ?? this._config?.pause_sensor_entity ?? ''),
       auto_apply: config.auto_apply ?? true,
       apply_on_edit: config.apply_on_edit ?? true,
       apply_on_default_change: config.apply_on_default_change ?? true,
@@ -3210,6 +3292,7 @@ class ThermostatTimelineCard extends HTMLElement {
       weekdays_enabled: !!(config.weekdays_enabled ?? false),
   weekdays_mode: (config.weekdays_mode || 'weekday_weekend'),
   weekdays_view: (config.weekdays_view || this._config?.weekdays_view || 'all_rooms_one_day'),
+  weekdays_view_switch_in_timeline: !!(config.weekdays_view_switch_in_timeline ?? this._config?.weekdays_view_switch_in_timeline ?? false),
   weekdays_selected_room: String(config.weekdays_selected_room || this._config?.weekdays_selected_room || ''),
     profiles_enabled: !!(config.profiles_enabled ?? false),
     away: {
@@ -3504,10 +3587,15 @@ class ThermostatTimelineCard extends HTMLElement {
           // Unwrap if an older/incorrect payload put the entire object under 'schedules'
           let sch = JSON.parse(JSON.stringify(schedSource.schedules));
           if (sch && sch.schedules && typeof sch.schedules === 'object') sch = sch.schedules;
-          // Convert incoming schedules to °C if backend stored them in °F
+          // Canonical storage is °C. For backwards compatibility, detect legacy stores that saved °F values.
           try {
-            storUnit = String((schedSource?.settings?.temp_unit)||'C').toUpperCase();
-            if (storUnit === 'F') sch = this._convertSchedulesTemps(sch, 'C');
+            const su = String((schedSource?.settings?.storage_temp_unit || '')).toUpperCase();
+            const legacyDisplayUnit = String((schedSource?.settings?.temp_unit || 'C')).toUpperCase();
+            const maxT = this._maxTempInSchedules(sch);
+            const looksLikeF = Number.isFinite(maxT) && maxT > 45;
+            const legacyWasF = (legacyDisplayUnit === 'F');
+            const storeWasF = (su === 'F') || (!su && (legacyWasF || looksLikeF));
+            if (storeWasF) sch = this._convertSchedulesTemps(sch, 'C');
           } catch {}
           this._schedules = sch;
           // If there is a pending delayed sync (due stored locally), prefer draft schedules
@@ -3547,10 +3635,15 @@ class ThermostatTimelineCard extends HTMLElement {
           if (attrsProf?.profiles && typeof attrsProf.profiles === 'object') profSrc = attrsProf.profiles;
           else if (attrsMain?.profiles && typeof attrsMain.profiles === 'object') profSrc = attrsMain.profiles;
           if (profSrc && typeof profSrc === 'object') {
-            // Convert from F if needed
+            // Canonical storage is °C. For backwards compatibility, detect legacy °F profile payloads.
             try {
-              const unit = String((attrsProf?.settings?.temp_unit || storUnit || 'C')).toUpperCase();
-              if (unit === 'F') profSrc = this._convertSchedulesTemps(profSrc, 'C');
+              const su = String((attrsProf?.settings?.storage_temp_unit || attrsMain?.settings?.storage_temp_unit || '')).toUpperCase();
+              const legacyDisplayUnit = String((attrsProf?.settings?.temp_unit || attrsMain?.settings?.temp_unit || 'C')).toUpperCase();
+              const maxT = this._maxTempInSchedules(profSrc);
+              const looksLikeF = Number.isFinite(maxT) && maxT > 45;
+              const legacyWasF = (legacyDisplayUnit === 'F');
+              const storeWasF = (su === 'F') || (!su && (legacyWasF || looksLikeF));
+              if (storeWasF) profSrc = this._convertSchedulesTemps(profSrc, 'C');
             } catch {}
             for (const eid of Object.keys(profSrc)) {
               const src = profSrc[eid];
@@ -3576,11 +3669,17 @@ class ThermostatTimelineCard extends HTMLElement {
         if (settingsSource) {
           try {
             const s0 = settingsSource;
-            // Convert numeric settings from °F to °C for internal use
+            // Canonical storage is °C. For backwards compatibility, detect legacy stores that saved numeric settings in °F.
             let s = s0;
             try {
-              const storUnit = String(s0?.temp_unit||'C').toUpperCase();
-              if (storUnit === 'F') {
+              const su = String(s0?.storage_temp_unit || '').toUpperCase();
+              const legacyDisplayUnit = String(s0?.temp_unit||'C').toUpperCase();
+              const nums = [s0?.default_temp, s0?.min_temp, s0?.max_temp, s0?.boiler_min_temp, s0?.boiler_max_temp, s0?.away?.target_c].map(v=>Number(v)).filter(v=>Number.isFinite(v));
+              const maxN = nums.length ? Math.max(...nums) : -Infinity;
+              const looksLikeF = Number.isFinite(maxN) && maxN > 45;
+              const legacyWasF = (legacyDisplayUnit === 'F');
+              const storeWasF = (su === 'F') || (!su && (legacyWasF || looksLikeF));
+              if (storeWasF) {
                 const conv = (n)=>{ const v=Number(n); return Number.isFinite(v)? this._fToC(v): n; };
                 const so = { ...s0 };
                 if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
@@ -3639,6 +3738,8 @@ class ThermostatTimelineCard extends HTMLElement {
             try { this._awayBypass = !!s.away_bypass; } catch {}
             if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
             if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
+            if (typeof s.pause_sensor_enabled === 'boolean' && !this._yamlProvided?.pause_sensor_enabled) this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
+            if (typeof s.pause_sensor_entity === 'string' && !this._yamlProvided?.pause_sensor_entity) this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
             if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled;
             if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
             if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
@@ -3655,6 +3756,7 @@ class ThermostatTimelineCard extends HTMLElement {
               try { if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled; } catch {}
               try { if (typeof s.weekdays_mode === 'string') this._config.weekdays_mode = s.weekdays_mode; } catch {}
               try { if (typeof s.weekdays_view === 'string') this._config.weekdays_view = s.weekdays_view; } catch {}
+              try { if (typeof s.weekdays_view_switch_in_timeline === 'boolean') this._config.weekdays_view_switch_in_timeline = !!s.weekdays_view_switch_in_timeline; } catch {}
               try { if (typeof s.weekdays_selected_room === 'string') this._config.weekdays_selected_room = s.weekdays_selected_room; } catch {}
             }
             // Pick up a global profile selection from shared storage
@@ -3812,10 +3914,13 @@ class ThermostatTimelineCard extends HTMLElement {
     try { if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled; } catch {}
     try { if (typeof s.weekdays_mode === 'string') this._config.weekdays_mode = s.weekdays_mode; } catch {}
     try { if (typeof s.weekdays_view === 'string') this._config.weekdays_view = s.weekdays_view; } catch {}
+    try { if (typeof s.weekdays_view_switch_in_timeline === 'boolean') this._config.weekdays_view_switch_in_timeline = !!s.weekdays_view_switch_in_timeline; } catch {}
     try { if (typeof s.weekdays_selected_room === 'string') this._config.weekdays_selected_room = s.weekdays_selected_room; } catch {}
   }
     if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
     if (typeof s.show_pause_button === 'boolean' && !this._yamlProvided?.show_pause_button) this._config.show_pause_button = !!s.show_pause_button;
+    if (typeof s.pause_sensor_enabled === 'boolean' && !this._yamlProvided?.pause_sensor_enabled) this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
+    if (typeof s.pause_sensor_entity === 'string' && !this._yamlProvided?.pause_sensor_entity) this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
     if (s.away && typeof s.away === 'object') {
       try {
         const a = s.away;
@@ -3895,6 +4000,8 @@ class ThermostatTimelineCard extends HTMLElement {
               boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : Number(this._config.boiler_min_temp),
               boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : Number(this._config.boiler_max_temp),
               show_pause_button: !!(this._config.show_pause_button ?? true), 
+              pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false),
+              pause_sensor_entity: String(this._config.pause_sensor_entity || ''),
               pause_indef: !!this._pauseIndef, 
               pause_until_ms: Number(this._pauseUntilMs||0), 
               holidays_enabled: !!this._config.holidays_enabled, 
@@ -4059,7 +4166,8 @@ class ThermostatTimelineCard extends HTMLElement {
   // --- Temperature conversion helpers (internal storage is °C) ---
   _cToF(c){ try { return (Number(c)*9/5)+32; } catch { return c; } }
   _fToC(f){ try { return (Number(f)-32)*5/9; } catch { return f; } }
-  _serviceTempFromC(c){ return this._isF() ? this._cToF(c) : c; }
+  // Service calls must follow Home Assistant's unit system (not the card display unit)
+  _serviceTempFromC(c){ return this._haIsF() ? this._cToF(c) : c; }
   _haIsF(){ try { const u = String(this._hass?.config?.unit_system?.temperature||''); return u.toUpperCase().includes('F'); } catch { return false; } }
   async _applySetpointForEntity(eid, desiredC){
     try {
@@ -4135,10 +4243,43 @@ class ThermostatTimelineCard extends HTMLElement {
       return clone;
     } catch { return schedules; }
   }
+
+  // Heuristic for legacy stores: detect if schedule temps look like °F (typical °C schedules are < ~45)
+  _maxTempInSchedules(schedules){
+    let maxV = -Infinity;
+    const scanBlocks = (arr)=>{
+      if (!Array.isArray(arr)) return;
+      for (const b of arr){
+        try {
+          if (!b || typeof b !== 'object') continue;
+          const v = Number(b.temp);
+          if (Number.isFinite(v)) maxV = Math.max(maxV, v);
+        } catch {}
+      }
+    };
+    try {
+      const s = schedules || {};
+      for (const eid of Object.keys(s)){
+        const row = s[eid];
+        if (!row || typeof row !== 'object') continue;
+        const d = Number(row.defaultTemp);
+        if (Number.isFinite(d)) maxV = Math.max(maxV, d);
+        scanBlocks(row.blocks);
+        try { const days = row?.weekly?.days||{}; for (const k of Object.keys(days)) scanBlocks(days[k]); } catch {}
+        try { const prof = row?.profiles||{}; for (const p of Object.keys(prof)) scanBlocks(prof[p]?.blocks); } catch {}
+        try { scanBlocks(row?.holiday?.blocks); } catch {}
+        try { const pres = row?.presence||{}; for (const key of Object.keys(pres)) scanBlocks(pres[key]?.blocks); } catch {}
+      }
+    } catch {}
+    return Number.isFinite(maxV) ? maxV : -Infinity;
+  }
+
   // Build payload for shared storage respecting selected unit for numbers
   _makeStoragePayload(includeSchedules=true){
     try {
-      const wantF = this._isF();
+      // Canonical shared storage is always °C to avoid drift when multiple clients use different display units.
+      // (Display unit is controlled by settings.temp_unit and is independent of stored numeric values.)
+      const wantF = false;
       let schedules = undefined;
       let weekdays = {};
       let profiles = {};
@@ -4164,17 +4305,10 @@ class ThermostatTimelineCard extends HTMLElement {
             }
           }
         } catch {}
-        schedules = wantF ? this._convertSchedulesTemps(cloned, 'F') : cloned;
-        // If converting to F, ensure weekday payload converted too
-        if (wantF && Object.keys(weekdays).length) {
-          try { weekdays = this._convertSchedulesTemps(weekdays, 'F'); } catch {}
-        }
-        if (wantF && Object.keys(profiles).length) {
-          try { profiles = this._convertSchedulesTemps(profiles, 'F'); } catch {}
-        }
+        schedules = cloned;
       }
       // Convert numeric settings if storing as °F
-      const toStore = (n)=>{ const v = Number(n); if (!Number.isFinite(v)) return n; return wantF ? this._cToF(v) : v; };
+      const toStore = (n)=>{ const v = Number(n); if (!Number.isFinite(v)) return n; return v; };
       const awayCfg = this._config?.away || {};
       const awayOut = { ...awayCfg };
       if (typeof awayOut.target_c !== 'undefined') awayOut.target_c = toStore(awayOut.target_c);
@@ -4196,6 +4330,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
         time_12h: this._config.time_12h,
         temp_unit: this._config.temp_unit,
+        storage_temp_unit: 'C',
         time_source: this._config.time_source,
         row_height: Number(this._config.row_height ?? 64),
         default_temp: toStore(Number(this._config.default_temp||20)),
@@ -4204,6 +4339,7 @@ class ThermostatTimelineCard extends HTMLElement {
         weekdays_enabled: !!this._config.weekdays_enabled,
         weekdays_mode: this._config.weekdays_mode || 'weekday_weekend',
         weekdays_view: this._config.weekdays_view || 'all_rooms_one_day',
+        weekdays_view_switch_in_timeline: !!(this._config.weekdays_view_switch_in_timeline ?? false),
         weekdays_selected_room: this._config.weekdays_selected_room || '',
         per_room_defaults: !!this._config.per_room_defaults,
         away: awayOut,
@@ -4218,6 +4354,8 @@ class ThermostatTimelineCard extends HTMLElement {
         boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : toStore(this._config.boiler_min_temp),
         boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : toStore(this._config.boiler_max_temp),
         show_pause_button: !!(this._config.show_pause_button ?? true),
+          pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false),
+          pause_sensor_entity: String(this._config.pause_sensor_entity || ''),
   presence_live_header: !!(this._config.presence_live_header ?? true),
         auto_apply_enabled: !!this._config.auto_apply,
         apply_on_edit: !!this._config.apply_on_edit,
@@ -4577,8 +4715,19 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   // ---- Pause helpers ----
+  _isPausedBySensor(){
+    try {
+      if (!this._config?.pause_sensor_enabled) return false;
+      const eid = String(this._config?.pause_sensor_entity || '').trim();
+      if (!eid || !eid.startsWith('binary_sensor.')) return false;
+      const st = this._hass?.states?.[eid];
+      const s = String(st?.state || '').toLowerCase();
+      return s === 'on';
+    } catch { return false; }
+  }
   _isPaused(){
     try {
+      if (this._isPausedBySensor()) return true;
       if (this._pauseIndef) return true;
       const until = Number(this._pauseUntilMs||0);
       if (Number.isFinite(until) && until > Date.now()) return true;
@@ -4590,7 +4739,7 @@ class ThermostatTimelineCard extends HTMLElement {
     try {
       if (this._resumeTimer) clearTimeout(this._resumeTimer);
       if (!this._isPaused()) return;
-      if (this._pauseIndef) return; // manual resume only
+      if (this._pauseIndef || this._isPausedBySensor()) return; // manual or sensor resume only
       const when = this._resumeAtMs();
       if (!when) return;
       const delay = Math.max(500, when - Date.now());
@@ -4623,7 +4772,7 @@ class ThermostatTimelineCard extends HTMLElement {
       if (this._countdownTimer) clearInterval(this._countdownTimer);
       const wrap = this.shadowRoot && this.shadowRoot.querySelector('.pause-wrap');
       const etaEl = wrap && wrap.querySelector && wrap.querySelector('.pause-eta');
-      if (!this._isPaused() || this._pauseIndef || !etaEl) return;
+      if (!this._isPaused() || this._pauseIndef || this._isPausedBySensor() || !etaEl) return;
       const tick = ()=>{ try { if (!this._isPaused() || this._pauseIndef) { clearInterval(this._countdownTimer); this._countdownTimer=null; etaEl.textContent=''; return; } etaEl.textContent = this._formatPauseCountdown(); } catch {} };
       tick();
       this._countdownTimer = setInterval(tick, 1000);
@@ -4724,6 +4873,8 @@ class ThermostatTimelineCard extends HTMLElement {
     if (!this._config?.auto_apply) return;
     // Don't schedule until config is available
     if (!this._hasConfig) return;
+    // If paused by binary sensor, don't schedule boundary timer; resume when sensor changes
+    if (this._isPausedBySensor && this._isPausedBySensor()) { this._scheduleResumeTimer(); return; }
     // If paused indefinitely, don't schedule boundary timer; only resume via user action
     if (this._pauseIndef) { this._scheduleResumeTimer(); return; }
     // Choose earlier of boundary and pause-resume moment if set
@@ -4928,12 +5079,14 @@ class ThermostatTimelineCard extends HTMLElement {
       <style>
         :host { display:block; }
     .card{ --pad-x:16px; background: var(--card-background-color); color: var(--primary-text-color); border-radius: var(--ha-card-border-radius, 12px); box-shadow: var(--ha-card-box-shadow, none); overflow:hidden }
-  .header{display:grid;align-items:center;grid-template-columns: 1fr auto 1fr;gap:.75rem;padding:12px var(--pad-x);border-bottom:1px solid var(--divider-color); position:relative}
-  .title{display:flex; align-items:center; gap:8px; font-weight:600;font-size:1rem;color:var(--primary-text-color)}
+  .header{display:grid;align-items:center;grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);gap:.75rem;padding:12px var(--pad-x);border-bottom:1px solid var(--divider-color); position:relative}
+  /* Explicit grid placement so right tools don't drift when center is hidden */
+  .title{ grid-column:1; display:flex; align-items:center; gap:8px; font-weight:600;font-size:1rem;color:var(--primary-text-color); min-width:0; overflow:hidden}
+  .title .title-text{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   /* Right header area aligns content to far right */
-  .header .spacer{display:flex; justify-content:flex-end;}
-  /* Absolute wrapper to ensure pause stays top-right regardless of center label */
-  .header .pause-wrap{ position:absolute; right: var(--pad-x); top: 50%; transform: translateY(-50%); display:flex; align-items:center; gap:8px; }
+  .header .spacer{ grid-column:3; justify-self:end; display:flex; justify-content:flex-end; min-width:0; overflow:hidden;}
+  /* Right-side header toolbar (lives inside .spacer) */
+  .header .pause-wrap{ display:flex; align-items:center; gap:8px; }
   .header .pause-wrap .pause-eta{ font-size:.82rem; color: var(--primary-text-color); min-width:58px; text-align:center; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); }
   /* Presence live chips (away persons status) */
   .header .pause-wrap .presence-live{ display:flex; align-items:center; gap:6px; flex-wrap:nowrap; max-width:50vw; overflow:hidden; }
@@ -4944,7 +5097,53 @@ class ThermostatTimelineCard extends HTMLElement {
   @supports not (color-mix(in oklab, #000 0%, #000 0%)){
     .header .pause-wrap .presence-live .presence-chip.away .presence-dot{ background: var(--error-color, #b00020); }
   }
-  .weekday-full{ display:flex; align-items:center; justify-content:center; gap:8px; text-align:center; font-weight:700; font-size:1.15rem; color:var(--primary-text-color)}
+  .weekday-full{
+    grid-column:2;
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--primary-text-color);
+    min-width:0;
+  }
+  .weekday-full .wd-left{ display:flex; align-items:center; justify-content:flex-end; gap:6px; }
+  .weekday-full .wd-center{ display:inline-flex; align-items:center; justify-content:center; gap:6px; min-width:0; }
+  .weekday-full .wd-right{ display:flex; align-items:center; justify-content:flex-start; gap:6px; }
+  /* Weekday view switch (inline, next to weekday controls) */
+  .header .sp-week-view-inline{ display:inline-flex; align-items:center; height:26px; border-radius:999px; overflow:hidden; border:1px solid var(--divider-color); background: var(--card-background-color); pointer-events:auto; }
+  .header .pause-wrap .sp-week-view-inline{ margin-right:8px; }
+  .header .sp-week-view-inline button{ height:26px; display:inline-flex; align-items:center; padding:0 10px; font-size:.78rem; font-weight:700; line-height:1.1; border:0; cursor:pointer; background:transparent; color: var(--secondary-text-color); pointer-events:auto; }
+  .header .sp-week-view-inline button.active{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  .header .sp-week-view-inline button:focus{ outline:none; }
+  .header .sp-week-view-inline button:focus-visible{ outline:2px solid var(--primary-color); outline-offset:2px; border-radius:8px; }
+  /* Default: show switch in top row (desktop), hide on weekday row */
+  .weekday-full .sp-week-view-mobile{ display:none; }
+  .header .pause-wrap .sp-week-view-desktop{ display:inline-flex; }
+
+  /* Mobile: split header into 2 rows (title/tools on top, weekday nav below) */
+  @media (max-width: 520px){
+    .header{ grid-template-columns: 1fr auto; grid-template-rows: auto auto; row-gap: 8px; }
+    .title{ grid-column: 1; grid-row: 1; min-width: 0; }
+    .header .spacer{ grid-column: 2; grid-row: 1; }
+    .weekday-full{
+      grid-column: 1 / 3;
+      grid-row: 2;
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .weekday-full .wd-left{ justify-content:flex-start; }
+    .weekday-full .wd-center{ margin-left:auto; justify-content:flex-end; }
+    /* right container is unused on mobile (arrows are in center) */
+    .weekday-full .wd-right{ display:none; }
+    /* Mobile: show switch on row 2 by arrows, hide in top row */
+    .weekday-full .sp-week-view-mobile{ display:inline-flex; }
+    .header .pause-wrap .sp-week-view-desktop{ display:none; }
+  }
   .profile-pill{ font-weight:600; font-size:.85rem; padding:2px 8px; border-radius:999px; border:1px solid var(--divider-color); background: var(--secondary-background-color, rgba(0,0,0,.05)); color: var(--primary-text-color); }
   .profile-pill.success{ background: var(--success-color, #2e7d32); color:#fff; border-color: var(--success-color, #2e7d32); }
   .scale{position:relative;padding:8px var(--pad-x);z-index:0;margin-bottom:6px;border-bottom:1px solid var(--divider-color)}
@@ -5480,6 +5679,7 @@ class ThermostatTimelineCard extends HTMLElement {
             </div>
             <div class="settings-tabs" role="tablist">
               <button type="button" class="settings-tab-btn" data-tab="settings" role="tab" aria-selected="true"></button>
+              <button type="button" class="settings-tab-btn" data-tab="pause" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="weekdays" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="rooms" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="boiler" role="tab" aria-selected="false"></button>
@@ -5544,14 +5744,6 @@ class ThermostatTimelineCard extends HTMLElement {
 
                   <div class="setting">
                     <div class="text">
-                      <div class="title sp-pausebtn-title"></div>
-                      <div class="desc sp-pausebtn-desc"></div>
-                    </div>
-                    <ha-switch class="sp-pausebtn"></ha-switch>
-                  </div>
-
-                  <div class="setting">
-                    <div class="text">
                       <div class="title sp-timefmt-title"></div>
                       <div class="desc sp-timefmt-desc"></div>
                     </div>
@@ -5589,6 +5781,33 @@ class ThermostatTimelineCard extends HTMLElement {
                       <div class="desc sp-profiles-desc"></div>
                     </div>
                     <ha-switch class="sp-profiles"></ha-switch>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-page" data-page="pause">
+                <div class="settings-card">
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-pausebtn-title"></div>
+                      <div class="desc sp-pausebtn-desc"></div>
+                    </div>
+                    <ha-switch class="sp-pausebtn"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-pausesensor-title"></div>
+                      <div class="desc sp-pausesensor-desc"></div>
+                    </div>
+                    <ha-switch class="sp-pausesensor"></ha-switch>
+                  </div>
+
+                  <div class="setting sp-pausesensor-entity-setting" style="grid-template-columns: 1fr;">
+                    <div class="text">
+                      <div class="title sp-pausesensor-entity-title"></div>
+                      <div class="desc sp-pausesensor-entity-desc"></div>
+                    </div>
+                    <tt-entity-picker class="sp-pausesensor-entity" include-domains='["binary_sensor"]'></tt-entity-picker>
                   </div>
                 </div>
               </div>
@@ -5901,6 +6120,70 @@ class ThermostatTimelineCard extends HTMLElement {
   const headerEl = qs('.header');
     if (!rowsEl || !scaleEl || !titleEl) return;
 
+    // Helper: build "All rooms" / "All days" view switch
+    const makeWeekViewSeg = (extraClass='')=>{
+      try {
+        const isWeekEnabled = !!this._config?.weekdays_enabled;
+        const allowInlineViewSwitch = !!(this._config?.weekdays_view_switch_in_timeline);
+        const isHoliday = !!(this._isHolidayActive && this._isHolidayActive());
+        if (!isWeekEnabled || !allowInlineViewSwitch || isHoliday) return null;
+
+        const fullRooms = this._t('week.view.rooms_one_day') || 'All rooms • one day';
+        const fullDays = this._t('week.view.days_one_room') || 'All days • one room';
+        const short = (txt)=>{
+          try {
+            const s = String(txt || '').split('•')[0].trim();
+            return s || String(txt || '');
+          } catch { return String(txt || ''); }
+        };
+
+        const setView = (mode)=>{
+          try {
+            if (!this._config?.weekdays_enabled) return;
+            const next = (mode === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+            const cur = String(this._config?.weekdays_view || 'all_rooms_one_day');
+            if (cur === next) return;
+            this._config.weekdays_view = next;
+            // Keep selected room consistent
+            try {
+              const ents = Array.isArray(this._config?.entities) ? this._config.entities.filter(Boolean).map(String) : [];
+              if (next === 'one_room_all_days') {
+                const want = String(this._config?.weekdays_selected_room || '');
+                this._config.weekdays_selected_room = (want && ents.includes(want)) ? want : (ents[0] || '');
+              } else {
+                this._config.weekdays_selected_room = '';
+                try { this._setTimelineDisplayDayKey(this._todayKey()); } catch {}
+              }
+            } catch {}
+            this._render();
+            try { this._debouncedSaveStore(); } catch {}
+          } catch {}
+        };
+
+        const seg = document.createElement('div');
+        seg.className = 'sp-week-view-inline' + (extraClass ? (' ' + extraClass) : '');
+        seg.setAttribute('role','group');
+        seg.setAttribute('aria-label', this._t('week.title') || 'Weekdays');
+
+        const bRooms = document.createElement('button');
+        bRooms.type = 'button';
+        bRooms.textContent = short(fullRooms);
+        bRooms.title = String(fullRooms || '');
+        bRooms.classList.toggle('active', String(this._config?.weekdays_view || 'all_rooms_one_day') === 'all_rooms_one_day');
+        bRooms.addEventListener('click', ()=>setView('all_rooms_one_day'));
+
+        const bDays = document.createElement('button');
+        bDays.type = 'button';
+        bDays.textContent = short(fullDays);
+        bDays.title = String(fullDays || '');
+        bDays.classList.toggle('active', String(this._config?.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days');
+        bDays.addEventListener('click', ()=>setView('one_room_all_days'));
+
+        seg.append(bRooms, bDays);
+        return seg;
+      } catch { return null; }
+    };
+
     // Determine first active profile (if any) for header pill
     let _activeProfileName = null;
     try {
@@ -5966,6 +6249,7 @@ class ThermostatTimelineCard extends HTMLElement {
       if (_activeProfileName) {
         const p = document.createElement('span'); p.className = 'profile-pill success'; const prefix = this._t('profiles.active_label') || 'Manual profile active:'; p.textContent = `${prefix} ${_activeProfileName}`; titleEl.append(p);
       }
+
     }
     // (Profile pill moved next to title; weekday center shows only day name now)
     // Center header: show current weekday name when weekday mode is enabled
@@ -6002,10 +6286,14 @@ class ThermostatTimelineCard extends HTMLElement {
           const mkArrow = (dir)=>{
             const btn = document.createElement('button');
             btn.type = 'button';
+            btn.className = 'wd-arrow';
             btn.textContent = dir < 0 ? '◀' : '▶';
-            btn.style.cssText = 'background:none; border:none; color:var(--primary-text-color); cursor:pointer; padding:0 8px; font-size:inherit;';
+            btn.style.cssText = 'background:none; border:none; color:var(--primary-text-color); cursor:pointer; padding:0 4px; font-size:inherit;';
             return btn;
           };
+
+          let leftNavBtn = null;
+          let rightNavBtn = null;
 
           // In "Alle rum • én dag" view: arrows browse days (Mon..Sun)
           if (isWeekEnabled && viewMode === 'all_rooms_one_day') {
@@ -6019,30 +6307,8 @@ class ThermostatTimelineCard extends HTMLElement {
               this._setTimelineDisplayDayKey(names[newIdx]);
               this._render();
             });
-            dayFull.appendChild(prevBtn);
-          }
-          // In "Alle dage • ét rum" view: keep room navigation arrows (only if multiple rooms)
-          else if (isWeekEnabled && viewMode === 'one_room_all_days' && ents.length > 1) {
-            const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room))
-              ? this._config.weekdays_selected_room
-              : (ents[0]||'');
-            const roomIdx = ents.indexOf(roomEid);
-            const prevBtn = mkArrow(-1);
-            prevBtn.title = 'Previous room';
-            prevBtn.addEventListener('click', () => {
-              const newIdx = roomIdx <= 0 ? ents.length - 1 : roomIdx - 1;
-              this._config.weekdays_selected_room = ents[newIdx];
-              this._render();
-            });
-            dayFull.appendChild(prevBtn);
-          }
-          
-          // Label text
-          const labelSpan = document.createElement('span');
-          labelSpan.textContent = label;
-          dayFull.appendChild(labelSpan);
+            leftNavBtn = prevBtn;
 
-          if (isWeekEnabled && viewMode === 'all_rooms_one_day') {
             const nextBtn = mkArrow(1);
             nextBtn.title = 'Next day';
             nextBtn.addEventListener('click', () => {
@@ -6053,12 +6319,24 @@ class ThermostatTimelineCard extends HTMLElement {
               this._setTimelineDisplayDayKey(names[newIdx]);
               this._render();
             });
-            dayFull.appendChild(nextBtn);
-          } else if (isWeekEnabled && viewMode === 'one_room_all_days' && ents.length > 1) {
+            rightNavBtn = nextBtn;
+          }
+          // In "Alle dage • ét rum" view: keep room navigation arrows (only if multiple rooms)
+          else if (isWeekEnabled && viewMode === 'one_room_all_days' && ents.length > 1) {
             const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room))
               ? this._config.weekdays_selected_room
               : (ents[0]||'');
             const roomIdx = ents.indexOf(roomEid);
+
+            const prevBtn = mkArrow(-1);
+            prevBtn.title = 'Previous room';
+            prevBtn.addEventListener('click', () => {
+              const newIdx = roomIdx <= 0 ? ents.length - 1 : roomIdx - 1;
+              this._config.weekdays_selected_room = ents[newIdx];
+              this._render();
+            });
+            leftNavBtn = prevBtn;
+
             const nextBtn = mkArrow(1);
             nextBtn.title = 'Next room';
             nextBtn.addEventListener('click', () => {
@@ -6066,8 +6344,30 @@ class ThermostatTimelineCard extends HTMLElement {
               this._config.weekdays_selected_room = ents[newIdx];
               this._render();
             });
-            dayFull.appendChild(nextBtn);
+            rightNavBtn = nextBtn;
           }
+
+          const leftWrap = document.createElement('div');
+          leftWrap.className = 'wd-left';
+          const centerWrap = document.createElement('div');
+          centerWrap.className = 'wd-center';
+          const rightWrap = document.createElement('div');
+          rightWrap.className = 'wd-right';
+
+          // Mobile-only: show view switch on the weekday row (left-aligned)
+          try {
+            const segMobile = makeWeekViewSeg('sp-week-view-mobile');
+            if (segMobile) leftWrap.appendChild(segMobile);
+          } catch {}
+
+          const labelSpan = document.createElement('span');
+          labelSpan.textContent = label;
+          // Keep arrows tight to the label (centered as a group)
+          if (leftNavBtn) centerWrap.appendChild(leftNavBtn);
+          centerWrap.appendChild(labelSpan);
+          if (rightNavBtn) centerWrap.appendChild(rightNavBtn);
+
+          dayFull.append(leftWrap, centerWrap, rightWrap);
           
           dayFull.style.display = '';
         } else {
@@ -6103,9 +6403,17 @@ class ThermostatTimelineCard extends HTMLElement {
     // Right header tools: global pause toggle (absolute top-right)
     try {
       if (headerEl) {
+        const spacer = headerEl.querySelector('.spacer') || headerEl;
         let wrap = headerEl.querySelector('.pause-wrap');
-        if (!wrap) { wrap = document.createElement('div'); wrap.className = 'pause-wrap'; headerEl.append(wrap); }
+        if (!wrap) { wrap = document.createElement('div'); wrap.className = 'pause-wrap'; spacer.append(wrap); }
+        else if (wrap.parentNode !== spacer) { try { spacer.append(wrap); } catch {} }
         wrap.innerHTML = '';
+
+        // Desktop: show view switch in top row (hidden on mobile)
+        try {
+          const segDesktop = makeWeekViewSeg('sp-week-view-desktop');
+          if (segDesktop) wrap.append(segDesktop);
+        } catch {}
 
         // Settings button (top-right)
         try {
@@ -6378,8 +6686,25 @@ class ThermostatTimelineCard extends HTMLElement {
             addBtn.textContent = '+ ' + this._t('ui.add_block');
             addBtn.addEventListener('click', () => {
               this._weeklyEntity = roomEid;
-              this._weeklyDayKey = effKey(gk);
-              this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+              // Keep group/day key so editor respects current weekday mode.
+              // E.g. weekday_weekend: editing on Sunday should edit the "weekend" group.
+              this._ensureWeeklyStruct(row);
+              const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+              this._weeklyDayKey = gk;
+              // Build draft from active mode bucket (weekly_modes is the primary source).
+              try {
+                const src = row.weekly_modes?.[mode]?.days || row.weekly?.days || {};
+                const names = this._weekdayNames();
+                const draftDays = JSON.parse(JSON.stringify(src));
+                for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                this._weeklyDraft = { mode, days: draftDays };
+                // Include modes so edit/delete can fully reconcile sources.
+                try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+              } catch {
+                this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+                try { this._weeklyDraft.mode = this._weeklyDraft.mode || mode; } catch {}
+                try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+              }
               this._autoSaveWeeklyFromTimeline = true;
               this._openWeeklyBlockEditor(null, 0);
             });
@@ -6458,11 +6783,21 @@ class ThermostatTimelineCard extends HTMLElement {
               bl.addEventListener('dblclick', (e) => {
                 try { e.preventDefault(); e.stopPropagation(); } catch {}
                 this._weeklyEntity = roomEid;
-                this._weeklyDayKey = dkey;
-                this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
-                // Also include weekly_modes if it exists so editing works correctly
-                if (row.weekly_modes) {
-                  this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes));
+                // Keep group key (gk) so the editor knows whether it's weekdays/weekend vs specific day.
+                this._ensureWeeklyStruct(row);
+                const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+                this._weeklyDayKey = gk;
+                try {
+                  const src = row.weekly_modes?.[mode]?.days || row.weekly?.days || {};
+                  const names = this._weekdayNames();
+                  const draftDays = JSON.parse(JSON.stringify(src));
+                  for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                  this._weeklyDraft = { mode, days: draftDays };
+                  try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+                } catch {
+                  this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+                  try { this._weeklyDraft.mode = this._weeklyDraft.mode || mode; } catch {}
+                  try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
                 }
                 this._autoSaveWeeklyFromTimeline = true;
                 this._openWeeklyBlockEditor(b.id);
@@ -6476,11 +6811,20 @@ class ThermostatTimelineCard extends HTMLElement {
                   try { e.preventDefault(); e.stopPropagation(); } catch {}
                   this._lastWeeklyTap = { t: 0, target: null };
                   this._weeklyEntity = roomEid;
-                  this._weeklyDayKey = dkey;
-                  this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
-                  // Also include weekly_modes if it exists so editing works correctly
-                  if (row.weekly_modes) {
-                    this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes));
+                  this._ensureWeeklyStruct(row);
+                  const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+                  this._weeklyDayKey = gk;
+                  try {
+                    const src = row.weekly_modes?.[mode]?.days || row.weekly?.days || {};
+                    const names = this._weekdayNames();
+                    const draftDays = JSON.parse(JSON.stringify(src));
+                    for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                    this._weeklyDraft = { mode, days: draftDays };
+                    try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+                  } catch {
+                    this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+                    try { this._weeklyDraft.mode = this._weeklyDraft.mode || mode; } catch {}
+                    try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
                   }
                   this._autoSaveWeeklyFromTimeline = true;
                   this._openWeeklyBlockEditor(b.id);
@@ -7140,12 +7484,10 @@ class ThermostatTimelineCard extends HTMLElement {
       const swApplyEdit = qs('.overlay-settings .sp-applyedit');
       const swApplyDef = qs('.overlay-settings .sp-applydef');
       const swPerRoom = qs('.overlay-settings .sp-perroom');
-      const swPauseBtn = qs('.overlay-settings .sp-pausebtn');
       if (swAuto) swAuto.onchange = onSw('auto_apply');
       if (swApplyEdit) swApplyEdit.onchange = onSw('apply_on_edit');
       if (swApplyDef) swApplyDef.onchange = onSw('apply_on_default_change');
       if (swPerRoom) swPerRoom.onchange = onSw('per_room_defaults');
-      if (swPauseBtn) swPauseBtn.onchange = onSw('show_pause_button');
 
       // Segmented controls + profiles enable
       const fmt24 = qs('.overlay-settings .sp-fmt24');
@@ -7189,7 +7531,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _setSettingsPopupTab(tab){
     try {
-      const allowed = new Set(['settings','weekdays','rooms','boiler','colors','owd','holidays','away']);
+      const allowed = new Set(['settings','pause','weekdays','rooms','boiler','colors','owd','holidays','away']);
       const next = allowed.has(String(tab)) ? String(tab) : 'settings';
       this._settingsPopupTab = next;
       this._renderSettingsPopupTabs();
@@ -7224,6 +7566,8 @@ class ThermostatTimelineCard extends HTMLElement {
       }
       if (active === 'settings') {
         this._renderSettingsPopupSettingsTab();
+      } else if (active === 'pause') {
+        this._renderSettingsPopupPauseTab();
       } else if (active === 'weekdays') {
         this._renderSettingsPopupWeekdaysTab();
       } else if (active === 'rooms') {
@@ -7318,6 +7662,8 @@ class ThermostatTimelineCard extends HTMLElement {
         apply_on_default_change: !!cfg.apply_on_default_change,
         per_room_defaults: !!cfg.per_room_defaults,
         show_pause_button: cfg.show_pause_button !== false,
+        pause_sensor_enabled: !!cfg.pause_sensor_enabled,
+        pause_sensor_entity: String(cfg.pause_sensor_entity || ''),
         time_12h: !!cfg.time_12h,
         time_source: (cfg.time_source === 'ha') ? 'ha' : 'browser',
         temp_unit: (String(cfg.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C',
@@ -7325,6 +7671,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
         weekdays_enabled: !!cfg.weekdays_enabled,
         weekdays_view: String(cfg.weekdays_view || 'all_rooms_one_day'),
+        weekdays_view_switch_in_timeline: !!(cfg.weekdays_view_switch_in_timeline ?? false),
         weekdays_selected_room: String(cfg.weekdays_selected_room || ''),
 
         boiler_enabled: !!cfg.boiler_enabled,
@@ -7452,6 +7799,8 @@ class ThermostatTimelineCard extends HTMLElement {
       cfg.apply_on_default_change = !!d.apply_on_default_change;
       cfg.per_room_defaults = !!d.per_room_defaults;
       cfg.show_pause_button = !!d.show_pause_button;
+      cfg.pause_sensor_enabled = !!d.pause_sensor_enabled;
+      cfg.pause_sensor_entity = String(d.pause_sensor_entity || '');
 
       cfg.time_12h = !!d.time_12h;
       cfg.time_source = (d.time_source === 'ha') ? 'ha' : 'browser';
@@ -7460,6 +7809,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
       cfg.weekdays_enabled = !!d.weekdays_enabled;
       cfg.weekdays_view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+      cfg.weekdays_view_switch_in_timeline = !!d.weekdays_view_switch_in_timeline;
       // If per-room view, ensure we have a selected room
       try {
         const ents = Array.isArray(cfg.entities) ? cfg.entities.filter(Boolean) : [];
@@ -9517,6 +9867,14 @@ class ThermostatTimelineCard extends HTMLElement {
               </div>
             </div>
 
+            <div class="setting sp-week-view-switch-setting">
+              <div class="text">
+                <div class="title sp-week-view-switch-title"></div>
+                <div class="desc sp-week-view-switch-desc"></div>
+              </div>
+              <ha-switch class="sp-week-view-switch"></ha-switch>
+            </div>
+
             <div class="setting sp-week-open-setting">
               <div class="text">
                 <div class="title sp-week-open-title"></div>
@@ -9531,6 +9889,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const q = (sel)=> this.shadowRoot.querySelector(sel);
       const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
       setChk('.overlay-settings .sp-week-enable', d.weekdays_enabled);
+      setChk('.overlay-settings .sp-week-view-switch', d.weekdays_view_switch_in_timeline);
 
       const view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
       try {
@@ -9544,6 +9903,11 @@ class ThermostatTimelineCard extends HTMLElement {
         if (row) row.style.opacity = on ? '' : '.5';
         if (bRooms) { bRooms.disabled = !on; bRooms.setAttribute('aria-disabled', (!on).toString()); }
         if (bDays)  { bDays.disabled  = !on; bDays.setAttribute('aria-disabled', (!on).toString()); }
+
+        const swRow = q('.overlay-settings .sp-week-view-switch-setting');
+        if (swRow) swRow.style.opacity = on ? '' : '.5';
+        const swInline = q('.overlay-settings .sp-week-view-switch');
+        if (swInline) { swInline.disabled = !on; swInline.setAttribute('aria-disabled', (!on).toString()); }
 
         // Open weekdays editor button
         const hasEnts = Array.isArray(this._config?.entities) && this._config.entities.filter(Boolean).length > 0;
@@ -9567,6 +9931,17 @@ class ThermostatTimelineCard extends HTMLElement {
               if (on && (!this._settingsDraft.weekdays_view || this._settingsDraft.weekdays_view === 'undefined')) {
                 this._settingsDraft.weekdays_view = 'all_rooms_one_day';
               }
+              this._renderSettingsPopupWeekdaysTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const swInline = q('.overlay-settings .sp-week-view-switch');
+          if (swInline) swInline.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.weekdays_view_switch_in_timeline = !!e.target.checked;
               this._renderSettingsPopupWeekdaysTab();
             } catch {}
           });
@@ -9635,7 +10010,6 @@ class ThermostatTimelineCard extends HTMLElement {
       setChk('.overlay-settings .sp-applyedit', d.apply_on_edit);
       setChk('.overlay-settings .sp-applydef', d.apply_on_default_change);
       setChk('.overlay-settings .sp-perroom', d.per_room_defaults);
-      setChk('.overlay-settings .sp-pausebtn', d.show_pause_button);
 
       // Segmented controls: active state
       try {
@@ -9668,6 +10042,68 @@ class ThermostatTimelineCard extends HTMLElement {
         setLbl('.overlay-settings .sp-slabel-def', 'editor.default_c');
         setLbl('.overlay-settings .sp-slabel-minc', 'editor.min_c');
         setLbl('.overlay-settings .sp-slabel-maxc', 'editor.max_c');
+      } catch {}
+    } catch {}
+  }
+
+  _renderSettingsPopupPauseTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
+
+      setChk('.overlay-settings .sp-pausebtn', d.show_pause_button);
+      setChk('.overlay-settings .sp-pausesensor', d.pause_sensor_enabled);
+
+      // Pause sensor entity row visibility + picker value
+      try {
+        const row = q('.overlay-settings .sp-pausesensor-entity-setting');
+        if (row) row.style.display = d.pause_sensor_enabled ? '' : 'none';
+      } catch {}
+      try {
+        const p = q('.overlay-settings .sp-pausesensor-entity');
+        if (p) {
+          p.hass = this._hass;
+          p.value = String(d.pause_sensor_entity || '');
+          try { p.setAttribute('label', this._t('editor.pause_sensor.entity_title') || 'Pause sensor'); } catch {}
+        }
+      } catch {}
+
+      // Wire Pause tab controls
+      const onSw = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const checked = !!(e && e.target && e.target.checked);
+          this._settingsDraft[key] = checked;
+        } catch {}
+      };
+
+      try {
+        const swPauseBtn = q('.overlay-settings .sp-pausebtn');
+        if (swPauseBtn) swPauseBtn.onchange = onSw('show_pause_button');
+      } catch {}
+
+      try {
+        const swPauseSensor = q('.overlay-settings .sp-pausesensor');
+        if (swPauseSensor) swPauseSensor.onchange = (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.pause_sensor_enabled = !!e?.target?.checked; this._renderSettingsPopupPauseTab(); } catch {} };
+      } catch {}
+
+      // Pause sensor entity picker
+      try {
+        const p = q('.overlay-settings .sp-pausesensor-entity');
+        if (p) {
+          if (!p._ttBoundPausePicker) {
+            p._ttBoundPausePicker = true;
+            p.addEventListener('value-changed', (ev)=>{
+              try {
+                if (!this._settingsDraft) return;
+                const v = (ev?.detail && ev.detail.value != null) ? String(ev.detail.value) : '';
+                this._settingsDraft.pause_sensor_entity = v;
+              } catch {}
+            });
+          }
+        }
       } catch {}
     } catch {}
   }
@@ -9707,6 +10143,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (!!d.apply_on_default_change !== !!c.apply_on_default_change) return true;
       if (!!d.per_room_defaults !== !!c.per_room_defaults) return true;
       if (!!d.show_pause_button !== !!(c.show_pause_button !== false)) return true;
+      if (!!d.pause_sensor_enabled !== !!c.pause_sensor_enabled) return true;
+      if (String(d.pause_sensor_entity||'') !== String(c.pause_sensor_entity||'')) return true;
       if (!!d.time_12h !== !!c.time_12h) return true;
       if (String(d.time_source||'browser') !== String(c.time_source||'browser')) return true;
       if (String(d.temp_unit||'C').toUpperCase() !== String(c.temp_unit||'C').toUpperCase()) return true;
@@ -10345,11 +10783,24 @@ class ThermostatTimelineCard extends HTMLElement {
         if (row) {
           const mode = this._weeklyDraft.mode || 'weekday_weekend';
           this._ensureWeeklyStruct(row);
-          // Save to both weekly and weekly_modes without syncing across group days
-          if (this._weeklyDraft._weeklyModes) {
-            row.weekly_modes = JSON.parse(JSON.stringify(this._weeklyDraft._weeklyModes));
+          // Save to both weekly and weekly_modes without syncing across group days.
+          // IMPORTANT: main timeline builds _weeklyDraft from weekly_modes, so if we only
+          // update row.weekly.days here, the next edit will reload stale blocks from
+          // row.weekly_modes and "revive" deleted blocks.
+          const daysCopy = JSON.parse(JSON.stringify(this._weeklyDraft.days || {}));
+          // Keep any existing modes, but ensure the active mode reflects this draft.
+          try {
+            if (this._weeklyDraft._weeklyModes) {
+              row.weekly_modes = JSON.parse(JSON.stringify(this._weeklyDraft._weeklyModes));
+            }
+          } catch {}
+          try {
+            if (!row.weekly_modes || typeof row.weekly_modes !== 'object') row.weekly_modes = {};
+            row.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(daysCopy)) };
+          } catch {
+            try { row.weekly_modes = row.weekly_modes || {}; row.weekly_modes[mode] = { days: daysCopy }; } catch {}
           }
-          row.weekly = { mode, days: JSON.parse(JSON.stringify(this._weeklyDraft.days)) };
+          row.weekly = { mode, days: JSON.parse(JSON.stringify(daysCopy)) };
           this._schedules[entity] = row;
           this._config.weekdays_mode = mode;
           const before = this._desiredNowSnapshot();
@@ -12271,6 +12722,7 @@ class ThermostatTimelineCard extends HTMLElement {
         // Tab strip (same labels as editor tabs; excludes Sync/Backup intentionally)
         const tabMap = {
           settings: 'editor.tabs.settings',
+          pause: 'editor.tabs.pause',
           weekdays: 'editor.tabs.weekdays',
           rooms: 'editor.tabs.rooms',
           boiler: 'editor.tabs.boiler',
@@ -12325,6 +12777,15 @@ class ThermostatTimelineCard extends HTMLElement {
         const pbd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausebtn-desc');
         if (pbd) pbd.textContent = t('editor.pausebtn.desc');
 
+        const pst = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-title');
+        if (pst) pst.textContent = t('editor.pause_sensor.title');
+        const psd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-desc');
+        if (psd) psd.textContent = t('editor.pause_sensor.desc');
+        const psEt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-entity-title');
+        if (psEt) psEt.textContent = t('editor.pause_sensor.entity_title');
+        const psEd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-entity-desc');
+        if (psEd) psEd.textContent = t('editor.pause_sensor.entity_desc');
+
         // New popup-only settings (moved from HA editor)
         const tft = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timefmt-title');
         if (tft) tft.textContent = t('editor.timefmt.title');
@@ -12358,6 +12819,11 @@ class ThermostatTimelineCard extends HTMLElement {
         if (wvR) wvR.textContent = t('week.view.rooms_one_day');
         const wvD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-days');
         if (wvD) wvD.textContent = t('week.view.days_one_room');
+
+        const wvsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-switch-title');
+        if (wvsT) wvsT.textContent = t('week.view_switch.title');
+        const wvsD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-switch-desc');
+        if (wvsD) wvsD.textContent = t('week.view_switch.desc');
 
         const woT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-title');
         if (woT) woT.textContent = t('week.editor.title');
@@ -12633,6 +13099,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled;
           if (typeof s.holidays_enabled === 'boolean') this._config.holidays_enabled = !!s.holidays_enabled;
           if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
+          if (typeof s.pause_sensor_enabled === 'boolean') this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
+          if (typeof s.pause_sensor_entity === 'string') this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
           if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
           if (typeof s.apply_on_default_change === 'boolean') this._config.apply_on_default_change = !!s.apply_on_default_change;
           if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
@@ -13072,7 +13540,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
                 let schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : (parsed || {});
                 let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, entities: Array.isArray(this._config.entities) ? this._config.entities : [], room_use_input_number: Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : [], color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
                 let colors = parsed && typeof parsed === 'object' && parsed.colors ? parsed.colors : { color_ranges: settings?.color_ranges || this._config.color_ranges, color_global: typeof settings?.color_global === 'boolean' ? settings.color_global : !!this._config.color_global };
-                settings = { ...settings, entities: Array.isArray(settings?.entities) ? settings.entities : (Array.isArray(this._config.entities) ? this._config.entities : []), room_use_input_number: Array.isArray(settings?.room_use_input_number) ? settings.room_use_input_number : (Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : []), row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+                settings = { ...settings, entities: Array.isArray(settings?.entities) ? settings.entities : (Array.isArray(this._config.entities) ? this._config.entities : []), room_use_input_number: Array.isArray(settings?.room_use_input_number) ? settings.room_use_input_number : (Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : []), row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
                 if (this._hass) {
                   // Use set_store service directly - file-based storage
                   await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings, colors });
@@ -13166,7 +13634,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const profiles = parsed.profiles || {};
         let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
         let colors = parsed.colors || { color_ranges: settings?.color_ranges || this._config.color_ranges, color_global: typeof settings?.color_global === 'boolean' ? settings.color_global : !!this._config.color_global };
-        settings = { ...settings, row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+        settings = { ...settings, row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
         if (this._hass) {
           // Use set_store service directly - file-based storage
           await this._hass.callService('thermostat_timeline', 'set_store', { schedules, weekdays, profiles, settings, colors });
@@ -13230,7 +13698,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   // --- Local helpers for unit/time conversions (editor context) ---
   _isF(){ try { return (this._config?.temp_unit||'C')==='F'; } catch { return false; } }
   _unitSymbol(){ return this._isF() ? '°F' : '°C'; }
-  _toDisplayTemp(c){ try { return this._isF() ? Math.round((Number(c)*9/5+32)*10)/10 : Number(c); } catch { return c; } }
+  _toDisplayTemp(c){
+    // Always round display values to avoid long decimals (e.g. whole °F becomes fractional °C internally).
+    try {
+      const v = Number(c);
+      if (!Number.isFinite(v)) return c;
+      const disp = this._isF() ? (v*9/5+32) : v;
+      return Math.round(disp * 10) / 10;
+    } catch { return c; }
+  }
   _fromDisplayTemp(v){ try { return this._isF() ? ((Number(v)-32)*5/9) : Number(v); } catch { return Number(v); } }
 
   
@@ -13930,11 +14406,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
               } catch {}
             }
             // Write local copy
-            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) }, colors })); } catch {}
+            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) }, colors })); } catch {}
             // And update shared file storage if available
             try {
               if (this._config.storage_enabled) {
-                const setPayload = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+                const setPayload = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
                 await this._hass.callService('thermostat_timeline','set_store', { schedules, settings: setPayload, colors });
               }
             } catch {}
@@ -14756,7 +15232,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     // These settings are now edited in the in-card popup + stored in shared/local storage,
     // so they should not be emitted into YAML config.
     try {
-      for (const k of ['row_height','default_temp','min_temp','max_temp','auto_apply','apply_on_edit','apply_on_default_change','per_room_defaults','show_pause_button','time_12h','time_source','temp_unit','profiles_enabled','weekdays_enabled','weekdays_view','weekdays_selected_room','boiler_enabled','boiler_switch','boiler_temp_sensor','boiler_min_temp','boiler_max_temp','open_window','color_ranges','color_global','respect_storage_weekdays']) {
+      for (const k of ['row_height','default_temp','min_temp','max_temp','auto_apply','apply_on_edit','apply_on_default_change','per_room_defaults','show_pause_button','pause_sensor_enabled','pause_sensor_entity','time_12h','time_source','temp_unit','profiles_enabled','weekdays_enabled','weekdays_view','weekdays_selected_room','boiler_enabled','boiler_switch','boiler_temp_sensor','boiler_min_temp','boiler_max_temp','open_window','color_ranges','color_global','respect_storage_weekdays']) {
         if (k in cfg) delete cfg[k];
       }
     } catch {}
