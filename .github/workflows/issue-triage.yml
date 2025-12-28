@@ -29,7 +29,7 @@ jobs:
           original_title = (issue.get("title") or "").strip()
           body = (issue.get("body") or "").strip()
 
-          # Undgå dobbelt prefix hvis nogen allerede skriver [Bug] osv.
+          # Avoid double prefix if someone already used [Bug], etc.
           prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
           stripped_title = prefix_re.sub("", original_title).strip() or original_title
 
@@ -37,11 +37,11 @@ jobs:
           def safe_parse_model_json(content: str):
             s = (content or "").strip()
 
-            # Fjern evt. ```json ... ``` fences
+            # Remove ```json ... ``` fences if present
             s = re.sub(r"^\s*```(?:json)?\s*", "", s, flags=re.I)
             s = re.sub(r"\s*```\s*$", "", s)
 
-            # Find første {...} blok
+            # Extract first {...} block
             start = s.find("{")
             end = s.rfind("}")
             if start == -1 or end == -1 or end <= start:
@@ -55,7 +55,7 @@ jobs:
               return None, f"JSON parse failed: {e}\nCandidate:\n{candidate}\nRaw:\n{s}"
           # --------------------------------------
 
-          # ---------- LLM: klassificering + kort titel + evt. locale ----------
+          # ---------- LLM: classification + short title + optional locale ----------
           messages = [
             {
               "role": "system",
@@ -84,8 +84,8 @@ jobs:
             "model": "openai/gpt-4.1",
             "messages": messages,
             "temperature": 0,
-            # Hvis endpointet understøtter dette, hjælper det.
-            # Hvis det fejler, så kommentér linjen ud igen.
+            # If supported by the endpoint, this helps enforce JSON output.
+            # If it causes an error, just comment it out again.
             # "response_format": {"type": "json_object"},
           }
 
@@ -126,13 +126,13 @@ jobs:
           if len(short_title) > 120:
             short_title = short_title[:120].rstrip()
 
-          # Locale: brug locale direkte som titel, hvis den blev fundet
+          # Locale: use locale directly as title if available
           if category == "locale" and locale:
             short_title = re.sub(r"\s+", " ", locale).strip()
             if len(short_title) > 120:
               short_title = short_title[:120].rstrip()
 
-          # DINE label-navne (præcis):
+          # Your exact label names:
           label_map = {
             "bug": "bug",
             "feature": "New feature",
@@ -147,15 +147,15 @@ jobs:
           }
           new_title = f"{prefix_map[category]} {short_title}".strip()
 
-          # Undgå no-op
+          # Avoid no-op
           if new_title.lower() == original_title.lower():
             new_title = ""
 
-          # ---------- Version-tjek (kun for bugs) ----------
+          # ---------- Version check (bugs only) ----------
           def has_version_for(kind: str, text: str) -> bool:
             """
-            Heuristik: finder versionsnumre i nærheden af nøgleord.
-            Matcher fx 1.2, 1.2.3, v1.2.3, 1.2.3-beta.1
+            Heuristic: find versions near keywords.
+            Matches e.g. 1.2, 1.2.3, v1.2.3, 1.2.3-beta.1
             """
             version_pat = r"(?:v)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z\.-]+)?"
             t = text or ""
@@ -181,21 +181,21 @@ jobs:
 
             if missing_card or missing_sync:
               lines = [
-                "Hej! For at vi kan reproducere buggen hurtigere, mangler vi lige versionsinfo:",
+                "Hi! To help us reproduce this bug faster, could you please share the following version info:",
                 ""
               ]
               if missing_card:
-                lines.append("- **Card version**: (fx 1.2.3)")
+                lines.append("- **Card version** (e.g. 1.2.3)")
               if missing_sync:
-                lines.append("- **Sync integration version**: (fx 0.9.1)")
+                lines.append("- **Sync integration version** (e.g. 0.9.1)")
               lines += [
                 "",
-                "Skriv dem gerne her i tråden – tak 🙏"
+                "Please reply here with the missing details — thank you 🙏"
               ]
               comment_body = "\n".join(lines)
           # ----------------------------------------------
 
-          # Output til næste steps (multiline-safe)
+          # Outputs (multiline-safe)
           out = os.environ["GITHUB_OUTPUT"]
           with open(out, "a", encoding="utf-8") as f:
             f.write(f"category={category}\n")
