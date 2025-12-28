@@ -47,20 +47,20 @@ jobs:
             function waitingBody(type) {
               if (type === 'bug') {
                 return `${MARKERS.bugWaiting}
-            ✅ Denne bug er markeret som **fikset** og bliver udgivet i **næste release**.
+            ✅ This bug has been marked as **fixed** and will be included in the **next release**.
 
-            Når releasen bliver udgivet, bliver dette issue automatisk opdateret og lukket.
+            When the release is published, this issue will be automatically updated and closed.
 
-            Hvis problemet stadig findes efter release, så skriv en kommentar der indeholder **reopen** (så åbner den automatisk igen).`;
+            If the problem still exists after the release, comment with **reopen** (it will be reopened automatically).`;
               }
 
               if (type === 'feature') {
                 return `${MARKERS.featureWaiting}
-            ✅ Denne feature er markeret som **klar** og bliver udgivet i **næste release**.
+            ✅ This feature has been marked as **ready** and will be included in the **next release**.
 
-            Når releasen bliver udgivet, bliver dette issue automatisk opdateret og lukket.
+            When the release is published, this issue will be automatically updated and closed.
 
-            Hvis noget stadig mangler efter release, så skriv en kommentar der indeholder **reopen** (så åbner den automatisk igen).`;
+            If anything is still missing after the release, comment with **reopen** (it will be reopened automatically).`;
               }
 
               throw new Error('Unknown waiting type: ' + type);
@@ -69,18 +69,18 @@ jobs:
             function releasedBody(type, version, url) {
               if (type === 'bug') {
                 return `${MARKERS.bugReleased}
-            ✅ **Bug fix udgivet** i **${version}**
+            ✅ **Bug fix released** in **${version}**
             🔗 ${url}
 
-            Hvis problemet stadig findes, så skriv en kommentar der indeholder **reopen**.`;
+            If the problem still exists, comment with **reopen**.`;
               }
 
               if (type === 'feature') {
                 return `${MARKERS.featureReleased}
-            ✅ **Feature udgivet** i **${version}**
+            ✅ **Feature released** in **${version}**
             🔗 ${url}
 
-            Hvis noget stadig mangler, så skriv en kommentar der indeholder **reopen**.`;
+            If anything is still missing, comment with **reopen**.`;
               }
 
               throw new Error('Unknown released type: ' + type);
