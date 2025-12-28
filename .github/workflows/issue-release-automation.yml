@@ -1,4 +1,4 @@
-name: Issue automation: ready-for-release + release closing (bugs & features)
+name: "Issue automation: ready-for-release + release closing (bugs & features)"
 
 'on':
   issues:
