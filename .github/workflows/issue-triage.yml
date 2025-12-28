@@ -29,11 +29,33 @@ jobs:
           original_title = (issue.get("title") or "").strip()
           body = (issue.get("body") or "").strip()
 
-          # Undgå dobbelt prefix hvis nogen allerede skriver det
+          # Undgå dobbelt prefix hvis nogen allerede skriver [Bug] osv.
           prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
           stripped_title = prefix_re.sub("", original_title).strip() or original_title
 
-          # --- LLM: klassificering + kort titel + evt. locale ---
+          # ---------- Robust JSON parse ----------
+          def safe_parse_model_json(content: str):
+            s = (content or "").strip()
+
+            # Fjern evt. ```json ... ``` fences
+            s = re.sub(r"^\s*```(?:json)?\s*", "", s, flags=re.I)
+            s = re.sub(r"\s*```\s*$", "", s)
+
+            # Find første {...} blok
+            start = s.find("{")
+            end = s.rfind("}")
+            if start == -1 or end == -1 or end <= start:
+              return None, f"No JSON braces found. Raw:\n{s}"
+
+            candidate = s[start:end+1].strip()
+
+            try:
+              return json.loads(candidate), None
+            except Exception as e:
+              return None, f"JSON parse failed: {e}\nCandidate:\n{candidate}\nRaw:\n{s}"
+          # --------------------------------------
+
+          # ---------- LLM: klassificering + kort titel + evt. locale ----------
           messages = [
             {
               "role": "system",
@@ -58,7 +80,14 @@ jobs:
             }
           ]
 
-          payload = {"model": "openai/gpt-4.1", "messages": messages, "temperature": 0}
+          payload = {
+            "model": "openai/gpt-4.1",
+            "messages": messages,
+            "temperature": 0,
+            # Hvis endpointet understøtter dette, hjælper det.
+            # Hvis det fejler, så kommentér linjen ud igen.
+            # "response_format": {"type": "json_object"},
+          }
 
           req = urllib.request.Request(
             "https://models.github.ai/inference/chat/completions",
@@ -77,12 +106,12 @@ jobs:
 
           content = data["choices"][0]["message"]["content"].strip()
 
-          # Robust JSON parse
-          try:
-            obj = json.loads(content)
-          except Exception:
-            m = re.search(r"\{.*\}", content, re.S)
-            obj = json.loads(m.group(0)) if m else {}
+          obj, err = safe_parse_model_json(content)
+          if obj is None:
+            print("WARN: Could not parse model output as JSON.")
+            print(err)
+            obj = {}
+          # -------------------------------------------------------------------
 
           category = (obj.get("category") or "").strip().lower()
           locale = (obj.get("locale") or "").strip()
@@ -97,6 +126,7 @@ jobs:
           if len(short_title) > 120:
             short_title = short_title[:120].rstrip()
 
+          # Locale: brug locale direkte som titel, hvis den blev fundet
           if category == "locale" and locale:
             short_title = re.sub(r"\s+", " ", locale).strip()
             if len(short_title) > 120:
@@ -117,10 +147,11 @@ jobs:
           }
           new_title = f"{prefix_map[category]} {short_title}".strip()
 
+          # Undgå no-op
           if new_title.lower() == original_title.lower():
             new_title = ""
 
-          # --- Version-tjek (kun for bugs) ---
+          # ---------- Version-tjek (kun for bugs) ----------
           def has_version_for(kind: str, text: str) -> bool:
             """
             Heuristik: finder versionsnumre i nærheden af nøgleord.
@@ -139,10 +170,7 @@ jobs:
             p2 = re.compile(rf"\b({version_pat})\b[^\n]{{0,40}}{kw}", re.I)
             return bool(p1.search(t) or p2.search(t))
 
-          missing_card = False
-          missing_sync = False
           comment_body = ""
-
           if category == "bug":
             text = f"{stripped_title}\n\n{body}"
             card_ok = has_version_for("card", text)
@@ -165,12 +193,13 @@ jobs:
                 "Skriv dem gerne her i tråden – tak 🙏"
               ]
               comment_body = "\n".join(lines)
+          # ----------------------------------------------
 
-          # Output
+          # Output til næste steps (multiline-safe)
           out = os.environ["GITHUB_OUTPUT"]
           with open(out, "a", encoding="utf-8") as f:
             f.write(f"category={category}\n")
-            f.write("label<<EOF\n" + label + "\nEOF\n")
+            f.write("label<<EOF\n" + (label or "") + "\nEOF\n")
             f.write("new_title<<EOF\n" + (new_title or "") + "\nEOF\n")
             f.write("comment_body<<EOF\n" + (comment_body or "") + "\nEOF\n")
           PY
