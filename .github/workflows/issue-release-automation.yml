@@ -1,6 +1,6 @@
 name: Issue automation: ready-for-release + release closing (bugs & features)
 
-on:
+'on':
   issues:
     types: [labeled]
   release:
@@ -31,7 +31,7 @@ jobs:
               featureAddedReleased: 'Feature added - released',
               featurePlanned: 'Feature will be added',
 
-              // Legacy labels you said existed before (safe to remove if present)
+              // Legacy labels (safe cleanup if they exist)
               legacyBugFixed: 'Bug fixed',
               legacyFeatureAdded: 'Feature added',
             };
@@ -127,7 +127,6 @@ jobs:
             }
 
             async function getReleaseInfo() {
-              // release event -> use payload
               if (context.eventName === 'release') {
                 const rel = context.payload.release;
                 const version = rel.tag_name || rel.name || 'unknown';
@@ -135,7 +134,6 @@ jobs:
                 return { version, url };
               }
 
-              // workflow_dispatch -> use latest non-draft, non-prerelease
               const releases = await github.rest.repos.listReleases({ owner, repo, per_page: 50 });
               const latest = releases.data.find(r => !r.draft && !r.prerelease);
               if (!latest) return null;
@@ -167,7 +165,7 @@ jobs:
               // 2) Labels
               if (type === 'bug') {
                 await safeRemoveLabel(issue_number, LABELS.bugWaiting);
-                await safeRemoveLabel(issue_number, LABELS.legacyBugFixed); // legacy cleanup
+                await safeRemoveLabel(issue_number, LABELS.legacyBugFixed);
 
                 await github.rest.issues.addLabels({
                   owner,
@@ -177,8 +175,8 @@ jobs:
                 });
               } else {
                 await safeRemoveLabel(issue_number, LABELS.featureWaiting);
-                await safeRemoveLabel(issue_number, LABELS.featurePlanned); // optional cleanup
-                await safeRemoveLabel(issue_number, LABELS.legacyFeatureAdded); // legacy cleanup
+                await safeRemoveLabel(issue_number, LABELS.featurePlanned);
+                await safeRemoveLabel(issue_number, LABELS.legacyFeatureAdded);
 
                 await github.rest.issues.addLabels({
                   owner,
@@ -201,7 +199,6 @@ jobs:
               const issue = context.payload.issue;
               const appliedLabel = context.payload.label?.name || '';
 
-              // Skip PRs
               if (issue.pull_request) {
                 core.info(`PR #${issue.number} – skipping`);
                 return;
@@ -209,13 +206,13 @@ jobs:
 
               if (appliedLabel === LABELS.bugWaiting) {
                 await upsertComment(issue.number, MARKERS.bugWaiting, waitingBody('bug'));
-                core.info(`#${issue.number}: added/updated waiting-for-release comment (bug).`);
+                core.info(`#${issue.number}: waiting-for-release comment (bug).`);
                 return;
               }
 
               if (appliedLabel === LABELS.featureWaiting) {
                 await upsertComment(issue.number, MARKERS.featureWaiting, waitingBody('feature'));
-                core.info(`#${issue.number}: added/updated waiting-for-release comment (feature).`);
+                core.info(`#${issue.number}: waiting-for-release comment (feature).`);
                 return;
               }
 
@@ -232,9 +229,8 @@ jobs:
               return;
             }
 
-            // Create target labels if they somehow don't exist
             await ensureLabel(LABELS.bugReleased, '0e8a16', 'Bug fixed and released');
-            await ensureLabel(LABELS.featureAddedReleased, '1d76db', 'Feature released');
+            await ensureLabel(LABELS.featureAddedReleased, '1d76db', 'Feature added and released');
 
             const bugIssues = await issuesWithLabelOpen(LABELS.bugWaiting);
             const featureIssues = await issuesWithLabelOpen(LABELS.featureWaiting);
