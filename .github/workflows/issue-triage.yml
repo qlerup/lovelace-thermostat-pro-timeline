@@ -1,0 +1,158 @@
+name: Issue triage (label + title prefix)
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  models: read
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Classify issue with GitHub Models
+        id: decide
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          python3 - <<'PY'
+          import os, json, re, urllib.request
+
+          with open(os.environ["GITHUB_EVENT_PATH"], "r", encoding="utf-8") as f:
+            event = json.load(f)
+
+          issue = event["issue"]
+          original_title = (issue.get("title") or "").strip()
+          body = (issue.get("body") or "").strip()
+
+          # Undgå dobbelt prefix hvis nogen allerede skriver [Bug] osv.
+          prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
+          stripped_title = prefix_re.sub("", original_title).strip() or original_title
+
+          messages = [
+            {
+              "role": "system",
+              "content": (
+                "You are a GitHub triage bot.\n"
+                "Classify the issue into exactly one category:\n"
+                "- bug: broken behavior, error, regression, unexpected result, steps to reproduce.\n"
+                "- feature: request for new functionality or enhancement.\n"
+                "- locale: request to add/translate language/locale/i18n (e.g. 'add Danish', 'translation', 'da-DK').\n\n"
+                "Return ONLY valid JSON with keys:\n"
+                "category: one of [bug, feature, locale]\n"
+                "locale: empty string unless category=locale; then set requested language/locale (e.g. 'Danish' or 'da-DK').\n"
+                "short_title: concise title WITHOUT any bracket prefix.\n\n"
+                "Rules:\n"
+                "- short_title must be plain text, <= 120 chars.\n"
+                "- For locale issues, if the requested language/locale is clear, prefer that as the short_title.\n"
+              )
+            },
+            {
+              "role": "user",
+              "content": f"User title: {stripped_title}\n\nIssue body:\n{body}"
+            }
+          ]
+
+          payload = {"model": "openai/gpt-4.1", "messages": messages, "temperature": 0}
+
+          req = urllib.request.Request(
+            "https://models.github.ai/inference/chat/completions",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+              "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+              "Content-Type": "application/json",
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+            },
+            method="POST",
+          )
+
+          with urllib.request.urlopen(req) as r:
+            data = json.load(r)
+
+          content = data["choices"][0]["message"]["content"].strip()
+
+          # Robust JSON parse
+          try:
+            obj = json.loads(content)
+          except Exception:
+            m = re.search(r"\{.*\}", content, re.S)
+            obj = json.loads(m.group(0)) if m else {}
+
+          category = (obj.get("category") or "").strip().lower()
+          locale = (obj.get("locale") or "").strip()
+          short_title = (obj.get("short_title") or "").strip()
+
+          if category not in {"bug", "feature", "locale"}:
+            category = "bug"
+
+          short_title = re.sub(r"\s+", " ", short_title).strip()
+          if not short_title:
+            short_title = stripped_title
+          if len(short_title) > 120:
+            short_title = short_title[:120].rstrip()
+
+          # Locale: brug locale direkte som titel, hvis den blev fundet
+          if category == "locale" and locale:
+            short_title = re.sub(r"\s+", " ", locale).strip()
+            if len(short_title) > 120:
+              short_title = short_title[:120].rstrip()
+
+          # DINE label-navne (præcis):
+          label_map = {
+            "bug": "bug",
+            "feature": "New feature",
+            "locale": "New locale",
+          }
+          label = label_map[category]
+
+          prefix_map = {
+            "bug": "[Bug]",
+            "feature": "[New feature request]",
+            "locale": "[Locale request]",
+          }
+          new_title = f"{prefix_map[category]} {short_title}".strip()
+
+          # Undgå no-op
+          if new_title.lower() == original_title.lower():
+            new_title = ""
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+            f.write(f"category={category}\n")
+            f.write("label<<EOF\n" + label + "\nEOF\n")
+            f.write("new_title<<EOF\n" + new_title + "\nEOF\n")
+          PY
+
+      - name: Apply label + title
+        uses: actions/github-script@v7
+        env:
+          LABEL: ${{ steps.decide.outputs.label }}
+          NEW_TITLE: ${{ steps.decide.outputs.new_title }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = context.payload.issue.number;
+
+            const labelName = process.env.LABEL?.trim();
+            const newTitle = process.env.NEW_TITLE?.trim();
+
+            // Tilføj label (forudsætter den findes, som du har oprettet)
+            if (labelName) {
+              await github.rest.issues.addLabels({
+                owner, repo, issue_number,
+                labels: [labelName],
+              });
+            }
+
+            // Opdater titel
+            if (newTitle) {
+              await github.rest.issues.update({
+                owner, repo, issue_number,
+                title: newTitle,
+              });
+            }
