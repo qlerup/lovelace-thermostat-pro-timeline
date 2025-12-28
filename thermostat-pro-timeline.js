@@ -1,298 +1,15503 @@
-name: Issue triage (label + prefix + conservative retitle + version questions)
+// Note: avoid ESM imports so the card works when loaded as "javascript" resource in HA.
+// ---- thermostat-timeline i18n (namespaced) ----
+const TT_I18N = {
+  en: {
+    // Card
+    'card.title_default': 'Thermostat Timeline',
+    // Modal / editor (inline)
+    'ui.edit_block': 'Edit block',
+    'ui.add_block': 'Add block',
+    'ui.from': 'From',
+    'ui.to': 'To',
+    'ui.temperature': 'Temperature',
+    'ui.delete': 'Delete',
+    'ui.cancel': 'Cancel',
+    'ui.close': 'Close',
+    'ui.unsaved_confirm': 'You have unsaved changes. Close anyway?',
+    'ui.discard_changes': 'Discard changes',
+    'ui.keep_editing': 'Keep editing',
+    'ui.save': 'Save',
+    'ui.error_prefix': 'Error: ',
+    'ui.overlap_msg': 'You selected overlapping times — overlap is {start} – {end}.',
+    'ui.auto_fix': 'Auto-fix',
+    'ui.fix_start_to': 'Set start to {time}',
+    'ui.fix_end_to': 'Set end to {time}',
+    'ui.current_temp': 'Current temperature:',
+    'ui.copy_plan': 'Copy plan',
+    'ui.paste_plan': 'Paste plan',
+    'ui.copy_day': 'Copy day',
+    'ui.paste_day': 'Paste day',
 
-on:
-  issues:
-    types: [opened]
+    'editor.title_label': 'Title',
+    'editor.add_entity': 'Add room',
+    'editor.entity_placeholder': 'Select an entity',
+    'editor.drag_reorder': 'Drag to reorder',
+    'editor.remove': 'Remove',
+    'editor.default_c': 'Default °C',
+    'editor.row_height_px': 'Row height (px)',
+    'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Auto apply',
+    'editor.auto_apply.desc': 'When enabled, the card tries to set temperature on the selected climate entities to match the scheduled value for “now”.',
+    'editor.apply_edit.title': 'On edit',
+    'editor.apply_edit.desc': 'When you edit blocks and it affects the current time, apply the new temperature immediately.',
+    'editor.apply_default.title': 'On default temperature change',
+    'editor.apply_default.desc': 'When “Default °C” changes and it affects the current period, apply the new temperature immediately.',
+    'editor.perroom.title': 'Default °C per room',
+    'editor.perroom.desc': 'Shows a Default °C field on each row. When off, the global Default °C is used for all rooms.',
 
-permissions:
-  issues: write
-  models: read
+    'editor.room_mode.title': 'Room entity type',
+    'editor.room_mode.desc': 'When enabled, select an input_number (target temperature). When disabled, select a climate entity.',
 
-jobs:
-  triage:
-    runs-on: ubuntu-latest
+    'editor.merge_label': 'Merge with (add extra thermostat)',
+    'editor.display_name_optional': 'Room name (optional)',
+    'editor.merged_with': 'Merged with',
 
-    steps:
-      - name: Classify + label + title + check versions
-        id: decide
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_EVENT_PATH: ${{ github.event_path }}
-        run: |
-          python3 - <<'PY'
-          import os, json, re, urllib.request
+    'editor.store_enable.title': 'Shared storage + background control',
+    'editor.store_enable.short': 'Stores schedules in the selected sensor and enables background control.',
+    'editor.store_enable.desc': 'Stores schedules in the selected sensor and enables set_temperature in the background. Thermostats are also updated when the card is closed. Shares schedules and card settings across users/devices. When off: commands are only sent while the card is visible on a device and must remain open.',
+    'editor.store_missing': 'The integration “Thermostat Pro Timeline Sync” is not installed. Shared storage is unavailable.',
+    'editor.open_in_hacs': 'Open in HACS',
+    'editor.clear_store': 'Clear storage',
+    'editor.clear_store_confirm': 'This will delete all stored schedules. Continue?',
+    'editor.migrate_to_store': 'Transfer data to storage',
+    'editor.migrate_confirm': 'Transfer your browser-saved schedules to the selected sensor? This overwrites existing schedules in storage.',
+    'editor.migrate_pull_confirm': 'Import schedules from storage and overwrite local browser data?',
+    'editor.select_storage_first': 'Select a storage sensor first.',
+    'editor.no_local_data': 'No local browser data was found.',
+    'editor.clear_all': 'Clear all data',
+    'editor.clear_all_confirm': 'This deletes both storage and local/browser schedules. Continue?',
+    'editor.clear_storage_only': 'Clear storage data only',
+    'editor.clear_storage_only_confirm': 'This deletes schedules from the selected storage sensor. Continue?',
+    'editor.clear_local_only': 'Clear ALL local data (local only)',
+    'editor.clear_local_only_confirm': 'This deletes only schedules saved in your browser. Continue?',
 
-          with open(os.environ["GITHUB_EVENT_PATH"], "r", encoding="utf-8") as f:
-            event = json.load(f)
+    'editor.select_entities': 'Rooms',
+    'editor.colors.empty': 'No rooms added yet. Add a room to define colors.',
+    'editor.colors.go_add': 'Add room',
 
-          issue = event["issue"]
-          original_title = (issue.get("title") or "").strip()
-          body = (issue.get("body") or "").strip()
+    'week.enable': 'Enable weekdays',
+    'week.enable.desc': 'Enable per-weekday planning. When off, the same plan is used every day.',
+    'week.mode': 'Weekday mode',
+  // removed same_all option from UI
+  'week.mode.weekday_weekend': 'Weekdays + Weekend',
+  'week.mode.weekday_sat_sun': 'Weekdays + Saturday + Sunday',
+  'week.mode.all_7': 'All days',
+  'week.button': 'Weekdays',
+  'week.title': 'Weekdays',
+  'week.group.weekdays': 'Weekdays',
+  'week.group.weekend': 'Weekend',
+  'week.days_full.mon': 'Monday',
+  'week.days_full.tue': 'Tuesday',
+  'week.days_full.wed': 'Wednesday',
+  'week.days_full.thu': 'Thursday',
+  'week.days_full.fri': 'Friday',
+  'week.days_full.sat': 'Saturday',
+  'week.days_full.sun': 'Sunday',
+  'week.days.mon': 'Mon',
+  'week.days.tue': 'Tue',
+  'week.days.wed': 'Wed',
+  'week.days.thu': 'Thu',
+  'week.days.fri': 'Fri',
+  'week.days.sat': 'Sat',
+  'week.days.sun': 'Sun',
+  'week.editor.title': 'Weekday schedule',
+  'week.editor.preview_note': 'Preview only. Changes are applied when you press Save.',
+  'week.open_editor.desc': 'Open the weekdays editor popup.',
+  'week.open_editor.btn': 'Open',
+  'week.view.title': 'Weekdays view',
+  'week.view.rooms_one_day': 'All rooms • one day',
+  'week.view.days_one_room': 'All days • one room',
+  'week.view_switch.title': 'Switch view from timeline',
+  'week.view_switch.desc': 'Show a toggle in the timeline header to switch between the two Weekdays view modes.',
+  'week.select_room': 'Select room',
+  'week.copy_to_rooms': 'Copy weekdays to rooms',
+  'week.copy_to_rooms.title': 'Copy weekdays to rooms',
+  'week.copy_to_rooms.select': 'Select rooms',
+  'week.copy_to_rooms.apply': 'Apply to rooms',
 
-          # Recognize our title prefixes
-          prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
-          stripped_title = prefix_re.sub("", original_title).strip() or original_title
+  'editor.timefmt.title': 'Time format',
+  'editor.timefmt.desc': 'Choose 24-hour or 12-hour (AM/PM) display for times.',
+  'editor.tempfmt.title': 'Temperature unit',
+  'editor.tempfmt.desc': 'Choose Celsius (°C) or Fahrenheit (°F) for display in the card and editors.',
+  'editor.timesrc.title': 'Time source',
+  'editor.timesrc.desc': 'Choose whether the card uses the browser time or the Home Assistant time zone for “now”.',
+  'editor.timesrc.browser': 'Browser',
+  'editor.timesrc.ha': 'Home Assistant',
 
-          # ---------- Robust JSON parse ----------
-          def safe_parse_model_json(content: str):
-            s = (content or "").strip()
-            # Remove ```json fences
-            s = re.sub(r"^\s*```(?:json)?\s*", "", s, flags=re.I)
-            s = re.sub(r"\s*```\s*$", "", s)
+  'editor.tabs.settings': 'Settings',
+  'editor.tabs.pause': 'Pause',
+  'editor.tabs.weekdays': 'Weekdays',
+  'editor.tabs.rooms': 'Rooms',
+  'editor.tabs.boiler': 'Boiler',
+  'editor.tabs.colors': 'Colors',
+  'editor.tabs.owd': 'Open Window Detection',
+  'editor.tabs.away': 'Away from home',
+  'editor.tabs.sync': 'Sync Engine',
+  'editor.tabs.backup': 'Backup',
 
-            start = s.find("{")
-            end = s.rfind("}")
-            if start == -1 or end == -1 or end <= start:
-              return None, f"No JSON braces found. Raw:\n{s}"
+  'owd.enable': 'Open Window Detection',
+  'owd.enable.desc': 'Turns off thermostats in a room when selected window/door sensors are open.',
+  'owd.sensors': 'Window/Door sensors',
+  'owd.delays.title': 'Delays',
+  'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).',
+  'owd.open_delay': 'After open (min)',
+  'owd.close_delay': 'After closed (min)',
 
-            candidate = s[start:end+1].strip()
-            try:
-              return json.loads(candidate), None
-            except Exception as e:
-              return None, f"JSON parse failed: {e}\nCandidate:\n{candidate}\nRaw:\n{s}"
-          # --------------------------------------
+  'boiler.switch': 'Boiler switch',
+  'boiler.enable': 'Enable boiler control',
+  'boiler.enable.desc': 'Show boiler settings in this card editor.',
+  'boiler.temp_sensor': 'Boiler temperature sensor',
+  'boiler.temp_sensor.desc': 'Temperature sensor that controls the boiler switch.',
+  'boiler.min_temp': 'Min boiler temp (°C)',
+  'boiler.max_temp': 'Max boiler temp (°C)',
 
-          # ---------- Conservative "vague title" heuristic ----------
-          def is_vague_title(t: str) -> bool:
-            tl = (t or "").strip().lower()
-            if not tl:
-              return True
+  'sync.running': 'Sync in progress…',
+  'sync.completed': 'Sync completed',
 
-            # Purely generic
-            generic_exact = {
-              "bug","issue","problem","help","question","error","crash",
-              "broken","not working","doesn't work","does not work","doesnt work",
-              "please help","urgent"
+  'backup.title': 'Backup',
+  'backup.desc': 'Copy the full content of your sync sensor to the backup sensor and restore it when needed.',
+  'backup.now': 'Backup now',
+  'backup.restore': 'Restore',
+  'backup.delete': 'Delete backup',
+  'backup.delete.confirm': 'Delete selected backup?',
+  'backup.new': 'New backup',
+  'backup.auto': 'Auto backup',
+  'backup.auto.desc': 'Create backups automatically at a fixed interval.',
+  'backup.interval': 'Interval (days)',
+  'backup.interval.desc': 'How many days between automatic backups (min 1).',
+  'backup.sensor': 'Backup sensor',
+  'backup.last': 'Last backup',
+  'backup.slot.title': 'Select backup',
+  'backup.slot.desc': 'Select which backup slot to restore.',
+  'backup.slot.empty': 'No backups yet',
+  'backup.select': 'Select what to back up',
+  'backup.select.desc': 'Checked items are included in backup/restore',
+  'backup.opt.all': 'All',
+  'backup.opt.main': 'Main schedules',
+  'backup.opt.weekday': 'Weekday schedules',
+  'backup.opt.presence': 'Presence schedules',
+  'backup.opt.settings': 'Editor settings',
+  'backup.opt.holiday': 'Holiday schedules',
+  'backup.opt.colors': 'Color blocks',
+
+  'away.enable': 'Enable Away mode',
+  'away.desc': 'When none of the selected persons are home, thermostats are automatically lowered to the specified temperature.',
+  'away.temp': 'Away temperature',
+  'away.persons': 'Persons',
+  'away.add_person': 'Add person',
+  'away.resume_schedule': 'Resume schedule',
+  'away.resume_away': 'Resume away temperature',
+
+  'editor.heat_colors.title': 'Colors for heat blocks',
+  'editor.heat_colors.add': 'Add color interval',
+  'editor.colors.col_from': 'From °C',
+  'editor.colors.col_to': 'To °C',
+  'editor.colors.col_color': 'Color',
+  'editor.colors.refresh': 'Refresh schedule',
+  'editor.colors.clear_local': 'Clear local color data',
+  'editor.colors.clear_local_confirm': 'This deletes color intervals stored in your browser for this card. Continue?',
+  'editor.colors.clear_shared': 'Clear shared color storage',
+  'editor.colors.clear_shared_confirm': 'This deletes color intervals in the selected storage sensor. Continue?',
+  'editor.colors.clear_all': 'Clear all color data',
+  'editor.colors.clear_all_confirm': 'This deletes all color intervals both locally and in the selected storage sensor. Continue?',
+  'editor.colors.mode': 'Color mode',
+  'editor.colors.mode.desc': 'Choose per-room colors or one set for all rooms.',
+  'editor.colors.mode_per_room': 'Per room',
+  'editor.colors.mode_global': 'All rooms',
+  'editor.colors.global_title': 'All rooms',
+
+  'editor.reload_editor': 'Reload editor',
+  'editor.reload_dashboard': 'Reload dashboard',
+
+  'onboard.title': 'Welcome to Thermostat Timeline',
+  'onboard.next': 'Next',
+  'onboard.prev': 'Back',
+  'onboard.skip': 'Skip',
+  'onboard.done': 'Done',
+  'onboard.dont_show': 'Don’t show again',
+  'onboard.step_main': 'This is the main timeline. It shows target temperatures over 24 hours for each room.',
+  'onboard.step_add': 'Add a heat block via + Add block or by double-clicking the timeline.',
+  'onboard.step_edit': 'Edit or delete a block by double-clicking it. Use Weekdays for different days.',
+  'onboard.reset': 'Show guide again',
+  'onboard.reset_ok': 'The guide will show next time.',
+
+  'pause.menu_title': 'Pause auto-apply',
+  'pause.off_1h': 'Pause for 1 hour',
+  'pause.off_5h': 'Pause for 5 hours',
+  'pause.off_custom': 'Custom duration…',
+  'pause.off_indef': 'Pause until I resume',
+  'pause.resume': 'Resume now',
+  'pause.close': 'Close',
+  'pause.active_until': 'Paused until {time}',
+  'pause.active_indef': 'Paused',
+
+  'editor.pausebtn.title': 'Pause button',
+  'editor.pausebtn.desc': 'Show a global pause button in the card header. When pause is active, all set_temperature commands are suppressed.',
+  'editor.pause_sensor.title': 'Pause via binary sensor',
+  'editor.pause_sensor.desc': 'Automatically pause while the selected binary sensor is on.',
+  'editor.pause_sensor.entity_title': 'Pause sensor',
+  'editor.pause_sensor.entity_desc': 'Binary sensor that controls pause (on = pause, off = resume).',
+  'editor.integration.connected': 'Connected to integration',
+  'editor.integration.disconnected': 'Not connected to integration',
+
+  'profiles.enable': 'Enable profiles (override)',
+  'profiles.enable.desc': 'Allow named day schedules that can be activated to override the main plan.',
+  'profiles.button': 'Profiles',
+  'profiles.editor.title': 'Profiles',
+  'profiles.add': 'Add profile',
+  'profiles.rename': 'Rename',
+  'profiles.delete': 'Delete',
+  'profiles.activate': 'Activate',
+  'profiles.deactivate': 'Deactivate',
+  'profiles.active': 'Active',
+  'profiles.none': 'None',
+  'profiles.name_placeholder': 'Profile name',
+  'profiles.edit': 'Edit',
+  'profiles.preview_note': 'Preview only. Profiles become active when you activate them.',
+  'profiles.active_label': 'Active profile:',
+
+  'editor.tabs.holidays': 'Holidays',
+  'holidays.enable': 'Enable holidays',
+  'holidays.desc': 'Use a special day schedule on holidays.',
+  'holidays.source': 'Holiday source',
+  'holidays.source.calendar': 'Calendar',
+  'holidays.source.manual': 'Manual dates',
+  'holidays.entity': 'Holiday entity',
+  'holidays.entity_desc': 'Select a calendar that only provides on/off. It must be on on holidays and off on other days.',
+  'holidays.dates': 'Holiday dates',
+  'holidays.add_date': 'Add date',
+  'holidays.editor.title': 'Holiday schedule',
+  'holidays.edit': 'Edit holiday schedule',
+  'holidays.button': 'Holidays',
+
+  'presence.button': 'Presence schedules',
+  'presence.editor.title': 'Presence schedules',
+  'presence.enable_advanced': 'Enable advanced presence',
+  'presence.live_header': 'Show live presence in header',
+  'presence.live_header.desc': 'Show chips next to the pause button with who is home/away.',
+  'presence.combos': 'Combinations',
+  'presence.enable_combo': 'Enable this combination',
+  'presence.all_home': 'All home',
+  'presence.none_home': 'Nobody home',
+  'presence.home': 'Home: {names}',
+  'presence.away': 'Away: {names}',
+  'presence.manage': 'Manage combinations',
+  'presence.who_home': 'Who is home',
+  'presence.who_away': 'Who is away'
+  },
+  da: {
+    // Card
+    'card.title_default': 'Thermostat Timeline',
+    // Modal / editor (inline)
+    'ui.edit_block': 'Edit block',
+    'ui.add_block': 'Add block',
+    'ui.from': 'From',
+    'ui.to': 'To',
+    'ui.temperature': 'Temperatur',
+    'ui.delete': 'Slet',
+    'ui.cancel': 'Annuller',
+    'ui.close': 'Luk',
+    'ui.unsaved_confirm': 'Du har ændringer, der ikke er gemt. Vil du lukke alligevel?',
+    'ui.discard_changes': 'Forkast ændringer',
+    'ui.keep_editing': 'Fortsæt redigering',
+    'ui.save': 'Gem',
+    'ui.error_prefix': 'Fejl: ',
+    'ui.overlap_msg': 'Du har valgt overlappende tider — overlap er {start} – {end}.',
+    'ui.auto_fix': 'Ret automatisk',
+    'ui.fix_start_to': 'Sæt start til {time}',
+    'ui.fix_end_to': 'Sæt slut til {time}',
+    'ui.current_temp': 'Nuværende temperatur:',
+    'ui.copy_plan': 'Kopiér plan',
+    'ui.paste_plan': 'Indsæt plan',
+    'ui.copy_day': 'Kopiér dag',
+    'ui.paste_day': 'Indsæt dag',
+    'editor.title_label': 'Titel',
+    'editor.store_enable.title': 'Delt lager + baggrundsstyring',
+    'editor.store_enable.short': 'Gemmer tidsplaner i den valgte sensor og aktiverer baggrundsstyring.',
+    'editor.store_enable.desc': 'Gemmer tidsplaner i den valgte sensor og aktiverer set_temperature i baggrunden. Termostater opdateres også når kortet er lukket. Deler tidsplaner og kortindstillinger på tværs af brugere/enheder. Når slået fra: kommandoer sendes kun mens kortet er synligt på en enhed og skal forblive åbent.',
+    'editor.store_missing': 'Integrationen “Thermostat Pro Timeline Sync” er ikke installeret. Delt lager er ikke tilgængeligt.',
+    'editor.clear_store': 'Ryd lager',
+    'editor.clear_store_confirm': 'Dette vil slette alle gemte tidsplaner. Vil du fortsætte?',
+    'editor.migrate_to_store': 'Overfør data til lager',
+    'editor.migrate_confirm': 'Overfør dine browser-gemte tidsplaner til den valgte sensor? Dette overskriver eksisterende planer i lageret.',
+    'editor.migrate_pull_confirm': 'Importér tidsplaner fra lager og overskriv lokale browserdata?',
+    'editor.select_storage_first': 'Vælg først en lagersensor.',
+    'editor.no_local_data': 'Ingen lokale browserdata blev fundet.',
+    'editor.clear_all': 'Ryd alt data',
+    'editor.clear_all_confirm': 'Dette sletter både lager og lokale/browser tidsplaner. Vil du fortsætte?',
+    'editor.clear_storage_only': 'Ryd kun lagerdata',
+    'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra den valgte lagersensor. Vil du fortsætte?',
+    'editor.clear_local_only': 'Ryd ALLE lokale data (kun lokalt)',
+    'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner gemt i din browser. Vil du fortsætte?',
+    'editor.temp_sensor': 'Temperatursensor',
+    'editor.test_tool': 'Testværktøj',
+    'editor.test_select_entity': 'Vælg entitet',
+    'editor.test_empty': 'Vælg en entitet for at se tilgængelige kommandoer…',
+    'editor.test_export': 'Export .md',
+    'editor.test_no_fields': 'Ingen felter',
+    'editor.test_select_placeholder': '— Vælg —',
+    'editor.error_prefix': 'Fejl: ',
+    'editor.open_in_hacs': 'Åbn i HACS',
+    'editor.add_entity': 'Tilføj rum',
+    'editor.entity_placeholder': 'Vælg en entitet',
+    'editor.drag_reorder': 'Træk for at ændre rækkefølge',
+    'editor.remove': 'Fjern',
+    'editor.default_c': 'Standard °C',
+    'editor.row_height_px': 'Rækkehøjde (px)',
+    'editor.min_c': 'Min °C',
+    'editor.max_c': 'Maks °C',
+    'editor.auto_apply.title': 'Auto apply',
+    'editor.auto_apply.desc': 'Når slået til forsøger kortet at sætte temperaturen på de valgte climate‑entiteter til den planlagte værdi for “nu”.',
+    'editor.apply_edit.title': 'Ved redigering',
+    'editor.apply_edit.desc': 'Når du redigerer blokke og det påvirker nuværende tidspunkt, så anvend den nye temperatur med det samme.',
+    'editor.apply_default.title': 'Ved ændring af Standard °C',
+    'editor.apply_default.desc': 'Når “Standard °C” ændres og det påvirker den aktuelle periode, så anvend den nye temperatur med det samme.',
+    'editor.perroom.title': 'Standard °C pr. rum',
+    'editor.perroom.desc': 'Vis et Standard °C‑felt på hver række. Når slået fra, bruges global Standard °C for alle rum.',
+    'editor.room_mode.title': 'Rumtype (entitet)',
+    'editor.room_mode.desc': 'Når slået til vælger du en input_number (måltemperatur). Når slået fra vælger du en climate‑entitet.',
+    'editor.display_name_optional': 'Rum navn (valgfri)',
+    'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
+    'editor.merged_with': 'Flettet med',
+    'editor.colors.empty': 'Der er endnu ikke oprettet rum. Tilføj et rum for at definere farver.',
+    'editor.colors.go_add': 'Tilføj rum',
+    'editor.select_entities': 'Rum',
+    'week.enable': 'Aktivér ugedage',
+    'week.mode': 'Ugedags-tilstand',
+    'week.mode.weekday_weekend': 'Hverdage + Weekend',
+    'week.mode.weekday_sat_sun': 'Hverdage + Lørdag + Søndag',
+    'week.mode.all_7': 'Alle dage',
+    'week.button': 'Ugedage',
+    'week.title': 'Ugedage',
+    'week.group.weekdays': 'Hverdage',
+    'week.group.weekend': 'Weekend',
+    'week.days_full.mon': 'Mandag',
+    'week.days_full.tue': 'Tirsdag',
+    'week.days_full.wed': 'Onsdag',
+    'week.days_full.thu': 'Torsdag',
+    'week.days_full.fri': 'Fredag',
+    'week.days_full.sat': 'Lørdag',
+    'week.days_full.sun': 'Søndag',
+    'week.days.mon': 'Man',
+    'week.days.tue': 'Tir',
+    'week.days.wed': 'Ons',
+    'week.days.thu': 'Tor',
+    'week.days.fri': 'Fre',
+    'week.days.sat': 'Lør',
+    'week.days.sun': 'Søn',
+    'week.editor.title': 'Ugedags-tidsplan',
+    'week.editor.preview_note': 'Kun forhåndsvisning. Ændringer gemmes først når du trykker Gem.',
+    'week.open_editor.desc': 'Åbn ugedags-editoren.',
+    'week.open_editor.btn': 'Åbn',
+    'week.view.title': 'Ugedage-visning',
+    'week.view.rooms_one_day': 'Alle rum • én dag',
+    'week.view.days_one_room': 'Alle dage • ét rum',
+    'week.view_switch.title': 'Skift visning fra tidslinjen',
+    'week.view_switch.desc': 'Vis en toggle i tidslinjens header, så du kan skifte ugedags-visning uden at åbne indstillinger.',
+    'week.select_room': 'Vælg rum',
+    'week.copy_to_rooms': 'Kopiér ugedage til rum',
+    'week.copy_to_rooms.title': 'Kopiér ugedage til rum',
+    'week.copy_to_rooms.select': 'Vælg rum',
+    'week.copy_to_rooms.apply': 'Indsæt i rum',
+    'week.enable.desc': 'Aktivér plan per ugedag. Når slået fra, bruges samme plan hver dag.',
+    'editor.timefmt.title': 'Tidsformat',
+    'editor.timefmt.desc': 'Vælg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.',
+    'editor.tempfmt.title': 'Temperaturenhed',
+    'editor.tempfmt.desc': 'Vælg Celsius (°C) eller Fahrenheit (°F) til visning i kortet og editorer.',
+    'editor.timesrc.title': 'Tidskilde',
+    'editor.timesrc.desc': 'Vælg om kortet skal bruge browserens tid eller Home Assistant-tidszone til “nu”.',
+    'editor.timesrc.browser': 'Browser',
+    'editor.timesrc.ha': 'Home Assistant',
+    'editor.tabs.settings': 'Indstillinger',
+    'editor.tabs.pause': 'Pause',
+    'editor.tabs.weekdays': 'Ugedage',
+    'editor.tabs.rooms': 'Rum',
+    'editor.tabs.boiler': 'Boiler',
+    'editor.tabs.colors': 'Farver',
+    'editor.tabs.owd': 'Open Window Detection',
+    'owd.enable': 'Open Window Detection',
+    'owd.enable.desc': 'Slår termostaterne fra i et rum når valgte vindue-/dørsensorer er åbne.',
+    'owd.sensors': 'Vindue-/dørsensorer',
+    'owd.delays.title': 'Forsinkelser',
+    'owd.delays.desc': 'Minutter før der slukkes (åben) og før skemaet genoptages (lukket).',
+    'owd.open_delay': 'Efter åbnet (min)',
+    'owd.close_delay': 'Efter lukket (min)',
+    'editor.tabs.away': 'Væk fra hjemme',
+    'editor.tabs.sync': 'Sync Engine',
+    'boiler.switch': 'Boiler switch',
+    'boiler.enable': 'Aktivér kedelstyring',
+    'boiler.enable.desc': 'Vis kedelindstillinger i denne cards editor.',
+    'boiler.temp_sensor': 'Kedel temperatursensor',
+    'boiler.temp_sensor.desc': 'Temperatursensor som styrer kedel‑switchen.',
+    'boiler.min_temp': 'Min kedeltemp (°C)',
+    'boiler.max_temp': 'Maks kedeltemp (°C)',
+    'sync.running': 'Igangværende sync…',
+    'sync.completed': 'Sync gennemført',
+    'editor.tabs.backup': 'Backup',
+    'backup.title': 'Backup',
+    'backup.desc': 'Kopiér hele indholdet af din sync‑sensor til backup‑sensoren og gendan den igen ved behov.',
+    'backup.now': 'Backup nu',
+    'backup.restore': 'Gendan',
+    'backup.delete': 'Slet backup',
+    'backup.delete.confirm': 'Slet valgt backup?',
+    'backup.new': 'Ny backup',
+    'backup.auto': 'Auto backup',
+    'backup.auto.desc': 'Lav automatisk backup med faste intervaller.',
+    'backup.interval': 'Interval (dage)',
+    'backup.interval.desc': 'Hvor mange dage der skal gå mellem automatiske backups (min. 1).',
+    'backup.sensor': 'Backup sensor',
+    'backup.last': 'Sidste backup',
+    'backup.slot.title': 'Vælg backup',
+    'backup.slot.desc': 'Vælg hvilken backup-slot der skal gendannes.',
+    'backup.slot.empty': 'Ingen backups endnu',
+    'backup.select': 'Vælg hvad der skal tages backup af',
+    'backup.select.desc': 'Markerede punkter tages med i backup/gendannelse',
+    'backup.opt.all': 'Alt',
+    'backup.opt.main': 'Hovedskemaer',
+    'backup.opt.weekday': 'Ugedagsskemaer',
+    'backup.opt.presence': 'Tilstede skemaer',
+    'backup.opt.settings': 'Editor-indstillinger',
+    'backup.opt.holiday': 'Helligdags-skemaer',
+    'backup.opt.colors': 'Farveblokke',
+    'away.enable': 'Aktivér væk-tilstand',
+    'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.',
+    'away.temp': 'Væk-temperatur',
+    'away.persons': 'Personer',
+    'away.add_person': 'Tilføj person',
+    'away.resume_schedule': 'Genoptag skema',
+    'away.resume_away': 'Genoptag væk‑temperatur',
+    'editor.heat_colors.title': 'Farver for varmeblokke',
+    'editor.heat_colors.add': 'Tilføj farveinterval',
+    'editor.colors.col_from': 'Fra °C',
+    'editor.colors.col_to': 'Til °C',
+    'editor.colors.col_color': 'Farve',
+    'editor.colors.refresh': 'Opdater skema',
+    'editor.colors.clear_local': 'Ryd lokale farvedata',
+    'editor.colors.clear_local_confirm': 'Dette sletter farveintervaller gemt i din browser for dette kort. Vil du fortsætte?',
+    'editor.colors.clear_shared': 'Ryd delt farvelager',
+    'editor.colors.clear_shared_confirm': 'Dette sletter farveintervaller i den valgte lagersensor. Vil du fortsætte?',
+    'editor.colors.clear_all': 'Ryd alle farvedata',
+    'editor.colors.clear_all_confirm': 'Dette sletter alle farveintervaller både lokalt og i den valgte lagersensor. Vil du fortsætte?',
+    'editor.colors.mode': 'Farvetilstand',
+    'editor.colors.mode.desc': 'Vælg om farver defineres pr. rum eller ens for alle rum.',
+    'editor.colors.mode_per_room': 'Pr. rum',
+    'editor.colors.mode_global': 'Samme for alle',
+    'editor.colors.global_title': 'Alle rum',
+    'editor.reload_editor': 'Genindlæs editor',
+    'editor.reload_dashboard': 'Genindlæs dashboard',
+    'onboard.title': 'Velkommen til Termostat Tidslinje',
+    'onboard.next': 'Næste',
+    'onboard.prev': 'Tilbage',
+    'onboard.skip': 'Spring over',
+    'onboard.done': 'Færdig',
+    'onboard.dont_show': 'Vis ikke igen',
+    'onboard.step_main': 'Dette er hovedtidslinjen. Den viser ønskede temperaturer over 24 timer for hvert rum.',
+    'onboard.step_add': 'Tilføj en varmeblok via + Tilføj blok eller ved at dobbeltklikke på tidslinjen.',
+    'onboard.step_edit': 'Redigér eller slet en blok ved dobbeltklik. Brug Ugedage til forskellige dage.',
+    'onboard.reset': 'Vis guide igen',
+    'onboard.reset_ok': 'Guiden vises næste gang.',
+    'pause.menu_title': 'Pause auto-apply',
+    'pause.off_1h': 'Sluk i 1 time',
+    'pause.off_5h': 'Sluk i 5 timer',
+    'pause.off_custom': 'Tilpasset varighed…',
+    'pause.off_indef': 'Sluk til jeg tænder',
+    'pause.resume': 'Tænd igen nu',
+    'pause.close': 'Luk',
+    'pause.active_until': 'Slukket til {time}',
+    'pause.active_indef': 'Slukket',
+    'editor.pausebtn.title': 'Pause‑knap',
+    'editor.pausebtn.desc': 'Vis en global pauseknap i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.',
+    'editor.pause_sensor.title': 'Pause via binary sensor',
+    'editor.pause_sensor.desc': 'Sæt automatisk pause mens den valgte binary sensor er on.',
+    'editor.pause_sensor.entity_title': 'Pause sensor',
+    'editor.pause_sensor.entity_desc': 'Binary sensor som styrer pause (on = pause, off = genoptag).',
+    'editor.integration.connected': 'Integration klar',
+    'editor.integration.disconnected': 'Integration ikke tilgængelig',
+    'profiles.enable': 'Aktivér skema overrule',
+    'profiles.enable.desc': 'Tillad navngivne dagsskemaer som kan aktiveres og overrule hovedplanen.',
+    'profiles.button': 'Manuelt skema',
+    'profiles.editor.title': 'Skemaer',
+    'profiles.add': 'Tilføj skema',
+    'profiles.rename': 'Omdøb',
+    'profiles.delete': 'Slet',
+    'profiles.activate': 'Aktivér',
+    'profiles.deactivate': 'Deaktivér',
+    'profiles.active': 'Aktiv',
+    'profiles.none': 'Ingen',
+    'profiles.name_placeholder': 'Skemanavn',
+    'profiles.edit': 'Redigér',
+    'profiles.preview_note': 'Kun forhåndsvisning. Skemaerne bliver først aktive, når profilen aktiveres.',
+    'profiles.active_label': 'Manuelt skema aktivt:',
+    'editor.tabs.holidays': 'Helligdage',
+    'holidays.enable': 'Aktivér helligdage',
+    'holidays.desc': 'Brug et særligt dagsskema på helligdage.',
+    'holidays.source': 'Kilde til helligdage',
+    'holidays.source.calendar': 'Kalender',
+    'holidays.source.manual': 'Manuelle datoer',
+    'holidays.entity': 'Helligdags‑entitet',
+    'holidays.entity_desc': 'Vælg en kalender, der kun giver on/off. Den skal være on på helligdage og off på andre dage.',
+    'holidays.dates': 'Helligdagsdatoer',
+    'holidays.add_date': 'Tilføj dato',
+    'holidays.editor.title': 'Helligdags‑skema',
+    'holidays.edit': 'Redigér helligdags‑skema',
+    'holidays.button': 'Helligdage',
+    'presence.button': 'Tilstede skemaer',
+    'presence.editor.title': 'Tilstede skemaer',
+    'presence.enable_advanced': 'Aktivér avanceret tilstedeværelse',
+    'presence.live_header': 'Vis live personstatus i header',
+    'presence.live_header.desc': 'Vis chips ved pause-knappen med hvem der er hjemme/ude.',
+    'presence.combos': 'Kombinationer',
+    'presence.enable_combo': 'Aktivér denne kombination',
+    'presence.all_home': 'Alle hjemme',
+    'presence.none_home': 'Ingen hjemme',
+    'presence.home': 'Hjemme: {names}',
+    'presence.away': 'Ude: {names}',
+    'presence.manage': 'Administrér kombinationer',
+    'presence.who_home': 'Hvem er hjemme',
+    'presence.who_away': 'Hvem er ikke hjemme'
+  },
+  sv: {
+    'card.title_default': 'Termostat-tidslinje',
+    'ui.edit_block': 'Redigera block',
+    'ui.add_block': 'Lägg till block',
+    'ui.from': 'Från',
+    'ui.to': 'Till',
+    'ui.temperature': 'Temperatur',
+    'ui.delete': 'Ta bort',
+  'ui.cancel': 'Avbryt',
+  'ui.close': 'Stäng',
+  'ui.unsaved_confirm': 'Du har osparade ändringar. Vill du stänga ändå?',
+  'ui.discard_changes': 'Ignorera ändringar',
+  'ui.keep_editing': 'Fortsätt redigera',
+    'ui.save': 'Spara',
+    'ui.error_prefix': 'Fel: ',
+    'ui.overlap_msg': 'Du har valt överlappande tider — det överlappar under {start} – {end}.',
+    'ui.auto_fix': 'Åtgärda automatiskt',
+    'ui.fix_start_to': 'Justera start till {time}',
+  'ui.fix_end_to': 'Justera slut till {time}',
+  // Inline meta
+  'ui.current_temp': 'Nuvarande temperatur:',
+
+    'editor.title_label': 'Titel',
+  'editor.add_entity': 'Lägg till rum',
+    'editor.entity_placeholder': 'Välj en entitet',
+    'editor.drag_reorder': 'Dra för att ändra ordning',
+    'editor.remove': 'Ta bort',
+    'editor.default_c': 'Standard °C',
+  'editor.row_height_px': 'Radhöjd (px)',
+  'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automatisk tillämpning',
+    'editor.auto_apply.desc': 'När det är aktiverat försöker kortet automatiskt ställa in temperaturen på valda climate-entiteter så att den matchar det planerade värdet för ”just nu”.',
+    'editor.apply_edit.title': 'Vid redigering',
+    'editor.apply_edit.desc': 'När du ändrar tidslinjeblock och ändringen påverkar aktuell tid, tillämpas den nya temperaturen omedelbart.',
+    'editor.apply_default.title': 'Vid ändring av Standard °C',
+    'editor.apply_default.desc': 'När ”Standard °C” ändras och det påverkar den aktuella perioden, tillämpas den nya temperaturen omedelbart.',
+    'editor.room_mode.title': 'Typ av rumentitet',
+    'editor.room_mode.desc': 'När aktiverat, välj en input_number (måltemperatur). När av, välj en climate-entitet.',
+  'ui.copy_plan': 'Kopiera schema',
+  'ui.paste_plan': 'Klistra in schema',
+  'ui.copy_day': 'Kopiera dag',
+  'ui.paste_day': 'Klistra in dag',
+  'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
+  'editor.display_name_optional': 'Rumsnamn (valfritt)',
+    'editor.merged_with': 'Sammanslagen med',
+  'editor.store_enable.title': 'Delad lagring + bakgrundsstyrning',
+  'editor.store_enable.short': 'Sparar scheman i vald sensor och aktiverar bakgrundsstyrning.',
+  'editor.store_enable.desc': 'Sparar scheman i vald sensor och aktiverar set_temperature i bakgrunden. Termostater uppdateras även när kortet är stängt. Delar också scheman (värmeblock) och kortinställningar mellan användare/enheter. När av: kommandon skickas bara när kortet är aktivt synligt på en enhet (surfplatta/dator/mobil) och måste förbli öppet.',
+  'editor.store_missing': 'Integrationen "Thermostat Pro Timeline Sync" är inte installerad. Delad lagring är inte tillgänglig.',
+    'editor.clear_store': 'Rensa lagring',
+    'editor.clear_store_confirm': 'Detta tar bort alla sparade scheman. Vill du fortsätta?',
+  'editor.migrate_to_store': 'Överför data till lagring',
+    'editor.migrate_confirm': 'Överför dina webbläsar-sparade scheman till vald sensor? Detta skriver över befintliga scheman i lagringen.',
+  'editor.migrate_pull_confirm': 'Importera scheman från lagring och skriv över lokala webbläsardata?',
+  'editor.select_storage_first': 'Välj först en lagringssensor.',
+    'editor.no_local_data': 'Inga lokala webbläsardata hittades.',
+    'editor.clear_all': 'Rensa all data',
+    'editor.clear_all_confirm': 'Detta tar bort både lagring och lokala webblässarscheman. Vill du fortsätta?',
+  'editor.clear_storage_only': 'Rensa endast lagringsdata',
+    'editor.clear_storage_only_confirm': 'Detta tar bort scheman från vald lagringssensor. Vill du fortsätta?',
+  'editor.clear_local_only': 'Rensa endast lokala data',
+    'editor.clear_local_only_confirm': 'Detta tar endast bort scheman som sparats i din webbläsare. Vill du fortsätta?',
+    'week.enable': 'Aktivera veckodagar',
+    'week.mode': 'Veckoläge',
+    'week.mode.same_all': 'Samma alla dagar (1)',
+  'week.mode.weekday_weekend': 'Vardagar + Helg',
+  'week.mode.weekday_sat_sun': 'Vardagar + Lördag + Söndag',
+  'week.mode.all_7': 'Alla dagar',
+    'week.button': 'Veckodagar',
+    'week.days.mon': 'Mån',
+    'week.days.tue': 'Tis',
+    'week.days.wed': 'Ons',
+    'week.days.thu': 'Tor',
+    'week.days.fri': 'Fre',
+    'week.days.sat': 'Lör',
+    'week.days.sun': 'Sön',
+    'week.editor.title': 'Veckoschema',
+    'week.editor.preview_note': 'Endast förhandsvisning. Ändringar tillämpas när du trycker Spara.',
+    'week.open_editor.desc': 'Öppna veckodagsredigeraren.',
+    'week.open_editor.btn': 'Öppna',
+  'week.copy_to_rooms': 'Kopiera vecka till rum',
+  'week.copy_to_rooms.title': 'Kopiera vecka till rum',
+  'week.copy_to_rooms.select': 'Välj rum',
+  'week.copy_to_rooms.apply': 'Klistra in i rum',
+    'week.group.weekdays': 'Vardagar',
+  'week.group.weekend': 'Helg',
+    'week.days_full.mon': 'Måndag',
+    'week.days_full.tue': 'Tisdag',
+    'week.days_full.wed': 'Onsdag',
+    'week.days_full.thu': 'Torsdag',
+    'week.days_full.fri': 'Fredag',
+    'week.days_full.sat': 'Lördag',
+    'week.days_full.sun': 'Söndag',
+    'editor.timefmt.title': 'Tidsformat',
+    'editor.timefmt.desc': 'Välj 24-timmars eller 12-timmars (AM/PM) visning på kortet.',
+    'editor.tempfmt.title': 'Temperaturenhet',
+    'editor.tempfmt.desc': 'Välj Celsius (°C) eller Fahrenheit (°F) för visning i kortet och editorer.',
+  'editor.timesrc.title': 'Tidskälla',
+  'editor.timesrc.desc': 'Välj om kortet ska använda webbläsarens tid eller Home Assistant-tidszon för ”nu”.',
+  'editor.timesrc.browser': 'Webbläsare',
+  'editor.timesrc.ha': 'Home Assistant',
+    'editor.heat_colors.title': 'Färger för värmeblock',
+    'editor.heat_colors.add': 'Lägg till färgintervall',
+    'editor.colors.col_from': 'Från °C',
+    'editor.colors.col_to': 'Till °C',
+    'editor.colors.col_color': 'Färg',
+    'editor.colors.empty': 'Inga rum tillagda ännu. Lägg till ett rum för att definiera färger.',
+    'editor.colors.go_add': 'Lägg till rum',
+    'editor.colors.refresh': 'Uppdatera schema',
+    'editor.colors.clear_local': 'Rensa lokala färgdata',
+    'editor.colors.clear_local_confirm': 'Detta tar bort färgintervall som sparats i din webbläsare för detta kort. Vill du fortsätta?',
+    'editor.colors.clear_shared': 'Rensa delad färglagring',
+  'editor.colors.clear_shared_confirm': 'Detta tar bort färgintervall i den valda lagringssensorn. Vill du fortsätta?',
+  'editor.colors.mode': 'Färgläge',
+  'editor.colors.mode.desc': 'Välj färger per rum eller ett set för alla rum.',
+  'editor.colors.mode_per_room': 'Per rum',
+  'editor.colors.mode_global': 'Alla rum',
+  'editor.colors.global_title': 'Alla rum',
+  'editor.colors.clear_all': 'Rensa all färgdata',
+  'editor.colors.clear_all_confirm': 'Detta tar bort alla färgintervall både lokalt och i vald lagringssensor. Vill du fortsätta?',
+  'editor.reload_editor': 'Ladda om redigerare',
+  'editor.reload_dashboard': 'Ladda om instrumentpanel',
+  'onboard.title': 'Välkommen till Termostat‑tidslinje',
+  'onboard.next': 'Nästa',
+  'onboard.prev': 'Tillbaka',
+  'onboard.skip': 'Hoppa över',
+  'onboard.done': 'Klar',
+  'onboard.dont_show': 'Visa inte igen',
+  'onboard.step_main': 'Detta är huvudtidslinjen. Den visar önskad temperatur under dygnet för varje rum.',
+  'onboard.step_add': 'Lägg till ett värmeblock via + Lägg till block eller dubbelklicka på tidslinjen.',
+  'onboard.step_edit': 'Redigera eller ta bort ett block genom att dubbelklicka. Använd veckodagar för olika dagar.',
+  'onboard.reset': 'Visa guiden igen',
+  'onboard.reset_ok': 'Guiden visas nästa gång.',
+    'editor.select_entities': 'Rum',
+  'editor.tabs.rooms': 'Rum',
+  'editor.test_tool': 'Testverktyg',
+  'editor.test_select_entity': 'Välj enhet',
+  'editor.test_empty': 'Välj en enhet för att se tillgängliga kommandon…',
+  'editor.test_export': 'Exportera .md',
+  'editor.test_no_fields': 'Inga fält',
+  'editor.test_select_placeholder': '— Välj —',
+  'editor.error_prefix': 'Fel: ',
+  'editor.open_in_hacs': 'Öppna i HACS',
+  'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.',
+  'editor.tabs.sync': 'Sync Engine',
+  'sync.running': 'Synkronisering pågår…',
+  'sync.completed': 'Synkronisering klar',
+  'editor.tabs.backup': 'Backup',
+  'backup.title': 'Backup',
+  'backup.desc': 'Kopiera innehållet i din sync‑sensor till backup‑sensorn och återställ vid behov.',
+  'backup.now': 'Säkerhetskopiera nu',
+  'backup.restore': 'Återställ',
+  'backup.delete': 'Ta bort backup',
+  'backup.delete.confirm': 'Ta bort vald backup?',
+  'backup.new': 'Ny backup',
+  'backup.auto': 'Automatisk backup',
+  'backup.auto.desc': 'Gör automatiska säkerhetskopior med intervall.',
+  'backup.interval': 'Intervall (dagar)',
+  'backup.interval.desc': 'Hur många dagar mellan automatiska säkerhetskopior (min. 1).',
+  'backup.sensor': 'Backup‑sensor',
+  'backup.last': 'Senaste backup',
+  'backup.slot.title': 'Välj backup',
+  'backup.slot.desc': 'Välj vilken backupplats som ska återställas.',
+  'backup.slot.empty': 'Inga backups ännu',
+  'pause.menu_title': 'Pausa auto‑apply',
+  'pause.off_1h': 'Pausa 1 timme',
+  'pause.off_5h': 'Pausa 5 timmar',
+  'pause.off_custom': 'Anpassad varaktighet…',
+  'pause.off_indef': 'Pausa tills jag återupptar',
+  'pause.resume': 'Återuppta nu',
+  'pause.close': 'Stäng',
+  'pause.active_until': 'Pausad till {time}',
+  'pause.active_indef': 'Pausad',
+  'editor.pausebtn.title': 'Pausknapp',
+  'editor.pausebtn.desc': 'Visa en global pausknapp i kortets huvud. När paus är aktiv blockeras alla set_temperature‑kommandon.',
+  'editor.integration.connected': 'Integration klar',
+  'editor.integration.disconnected': 'Integration inte tillgänglig'
+  , 'profiles.button': 'Manuellt schema'
+  , 'profiles.editor.title': 'Profiler'
+  , 'profiles.add': 'Lägg till profil'
+  , 'profiles.rename': 'Byt namn'
+  , 'profiles.delete': 'Ta bort'
+  , 'profiles.activate': 'Aktivera'
+  , 'profiles.deactivate': 'Inaktivera'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Ingen'
+  , 'profiles.name_placeholder': 'Profilnamn'
+  , 'profiles.edit': 'Redigera'
+  , 'profiles.preview_note': 'Endast förhandsvisning. Scheman blir aktiva när du aktiverar profilen.'
+  , 'editor.tabs.holidays': 'Helgdagar'
+  , 'holidays.enable': 'Aktivera helgdagar'
+  , 'holidays.desc': 'Använd ett särskilt dagsschema på helgdagar.'
+  , 'holidays.source': 'Källa för helgdagar'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuella datum'
+  , 'holidays.entity': 'Helgdags‑entitet'
+  , 'holidays.entity_desc': 'Välj en kalender som bara ger on/off. Den ska vara on på helgdagar och off övriga dagar.'
+  , 'holidays.dates': 'Helgdagsdatum'
+  , 'holidays.add_date': 'Lägg till datum'
+  , 'holidays.editor.title': 'Helgdags‑schema'
+  , 'holidays.edit': 'Redigera helgdags‑schema'
+  , 'holidays.button': 'Helgdagar'
+  , 'editor.perroom.title': 'Standard °C per rum'
+  , 'editor.perroom.desc': 'Visa ett Standard °C‑fält på varje rad. När av, används global Standard °C för alla rum.'
+  , 'away.resume_schedule': 'Återuppta schema'
+  , 'away.resume_away': 'Återuppta bortatemperatur'
+  , 'presence.button': 'Närvaroscheman'
+  , 'presence.editor.title': 'Närvaroscheman'
+  , 'presence.enable_advanced': 'Aktivera avancerad närvaro'
+  , 'presence.combos': 'Kombinationer'
+  , 'presence.enable_combo': 'Aktivera denna kombination'
+  , 'presence.all_home': 'Alla hemma'
+  , 'presence.none_home': 'Ingen hemma'
+  , 'presence.home': 'Hemma: {names}'
+  , 'presence.away': 'Borta: {names}'
+  , 'presence.manage': 'Hantera kombinationer'
+  , 'presence.who_home': 'Vem är hemma'
+  , 'presence.who_away': 'Vem är inte hemma'
+  , 'away.enable': 'Aktivera bortaläge'
+  , 'away.desc': 'När ingen av de valda personerna är hemma, sänks termostaterna automatiskt till den angivna temperaturen.'
+  , 'away.temp': 'Bortatemperatur'
+  , 'away.persons': 'Personer'
+  , 'away.add_person': 'Lägg till person'
+  , 'backup.select': 'Välj vad som ska säkerhetskopieras'
+  , 'backup.select.desc': 'Markerade objekt inkluderas i backup/återställning'
+  , 'backup.opt.all': 'Alla'
+  , 'backup.opt.main': 'Huvudscheman'
+  , 'backup.opt.weekday': 'Veckodagsscheman'
+  , 'backup.opt.presence': 'Närvaroscheman'
+  , 'backup.opt.settings': 'Redigeringsinställningar'
+  , 'backup.opt.holiday': 'Helgdags‑scheman'
+  , 'backup.opt.colors': 'Färgblock'
+  , 'editor.tabs.settings': 'Inställningar'
+  , 'editor.tabs.pause': 'Paus'
+  , 'editor.tabs.weekdays': 'Veckodagar'
+  , 'editor.tabs.colors': 'Färger'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Borta hemifrån'
+  , 'editor.tabs.boiler': 'Panna'
+  , 'boiler.switch': 'Pannbrytare'
+  , 'boiler.enable': 'Aktivera pannstyrning'
+  , 'boiler.enable.desc': 'Visa panninställningar i den här korteditorn.'
+  , 'boiler.temp_sensor': 'Pannans temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor som styr pannbrytaren.'
+  , 'boiler.min_temp': 'Min pann‑temp (°C)'
+  , 'boiler.max_temp': 'Max pann‑temp (°C)'
+  , 'editor.temp_sensor': 'Temperatursensor'
+  , 'presence.live_header': 'Visa live‑närvaro i rubriken'
+  , 'presence.live_header.desc': 'Visa chips vid pausknappen med vilka som är hemma/borta.'
+  , 'profiles.enable': 'Aktivera profiler (åsidosättning)'
+  , 'profiles.enable.desc': 'Tillåt namngivna dagsscheman som kan aktiveras för att åsidosätta huvudplanen.'
+  , 'profiles.active_label': 'Manuell profil aktiv:'
+  , 'week.view.title': 'Veckovy'
+  , 'week.view.rooms_one_day': 'Alla rum • en dag'
+  , 'week.view.days_one_room': 'Alla dagar • ett rum'
+  , 'week.view_switch.title': 'Byt vy från tidslinjen'
+  , 'week.view_switch.desc': 'Visa en växlare i tidslinjens rubrik så att du kan byta mellan de två veckodagsvisningarna.'
+  , 'week.title': 'Veckodagar'
+  , 'week.select_room': 'Välj rum'
+  },
+  nb: {
+    'card.title_default': 'Termostat tidslinje',
+    'ui.edit_block': 'Rediger blokk',
+    'ui.add_block': 'Legg til blokk',
+    'ui.from': 'Fra',
+    'ui.to': 'Til',
+    'ui.temperature': 'Temperatur',
+    'ui.delete': 'Slett',
+  'ui.cancel': 'Avbryt',
+  'ui.close': 'Lukk',
+  'ui.unsaved_confirm': 'Du har ulagrede endringer. Vil du lukke likevel?',
+  'ui.discard_changes': 'Forkast endringer',
+  'ui.keep_editing': 'Fortsett redigering',
+    'ui.save': 'Lagre',
+    'ui.error_prefix': 'Feil: ',
+    'ui.overlap_msg': 'Du har valgt overlappende tider — det overlapper i perioden {start} – {end}.',
+    'ui.auto_fix': 'Rett automatisk',
+    'ui.fix_start_to': 'Sett start til {time}',
+  'ui.fix_end_to': 'Sett slutt til {time}',
+  // Inline meta
+  'ui.current_temp': 'Aktuell temperatur:',
+
+    'editor.title_label': 'Tittel',
+  'editor.add_entity': 'Legg til rom',
+    'editor.entity_placeholder': 'Velg en entitet',
+    'editor.drag_reorder': 'Dra for å endre rekkefølge',
+    'editor.remove': 'Fjern',
+    'editor.default_c': 'Standard °C',
+  'editor.row_height_px': 'Radhøyde (px)',
+  'editor.max_c': 'Maks °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automatisk bruk',
+    'editor.auto_apply.desc': 'Når aktivert forsøker kortet å sette temperaturen på valgte climate-entiteter slik at den samsvarer med planlagt verdi for «nå».',
+    'editor.apply_edit.title': 'Ved redigering',
+    'editor.apply_edit.desc': 'Når du endrer blokker i tidslinjen og endringen påvirker aktuell tid, tilpasses den nye temperaturen umiddelbart.',
+    'editor.apply_default.title': 'Ved Standard °C-endring',
+    'editor.apply_default.desc': 'Når «Standard °C» endres og det påvirker gjeldende periode, brukes den nye temperaturen umiddelbart.',
+    'editor.room_mode.title': 'Type rom-entitet',
+    'editor.room_mode.desc': 'Når aktivert, velg en input_number (måltemperatur). Når deaktivert, velg en climate-entitet.',
+  'ui.copy_plan': 'Kopier plan',
+  'ui.paste_plan': 'Lim inn plan',
+  'ui.copy_day': 'Kopier dag',
+  'ui.paste_day': 'Lim inn dag',
+  'editor.merge_label': 'Flet med (vælg en ekstra radiatortermostat)',
+  'editor.display_name_optional': 'Romnavn (valgfritt)',
+    'editor.merged_with': 'Flettet med',
+  'editor.store_enable.title': 'Delt lagring + bakgrunnsstyring',
+  'editor.store_enable.short': 'Lagrer tidsplaner i valgt sensor og aktiverer bakgrunnsstyring.',
+  'editor.store_enable.desc': 'Lagrer tidsplaner i valgt sensor og aktiverer set_temperature i bakgrunnen. Termostater oppdateres også når kortet er lukket. Deler også tidsplaner (varmeblokker) og kortinnstillinger på tvers av brukere/enheter. Når av: kommandoer sendes kun mens kortet er aktivt synlig på en enhet (nettbrett/PC/mobil) og må forbli åpent.',
+  'editor.store_missing': 'Integrasjonen "Thermostat Pro Timeline Sync" er ikke installert. Delt lagring er ikke tilgjengelig.',
+    'editor.clear_store': 'Tøm lagring',
+    'editor.clear_store_confirm': 'Dette vil slette alle lagrede tidsplaner. Fortsette?',
+  'editor.migrate_to_store': 'Overfør data til lagring',
+    'editor.migrate_confirm': 'Overfør nettleserlagrede tidsplaner til valgt sensor? Dette overskriver eksisterende tidsplaner i lagringen.',
+  'editor.migrate_pull_confirm': 'Importer tidsplaner fra lagring og overskriv lokale nettleserdata?',
+  'editor.select_storage_first': 'Velg først en lagringssensor.',
+    'editor.no_local_data': 'Ingen lokale nettleserdata ble funnet.',
+    'editor.clear_all': 'Tøm all data',
+    'editor.clear_all_confirm': 'Dette sletter både lagring og lokale nettleserplaner. Fortsette?',
+  'editor.clear_storage_only': 'Tøm kun lagringsdata',
+    'editor.clear_storage_only_confirm': 'Dette sletter tidsplaner fra valgt lagringssenso r. Fortsette?',
+  'editor.clear_local_only': 'Tøm kun lokale data',
+    'editor.clear_local_only_confirm': 'Dette sletter kun tidsplaner som er lagret i nettleseren. Fortsette?',
+    'week.enable': 'Aktiver ukedager',
+    'week.mode': 'Ukedagsmodus',
+    'week.mode.same_all': 'Samme hver dag (1)',
+  'week.mode.weekday_weekend': 'Hverdager + Helg',
+  'week.mode.weekday_sat_sun': 'Hverdager + Lørdag + Søndag',
+  'week.mode.all_7': 'Alle dager',
+    'week.button': 'Ukedager',
+    'week.days.mon': 'Man',
+    'week.days.tue': 'Tir',
+    'week.days.wed': 'Ons',
+    'week.days.thu': 'Tor',
+    'week.days.fri': 'Fre',
+    'week.days.sat': 'Lør',
+    'week.days.sun': 'Søn',
+    'week.editor.title': 'Ukeplan',
+    'week.editor.preview_note': 'Kun forhåndsvisning. Endringer brukes når du trykker Lagre.',
+    'week.open_editor.desc': 'Åpne ukedagseditoren.',
+    'week.open_editor.btn': 'Åpne',
+  'week.copy_to_rooms': 'Kopier ukeplan til rom',
+  'week.copy_to_rooms.title': 'Kopier ukeplan til rom',
+  'week.copy_to_rooms.select': 'Velg rom',
+  'week.copy_to_rooms.apply': 'Sett inn i rom',
+    'week.group.weekdays': 'Hverdager',
+    'week.group.weekend': 'Helg',
+    'week.days_full.mon': 'Mandag',
+    'week.days_full.tue': 'Tirsdag',
+    'week.days_full.wed': 'Onsdag',
+    'week.days_full.thu': 'Torsdag',
+    'week.days_full.fri': 'Fredag',
+    'week.days_full.sat': 'Lørdag',
+    'week.days_full.sun': 'Søndag',
+    'editor.timefmt.title': 'Tidsformat',
+    'editor.timefmt.desc': 'Velg 24-timers eller 12-timers (AM/PM) visning for tider på kortet.',
+    'editor.tempfmt.title': 'Temperaturenhet',
+    'editor.tempfmt.desc': 'Velg Celsius (°C) eller Fahrenheit (°F) for visning i kortet og editorer.',
+  'editor.timesrc.title': 'Tidskilde',
+  'editor.timesrc.desc': 'Velg om kortet skal bruke nettleserens tid eller Home Assistant-tidssone for «nå».',
+  'editor.timesrc.browser': 'Nettleser',
+  'editor.timesrc.ha': 'Home Assistant',
+    'editor.heat_colors.title': 'Farger for varmeblokker',
+    'editor.heat_colors.add': 'Legg til fargeintervall',
+    'editor.colors.col_from': 'Fra °C',
+    'editor.colors.col_to': 'Til °C',
+    'editor.colors.col_color': 'Farge',
+    'editor.colors.empty': 'Ingen rom lagt til ennå. Legg til et rom for å definere farger.',
+    'editor.colors.go_add': 'Legg til rom',
+    'editor.colors.refresh': 'Oppdater tidsplan',
+    'editor.colors.clear_local': 'Tøm lokale fargedata',
+    'editor.colors.clear_local_confirm': 'Dette sletter fargeintervaller lagret i nettleseren for dette kortet. Fortsette?',
+    'editor.colors.clear_shared': 'Tøm delt fargelagring',
+  'editor.colors.clear_shared_confirm': 'Dette sletter fargeintervaller i den valgte lagringssensoren. Fortsette?',
+  'editor.colors.mode': 'Fargemodus',
+  'editor.colors.mode.desc': 'Velg farger per rom eller ett felles sett for alle rom.',
+  'editor.colors.mode_per_room': 'Per rom',
+  'editor.colors.mode_global': 'Alle rom',
+  'editor.colors.global_title': 'Alle rom',
+  'editor.colors.clear_all': 'Tøm alle fargedata',
+  'editor.colors.clear_all_confirm': 'Dette sletter alle fargeintervaller både lokalt og i valgt lagringssenso r. Fortsette?',
+  'editor.reload_editor': 'Last inn editor på nytt',
+  'editor.reload_dashboard': 'Last inn dashboard på nytt',
+  'onboard.title': 'Velkommen til Termostat tidslinje',
+  'onboard.next': 'Neste',
+  'onboard.prev': 'Tilbake',
+  'onboard.skip': 'Hopp over',
+  'onboard.done': 'Ferdig',
+  'onboard.dont_show': 'Ikke vis igjen',
+  'onboard.step_main': 'Dette er hovedtidslinjen. Den viser ønsket temperatur gjennom døgnet for hvert rom.',
+  'onboard.step_add': 'Legg til en varmeblokk via + Legg til blokk eller ved å dobbeltklikke på tidslinjen.',
+  'onboard.step_edit': 'Rediger eller slett en blokk ved å dobbeltklikke. Bruk ukedager for forskjellige dager.',
+  'onboard.reset': 'Vis guiden på nytt',
+  'onboard.reset_ok': 'Velkomst vises neste gang.',
+    'editor.select_entities': 'Rom',
+  'editor.tabs.rooms': 'Rum',
+  'editor.test_tool': 'Testverktøy',
+  'editor.test_select_entity': 'Velg enhet',
+  'editor.test_empty': 'Velg en enhet for å se tilgjengelige kommandoer…',
+  'editor.test_export': 'Eksporter .md',
+  'editor.test_no_fields': 'Ingen felt',
+  'editor.test_select_placeholder': '— Velg —',
+  'editor.error_prefix': 'Feil: ',
+  'editor.open_in_hacs': 'Åpne i HACS',
+  'week.enable.desc': 'Aktivera schema per veckodag. När det är av, används samma schema varje dag.',
+  'editor.tabs.sync': 'Sync Engine',
+  'sync.running': 'Synkronisering pågår…',
+  'sync.completed': 'Synkronisering fullført',
+  'pause.menu_title': 'Pause auto‑apply',
+  'pause.off_1h': 'Pause i 1 time',
+  'pause.off_5h': 'Pause i 5 timer',
+  'pause.off_custom': 'Egendefinert varighet…',
+  'pause.off_indef': 'Pause til jeg gjenopptar',
+  'pause.resume': 'Gjenoppta nå',
+  'pause.close': 'Lukk',
+  'pause.active_until': 'Pauset til {time}',
+  'pause.active_indef': 'Pauset',
+  'editor.pausebtn.title': 'Pauseknapp',
+  'editor.pausebtn.desc': 'Vis en global pauseknapp i kortets header. Når pause er aktiv, undertrykkes alle set_temperature‑kommandoer.',
+  'editor.tabs.sync': 'Synk‑motor',
+  'editor.tabs.backup': 'Backup',
+  'backup.title': 'Backup',
+  'backup.desc': 'Kopier innholdet i synk‑sensoren til backup‑sensoren og gjenopprett ved behov.',
+  'backup.now': 'Ta backup nå',
+  'backup.restore': 'Gjenopprett',
+  'backup.delete': 'Slett backup',
+  'backup.delete.confirm': 'Slett valgt backup?',
+  'backup.new': 'Ny backup',
+  'backup.auto': 'Automatisk backup',
+  'backup.auto.desc': 'Lag automatiske sikkerhetskopier med intervaller.',
+  'backup.interval': 'Intervall (dager)',
+  'backup.interval.desc': 'Antall dager mellom automatiske sikkerhetskopier (min. 1).',
+  'backup.sensor': 'Backup‑sensor',
+  'backup.last': 'Siste backup',
+  'backup.slot.title': 'Velg sikkerhetskopi',
+  'backup.slot.desc': 'Velg hvilken backup-slot som skal gjenopprettes.',
+  'backup.slot.empty': 'Ingen sikkerhetskopier ennå',
+  'editor.integration.connected': 'Integrasjon klar',
+  'editor.integration.disconnected': 'Integrasjon utilgjengelig'
+  , 'profiles.button': 'Manuelt skjema'
+  , 'profiles.editor.title': 'Profiler'
+  , 'profiles.add': 'Legg til profil'
+  , 'profiles.rename': 'Gi nytt navn'
+  , 'profiles.delete': 'Slett'
+  , 'profiles.activate': 'Aktiver'
+  , 'profiles.deactivate': 'Deaktiver'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Ingen'
+  , 'profiles.name_placeholder': 'Profilnavn'
+  , 'profiles.edit': 'Rediger'
+  , 'profiles.preview_note': 'Kun forhåndsvisning. Skjemaer blir aktive når profilen aktiveres.'
+  , 'editor.tabs.holidays': 'Helligdager'
+  , 'holidays.enable': 'Aktiver helligdager'
+  , 'holidays.desc': 'Bruk en egen dagsplan på helligdager.'
+  , 'holidays.source': 'Kilde for helligdager'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuelle datoer'
+  , 'holidays.entity': 'Helligdags‑entitet'
+  , 'holidays.entity_desc': 'Velg en kalender som kun gir on/off. Den skal være on på helligdager og off ellers.'
+  , 'holidays.dates': 'Helligdagsdatoer'
+  , 'holidays.add_date': 'Legg til dato'
+  , 'holidays.editor.title': 'Helligdags‑skjema'
+  , 'holidays.edit': 'Rediger helligdags‑skjema'
+  , 'holidays.button': 'Helligdager'
+  , 'editor.perroom.title': 'Standard °C per rom'
+  , 'editor.perroom.desc': 'Vis et Standard °C‑felt på hver rad. Når av, brukes global Standard °C for alle rom.'
+  , 'away.resume_schedule': 'Gjenoppta skjema'
+  , 'away.resume_away': 'Gjenoppta borte‑temperatur'
+  , 'presence.button': 'Tilstede‑skjemaer'
+  , 'presence.editor.title': 'Tilstede‑skjemaer'
+  , 'presence.enable_advanced': 'Aktiver avansert tilstedeværelse'
+  , 'presence.combos': 'Kombinasjoner'
+  , 'presence.enable_combo': 'Aktiver denne kombinasjonen'
+  , 'presence.all_home': 'Alle hjemme'
+  , 'presence.none_home': 'Ingen hjemme'
+  , 'presence.home': 'Hjemme: {names}'
+  , 'presence.away': 'Borte: {names}'
+  , 'presence.manage': 'Administrer kombinasjoner'
+  , 'presence.who_home': 'Hvem er hjemme'
+  , 'presence.who_away': 'Hvem er ikke hjemme'
+  , 'away.enable': 'Aktiver borte‑modus'
+  , 'away.desc': 'Når ingen av de valgte personene er hjemme, senkes termostatene automatisk til den angitte temperaturen.'
+  , 'away.temp': 'Borte‑temperatur'
+  , 'away.persons': 'Personer'
+  , 'away.add_person': 'Legg til person'
+  , 'backup.select': 'Velg hva som skal sikkerhetskopieres'
+  , 'backup.select.desc': 'Avmerkede elementer tas med i sikkerhetskopi/gjenoppretting'
+  , 'backup.opt.all': 'Alle'
+  , 'backup.opt.main': 'Hovedskjemaer'
+  , 'backup.opt.weekday': 'Ukedagsskjemaer'
+  , 'backup.opt.presence': 'Tilstede‑skjemaer'
+  , 'backup.opt.settings': 'Redigeringsinnstillinger'
+  , 'backup.opt.holiday': 'Helligdags‑skjemaer'
+  , 'backup.opt.colors': 'Fargeblokker'
+  , 'editor.tabs.settings': 'Innstillinger'
+  , 'editor.tabs.pause': 'Pause'
+  , 'editor.tabs.weekdays': 'Ukedager'
+  , 'editor.tabs.colors': 'Farger'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Borte fra hjemmet'
+  , 'editor.tabs.boiler': 'Kjel'
+  , 'boiler.switch': 'Kjelbryter'
+  , 'boiler.enable': 'Aktiver kjelstyring'
+  , 'boiler.enable.desc': 'Vis kjelinnstillinger i denne kort‑editoren.'
+  , 'boiler.temp_sensor': 'Kjelens temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor som styrer kjelbryteren.'
+  , 'boiler.min_temp': 'Min kjeltemperatur (°C)'
+  , 'boiler.max_temp': 'Maks kjeltemperatur (°C)'
+  , 'editor.temp_sensor': 'Temperatursensor'
+  , 'presence.live_header': 'Vis live tilstedeværelse i headeren'
+  , 'presence.live_header.desc': 'Vis chips ved pause‑knappen med hvem som er hjemme/borte.'
+  , 'profiles.enable': 'Aktiver profiler (overstyring)'
+  , 'profiles.enable.desc': 'Tillat navngitte dagsskjemaer som kan aktiveres for å overstyre hovedplanen.'
+  , 'profiles.active_label': 'Manuell profil aktiv:'
+  , 'week.view.title': 'Ukevisning'
+  , 'week.view.rooms_one_day': 'Alle rom • én dag'
+  , 'week.view.days_one_room': 'Alle dager • ett rom'
+  , 'week.view_switch.title': 'Bytt visning fra tidslinjen'
+  , 'week.view_switch.desc': 'Vis en bryter i tidslinjens toppfelt for å bytte mellom de to ukedagsvisningene.'
+  , 'week.title': 'Ukedager'
+  , 'week.select_room': 'Velg rom'
+  },
+  de: {
+    'card.title_default': 'Thermostat-Zeitlinie',
+    'ui.edit_block': 'Block bearbeiten',
+    'ui.add_block': 'Block hinzufügen',
+    'ui.from': 'Von',
+    'ui.to': 'Bis',
+    'ui.temperature': 'Temperatur',
+    'ui.delete': 'Löschen',
+  'ui.cancel': 'Abbrechen',
+  'ui.close': 'Schließen',
+  'ui.unsaved_confirm': 'Es gibt ungespeicherte Änderungen. Trotzdem schließen?',
+  'ui.discard_changes': 'Änderungen verwerfen',
+  'ui.keep_editing': 'Weiter bearbeiten',
+    'ui.save': 'Speichern',
+    'ui.error_prefix': 'Fehler: ',
+    'ui.overlap_msg': 'Sie haben sich überschneidende Zeiten ausgewählt — Überschneidung zwischen {start} – {end}.',
+    'ui.auto_fix': 'Automatisch korrigieren',
+    'ui.fix_start_to': 'Beginn auf {time} korrigieren',
+  'ui.fix_end_to': 'Ende auf {time} korrigieren',
+  // Inline meta
+  'ui.current_temp': 'Aktuelle Temperatur:',
+
+    'editor.title_label': 'Titel',
+  'editor.add_entity': 'Raum hinzufügen',
+    'editor.entity_placeholder': 'Entität auswählen',
+    'editor.drag_reorder': 'Zum Neuordnen ziehen',
+    'editor.remove': 'Entfernen',
+    'editor.default_c': 'Standard °C',
+  'editor.row_height_px': 'Zeilenhöhe (px)',
+  'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automatisch anwenden',
+    'editor.auto_apply.desc': 'Wenn aktiviert, versucht die Karte, die Temperatur der ausgewählten climate-Entitäten automatisch so einzustellen, dass sie dem geplanten Wert für „jetzt“ entspricht.',
+    'editor.apply_edit.title': 'Beim Bearbeiten',
+    'editor.apply_edit.desc': 'Wenn Sie Blöcke der Zeitlinie ändern und die Änderung die aktuelle Zeit betrifft, wird die neue Temperatur sofort angewendet.',
+    'editor.apply_default.title': 'Bei Änderung von Standard °C',
+    'editor.apply_default.desc': 'Wenn „Standard °C“ geändert wird und dies den aktuellen Zeitraum betrifft, wird die neue Temperatur sofort angewendet.',
+    'editor.room_mode.title': 'Raum-Entitätstyp',
+    'editor.room_mode.desc': 'Wenn aktiviert, wählen Sie eine input_number (Zieltemperatur). Wenn deaktiviert, wählen Sie eine climate-Entität.',
+  'ui.copy_plan': 'Plan kopieren',
+  'ui.paste_plan': 'Plan einfügen',
+  'ui.copy_day': 'Tag kopieren',
+  'ui.paste_day': 'Tag einfügen',
+  'editor.merge_label': 'Mit zusammenführen (zusätzlichen Thermostat hinzufügen)',
+  'editor.display_name_optional': 'Raumname (optional)',
+    'editor.merged_with': 'Zusammengeführt mit',
+  'editor.store_enable.title': 'Geteilter Speicher + Hintergrundsteuerung',
+  'editor.store_enable.short': 'Speichert Pläne im ausgewählten Sensor und aktiviert die Hintergrundsteuerung.',
+  'editor.store_enable.desc': 'Speichert Pläne im ausgewählten Sensor und aktiviert set_temperature im Hintergrund. Thermostate werden auch aktualisiert, wenn die Karte geschlossen ist. Teilt zudem Zeitpläne (Heizblöcke) und Karten-Einstellungen zwischen Benutzern/Geräten. Wenn aus: Befehle werden nur gesendet, solange die Karte auf einem Gerät (Tablet/PC/Mobil) aktiv sichtbar ist und geöffnet bleibt.',
+  'editor.store_missing': 'Die Integration „Thermostat Pro Timeline Sync“ ist nicht installiert. Geteilter Speicher ist nicht verfügbar.',
+    'editor.clear_store': 'Speicher leeren',
+    'editor.clear_store_confirm': 'Dadurch werden alle gespeicherten Zeitpläne gelöscht. Fortfahren?',
+  'editor.migrate_to_store': 'Daten in Speicher übertragen',
+    'editor.migrate_confirm': 'Ihre im Browser gespeicherten Pläne in den ausgewählten Sensor übertragen? Vorhandene gespeicherte Pläne werden überschrieben.',
+  'editor.migrate_pull_confirm': 'Pläne aus dem Speicher importieren und lokale Browserdaten überschreiben?',
+  'editor.select_storage_first': 'Bitte wähle zuerst einen Speichersensor aus.',
+    'editor.no_local_data': 'Keine lokalen Browserdaten gefunden.',
+    'editor.clear_all': 'Alle Daten löschen',
+    'editor.clear_all_confirm': 'Dies löscht sowohl Speicher- als auch lokale Browser-Zeitpläne. Fortfahren?',
+  'editor.clear_storage_only': 'Nur Speicherdaten löschen',
+    'editor.clear_storage_only_confirm': 'Dies löscht Zeitpläne vom ausgewählten Speichersensor. Fortfahren?',
+  'editor.clear_local_only': 'Nur lokale Daten löschen',
+    'editor.clear_local_only_confirm': 'Dies löscht nur im Browser gespeicherte Zeitpläne. Fortfahren?',
+    'week.enable': 'Wochentage aktivieren',
+    'week.mode': 'Wochentagsmodus',
+    'week.mode.same_all': 'Jeden Tag gleich (1)',
+  'week.mode.weekday_weekend': 'Werktage + Wochenende',
+  'week.mode.weekday_sat_sun': 'Werktage + Samstag + Sonntag',
+  'week.mode.all_7': 'Alle Tage',
+    'week.button': 'Wochentage',
+    'week.days.mon': 'Mo',
+    'week.days.tue': 'Di',
+    'week.days.wed': 'Mi',
+    'week.days.thu': 'Do',
+    'week.days.fri': 'Fr',
+    'week.days.sat': 'Sa',
+    'week.days.sun': 'So',
+    'week.editor.title': 'Wochenschema',
+    'week.editor.preview_note': 'Nur Vorschau. Änderungen werden erst beim Speichern angewendet.',
+    'week.open_editor.desc': 'Wochentags-Editor öffnen.',
+    'week.open_editor.btn': 'Öffnen',
+  'week.copy_to_rooms': 'Wochenschema in Räume kopieren',
+  'week.copy_to_rooms.title': 'Wochenschema in Räume kopieren',
+  'week.copy_to_rooms.select': 'Räume auswählen',
+  'week.copy_to_rooms.apply': 'In Räume einfügen',
+    'week.group.weekdays': 'Werktage',
+    'week.group.weekend': 'Wochenende',
+    'week.days_full.mon': 'Montag',
+    'week.days_full.tue': 'Dienstag',
+    'week.days_full.wed': 'Mittwoch',
+    'week.days_full.thu': 'Donnerstag',
+    'week.days_full.fri': 'Freitag',
+    'week.days_full.sat': 'Samstag',
+    'week.days_full.sun': 'Sonntag',
+    'editor.timefmt.title': 'Zeitformat',
+    'editor.timefmt.desc': '24-Stunden- oder 12-Stunden-Anzeige (AM/PM) für Zeiten auf der Karte wählen.',
+    'editor.tempfmt.title': 'Temperatureinheit',
+    'editor.tempfmt.desc': 'Celsius (°C) oder Fahrenheit (°F) für Anzeige in Karte und Editoren wählen.',
+  'editor.timesrc.title': 'Zeitquelle',
+  'editor.timesrc.desc': 'Wählen, ob die Karte die Browser‑Zeit oder die Home‑Assistant‑Zeitzone für „jetzt“ verwendet.',
+  'editor.timesrc.browser': 'Browser',
+  'editor.timesrc.ha': 'Home Assistant',
+    'editor.heat_colors.title': 'Farben für Heizblöcke',
+    'editor.heat_colors.add': 'Farbintervall hinzufügen',
+    'editor.colors.col_from': 'Von °C',
+    'editor.colors.col_to': 'Bis °C',
+    'editor.colors.col_color': 'Farbe',
+    'editor.colors.empty': 'Noch keine Räume hinzugefügt. Fügen Sie einen Raum hinzu, um Farben zu definieren.',
+    'editor.colors.go_add': 'Raum hinzufügen',
+    'editor.colors.refresh': 'Zeitplan aktualisieren',
+    'editor.colors.clear_local': 'Lokale Farb-Daten löschen',
+    'editor.colors.clear_local_confirm': 'Dadurch werden in Ihrem Browser für diese Karte gespeicherte Farbbereiche gelöscht. Fortfahren?',
+    'editor.colors.clear_shared': 'Geteilten Farbspeicher löschen',
+  'editor.colors.clear_shared_confirm': 'Dadurch werden Farbbereiche im ausgewählten Speichersensor gelöscht. Fortfahren?',
+  'editor.colors.mode': 'Farbmodus',
+  'editor.colors.mode.desc': 'Farben pro Raum oder ein Satz für alle Räume wählen.',
+  'editor.colors.mode_per_room': 'Pro Raum',
+  'editor.colors.mode_global': 'Alle Räume',
+  'editor.colors.global_title': 'Alle Räume',
+  'editor.colors.clear_all': 'Alle Farbdaten löschen',
+  'editor.colors.clear_all_confirm': 'Dies löscht alle Farbbereiche sowohl lokal als auch im ausgewählten Speichersensor. Fortfahren?',
+  'editor.reload_editor': 'Editor neu laden',
+  'editor.reload_dashboard': 'Dashboard neu laden',
+  'onboard.title': 'Willkommen bei Thermostat‑Zeitlinie',
+  'onboard.next': 'Weiter',
+  'onboard.prev': 'Zurück',
+  'onboard.skip': 'Überspringen',
+  'onboard.done': 'Fertig',
+  'onboard.dont_show': 'Nicht erneut anzeigen',
+  'onboard.step_main': 'Dies ist die Hauptzeitlinie. Sie zeigt Solltemperaturen über 24 Stunden für jeden Raum.',
+  'onboard.step_add': 'Fügen Sie einen Heizblock über + Block hinzufügen oder per Doppelklick hinzu.',
+  'onboard.step_edit': 'Bearbeiten/Löschen per Doppelklick. Verwenden Sie Wochentage für verschiedene Tage.',
+  'onboard.reset': 'Anleitung erneut anzeigen',
+  'onboard.reset_ok': 'Willkommen wird beim nächsten Mal angezeigt.',
+    'editor.select_entities': 'Räume',
+  'editor.tabs.rooms': 'Räume',
+  'editor.test_tool': 'Testwerkzeug',
+  'editor.test_select_entity': 'Entität auswählen',
+  'editor.test_empty': 'Wählen Sie eine Entität, um verfügbare Befehle anzuzeigen…',
+  'editor.test_export': 'Exportieren .md',
+  'editor.test_no_fields': 'Keine Felder',
+  'editor.test_select_placeholder': '— Auswählen —',
+  'editor.error_prefix': 'Fehler: ',
+  'editor.open_in_hacs': 'In HACS öffnen',
+  'week.enable.desc': 'Pro-Wochentag-Plan aktivieren. Wenn aus, wird jeden Tag derselbe Plan verwendet.',
+  'editor.tabs.sync': 'Sync‑Engine',
+  'sync.running': 'Synchronisierung läuft…',
+  'sync.completed': 'Synchronisierung abgeschlossen',
+  'editor.tabs.backup': 'Backup',
+  'backup.title': 'Backup',
+  'backup.desc': 'Kopiere den Inhalt deines Sync‑Sensors in den Backup‑Sensor und bei Bedarf wiederherstellen.',
+  'backup.now': 'Jetzt sichern',
+  'backup.restore': 'Wiederherstellen',
+  'backup.delete': 'Backup löschen',
+  'backup.delete.confirm': 'Ausgewähltes Backup löschen?',
+  'backup.new': 'Neues Backup',
+  'backup.auto': 'Automatisches Backup',
+  'backup.auto.desc': 'Automatische Sicherungen in festen Intervallen erstellen.',
+  'backup.interval': 'Intervall (Tage)',
+  'backup.interval.desc': 'Anzahl der Tage zwischen automatischen Sicherungen (min. 1).',
+  'backup.sensor': 'Backup‑Sensor',
+  'backup.last': 'Letztes Backup',
+  'backup.slot.title': 'Backup auswählen',
+  'backup.slot.desc': 'Wählen Sie, welcher Backup-Slot wiederhergestellt werden soll.',
+  'backup.slot.empty': 'Noch keine Backups',
+  'pause.menu_title': 'Auto‑Anwendung pausieren',
+  'pause.off_1h': '1 Stunde pausieren',
+  'pause.off_5h': '5 Stunden pausieren',
+  'pause.off_custom': 'Benutzerdefinierte Dauer…',
+  'pause.off_indef': 'Pausieren bis ich fortsetze',
+  'pause.resume': 'Jetzt fortsetzen',
+  'pause.close': 'Schließen',
+  'pause.active_until': 'Pausiert bis {time}',
+  'pause.active_indef': 'Pausiert',
+  'editor.pausebtn.title': 'Pause‑Schaltfläche',
+  'editor.pausebtn.desc': 'Zeigt eine globale Pause‑Schaltfläche in der Kopfzeile. Während der Pause werden alle set_temperature‑Befehle unterdrückt.',
+  'editor.integration.connected': 'Integration bereit',
+  'editor.integration.disconnected': 'Integration nicht verfügbar'
+  , 'profiles.button': 'Manueller Zeitplan'
+  , 'profiles.editor.title': 'Profile'
+  , 'profiles.add': 'Profil hinzufügen'
+  , 'profiles.rename': 'Umbenennen'
+  , 'profiles.delete': 'Löschen'
+  , 'profiles.activate': 'Aktivieren'
+  , 'profiles.deactivate': 'Deaktivieren'
+  , 'profiles.active': 'Aktiv'
+  , 'profiles.none': 'Keins'
+  , 'profiles.name_placeholder': 'Profilname'
+  , 'profiles.edit': 'Bearbeiten'
+  , 'profiles.preview_note': 'Nur Vorschau. Pläne werden aktiv, wenn Sie das Profil aktivieren.'
+  , 'editor.tabs.holidays': 'Feiertage'
+  , 'holidays.enable': 'Feiertage aktivieren'
+  , 'holidays.desc': 'An Feiertagen einen speziellen Tagesplan verwenden.'
+  , 'holidays.source': 'Feiertagsquelle'
+  , 'holidays.source.calendar': 'Kalender'
+  , 'holidays.source.manual': 'Manuelle Daten'
+  , 'holidays.entity': 'Feiertags‑Entität'
+  , 'holidays.entity_desc': 'Wähle einen Kalender, der nur Ein/Aus meldet. An Feiertagen sollte er „on“ sein, an anderen Tagen „off“.'
+  , 'holidays.dates': 'Feiertagsdaten'
+  , 'holidays.add_date': 'Datum hinzufügen'
+  , 'holidays.editor.title': 'Feiertags‑Zeitplan'
+  , 'holidays.edit': 'Feiertags‑Zeitplan bearbeiten'
+  , 'holidays.button': 'Feiertage'
+  , 'editor.perroom.title': 'Standard‑°C pro Raum'
+  , 'editor.perroom.desc': 'Zeigt ein Standard‑°C‑Feld in jeder Zeile. Wenn aus, wird die globale Standard‑°C für alle Räume verwendet.'
+  , 'away.resume_schedule': 'Zeitplan fortsetzen'
+  , 'away.resume_away': 'Abwesenheits‑Temperatur fortsetzen'
+  , 'presence.button': 'Anwesenheitspläne'
+  , 'presence.editor.title': 'Anwesenheitspläne'
+  , 'presence.enable_advanced': 'Erweiterte Anwesenheit aktivieren'
+  , 'presence.combos': 'Kombinationen'
+  , 'presence.enable_combo': 'Diese Kombination aktivieren'
+  , 'presence.all_home': 'Alle zu Hause'
+  , 'presence.none_home': 'Niemand zu Hause'
+  , 'presence.home': 'Zu Hause: {names}'
+  , 'presence.away': 'Abwesend: {names}'
+  , 'presence.manage': 'Kombinationen verwalten'
+  , 'presence.who_home': 'Wer ist zu Hause'
+  , 'presence.who_away': 'Wer ist nicht zu Hause'
+  , 'away.enable': 'Abwesenheitsmodus aktivieren'
+  , 'away.desc': 'Wenn keine der ausgewählten Personen zu Hause ist, werden die Thermostate automatisch auf die eingestellte Temperatur abgesenkt.'
+  , 'away.temp': 'Abwesenheits‑Temperatur'
+  , 'away.persons': 'Personen'
+  , 'away.add_person': 'Person hinzufügen'
+  , 'backup.select': 'Auswählen, was gesichert wird'
+  , 'backup.select.desc': 'Markierte Elemente werden in Sicherung/Wiederherstellung einbezogen.'
+  , 'backup.opt.all': 'Alle'
+  , 'backup.opt.main': 'Hauptzeitpläne'
+  , 'backup.opt.weekday': 'Wochentags‑Zeitpläne'
+  , 'backup.opt.presence': 'Anwesenheitspläne'
+  , 'backup.opt.settings': 'Editor‑Einstellungen'
+  , 'backup.opt.holiday': 'Feiertags‑Zeitpläne'
+  , 'backup.opt.colors': 'Farbblöcke'
+  , 'editor.tabs.settings': 'Einstellungen'
+  , 'editor.tabs.pause': 'Pause'
+  , 'editor.tabs.weekdays': 'Wochentage'
+  , 'editor.tabs.colors': 'Farben'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Abwesend von zu Hause'
+  , 'editor.tabs.boiler': 'Kessel'
+  , 'boiler.switch': 'Kesselschalter'
+  , 'boiler.enable': 'Kesselsteuerung aktivieren'
+  , 'boiler.enable.desc': 'Kesseleinstellungen in diesem Karten‑Editor anzeigen.'
+  , 'boiler.temp_sensor': 'Kessel‑Temperatursensor'
+  , 'boiler.temp_sensor.desc': 'Temperatursensor zur Steuerung des Kesselschalters.'
+  , 'boiler.min_temp': 'Min. Kesseltemperatur (°C)'
+  , 'boiler.max_temp': 'Max. Kesseltemperatur (°C)'
+  , 'editor.temp_sensor': 'Temperatursensor'
+  , 'presence.live_header': 'Live‑Anwesenheit in Kopfzeile anzeigen'
+  , 'presence.live_header.desc': 'Chips neben der Pause‑Taste anzeigen, wer zu Hause/abwesend ist.'
+  , 'profiles.enable': 'Profile aktivieren (Überschreiben)'
+  , 'profiles.enable.desc': 'Benannte Tagespläne erlauben, die den Hauptplan bei Aktivierung überschreiben.'
+  , 'profiles.active_label': 'Manuelles Profil aktiv:'
+  , 'week.view.title': 'Wochenansicht'
+  , 'week.view.rooms_one_day': 'Alle Räume • ein Tag'
+  , 'week.view.days_one_room': 'Alle Tage • ein Raum'
+  , 'week.view_switch.title': 'Ansicht in der Zeitleiste wechseln'
+  , 'week.view_switch.desc': 'Zeigt einen Umschalter in der Kopfzeile der Zeitleiste, um zwischen den beiden Wochentagsansichten zu wechseln.'
+  , 'week.title': 'Wochentage'
+  , 'week.select_room': 'Raum auswählen'
+  },
+  es: {
+    'card.title_default': 'Línea de tiempo del termostato',
+    'ui.edit_block': 'Editar bloque',
+    'ui.add_block': 'Agregar bloque',
+    'ui.from': 'Desde',
+    'ui.to': 'Hasta',
+    'ui.temperature': 'Temperatura',
+    'ui.delete': 'Eliminar',
+  'ui.cancel': 'Cancelar',
+  'ui.close': 'Cerrar',
+  'ui.unsaved_confirm': 'Tienes cambios sin guardar. ¿Cerrar igualmente?',
+  'ui.discard_changes': 'Descartar cambios',
+  'ui.keep_editing': 'Seguir editando',
+    'ui.save': 'Guardar',
+    'ui.error_prefix': 'Error: ',
+    'ui.overlap_msg': 'Has seleccionado horas superpuestas — se solapa durante {start} – {end}.',
+    'ui.auto_fix': 'Corregir automáticamente',
+    'ui.fix_start_to': 'Ajustar inicio a {time}',
+  'ui.fix_end_to': 'Ajustar fin a {time}',
+  // Inline meta
+  'ui.current_temp': 'Temperatura actual:',
+
+    'editor.title_label': 'Título',
+  'editor.add_entity': 'Añadir habitación',
+    'editor.entity_placeholder': 'Selecciona una entidad',
+    'editor.drag_reorder': 'Arrastrar para reordenar',
+    'editor.remove': 'Eliminar',
+    'editor.default_c': 'Predeterminado °C',
+  'editor.row_height_px': 'Altura de fila (px)',
+  'editor.max_c': 'Máx °C',
+    'editor.min_c': 'Mín °C',
+    'editor.auto_apply.title': 'Aplicar automáticamente',
+    'editor.auto_apply.desc': 'Cuando está activado, la tarjeta intentará establecer la temperatura en las entidades climate seleccionadas para que coincida con el valor planificado para “ahora mismo”.',
+    'editor.apply_edit.title': 'Al editar',
+    'editor.apply_edit.desc': 'Cuando cambias bloques de la línea de tiempo y el cambio afecta a la hora actual, la nueva temperatura se aplica inmediatamente.',
+    'editor.apply_default.title': 'Al cambiar Predeterminado °C',
+    'editor.apply_default.desc': 'Cuando “Predeterminado °C” cambia y afecta al período actual, la nueva temperatura se aplica inmediatamente.',
+    'editor.room_mode.title': 'Tipo de entidad de habitación',
+    'editor.room_mode.desc': 'Cuando está activado, selecciona un input_number (temperatura objetivo). Cuando está desactivado, selecciona una entidad climate.',
+  'ui.copy_plan': 'Copiar plan',
+  'ui.paste_plan': 'Pegar plan',
+  'ui.copy_day': 'Copiar día',
+  'ui.paste_day': 'Pegar día',
+  'editor.merge_label': 'Combinar con (añadir termostato extra)',
+  'editor.display_name_optional': 'Nombre de la habitación (opcional)',
+    'editor.merged_with': 'Combinado con',
+  'editor.store_enable.title': 'Almacenamiento compartido + control en segundo plano',
+  'editor.store_enable.short': 'Guarda horarios en el sensor seleccionado y habilita el control en segundo plano.',
+  'editor.store_enable.desc': 'Guarda horarios en el sensor seleccionado y habilita set_temperature en segundo plano. Los termostatos se actualizan incluso con la tarjeta cerrada. Además comparte horarios (bloques de calor) y la configuración de la tarjeta entre usuarios/dispositivos. Si está desactivado: los comandos se envían solo mientras la tarjeta está visible en un dispositivo (tableta/PC/móvil) y debe permanecer abierta.',
+  'editor.store_missing': 'La integración "Thermostat Pro Timeline Sync" no está instalada. El almacenamiento compartido no está disponible.',
+    'editor.clear_store': 'Vaciar almacenamiento',
+    'editor.clear_store_confirm': 'Esto eliminará todos los horarios guardados. ¿Continuar?',
+  'editor.migrate_to_store': 'Transferir datos al almacenamiento',
+    'editor.migrate_confirm': '¿Transferir los horarios guardados en tu navegador al sensor seleccionado? Esto sobrescribirá los horarios existentes en el almacenamiento.',
+  'editor.migrate_pull_confirm': '¿Importar horarios desde el almacenamiento y sobrescribir los datos locales del navegador?',
+  'editor.select_storage_first': 'Selecciona primero un sensor de almacenamiento.',
+    'editor.no_local_data': 'No se encontraron datos locales del navegador.',
+    'editor.clear_all': 'Borrar todos los datos',
+    'editor.clear_all_confirm': 'Esto eliminará los horarios tanto del almacenamiento como del navegador local. ¿Continuar?',
+  'editor.clear_storage_only': 'Borrar solo datos de almacenamiento',
+    'editor.clear_storage_only_confirm': 'Esto eliminará los horarios del sensor de almacenamiento seleccionado. ¿Continuar?',
+  'editor.clear_local_only': 'Borrar solo datos locales',
+    'editor.clear_local_only_confirm': 'Esto eliminará solo los horarios guardados en tu navegador. ¿Continuar?',
+    'week.enable': 'Habilitar días de la semana',
+    'week.mode': 'Modo por días',
+    'week.mode.same_all': 'Igual todos los días (1)',
+  'week.mode.weekday_weekend': 'Laborables + Fin de semana',
+  'week.mode.weekday_sat_sun': 'Laborables + Sábado + Domingo',
+  'week.mode.all_7': 'Todos los días',
+    'week.button': 'Días de la semana',
+    'week.days.mon': 'Lun',
+    'week.days.tue': 'Mar',
+    'week.days.wed': 'Mié',
+    'week.days.thu': 'Jue',
+    'week.days.fri': 'Vie',
+    'week.days.sat': 'Sáb',
+    'week.days.sun': 'Dom',
+    'week.editor.title': 'Programación por días',
+    'week.editor.preview_note': 'Solo vista previa. Los cambios se aplican al pulsar Guardar.',
+    'week.open_editor.desc': 'Abrir el editor de días de la semana.',
+    'week.open_editor.btn': 'Abrir',
+  'week.copy_to_rooms': 'Copiar semana a habitaciones',
+  'week.copy_to_rooms.title': 'Copiar semana a habitaciones',
+  'week.copy_to_rooms.select': 'Seleccionar habitaciones',
+  'week.copy_to_rooms.apply': 'Insertar en habitaciones',
+    'week.group.weekdays': 'Laborables',
+    'week.group.weekend': 'Fin de semana',
+    'week.days_full.mon': 'Lunes',
+    'week.days_full.tue': 'Martes',
+    'week.days_full.wed': 'Miércoles',
+    'week.days_full.thu': 'Jueves',
+    'week.days_full.fri': 'Viernes',
+    'week.days_full.sat': 'Sábado',
+    'week.days_full.sun': 'Domingo',
+    'editor.timefmt.title': 'Formato de hora',
+    'editor.timefmt.desc': 'Elige visualización de 24 horas o 12 horas (AM/PM) para la tarjeta.',
+    'editor.tempfmt.title': 'Unidad de temperatura',
+    'editor.tempfmt.desc': 'Elige Celsius (°C) o Fahrenheit (°F) para mostrar en la tarjeta y editores.',
+  'editor.timesrc.title': 'Fuente de tiempo',
+  'editor.timesrc.desc': 'Elige si la tarjeta usa la hora del navegador o la zona horaria de Home Assistant para “ahora”.',
+  'editor.timesrc.browser': 'Navegador',
+  'editor.timesrc.ha': 'Home Assistant',
+    'editor.heat_colors.title': 'Colores de bloques de calor',
+    'editor.heat_colors.add': 'Añadir intervalo de color',
+    'editor.colors.col_from': 'Desde °C',
+    'editor.colors.col_to': 'Hasta °C',
+    'editor.colors.col_color': 'Color',
+    'editor.colors.empty': 'Aún no se han añadido habitaciones. Añade una para definir colores.',
+    'editor.colors.go_add': 'Añadir habitación',
+    'editor.colors.refresh': 'Actualizar programación',
+    'editor.colors.clear_local': 'Borrar datos de color locales',
+    'editor.colors.clear_local_confirm': 'Esto eliminará los intervalos de color guardados en tu navegador para esta tarjeta. ¿Continuar?',
+    'editor.colors.clear_shared': 'Borrar almacenamiento de color compartido',
+  'editor.colors.clear_shared_confirm': 'Esto eliminará los intervalos de color en el sensor de almacenamiento seleccionado. ¿Continuar?',
+  'editor.colors.mode': 'Modo de color',
+  'editor.colors.mode.desc': 'Elige colores por habitación o un conjunto para todas.',
+  'editor.colors.mode_per_room': 'Por habitación',
+  'editor.colors.mode_global': 'Todas las habitaciones',
+  'editor.colors.global_title': 'Todas las habitaciones',
+  'editor.colors.clear_all': 'Borrar todos los datos de color',
+  'editor.colors.clear_all_confirm': 'Esto borrará todos los intervalos de color tanto locales como del sensor de almacenamiento seleccionado. ¿Continuar?',
+  'editor.reload_editor': 'Recargar editor',
+  'editor.reload_dashboard': 'Recargar panel',
+  'onboard.title': 'Bienvenido a la línea de tiempo del termostato',
+  'onboard.next': 'Siguiente',
+  'onboard.prev': 'Atrás',
+  'onboard.skip': 'Omitir',
+  'onboard.done': 'Listo',
+  'onboard.dont_show': 'No mostrar de nuevo',
+  'onboard.step_main': 'Esta es la línea principal. Muestra las temperaturas deseadas a lo largo del día por habitación.',
+  'onboard.step_add': 'Añade un bloque con + Agregar bloque o con doble clic en la línea de tiempo.',
+  'onboard.step_edit': 'Edita o elimina un bloque con doble clic. Usa días de la semana para distintos días.',
+  'onboard.reset': 'Mostrar la guía otra vez',
+  'onboard.reset_ok': 'La bienvenida se mostrará la próxima vez.',
+    'editor.select_entities': 'Habitaciones',
+  'editor.tabs.rooms': 'Habitaciones',
+  'editor.test_tool': 'Herramienta de prueba',
+  'editor.test_select_entity': 'Seleccionar entidad',
+  'editor.test_empty': 'Seleccione una entidad para ver los comandos disponibles…',
+  'editor.test_export': 'Exportar .md',
+  'editor.test_no_fields': 'Sin campos',
+  'editor.test_select_placeholder': '— Seleccionar —',
+  'editor.error_prefix': 'Error: ',
+  'editor.open_in_hacs': 'Abrir en HACS',
+  'week.enable.desc': 'Habilitar programación por día. Si está desactivado, se usa el mismo plan todos los días.',
+  'editor.tabs.sync': 'Motor de sincronización',
+  'sync.running': 'Sincronización en curso…',
+  'sync.completed': 'Sincronización completada',
+  'editor.tabs.backup': 'Copia de seguridad',
+  'backup.title': 'Copia de seguridad',
+  'backup.desc': 'Copia el contenido de tu sensor de sincronización al sensor de copia de seguridad y restaura cuando sea necesario.',
+  'backup.now': 'Hacer copia ahora',
+  'backup.restore': 'Restaurar',
+  'backup.delete': 'Eliminar copia de seguridad',
+  'backup.delete.confirm': '¿Eliminar la copia seleccionada?',
+  'backup.new': 'Nueva copia de seguridad',
+  'backup.auto': 'Copia de seguridad automática',
+  'backup.auto.desc': 'Realiza copias de seguridad automáticas a intervalos.',
+  'backup.interval': 'Intervalo (días)',
+  'backup.interval.desc': 'Cuántos días entre copias de seguridad automáticas (mín. 1).',
+  'backup.sensor': 'Sensor de copia de seguridad',
+  'backup.last': 'Última copia de seguridad',
+  'backup.slot.title': 'Seleccionar copia de seguridad',
+  'backup.slot.desc': 'Selecciona qué ranura de copia de seguridad restaurar.',
+  'backup.slot.empty': 'Aún no hay copias de seguridad',
+  'pause.menu_title': 'Pausar auto‑aplicación',
+  'pause.off_1h': 'Pausar 1 hora',
+  'pause.off_5h': 'Pausar 5 horas',
+  'pause.off_custom': 'Duración personalizada…',
+  'pause.off_indef': 'Pausar hasta reanudar',
+  'pause.resume': 'Reanudar ahora',
+  'pause.close': 'Cerrar',
+  'pause.active_until': 'Pausado hasta {time}',
+  'pause.active_indef': 'Pausado',
+  'editor.pausebtn.title': 'Botón de pausa',
+  'editor.pausebtn.desc': 'Muestra un botón de pausa global en la cabecera. Mientras está pausado, se suprimen todos los comandos set_temperature.',
+  'editor.integration.connected': 'Integración lista',
+  'editor.integration.disconnected': 'Integración no disponible'
+  , 'profiles.button': 'Horario manual'
+  , 'profiles.editor.title': 'Perfiles'
+  , 'profiles.add': 'Agregar perfil'
+  , 'profiles.rename': 'Renombrar'
+  , 'profiles.delete': 'Eliminar'
+  , 'profiles.activate': 'Activar'
+  , 'profiles.deactivate': 'Desactivar'
+  , 'profiles.active': 'Activo'
+  , 'profiles.none': 'Ninguno'
+  , 'profiles.name_placeholder': 'Nombre del perfil'
+  , 'profiles.edit': 'Editar'
+  , 'profiles.preview_note': 'Solo vista previa. Los horarios se activan al activar el perfil.'
+  , 'editor.tabs.holidays': 'Festivos'
+  , 'holidays.enable': 'Habilitar festivos'
+  , 'holidays.desc': 'Usa un horario especial en días festivos.'
+  , 'holidays.source': 'Fuente de festivos'
+  , 'holidays.source.calendar': 'Calendario'
+  , 'holidays.source.manual': 'Fechas manuales'
+  , 'holidays.entity': 'Entidad de festivos'
+  , 'holidays.entity_desc': 'Selecciona un calendario que solo informe on/off. Debe estar en on en festivos y en off el resto de días.'
+  , 'holidays.dates': 'Fechas de festivos'
+  , 'holidays.add_date': 'Agregar fecha'
+  , 'holidays.editor.title': 'Horario de festivos'
+  , 'holidays.edit': 'Editar horario de festivos'
+  , 'holidays.button': 'Festivos'
+  , 'editor.perroom.title': '°C predeterminado por habitación'
+  , 'editor.perroom.desc': 'Muestra un campo de °C predeterminado en cada fila. Si está desactivado, se usa el °C predeterminado global para todas las habitaciones.'
+  , 'away.resume_schedule': 'Reanudar horario'
+  , 'away.resume_away': 'Reanudar temperatura de ausencia'
+  , 'presence.button': 'Horarios de presencia'
+  , 'presence.editor.title': 'Horarios de presencia'
+  , 'presence.enable_advanced': 'Habilitar presencia avanzada'
+  , 'presence.combos': 'Combinaciones'
+  , 'presence.enable_combo': 'Habilitar esta combinación'
+  , 'presence.all_home': 'Todos en casa'
+  , 'presence.none_home': 'Nadie en casa'
+  , 'presence.home': 'En casa: {names}'
+  , 'presence.away': 'Fuera: {names}'
+  , 'presence.manage': 'Gestionar combinaciones'
+  , 'presence.who_home': 'Quién está en casa'
+  , 'presence.who_away': 'Quién no está en casa'
+  , 'away.enable': 'Habilitar modo ausente'
+  , 'away.desc': 'Cuando ninguna de las personas seleccionadas está en casa, los termostatos bajan automáticamente a la temperatura establecida.'
+  , 'away.temp': 'Temperatura de ausencia'
+  , 'away.persons': 'Personas'
+  , 'away.add_person': 'Agregar persona'
+  , 'backup.select': 'Elegir qué copiar en la copia de seguridad'
+  , 'backup.select.desc': 'Los elementos marcados se incluyen en la copia/restauración'
+  , 'backup.opt.all': 'Todo'
+  , 'backup.opt.main': 'Horarios principales'
+  , 'backup.opt.weekday': 'Horarios por día'
+  , 'backup.opt.presence': 'Horarios de presencia'
+  , 'backup.opt.settings': 'Ajustes del editor'
+  , 'backup.opt.holiday': 'Horarios de festivos'
+  , 'backup.opt.colors': 'Bloques de color'
+  , 'editor.tabs.settings': 'Ajustes'
+  , 'editor.tabs.pause': 'Pausa'
+  , 'editor.tabs.weekdays': 'Días de la semana'
+  , 'editor.tabs.colors': 'Colores'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Fuera de casa'
+  , 'editor.tabs.boiler': 'Caldera'
+  , 'boiler.switch': 'Interruptor de caldera'
+  , 'boiler.enable': 'Activar control de caldera'
+  , 'boiler.enable.desc': 'Mostrar ajustes de caldera en el editor de esta tarjeta.'
+  , 'boiler.temp_sensor': 'Sensor de temperatura de caldera'
+  , 'boiler.temp_sensor.desc': 'Sensor de temperatura usado para controlar el interruptor de la caldera.'
+  , 'boiler.min_temp': 'Temp. mínima de caldera (°C)'
+  , 'boiler.max_temp': 'Temp. máxima de caldera (°C)'
+  , 'editor.temp_sensor': 'Sensor de temperatura'
+  , 'presence.live_header': 'Mostrar presencia en vivo en la cabecera'
+  , 'presence.live_header.desc': 'Mostrar chips junto al botón de pausa con quién está en casa/ausente.'
+  , 'profiles.enable': 'Habilitar perfiles (sobrescribir)'
+  , 'profiles.enable.desc': 'Permitir horarios diarios con nombre que puedas activar para sobrescribir el plan principal.'
+  , 'profiles.active_label': 'Perfil manual activo:'
+  , 'week.view.title': 'Vista semanal'
+  , 'week.view.rooms_one_day': 'Todas las habitaciones • un día'
+  , 'week.view.days_one_room': 'Todos los días • una habitación'
+  , 'week.view_switch.title': 'Cambiar vista desde la línea de tiempo'
+  , 'week.view_switch.desc': 'Muestra un selector en el encabezado de la línea de tiempo para alternar entre los dos modos de vista de los días de la semana.'
+  , 'week.title': 'Días de la semana'
+  , 'week.select_room': 'Seleccionar habitación'
+  },
+  fr: {
+    'card.title_default': 'Chronologie du thermostat',
+    'ui.edit_block': 'Modifier le bloc',
+    'ui.add_block': 'Ajouter un bloc',
+    'ui.from': 'De',
+    'ui.to': 'À',
+    'ui.temperature': 'Température',
+    'ui.delete': 'Supprimer',
+  'ui.cancel': 'Annuler',
+  'ui.close': 'Fermer',
+  'ui.unsaved_confirm': 'Des modifications non enregistrées existent. Fermer quand même ?',
+  'ui.discard_changes': 'Ignorer les modifications',
+  'ui.keep_editing': 'Continuer l’édition',
+    'ui.save': 'Enregistrer',
+    'ui.error_prefix': 'Erreur : ',
+    'ui.overlap_msg': 'Vous avez sélectionné des heures qui se chevauchent — chevauchement entre {start} – {end}.',
+    'ui.auto_fix': 'Corriger automatiquement',
+    'ui.fix_start_to': 'Ajuster le début à {time}',
+  'ui.fix_end_to': 'Ajuster la fin à {time}',
+  // Inline meta
+  'ui.current_temp': 'Température actuelle :',
+
+    'editor.title_label': 'Titre',
+  'editor.add_entity': 'Ajouter une pièce',
+    'editor.entity_placeholder': 'Sélectionnez une entité',
+    'editor.room_mode.title': 'Type d’entité de pièce',
+    'editor.room_mode.desc': 'Activé : sélectionnez un input_number (température cible). Désactivé : sélectionnez une entité climate.',
+    'editor.drag_reorder': 'Glisser pour réorganiser',
+    'editor.remove': 'Supprimer',
+    'editor.default_c': 'Par défaut °C',
+  'editor.row_height_px': 'Hauteur de ligne (px)',
+  'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Application automatique',
+    'editor.auto_apply.desc': 'Lorsqu’il est activé, la carte essaie de régler la température des entités climate sélectionnées pour qu’elle corresponde à la valeur prévue pour « maintenant »',
+    'editor.apply_edit.title': 'Lors de l’édition',
+    'editor.apply_edit.desc': 'Quand vous modifiez des blocs de la chronologie et que la modification affecte l’heure actuelle, la nouvelle température est appliquée immédiatement.',
+    'editor.apply_default.title': 'Lors d’un changement de °C par défaut',
+    'editor.apply_default.desc': 'Lorsque « °C par défaut » change et que cela affecte la période en cours, la nouvelle température est appliquée immédiatement.',
+  'ui.copy_plan': 'Copier le plan',
+  'ui.paste_plan': 'Coller le plan',
+  'ui.copy_day': 'Copier le jour',
+  'ui.paste_day': 'Coller le jour',
+  'editor.merge_label': 'Fusionner avec (ajouter un thermostat supplémentaire)',
+  'editor.display_name_optional': 'Nom de la pièce (facultatif)',
+    'editor.merged_with': 'Fusionné avec',
+  'editor.store_enable.title': 'Stockage partagé + contrôle en arrière‑plan',
+  'editor.store_enable.short': 'Enregistre les plannings dans le capteur sélectionné et active le contrôle en arrière‑plan.',
+  'editor.store_enable.desc': 'Enregistre les plannings dans le capteur sélectionné et active set_temperature en arrière‑plan. Les thermostats se mettent à jour même lorsque la carte est fermée. Partage également les plannings (blocs de chauffe) et les paramètres de la carte entre utilisateurs/appareils. Désactivé : commandes envoyées uniquement lorsque la carte est visible sur un appareil (tablette/PC/mobile) et elle doit rester ouverte.',
+  'editor.store_missing': 'L’intégration « Thermostat Pro Timeline Sync » n’est pas installée. Le stockage partagé n’est pas disponible.',
+    'editor.clear_store': 'Vider le stockage',
+    'editor.clear_store_confirm': 'Cela supprimera tous les plannings enregistrés. Continuer ?',
+  'editor.migrate_to_store': 'Transférer les données vers le stockage',
+    'editor.migrate_confirm': 'Transférer vos plannings enregistrés dans le navigateur vers le capteur sélectionné ? Cela remplacera les plannings existants dans le stockage.',
+  'editor.migrate_pull_confirm': 'Importer les plannings depuis le stockage et remplacer les données locales du navigateur ?',
+  'editor.select_storage_first': 'Veuillez d’abord sélectionner un capteur de stockage.',
+    'editor.no_local_data': 'Aucune donnée locale du navigateur trouvée.',
+    'editor.clear_all': 'Effacer toutes les données',
+    'editor.clear_all_confirm': 'Cela supprimera les plannings du stockage et du navigateur local. Continuer ?',
+  'editor.clear_storage_only': 'Effacer uniquement les données du stockage',
+    'editor.clear_storage_only_confirm': 'Cela supprimera les plannings du capteur de stockage sélectionné. Continuer ?',
+  'editor.clear_local_only': 'Effacer uniquement les données locales',
+    'editor.clear_local_only_confirm': 'Cela supprimera uniquement les plannings enregistrés dans votre navigateur. Continuer ?',
+    'week.enable': 'Activer les jours de semaine',
+    'week.mode': 'Mode jours de semaine',
+    'week.mode.same_all': 'Identique chaque jour (1)',
+  'week.mode.weekday_weekend': 'Jours ouvrés + Week-end',
+  'week.mode.weekday_sat_sun': 'Jours ouvrés + Samedi + Dimanche',
+  'week.mode.all_7': 'Tous les jours',
+    'week.button': 'Jours de semaine',
+    'week.days.mon': 'Lun',
+    'week.days.tue': 'Mar',
+    'week.days.wed': 'Mer',
+    'week.days.thu': 'Jeu',
+    'week.days.fri': 'Ven',
+    'week.days.sat': 'Sam',
+    'week.days.sun': 'Dim',
+    'week.editor.title': 'Planification par jour',
+    'week.editor.preview_note': 'Aperçu uniquement. Les modifications s’appliquent lors de l’enregistrement.',
+    'week.open_editor.desc': 'Ouvrir l’éditeur des jours.',
+    'week.open_editor.btn': 'Ouvrir',
+  'week.copy_to_rooms': 'Copier la semaine vers des pièces',
+  'week.copy_to_rooms.title': 'Copier la semaine vers des pièces',
+  'week.copy_to_rooms.select': 'Sélectionner des pièces',
+  'week.copy_to_rooms.apply': 'Insérer dans les pièces',
+    'week.group.weekdays': 'Jours ouvrés',
+    'week.group.weekend': 'Week-end',
+    'week.days_full.mon': 'Lundi',
+    'week.days_full.tue': 'Mardi',
+    'week.days_full.wed': 'Mercredi',
+    'week.days_full.thu': 'Jeudi',
+    'week.days_full.fri': 'Vendredi',
+    'week.days_full.sat': 'Samedi',
+    'week.days_full.sun': 'Dimanche',
+    'editor.timefmt.title': 'Format de l’heure',
+    'editor.timefmt.desc': 'Choisir affichage 24 h ou 12 h (AM/PM) pour les heures sur la carte.',
+    'editor.tempfmt.title': 'Unité de température',
+    'editor.tempfmt.desc': 'Choisir Celsius (°C) ou Fahrenheit (°F) pour l’affichage dans la carte et les éditeurs.',
+  'editor.timesrc.title': 'Source de l’heure',
+  'editor.timesrc.desc': 'Choisir si la carte utilise l’heure du navigateur ou le fuseau horaire de Home Assistant pour « maintenant ».',
+  'editor.timesrc.browser': 'Navigateur',
+  'editor.timesrc.ha': 'Home Assistant',
+    'editor.heat_colors.title': 'Couleurs des blocs de chauffe',
+    'editor.heat_colors.add': 'Ajouter un intervalle de couleur',
+    'editor.colors.col_from': 'De °C',
+    'editor.colors.col_to': 'À °C',
+    'editor.colors.col_color': 'Couleur',
+    'editor.colors.empty': 'Aucune pièce ajoutée. Ajoutez une pièce pour définir des couleurs.',
+    'editor.colors.go_add': 'Ajouter une pièce',
+    'editor.colors.refresh': 'Mettre à jour le planning',
+    'editor.colors.clear_local': 'Effacer les données de couleur locales',
+    'editor.colors.clear_local_confirm': 'Cela supprimera les intervalles de couleur enregistrés dans votre navigateur pour cette carte. Continuer ?',
+    'editor.colors.clear_shared': 'Effacer le stockage de couleur partagé',
+  'editor.colors.clear_shared_confirm': 'Cela supprimera les intervalles de couleur dans le capteur de stockage sélectionné. Continuer ?',
+  'editor.colors.mode': 'Mode de couleur',
+  'editor.colors.mode.desc': 'Choisir des couleurs par pièce ou un jeu pour toutes les pièces.',
+  'editor.colors.mode_per_room': 'Par pièce',
+  'editor.colors.mode_global': 'Toutes les pièces',
+  'editor.colors.global_title': 'Toutes les pièces',
+  'editor.colors.clear_all': 'Effacer toutes les données de couleur',
+  'editor.colors.clear_all_confirm': 'Ceci supprimera tous les intervalles de couleur à la fois localement et sur le capteur de stockage sélectionné. Continuer ?',
+  'editor.reload_editor': 'Recharger l’éditeur',
+  'editor.reload_dashboard': 'Recharger le tableau de bord',
+  'onboard.title': 'Bienvenue dans la Chronologie du thermostat',
+  'onboard.next': 'Suivant',
+  'onboard.prev': 'Précédent',
+  'onboard.skip': 'Ignorer',
+  'onboard.done': 'Terminer',
+  'onboard.dont_show': 'Ne plus afficher',
+  'onboard.step_main': 'Voici la chronologie principale. Elle affiche les températures souhaitées sur 24 h pour chaque pièce.',
+  'onboard.step_add': 'Ajoutez un bloc via + Ajouter un bloc ou double‑cliquez sur la chronologie.',
+  'onboard.step_edit': 'Modifiez/Supprimez un bloc par double‑clic. Utilisez les jours de semaine pour des jours différents.',
+  'onboard.reset': 'Afficher le guide à nouveau',
+  'onboard.reset_ok': 'La présentation s’affichera la prochaine fois.',
+    'editor.select_entities': 'Pièces',
+  'editor.tabs.rooms': 'Pièces',
+  'week.enable.desc': 'Activer la planification par jour de semaine. Désactivé : même plan chaque jour.',
+  'editor.tabs.sync': 'Moteur de synchro',
+  'sync.running': 'Synchronisation en cours…',
+  'sync.completed': 'Synchronisation terminée',
+  'editor.tabs.backup': 'Sauvegarde',
+  'backup.title': 'Sauvegarde',
+  'backup.desc': 'Copie le contenu de votre capteur de synchro vers le capteur de sauvegarde et restaure si besoin.',
+  'backup.now': 'Sauvegarder maintenant',
+  'backup.restore': 'Restaurer',
+  'backup.delete': 'Supprimer la sauvegarde',
+  'backup.delete.confirm': 'Supprimer la sauvegarde sélectionnée ?',
+  'backup.new': 'Nouvelle sauvegarde',
+  'backup.auto': 'Sauvegarde automatique',
+  'backup.auto.desc': 'Effectuer des sauvegardes automatiques à intervalle régulier.',
+  'backup.interval': 'Intervalle (jours)',
+  'backup.interval.desc': 'Nombre de jours entre les sauvegardes automatiques (min. 1).',
+  'backup.sensor': 'Capteur de sauvegarde',
+  'backup.last': 'Dernière sauvegarde',
+  'backup.slot.title': 'Sélectionner une sauvegarde',
+  'backup.slot.desc': 'Sélectionnez l’emplacement de sauvegarde à restaurer.',
+  'backup.slot.empty': 'Aucune sauvegarde pour l’instant',
+  'pause.menu_title': 'Suspendre l’application automatique',
+  'pause.off_1h': 'Suspendre 1 heure',
+  'pause.off_5h': 'Suspendre 5 heures',
+  'pause.off_custom': 'Durée personnalisée…',
+  'pause.off_indef': 'Suspendre jusqu’à reprise',
+  'pause.resume': 'Reprendre maintenant',
+  'pause.close': 'Fermer',
+  'pause.active_until': 'Suspendu jusqu’à {time}',
+  'pause.active_indef': 'Suspendu',
+  'editor.pausebtn.title': 'Bouton Pause',
+  'editor.pausebtn.desc': 'Affiche un bouton de pause global dans l’en‑tête de la carte. En pause, toutes les commandes set_temperature sont bloquées.',
+  'editor.integration.connected': 'Intégration prête',
+  'editor.integration.disconnected': 'Intégration indisponible'
+  , 'editor.open_in_hacs': 'Ouvrir dans HACS'
+  , 'profiles.button': 'Programme manuel'
+  , 'profiles.editor.title': 'Profils'
+  , 'profiles.add': 'Ajouter un profil'
+  , 'profiles.rename': 'Renommer'
+  , 'profiles.delete': 'Supprimer'
+  , 'profiles.activate': 'Activer'
+  , 'profiles.deactivate': 'Désactiver'
+  , 'profiles.active': 'Actif'
+  , 'profiles.none': 'Aucun'
+  , 'profiles.name_placeholder': 'Nom du profil'
+  , 'profiles.edit': 'Modifier'
+  , 'profiles.preview_note': 'Aperçu uniquement. Les plannings deviennent actifs lorsque vous activez le profil.'
+  , 'editor.tabs.holidays': 'Jours fériés'
+  , 'holidays.enable': 'Activer les jours fériés'
+  , 'holidays.desc': 'Utiliser un planning spécifique les jours fériés.'
+  , 'holidays.source': 'Source des jours fériés'
+  , 'holidays.source.calendar': 'Calendrier'
+  , 'holidays.source.manual': 'Dates manuelles'
+  , 'holidays.entity': 'Entité jours fériés'
+  , 'holidays.entity_desc': 'Sélectionnez un calendrier ne fournissant que on/off. Il doit être « on » les jours fériés et « off » les autres jours.'
+  , 'holidays.dates': 'Dates des jours fériés'
+  , 'holidays.add_date': 'Ajouter une date'
+  , 'holidays.editor.title': 'Planning jours fériés'
+  , 'holidays.edit': 'Modifier le planning jours fériés'
+  , 'holidays.button': 'Jours fériés'
+  , 'editor.perroom.title': '°C par défaut par pièce'
+  , 'editor.perroom.desc': 'Affiche un champ °C par défaut sur chaque ligne. Désactivé : utilise le °C par défaut global pour toutes les pièces.'
+  , 'away.resume_schedule': 'Reprendre le programme'
+  , 'away.resume_away': 'Reprendre la température d’absence'
+  , 'presence.button': 'Programmes de présence'
+  , 'presence.editor.title': 'Programmes de présence'
+  , 'presence.enable_advanced': 'Activer la présence avancée'
+  , 'presence.combos': 'Combinaisons'
+  , 'presence.enable_combo': 'Activer cette combinaison'
+  , 'presence.all_home': 'Tous à la maison'
+  , 'presence.none_home': 'Personne à la maison'
+  , 'presence.home': 'À la maison : {names}'
+  , 'presence.away': 'Absents : {names}'
+  , 'presence.manage': 'Gérer les combinaisons'
+  , 'presence.who_home': 'Qui est à la maison'
+  , 'presence.who_away': 'Qui n’est pas à la maison'
+  , 'away.enable': 'Activer le mode absence'
+  , 'away.desc': 'Lorsque aucune des personnes sélectionnées n’est à la maison, les thermostats sont automatiquement abaissés à la température définie.'
+  , 'away.temp': 'Température d’absence'
+  , 'away.persons': 'Personnes'
+  , 'away.add_person': 'Ajouter une personne'
+  , 'backup.select': 'Choisir quoi sauvegarder'
+  , 'backup.select.desc': 'Les éléments cochés sont inclus dans la sauvegarde/restauration'
+  , 'backup.opt.all': 'Tout'
+  , 'backup.opt.main': 'Plannings principaux'
+  , 'backup.opt.weekday': 'Plannings par jour'
+  , 'backup.opt.presence': 'Plannings de présence'
+  , 'backup.opt.settings': 'Paramètres de l’éditeur'
+  , 'backup.opt.holiday': 'Plannings jours fériés'
+  , 'backup.opt.colors': 'Blocs de couleur'
+  , 'editor.tabs.settings': 'Paramètres'
+  , 'editor.tabs.pause': 'Pause'
+  , 'editor.tabs.weekdays': 'Jours de semaine'
+  , 'editor.tabs.colors': 'Couleurs'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Absence du domicile'
+  , 'editor.tabs.boiler': 'Chaudière'
+  , 'boiler.switch': 'Interrupteur de chaudière'
+  , 'boiler.enable': 'Activer le contrôle chaudière'
+  , 'boiler.enable.desc': 'Afficher les réglages de chaudière dans l’éditeur de cette carte.'
+  , 'boiler.temp_sensor': 'Capteur de température chaudière'
+  , 'boiler.temp_sensor.desc': 'Capteur de température utilisé pour piloter l’interrupteur de la chaudière.'
+  , 'boiler.min_temp': 'Temp. min. chaudière (°C)'
+  , 'boiler.max_temp': 'Temp. max. chaudière (°C)'
+  , 'editor.temp_sensor': 'Capteur de température'
+  , 'presence.live_header': 'Afficher la présence en direct dans l’en‑tête'
+  , 'presence.live_header.desc': 'Afficher des chips près du bouton Pause indiquant qui est présent/absent.'
+  , 'profiles.enable': 'Activer les profils (remplacement)'
+  , 'profiles.enable.desc': 'Autoriser des plannings journaliers nommés pouvant remplacer le plan principal lorsque vous les activez.'
+  , 'profiles.active_label': 'Profil manuel actif :'
+  , 'week.view.title': 'Vue semaine'
+  , 'week.view.rooms_one_day': 'Toutes les pièces • un jour'
+  , 'week.view.days_one_room': 'Tous les jours • une pièce'
+  , 'week.view_switch.title': 'Changer la vue depuis la frise'
+  , 'week.view_switch.desc': 'Affiche un sélecteur dans l’en-tête de la frise pour basculer entre les deux modes de vue des jours de semaine.'
+  , 'week.title': 'Jours de semaine'
+  , 'week.select_room': 'Sélectionner une pièce'
+  },
+  it: {
+    'card.title_default': 'Cronologia del termostato',
+    'ui.edit_block': 'Modifica blocco',
+    'ui.add_block': 'Aggiungi blocco',
+    'ui.from': 'Da',
+    'ui.to': 'A',
+    'ui.temperature': 'Temperatura',
+    'ui.delete': 'Elimina',
+  'ui.cancel': 'Annulla',
+  'ui.close': 'Chiudi',
+  'ui.unsaved_confirm': 'Hai modifiche non salvate. Chiudere comunque?',
+  'ui.discard_changes': 'Scarta modifiche',
+  'ui.keep_editing': 'Continua a modificare',
+    'ui.save': 'Salva',
+    'ui.error_prefix': 'Errore: ',
+    'ui.overlap_msg': 'Hai selezionato orari sovrapposti — si sovrappongono tra {start} e {end}.',
+    'ui.auto_fix': 'Correzione automatica',
+    'ui.fix_start_to': 'Allinea inizio a {time}',
+  'ui.fix_end_to': 'Allinea fine a {time}',
+  // Inline meta
+  'ui.current_temp': 'Temperatura attuale:',
+
+    'editor.title_label': 'Titolo',
+  'editor.add_entity': 'Aggiungi stanza',
+    'editor.entity_placeholder': 'Seleziona un\'entità',
+      'editor.room_mode.title': 'Tipo di entità stanza',
+      'editor.room_mode.desc': 'Quando è attivo, seleziona un input_number (temperatura obiettivo). Quando è disattivo, seleziona un\'entità climate.',
+    'editor.drag_reorder': 'Trascina per riordinare',
+    'editor.remove': 'Rimuovi',
+    'editor.default_c': '°C predefinita',
+      'editor.perroom.title': '°C predefinita per stanza',
+      'editor.perroom.desc': 'Mostra un campo °C predefinita su ogni riga. Se disattivato, viene usata la °C predefinita globale per tutte le stanze.',
+  'editor.row_height_px': 'Altezza riga (px)',
+  'editor.max_c': '°C max',
+    'editor.min_c': '°C min',
+    'editor.auto_apply.title': 'Applicazione automatica',
+    'editor.auto_apply.desc': 'Quando è attivo, la scheda prova a impostare la temperatura sulle entità climate selezionate così da corrispondere al valore pianificato per "adesso".',
+    'editor.apply_edit.title': 'Durante la modifica',
+    'editor.apply_edit.desc': 'Quando modifichi i blocchi della timeline e la modifica influisce sull\'ora corrente, la nuova temperatura viene applicata immediatamente.',
+    'editor.apply_default.title': 'Al cambio di °C predefinita',
+    'editor.apply_default.desc': 'Quando la "°C predefinita" cambia e interessa il periodo corrente, la nuova temperatura viene applicata subito.',
+  'ui.copy_plan': 'Copia pianificazione',
+  'ui.paste_plan': 'Incolla pianificazione',
+  'ui.copy_day': 'Copia giorno',
+  'ui.paste_day': 'Incolla giorno',
+  'editor.merge_label': 'Unisci con (aggiungi un altro termostato)',
+  'editor.display_name_optional': 'Nome stanza (facoltativo)',
+    'editor.merged_with': 'Unito con',
+  'editor.store_enable.title': 'Archiviazione condivisa + controllo in background',
+  'editor.store_enable.short': 'Salva i programmi nel sensore selezionato e abilita il controllo in background.',
+  'editor.store_enable.desc': 'Salva i programmi nel sensore selezionato e abilita i comandi set_temperature in background tramite l\'integrazione Thermostat Timeline. I termostati si aggiornano anche quando la scheda è chiusa. Condivide anche programmi (blocchi di calore) e impostazioni tra utenti/dispositivi. Quando è disattivo, i comandi vengono inviati solo mentre la scheda è visibile su un dispositivo (tablet/PC/mobile) e deve restare aperta.',
+  'editor.store_missing': 'L\'integrazione "Thermostat Pro Timeline Sync" non è installata. L\'archiviazione condivisa non è disponibile.',
+    'editor.clear_store': 'Svuota archiviazione',
+    'editor.clear_store_confirm': 'Questo eliminerà tutti i programmi salvati. Continuare?',
+  'editor.migrate_to_store': 'Trasferisci dati nell\'archiviazione',
+    'editor.migrate_confirm': 'Trasferire i programmi salvati nel browser al sensore selezionato? Eventuali programmi esistenti verranno sovrascritti.',
+  'editor.migrate_pull_confirm': 'Importare i programmi dall\'archiviazione e sovrascrivere i dati locali del browser?',
+  'editor.select_storage_first': 'Seleziona prima un sensore di archiviazione.',
+    'editor.no_local_data': 'Nessun dato locale del browser trovato.',
+    'editor.clear_all': 'Cancella tutti i dati',
+    'editor.clear_all_confirm': 'Questo eliminerà sia l\'archiviazione sia i programmi salvati nel browser locale. Continuare?',
+  'editor.clear_storage_only': 'Cancella solo i dati dell\'archiviazione',
+    'editor.clear_storage_only_confirm': 'Questo eliminerà i programmi dal sensore di archiviazione selezionato. Continuare?',
+  'editor.clear_local_only': 'Cancella solo i dati locali',
+    'editor.clear_local_only_confirm': 'Questo eliminerà solo i programmi salvati nel tuo browser. Continuare?',
+    'editor.temp_sensor': 'Sensore di temperatura',
+    'editor.test_tool': 'Strumento di test',
+    'editor.test_select_entity': 'Seleziona entità',
+    'editor.test_empty': 'Seleziona un\'entità per vedere i comandi disponibili…',
+    'editor.test_export': 'Esporta .md',
+    'editor.test_no_fields': 'Nessun campo',
+    'editor.test_select_placeholder': '— Seleziona —',
+    'editor.error_prefix': 'Errore: ',
+    'editor.open_in_hacs': 'Apri in HACS'
+    , 'week.enable': 'Abilita giorni della settimana'
+    , 'week.mode': 'Modalità giorni'
+  , 'week.mode.weekday_weekend': 'Feriali + Weekend'
+  , 'week.mode.weekday_sat_sun': 'Feriali + Sabato + Domenica'
+  , 'week.mode.all_7': 'Tutti i giorni'
+    , 'week.button': 'Giorni feriali'
+  , 'week.group.weekdays': 'Feriali'
+  , 'week.group.weekend': 'Weekend'
+  , 'week.days_full.mon': 'Lunedì'
+  , 'week.days_full.tue': 'Martedì'
+  , 'week.days_full.wed': 'Mercoledì'
+  , 'week.days_full.thu': 'Giovedì'
+  , 'week.days_full.fri': 'Venerdì'
+  , 'week.days_full.sat': 'Sabato'
+  , 'week.days_full.sun': 'Domenica'
+  , 'week.days.mon': 'Lun'
+    , 'week.days.tue': 'Mar'
+    , 'week.days.wed': 'Mer'
+    , 'week.days.thu': 'Gio'
+    , 'week.days.fri': 'Ven'
+    , 'week.days.sat': 'Sab'
+    , 'week.days.sun': 'Dom'
+    , 'week.editor.title': 'Programma settimanale'
+  , 'week.editor.preview_note': 'Solo anteprima. Le modifiche si applicano quando premi Salva.'
+    , 'week.open_editor.desc': 'Apri l’editor dei giorni della settimana.'
+    , 'week.open_editor.btn': 'Apri'
+  , 'week.view.title': 'Vista settimanale'
+  , 'week.view.rooms_one_day': 'Tutte le stanze • un giorno'
+  , 'week.view.days_one_room': 'Tutti i giorni • una stanza'
+  , 'week.view_switch.title': 'Cambia vista dalla timeline'
+  , 'week.view_switch.desc': 'Mostra un selettore nell’intestazione della timeline per passare tra le due modalità di visualizzazione dei giorni feriali.'
+  , 'week.title': 'Giorni feriali'
+  , 'week.select_room': 'Seleziona stanza'
+  , 'week.copy_to_rooms': 'Copia settimana nelle stanze'
+  , 'week.copy_to_rooms.title': 'Copia settimana nelle stanze'
+  , 'week.copy_to_rooms.select': 'Seleziona stanze'
+  , 'week.copy_to_rooms.apply': 'Inserisci nelle stanze'
+  , 'week.enable.desc': 'Abilita la pianificazione per giorno. Quando è disattivo viene usato lo stesso piano ogni giorno.'
+    , 'editor.timefmt.title': 'Formato orario'
+    , 'editor.timefmt.desc': 'Scegli 24 ore o 12 ore (AM/PM) per gli orari mostrati sulla scheda.'
+    , 'editor.tempfmt.title': 'Unità di temperatura'
+    , 'editor.tempfmt.desc': 'Scegli Celsius (°C) o Fahrenheit (°F) per la scheda e gli editor.'
+  , 'editor.timesrc.title': 'Origine orario'
+  , 'editor.timesrc.desc': 'Scegli se la scheda usa l\'ora del browser o il fuso di Home Assistant per "adesso".'
+  , 'editor.timesrc.browser': 'Browser'
+  , 'editor.timesrc.ha': 'Home Assistant'
+  , 'editor.tabs.settings': 'Impostazioni'
+  , 'editor.tabs.pause': 'Pausa'
+  , 'editor.tabs.weekdays': 'Giorni feriali'
+    , 'editor.tabs.rooms': 'Stanze'
+  , 'editor.tabs.colors': 'Colori'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Fuori casa'
+  , 'editor.tabs.boiler': 'Caldaia'
+  , 'boiler.switch': 'Interruttore caldaia'
+  , 'boiler.enable': 'Attiva controllo caldaia'
+  , 'boiler.enable.desc': 'Mostra le impostazioni caldaia nell’editor di questa scheda.'
+  , 'boiler.temp_sensor': 'Sensore temperatura caldaia'
+  , 'boiler.temp_sensor.desc': 'Sensore di temperatura usato per controllare l’interruttore della caldaia.'
+  , 'boiler.min_temp': 'Temperatura min. caldaia (°C)'
+  , 'boiler.max_temp': 'Temperatura max. caldaia (°C)'
+  , 'editor.tabs.sync': 'Motore di sincronizzazione'
+  , 'sync.running': 'Sincronizzazione in corso…'
+  , 'sync.completed': 'Sincronizzazione completata'
+  , 'away.enable': 'Abilita modalità assenza'
+  , 'away.desc': 'Quando nessuna delle persone selezionate è in casa, abbassa automaticamente i termostati alla temperatura impostata.'
+  , 'away.temp': 'Temperatura assenza'
+  , 'away.persons': 'Persone'
+  , 'away.add_person': 'Aggiungi persona'
+  , 'away.resume_schedule': 'Riprendi programma'
+  , 'away.resume_away': 'Ripristina temperatura assenza'
+    , 'editor.heat_colors.title': 'Colori dei blocchi di calore'
+  , 'editor.heat_colors.add': 'Aggiungi intervallo colore'
+    , 'editor.colors.col_from': 'Da °C'
+    , 'editor.colors.col_to': 'A °C'
+    , 'editor.colors.col_color': 'Colore'
+  , 'editor.colors.empty': 'Nessuna stanza aggiunta. Aggiungi una stanza per definire i colori.'
+  , 'editor.colors.go_add': 'Aggiungi stanza'
+  , 'editor.select_entities': 'Stanze'
+  , 'editor.colors.refresh': 'Aggiorna programma'
+  , 'editor.colors.clear_local': 'Pulisci dati colore locali'
+  , 'editor.colors.clear_local_confirm': 'Questo eliminerà gli intervalli colore salvati nel tuo browser per questa scheda. Continuare?'
+  , 'editor.colors.clear_shared': 'Pulisci archivio colori condiviso'
+  , 'editor.colors.clear_shared_confirm': 'Questo eliminerà gli intervalli colore nel sensore di archiviazione selezionato. Continuare?'
+  , 'editor.colors.clear_all': 'Pulisci tutti i dati colore'
+  , 'editor.colors.clear_all_confirm': 'Questo eliminerà tutti gli intervalli colore sia locali sia nel sensore selezionato. Continuare?'
+  , 'editor.colors.mode': 'Modalità colore'
+  , 'editor.colors.mode.desc': 'Scegli colori per stanza o un set per tutte le stanze.'
+  , 'editor.colors.mode_per_room': 'Per stanza'
+  , 'editor.colors.mode_global': 'Tutte le stanze'
+  , 'editor.colors.global_title': 'Tutte le stanze'
+  , 'editor.reload_editor': 'Ricarica editor'
+  , 'editor.reload_dashboard': 'Ricarica dashboard'
+  , 'onboard.title': 'Benvenuto in Thermostat Timeline'
+  , 'onboard.next': 'Avanti'
+  , 'onboard.prev': 'Indietro'
+  , 'onboard.skip': 'Salta'
+  , 'onboard.done': 'Fine'
+  , 'onboard.dont_show': 'Non mostrare più'
+  , 'onboard.step_main': 'Questa è la timeline principale. Mostra le temperature desiderate sulle 24 ore per ogni stanza.'
+  , 'onboard.step_add': 'Aggiungi un blocco di calore con + Aggiungi blocco o facendo doppio clic sulla timeline.'
+  , 'onboard.step_edit': 'Modifica o elimina un blocco con un doppio clic. Usa Giorni feriali per pianificare giorni diversi.'
+  , 'onboard.reset': 'Mostra di nuovo la guida'
+  , 'onboard.reset_ok': 'La schermata di benvenuto verrà mostrata la prossima volta.'
+  , 'pause.menu_title': 'Pausa applicazione automatica'
+  , 'pause.off_1h': 'Pausa 1 ora'
+  , 'pause.off_5h': 'Pausa 5 ore'
+  , 'pause.off_custom': 'Durata personalizzata…'
+  , 'pause.off_indef': 'Pausa finché non riprendo'
+  , 'pause.resume': 'Riprendi ora'
+  , 'pause.close': 'Chiudi'
+  , 'pause.active_until': 'In pausa fino alle {time}'
+  , 'pause.active_indef': 'In pausa'
+  , 'editor.pausebtn.title': 'Pulsante Pausa'
+  , 'editor.pausebtn.desc': 'Mostra un pulsante di pausa globale nell\'intestazione della scheda. Durante la pausa, tutti i comandi set_temperature sono sospesi.'
+  , 'editor.integration.connected': 'Integrazione pronta'
+  , 'editor.integration.disconnected': 'Integrazione non disponibile'
+  , 'profiles.enable': 'Abilita profili (override)'
+  , 'profiles.enable.desc': 'Consenti programmi giornalieri nominati che possono sostituire il piano principale.'
+  , 'profiles.button': 'Programma manuale'
+  , 'profiles.editor.title': 'Profili'
+  , 'profiles.add': 'Aggiungi profilo'
+  , 'profiles.rename': 'Rinomina'
+  , 'profiles.delete': 'Elimina'
+  , 'profiles.activate': 'Attiva'
+  , 'profiles.deactivate': 'Disattiva'
+  , 'profiles.active': 'Attivo'
+  , 'profiles.none': 'Nessuno'
+  , 'profiles.name_placeholder': 'Nome profilo'
+  , 'profiles.edit': 'Modifica'
+  , 'profiles.preview_note': 'Solo anteprima. I programmi diventano attivi quando attivi il profilo.'
+  , 'profiles.active_label': 'Profilo manuale attivo:'
+  , 'editor.tabs.holidays': 'Festività'
+  , 'editor.tabs.backup': 'Backup'
+  , 'backup.title': 'Backup'
+  , 'backup.desc': 'Copia programmi e impostazioni nel backup e ripristinali al bisogno.'
+  , 'backup.now': 'Esegui backup ora'
+  , 'backup.restore': 'Ripristina'
+  , 'backup.delete': 'Elimina backup'
+  , 'backup.delete.confirm': 'Eliminare il backup selezionato?'
+  , 'backup.new': 'Nuovo backup'
+  , 'backup.auto': 'Backup automatico'
+  , 'backup.auto.desc': 'Esegui backup automatici pianificati.'
+  , 'backup.interval': 'Intervallo (giorni)'
+  , 'backup.interval.desc': 'Numero di giorni tra i backup automatici (min. 1).'
+  , 'backup.sensor': 'Sensore di backup'
+  , 'backup.last': 'Ultimo backup'
+  , 'backup.slot.title': 'Seleziona backup'
+  , 'backup.slot.desc': 'Seleziona quale slot di backup ripristinare.'
+  , 'backup.slot.empty': 'Nessun backup ancora'
+  , 'backup.select': 'Scegli cosa includere nel backup'
+  , 'backup.select.desc': 'Gli elementi selezionati sono inclusi nel backup/ripristino'
+  , 'backup.opt.all': 'Tutto'
+  , 'backup.opt.main': 'Programmi principali'
+  , 'backup.opt.weekday': 'Programmi feriali'
+  , 'backup.opt.presence': 'Programmi presenza'
+  , 'backup.opt.settings': 'Impostazioni editor'
+  , 'backup.opt.holiday': 'Programmi festività'
+  , 'backup.opt.colors': 'Blocchi colore'
+  , 'holidays.enable': 'Abilita festività'
+  , 'holidays.desc': 'Usa un programma giornaliero speciale nei giorni festivi.'
+  , 'holidays.source': 'Fonte festività'
+  , 'holidays.source.calendar': 'Calendario'
+  , 'holidays.source.manual': 'Date manuali'
+  , 'holidays.entity': 'Entità festività'
+  , 'holidays.entity_desc': 'Seleziona un calendario che segnala solo acceso/spento. Deve essere acceso nei giorni festivi e spento negli altri.'
+  , 'holidays.dates': 'Date festività'
+  , 'holidays.add_date': 'Aggiungi data'
+  , 'holidays.editor.title': 'Programma festività'
+  , 'holidays.edit': 'Modifica programma festività'
+  , 'holidays.button': 'Festività'
+  , 'presence.button': 'Programmi presenza'
+  , 'presence.editor.title': 'Programmi presenza'
+  , 'presence.enable_advanced': 'Abilita presenza avanzata'
+  , 'presence.live_header': 'Mostra presenza live nell\'intestazione'
+  , 'presence.live_header.desc': 'Mostra chip accanto al pulsante Pausa con chi è in casa/fuori.'
+  , 'presence.combos': 'Combinazioni'
+  , 'presence.enable_combo': 'Abilita questa combinazione'
+  , 'presence.all_home': 'Tutti a casa'
+  , 'presence.none_home': 'Nessuno a casa'
+  , 'presence.home': 'A casa: {names}'
+  , 'presence.away': 'Fuori: {names}'
+  , 'presence.manage': 'Gestisci combinazioni'
+  , 'presence.who_home': 'Chi è a casa'
+  , 'presence.who_away': 'Chi non è a casa'
+  },
+  fi: {
+    'card.title_default': 'Termostaatin aikajana',
+    'ui.edit_block': 'Muokkaa lohkoa',
+    'ui.add_block': 'Lisää lohko',
+    'ui.from': 'Alkaen',
+    'ui.to': 'Asti',
+    'ui.temperature': 'Lämpötila',
+    'ui.delete': 'Poista',
+  'ui.cancel': 'Peruuta',
+  'ui.close': 'Sulje',
+  'ui.unsaved_confirm': 'Sinulla on tallentamattomia muutoksia. Suljetaanko silti?',
+  'ui.discard_changes': 'Hylkää muutokset',
+  'ui.keep_editing': 'Jatka muokkausta',
+    'ui.save': 'Tallenna',
+    'ui.error_prefix': 'Virhe: ',
+    'ui.overlap_msg': 'Valitsit päällekkäisiä aikoja — ne menevät päällekkäin välillä {start} – {end}.',
+    'ui.auto_fix': 'Korjaa automaattisesti',
+    'ui.fix_start_to': 'Korjaa alku ajaksi {time}',
+  'ui.fix_end_to': 'Korjaa loppu ajaksi {time}',
+  // Inline meta
+  'ui.current_temp': 'Nykyinen lämpötila:',
+
+    'editor.title_label': 'Otsikko',
+  'editor.add_entity': 'Lisää huone',
+    'editor.entity_placeholder': 'Valitse entiteetti',
+    'editor.drag_reorder': 'Vedä järjestelläksesi',
+    'editor.remove': 'Poista',
+    'editor.default_c': 'Oletus °C',
+  'editor.row_height_px': 'Rivin korkeus (px)',
+  'editor.max_c': 'Maksi °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automaattinen käyttö',
+    'editor.auto_apply.desc': 'Kun käytössä, kortti yrittää asettaa valittujen climate-entiteettien lämpötilan vastaamaan suunniteltua arvoa tälle hetkelle.',
+    'editor.apply_edit.title': 'Muokkauksen yhteydessä',
+    'editor.apply_edit.desc': 'Kun muutat aikajanan lohkoja ja muutos koskee nykyhetkeä, uusi lämpötila otetaan käyttöön heti.',
+    'editor.apply_default.title': 'Kun Oletus °C muuttuu',
+    'editor.apply_default.desc': 'Kun ”Oletus °C” muuttuu ja se vaikuttaa meneillään olevaan ajanjaksoon, uusi lämpötila otetaan käyttöön heti.',
+    'editor.room_mode.title': 'Huoneen entiteettityyppi',
+    'editor.room_mode.desc': 'Kun käytössä, valitse input_number (tavoitelämpötila). Kun pois päältä, valitse climate-entiteetti.',
+  'ui.copy_plan': 'Kopioi aikataulu',
+  'ui.paste_plan': 'Liitä aikataulu',
+  'ui.copy_day': 'Kopioi päivä',
+  'ui.paste_day': 'Liitä päivä',
+  'editor.merge_label': 'Yhdistä (lisää toinen termostaatti)',
+  'editor.display_name_optional': 'Huoneen nimi (valinnainen)',
+    'editor.merged_with': 'Yhdistetty kohteeseen',
+  'editor.store_enable.title': 'Jaettu tallennus + taustasäätö',
+  'editor.store_enable.short': 'Tallentaa aikataulut valittuun sensoriin ja ottaa käyttöön taustasäädön.',
+  'editor.store_enable.desc': 'Tallentaa aikataulut valittuun sensoriin ja ottaa käyttöön taustalla tapahtuvan set_temperature‑ohjauksen. Termostaatit päivittyvät myös, kun kortti ei ole auki. Jakaa myös aikataulut (lämpöblokit) ja kortin asetukset käyttäjien/laitteiden välillä. Kun pois päältä: komennot lähetetään vain, kun kortti on näkyvissä laitteella (tabletti/tietokone/puhelin) ja sen on pysyttävä auki.',
+  'editor.store_missing': 'Integraatiota "Thermostat Pro Timeline Sync" ei ole asennettu. Jaettu tallennus ei ole käytettävissä.',
+    'editor.clear_store': 'Tyhjennä tallennus',
+    'editor.clear_store_confirm': 'Tämä poistaa kaikki tallennetut aikataulut. Jatketaanko?',
+  'editor.migrate_to_store': 'Siirrä tiedot tallennukseen',
+    'editor.migrate_confirm': 'Siirretäänkö selaimeen tallennetut aikataulut valittuun sensoriin? Tämä korvaa nykyiset aikataulut tallennuksessa.',
+  'editor.migrate_pull_confirm': 'Tuo aikataulut tallennuksesta ja korvaa paikalliset selaintiedot?',
+  'editor.select_storage_first': 'Valitse ensin tallennussensori.',
+    'editor.no_local_data': 'Paikallisia selaintietoja ei löytynyt.',
+    'editor.clear_all': 'Tyhjennä kaikki tiedot',
+    'editor.clear_all_confirm': 'Tämä poistaa sekä tallennuksesta että selaimesta aikataulut. Jatketaanko?',
+  'editor.clear_storage_only': 'Tyhjennä vain tallennusdata',
+    'editor.clear_storage_only_confirm': 'Tämä poistaa aikataulut valitusta sensorista. Jatketaanko?',
+  'editor.clear_local_only': 'Tyhjennä vain paikalliset tiedot',
+    'editor.clear_local_only_confirm': 'Tämä poistaa vain selaimeen tallennetut aikataulut. Jatketaanko?',
+    'week.enable': 'Ota viikonpäivät käyttöön',
+    'week.mode': 'Viikkotila',
+    'week.mode.same_all': 'Sama joka päivä (1)',
+  'week.mode.weekday_weekend': 'Arkipäivät + Viikonloppu',
+  'week.mode.weekday_sat_sun': 'Arkipäivät + Lauantai + Sunnuntai',
+  'week.mode.all_7': 'Kaikki päivät',
+    'week.button': 'Viikonpäivät',
+    'week.days.mon': 'Ma',
+    'week.days.tue': 'Ti',
+    'week.days.wed': 'Ke',
+    'week.days.thu': 'To',
+    'week.days.fri': 'Pe',
+    'week.days.sat': 'La',
+    'week.days.sun': 'Su',
+    'week.editor.title': 'Viikkosuunnitelma',
+    'week.editor.preview_note': 'Vain esikatselu. Muutokset otetaan käyttöön, kun painat Tallenna.',
+    'week.open_editor.desc': 'Avaa viikonpäiväeditori.',
+    'week.open_editor.btn': 'Avaa',
+  'week.copy_to_rooms': 'Kopioi viikkosuunnitelma huoneisiin',
+  'week.copy_to_rooms.title': 'Kopioi viikkosuunnitelma huoneisiin',
+  'week.copy_to_rooms.select': 'Valitse huoneet',
+  'week.copy_to_rooms.apply': 'Lisää huoneisiin',
+    'week.group.weekdays': 'Arkipäivät',
+    'week.group.weekend': 'Viikonloppu',
+    'week.days_full.mon': 'Maanantai',
+    'week.days_full.tue': 'Tiistai',
+    'week.days_full.wed': 'Keskiviikko',
+    'week.days_full.thu': 'Torstai',
+    'week.days_full.fri': 'Perjantai',
+    'week.days_full.sat': 'Lauantai',
+    'week.days_full.sun': 'Sunnuntai',
+    'editor.timefmt.title': 'Aikamuoto',
+    'editor.timefmt.desc': 'Valitse 24 tunnin tai 12 tunnin (AM/PM) näyttö kortin ajoille.',
+    'editor.tempfmt.title': 'Lämpötilayksikkö',
+    'editor.tempfmt.desc': 'Valitse Celsius (°C) tai Fahrenheit (°F) kortin ja editorien näyttöön.',
+  'editor.timesrc.title': 'Ajan lähde',
+  'editor.timesrc.desc': 'Valitse käytetäänkö “nyt”‑hetkeen selaimen aikaa vai Home Assistantin aikavyöhykettä.',
+  'editor.timesrc.browser': 'Selain',
+  'editor.timesrc.ha': 'Home Assistant',
+    'editor.heat_colors.title': 'Lämmityslohkojen värit',
+    'editor.heat_colors.add': 'Lisää värihaarukka',
+    'editor.colors.col_from': 'Alkaen °C',
+    'editor.colors.col_to': 'Asti °C',
+    'editor.colors.col_color': 'Väri',
+    'editor.colors.empty': 'Huoneita ei ole lisätty vielä. Lisää huone määrittääksesi värit.',
+    'editor.colors.go_add': 'Lisää huone',
+    'editor.colors.refresh': 'Päivitä aikataulu',
+    'editor.colors.clear_local': 'Tyhjennä paikalliset väritiedot',
+    'editor.colors.clear_local_confirm': 'Tämä poistaa tähän korttiin selaimeen tallennetut värihaarukat. Jatketaanko?',
+    'editor.colors.clear_shared': 'Tyhjennä jaettu värivarasto',
+  'editor.colors.clear_shared_confirm': 'Tämä poistaa värihaarukat valitusta tallennussensorista. Jatketaanko?',
+  'editor.colors.mode': 'Väritila',
+  'editor.colors.mode.desc': 'Valitse värit huoneittain tai yksi yhteinen kaikille.',
+  'editor.colors.mode_per_room': 'Huoneittain',
+  'editor.colors.mode_global': 'Kaikille',
+  'editor.colors.global_title': 'Kaikki huoneet',
+  'editor.colors.clear_all': 'Tyhjennä kaikki väritiedot',
+  'editor.colors.clear_all_confirm': 'Tämä poistaa kaikki värihaarukat sekä paikallisesti että valitusta tallennussensorista. Jatketaanko?',
+  'editor.reload_editor': 'Lataa editori uudelleen',
+  'editor.reload_dashboard': 'Lataa koontinäyttö uudelleen',
+  'onboard.title': 'Tervetuloa Termostaatin aikajanaan',
+  'onboard.next': 'Seuraava',
+  'onboard.prev': 'Edellinen',
+  'onboard.skip': 'Ohita',
+  'onboard.done': 'Valmis',
+  'onboard.dont_show': 'Älä näytä uudelleen',
+  'onboard.step_main': 'Tämä on pääaikajana. Se näyttää toivotut lämpötilat 24 tunnin aikana huoneittain.',
+  'onboard.step_add': 'Lisää lämpölohko painamalla + Lisää lohko tai kaksoisnapsauttamalla aikajanaa.',
+  'onboard.step_edit': 'Muokkaa tai poista lohko kaksoisnapsauttamalla. Käytä viikonpäiviä eri päiville.',
+  'onboard.reset': 'Näytä opas uudelleen',
+  'onboard.reset_ok': 'Tervetuloa-näyttö avautuu seuraavalla kerralla.',
+    'editor.select_entities': 'Huoneet',
+  'editor.tabs.rooms': 'Huoneet',
+  'editor.test_tool': 'Testityökalu',
+  'editor.test_select_entity': 'Valitse entiteetti',
+  'editor.test_empty': 'Valitse entiteetti nähdäksesi käytettävissä olevat komennot…',
+  'editor.test_export': 'Vie .md',
+  'editor.test_no_fields': 'Ei kenttiä',
+  'editor.test_select_placeholder': '— Valitse —',
+  'editor.error_prefix': 'Virhe: ',
+  'editor.open_in_hacs': 'Avaa HACSissa',
+  'week.enable.desc': 'Ota viikonpäiväkohtainen aikataulu käyttöön. Kun pois päältä, käytetään samaa aikataulua joka päivä.',
+  'editor.tabs.sync': 'Synkronointi‑moottori',
+  'sync.running': 'Synkronointi käynnissä…',
+  'sync.completed': 'Synkronointi valmis',
+  'editor.tabs.backup': 'Varmuuskopio',
+  'backup.title': 'Varmuuskopio',
+  'backup.desc': 'Kopioi sync‑anturin sisältö varmuuskopioanturiin ja palauta tarvittaessa.',
+  'backup.now': 'Varmuuskopioi nyt',
+  'backup.restore': 'Palauta',
+  'backup.delete': 'Poista varmuuskopio',
+  'backup.delete.confirm': 'Poistetaanko valittu varmuuskopio?',
+  'backup.new': 'Uusi varmuuskopio',
+  'backup.auto': 'Automaattinen varmuuskopiointi',
+  'backup.auto.desc': 'Tee varmuuskopioita automaattisesti tietyin välein.',
+  'backup.interval': 'Väli (päivää)',
+  'backup.interval.desc': 'Kuinka monta päivää automaattisten varmuuskopioiden välillä (min. 1).',
+  'backup.sensor': 'Varmuuskopioanturi',
+  'backup.last': 'Viimeisin varmuuskopio',
+  'backup.slot.title': 'Valitse varmuuskopio',
+  'backup.slot.desc': 'Valitse mikä varmuuskopiointipaikka palautetaan.',
+  'backup.slot.empty': 'Ei varmuuskopioita vielä',
+  'pause.menu_title': 'Keskeytä automaattinen asetus',
+  'pause.off_1h': 'Keskeytä 1 tunniksi',
+  'pause.off_5h': 'Keskeytä 5 tunniksi',
+  'pause.off_custom': 'Mukautettu kesto…',
+  'pause.off_indef': 'Keskeytä kunnes jatkan',
+  'pause.resume': 'Jatka nyt',
+  'pause.close': 'Sulje',
+  'pause.active_until': 'Keskeytetty asti {time}',
+  'pause.active_indef': 'Keskeytetty',
+  'editor.pausebtn.title': 'Taukopainike',
+  'editor.pausebtn.desc': 'Näytä globaali taukopainike kortin yläreunassa. Tauon aikana kaikki set_temperature‑komennot estetään.',
+  'editor.integration.connected': 'Integraatio valmis',
+  'editor.integration.disconnected': 'Integraatio ei käytettävissä'
+  , 'profiles.button': 'Manuaalinen aikataulu'
+  , 'profiles.editor.title': 'Profiilit'
+  , 'profiles.add': 'Lisää profiili'
+  , 'profiles.rename': 'Nimeä uudelleen'
+  , 'profiles.delete': 'Poista'
+  , 'profiles.activate': 'Aktivoi'
+  , 'profiles.deactivate': 'Poista käytöstä'
+  , 'profiles.active': 'Aktiivinen'
+  , 'profiles.none': 'Ei mikään'
+  , 'profiles.name_placeholder': 'Profiilin nimi'
+  , 'profiles.edit': 'Muokkaa'
+  , 'profiles.preview_note': 'Vain esikatselu. Aikataulut aktivoituvat, kun aktivoit profiilin.'
+  , 'editor.tabs.holidays': 'Pyhäpäivät'
+  , 'holidays.enable': 'Ota pyhäpäivät käyttöön'
+  , 'holidays.desc': 'Käytä erityistä päiväaikataulua pyhäpäivinä.'
+  , 'holidays.source': 'Pyhäpäivien lähde'
+  , 'holidays.source.calendar': 'Kalenteri'
+  , 'holidays.source.manual': 'Manuaaliset päivämäärät'
+  , 'holidays.entity': 'Pyhäpäivä‑entiteetti'
+  , 'holidays.entity_desc': 'Valitse kalenteri, joka ilmoittaa vain on/off. Sen tulee olla on pyhäpäivinä ja off muina päivinä.'
+  , 'holidays.dates': 'Pyhäpäivien päivämäärät'
+  , 'holidays.add_date': 'Lisää päivämäärä'
+  , 'holidays.editor.title': 'Pyhäpäivä‑aikataulu'
+  , 'holidays.edit': 'Muokkaa pyhäpäivä‑aikataulua'
+  , 'holidays.button': 'Pyhäpäivät'
+  , 'editor.perroom.title': 'Oletus °C huoneittain'
+  , 'editor.perroom.desc': 'Näytä oletus °C -kenttä jokaisella rivillä. Kun pois päältä, käytetään globaalia oletus °C:ta kaikissa huoneissa.'
+  , 'away.resume_schedule': 'Jatka aikataulua'
+  , 'away.resume_away': 'Jatka poissaololämpötilaa'
+  , 'presence.button': 'Läsnäoloaikataulut'
+  , 'presence.editor.title': 'Läsnäoloaikataulut'
+  , 'presence.enable_advanced': 'Ota käyttöön edistynyt läsnäolo'
+  , 'presence.combos': 'Yhdistelmät'
+  , 'presence.enable_combo': 'Ota tämä yhdistelmä käyttöön'
+  , 'presence.all_home': 'Kaikki kotona'
+  , 'presence.none_home': 'Ei ketään kotona'
+  , 'presence.home': 'Kotona: {names}'
+  , 'presence.away': 'Poissa: {names}'
+  , 'presence.manage': 'Hallinnoi yhdistelmiä'
+  , 'presence.who_home': 'Kuka on kotona'
+  , 'presence.who_away': 'Kuka ei ole kotona'
+  , 'away.enable': 'Ota poissaolotila käyttöön'
+  , 'away.desc': 'Kun yksikään valituista henkilöistä ei ole kotona, termostaatit lasketaan automaattisesti asetettuun lämpötilaan.'
+  , 'away.temp': 'Poissaololämpötila'
+  , 'away.persons': 'Henkilöt'
+  , 'away.add_person': 'Lisää henkilö'
+  , 'backup.select': 'Valitse, mitä varmuuskopioidaan'
+  , 'backup.select.desc': 'Valitut kohteet sisällytetään varmuuskopiointiin/palautukseen'
+  , 'backup.opt.all': 'Kaikki'
+  , 'backup.opt.main': 'Pääaikataulut'
+  , 'backup.opt.weekday': 'Viikonpäiväaikataulut'
+  , 'backup.opt.presence': 'Läsnäoloaikataulut'
+  , 'backup.opt.settings': 'Editorin asetukset'
+  , 'backup.opt.holiday': 'Pyhäpäiväaikataulut'
+  , 'backup.opt.colors': 'Värilohkot'
+  , 'editor.tabs.settings': 'Asetukset'
+  , 'editor.tabs.pause': 'Tauko'
+  , 'editor.tabs.weekdays': 'Viikonpäivät'
+  , 'editor.tabs.colors': 'Värit'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Poissa kotoa'
+  , 'editor.tabs.boiler': 'Kattila'
+  , 'boiler.switch': 'Kattilakytkin'
+  , 'boiler.enable': 'Ota kattilan ohjaus käyttöön'
+  , 'boiler.enable.desc': 'Näytä kattila-asetukset tämän kortin editorissa.'
+  , 'boiler.temp_sensor': 'Kattilan lämpötila‑anturi'
+  , 'boiler.temp_sensor.desc': 'Lämpötila‑anturi, joka ohjaa kattilakytkintä.'
+  , 'boiler.min_temp': 'Kattilan minimi (°C)'
+  , 'boiler.max_temp': 'Kattilan maksimi (°C)'
+  , 'editor.temp_sensor': 'Lämpötila‑anturi'
+  , 'presence.live_header': 'Näytä live‑läsnäolo yläreunassa'
+  , 'presence.live_header.desc': 'Näytä sirut taukopainikkeen vieressä siitä, kuka on kotona/poissa.'
+  , 'profiles.enable': 'Ota profiilit käyttöön (ohitus)'
+  , 'profiles.enable.desc': 'Salli nimettyjä päiväaikatauluja, jotka voit aktivoida ohittaaksesi pääsuunnitelman.'
+  , 'profiles.active_label': 'Manuaalinen profiili aktiivinen:'
+  , 'week.view.title': 'Viikkonäkymä'
+  , 'week.view.rooms_one_day': 'Kaikki huoneet • yksi päivä'
+  , 'week.view.days_one_room': 'Kaikki päivät • yksi huone'
+  , 'week.view_switch.title': 'Vaihda näkymää aikajanasta'
+  , 'week.view_switch.desc': 'Näyttää valitsimen aikajanan otsikossa, jolla voi vaihtaa kahden viikonpäivänäkymän välillä.'
+  , 'week.title': 'Viikonpäivät'
+  , 'week.select_room': 'Valitse huone'
+  },
+  cs: {
+    // Karta
+    'card.title_default': 'Časová osa termostatu',
+    // Modal / editor (inline)
+    'ui.edit_block': 'Upravit blok',
+    'ui.add_block': 'Přidat blok',
+    'ui.from': 'Od',
+    'ui.to': 'Do',
+    'ui.temperature': 'Teplota',
+    'ui.delete': 'Smazat',
+  'ui.cancel': 'Zrušit',
+  'ui.close': 'Zavřít',
+  'ui.unsaved_confirm': 'Máte neuložené změny. Opravdu zavřít?',
+  'ui.discard_changes': 'Zahodit změny',
+  'ui.keep_editing': 'Pokračovat v úpravách',
+    'ui.save': 'Uložit',
+    'ui.error_prefix': 'Chyba: ',
+    'ui.overlap_msg': 'Vybrali jste překrývající se časy — překrývá se mezi {start} – {end}.',
+    'ui.auto_fix': 'Opravit automaticky',
+    'ui.fix_start_to': 'Upravit začátek na {time}',
+    'ui.fix_end_to': 'Upravit konec na {time}',
+    // Inline meta
+    'ui.current_temp': 'Aktuální teplota:',
+
+    // GUI editor panel
+    'editor.title_label': 'Nadpis',
+    'editor.add_entity': 'Přidat místnost',
+    'editor.entity_placeholder': 'Vyberte entitu',
+    'editor.room_mode.title': 'Typ entity místnosti',
+    'editor.room_mode.desc': 'Když je zapnuto, vyberte input_number (cílová teplota). Když je vypnuto, vyberte entitu climate.',
+    'editor.drag_reorder': 'Přetažením změňte pořadí',
+    'editor.remove': 'Odebrat',
+    'editor.default_c': 'Výchozí °C',
+    'editor.row_height_px': 'Výška řádku (px)',
+    'editor.max_c': 'Max °C',
+    'editor.min_c': 'Min °C',
+    'editor.auto_apply.title': 'Automatické použití',
+    'editor.auto_apply.desc': 'Je-li zapnuto, karta se pokusí nastavit teplotu vybraných climate entit tak, aby odpovídala plánované hodnotě pro „právě teď“.',
+    'editor.apply_edit.title': 'Při úpravě',
+    'editor.apply_edit.desc': 'Když změníte bloky v časové ose a změna ovlivní aktuální čas, nová teplota se použije okamžitě.',
+    'editor.apply_default.title': 'Při změně Výchozí °C',
+    'editor.apply_default.desc': 'Když se změní „Výchozí °C“ a ovlivní aktuální období, nová teplota se použije okamžitě.',
+    'ui.copy_plan': 'Kopírovat plán',
+    'ui.paste_plan': 'Vložit plán',
+    'ui.copy_day': 'Kopírovat den',
+    'ui.paste_day': 'Vložit den',
+    'editor.merge_label': 'Sloučit s (přidat další termostat)',
+    'editor.display_name_optional': 'Název místnosti (volitelné)',
+    'editor.merged_with': 'Sloučeno s',
+    'editor.store_enable.title': 'Sdílené úložiště + řízení na pozadí',
+    'editor.store_enable.short': 'Ukládá rozvrhy do zvoleného senzoru a umožňuje řízení na pozadí.',
+    'editor.store_enable.desc': 'Ukládá rozvrhy do zvoleného senzoru a zapíná set_temperature na pozadí přes integraci Thermostat Timeline. Termostaty se aktualizují i když karta není otevřená. Také sdílí rozvrhy (tepelné bloky) a nastavení karty mezi uživateli/zařízeními. Když je vypnuto, příkazy se posílají jen když je karta aktivně viditelná na zařízení (tablet/PC/mobil) — musí zůstat otevřená na obrazovce.',
+    'editor.store_missing': 'Integrace „Thermostat Pro Timeline Sync“ není nainstalována. Sdílené úložiště není k dispozici.',
+    'editor.clear_store': 'Vymazat úložiště',
+    'editor.clear_store_confirm': 'Tímto smažete všechny uložené rozvrhy. Pokračovat?',
+    'editor.migrate_to_store': 'Převést data do úložiště',
+    'editor.migrate_confirm': 'Převést vaše rozvrhy uložené v prohlížeči do zvoleného senzoru? Tím se přepíší existující rozvrhy v úložišti.',
+    'editor.migrate_pull_confirm': 'Importovat rozvrhy z úložiště a přepsat lokální data v prohlížeči?',
+    'editor.select_storage_first': 'Nejprve vyberte senzor úložiště.',
+    'editor.no_local_data': 'Nebyla nalezena žádná lokální data v prohlížeči.',
+    'editor.clear_all': 'Smazat všechna data',
+    'editor.clear_all_confirm': 'Tímto smažete rozvrhy jak v úložišti, tak v lokálním prohlížeči. Pokračovat?',
+    'editor.clear_storage_only': 'Smazat jen data v úložišti',
+    'editor.clear_storage_only_confirm': 'Tímto smažete rozvrhy z vybraného senzoru úložiště. Pokračovat?',
+    'editor.clear_local_only': 'Smazat jen lokální data',
+    'editor.clear_local_only_confirm': 'Tímto smažete pouze rozvrhy uložené ve vašem prohlížeči. Pokračovat?',
+    'editor.temp_sensor': 'Teplotní senzor',
+
+    // Týdny
+    'week.enable': 'Povolit pracovní dny',
+    'week.mode': 'Režim dní v týdnu',
+    // removed same_all option from UI
+    'week.mode.weekday_weekend': 'Pracovní dny + Víkend',
+    'week.mode.weekday_sat_sun': 'Pracovní dny + Sobota + Neděle',
+    'week.mode.all_7': 'Všechny dny',
+    'week.button': 'Dny v týdnu',
+    'week.group.weekdays': 'Pracovní dny',
+    'week.group.weekend': 'Víkend',
+    'week.days_full.mon': 'Pondělí',
+    'week.days_full.tue': 'Úterý',
+    'week.days_full.wed': 'Středa',
+    'week.days_full.thu': 'Čtvrtek',
+    'week.days_full.fri': 'Pátek',
+    'week.days_full.sat': 'Sobota',
+    'week.days_full.sun': 'Neděle',
+    'week.days.mon': 'Po',
+    'week.days.tue': 'Út',
+    'week.days.wed': 'St',
+    'week.days.thu': 'Čt',
+    'week.days.fri': 'Pá',
+    'week.days.sat': 'So',
+    'week.days.sun': 'Ne',
+    'week.editor.title': 'Týdenní rozvrh',
+    'week.editor.preview_note': 'Pouze náhled. Změny se použijí po stisknutí Uložit.',
+    'week.open_editor.desc': 'Otevřít editor dnů v týdnu.',
+    'week.open_editor.btn': 'Otevřít',
+    'week.copy_to_rooms': 'Kopírovat týden do místností',
+    'week.copy_to_rooms.title': 'Kopírovat týden do místností',
+    'week.copy_to_rooms.select': 'Vyberte místnosti',
+    'week.copy_to_rooms.apply': 'Vložit do místností',
+    'week.enable.desc': 'Povolit plán podle dní v týdnu. Když je vypnuto, používá se stejný plán každý den.',
+
+    // Formáty
+    'editor.timefmt.title': 'Formát času',
+    'editor.timefmt.desc': 'Zvolte 24hodinový nebo 12hodinový (AM/PM) formát pro časy na kartě.',
+    'editor.tempfmt.title': 'Jednotka teploty',
+    'editor.tempfmt.desc': 'Zvolte Celsia (°C) nebo Fahrenheit (°F) pro zobrazení na kartě a v editorech.',
+  'editor.timesrc.title': 'Zdroj času',
+  'editor.timesrc.desc': 'Zvolte, zda má karta používat čas prohlížeče nebo časové pásmo Home Assistantu pro „nyní“.',
+  'editor.timesrc.browser': 'Prohlížeč',
+  'editor.timesrc.ha': 'Home Assistant',
+
+    // Záložky
+    'editor.tabs.settings': 'Nastavení',
+    'editor.tabs.pause': 'Pauza',
+    'editor.tabs.rooms': 'Místnosti',
+    'editor.tabs.boiler': 'Kotel',
+    'boiler.switch': 'Spínač kotle',
+    'boiler.enable': 'Povolit ovládání kotle',
+    'boiler.enable.desc': 'Zobrazit nastavení kotle v editoru této karty.',
+    'boiler.temp_sensor': 'Teplotní senzor kotle',
+    'boiler.temp_sensor.desc': 'Teplotní senzor používaný k ovládání spínače kotle.',
+    'boiler.min_temp': 'Min. teplota kotle (°C)',
+    'boiler.max_temp': 'Max. teplota kotle (°C)',
+    'editor.test_tool': 'Testovací nástroj',
+    'editor.test_select_entity': 'Vybrat entitu',
+    'editor.test_empty': 'Vyberte entitu pro zobrazení dostupných příkazů…',
+    'editor.test_export': 'Exportovat .md',
+    'editor.test_no_fields': 'Žádná pole',
+    'editor.test_select_placeholder': '— Vybrat —',
+    'editor.error_prefix': 'Chyba: ',
+    'editor.open_in_hacs': 'Otevřít v HACS',
+    'editor.tabs.colors': 'Barvy',
+    'editor.tabs.owd': 'Open Window Detection',
+    'owd.enable': 'Open Window Detection',
+    'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.',
+    'owd.sensors': 'Window/Door sensors',
+    'owd.delays.title': 'Delays',
+    'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).',
+    'owd.open_delay': 'After open (min)',
+    'owd.close_delay': 'After closed (min)',
+    'editor.tabs.away': 'Mimo domov',
+  'editor.tabs.sync': 'Sync engine',
+  'sync.running': 'Probíhá synchronizace…',
+  'sync.completed': 'Synchronizace dokončena',
+  'editor.tabs.backup': 'Záloha',
+  'backup.title': 'Záloha',
+  'backup.desc': 'Zkopíruje obsah vašeho sync senzoru do záložního senzoru a v případě potřeby obnoví.',
+  'backup.now': 'Zálohovat nyní',
+  'backup.restore': 'Obnovit',
+  'backup.delete': 'Smazat zálohu',
+  'backup.delete.confirm': 'Smazat vybranou zálohu?',
+  'backup.new': 'Nová záloha',
+  'backup.auto': 'Automatická záloha',
+  'backup.auto.desc': 'Provádět automatické zálohy v intervalech.',
+  'backup.interval': 'Interval (dny)',
+  'backup.interval.desc': 'Počet dnů mezi automatickými zálohami (min. 1).',
+  'backup.sensor': 'Záložní senzor',
+  'backup.last': 'Poslední záloha',
+  'backup.slot.title': 'Vybrat zálohu',
+  'backup.slot.desc': 'Vyberte, kterou zálohu obnovit.',
+  'backup.slot.empty': 'Zatím žádné zálohy',
+
+    // Away
+    'away.enable': 'Povolit režim mimo domov',
+    'away.desc': 'Když žádní z vybraných lidí nejsou doma, automaticky snižuje teploty na nastavenou hodnotu.',
+    'away.temp': 'Teplota mimo domov',
+    'away.persons': 'Osoby',
+    'away.add_person': 'Přidat osobu',
+
+    // Barvy tepla
+    'editor.heat_colors.title': 'Barvy tepelných bloků',
+    'editor.heat_colors.add': 'Přidat rozsah barev',
+    'editor.colors.col_from': 'Od °C',
+    'editor.colors.col_to': 'Do °C',
+    'editor.colors.col_color': 'Barva',
+    'editor.colors.empty': 'Zatím nebyly přidány žádné místnosti. Přidejte místnost pro definici barev.',
+    'editor.colors.go_add': 'Přidat místnost',
+    'editor.select_entities': 'Místnosti',
+    'editor.colors.refresh': 'Aktualizovat rozvrh',
+    'editor.colors.clear_local': 'Smazat lokální barevná data',
+    'editor.colors.clear_local_confirm': 'Tímto smažete barevné rozsahy uložené ve vašem prohlížeči pro tuto kartu. Pokračovat?',
+    'editor.colors.clear_shared': 'Smazat sdílené barevné úložiště',
+    'editor.colors.clear_shared_confirm': 'Tímto smažete barevné rozsahy ve vybraném senzoru úložiště. Pokračovat?',
+    'editor.colors.clear_all': 'Smazat všechna barevná data',
+    'editor.colors.clear_all_confirm': 'Tímto smažete všechny barevné rozsahy jak lokálně, tak ve vybraném senzoru úložiště. Pokračovat?',
+    'editor.colors.mode': 'Režim barev',
+    'editor.colors.mode.desc': 'Zvolte barvy pro každou místnost nebo jeden set pro všechny.',
+    'editor.colors.mode_per_room': 'Podle místnosti',
+    'editor.colors.mode_global': 'Všechny místnosti',
+    'editor.colors.global_title': 'Všechny místnosti',
+    'editor.reload_editor': 'Znovu načíst editor',
+    'editor.reload_dashboard': 'Znovu načíst dashboard',
+
+    // Onboarding
+    'onboard.title': 'Vítejte v Časové ose termostatu',
+    'onboard.next': 'Další',
+    'onboard.prev': 'Zpět',
+    'onboard.skip': 'Přeskočit',
+    'onboard.done': 'Hotovo',
+    'onboard.dont_show': 'Nezobrazovat znovu',
+    'onboard.step_main': 'Toto je hlavní časová osa. Zobrazuje požadované teploty během 24 hodin pro každou místnost.',
+    'onboard.step_add': 'Přidejte tepelný blok přes + Přidat blok nebo dvojitým kliknutím na časovou osu.',
+    'onboard.step_edit': 'Upravte nebo smažte blok dvojitým kliknutím. Použijte Dny v týdnu pro různé dny.',
+    'onboard.reset': 'Zobrazit průvodce znovu',
+    'onboard.reset_ok': 'Vítání se zobrazí příště.',
+
+    // Pause
+    'pause.menu_title': 'Pozastavit auto‑apply',
+    'pause.off_1h': 'Pozastavit na 1 hodinu',
+    'pause.off_5h': 'Pozastavit na 5 hodin',
+    'pause.off_custom': 'Vlastní délka…',
+    'pause.off_indef': 'Pozastavit do obnovení',
+    'pause.resume': 'Obnovit nyní',
+    'pause.close': 'Zavřít',
+    'pause.active_until': 'Pozastaveno do {time}',
+    'pause.active_indef': 'Pozastaveno',
+    'editor.pausebtn.title': 'Tlačítko pozastavení',
+    'editor.pausebtn.desc': 'Zobrazí globální tlačítko pozastavení v záhlaví karty. Během pauzy jsou všechny příkazy set_temperature potlačeny.',
+    'editor.integration.connected': 'Integrace připravena',
+    'editor.integration.disconnected': 'Integrace není k dispozici',
+
+    // Profily
+    'profiles.enable': 'Povolit profily (přepis)',
+    'profiles.enable.desc': 'Povolit pojmenované denní rozvrhy, které můžete aktivovat pro přepsání hlavního plánu.',
+  'profiles.button': 'Manuální plán',
+    'profiles.editor.title': 'Profily',
+    'profiles.add': 'Přidat profil',
+    'profiles.rename': 'Přejmenovat',
+    'profiles.delete': 'Smazat',
+    'profiles.activate': 'Aktivovat',
+    'profiles.deactivate': 'Deaktivovat',
+    'profiles.active': 'Aktivní',
+    'profiles.none': 'Žádný',
+    'profiles.name_placeholder': 'Název profilu',
+    'profiles.edit': 'Upravit',
+    'profiles.preview_note': 'Pouze náhled. Rozvrhy se stanou aktivními po aktivaci profilu.',
+    'profiles.active_label': 'Manuální profil aktivní:',
+
+    // Svátky
+    'editor.tabs.holidays': 'Svátky',
+    'holidays.enable': 'Povolit svátky',
+    'holidays.desc': 'Použít speciální denní rozvrh o svátcích.',
+    'holidays.source': 'Zdroj svátků',
+    'holidays.source.calendar': 'Kalendář',
+    'holidays.source.manual': 'Manuální data',
+    'holidays.entity': 'Entita svátků',
+    'holidays.entity_desc': 'Vyberte kalendář, který hlásí pouze on/off. Má být on ve svátky a off v ostatní dny.',
+    'holidays.dates': 'Data svátků',
+    'holidays.add_date': 'Přidat datum',
+    'holidays.editor.title': 'Rozvrh o svátcích',
+    'holidays.edit': 'Upravit rozvrh o svátcích',
+    'holidays.button': 'Svátky',
+    'editor.perroom.title': 'Výchozí °C pro místnost',
+    'editor.perroom.desc': 'Zobrazit pole výchozí °C v každém řádku. Při vypnutí se použije globální výchozí °C pro všechny místnosti.',
+    'away.resume_schedule': 'Obnovit plán',
+    'away.resume_away': 'Obnovit teplotu mimo domov',
+    'presence.button': 'Plány přítomnosti',
+    'presence.editor.title': 'Plány přítomnosti',
+    'presence.enable_advanced': 'Povolit pokročilou přítomnost',
+    'presence.combos': 'Kombinace',
+    'presence.enable_combo': 'Povolit tuto kombinaci',
+    'presence.all_home': 'Všichni doma',
+    'presence.none_home': 'Nikdo doma',
+    'presence.home': 'Doma: {names}',
+    'presence.away': 'Mimo domov: {names}',
+    'presence.manage': 'Spravovat kombinace',
+    'presence.who_home': 'Kdo je doma',
+    'presence.who_away': 'Kdo není doma'
+    , 'backup.select': 'Vyberte, co zálohovat'
+    , 'backup.select.desc': 'Zaškrtnuté položky jsou zahrnuty do zálohy/obnovy'
+    , 'backup.opt.all': 'Vše'
+    , 'backup.opt.main': 'Hlavní rozvrhy'
+    , 'backup.opt.weekday': 'Rozvrhy podle dní'
+    , 'backup.opt.presence': 'Plány přítomnosti'
+    , 'backup.opt.settings': 'Nastavení editoru'
+    , 'backup.opt.holiday': 'Sváteční rozvrhy'
+    , 'backup.opt.colors': 'Barevné bloky'
+    , 'editor.tabs.weekdays': 'Dny v týdnu'
+    , 'presence.live_header': 'Zobrazit živou přítomnost v záhlaví'
+    , 'presence.live_header.desc': 'Zobrazit štítky u tlačítka pauzy s tím, kdo je doma/pryč.'
+    , 'week.view.title': 'Pohled na týden'
+    , 'week.view.rooms_one_day': 'Všechny místnosti • jeden den'
+    , 'week.view.days_one_room': 'Všechny dny • jedna místnost'
+    , 'week.view_switch.title': 'Přepnout zobrazení z časové osy'
+    , 'week.view_switch.desc': 'Zobrazí přepínač v záhlaví časové osy pro přepínání mezi dvěma režimy zobrazení dnů v týdnu.'
+    , 'week.title': 'Dny v týdnu'
+    , 'week.select_room': 'Vyberte místnost'
+  },
+  sl: {
+    'card.title_default': 'Časovnica termostata',
+    'ui.edit_block': 'Uredi blok',
+    'ui.add_block': 'Dodaj blok',
+    'ui.from': 'Od',
+    'ui.to': 'Do',
+    'ui.temperature': 'Temperatura',
+    'ui.delete': 'Izbriši',
+  'ui.cancel': 'Prekliči',
+  'ui.close': 'Zapri',
+  'ui.unsaved_confirm': 'Imate neshranjene spremembe. Želite vseeno zapreti?',
+  'ui.discard_changes': 'Zavrzi spremembe',
+  'ui.keep_editing': 'Nadaljuj z urejanjem',
+    'ui.save': 'Shrani',
+    'ui.error_prefix': 'Napaka: ',
+    'ui.overlap_msg': 'Izbrali ste prekrivajoče se čase — prekrivanje med {start} in {end}.',
+    'ui.auto_fix': 'Samodejno popravi',
+    'ui.fix_start_to': 'Nastavi začetek na {time}',
+  'ui.fix_end_to': 'Nastavi konec na {time}',
+  // Inline meta
+  'ui.current_temp': 'Trenutna temperatura:',
+
+    'editor.title_label': 'Naslov',
+  'editor.add_entity': 'Dodaj prostor',
+    'editor.entity_placeholder': 'Izberite entiteto',
+      'editor.room_mode.title': 'Vrsta entitete prostora',
+      'editor.room_mode.desc': 'Ko je omogočeno, izberite input_number (ciljna temperatura). Ko je onemogočeno, izberite climate entiteto.',
+    'editor.drag_reorder': 'Povleci za spremembo vrstnega reda',
+    'editor.remove': 'Odstrani',
+    'editor.default_c': 'Privzeta °C',
+      'editor.perroom.title': 'Privzeta °C po prostoru',
+      'editor.perroom.desc': 'Prikaže polje Privzeta °C v vsaki vrstici. Ko je izklopljeno, se globalna Privzeta °C uporabi za vse prostore.',
+  'editor.row_height_px': 'Višina vrstice (px)',
+  'editor.max_c': 'Največ °C',
+    'editor.min_c': 'Najmanj °C',
+    'editor.auto_apply.title': 'Samodejna uporaba',
+    'editor.auto_apply.desc': 'Ko je omogočeno, kartica poskuša nastaviti temperaturo na izbranih climate entitetah tako, da ustreza načrtovani vrednosti za "trenutno".',
+    'editor.apply_edit.title': 'Ob urejanju',
+    'editor.apply_edit.desc': 'Ko spremenite bloke na časovnici in sprememba vpliva na trenutni čas, se nova temperatura uporabi takoj.',
+    'editor.apply_default.title': 'Ob spremembi privzete °C',
+    'editor.apply_default.desc': 'Ko se "Privzeta °C" spremeni in to vpliva na trenutno obdobje, se nova temperatura uporabi takoj.',
+  'ui.copy_plan': 'Kopiraj načrt',
+  'ui.paste_plan': 'Prilepi načrt',
+  'ui.copy_day': 'Kopiraj dan',
+  'ui.paste_day': 'Prilepi dan',
+  'editor.merge_label': 'Združi z (dodaj dodatni termostat)',
+  'editor.display_name_optional': 'Ime prostora (neobvezno)',
+    'editor.merged_with': 'Združeno z',
+  'editor.store_enable.title': 'Deljena shramba + ozadni nadzor',
+  'editor.store_enable.short': 'Shrani urnike v izbrani senzor in omogoči nadzor v ozadju.',
+  'editor.store_enable.desc': 'Shrani urnike v izbrani senzor in omogoči ozadnje ukaze set_temperature prek integracije Thermostat Timeline. Termostati se posodobijo tudi, ko kartica ni odprta. Prav tako deli urnike (toplotne bloke) in nastavitve kartice med uporabniki/napravami. Ko je izklopljeno, se ukazi pošiljajo le, ko je kartica vidna na napravi (tablica/PC/mobilnik) in mora ostati odprta.',
+  'editor.store_missing': 'Integracija "Thermostat Pro Timeline Sync" ni nameščena. Deljena shramba ni na voljo.',
+    'editor.clear_store': 'Počisti shrambo',
+    'editor.clear_store_confirm': 'To bo izbrisalo vse shranjene urnike. Nadaljujem?',
+  'editor.migrate_to_store': 'Prenesi podatke v shrambo',
+    'editor.migrate_confirm': 'Prenesem urnike, shranjene v brskalniku, v izbrani senzor? To bo prepisalo obstoječe urnike v shrambi.',
+  'editor.migrate_pull_confirm': 'Uvozim urnike iz shrambe in prepišem lokalne podatke v brskalniku?',
+  'editor.select_storage_first': 'Najprej izberite senzor shrambe.',
+    'editor.no_local_data': 'Lokalnih podatkov v brskalniku ni.',
+    'editor.clear_all': 'Počisti vse podatke',
+    'editor.clear_all_confirm': 'To bo izbrisalo urnike iz shrambe in lokalnega brskalnika. Nadaljujem?',
+  'editor.clear_storage_only': 'Počisti samo shrambo',
+    'editor.clear_storage_only_confirm': 'To bo izbrisalo urnike iz izbranega senzora shrambe. Nadaljujem?',
+  'editor.clear_local_only': 'Počisti samo lokalne podatke',
+    'editor.clear_local_only_confirm': 'To bo izbrisalo le urnike, shranjene v vašem brskalniku. Nadaljujem?',
+    'editor.temp_sensor': 'Senzor temperature',
+    'editor.test_tool': 'Testno orodje',
+    'editor.test_select_entity': 'Izberite entiteto',
+    'editor.test_empty': 'Izberite entiteto za prikaz razpoložljivih ukazov…',
+    'editor.test_export': 'Izvozi .md',
+    'editor.test_no_fields': 'Ni polj',
+    'editor.test_select_placeholder': '— Izberi —',
+    'editor.error_prefix': 'Napaka: ',
+    'editor.open_in_hacs': 'Odpri v HACS'
+    , 'week.enable': 'Omogoči dneve v tednu'
+    , 'week.mode': 'Način tedna'
+  , 'week.mode.weekday_weekend': 'Delavnik + Vikend'
+  , 'week.mode.weekday_sat_sun': 'Delavnik + Sobota + Nedelja'
+  , 'week.mode.all_7': 'Vsi dnevi'
+    , 'week.button': 'Dnevi v tednu'
+  , 'week.group.weekdays': 'Delavniki'
+  , 'week.group.weekend': 'Vikend'
+  , 'week.days_full.mon': 'Ponedeljek'
+  , 'week.days_full.tue': 'Torek'
+  , 'week.days_full.wed': 'Sreda'
+  , 'week.days_full.thu': 'Četrtek'
+  , 'week.days_full.fri': 'Petek'
+  , 'week.days_full.sat': 'Sobota'
+  , 'week.days_full.sun': 'Nedelja'
+  , 'week.days.mon': 'Pon'
+    , 'week.days.tue': 'Tor'
+    , 'week.days.wed': 'Sre'
+    , 'week.days.thu': 'Čet'
+    , 'week.days.fri': 'Pet'
+    , 'week.days.sat': 'Sob'
+    , 'week.days.sun': 'Ned'
+    , 'week.editor.title': 'Urnik po dnevih'
+  , 'week.editor.preview_note': 'Samo predogled. Spremembe se uporabijo, ko pritisnete Shrani.'
+    , 'week.open_editor.desc': 'Odpri urejevalnik urnika po dnevih.'
+    , 'week.open_editor.btn': 'Odpri'
+  , 'week.view.title': 'Pogled tedna'
+  , 'week.view.rooms_one_day': 'Vsi prostori • en dan'
+  , 'week.view.days_one_room': 'Vsi dnevi • en prostor'
+  , 'week.view_switch.title': 'Preklopi pogled na časovnici'
+  , 'week.view_switch.desc': 'Prikaže preklopnik v glavi časovnice za preklapljanje med obema načinoma pogleda za dneve v tednu.'
+  , 'week.title': 'Dnevi v tednu'
+  , 'week.select_room': 'Izberi prostor'
+  , 'week.copy_to_rooms': 'Kopiraj teden v prostore'
+  , 'week.copy_to_rooms.title': 'Kopiraj teden v prostore'
+  , 'week.copy_to_rooms.select': 'Izberi prostore'
+  , 'week.copy_to_rooms.apply': 'Vstavi v prostore'
+  , 'week.enable.desc': 'Omogoči načrtovanje po posameznem dnevu. Ko je izklopljeno, se vsak dan uporabi isti načrt.'
+    , 'editor.timefmt.title': 'Oblika časa'
+    , 'editor.timefmt.desc': 'Izberite 24-urni ali 12-urni (AM/PM) prikaz časov na kartici.'
+    , 'editor.tempfmt.title': 'Enota temperature'
+    , 'editor.tempfmt.desc': 'Izberite Celsius (°C) ali Fahrenheit (°F) za prikaz na kartici in v urejevalnikih.'
+  , 'editor.timesrc.title': 'Vir časa'
+  , 'editor.timesrc.desc': 'Izberite, ali kartica za "zdaj" uporablja čas brskalnika ali časovni pas Home Assistanta.'
+  , 'editor.timesrc.browser': 'Brskalnik'
+  , 'editor.timesrc.ha': 'Home Assistant'
+  , 'editor.tabs.settings': 'Nastavitve'
+  , 'editor.tabs.pause': 'Premor'
+  , 'editor.tabs.weekdays': 'Dnevi v tednu'
+    , 'editor.tabs.rooms': 'Prostori'
+  , 'editor.tabs.colors': 'Barve'
+  , 'editor.tabs.owd': 'Open Window Detection'
+  , 'owd.enable': 'Open Window Detection'
+  , 'owd.enable.desc': 'Turn off thermostats in a room when selected window/door sensors are open.'
+  , 'owd.sensors': 'Window/Door sensors'
+  , 'owd.delays.title': 'Delays'
+  , 'owd.delays.desc': 'Minutes to wait before turning off (open) and resuming schedule (closed).'
+  , 'owd.open_delay': 'After open (min)'
+  , 'owd.close_delay': 'After closed (min)'
+  , 'editor.tabs.away': 'Odsotnost'
+  , 'editor.tabs.boiler': 'Kotel'
+  , 'boiler.switch': 'Stikalo kotla'
+  , 'boiler.enable': 'Omogoči krmiljenje kotla'
+  , 'boiler.enable.desc': 'Prikaži nastavitve kotla v urejevalniku te kartice.'
+  , 'boiler.temp_sensor': 'Temperaturni senzor kotla'
+  , 'boiler.temp_sensor.desc': 'Temperaturni senzor za krmiljenje stikala kotla.'
+  , 'boiler.min_temp': 'Min. temperatura kotla (°C)'
+  , 'boiler.max_temp': 'Maks. temperatura kotla (°C)'
+  , 'editor.tabs.sync': 'Sinhronizacijski pogon'
+  , 'sync.running': 'Sinhronizacija poteka…'
+  , 'sync.completed': 'Sinhronizacija končana'
+  , 'away.enable': 'Omogoči način odsotnosti'
+  , 'away.desc': 'Ko nihče iz izbranih oseb ni doma, termostati samodejno spustijo na nastavljeno temperaturo.'
+  , 'away.temp': 'Temperatura odsotnosti'
+  , 'away.persons': 'Osebe'
+  , 'away.add_person': 'Dodaj osebo'
+  , 'away.resume_schedule': 'Nadaljuj urnik'
+  , 'away.resume_away': 'Nadaljuj temperaturo odsotnosti'
+    , 'editor.heat_colors.title': 'Barve toplotnih blokov'
+  , 'editor.heat_colors.add': 'Dodaj barvno območje'
+    , 'editor.colors.col_from': 'Od °C'
+    , 'editor.colors.col_to': 'Do °C'
+    , 'editor.colors.col_color': 'Barva'
+  , 'editor.colors.empty': 'Ni še dodanih prostorov. Dodajte prostor za določitev barv.'
+  , 'editor.colors.go_add': 'Dodaj prostor'
+  , 'editor.select_entities': 'Prostori'
+  , 'editor.colors.refresh': 'Osveži urnik'
+  , 'editor.colors.clear_local': 'Počisti lokalne barvne podatke'
+  , 'editor.colors.clear_local_confirm': 'To bo izbrisalo barvna območja, shranjena v vašem brskalniku za to kartico. Nadaljujem?'
+  , 'editor.colors.clear_shared': 'Počisti deljeno barvno shrambo'
+  , 'editor.colors.clear_shared_confirm': 'To bo izbrisalo barvna območja v izbranem senzoru shrambe. Nadaljujem?'
+  , 'editor.colors.clear_all': 'Počisti vse barvne podatke'
+  , 'editor.colors.clear_all_confirm': 'To bo izbrisalo vsa barvna območja iz lokalne in deljene shrambe. Nadaljujem?'
+  , 'editor.colors.mode': 'Način barv'
+  , 'editor.colors.mode.desc': 'Izberite barve po prostorih ali en nabor za vse prostore.'
+  , 'editor.colors.mode_per_room': 'Po prostorih'
+  , 'editor.colors.mode_global': 'Vsi prostori'
+  , 'editor.colors.global_title': 'Vsi prostori'
+  , 'editor.reload_editor': 'Ponovno naloži urejevalnik'
+  , 'editor.reload_dashboard': 'Ponovno naloži nadzorno ploščo'
+  , 'onboard.title': 'Dobrodošli v Thermostat Timeline'
+  , 'onboard.next': 'Naprej'
+  , 'onboard.prev': 'Nazaj'
+  , 'onboard.skip': 'Preskoči'
+  , 'onboard.done': 'Končano'
+  , 'onboard.dont_show': 'Ne pokaži več'
+  , 'onboard.step_main': 'To je glavna časovnica. Prikazuje želene temperature za 24 ur v vsakem prostoru.'
+  , 'onboard.step_add': 'Toplotni blok dodate z + Dodaj blok ali z dvojnim klikom na časovnico.'
+  , 'onboard.step_edit': 'Blok uredite ali izbrišete z dvojnim klikom. Uporabite Dneve v tednu za načrtovanje različnih dni.'
+  , 'onboard.reset': 'Prikaži vodič znova'
+  , 'onboard.reset_ok': 'Pozdrav se bo prikazal naslednjič.'
+  , 'pause.menu_title': 'Premor samodejne uporabe'
+  , 'pause.off_1h': 'Premor 1 ura'
+  , 'pause.off_5h': 'Premor 5 ur'
+  , 'pause.off_custom': 'Poljubno trajanje…'
+  , 'pause.off_indef': 'Premor do nadaljnjega'
+  , 'pause.resume': 'Nadaljuj zdaj'
+  , 'pause.close': 'Zapri'
+  , 'pause.active_until': 'V premoru do {time}'
+  , 'pause.active_indef': 'V premoru'
+  , 'editor.pausebtn.title': 'Gumb premora'
+  , 'editor.pausebtn.desc': 'V glavi kartice prikaži globalni gumb premora. Med premorom so vsi ukazi set_temperature blokirani.'
+  , 'editor.integration.connected': 'Integracija pripravljena'
+  , 'editor.integration.disconnected': 'Integracija ni na voljo'
+  , 'profiles.enable': 'Omogoči profile (prepis)'
+  , 'profiles.enable.desc': 'Dovoli poimenovane dnevne urnike, ki lahko preglasijo glavni načrt.'
+  , 'profiles.button': 'Ročni urnik'
+  , 'profiles.editor.title': 'Profili'
+  , 'profiles.add': 'Dodaj profil'
+  , 'profiles.rename': 'Preimenuj'
+  , 'profiles.delete': 'Izbriši'
+  , 'profiles.activate': 'Aktiviraj'
+  , 'profiles.deactivate': 'Deaktiviraj'
+  , 'profiles.active': 'Aktiven'
+  , 'profiles.none': 'Noben'
+  , 'profiles.name_placeholder': 'Ime profila'
+  , 'profiles.edit': 'Uredi'
+  , 'profiles.preview_note': 'Samo predogled. Urniki postanejo aktivni, ko profil aktivirate.'
+  , 'profiles.active_label': 'Ročni profil aktiven:'
+  , 'editor.tabs.holidays': 'Prazniki'
+  , 'editor.tabs.backup': 'Varnostna kopija'
+  , 'backup.title': 'Varnostna kopija'
+  , 'backup.desc': 'Kopiraj urnike in nastavitve v varnostno kopijo ter jih po potrebi obnovi.'
+  , 'backup.now': 'Ustvari kopijo zdaj'
+  , 'backup.restore': 'Obnovi'
+  , 'backup.delete': 'Izbriši varnostno kopijo'
+  , 'backup.delete.confirm': 'Izbrišem izbrano varnostno kopijo?'
+  , 'backup.new': 'Nova varnostna kopija'
+  , 'backup.auto': 'Samodejna kopija'
+  , 'backup.auto.desc': 'Samodejno ustvarjaj varnostne kopije po urniku.'
+  , 'backup.interval': 'Interval (dni)'
+  , 'backup.interval.desc': 'Število dni med samodejnimi kopijami (min. 1).'
+  , 'backup.sensor': 'Senzor varnostne kopije'
+  , 'backup.last': 'Zadnja kopija'
+  , 'backup.slot.title': 'Izberi varnostno kopijo'
+  , 'backup.slot.desc': 'Izberite, kateri slot varnostne kopije želite obnoviti.'
+  , 'backup.slot.empty': 'Še ni varnostnih kopij'
+  , 'backup.select': 'Izberi, kaj kopirati'
+  , 'backup.select.desc': 'Označene postavke so vključene v kopiranje/obnovo'
+  , 'backup.opt.all': 'Vse'
+  , 'backup.opt.main': 'Glavni urniki'
+  , 'backup.opt.weekday': 'Urniki po dnevih'
+  , 'backup.opt.presence': 'Urniki prisotnosti'
+  , 'backup.opt.settings': 'Nastavitve urejevalnika'
+  , 'backup.opt.holiday': 'Praznični urniki'
+  , 'backup.opt.colors': 'Barvni bloki'
+  , 'holidays.enable': 'Omogoči praznike'
+  , 'holidays.desc': 'Uporabi poseben dnevni urnik ob praznikih.'
+  , 'holidays.source': 'Vir praznikov'
+  , 'holidays.source.calendar': 'Koledar'
+  , 'holidays.source.manual': 'Ročni datumi'
+  , 'holidays.entity': 'Entiteta za praznike'
+  , 'holidays.entity_desc': 'Izberite koledar, ki poroča le vklop/izklop. Na praznike mora biti vklopljen, sicer izklopljen.'
+  , 'holidays.dates': 'Datumi praznikov'
+  , 'holidays.add_date': 'Dodaj datum'
+  , 'holidays.editor.title': 'Praznični urnik'
+  , 'holidays.edit': 'Uredi praznični urnik'
+  , 'holidays.button': 'Prazniki'
+  , 'presence.button': 'Urniki prisotnosti'
+  , 'presence.editor.title': 'Urniki prisotnosti'
+  , 'presence.enable_advanced': 'Omogoči napredno prisotnost'
+  , 'presence.live_header': 'Prikaži živo prisotnost v glavi'
+  , 'presence.live_header.desc': 'Ob gumbu za premor prikaži oznake s tem, kdo je doma ali odsoten.'
+  , 'presence.combos': 'Kombinacije'
+  , 'presence.enable_combo': 'Omogoči to kombinacijo'
+  , 'presence.all_home': 'Vsi doma'
+  , 'presence.none_home': 'Nihče doma'
+  , 'presence.home': 'Doma: {names}'
+  , 'presence.away': 'Odsotni: {names}'
+  , 'presence.manage': 'Upravljaj kombinacije'
+  , 'presence.who_home': 'Kdo je doma'
+  , 'presence.who_away': 'Kdo ni doma'
+  },
+};
+const TT_LANG_ALIAS = { no: 'nb', cz: 'cs', dk: 'da' };
+function ttGetLangFromHass(hass) {
+  // Home Assistant can report locales like "da_DK"; normalize to BCP-47 ("da-DK").
+  const raw =
+    (typeof hass === 'string' ? hass : (hass?.locale?.language || hass?.language)) ||
+    navigator.language ||
+    'en';
+  return String(raw).replace(/_/g, '-').toLowerCase();
+}
+function ttLocalize(key, langOrHass) {
+  const raw = typeof langOrHass === 'string' ? langOrHass : ttGetLangFromHass(langOrHass);
+  const lang = String(raw).replace(/_/g, '-').toLowerCase();
+  const parts = lang.split('-');
+  const candidates = [
+    lang,
+    parts[0],
+    TT_LANG_ALIAS[lang],
+    TT_LANG_ALIAS[parts[0]],
+    'en',
+  ].filter(Boolean);
+  for (const c of candidates) {
+    const dict = TT_I18N[c];
+    if (dict && dict[key]) return dict[key];
+  }
+  // Default/fallback language is English.
+  return TT_I18N.en[key] || key;
+}
+// ---- end i18n ----
+
+/* eslint-disable no-undef */
+
+// Simple runtime version to help with cache-busting diagnostics in HA.
+// Update this when shipping changes so the version appears in the
+// "Custom cards" panel and in logs.
+const TT_CARD_VERSION = "2025.12.28-weekdays-view-switch-1";
+
+class ThermostatTimelineCard extends HTMLElement {
+  static get version() { return TT_CARD_VERSION; }
+  static getConfigElement() { return document.createElement("thermostat-timeline-card-editor"); }
+  static getStubConfig() {
+    return {
+      // Localize default title based on browser language; editor will further adapt to HA language
+      title: ttLocalize('card.title_default', navigator.language || 'en'),
+      entities: [],
+      time_12h: null,
+      time_source: 'browser', // 'browser' | 'ha'
+      color_global: false, // when true, use one global set of colors (key "*") for all rooms
+      now_update_ms: 60000,   // kun til UI 'nu'-stregen
+      storage_enabled: true, // default: on -> uses file storage via API
+      storage_sync_min: 5,          // minutes when mode = 'delay' (legacy)
+      backup_auto_enabled: false,
+      backup_interval_days: 1,
+      show_top_now: false,
+      now_extend_px: 76,
+      show_pause_button: true,
+      pause_sensor_enabled: false,
+      pause_sensor_entity: '',
+      labels: {},
+      merges: {},              // { [primary_eid]: [linked_eid, ...] }
+      temp_sensors: {},        // { [primary_eid]: sensor.temperature_entity_id }
+      boiler_enabled: false,   // enable boiler controls in editor and runtime
+      boiler_switch: '',       // optional switch.* entity used for boiler control
+      boiler_temp_sensor: '',  // optional sensor.* entity used for boiler temperature control
+      boiler_min_temp: 20,     // boiler min temp (stored internally as °C)
+      boiler_max_temp: 25,     // boiler max temp (stored internally as °C)
+      weekdays_enabled: false,
+      weekdays_mode: 'weekday_weekend', // 'weekday_weekend' | 'weekday_sat_sun' | 'all_7'
+      weekdays_view: 'all_rooms_one_day', // 'all_rooms_one_day' | 'one_room_all_days'
+      weekdays_view_switch_in_timeline: false,
+      weekdays_selected_room: '',
+      profiles_enabled: false,
+      away: { enabled: false, persons: [], target_c: 17, advanced_enabled: false, combos: {} },
+      // Open Window Detection (editor + shared settings)
+      open_window: { enabled: false, sensors: {}, open_delay_min: 2, close_delay_min: 5 },
+      holidays_enabled: false,
+      holidays_source: 'calendar', // 'calendar' | 'manual'
+      holidays_entity: '',         // calendar.* or binary_sensor.* that is on/off for holiday
+      holidays_dates: [],          // [ 'YYYY-MM-DD', ... ]
+      presence_live_header: true // Show live presence chips in header
+      , room_use_input_number: [] // per-room toggle: show/select input_number instead of climate (matches entities[] index)
+    };
+  }
+
+  connectedCallback(){
+    // Attach minimal listeners to avoid re-render while typing in row inputs
+    try {
+      this.shadowRoot?.addEventListener('focusin', (e)=>{
+        try {
+          const t = e.target;
+          if (!t) return;
+          // Suspend while editing any number input in row header
+          if ((t.tagName === 'INPUT' || t.tagName === 'HA-TEXTFIELD') && t.closest && t.closest('.row-head')) {
+            this._suspendRender = true;
+          }
+        } catch {}
+      });
+      this.shadowRoot?.addEventListener('focusout', ()=>{ setTimeout(()=>{ this._suspendRender = false; }, 150); });
+    } catch {}
+  }
+
+  // ---------- Home Assistant hook ----------
+  set hass(hass) {
+    this._hass = hass; this._lang = ttGetLangFromHass(hass);
+    // Storage is now file-based via API, no sensor auto-detection needed
+
+    // (Select-based global profile removed)
+
+
+    // Detect Away mode changes and apply immediately
+    try {
+      const curAway = this._isAwayActive();
+      if (this._lastAwayActive === null) {
+        this._lastAwayActive = curAway;
+      } else if (this._initialized && curAway !== this._lastAwayActive) {
+        this._lastAwayActive = curAway;
+        // Reset manual away bypass on any away enter/exit
+        this._awayBypass = false;
+        if (this._config?.auto_apply) {
+          // Apply immediately on Away enter/exit
+          this._applyCurrentSetpoints(true);
+          // When Sync is ON, nudge backend to apply right away as well
+          try { if (this._config?.storage_enabled) this._nudgeBackgroundApplyNow(); } catch {}
+          this._scheduleNextApply();
+        }
+      }
+    } catch {}
+
+    // Hent fra sensor hvis version ændret
+    // Detect Presence combo changes and apply immediately
+    try {
+      const curKey = this._activePresenceComboKey ? this._activePresenceComboKey() : null;
+      if (this._lastPresenceKey === null) {
+        this._lastPresenceKey = curKey;
+      } else if (this._initialized && curKey !== this._lastPresenceKey) {
+        this._lastPresenceKey = curKey;
+        if (this._config?.auto_apply) {
+          this._applyCurrentSetpoints(true);
+          try { if (this._config?.storage_enabled) this._nudgeBackgroundApplyNow(); } catch {}
+          this._scheduleNextApply();
+        }
+      }
+    } catch {}
+
+    // Detect pause sensor transitions (UI responsiveness + frontend-only behavior when Sync is OFF)
+    try {
+      const cur = this._isPausedBySensor ? !!this._isPausedBySensor() : false;
+      if (this._lastPauseSensorOn === null || this._lastPauseSensorOn === undefined) {
+        this._lastPauseSensorOn = cur;
+      } else if (this._initialized && cur !== this._lastPauseSensorOn) {
+        this._lastPauseSensorOn = cur;
+        try { if (!this._inlineEditing && !this._editing) this._render(); } catch {}
+        if (this._config?.auto_apply) {
+          if (cur) {
+            // Pause: cancel any pending boundary timer
+            try { this._scheduleNextApply(); } catch {}
+          } else {
+            // Resume: reconcile once + schedule next
+            this._applyCurrentSetpoints(true, true);
+            try { if (this._config?.storage_enabled) this._nudgeBackgroundApplyNow(); } catch {}
+            this._scheduleNextApply();
+          }
+        }
+      }
+    } catch {}
+
+    // Version checking is now done via API polling in _startStoreWatchTimer
+
+    // When Sync is OFF, do not override local editor toggles (profiles_enabled) with sensor values.
+    // Visibility of the Manual schedule button is driven by local config and localStorage only.
+
+    try {
+      if (this._config?.storage_enabled) this._startStoreWatchTimer();
+      else if (this._storeWatchTimer) { clearInterval(this._storeWatchTimer); this._storeWatchTimer = null; }
+    } catch {}
+
+    // Boiler control (frontend only when Sync is OFF)
+    try { this._setupBoilerControl(); } catch {}
+
+    // (Removed select/state subscription; card updates via version change as before)
+
+    if (!this._initialized) {
+      this._initialized = true;
+      this._init();
+      this._loadStore(true).then(() => {
+        this._ensureSchedules();
+        // Restore delayed sync countdown if previously scheduled
+        try { this._restoreSyncDue(); } catch {}
+        this._render();
+        // Open deferred Holiday editor right after first render if flagged by editor
+        try { this._maybeOpenDeferredHoliday && this._maybeOpenDeferredHoliday(); } catch {}
+        // Ved load sætter vi korrekt setpoint én gang
+        this._applyCurrentSetpoints(true);
+        this._scheduleNextApply();
+        // Push any YAML-provided settings to storage/local after first load
+        // but avoid resetting a pending delayed sync countdown on hard refresh
+        try {
+          const hasPending = Number(this._storeDelayDue||0) > Date.now() || !!localStorage.getItem(this._syncDueKey());
+          if (!(this._config?.storage_enabled && this._config?.storage_sync_mode === 'delay' && hasPending)) {
+            this._debouncedSaveStore();
+          }
+        } catch {}
+  // (Removed polling safety net)
+      });
+    } else {
+      if (!this._inlineEditing && !this._editing) this._render();
+    }
+  }
+
+  // ---------- Config ----------
+  setConfig(config) {
+    if (!config || !Array.isArray(config.entities)) throw new Error("Config skal have 'entities: [climate.xxx, ...]'.");
+    const prevDefault = Number(this._config?.default_temp);
+    const yamlSetsDefault = Object.prototype.hasOwnProperty.call(config, 'default_temp');
+    let rowh = Number(config.row_height ?? 64); rowh = isNaN(rowh) ? 64 : Math.max(40, Math.min(120, Math.round(rowh)));
+    let deft = Number(config.default_temp ?? 20); deft = isNaN(deft) ? 20 : Math.max(5, Math.min(35, deft));
+  let nowms = Number(config.now_update_ms ?? 60000); nowms = isNaN(nowms) ? 60000 : Math.max(200, nowms);
+  let maxt = Number(config.max_temp ?? 25); maxt = isNaN(maxt) ? 25 : Math.max(5, Math.min(120, maxt));
+  let mint = Number(config.min_temp ?? 5); mint = isNaN(mint) ? 5 : Math.max(0, Math.min(45, mint));
+    // Boiler limits default to 20/25°C. Keep previous values when not provided.
+    const prevBMin = (this._config && Object.prototype.hasOwnProperty.call(this._config, 'boiler_min_temp')) ? this._config.boiler_min_temp : null;
+    const prevBMax = (this._config && Object.prototype.hasOwnProperty.call(this._config, 'boiler_max_temp')) ? this._config.boiler_max_temp : null;
+    const clampBoiler = (n)=>{ const v = Number(n); return Number.isFinite(v) ? Math.max(0, Math.min(120, v)) : null; };
+    let boilerMin = (config.boiler_min_temp === undefined)
+      ? (Number.isFinite(Number(prevBMin)) ? Number(prevBMin) : 20)
+      : ((config.boiler_min_temp === null || config.boiler_min_temp === '') ? 20 : clampBoiler(config.boiler_min_temp));
+    let boilerMax = (config.boiler_max_temp === undefined)
+      ? (Number.isFinite(Number(prevBMax)) ? Number(prevBMax) : 25)
+      : ((config.boiler_max_temp === null || config.boiler_max_temp === '') ? 25 : clampBoiler(config.boiler_max_temp));
+    const showTop = Boolean(config.show_top_now ?? false);
+    let extendPx = Number(config.now_extend_px ?? 76); extendPx = isNaN(extendPx) ? 76 : Math.max(48, Math.min(140, Math.round(extendPx)));
+
+    // Mark which keys were explicitly provided in YAML so storage won't
+    // override them on first hass() load
+    this._yamlProvided = {
+      labels: Object.prototype.hasOwnProperty.call(config, 'labels'),
+      merges: Object.prototype.hasOwnProperty.call(config, 'merges'),
+      color_ranges: Object.prototype.hasOwnProperty.call(config, 'color_ranges'),
+      default_temp: Object.prototype.hasOwnProperty.call(config, 'default_temp'),
+      min_temp: Object.prototype.hasOwnProperty.call(config, 'min_temp'),
+      max_temp: Object.prototype.hasOwnProperty.call(config, 'max_temp'),
+      temp_sensors: Object.prototype.hasOwnProperty.call(config, 'temp_sensors'),
+      boiler_enabled: Object.prototype.hasOwnProperty.call(config, 'boiler_enabled'),
+      boiler_switch: Object.prototype.hasOwnProperty.call(config, 'boiler_switch'),
+      boiler_temp_sensor: Object.prototype.hasOwnProperty.call(config, 'boiler_temp_sensor'),
+      boiler_min_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_min_temp'),
+      boiler_max_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_max_temp'),
+      show_pause_button: Object.prototype.hasOwnProperty.call(config, 'show_pause_button'),
+      pause_sensor_enabled: Object.prototype.hasOwnProperty.call(config, 'pause_sensor_enabled'),
+      pause_sensor_entity: Object.prototype.hasOwnProperty.call(config, 'pause_sensor_entity'),
+      away: Object.prototype.hasOwnProperty.call(config, 'away'),
+      time_12h: Object.prototype.hasOwnProperty.call(config, 'time_12h'),
+      time_source: Object.prototype.hasOwnProperty.call(config, 'time_source'),
+      temp_unit: Object.prototype.hasOwnProperty.call(config, 'temp_unit'),
+      holidays_enabled: Object.prototype.hasOwnProperty.call(config, 'holidays_enabled'),
+      holidays_source: Object.prototype.hasOwnProperty.call(config, 'holidays_source'),
+      holidays_entity: Object.prototype.hasOwnProperty.call(config, 'holidays_entity'),
+      holidays_dates: Object.prototype.hasOwnProperty.call(config, 'holidays_dates'),
+    };
+
+    this._config = {
+      // If no explicit title, localize a default based on HA/browser language
+      title: (config.title !== undefined && config.title !== null)
+        ? String(config.title)
+        : ttLocalize('card.title_default', this._hass || this._lang || navigator.language || 'en'),
+      entities: config.entities,
+      row_height: rowh,
+      default_temp: deft,
+  max_temp: maxt,
+    min_temp: mint,
+      temp_unit: (config.temp_unit === undefined || config.temp_unit === null || config.temp_unit === 'auto')
+        ? (this._detectPreferF() ? 'F' : 'C')
+        : (String(config.temp_unit).toUpperCase()==='F'?'F':'C'),
+      time_12h: (config.time_12h === undefined || config.time_12h === null || config.time_12h === 'auto')
+        ? this._detectPrefer12h()
+        : !!config.time_12h,
+      time_source: (config.time_source === 'ha' ? 'ha' : 'browser'),
+      now_update_ms: nowms,
+      // File-based storage is always used - no sensor entity configuration needed
+      storage_enabled: !!(config.storage_enabled ?? true),
+  storage_sync_mode: (config.storage_sync_mode === 'delay' ? 'delay' : 'instant'),
+  storage_sync_min: Number.isFinite(config.storage_sync_min) ? Math.max(0, Math.min(1440, Number(config.storage_sync_min))) : (this._config?.storage_sync_min ?? 5),
+  storage_sync_sec: Number.isFinite(config.storage_sync_sec)
+    ? Math.max(5, Math.min(86400, Math.round(config.storage_sync_sec)))
+    : (Number.isFinite(config.storage_sync_min) ? Math.max(5, Math.min(86400, Math.round(Number(config.storage_sync_min)*60))) : (this._config?.storage_sync_sec ?? 15)),
+  backup_auto_enabled: !!(config.backup_auto_enabled ?? this._config?.backup_auto_enabled ?? false),
+  backup_interval_days: Number.isFinite(config.backup_interval_days) ? Math.max(1, Math.min(365, Math.round(config.backup_interval_days))) : (this._config?.backup_interval_days ?? 1),
+      show_top_now: showTop,
+      now_extend_px: extendPx,
+  show_pause_button: !!(config.show_pause_button ?? true),
+  pause_sensor_enabled: !!(config.pause_sensor_enabled ?? this._config?.pause_sensor_enabled ?? false),
+  pause_sensor_entity: String(config.pause_sensor_entity ?? this._config?.pause_sensor_entity ?? ''),
+      auto_apply: config.auto_apply ?? true,
+      apply_on_edit: config.apply_on_edit ?? true,
+      apply_on_default_change: config.apply_on_default_change ?? true,
+  labels: { ...(config.labels || {}) },
+      merges: { ...(config.merges || {}) },
+    temp_sensors: { ...(config.temp_sensors || {}) },
+  boiler_enabled: !!(config.boiler_enabled ?? this._config?.boiler_enabled ?? false),
+  boiler_switch: String(config.boiler_switch ?? this._config?.boiler_switch ?? ''),
+  boiler_temp_sensor: String(config.boiler_temp_sensor ?? this._config?.boiler_temp_sensor ?? ''),
+  boiler_min_temp: boilerMin,
+  boiler_max_temp: boilerMax,
+  color_ranges: { ...(config.color_ranges || {}) },
+    color_global: !!(config.color_global ?? this._config?.color_global ?? false),
+      per_room_defaults: !!(config.per_room_defaults ?? this._config?.per_room_defaults ?? false),
+      presence_live_header: !!(config.presence_live_header ?? this._config?.presence_live_header ?? true),
+      weekdays_enabled: !!(config.weekdays_enabled ?? false),
+  weekdays_mode: (config.weekdays_mode || 'weekday_weekend'),
+  weekdays_view: (config.weekdays_view || this._config?.weekdays_view || 'all_rooms_one_day'),
+  weekdays_view_switch_in_timeline: !!(config.weekdays_view_switch_in_timeline ?? this._config?.weekdays_view_switch_in_timeline ?? false),
+  weekdays_selected_room: String(config.weekdays_selected_room || this._config?.weekdays_selected_room || ''),
+    profiles_enabled: !!(config.profiles_enabled ?? false),
+    away: {
+      enabled: !!(config.away?.enabled ?? false),
+      persons: [...(config.away?.persons || [])],
+      target_c: Number.isFinite(config.away?.target_c) ? Number(config.away.target_c) : 17,
+      advanced_enabled: !!(config.away?.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
+      combos: { ...(config.away?.combos || this._config?.away?.combos || {}) }
+    }
+  , holidays_enabled: !!(config.holidays_enabled ?? this._config?.holidays_enabled ?? false)
+  , holidays_source: (config.holidays_source || this._config?.holidays_source || 'calendar')
+  , holidays_entity: String(config.holidays_entity || this._config?.holidays_entity || '')
+  , holidays_dates: Array.isArray(config.holidays_dates) ? [...config.holidays_dates] : ([...(this._config?.holidays_dates || [])])
+    };
+
+    // If YAML explicitly changed default_temp, update rows that still use the old
+    // default value (do not overwrite rooms with a user-specific override)
+    try {
+      if (yamlSetsDefault && Number.isFinite(prevDefault)) {
+        for (const eid of (this._config.entities || [])) {
+          const r = this._schedules[eid];
+          if (!r) continue;
+          if (!Number.isFinite(r.defaultTemp) || Math.abs(Number(r.defaultTemp) - prevDefault) < 0.001) {
+            r.defaultTemp = this._config.default_temp;
+          }
+        }
+      }
+    } catch {}
+
+    if (this._initialized) {
+      this._ensureSchedules();
+      // Extra safety: if YAML changed default_temp, propagate to rows that
+      // still used the previous global default
+      try {
+        if (yamlSetsDefault && Number.isFinite(prevDefault)) {
+          for (const eid of (this._config.entities || [])) {
+            const r = this._schedules[eid];
+            if (!r) continue;
+            if (!Number.isFinite(r.defaultTemp) || Math.abs(Number(r.defaultTemp) - prevDefault) < 0.001) {
+              r.defaultTemp = this._config.default_temp;
             }
-            if tl in generic_exact:
-              return True
+          }
+        }
+      } catch {}
+      this._startUiTimer();
+      if (!this._inlineEditing && !this._editing) this._render();
+      this._scheduleNextApply();
+      // Persist shared settings to storage so other users/dashboards pick them up
+      this._debouncedSaveStore();
 
-            tokens = re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9]+", tl)
-            wc = len(tokens)
+      // Boiler control (frontend only when Sync is OFF)
+      try { this._setupBoilerControl(); } catch {}
+    }
+    // Mark config as ready
+    this._hasConfig = true;
 
-            # 1-word titles are almost always vague (unless it's clearly a locale like "da-DK")
-            if wc <= 1:
-              if re.fullmatch(r"[a-z]{2}-[A-Z]{2}", (t or "").strip()):
-                return False
-              return True
+    // Boiler control (frontend only when Sync is OFF)
+    try { this._setupBoilerControl(); } catch {}
+  }
 
-            # Very short titles can still be fine if they contain clear failure language
-            failure_markers = ("not work", "doesn't", "does not", "fails", "failing", "error", "crash", "broken", "cannot", "can't")
-            if wc <= 2 and not any(m in tl for m in failure_markers):
-              return True
+  getCardSize() { return 3 + (this._config?.entities?.length || 0) * 2; }
 
-            # Otherwise: assume not vague
-            return False
-          # --------------------------------------
+  // ---------- Lifecycle ----------
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this._initialized = false;
+  this._config = ThermostatTimelineCard.getStubConfig();
+  // Guard: wait for setConfig before any apply logic
+  this._hasConfig = false;
+  // Track which YAML keys were explicitly provided so storage doesn't
+  // override them on first load
+  this._yamlProvided = {};
 
-          def clean(s: str) -> str:
-            s = re.sub(r"\s+", " ", (s or "").strip())
-            return s[:120].rstrip() if len(s) > 120 else s
+  // Pop-up overlays (block editor, weekday editor, copy-to-rooms, onboarding)
+  // Enable by default so Weekday and Add buttons are visible
+  this._disablePopups = false;
+  // Disable the onboarding guide popup explicitly
+  this._disableOnboard = true;
 
-          # ---------- LLM: classify + decide rewrite conservatively ----------
-          messages = [
-            {
-              "role": "system",
-              "content": (
-                "You are a GitHub triage bot.\n"
-                "Tasks:\n"
-                "1) Classify the issue into exactly one category:\n"
-                "   - bug: broken behavior, error, regression, unexpected result.\n"
-                "   - feature: request for new functionality or enhancement.\n"
-                "   - locale: request to add/translate language/locale/i18n.\n\n"
-                "2) Decide whether the user title should be rewritten.\n"
-                "Be conservative: ONLY rewrite if the title is clearly misleading, off-topic, or too vague to be useful.\n"
-                "If the title is reasonably descriptive (even with imperfect grammar), do NOT rewrite.\n\n"
-                "Return ONLY valid JSON with keys:\n"
-                "category: one of [bug, feature, locale]\n"
-                "rewrite: boolean (true ONLY if misleading/off-topic/vague)\n"
-                "rewrite_reason: one of [none, vague, misleading, off_topic]\n"
-                "suggested_title: string (ONLY if rewrite=true; otherwise empty string)\n"
-                "locale: string (ONLY if category=locale and the requested language/locale is clear; otherwise empty string)\n\n"
-                "Rules for suggested_title:\n"
-                "- plain text, <= 120 chars, no markdown.\n"
-                "- preserve the user's wording when possible; avoid unnecessary paraphrasing.\n"
-                "- if category=locale and language is clear, suggested_title should be that language/locale.\n"
-              )
+  // In-card settings popup state (draft; only saved on Save button)
+  this._settingsPopupTab = 'settings';
+  this._settingsDraft = null;
+
+    // Data
+    this._schedules = {};          // { [entity_id]: { defaultTemp:number, blocks:[{id,startMin,endMin,temp}] } }
+
+    // UI state
+    this._uiTimer = null;          // kun til at flytte "nu"-stregen
+    this._transitionTimer = null;  // timer til næste setpoint-ændring
+    this._active = null;           // { entity, id }
+    this._lastTap = { t: 0, target: null };
+    this._editing = null;          // { entity, blockId }
+  // When a weekly block is opened from main timeline, auto-save the weekly draft on block save
+  this._autoSaveWeeklyFromTimeline = false;
+  // When a profile block is opened from main timeline, auto-save the profile draft on block save
+  this._autoSaveProfileFromTimeline = false;
+
+    // Inline edit hard-lock
+    this._inlineEditing = false;   // er et inline input aktivt?
+    this._inlineEntity = null;     // hvilken entitys Standard-felt?
+    this._inlineTempDraft = null;  // den værdi man er i gang med at skrive
+
+    // Sync/debounce
+    this._saving = false;
+    this._saveTimer = null;
+    this._saveDebounceMs = 300;
+  // Delayed sync scheduler
+  this._storeDelayTimer = null;
+  this._storeDelayDue = 0;
+    // Defer writes while an editor is open to avoid rapid file churn
+    this._pendingSaveAfterEdit = false;
+    this._markPendingSave = ()=>{ this._pendingSaveAfterEdit = true; try { this._persistDraftNow(); } catch {} try { this._render(); } catch {} };
+    this._lastVersion = 0;
+    this._lastProfileVersion = 0;
+  // Polling watcher to pick up sensor updates in case frontend misses events
+  this._storeWatchTimer = null;
+  this._storeWatchMs = 10000; // ms
+  this._storeWatchBusy = false; // avoid overlapping polls
+
+  // Boiler hysteresis control tick (frontend only when Sync is OFF)
+  this._boilerTimer = null;
+
+    // Auto apply guard
+    this._lastApplied = {}; // { [entity_id]: { min:number, temp:number } }
+  this._lastAwayActive = null; // Track last away state to trigger immediate apply on change
+    this._lastPresenceKey = null; // Track last active presence combo key
+    // Track per-row tools open state
+    this._toolsOpen = {}; // { [entity_id]: boolean }
+
+    // Copy/paste schedule state
+    this._copyFrom = null;        // entity id of source room
+    this._copyPayload = null;     // deep-cloned schedule from source
+
+    // Weekday modal state
+    this._weeklyOpen = false;
+    this._weeklyEntity = null;
+    this._weeklyDraft = null; // { mode, days: { mon:[], ... } }
+    this._weeklyDayKey = null;
+    this._weeklyOverlayHiddenForEditor = false;
+    // Weekdays timeline view state (browse day when showing one day across rooms)
+    this._weekdaysViewDayKey = null;
+      // Weekly copy/paste by group (weekdays/weekend/sat/sun/mon..sun)
+      this._weeklyCopyFromGroup = null;
+      this._weeklyCopyPayload = null;
+      // Pending copy-to-rooms targets (applied on Save)
+      this._weeklyCopyTargets = [];
+
+    // Profiles modal state (per-room named daily schedules)
+    this._profilesOpen = false;
+    this._profilesEntity = null;   // entity id for which profiles are managed
+    this._profilesSelected = null; // currently selected profile name
+    this._profilesOverlayHiddenForEditor = false; // track if hidden while block editor is open
+  this._profilesDraft = null;     // { name: string, blocks: [...], defaultTemp:number }
+  this._profilesDirty = false;
+  this._profilesSaveLock = false; // debounce guard to prevent double-prompt on Enter
+  this._profilesRoom = null;      // current room eid being edited in profiles modal
+
+  // Global profile (shared via integration settings)
+  this._globalProfile = null;
+  // Track settings version even when storage is off
+  this._lastSettingsVersion = 0;
+  this._lastColorsVersion = 0;
+  this._lastWeekdayVersion = 0;
+  // HA event subscription (state_changed for storage sensor)
+  this._haEvtUnsub = null;
+  this._subStorageEid = null;
+
+    // Holidays modal state
+    this._holidayOpen = false;
+    this._holidayEntity = null;    // deprecated (use _holidayRoom)
+    this._holidayRoom = null;      // current room eid being edited in holiday modal
+    this._holidayDraft = null;     // { rooms: { [eid]: [blocks] } }
+    this._holidayOverlayHiddenForEditor = false;
+
+    // External refresh hook (from editor button)
+    this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
+    try { window.addEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
+  // External request to open holiday editor for a specific room
+  this._onOpenHoliday = (ev)=>{ try { const eid = ev?.detail?.eid || (this._config?.entities||[])[0] || null; if (eid) { this._openHolidayEditor(eid); } } catch {} };
+  try { window.addEventListener('tt-open-holiday', this._onOpenHoliday); } catch {}
+    // External request to open presence editor
+    this._onOpenPresence = (ev)=>{ try { const eid = ev?.detail?.eid || (this._config?.entities||[])[0] || null; if (eid) this._openPresenceEditor(eid); } catch {} };
+    try { window.addEventListener('tt-open-presence', this._onOpenPresence); } catch {}
+
+    // Onboarding state
+    this._onboardOpen = false;
+    this._onboardStep = 0;
+  this._onboardLastUrl = null;
+    this._onboardSlides = [
+      // Supports video (.mp4/.webm) or images (.webp/.png/.gif)
+      { key: 'onboard.step_main', img: this._assetUrl('media/thermostat-guide/step1.mp4'), fallback: '/local/media/thermostat-guide/step1.mp4' },
+      { key: 'onboard.step_add',  img: this._assetUrl('media/thermostat-guide/step2.mp4'), fallback: '/local/media/thermostat-guide/step2.mp4' },
+      { key: 'onboard.step_edit', img: this._assetUrl('media/thermostat-guide/step3.mp4'), fallback: '/local/media/thermostat-guide/step3.mp4' },
+    ];
+
+    // Global pause state (temporary suppression of set_temperature)
+    this._pauseIndef = false;        // boolean
+    this._pauseUntilMs = 0;          // epoch ms; > now => paused until time
+    this._resumeTimer = null;        // timer to auto-resume
+    this._countdownTimer = null;     // 1s updater for header countdown
+    // Sync countdown UI (for delayed sync)
+    this._syncTimer = null;
+    this._syncJustUntil = 0; // ms timestamp to show "done" message briefly
+    // Away bypass (manual override while nobody is home)
+    this._awayBypass = false; // when true and away is active, do not clamp to away.target_c
+    // Header tools open/close state
+    this._headToolsOpen = false;
+
+    // Presence (advanced away) modal state
+    this._presenceOpen = false;
+    this._presenceCombo = null; // active combo key selected for editing
+    this._presenceRoom = null;  // current room eid being edited in presence modal
+    this._presenceDraft = null; // { combo: string, rooms: { [eid]: [blocks] } }
+  }
+
+  disconnectedCallback() {
+    if (this._uiTimer) clearInterval(this._uiTimer);
+    if (this._transitionTimer) clearTimeout(this._transitionTimer);
+    if (this._saveTimer) clearTimeout(this._saveTimer);
+    if (this._storeWatchTimer) clearInterval(this._storeWatchTimer);
+    try { if (this._onExternalRefresh) window.removeEventListener('thermostat-timeline-refresh', this._onExternalRefresh); } catch {}
+    try { if (this._onOpenHoliday) window.removeEventListener('tt-open-holiday', this._onOpenHoliday); } catch {}
+    try { if (this._onOpenPresence) window.removeEventListener('tt-open-presence', this._onOpenPresence); } catch {}
+    try { if (this._haEvtUnsub) { this._haEvtUnsub(); this._haEvtUnsub = null; } } catch {}
+  }
+
+  // Resolve a static asset URL so it works in both dev (/local) and HACS (/hacsfiles/<repo>) installs.
+  // Place assets next to the JS file in your HACS repo (e.g. ./media/...),
+  // or in Home Assistant's config/www (refer using media/...).
+  _assetUrl(p){
+    try {
+      const rel = String(p||'').replace(/^[\/\\]+/, '');
+      // Resolve relative to the current JS module location (works under /local and /hacsfiles)
+      return new URL(rel, import.meta.url).href;
+    } catch (e) {
+      try { return `/local/${String(p||'').replace(/^[\/\\]+/, '')}`; } catch { return String(p||''); }
+    }
+  }
+
+  // ---------- Storage (file-based via API) ----------
+  // Stub function for backwards compatibility - always returns empty string (no sensor entities)
+  _storageEntity(kind = 'schedules') { return ''; }
+  _apiSupported(){ try { return !!(this._hass?.callApi) || !!(this._hass?.auth?.data?.access_token); } catch { return false; } }
+  async _apiGet(path){
+    const url = path.startsWith('/') ? path : `/api/${path}`;
+    // 1) Prefer Home Assistant's callApi when available
+    if (this._hass?.callApi) {
+      try {
+        return await this._hass.callApi('GET', path);
+      } catch (e) {}
+    }
+    // 2) Fallback: direct fetch with bearer token (mobile/webview safety)
+    try {
+      const token = this._hass?.auth?.data?.access_token;
+      const resp = await fetch(url, {
+        method: 'GET',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        credentials: 'same-origin'
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      return await resp.json();
+    } catch (e2) { return null; }
+  }
+  async _apiFetchState(){ return await this._apiGet('thermostat_timeline/state'); }
+  async _apiFetchVersion(){ return await this._apiGet('thermostat_timeline/version'); }
+
+  async _loadStore(preferSensor = true) {
+    let stMain = null, stSet = null, stCol = null, stWeek = null, stProf = null;
+    // Load from integration API (file-based storage)
+    if (this._config?.storage_enabled) {
+      const api = await this._apiFetchState();
+      if (api && typeof api === 'object') {
+        stMain = { state: Number(api.version || 0), attributes: { schedules: api.schedules, weekdays: api.weekdays, profiles: api.profiles, settings: api.settings, colors: api.colors } };
+        stSet = { state: Number(api.settings_version || api.version || 0), attributes: { settings: api.settings, colors: api.colors } };
+        stCol = { state: Number(api.colors_version || api.version || 0), attributes: { colors: api.colors } };
+        stWeek = { state: Number(api.weekday_version || api.version || 0), attributes: { weekdays: api.weekdays } };
+        stProf = { state: Number(api.profile_version || api.version || 0), attributes: { profiles: api.profiles, settings: api.settings } };
+      }
+    }
+
+    if (stMain || stSet || stCol || stWeek || stProf) {
+      try {
+        const attrsMain = stMain?.attributes || {};
+        const attrsSet = stSet?.attributes || {};
+        const attrsCol = stCol?.attributes || {};
+        const attrsWeek = stWeek?.attributes || {};
+        const attrsProf = stProf?.attributes || {};
+        let storUnit = 'C';
+        const schedSource = (attrsMain?.schedules && typeof attrsMain.schedules === "object") ? attrsMain : ((attrsSet?.schedules && typeof attrsSet.schedules === 'object') ? attrsSet : null);
+        if (schedSource) {
+          // Unwrap if an older/incorrect payload put the entire object under 'schedules'
+          let sch = JSON.parse(JSON.stringify(schedSource.schedules));
+          if (sch && sch.schedules && typeof sch.schedules === 'object') sch = sch.schedules;
+          // Canonical storage is °C. For backwards compatibility, detect legacy stores that saved °F values.
+          try {
+            const su = String((schedSource?.settings?.storage_temp_unit || '')).toUpperCase();
+            const legacyDisplayUnit = String((schedSource?.settings?.temp_unit || 'C')).toUpperCase();
+            const maxT = this._maxTempInSchedules(sch);
+            const looksLikeF = Number.isFinite(maxT) && maxT > 45;
+            const legacyWasF = (legacyDisplayUnit === 'F');
+            const storeWasF = (su === 'F') || (!su && (legacyWasF || looksLikeF));
+            if (storeWasF) sch = this._convertSchedulesTemps(sch, 'C');
+          } catch {}
+          this._schedules = sch;
+          // If there is a pending delayed sync (due stored locally), prefer draft schedules
+          try {
+            const dueRaw = localStorage.getItem(this._syncDueKey()) || '';
+            const due = Number(dueRaw);
+            if (Number.isFinite(due) && due > Date.now()) {
+              const dr = localStorage.getItem(this._draftKey()) || '';
+              if (dr) {
+                const parsed = JSON.parse(dr);
+                const dsch = parsed?.schedules && parsed.schedules.schedules ? parsed.schedules.schedules : (parsed?.schedules || parsed || {});
+                if (dsch && typeof dsch === 'object') {
+                  this._schedules = dsch;
+                }
+              }
+            }
+          } catch {}
+        }
+        // Merge weekday-only payload into schedules (weekly + weekly_modes)
+        try {
+          const weekSrc = (attrsWeek?.weekdays && typeof attrsWeek.weekdays === 'object') ? attrsWeek.weekdays
+            : ((attrsMain?.weekdays && typeof attrsMain.weekdays === 'object') ? attrsMain.weekdays : null);
+          if (weekSrc && typeof weekSrc === 'object') {
+            for (const eid of Object.keys(weekSrc)) {
+              const wk = weekSrc[eid];
+              if (!wk || typeof wk !== 'object') continue;
+              const row = this._schedules[eid] || {};
+              if (wk.weekly) row.weekly = wk.weekly;
+              if (wk.weekly_modes) row.weekly_modes = wk.weekly_modes;
+              this._schedules[eid] = row;
+            }
+          }
+        } catch {}
+        // Merge profile-only payload into schedules (profiles + activeProfile)
+        try {
+          let profSrc = null;
+          if (attrsProf?.profiles && typeof attrsProf.profiles === 'object') profSrc = attrsProf.profiles;
+          else if (attrsMain?.profiles && typeof attrsMain.profiles === 'object') profSrc = attrsMain.profiles;
+          if (profSrc && typeof profSrc === 'object') {
+            // Canonical storage is °C. For backwards compatibility, detect legacy °F profile payloads.
+            try {
+              const su = String((attrsProf?.settings?.storage_temp_unit || attrsMain?.settings?.storage_temp_unit || '')).toUpperCase();
+              const legacyDisplayUnit = String((attrsProf?.settings?.temp_unit || attrsMain?.settings?.temp_unit || 'C')).toUpperCase();
+              const maxT = this._maxTempInSchedules(profSrc);
+              const looksLikeF = Number.isFinite(maxT) && maxT > 45;
+              const legacyWasF = (legacyDisplayUnit === 'F');
+              const storeWasF = (su === 'F') || (!su && (legacyWasF || looksLikeF));
+              if (storeWasF) profSrc = this._convertSchedulesTemps(profSrc, 'C');
+            } catch {}
+            for (const eid of Object.keys(profSrc)) {
+              const src = profSrc[eid];
+              if (!src || typeof src !== 'object') continue;
+              const row = this._schedules[eid] || {};
+              if (src.profiles && typeof src.profiles === 'object') row.profiles = src.profiles;
+              if (typeof src.activeProfile === 'string' || src.activeProfile === null) row.activeProfile = src.activeProfile;
+              this._schedules[eid] = row;
+            }
+          }
+        } catch {}
+        // Optional shared settings (prefer dedicated settings sensor when provided)
+        let settingsSource = null;
+        if (attrsSet.settings && typeof attrsSet.settings === 'object') settingsSource = attrsSet.settings;
+        else if (attrsMain.settings && typeof attrsMain.settings === 'object') settingsSource = attrsMain.settings;
+        try { if (storUnit === 'C' && settingsSource?.temp_unit) storUnit = String(settingsSource.temp_unit).toUpperCase(); } catch {}
+        let colorsSource = null;
+        if (attrsCol.colors && typeof attrsCol.colors === 'object') colorsSource = attrsCol.colors;
+        else if (attrsSet.colors && typeof attrsSet.colors === 'object') colorsSource = attrsSet.colors;
+        else if (settingsSource && (settingsSource.color_ranges || settingsSource.color_global)) {
+          colorsSource = { color_ranges: settingsSource.color_ranges, color_global: settingsSource.color_global };
+        }
+        if (settingsSource) {
+          try {
+            const s0 = settingsSource;
+            // Canonical storage is °C. For backwards compatibility, detect legacy stores that saved numeric settings in °F.
+            let s = s0;
+            try {
+              const su = String(s0?.storage_temp_unit || '').toUpperCase();
+              const legacyDisplayUnit = String(s0?.temp_unit||'C').toUpperCase();
+              const nums = [s0?.default_temp, s0?.min_temp, s0?.max_temp, s0?.boiler_min_temp, s0?.boiler_max_temp, s0?.away?.target_c].map(v=>Number(v)).filter(v=>Number.isFinite(v));
+              const maxN = nums.length ? Math.max(...nums) : -Infinity;
+              const looksLikeF = Number.isFinite(maxN) && maxN > 45;
+              const legacyWasF = (legacyDisplayUnit === 'F');
+              const storeWasF = (su === 'F') || (!su && (legacyWasF || looksLikeF));
+              if (storeWasF) {
+                const conv = (n)=>{ const v=Number(n); return Number.isFinite(v)? this._fToC(v): n; };
+                const so = { ...s0 };
+                if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
+                if (so.min_temp !== undefined) so.min_temp = conv(so.min_temp);
+                if (so.max_temp !== undefined) so.max_temp = conv(so.max_temp);
+                if (so.boiler_min_temp !== undefined) so.boiler_min_temp = conv(so.boiler_min_temp);
+                if (so.boiler_max_temp !== undefined) so.boiler_max_temp = conv(so.boiler_max_temp);
+                if (so.away && typeof so.away==='object') {
+                  so.away = { ...so.away };
+                  if (so.away.target_c !== undefined) so.away.target_c = conv(so.away.target_c);
+                }
+                s = so;
+              }
+            } catch {}
+            // Pick up format/unit from shared storage when not YAML-provided
+            if (typeof s.time_12h === 'boolean' && !this._yamlProvided?.time_12h) this._config.time_12h = !!s.time_12h;
+            if (typeof s.temp_unit === 'string' && !this._yamlProvided?.temp_unit) this._config.temp_unit = (String(s.temp_unit).toUpperCase()==='F' ? 'F' : 'C');
+            // Pick up time_source from shared storage when not YAML-provided
+            if (typeof s.time_source === 'string' && !this._yamlProvided?.time_source) this._config.time_source = (s.time_source === 'ha' ? 'ha' : 'browser');
+            if (s.color_ranges && typeof s.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...s.color_ranges };
+            if (typeof s.color_global === 'boolean') this._config.color_global = !!s.color_global;
+            if (Number.isFinite(s.default_temp)) this._config.default_temp = Number(s.default_temp);
+            if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
+            if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+            if (Number.isFinite(s.row_height)) this._config.row_height = Math.max(30, Math.min(200, Math.round(Number(s.row_height))));
+
+            // Rooms from shared storage (used by Settings popup)
+            try {
+              if (Array.isArray(s.entities)) {
+                const ents = s.entities.filter(Boolean).map(String);
+                this._config.entities = ents;
+                const rawModes = Array.isArray(s.room_use_input_number) ? s.room_use_input_number.map(v=>!!v) : [];
+                while (rawModes.length < ents.length) rawModes.push(false);
+                this._config.room_use_input_number = ents.map((eid, idx)=>{
+                  if (String(eid).startsWith('input_number.')) return true;
+                  if (String(eid).startsWith('climate.')) return false;
+                  return !!rawModes[idx];
+                });
+              }
+            } catch {}
+
+            if (s.merges && typeof s.merges === 'object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
+            if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
+            if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+            if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
+            if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
+            if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
+            if (!this._yamlProvided?.boiler_min_temp) {
+              if (s.boiler_min_temp === null) this._config.boiler_min_temp = 20;
+              else { const v = Number(s.boiler_min_temp); if (Number.isFinite(v)) this._config.boiler_min_temp = v; }
+            }
+            if (!this._yamlProvided?.boiler_max_temp) {
+              if (s.boiler_max_temp === null) this._config.boiler_max_temp = 25;
+              else { const v = Number(s.boiler_max_temp); if (Number.isFinite(v)) this._config.boiler_max_temp = v; }
+            }
+            try { this._awayBypass = !!s.away_bypass; } catch {}
+            if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
+            if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
+            if (typeof s.pause_sensor_enabled === 'boolean' && !this._yamlProvided?.pause_sensor_enabled) this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
+            if (typeof s.pause_sensor_entity === 'string' && !this._yamlProvided?.pause_sensor_entity) this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
+            if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled;
+            if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
+            if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
+            if (typeof s.apply_on_default_change === 'boolean') this._config.apply_on_default_change = !!s.apply_on_default_change;
+            // Holidays shared settings
+            try {
+              if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
+              if (typeof s.holidays_source === 'string' && !this._yamlProvided?.holidays_source) this._config.holidays_source = s.holidays_source === 'manual' ? 'manual' : 'calendar';
+              if (typeof s.holidays_entity === 'string' && !this._yamlProvided?.holidays_entity) this._config.holidays_entity = s.holidays_entity || '';
+              if (Array.isArray(s.holidays_dates) && !this._yamlProvided?.holidays_dates) this._config.holidays_dates = [...s.holidays_dates];
+            } catch {}
+            // Weekdays settings (shared)
+            if (this._config?.respect_storage_weekdays !== false) {
+              try { if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled; } catch {}
+              try { if (typeof s.weekdays_mode === 'string') this._config.weekdays_mode = s.weekdays_mode; } catch {}
+              try { if (typeof s.weekdays_view === 'string') this._config.weekdays_view = s.weekdays_view; } catch {}
+              try { if (typeof s.weekdays_view_switch_in_timeline === 'boolean') this._config.weekdays_view_switch_in_timeline = !!s.weekdays_view_switch_in_timeline; } catch {}
+              try { if (typeof s.weekdays_selected_room === 'string') this._config.weekdays_selected_room = s.weekdays_selected_room; } catch {}
+            }
+            // Pick up a global profile selection from shared storage
+            try { this._globalProfile = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null; } catch {}
+            // Backup settings
+            try {
+              if (typeof s.backup_auto_enabled === 'boolean') this._config.backup_auto_enabled = !!s.backup_auto_enabled;
+              if (Number.isFinite(s.backup_interval_days)) this._config.backup_interval_days = Math.max(1, Math.min(365, Math.round(Number(s.backup_interval_days))));
+              else if (Number.isFinite(s.backup_interval_min)) this._config.backup_interval_days = Math.max(1, Math.min(365, Math.ceil(Number(s.backup_interval_min)/1440)));
+            } catch {}
+            if (s.away && typeof s.away === 'object') {
+              try {
+                const a = s.away;
+                this._config.away = {
+                  enabled: !!a.enabled,
+                  persons: Array.isArray(a.persons) ? [...a.persons] : [],
+                  target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17),
+                  advanced_enabled: !!(a.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
+                  combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {})
+                };
+              } catch {}
+            }
+            // Pause flags from shared storage
+            try {
+              this._pauseIndef = !!s.pause_indef;
+              const pu = Number(s.pause_until_ms);
+              this._pauseUntilMs = Number.isFinite(pu) ? pu : 0;
+            } catch {}
+            // Delayed sync due time from shared storage (persist across reloads)
+            try {
+              const due = Number(s.sync_pending_until_ms);
+              if (Number.isFinite(due) && due > Date.now()) {
+                this._storeDelayDue = due;
+                try { localStorage.setItem(this._syncDueKey(), String(due)); } catch {}
+              }
+            } catch {}
+          } catch {}
+        }
+        if (colorsSource) {
+          try {
+            if (colorsSource.color_ranges && typeof colorsSource.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...colorsSource.color_ranges };
+            if (typeof colorsSource.color_global === 'boolean') this._config.color_global = !!colorsSource.color_global;
+          } catch {}
+        }
+        this._lastVersion = Number(stMain?.state || stSet?.state || 0) || 0;
+        this._lastSettingsVersion = Number(stSet?.state || stMain?.state || 0) || this._lastVersion;
+        this._lastColorsVersion = Number(stCol?.state || this._lastSettingsVersion || this._lastVersion || 0) || 0;
+        this._lastWeekdayVersion = Number(stWeek?.state || this._lastVersion || 0) || 0;
+        this._lastProfileVersion = Number(stProf?.state || this._lastVersion || 0) || 0;
+        try { const payload = this._makeStoragePayload(true); localStorage.setItem("thermostat_timeline_store", JSON.stringify(payload)); } catch {}
+        return;
+      } catch (e) { /* fallback */ }
+    }
+    try {
+      const raw = localStorage.getItem("thermostat_timeline_store") || "";
+      if (!raw) { this._schedules = {}; return; }
+  const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object' && parsed.schedules) {
+        // Unwrap legacy nested structure if present
+        const sch = parsed.schedules && parsed.schedules.schedules ? parsed.schedules.schedules : parsed.schedules;
+        // If local copy was stored as °F, convert to °C for internal use
+        try {
+          const unit = String(parsed?.settings?.temp_unit||'C').toUpperCase();
+          this._schedules = (unit==='F') ? this._convertSchedulesTemps(sch||{}, 'C') : (sch||{});
+        } catch { this._schedules = sch || {}; }
+        try {
+          const wk = parsed.weekdays;
+          if (wk && typeof wk === 'object') {
+            for (const eid of Object.keys(wk)) {
+              const row = this._schedules[eid] || {};
+              const src = wk[eid];
+              if (src && typeof src === 'object') {
+                if (src.weekly) row.weekly = src.weekly;
+                if (src.weekly_modes) row.weekly_modes = src.weekly_modes;
+                this._schedules[eid] = row;
+              }
+            }
+          }
+        } catch {}
+        try {
+          let prof = parsed.profiles;
+          const unit = String(parsed?.settings?.temp_unit||'C').toUpperCase();
+          if (prof && typeof prof === 'object' && unit === 'F') {
+            prof = this._convertSchedulesTemps(prof, 'C');
+          }
+          if (prof && typeof prof === 'object') {
+            for (const eid of Object.keys(prof)) {
+              const src = prof[eid];
+              if (!src || typeof src !== 'object') continue;
+              const row = this._schedules[eid] || {};
+              if (src.profiles && typeof src.profiles === 'object') row.profiles = src.profiles;
+              if (Object.prototype.hasOwnProperty.call(src, 'activeProfile')) row.activeProfile = src.activeProfile;
+              this._schedules[eid] = row;
+            }
+          }
+        } catch {}
+  const s0 = parsed.settings || {}; 
+  // Convert numeric settings from °F to °C for internal use
+  let s = s0; 
+  try { 
+    const unit = String(s0?.temp_unit||'C').toUpperCase();
+    if (unit==='F') {
+      const conv = (n)=>{ const v=Number(n); return Number.isFinite(v)? this._fToC(v): n; };
+      const so = { ...s0 };
+      if (so.default_temp !== undefined) so.default_temp = conv(so.default_temp);
+      if (so.min_temp !== undefined) so.min_temp = conv(so.min_temp);
+      if (so.max_temp !== undefined) so.max_temp = conv(so.max_temp);
+      if (so.boiler_min_temp !== undefined) so.boiler_min_temp = conv(so.boiler_min_temp);
+      if (so.boiler_max_temp !== undefined) so.boiler_max_temp = conv(so.boiler_max_temp);
+      if (so.away && typeof so.away==='object') { so.away = { ...so.away }; if (so.away.target_c !== undefined) so.away.target_c = conv(so.away.target_c); }
+      s = so;
+    }
+  } catch {}
+  // Pick up format/unit from local browser storage when not YAML-provided
+  if (typeof s.time_12h === 'boolean' && !this._yamlProvided?.time_12h) this._config.time_12h = !!s.time_12h;
+  if (typeof s.temp_unit === 'string' && !this._yamlProvided?.temp_unit) this._config.temp_unit = (String(s.temp_unit).toUpperCase()==='F' ? 'F' : 'C');
+  if (s.color_ranges && typeof s.color_ranges==='object' && !this._yamlProvided?.color_ranges) this._config.color_ranges = { ...s.color_ranges };
+    if (typeof s.color_global === 'boolean') this._config.color_global = !!s.color_global;
+  if (Number.isFinite(s.default_temp) && !this._yamlProvided?.default_temp) this._config.default_temp = Number(s.default_temp);
+    if (Number.isFinite(s.min_temp) && !this._yamlProvided?.min_temp) this._config.min_temp = Number(s.min_temp);
+    if (Number.isFinite(s.max_temp) && !this._yamlProvided?.max_temp) this._config.max_temp = Number(s.max_temp);
+
+    // Rooms from local browser storage (used by Settings popup)
+    try {
+      if (Array.isArray(s.entities)) {
+        const ents = s.entities.filter(Boolean).map(String);
+        this._config.entities = ents;
+        const rawModes = Array.isArray(s.room_use_input_number) ? s.room_use_input_number.map(v=>!!v) : [];
+        while (rawModes.length < ents.length) rawModes.push(false);
+        this._config.room_use_input_number = ents.map((eid, idx)=>{
+          if (String(eid).startsWith('input_number.')) return true;
+          if (String(eid).startsWith('climate.')) return false;
+          return !!rawModes[idx];
+        });
+      }
+    } catch {}
+
+    if (s.merges && typeof s.merges==='object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
+    if (s.labels && typeof s.labels==='object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
+  if (s.temp_sensors && typeof s.temp_sensors==='object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+    if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
+    if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
+    if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
+  if (!this._yamlProvided?.boiler_min_temp) {
+      if (s.boiler_min_temp === null) this._config.boiler_min_temp = 20;
+    else { const v = Number(s.boiler_min_temp); if (Number.isFinite(v)) this._config.boiler_min_temp = v; }
+  }
+  if (!this._yamlProvided?.boiler_max_temp) {
+      if (s.boiler_max_temp === null) this._config.boiler_max_temp = 25;
+    else { const v = Number(s.boiler_max_temp); if (Number.isFinite(v)) this._config.boiler_max_temp = v; }
+  }
+  try { this._awayBypass = !!s.away_bypass; } catch {}
+  // Weekdays flags and view (persist across refresh) — skip if editor preview forbids overrides
+  if (this._config?.respect_storage_weekdays !== false) {
+    try { if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled; } catch {}
+    try { if (typeof s.weekdays_mode === 'string') this._config.weekdays_mode = s.weekdays_mode; } catch {}
+    try { if (typeof s.weekdays_view === 'string') this._config.weekdays_view = s.weekdays_view; } catch {}
+    try { if (typeof s.weekdays_view_switch_in_timeline === 'boolean') this._config.weekdays_view_switch_in_timeline = !!s.weekdays_view_switch_in_timeline; } catch {}
+    try { if (typeof s.weekdays_selected_room === 'string') this._config.weekdays_selected_room = s.weekdays_selected_room; } catch {}
+  }
+    if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
+    if (typeof s.show_pause_button === 'boolean' && !this._yamlProvided?.show_pause_button) this._config.show_pause_button = !!s.show_pause_button;
+    if (typeof s.pause_sensor_enabled === 'boolean' && !this._yamlProvided?.pause_sensor_enabled) this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
+    if (typeof s.pause_sensor_entity === 'string' && !this._yamlProvided?.pause_sensor_entity) this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
+    if (s.away && typeof s.away === 'object') {
+      try {
+        const a = s.away;
+        this._config.away = {
+          enabled: !!a.enabled,
+          persons: Array.isArray(a.persons) ? [...a.persons] : [],
+          target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17),
+          advanced_enabled: !!(a.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
+          combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {})
+        };
+      } catch {}
+    }
+  // Load flags from local storage copy
+    try { this._pauseIndef = !!s.pause_indef; const pu = Number(s.pause_until_ms); this._pauseUntilMs = Number.isFinite(pu) ? pu : 0; } catch {}
+  try { if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled; } catch {}
+  try { if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit; } catch {}
+  try { this._globalProfile = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null; } catch {}
+  try { if (typeof s.backup_auto_enabled === 'boolean') this._config.backup_auto_enabled = !!s.backup_auto_enabled; if (Number.isFinite(s.backup_interval_days)) this._config.backup_interval_days = Math.max(1, Math.min(365, Math.round(Number(s.backup_interval_days)))); else if (Number.isFinite(s.backup_interval_min)) this._config.backup_interval_days = Math.max(1, Math.min(365, Math.ceil(Number(s.backup_interval_min)/1440))); } catch {}
+  // Sync policy from storage
+  try {
+  if (typeof s.sync_mode === 'string') this._config.storage_sync_mode = (s.sync_mode === 'delay') ? 'delay' : 'instant';
+  if (Number.isFinite(s.sync_delay_min)) this._config.storage_sync_min = Math.max(0, Math.min(1440, Number(s.sync_delay_min)));
+  if (Number.isFinite(s.sync_delay_sec)) this._config.storage_sync_sec = Math.max(5, Math.min(86400, Math.round(Number(s.sync_delay_sec))));
+  else if (Number.isFinite(s.sync_delay_min)) this._config.storage_sync_sec = Math.max(5, Math.min(86400, Math.round(Number(s.sync_delay_min)*60)));
+  } catch {}
+  // Holidays from local storage
+  try {
+    if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
+    if (typeof s.holidays_source === 'string' && !this._yamlProvided?.holidays_source) this._config.holidays_source = s.holidays_source === 'manual' ? 'manual' : 'calendar';
+    if (typeof s.holidays_entity === 'string' && !this._yamlProvided?.holidays_entity) this._config.holidays_entity = s.holidays_entity || '';
+    if (Array.isArray(s.holidays_dates) && !this._yamlProvided?.holidays_dates) this._config.holidays_dates = [...s.holidays_dates];
+  } catch {}
+      } else {
+        // backward compat: schedules stored directly
+        this._schedules = parsed || {};
+      }
+    }
+    catch { this._schedules = {}; }
+  }
+
+  _editSessionActive(){ return !!(this._editing || this._inlineEditing || this._weeklyOpen || this._profilesOpen || this._holidayOpen || this._presenceOpen); }
+  _ensureEditModeOn(){ this._pendingSaveAfterEdit = true; }
+  _flushPendingSave(){
+    try {
+      if (!this._pendingSaveAfterEdit) return;
+      if (this._editSessionActive()) return;
+      this._pendingSaveAfterEdit = false;
+      this._saveStore(true);
+    } catch {}
+  }
+
+  async _saveStore(force = false) {
+    if (!force && this._editSessionActive()) {
+      this._markPendingSave();
+      return;
+    }
+    if (!force && this._pendingSaveAfterEdit) return;
+    this._pendingSaveAfterEdit = false;
+    try {
+      const payload = this._makeStoragePayload(true);
+      localStorage.setItem("thermostat_timeline_store", JSON.stringify(payload));
+    } catch {}
+    // Always persist local browser copy immediately
+    const writeRemote = async () => {
+      if (!this._config?.storage_enabled) {
+        // When shared storage is turned off, still push a minimal settings payload to disable backend apply
+        try {
+          await this._hass.callService("thermostat_timeline", "set_store", { 
+            settings: { 
+              auto_apply_enabled: false, 
+              apply_on_edit: !!this._config.apply_on_edit, 
+              profiles_enabled: !!this._config.profiles_enabled, 
+              global_profile: this._globalProfile || null, 
+              boiler_enabled: !!this._config.boiler_enabled,
+              boiler_switch: String(this._config.boiler_switch || ''), 
+              boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
+              boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : Number(this._config.boiler_min_temp),
+              boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : Number(this._config.boiler_max_temp),
+              show_pause_button: !!(this._config.show_pause_button ?? true), 
+              pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false),
+              pause_sensor_entity: String(this._config.pause_sensor_entity || ''),
+              pause_indef: !!this._pauseIndef, 
+              pause_until_ms: Number(this._pauseUntilMs||0), 
+              holidays_enabled: !!this._config.holidays_enabled, 
+              holidays_source: this._config.holidays_source || 'calendar', 
+              holidays_entity: this._config.holidays_entity || '', 
+              holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] 
             },
-            {
-              "role": "user",
-              "content": f"User title: {stripped_title}\n\nIssue body:\n{body}"
+            colors: { color_ranges: this._config.color_ranges, color_global: !!this._config.color_global }
+          });
+        } catch {}
+        return;
+      }
+      this._saving = true;
+      try {
+        const payload = this._makeStoragePayload(true);
+        // Push all data to the integration via set_store service (writes to file)
+        await this._hass.callService("thermostat_timeline", "set_store", payload);
+      } catch (e) {}
+      finally {
+        setTimeout(() => {
+          this._saving = false;
+          // Show "done" for a short moment and ensure UI keeps ticking
+          this._syncJustUntil = Date.now() + 2500;
+          // Clear previous due so countdown disappears until next change
+          this._storeDelayDue = 0;
+          this._startSyncTimer();
+          this._render();
+        }, 600);
+      }
+    };
+
+    // Decide sync policy
+    const mode = this._config?.storage_sync_mode || 'instant';
+    const secsCfg = Number(this._config?.storage_sync_sec || 0);
+    const secs = Math.max(5, Math.min(86400, Number.isFinite(secsCfg) ? secsCfg : Math.max(0, Number(this._config?.storage_sync_min || 0))*60));
+    if (this._config?.storage_enabled && mode === 'delay' && secs > 0) {
+      // Trailing save after N minutes; coalesce multiple changes
+      const delayMs = secs * 1000;
+      if (this._storeDelayTimer) try { clearTimeout(this._storeDelayTimer); } catch {}
+      this._storeDelayDue = Date.now() + delayMs;
+  try { localStorage.setItem(this._syncDueKey(), String(this._storeDelayDue)); } catch {}
+  // Save a draft of current schedules so they survive a hard refresh until delayed sync writes
+  try { localStorage.setItem(this._draftKey(), JSON.stringify({ schedules: this._schedules })); } catch {}
+  // Persist due time across reloads
+  // If we just finished a sync, drop the "done" flag so countdown shows immediately
+      this._syncJustUntil = 0;
+      this._storeDelayTimer = setTimeout(() => { this._storeDelayTimer = null; this._writeStoreNow(); }, delayMs);
+      try { this._startSyncTimer(); this._render(); } catch {}
+    } else {
+      // Instant (existing behavior with short debounce handled by callers)
+      await this._writeStoreNow();
+    }
+  }
+
+  _debouncedSaveStore() {
+    // Keep short debounce for bursts; final saving respects sync policy inside _saveStore
+    if (this._saveTimer) clearTimeout(this._saveTimer);
+    // Persist a local draft immediately so edits survive hard refresh before save runs
+    try { this._persistDraftNow(); } catch {}
+    this._saveTimer = setTimeout(() => this._saveStore(), this._saveDebounceMs);
+  }
+
+  // ---------- Helpers ----------
+  _sortBlocks(entity) { const r = this._schedules[entity]; r.blocks.sort((a,b)=>a.startMin - b.startMin || a.endMin - b.endMin); }
+  _neighbors(entity, id) { const r = this._schedules[entity]; const i = r.blocks.findIndex(b=>b.id===id); if (i === -1) return {left:null, right:null, index:-1}; return { left: r.blocks[i-1] || null, right: r.blocks[i+1] || null, index:i }; }
+  _applyNoOverlapResize(entity, b, edge, proposed) { this._sortBlocks(entity); const {left, right} = this._neighbors(entity, b.id); if (edge === "left") { let ns = this._clamp(Math.floor(proposed), 0, b.endMin - 5); if (left) ns = Math.max(ns, left.endMin); b.startMin = ns; } else if (edge === "right") { let ne = this._clamp(Math.ceil(proposed), b.startMin + 5, 1440); if (right) ne = Math.min(ne, right.startMin); b.endMin = ne; } this._sortBlocks(entity); }
+  _label(min) {
+    if (!Number.isFinite(min)) min = 0;
+    const m = ((Math.floor(min) % 1440) + 1440) % 1440;
+    const hh = Math.floor(m/60), mm = Math.round(m%60);
+    if (this._config?.time_12h) {
+      const am = hh < 12;
+      let h = hh % 12; if (h === 0) h = 12;
+      return `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')} ${am ? 'AM' : 'PM'}`;
+    }
+    return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+  }
+  _timeParts(min){
+    // Returns { main: 'hh:mm', mer: 'AM'|'PM'|null } according to current format
+    if (!Number.isFinite(min)) min = 0;
+    const m = ((Math.floor(min) % 1440) + 1440) % 1440;
+    const hh = Math.floor(m/60), mm = Math.round(m%60);
+    if (this._config?.time_12h) {
+      const am = hh < 12;
+      let h = hh % 12; if (h === 0) h = 12;
+      return { main: `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`, mer: am ? 'AM' : 'PM' };
+    }
+    return { main: `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`, mer: null };
+  }
+  _hourLabel(h){ const min = (h%24)*60; return this._label(min); }
+  _useHaTime(){ try { return String(this._config?.time_source||'browser') === 'ha'; } catch { return false; } }
+  _getNowMin(){
+    try {
+      if (this._useHaTime() && this._hass?.config?.time_zone) {
+        const tz = this._hass.config.time_zone;
+        const fmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false });
+        const parts = fmt.formatToParts(new Date());
+        const hh = Number(parts.find(p=>p.type==='hour')?.value||'0');
+        const mm = Number(parts.find(p=>p.type==='minute')?.value||'0');
+        return hh*60 + mm;
+      }
+    } catch {}
+    const d=new Date(); return d.getHours()*60 + d.getMinutes();
+  }
+  _clamp(v,a,b){ if (isNaN(v)) return a; return Math.min(Math.max(v,a),b); }
+  _prettyName(eid){ const st=this._hass?.states?.[eid]; if (st?.attributes?.friendly_name) return st.attributes.friendly_name; const base=(eid||"").split(".")[1]||eid||""; return base.replace(/_/g," ").replace(/\b\w/g,(m)=>m.toUpperCase()); }
+  
+  _isCompactScale(){
+    // Compact = show every other hour on small or touch devices (incl. mobile portrait)
+    try {
+      const isCoarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+      // Prefer the card width when available, fallback to window width
+      const hostW = (this.shadowRoot && this.shadowRoot.host && this.shadowRoot.host.clientWidth) || 0;
+      const w = hostW || window.innerWidth || 0;
+      // Consider compact on touch devices (phones/tablets) or narrow widths
+      return isCoarse || w <= 720; // ~mobile/tablet portrait breakpoint
+    } catch (e) { return false; }
+  }
+  _detectPrefer12h(){
+    try {
+      // Prefer Home Assistant locale if available
+      const lf = this._hass?.locale?.time_format || this._hass?.locale?.time_format_preference || '';
+      if (typeof lf === 'string') {
+        const s = lf.toLowerCase();
+        if (s.includes('12')) return true;
+        if (s.includes('24')) return false;
+      }
+    } catch {}
+    try {
+      // Fallback: browser preference
+      const fmt = new Intl.DateTimeFormat(navigator.language || undefined, { hour: 'numeric' });
+      const ro = fmt.resolvedOptions?.() || {};
+      if (typeof ro.hour12 === 'boolean') return ro.hour12;
+    } catch {}
+    // Final fallback: 24h
+    return false;
+  }
+  _detectPreferF(){
+    try {
+      const u = this._hass?.config?.unit_system?.temperature || this._hass?.locale?.temperature || '';
+      if (typeof u === 'string' && u.toUpperCase().includes('F')) return true;
+    } catch {}
+    try {
+      const f = new Intl.NumberFormat(navigator.language || undefined, { style:'unit', unit:'fahrenheit' });
+      // Heuristic: if formatter exists, still default to C; most regions outside US use C, but HA already covers primary preference
+    } catch {}
+    return false;
+  }
+  _getLocalProfilesEnabled(){
+    try {
+      const raw = localStorage.getItem('thermostat_timeline_store') || '';
+      if (!raw) return false;
+      const parsed = JSON.parse(raw);
+      const s = parsed?.settings || {};
+      return !!s.profiles_enabled;
+    } catch { return false; }
+  }
+  _isF(){ return (this._config?.temp_unit||'C')==='F'; }
+  _unitSymbol(){ return this._isF()? '°F' : '°C'; }
+  _toDisplayTemp(c){ return this._isF()? Math.round((c*9/5+32)*10)/10 : c; }
+  _fromDisplayTemp(v){ return this._isF()? ( (v-32)*5/9 ) : v; }
+  // --- Temperature conversion helpers (internal storage is °C) ---
+  _cToF(c){ try { return (Number(c)*9/5)+32; } catch { return c; } }
+  _fToC(f){ try { return (Number(f)-32)*5/9; } catch { return f; } }
+  // Service calls must follow Home Assistant's unit system (not the card display unit)
+  _serviceTempFromC(c){ return this._haIsF() ? this._cToF(c) : c; }
+  _haIsF(){ try { const u = String(this._hass?.config?.unit_system?.temperature||''); return u.toUpperCase().includes('F'); } catch { return false; } }
+  async _applySetpointForEntity(eid, desiredC){
+    try {
+      const dom = String(eid||'').split('.')[0] || '';
+      if (dom === 'input_number') {
+        // Mirror climate behavior: send in configured display/service unit (°C or °F)
+        const val = this._serviceTempFromC(desiredC);
+        await this._hass.callService('input_number','set_value', { entity_id: eid, value: val });
+        return;
+      }
+      if (dom !== 'climate') return;
+      const st = this._hass?.states?.[eid]; if (!st) return;
+      const attrs = st.attributes || {};
+      let hvacMode = String(attrs.hvac_mode ?? st.state ?? '').toLowerCase();
+      const hvacModes = Array.isArray(attrs.hvac_modes) ? attrs.hvac_modes.map(x=>String(x).toLowerCase()) : [];
+      const presetMode = String(attrs.preset_mode || '').toLowerCase();
+      const presetModes = Array.isArray(attrs.preset_modes) ? attrs.preset_modes.map(x=>String(x).toLowerCase()) : [];
+
+      // Optional: enable manual/hold preset to avoid schedule overrides
+      try {
+        const want = presetModes.includes('manual') ? 'manual' : (presetModes.includes('hold') ? 'hold' : null);
+        if (want && presetMode !== want){
+          await this._hass.callService('climate','set_preset_mode',{ entity_id: eid, preset_mode: want });
+        }
+      } catch {}
+
+      // If mode ignores setpoint, try switching to heat/cool
+      try {
+        if (['off','dry','fan_only'].includes(hvacMode)){
+          let newMode = null;
+          if (hvacModes.includes('heat')) newMode = 'heat'; else if (hvacModes.includes('cool')) newMode = 'cool';
+          if (newMode){ await this._hass.callService('climate','set_hvac_mode',{ entity_id: eid, hvac_mode: newMode }); hvacMode = newMode; }
+        }
+      } catch {}
+
+      // Decide between single setpoint vs range
+      const hasLow = Object.prototype.hasOwnProperty.call(attrs, 'target_temp_low');
+      const hasHigh = Object.prototype.hasOwnProperty.call(attrs, 'target_temp_high');
+      const modeSuggestsRange = (hvacMode === 'heat_cool') || (hvacMode === 'auto' && hasLow && hasHigh);
+      if (modeSuggestsRange && (hasLow || hasHigh)){
+        let band = 1.0; // °C total band
+        try { const b = Number(this._config?.range_band_c); if (Number.isFinite(b) && b > 0.2 && b <= 10) band = b; } catch {}
+        const half = Math.max(0.2, band/2);
+        const lowC = desiredC - half;
+        const highC = desiredC + half;
+        const data = { entity_id: eid, target_temp_low: this._serviceTempFromC(lowC), target_temp_high: this._serviceTempFromC(highC) };
+        await this._hass.callService('climate','set_temperature', data);
+        return;
+      }
+      await this._hass.callService('climate','set_temperature', { entity_id: eid, temperature: this._serviceTempFromC(desiredC) });
+    } catch {}
+  }
+  // Convert a schedules object between units (returns deep clone)
+  _convertSchedulesTemps(schedules, toUnit){
+    try {
+      const clone = JSON.parse(JSON.stringify(schedules||{}));
+      const toF = String(toUnit).toUpperCase()==='F';
+      const conv = (x)=>{ const n = Number(x); if (!Number.isFinite(n)) return x; return toF ? this._cToF(n) : this._fToC(n); };
+      const convertBlocks = (arr)=>{ if (!Array.isArray(arr)) return; for (const b of arr){ if (b && typeof b==='object' && 'temp' in b){ b.temp = conv(b.temp); } } };
+      for (const eid of Object.keys(clone||{})){
+        const row = clone[eid]; if (!row || typeof row!=='object') continue;
+        if ('defaultTemp' in row) row.defaultTemp = conv(row.defaultTemp);
+        convertBlocks(row.blocks);
+        // Weekly
+        try { const days = row?.weekly?.days||{}; for (const k of Object.keys(days)) convertBlocks(days[k]); } catch {}
+        // Profiles
+        try { const prof = row?.profiles||{}; for (const p of Object.keys(prof)){ convertBlocks(prof[p]?.blocks); } } catch {}
+        // Holiday
+        try { convertBlocks(row?.holiday?.blocks); } catch {}
+        // Presence
+        try { const pres = row?.presence||{}; for (const key of Object.keys(pres)){ convertBlocks(pres[key]?.blocks); } } catch {}
+      }
+      return clone;
+    } catch { return schedules; }
+  }
+
+  // Heuristic for legacy stores: detect if schedule temps look like °F (typical °C schedules are < ~45)
+  _maxTempInSchedules(schedules){
+    let maxV = -Infinity;
+    const scanBlocks = (arr)=>{
+      if (!Array.isArray(arr)) return;
+      for (const b of arr){
+        try {
+          if (!b || typeof b !== 'object') continue;
+          const v = Number(b.temp);
+          if (Number.isFinite(v)) maxV = Math.max(maxV, v);
+        } catch {}
+      }
+    };
+    try {
+      const s = schedules || {};
+      for (const eid of Object.keys(s)){
+        const row = s[eid];
+        if (!row || typeof row !== 'object') continue;
+        const d = Number(row.defaultTemp);
+        if (Number.isFinite(d)) maxV = Math.max(maxV, d);
+        scanBlocks(row.blocks);
+        try { const days = row?.weekly?.days||{}; for (const k of Object.keys(days)) scanBlocks(days[k]); } catch {}
+        try { const prof = row?.profiles||{}; for (const p of Object.keys(prof)) scanBlocks(prof[p]?.blocks); } catch {}
+        try { scanBlocks(row?.holiday?.blocks); } catch {}
+        try { const pres = row?.presence||{}; for (const key of Object.keys(pres)) scanBlocks(pres[key]?.blocks); } catch {}
+      }
+    } catch {}
+    return Number.isFinite(maxV) ? maxV : -Infinity;
+  }
+
+  // Build payload for shared storage respecting selected unit for numbers
+  _makeStoragePayload(includeSchedules=true){
+    try {
+      // Canonical shared storage is always °C to avoid drift when multiple clients use different display units.
+      // (Display unit is controlled by settings.temp_unit and is independent of stored numeric values.)
+      const wantF = false;
+      let schedules = undefined;
+      let weekdays = {};
+      let profiles = {};
+      const useSeparateProfiles = this._config?.storage_enabled && !!this._storageEntity('profiles');
+      if (includeSchedules) {
+        const cloned = JSON.parse(JSON.stringify(this._schedules||{}));
+        // Split weekday data into separate payload
+        try {
+          for (const eid of Object.keys(cloned||{})) {
+            const row = cloned[eid];
+            if (!row || typeof row !== 'object') continue;
+            const wk = {};
+            if (row.weekly) { wk.weekly = row.weekly; delete row.weekly; }
+            if (row.weekly_modes) { wk.weekly_modes = row.weekly_modes; delete row.weekly_modes; }
+            if (Object.keys(wk).length) weekdays[eid] = wk;
+            const prof = {};
+            if (row.profiles && typeof row.profiles === 'object') prof.profiles = row.profiles;
+            if (Object.prototype.hasOwnProperty.call(row, 'activeProfile')) prof.activeProfile = row.activeProfile;
+            if (Object.keys(prof).length) {
+              // Always keep profiles inside the schedules payload as a fallback, even when a dedicated profiles sensor is configured.
+              // This prevents losing data if the profiles sensor is missing or fails to update.
+              profiles[eid] = prof;
             }
-          ]
-
-          payload = {
-            "model": "openai/gpt-4.1",
-            "messages": messages,
-            "temperature": 0,
-            # If your endpoint supports it, uncomment:
-            # "response_format": {"type": "json_object"},
           }
-
-          req = urllib.request.Request(
-            "https://models.github.ai/inference/chat/completions",
-            data=json.dumps(payload).encode("utf-8"),
-            headers={
-              "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
-              "Content-Type": "application/json",
-              "Accept": "application/vnd.github+json",
-              "X-GitHub-Api-Version": "2022-11-28",
-            },
-            method="POST",
-          )
-
-          with urllib.request.urlopen(req) as r:
-            data = json.load(r)
-
-          content = (data.get("choices", [{}])[0].get("message", {}).get("content") or "").strip()
-
-          obj, err = safe_parse_model_json(content)
-          if obj is None:
-            print("WARN: Could not parse model output as JSON.")
-            print(err)
-            obj = {}
-
-          category = (obj.get("category") or "").strip().lower()
-          rewrite = bool(obj.get("rewrite"))
-          rewrite_reason = (obj.get("rewrite_reason") or "none").strip().lower()
-          suggested_title = (obj.get("suggested_title") or "").strip()
-          locale = (obj.get("locale") or "").strip()
-
-          if category not in {"bug", "feature", "locale"}:
-            category = "bug"
-
-          # Heuristic force-rewrite only for truly vague titles
-          locally_vague = is_vague_title(stripped_title)
-          if locally_vague:
-            rewrite = True
-            if rewrite_reason == "none":
-              rewrite_reason = "vague"
-
-          # If model says "vague" but local heuristic says NOT vague, trust local and keep title
-          if rewrite and rewrite_reason == "vague" and not locally_vague:
-            rewrite = False
-
-          # Your exact label names:
-          label_map = {
-            "bug": "bug",
-            "feature": "New feature",
-            "locale": "New locale",
-          }
-          label = label_map[category]
-
-          # Prefixes you want in titles:
-          prefix_map = {
-            "bug": "[Bug]",
-            "feature": "[New feature request]",
-            "locale": "[Locale request]",
-          }
-          prefix = prefix_map[category]
-
-          # Build base title text:
-          if category == "locale":
-            # Prefer explicit locale if detected; otherwise keep user's stripped title
-            base_title = clean(locale) if locale else clean(stripped_title)
-          else:
-            if rewrite:
-              base_title = clean(suggested_title) or clean(stripped_title)
-            else:
-              base_title = clean(stripped_title)
-
-          candidate_title = f"{prefix} {base_title}".strip()
-          new_title = "" if candidate_title.lower() == original_title.lower() else candidate_title
-
-          # ---------- Version check (bugs only) ----------
-          def has_version_for(kind: str, text: str) -> bool:
-            """
-            Heuristic: find versions near keywords.
-            Matches e.g. 1.2, 1.2.3, v1.2.3, 1.2.3-beta.1
-            """
-            version_pat = r"(?:v)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z\.-]+)?"
-            t = text or ""
-            if kind == "card":
-              # includes Danish "kort" just in case
-              kw = r"(?:\bcard\b|\bkort\b)"
-            else:
-              kw = r"(?:\bsync\b(?:\s+integration)?|\bsync-integration\b|\bsync\s+integration\b)"
-
-            p1 = re.compile(rf"{kw}[^\n]{{0,120}}\b({version_pat})\b", re.I)
-            p2 = re.compile(rf"\b({version_pat})\b[^\n]{{0,80}}{kw}", re.I)
-            return bool(p1.search(t) or p2.search(t))
-
-          comment_body = ""
-          if category == "bug":
-            text = f"{stripped_title}\n\n{body}"
-            card_ok = has_version_for("card", text)
-            sync_ok = has_version_for("sync", text)
-
-            missing_card = not card_ok
-            missing_sync = not sync_ok
-
-            if missing_card or missing_sync:
-              lines = [
-                "Hi! To help us reproduce this bug faster, could you please share the following version info:",
-                ""
-              ]
-              if missing_card:
-                lines.append("- **Card version** (e.g. 1.2.3)")
-              if missing_sync:
-                lines.append("- **Sync integration version** (e.g. 0.9.1)")
-              lines += [
-                "",
-                "Please reply here with the missing details — thank you 🙏"
-              ]
-              comment_body = "\n".join(lines)
-          # ----------------------------------------------
-
-          # Outputs (multiline-safe)
-          out = os.environ["GITHUB_OUTPUT"]
-          with open(out, "a", encoding="utf-8") as f:
-            f.write(f"category={category}\n")
-            f.write("label<<EOF\n" + (label or "") + "\nEOF\n")
-            f.write("new_title<<EOF\n" + (new_title or "") + "\nEOF\n")
-            f.write("comment_body<<EOF\n" + (comment_body or "") + "\nEOF\n")
-          PY
-
-      - name: Apply label + title
-        uses: actions/github-script@v7
-        env:
-          LABEL: ${{ steps.decide.outputs.label }}
-          NEW_TITLE: ${{ steps.decide.outputs.new_title }}
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const issue_number = context.payload.issue.number;
-
-            const labelName = process.env.LABEL?.trim();
-            const newTitle = process.env.NEW_TITLE?.trim();
-
-            // Add label (assumes it exists; if it doesn't, GitHub will error)
-            if (labelName) {
-              await github.rest.issues.addLabels({
-                owner, repo, issue_number,
-                labels: [labelName],
-              });
-            }
-
-            // Update title (prefix always enforced; rewrite only if needed)
-            if (newTitle) {
-              await github.rest.issues.update({
-                owner, repo, issue_number,
-                title: newTitle,
-              });
-            }
-
-      - name: Ask for missing versions (bug only)
-        if: steps.decide.outputs.comment_body != ''
-        uses: actions/github-script@v7
-        env:
-          COMMENT: ${{ steps.decide.outputs.comment_body }}
-        with:
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.issue.number,
-              body: process.env.COMMENT
+        } catch {}
+        schedules = cloned;
+      }
+      // Convert numeric settings if storing as °F
+      const toStore = (n)=>{ const v = Number(n); if (!Number.isFinite(v)) return n; return v; };
+      const awayCfg = this._config?.away || {};
+      const awayOut = { ...awayCfg };
+      if (typeof awayOut.target_c !== 'undefined') awayOut.target_c = toStore(awayOut.target_c);
+      const settings = {
+        // Rooms (used by Settings popup)
+        entities: Array.isArray(this._config.entities) ? this._config.entities.filter(Boolean).map(String) : [],
+        room_use_input_number: (()=>{
+          try {
+            const ents = Array.isArray(this._config.entities) ? this._config.entities.filter(Boolean).map(String) : [];
+            const raw = Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number.slice() : [];
+            while (raw.length < ents.length) raw.push(false);
+            return ents.map((eid, idx)=>{
+              if (String(eid).startsWith('input_number.')) return true;
+              if (String(eid).startsWith('climate.')) return false;
+              return !!raw[idx];
             });
+          } catch { return []; }
+        })(),
+
+        time_12h: this._config.time_12h,
+        temp_unit: this._config.temp_unit,
+        storage_temp_unit: 'C',
+        time_source: this._config.time_source,
+        row_height: Number(this._config.row_height ?? 64),
+        default_temp: toStore(Number(this._config.default_temp||20)),
+        min_temp: toStore(Number(this._config.min_temp ?? 5)),
+        max_temp: toStore(Number(this._config.max_temp ?? 25)),
+        weekdays_enabled: !!this._config.weekdays_enabled,
+        weekdays_mode: this._config.weekdays_mode || 'weekday_weekend',
+        weekdays_view: this._config.weekdays_view || 'all_rooms_one_day',
+        weekdays_view_switch_in_timeline: !!(this._config.weekdays_view_switch_in_timeline ?? false),
+        weekdays_selected_room: this._config.weekdays_selected_room || '',
+        per_room_defaults: !!this._config.per_room_defaults,
+        away: awayOut,
+        away_bypass: !!this._awayBypass,
+        merges: this._config.merges,
+        labels: this._config.labels,
+        temp_sensors: this._config.temp_sensors,
+        open_window: this._config.open_window,
+        boiler_enabled: !!this._config.boiler_enabled,
+          boiler_switch: String(this._config.boiler_switch || ''),
+        boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
+        boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : toStore(this._config.boiler_min_temp),
+        boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : toStore(this._config.boiler_max_temp),
+        show_pause_button: !!(this._config.show_pause_button ?? true),
+          pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false),
+          pause_sensor_entity: String(this._config.pause_sensor_entity || ''),
+  presence_live_header: !!(this._config.presence_live_header ?? true),
+        auto_apply_enabled: !!this._config.auto_apply,
+        apply_on_edit: !!this._config.apply_on_edit,
+        apply_on_default_change: !!this._config.apply_on_default_change,
+        backup_auto_enabled: !!this._config.backup_auto_enabled,
+        backup_interval_days: Number(this._config.backup_interval_days||1),
+        profiles_enabled: !!this._config.profiles_enabled,
+        global_profile: this._globalProfile || null,
+        pause_indef: !!this._pauseIndef,
+        pause_until_ms: Number(this._pauseUntilMs||0),
+        holidays_enabled: !!this._config.holidays_enabled,
+        holidays_source: this._config.holidays_source || 'calendar',
+        holidays_entity: this._config.holidays_entity || '',
+        holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [],
+        sync_mode: (this._config.storage_sync_mode||'instant'),
+        sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))),
+        sync_delay_sec: Number(this._config.storage_sync_sec||0)
+      };
+      const colors = { color_ranges: this._config.color_ranges, color_global: !!this._config.color_global };
+      // When a dedicated colors sensor is configured, avoid duplicating colors inside settings payload
+      if (this._config?.storage_enabled && this._storageEntity('colors')) {
+        delete settings.color_ranges;
+        delete settings.color_global;
+      } else {
+        settings.color_ranges = colors.color_ranges;
+        settings.color_global = colors.color_global;
+      }
+      const out = { settings, colors };
+      if (includeSchedules) { out.schedules = schedules; out.weekdays = weekdays; out.profiles = profiles; }
+      return out;
+    } catch { return { schedules: this._schedules, settings: { temp_unit: this._config.temp_unit } }; }
+  }
+  _maxDisplay(){ const c = Number(this._config?.max_temp ?? 25); return this._toDisplayTemp(c); }
+  _minDisplay(){ const c = Number(this._config?.min_temp ?? 5); return this._toDisplayTemp(c); }
+  _rowDefaultTemp(row){
+    try {
+      if (this._config?.per_room_defaults) {
+        const v = Number(row?.defaultTemp);
+        return Number.isFinite(v) ? v : Number(this._config?.default_temp ?? 20);
+      }
+      return Number(this._config?.default_temp ?? 20);
+    } catch { return Number(this._config?.default_temp ?? 20); }
+  }
+  _todayFullName(){
+    try {
+      const lang = ttGetLangFromHass(this._hass || this._lang || 'en');
+      const opts = { weekday: 'long' };
+      if (this._useHaTime() && this._hass?.config?.time_zone) Object.assign(opts, { timeZone: this._hass.config.time_zone });
+      const s = new Intl.DateTimeFormat(lang, opts).format(new Date());
+      return s.charAt(0).toUpperCase()+s.slice(1);
+    } catch {
+      const names = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
+      return names[this._todayKey()] || 'Today';
+    }
+  }
+
+  _weekdayFullName(dayKey){
+    try {
+      const k = String(dayKey || '').toLowerCase();
+      const map = {
+        mon: 'week.days_full.mon',
+        tue: 'week.days_full.tue',
+        wed: 'week.days_full.wed',
+        thu: 'week.days_full.thu',
+        fri: 'week.days_full.fri',
+        sat: 'week.days_full.sat',
+        sun: 'week.days_full.sun'
+      };
+      const t = map[k] ? this._t(map[k]) : '';
+      if (t) return String(t);
+    } catch {}
+    try {
+      const names = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
+      return names[String(dayKey||'').toLowerCase()] || this._todayFullName();
+    } catch { return this._todayFullName(); }
+  }
+
+  // Format ISO timestamp in a readable, localized way
+  _fmtDateTimeIso(iso){
+    try {
+      if (!iso) return '';
+      const d = new Date(iso);
+      const lang = ttGetLangFromHass(this._hass || this._lang || 'en');
+      const opts = { dateStyle: 'medium', timeStyle: 'short' };
+      if (this._useHaTime() && this._hass?.config?.time_zone) opts.timeZone = this._hass.config.time_zone;
+      return new Intl.DateTimeFormat(lang, opts).format(d);
+    } catch { return String(iso||''); }
+  }
+
+  // --- Weekday helpers ---
+  _weekdayNames(){ return ['mon','tue','wed','thu','fri','sat','sun']; }
+
+  _timelineDisplayDayKey(){
+    try {
+      const enabled = !!this._config?.weekdays_enabled;
+      const view = String(this._config?.weekdays_view || 'all_rooms_one_day');
+      if (enabled && view === 'all_rooms_one_day') {
+        const names = this._weekdayNames();
+        const cur = String(this._weekdaysViewDayKey || '').toLowerCase();
+        if (names.includes(cur)) return cur;
+        const today = this._todayKey();
+        this._weekdaysViewDayKey = today;
+        return today;
+      }
+    } catch {}
+    return this._todayKey();
+  }
+
+  _setTimelineDisplayDayKey(dayKey){
+    try {
+      const k = String(dayKey || '').toLowerCase();
+      if (this._weekdayNames().includes(k)) this._weekdaysViewDayKey = k;
+    } catch {}
+  }
+
+  _weekdaysStorageDayKeyForMode(displayDayKey, mode){
+    const d = String(displayDayKey || 'mon').toLowerCase();
+    const isWk = ['mon','tue','wed','thu','fri'].includes(d);
+    const m = String(mode || 'weekday_weekend');
+    if (m === 'weekday_weekend') return isWk ? 'mon' : 'sat';
+    if (m === 'weekday_sat_sun') return isWk ? 'mon' : d; // sat/sun
+    return d; // all_7
+  }
+  _todayKey(){
+    try {
+      if (this._useHaTime() && this._hass?.config?.time_zone) {
+        const tz = this._hass.config.time_zone;
+        const parts = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short' }).format(new Date());
+        const map = { Mon:'mon', Tue:'tue', Wed:'wed', Thu:'thu', Fri:'fri', Sat:'sat', Sun:'sun' };
+        return map[parts] || 'mon';
+      }
+    } catch {}
+    const d=new Date(); const idx=((d.getDay()+6)%7); return this._weekdayNames()[idx];
+  }
+  _ensureWeeklyStruct(row){
+    if (!row.weekly) { row.weekly = { mode: this._config?.weekdays_mode || 'weekday_weekend', days: {} }; }
+    const names=this._weekdayNames();
+    for (const k of names){ if (!Array.isArray(row.weekly.days[k])) row.weekly.days[k] = []; }
+    // Maintain separate saved schedules per mode
+    if (!row.weekly_modes) {
+      row.weekly_modes = {
+        weekday_weekend: { days: {} },
+        weekday_sat_sun: { days: {} },
+        all_7: { days: {} }
+      };
+      // Seed current into active mode bucket
+      try {
+        const curMode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+        row.weekly_modes[curMode] = { days: JSON.parse(JSON.stringify(row.weekly?.days||{})) };
+      } catch {}
+    }
+    try {
+      const modes = ['weekday_weekend','weekday_sat_sun','all_7'];
+      for (const m of modes){
+        const bucket = row.weekly_modes[m] = row.weekly_modes[m] || { days: {} };
+        for (const k of names){ if (!Array.isArray(bucket.days[k])) bucket.days[k] = []; }
+      }
+    } catch {}
+    return row;
+  }
+  _getBlocksForDay(row, dayKey){ if (!this._config?.weekdays_enabled || !row?.weekly) return row?.blocks || []; const days = row.weekly.days || {}; return Array.isArray(days[dayKey]) ? days[dayKey] : (row.blocks||[]); }
+  _weeklyEditableKeys(mode){ const all = this._weekdayNames(); if (!mode) mode = 'weekday_weekend'; if (mode==='weekday_weekend') return ['weekdays','weekend']; if (mode==='weekday_sat_sun') return ['weekdays','sat','sun']; if (mode==='all_7') return all; return ['weekdays','weekend']; }
+  _effectiveDayKey(sel){ if (sel==='weekdays') return 'mon'; if (sel==='weekend') return 'sat'; return sel || 'mon'; }
+
+  // --- Profiles (named daily schedules) helpers ---
+  _ensureProfilesStruct(row){
+    try {
+      if (!row) return row;
+      if (!row.profiles || typeof row.profiles !== 'object') row.profiles = {};
+      if (!('activeProfile' in row)) row.activeProfile = null;
+    } catch {}
+    return row;
+  }
+
+  // --- Holidays helpers ---
+  _ensureHolidayStruct(row){
+    try { if (!row) return row; if (!row.holiday || !Array.isArray(row.holiday.blocks)) row.holiday = { blocks: [] }; } catch {} return row;
+  }
+
+  // --- Presence (advanced away) helpers ---
+  _ensurePresenceStruct(row){ try { if (!row) return row; if (!row.presence || typeof row.presence !== 'object') row.presence = {}; } catch {} return row; }
+  _presencePersons(){ try { return Array.isArray(this._config?.away?.persons) ? [...this._config.away.persons] : []; } catch { return []; } }
+  _presenceComboKey(homeList, awayList){
+    try {
+      const h = [...(homeList||[])].map(String).sort();
+      const a = [...(awayList||[])].map(String).sort();
+      return `H:${h.join(',')}|A:${a.join(',')}`;
+    } catch { return 'H:|A:'; }
+  }
+  _presenceAllCombos(){
+    try {
+      const persons = this._presencePersons().map(String);
+      const n = persons.length; const out = [];
+      for (let mask=0; mask < (1<<n); mask++){
+        const home=[], away=[];
+        for (let i=0;i<n;i++){ ((mask>>i)&1) ? home.push(persons[i]) : away.push(persons[i]); }
+        // Skip the "all home" combination — when everyone is home, the main/weekdays
+        // schedule should be used and advanced presence should not override.
+        if (home.length === persons.length) continue;
+        const key = this._presenceComboKey(home, away);
+        const homeNames = home.map(e=> this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e)).join(', ');
+        const awayNames = away.map(e=> this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e)).join(', ');
+        let label;
+        if (home.length === 0) label = this._t('presence.none_home');
+        else {
+          const h = (this._t('presence.home') || 'Home: {names}').replace('{names}', homeNames);
+          const a = (this._t('presence.away') || 'Away: {names}').replace('{names}', awayNames);
+          label = `${h} • ${a}`;
+        }
+        out.push({ key, home:[...home], away:[...away], label });
+      }
+      // Sort with "none home" first, then by length of home desc (all‑home is omitted)
+      out.sort((x,y)=>{
+        if (x.home.length===0 && y.home.length!==0) return -1;
+        if (y.home.length===0 && x.home.length!==0) return 1;
+        return y.home.length - x.home.length;
+      });
+      return out;
+    } catch { return []; }
+  }
+  _activePresenceComboKey(){
+    try {
+      if (!this._config?.away?.advanced_enabled) return null;
+      const persons = this._presencePersons(); if (!persons.length) return null;
+      const home=[], away=[];
+      for (const p of persons){ const st = this._hass?.states?.[p]; const s = String(st?.state||'').toLowerCase(); if (s==='home') home.push(p); else away.push(p); }
+      // When everyone is home, do not use advanced presence at all — fall back to
+      // the main/weekdays schedule. No need for an "all home" presence plan.
+      if (home.length === persons.length) return null;
+      const key = this._presenceComboKey(home, away);
+      const combos = (this._config?.away?.combos) || {};
+      const meta = combos[key];
+      if (meta && meta.enabled) return key;
+      return null;
+    } catch { return null; }
+  }
+  _todayISO(){
+    try {
+      if (this._useHaTime() && this._hass?.config?.time_zone) {
+        const tz = this._hass.config.time_zone;
+        const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+        // en-CA gives YYYY-MM-DD
+        return String(parts);
+      }
+    } catch {}
+    try { const d=new Date(); const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const dd=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${dd}`; } catch { return ''; }
+  }
+  _isHolidayActive(){
+    try {
+      if (!this._config?.holidays_enabled) return false;
+      const src = this._config.holidays_source || 'calendar';
+      if (src === 'manual') {
+        const list = Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [];
+        const today = this._todayISO();
+        return !!list.find(d=>String(d)===today);
+      }
+      // calendar/binary_sensor entity
+      const eid = this._config.holidays_entity || '';
+      if (!eid) return false;
+      const st = this._hass?.states?.[eid];
+      const s = String(st?.state||'').toLowerCase();
+      return s === 'on';
+    } catch { return false; }
+  }
+
+  // --- Merge helpers ---
+  _groupPrimaryOf(eid){
+    const prims = this._config?.entities || [];
+    if (prims.includes(eid)) return eid;
+    const merges = this._config?.merges || {};
+    for (const p of prims){ const arr = merges[p]||[]; if (arr.includes(eid)) return p; }
+    return eid;
+  }
+  _allTargetEntities(){
+    const out = new Set();
+    const merges = this._config?.merges || {};
+    for (const p of (this._config?.entities||[])){
+      out.add(p);
+      for (const l of (merges[p]||[])) out.add(l);
+    }
+    return Array.from(out);
+  }
+
+  _desiredTempFor(eid, nowMin){ const primary = this._groupPrimaryOf(eid); const row = this._schedules[primary]; if (!row) return null; this._ensureHolidayStruct(row); this._ensurePresenceStruct(row); let blocks = row.blocks||[]; let usedPresence = false; let usedHoliday = false; let presenceKeyActive = null; let presenceHasBlocksForRoom = false;
+    // Holidays override take highest precedence when enabled
+    try {
+      if (this._isHolidayActive() && row.holiday && Array.isArray(row.holiday.blocks) && row.holiday.blocks.length) {
+        blocks = row.holiday.blocks || [];
+        usedHoliday = true;
+      } else {
+        // fall through
+      }
+    } catch {}
+    // Advanced presence overrides (if enabled and a combo is active) — below holidays, above profiles/weekdays
+    try {
+      presenceKeyActive = this._activePresenceComboKey && this._activePresenceComboKey();
+      if (presenceKeyActive) {
+        const roomBlocks = row.presence && row.presence[presenceKeyActive] && Array.isArray(row.presence[presenceKeyActive].blocks)
+          ? row.presence[presenceKeyActive].blocks : [];
+        if (roomBlocks.length) {
+          blocks = roomBlocks;
+          usedPresence = true;
+          presenceHasBlocksForRoom = true;
+        } else {
+          // Presence combo is active but this room has no presence schedule -> use a virtual all‑day Away block
+          const awayC = Number(this._config?.away?.target_c ?? 17);
+          const fallback = Number.isFinite(awayC) ? awayC : this._rowDefaultTemp(row);
+          blocks = [{ id: '__presence_away__', startMin: 0, endMin: 1440, temp: fallback }];
+          usedPresence = true; // treat as presence so simple away clamp won't run later
+          presenceHasBlocksForRoom = false;
+        }
+      }
+    } catch {}
+    // Profiles/Weekdays fallback if presence not used
+    if (!usedPresence) {
+      try {
+        if (this._config?.profiles_enabled && !(this._isHolidayActive() && row?.holiday?.blocks?.length)) {
+          this._ensureProfilesStruct(row);
+          const ap = row.activeProfile;
+          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
+            blocks = row.profiles[ap].blocks || [];
+          } else if (this._config?.weekdays_enabled && row.weekly) {
+            const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey);
+          }
+        } else if (this._config?.weekdays_enabled && row.weekly) {
+          const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey);
+        }
+      } catch { /* fall back to default blocks */ }
+    }
+    const hit = (blocks||[]).find(b => nowMin >= b.startMin && nowMin < b.endMin);
+    let want = Number(hit ? hit.temp : this._rowDefaultTemp(row));
+    // Apply away override if active
+    // Rules:
+    // - If advanced presence is enabled, the simple Away clamp must NEVER apply
+    //   (advanced replaces basic away entirely), regardless of whether a presence
+    //   schedule is currently used.
+    // - If advanced presence is OFF, apply simple Away clamp only when we did not
+    //   use a presence schedule for this room (usedPresence=false).
+    try {
+      const advOn = !!(this._config?.away?.advanced_enabled);
+      if (!advOn && !usedPresence && this._isAwayActive() && !this._awayBypass) {
+        const targetC = Number(this._config?.away?.target_c ?? 17);
+        if (Number.isFinite(targetC)) want = Math.min(want, targetC);
+      }
+    } catch {}
+    return want; }
+
+  _isAwayActive(){
+    try {
+      const a = this._config?.away; if (!a || !a.enabled) return false;
+      const persons = Array.isArray(a.persons) ? a.persons : [];
+      if (!persons.length) return false;
+      // Consider away if none are 'home'
+      for (const p of persons){ const st = this._hass?.states?.[p]; const s = (st?.state||'').toLowerCase(); if (s === 'home') return false; }
+      return true;
+    } catch { return false; }
+  }
+
+  // ---- Pause helpers ----
+  _isPausedBySensor(){
+    try {
+      if (!this._config?.pause_sensor_enabled) return false;
+      const eid = String(this._config?.pause_sensor_entity || '').trim();
+      if (!eid || !eid.startsWith('binary_sensor.')) return false;
+      const st = this._hass?.states?.[eid];
+      const s = String(st?.state || '').toLowerCase();
+      return s === 'on';
+    } catch { return false; }
+  }
+  _isPaused(){
+    try {
+      if (this._isPausedBySensor()) return true;
+      if (this._pauseIndef) return true;
+      const until = Number(this._pauseUntilMs||0);
+      if (Number.isFinite(until) && until > Date.now()) return true;
+    } catch {}
+    return false;
+  }
+  _resumeAtMs(){ const u = Number(this._pauseUntilMs||0); return (Number.isFinite(u) && u>0) ? u : null; }
+  _scheduleResumeTimer(){
+    try {
+      if (this._resumeTimer) clearTimeout(this._resumeTimer);
+      if (!this._isPaused()) return;
+      if (this._pauseIndef || this._isPausedBySensor()) return; // manual or sensor resume only
+      const when = this._resumeAtMs();
+      if (!when) return;
+      const delay = Math.max(500, when - Date.now());
+      this._resumeTimer = setTimeout(async ()=>{
+        // Resume reached: re-render UI and apply immediately once
+        try { this._render(); } catch {}
+        await this._applyCurrentSetpoints(true, true);
+        this._scheduleNextApply();
+      }, delay);
+    } catch {}
+  }
+
+  _formatPauseCountdown(){
+    try {
+      const until = Number(this._pauseUntilMs||0);
+      const now = Date.now();
+      if (!until || until <= now) return '';
+      let ms = until - now;
+      const totalSec = Math.floor(ms/1000);
+      const h = Math.floor(totalSec/3600);
+      const m = Math.floor((totalSec%3600)/60);
+      const s = totalSec%60;
+      const pad = (n)=>String(n).padStart(2,'0');
+      if (h>0) return `${h}:${pad(m)}:${pad(s)}`;
+      return `${m}:${pad(s)}`;
+    } catch { return ''; }
+  }
+  _startCountdownTimer(){
+    try {
+      if (this._countdownTimer) clearInterval(this._countdownTimer);
+      const wrap = this.shadowRoot && this.shadowRoot.querySelector('.pause-wrap');
+      const etaEl = wrap && wrap.querySelector && wrap.querySelector('.pause-eta');
+      if (!this._isPaused() || this._pauseIndef || this._isPausedBySensor() || !etaEl) return;
+      const tick = ()=>{ try { if (!this._isPaused() || this._pauseIndef) { clearInterval(this._countdownTimer); this._countdownTimer=null; etaEl.textContent=''; return; } etaEl.textContent = this._formatPauseCountdown(); } catch {} };
+      tick();
+      this._countdownTimer = setInterval(tick, 1000);
+    } catch {}
+  }
+
+  _nextBoundaryDate(){
+    // HA timezone mode: compute delay in HA tz and return a local Date for the timeout
+    if (this._useHaTime() && this._hass?.config?.time_zone) {
+      const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity;
+      for (const eid of (this._config.entities || [])){
+        const row = this._schedules[eid]; if (!row) continue; const times = [];
+        // Prefer presence schedule when enabled and active; then profiles/weekdays
+        let blocks = row.blocks||[]; let usedPresence=false;
+        try {
+          const key = this._activePresenceComboKey && this._activePresenceComboKey();
+          if (key && row.presence && Array.isArray(row.presence[key]?.blocks) && row.presence[key].blocks.length) {
+            blocks = row.presence[key].blocks || []; usedPresence=true;
+          }
+        } catch {}
+        if (!usedPresence) {
+          try {
+            if (this._config?.profiles_enabled) {
+              this._ensureProfilesStruct(row);
+              const ap = row.activeProfile;
+              if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
+                blocks = row.profiles[ap].blocks || [];
+              } else if (this._config?.weekdays_enabled && row.weekly) {
+                const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+              }
+            } else if (this._config?.weekdays_enabled && row.weekly) {
+              const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+            }
+          } catch {}
+        }
+        for (const b of blocks) { times.push(b.startMin, b.endMin); }
+        for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } }
+      }
+      // Always consider midnight rollover (00:00)
+      {
+        let deltaMid = (1440 - nowMin) % 1440; const tMid = 0; if (deltaMid === 0) deltaMid = 1; if (deltaMid < bestDelta) { bestDelta = deltaMid; bestT = tMid; }
+      }
+      let delayMs;
+      if (bestT == null) {
+        delayMs = ((1440 - nowMin) % 1440) * 60000;
+      } else {
+        const diffMin = (bestT - nowMin + 1440) % 1440; delayMs = Math.max(500, diffMin * 60000);
+      }
+      if (delayMs <= 250) delayMs += 60000;
+      return new Date(Date.now() + delayMs);
+    }
+    // Browser/local timezone mode (existing behavior)
+    const now = new Date(); const nowMin = this._getNowMin(); let bestT = null; let bestDelta = Infinity; for (const eid of (this._config.entities || [])){
+      const row = this._schedules[eid]; if (!row) continue; const times = [];
+      // Prefer presence schedule when enabled and active; then profiles/weekdays
+      let blocks = row.blocks||[]; let usedPresence=false;
+      try {
+        const key = this._activePresenceComboKey && this._activePresenceComboKey();
+        if (key && row.presence && Array.isArray(row.presence[key]?.blocks) && row.presence[key].blocks.length) {
+          blocks = row.presence[key].blocks || []; usedPresence=true;
+        }
+      } catch {}
+      if (!usedPresence) {
+        try {
+          if (this._config?.profiles_enabled) {
+            this._ensureProfilesStruct(row);
+            const ap = row.activeProfile;
+            if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
+              blocks = row.profiles[ap].blocks || [];
+            } else if (this._config?.weekdays_enabled && row.weekly) {
+              const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+            }
+          } else if (this._config?.weekdays_enabled && row.weekly) {
+            const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+          }
+        } catch {}
+      }
+      for (const b of blocks) { times.push(b.startMin, b.endMin); }
+      for (const t of times){ let delta = (t - nowMin + 1440) % 1440; if (delta === 0) delta = 1; if (delta < bestDelta){ bestDelta = delta; bestT = t; } }
+    }
+    // Always consider midnight rollover (00:00) as a boundary so we re-apply
+    // the next day's desired temperature even if today's schedule has no block
+    // ending/starting at 00:00. This makes day change bullet-proof.
+    {
+      let deltaMid = (1440 - nowMin) % 1440; // minutes until midnight
+      const tMid = 0;
+      if (deltaMid === 0) deltaMid = 1; // avoid scheduling "now"
+      if (deltaMid < bestDelta) { bestDelta = deltaMid; bestT = tMid; }
+    }
+    if (bestT == null) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0); }
+    const dayOffset = (bestT >= nowMin) ? 0 : 1; const target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset, Math.floor(bestT/60), bestT%60, 0, 0); if (target.getTime() - now.getTime() <= 250) target.setTime(target.getTime() + 60000); return target; }
+
+  // (removed next-boundary-per-row helper)
+
+  _scheduleNextApply(){
+    if (this._transitionTimer) clearTimeout(this._transitionTimer);
+    // If auto-apply is off completely, do nothing
+    if (!this._config?.auto_apply) return;
+    // Don't schedule until config is available
+    if (!this._hasConfig) return;
+    // If paused by binary sensor, don't schedule boundary timer; resume when sensor changes
+    if (this._isPausedBySensor && this._isPausedBySensor()) { this._scheduleResumeTimer(); return; }
+    // If paused indefinitely, don't schedule boundary timer; only resume via user action
+    if (this._pauseIndef) { this._scheduleResumeTimer(); return; }
+    // Choose earlier of boundary and pause-resume moment if set
+    const boundary = this._nextBoundaryDate();
+    let targetMs = boundary.getTime();
+    const resumeMs = this._resumeAtMs();
+    const isResume = !!(resumeMs && resumeMs < targetMs);
+    if (isResume) targetMs = resumeMs;
+    const delay = Math.max(500, targetMs - Date.now());
+    this._transitionTimer = setTimeout(async () => {
+      await this._applyCurrentSetpoints(true, isResume);
+      this._scheduleNextApply();
+    }, delay);
+    // Also make sure we have a standalone resume timer if paused
+    this._scheduleResumeTimer();
+  }
+
+  _setupBoilerControl(){
+    try {
+      if (this._boilerTimer) { clearInterval(this._boilerTimer); this._boilerTimer = null; }
+      if (!this._hass || !this._config) return;
+      // Boiler control runs in frontend only when Sync is OFF.
+      if (this._config?.storage_enabled) return;
+      if (!this._config?.auto_apply) return;
+      if (!this._config?.boiler_enabled) return;
+      const sw = String(this._config.boiler_switch || '');
+      const sens = String(this._config.boiler_temp_sensor || '');
+      if (!sw || !sw.startsWith('switch.')) return;
+      if (!sens || !sens.includes('.')) return;
+
+      // Run once immediately + then every minute.
+      try { this._boilerTick(); } catch {}
+      this._boilerTimer = setInterval(() => { try { this._boilerTick(); } catch {} }, 60000);
+    } catch {}
+  }
+
+  _boilerTick(){
+    try {
+      if (!this._hass || !this._config) return;
+      if (this._config?.storage_enabled) return;
+      if (!this._config?.auto_apply) return;
+      if (!this._config?.boiler_enabled) return;
+      if (this._isPaused && this._isPaused()) return;
+
+      const sw = String(this._config.boiler_switch || '');
+      const sens = String(this._config.boiler_temp_sensor || '');
+      if (!sw || !sens) return;
+
+      const stSens = this._hass.states?.[sens];
+      if (!stSens) return;
+      const raw = Number(stSens.state);
+      if (!Number.isFinite(raw)) return;
+
+      // Convert sensor value to °C for comparisons
+      let vC = raw;
+      try {
+        const u = String(stSens.attributes?.unit_of_measurement || '').trim();
+        const haU = String(this._hass?.config?.unit_system?.temperature || '').trim();
+        const isF = (u === '°F' || u === 'F') || (!u && (haU === '°F' || haU === 'F'));
+        if (isF) vC = this._fToC(raw);
+      } catch {}
+
+      let minC = Number(this._config.boiler_min_temp);
+      let maxC = Number(this._config.boiler_max_temp);
+      if (!Number.isFinite(minC)) minC = 20;
+      if (!Number.isFinite(maxC)) maxC = 25;
+      const lo = Math.min(minC, maxC);
+      const hi = Math.max(minC, maxC);
+
+      let want = null;
+      if (vC < lo) want = 'on';
+      else if (vC > hi) want = 'off';
+      else return;
+
+      const stSw = this._hass.states?.[sw];
+      const cur = String(stSw?.state || '');
+      if (want === 'on' && cur === 'on') return;
+      if (want === 'off' && cur === 'off') return;
+
+      if (want === 'on') this._hass.callService('switch', 'turn_on', { entity_id: sw });
+      else this._hass.callService('switch', 'turn_off', { entity_id: sw });
+    } catch {}
+  }
+
+  async _applyCurrentSetpoints(force=false, reconcile=false){ if (!this._config?.auto_apply || !this._hass) return; if (!this._hasConfig) return; if (this._config?.storage_enabled) return; if (this._isPaused()) return; const nowMin = this._getNowMin(); const targets = this._allTargetEntities(); for (const eid of targets){
+    // If this call is from boundary timer (force===true), only apply for entities that have boundary now.
+    // On resume from pause (reconcile=true), reconcile across all entities.
+    if (force && !reconcile) {
+      const primary = this._groupPrimaryOf(eid);
+      const row = this._schedules[primary];
+      if (!row || !this._entityHasBoundaryNow(row, nowMin)) { continue; }
+    }
+    let desired = this._desiredTempFor(eid, nowMin);
+    const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5; if (Number.isFinite(mx)) desired = Math.min(desired, mx); if (Number.isFinite(mn)) desired = Math.max(desired, mn);
+      if (desired == null || Number.isNaN(desired)) continue;
+      const last = this._lastApplied[eid] || {};
+      // Only send when desired setpoint changes for this entity.
+      // Prevents overriding manual changes in other rooms.
+      if (!reconcile && Number.isFinite(last.temp) && Math.abs(Number(last.temp) - desired) < 0.05) continue;
+      const st = this._hass.states?.[eid];
+      const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
+      const willSendF = this._isF(); const haIsF = this._haIsF();
+      let curU = cur;
+      if (Number.isFinite(curU)) {
+        if (willSendF && !haIsF) curU = this._cToF(curU);
+        else if (!willSendF && haIsF) curU = this._fToC(curU);
+      }
+      const sendTemp = this._serviceTempFromC(desired);
+      if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.05){ this._lastApplied[eid] = { min: nowMin, temp: desired }; continue; }
+      try { await this._applySetpointForEntity(eid, desired); this._lastApplied[eid] = { min: nowMin, temp: desired }; }
+      catch (e) {}
+    } }
+
+  // ---------- "Apply on change" helper ----------
+  _desiredNowSnapshot(){ const nowMin = this._getNowMin(); const snap = {}; for (const eid of this._allTargetEntities()) snap[eid] = this._desiredTempFor(eid, nowMin); return snap; }
+  async _applyIfDesiredChanged(beforeSnap){ if (!this._config?.auto_apply) return; if (this._isPaused()) return; const after = this._desiredNowSnapshot(); const nowMin = this._getNowMin();
+    if (this._config?.storage_enabled) { return; }
+  for (const eid of Object.keys(after)){ let a = after[eid]; const b = beforeSnap[eid]; if (a == null) continue; const mx=this._config?.max_temp ?? 25; const mn=this._config?.min_temp ?? 5; if (Number.isFinite(mx)) a = Math.min(a, mx); if (Number.isFinite(mn)) a = Math.max(a, mn); if (b == null || Math.abs(a - b) > 0.049){ try { await this._applySetpointForEntity(eid, a); this._lastApplied[eid] = { min: nowMin, temp: a }; } catch(e){} } }
+  }
+
+  // Ping backend to apply now without waiting for delayed sync
+  async _nudgeBackgroundApplyNow(){ try { if (!this._hass || !this._config?.storage_enabled) return; const _awayCfg = this._config?.away || {}; const _awayOut = { ..._awayCfg }; if (_awayOut.advanced_enabled) _awayOut.enabled = false; const payload = this._makeStoragePayload(false); payload.settings = { ...payload.settings, away: _awayOut }; await this._hass.callService('thermostat_timeline','set_store', { settings: payload.settings, force: true }); } catch {} }
+
+  // Apply a setpoint immediately for the given entity (and its merged entities)
+  // using the provided temperature (in °C). Honours away override and min/max.
+  async _applyImmediateForEntity(entity, tempC, nowMinOverride=null){
+    try {
+      if (!this._config?.auto_apply || !this._config?.apply_on_edit || !this._hass) return;
+      // When shared storage is enabled, integration handles the apply; card should not send
+      if (this._config?.storage_enabled) return;
+      if (this._isPaused()) return;
+      let desired = Number(tempC);
+  // Away override (disabled when advanced presence is enabled)
+  try { const advOn = !!(this._config?.away?.advanced_enabled); if (!advOn && this._isAwayActive()) { const a = Number(this._config?.away?.target_c ?? 17); if (Number.isFinite(a)) desired = Math.min(desired, a); } } catch {}
+      // Clamp to min/max
+      const mx = this._config?.max_temp ?? 25; const mn = this._config?.min_temp ?? 5;
+      if (Number.isFinite(mx)) desired = Math.min(desired, mx);
+      if (Number.isFinite(mn)) desired = Math.max(desired, mn);
+      const nowMin = Number.isFinite(nowMinOverride) ? nowMinOverride : this._getNowMin();
+      const dom = String(entity||'').split('.')[0] || '';
+      const targets = (dom === 'climate') ? [entity, ...(this._config?.merges?.[entity] || [])] : [entity];
+      for (const eid of targets){
+        try {
+          const __eid = eid;
+          if (!(typeof __eid==='string' && __eid.includes('.') && this._hass?.states?.[__eid])) continue;
+          const dom2 = __eid.split('.')[0];
+          // Avoid redundant command if already at desired
+          let curU = NaN;
+          try {
+            const st = this._hass.states[__eid];
+            if (dom2 === 'climate') {
+              const cur = Number(st?.attributes?.temperature ?? st?.attributes?.target_temperature ?? st?.attributes?.target_temp);
+              const willSendF = this._isF(); const haIsF = this._haIsF();
+              curU = cur;
+              if (Number.isFinite(curU)) {
+                if (willSendF && !haIsF) curU = this._cToF(curU);
+                else if (!willSendF && haIsF) curU = this._fToC(curU);
+              }
+            } else if (dom2 === 'input_number') {
+              const raw = Number(st?.state);
+              curU = raw;
+            }
+          } catch {}
+          const sendTemp = this._serviceTempFromC(desired);
+          if (Number.isFinite(curU) && Math.abs(curU - sendTemp) < 0.049) { this._lastApplied[__eid] = { min: nowMin, temp: desired }; continue; }
+          await this._applySetpointForEntity(__eid, desired);
+          this._lastApplied[__eid] = { min: nowMin, temp: desired };
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _entityHasBoundaryNow(row, nowMin){
+    try {
+      let blocks = row.blocks||[];
+      // Prefer presence schedule when enabled and active
+      try {
+        const key = this._activePresenceComboKey && this._activePresenceComboKey();
+        if (key && row.presence && Array.isArray(row.presence[key]?.blocks) && row.presence[key].blocks.length) {
+          blocks = row.presence[key].blocks || [];
+        } else if (this._config?.weekdays_enabled && row.weekly) {
+          const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || [];
+        }
+      } catch { if (this._config?.weekdays_enabled && row.weekly){ const dayKey = this._todayKey(); blocks = this._getBlocksForDay(row, dayKey) || []; } }
+      // Allow a 1-minute grace window because we intentionally schedule the
+      // timer a tiny bit after the exact boundary to avoid races. Otherwise we
+      // might miss the equality check and skip applying at the boundary.
+      const prev = ((nowMin - 1) % 1440 + 1440) % 1440;
+      for (const b of (blocks||[])){
+        const s = Number(b.startMin), e = Number(b.endMin);
+        if (Number.isFinite(s) && (s === nowMin || s === prev)) return true;
+        if (Number.isFinite(e) && (e === nowMin || e === prev)) return true;
+      }
+    } catch {}
+    return false;
+  }
+
+  // ---------- UI ----------
+  _init() {
+    this.shadowRoot.innerHTML = `
+      <meta charset="UTF-8">
+      <style>
+        :host { display:block; }
+    .card{ --pad-x:16px; background: var(--card-background-color); color: var(--primary-text-color); border-radius: var(--ha-card-border-radius, 12px); box-shadow: var(--ha-card-box-shadow, none); overflow:hidden }
+  .header{display:grid;align-items:center;grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);gap:.75rem;padding:12px var(--pad-x);border-bottom:1px solid var(--divider-color); position:relative}
+  /* Explicit grid placement so right tools don't drift when center is hidden */
+  .title{ grid-column:1; display:flex; align-items:center; gap:8px; font-weight:600;font-size:1rem;color:var(--primary-text-color); min-width:0; overflow:hidden}
+  .title .title-text{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  /* Right header area aligns content to far right */
+  .header .spacer{ grid-column:3; justify-self:end; display:flex; justify-content:flex-end; min-width:0; overflow:hidden;}
+  /* Right-side header toolbar (lives inside .spacer) */
+  .header .pause-wrap{ display:flex; align-items:center; gap:8px; }
+  .header .pause-wrap .pause-eta{ font-size:.82rem; color: var(--primary-text-color); min-width:58px; text-align:center; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); }
+  /* Presence live chips (away persons status) */
+  .header .pause-wrap .presence-live{ display:flex; align-items:center; gap:6px; flex-wrap:nowrap; max-width:50vw; overflow:hidden; }
+  .header .pause-wrap .presence-live .presence-chip{ display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); font-size:.82rem; max-width:160px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+  .header .pause-wrap .presence-live .presence-chip .presence-dot{ width:8px; height:8px; border-radius:50%; background: var(--divider-color); flex:0 0 8px; }
+  .header .pause-wrap .presence-live .presence-chip.home .presence-dot{ background: var(--success-color, #2e7d32); }
+  .header .pause-wrap .presence-live .presence-chip.away .presence-dot{ background: color-mix(in oklab, var(--error-color, #b00020) 60%, #fff); }
+  @supports not (color-mix(in oklab, #000 0%, #000 0%)){
+    .header .pause-wrap .presence-live .presence-chip.away .presence-dot{ background: var(--error-color, #b00020); }
+  }
+  .weekday-full{
+    grid-column:2;
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--primary-text-color);
+    min-width:0;
+  }
+  .weekday-full .wd-left{ display:flex; align-items:center; justify-content:flex-end; gap:6px; }
+  .weekday-full .wd-center{ display:inline-flex; align-items:center; justify-content:center; gap:6px; min-width:0; }
+  .weekday-full .wd-right{ display:flex; align-items:center; justify-content:flex-start; gap:6px; }
+  /* Weekday view switch (inline, next to weekday controls) */
+  .header .sp-week-view-inline{ display:inline-flex; align-items:center; height:26px; border-radius:999px; overflow:hidden; border:1px solid var(--divider-color); background: var(--card-background-color); pointer-events:auto; }
+  .header .pause-wrap .sp-week-view-inline{ margin-right:8px; }
+  .header .sp-week-view-inline button{ height:26px; display:inline-flex; align-items:center; padding:0 10px; font-size:.78rem; font-weight:700; line-height:1.1; border:0; cursor:pointer; background:transparent; color: var(--secondary-text-color); pointer-events:auto; }
+  .header .sp-week-view-inline button.active{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  .header .sp-week-view-inline button:focus{ outline:none; }
+  .header .sp-week-view-inline button:focus-visible{ outline:2px solid var(--primary-color); outline-offset:2px; border-radius:8px; }
+  /* Default: show switch in top row (desktop), hide on weekday row */
+  .weekday-full .sp-week-view-mobile{ display:none; }
+  .header .pause-wrap .sp-week-view-desktop{ display:inline-flex; }
+
+  /* Mobile: split header into 2 rows (title/tools on top, weekday nav below) */
+  @media (max-width: 520px){
+    .header{ grid-template-columns: 1fr auto; grid-template-rows: auto auto; row-gap: 8px; }
+    .title{ grid-column: 1; grid-row: 1; min-width: 0; }
+    .header .spacer{ grid-column: 2; grid-row: 1; }
+    .weekday-full{
+      grid-column: 1 / 3;
+      grid-row: 2;
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .weekday-full .wd-left{ justify-content:flex-start; }
+    .weekday-full .wd-center{ margin-left:auto; justify-content:flex-end; }
+    /* right container is unused on mobile (arrows are in center) */
+    .weekday-full .wd-right{ display:none; }
+    /* Mobile: show switch on row 2 by arrows, hide in top row */
+    .weekday-full .sp-week-view-mobile{ display:inline-flex; }
+    .header .pause-wrap .sp-week-view-desktop{ display:none; }
+  }
+  .profile-pill{ font-weight:600; font-size:.85rem; padding:2px 8px; border-radius:999px; border:1px solid var(--divider-color); background: var(--secondary-background-color, rgba(0,0,0,.05)); color: var(--primary-text-color); }
+  .profile-pill.success{ background: var(--success-color, #2e7d32); color:#fff; border-color: var(--success-color, #2e7d32); }
+  .scale{position:relative;padding:8px var(--pad-x);z-index:0;margin-bottom:6px;border-bottom:1px solid var(--divider-color)}
+        .scale-inner{position:relative;height:48px;display:block}
+        .rows{padding:0 var(--pad-x);position:relative}
+        .tick{position:absolute;width:0}
+        .tick.full{top:6px;bottom:8px;border-left:1px solid var(--divider-color)}
+        .tick.short{top:22px;bottom:8px;border-left:1px solid var(--divider-color);opacity:1}
+        .tick label{position:absolute;bottom:14px;left:50%;transform:translate(-50%,0);user-select:none;font-weight:500;font-size:.75rem;color:var(--secondary-text-color)}
+  .tick label .t-main{display:block; line-height:1;}
+  .tick label .mer{display:block; line-height:1; font-size:.65rem; text-align:center;}
+        .row{border-bottom:1px solid var(--divider-color)}
+        .row-head{display:flex;align-items:center;justify-content:space-between;padding:8px 0;background:transparent}
+        .row-head .meta{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--secondary-text-color)}
+        .row-head input[type=number]{width:64px;padding:4px 6px;border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);color:var(--primary-text-color);font-size:.8rem}
+  /* Normalize button heights inside row header to avoid vertical shift */
+  .row-head .btn{ display:inline-flex; align-items:center; height:32px; box-sizing:border-box; white-space: nowrap; }
+  /* Collapsible tools on each row (Add/Copy/Weekdays) */
+        .row-head .toolbar { display:flex; align-items:center; gap:6px; }
+        /* Smooth slide container */
+        .row-head .tools-wrap { display:flex; align-items:center; gap:6px; overflow:hidden; max-width:0; opacity:.0; transform: translateX(6px); white-space: nowrap;
+          transition: max-width .35s cubic-bezier(.25,.8,.25,1), opacity .28s ease, transform .35s cubic-bezier(.25,.8,.25,1); will-change: max-width, opacity, transform; }
+        .row-head .toolbar.open .tools-wrap { max-width:1000px; opacity:1; transform: translateX(0); }
+  /* Per-button slide + fade for a more fluid feel (no scale to avoid vertical jump) */
+  .row-head .tools-wrap > .btn { opacity:0; transform: translateX(12px); transition: transform .28s ease, opacity .28s ease; will-change: transform, opacity; flex: 0 0 auto; white-space: nowrap; }
+  .row-head .toolbar.open .tools-wrap > .btn { opacity:1; transform: translateX(0); }
+  /* Header toolbar (same motion as row toolbars) */
+  .header .toolbar { display:flex; align-items:center; gap:6px; }
+  .header .tools-wrap { display:flex; align-items:center; gap:6px; overflow:hidden; max-width:0; opacity:.0; transform: translateX(6px); white-space: nowrap;
+    transition: max-width .35s cubic-bezier(.25,.8,.25,1), opacity .28s ease, transform .35s cubic-bezier(.25,.8,.25,1); will-change: max-width, opacity, transform; }
+  .header .toolbar.open .tools-wrap { max-width:1000px; opacity:1; transform: translateX(0); }
+  .header .tools-wrap > .btn, .header .tools-wrap > .profiles-btn { opacity:0; transform: translateX(12px); transition: transform .28s ease, opacity .28s ease; will-change: transform, opacity; flex: 0 0 auto; white-space: nowrap; }
+  .header .toolbar.open .tools-wrap > .btn, .header .toolbar.open .tools-wrap > .profiles-btn { opacity:1; transform: translateX(0); }
+  .header .tools-toggle { width:24px; height:24px; border-radius:999px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; font-weight:700; line-height:1; transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+  .header .toolbar:not(.open) .tools-toggle { background: var(--primary-color); border-color: var(--primary-color); color: var(--text-primary-color, #fff); }
+  .header .toolbar.open .tools-toggle { background: var(--error-color); border-color: var(--error-color); color: var(--text-primary-color, #fff); }
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+          .row-head .tools-wrap, .row-head .tools-wrap > .btn { transition: none; }
+        }
+        .row-head .tools-toggle {
+    width:24px; height:24px; border-radius:999px; box-sizing:border-box;
+    border:1px solid var(--divider-color);
+    background: var(--card-background-color); color: var(--primary-text-color);
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    font-size:14px; font-weight:700; line-height:1;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .row-head .tools-toggle ha-icon{ --mdc-icon-size: 14px; }
+  /* Closed = primary (same blue as Add block) */
+  .row-head .toolbar:not(.open) .tools-toggle { background: var(--primary-color); border-color: var(--primary-color); color: var(--text-primary-color, #fff); }
+  /* Open = danger/red */
+  .row-head .toolbar.open .tools-toggle { background: var(--error-color); border-color: var(--error-color); color: var(--text-primary-color, #fff); }
+  /* Remove blue ring on click/focus */
+  .row-head .tools-toggle:focus, .row-head .tools-toggle:focus-visible, .row-head .tools-toggle:active {
+    outline:none; box-shadow:none;
+  }
+  /* Current temperature bubble */
+  .sensor-bubble{ display:inline-flex; align-items:center; gap:6px; margin-left:8px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, rgba(0,0,0,.05)); color: var(--primary-text-color); font-size:.78rem; }
+    .btn{cursor:pointer;border:1px solid var(--divider-color);border-radius:10px;padding:6px 10px;font-size:.8rem;background:var(--card-background-color);color:var(--primary-text-color)}
+  /* Make row toolbar buttons a bit lower than default */
+  .row-head .btn{ padding:4px 10px; border-radius:8px; font-size:.78rem; }
+        .btn.primary{background:var(--primary-color);color:var(--text-primary-color, #fff);border-color:var(--primary-color)}
+    .btn.success{background:var(--success-color, #2e7d32);color:#fff;border-color:var(--success-color, #2e7d32)}
+    .btn.danger{background:var(--error-color);color:var(--text-primary-color, #fff);border-color:var(--error-color)}
+        .btn.ghost{background:var(--card-background-color);color:var(--primary-text-color)}
+  .btn[disabled]{ opacity:.5; cursor:not-allowed }
+        .track{position:relative;height:var(--row-height,64px);user-select:none;background:transparent}
+        .block{position:absolute;top:6px;bottom:6px;border:1px solid var(--divider-color);border-radius:10px;background:var(--secondary-background-color, rgba(0,0,0,.05));display:flex;align-items:center;gap:10px;padding:0 10px;cursor:pointer;box-sizing:border-box}
+        .block.active{outline:2px solid var(--primary-color)}
+        .pill{font-size:.78rem;padding:2px 8px;border-radius:999px;border:1px solid var(--divider-color);background:var(--secondary-background-color, rgba(0,0,0,.05));color:inherit;white-space:nowrap}
+  .now{position:absolute;top:var(--now-extend-top,-76px);bottom:0;width:2px;background:var(--primary-color);opacity:.9;z-index:1;pointer-events:none}
+        .now-top{position:absolute;top:6px;bottom:6px;width:3px;background:var(--primary-color);border-radius:2px;z-index:40;pointer-events:none}
+        .footer{height:28px;position:relative;border-top:1px solid var(--divider-color)}
+        .label-end{position:absolute;left:var(--pad-x);right:var(--pad-x);top:4px;display:flex;justify-content:space-between;font-size:.7rem;color:var(--secondary-text-color)}
+    .overlay{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.32);z-index:2147483000}
+        .overlay.open{display:grid}
+
+  /* Ensure modal content is always above any card decorations/lines */
+  .overlay .modal{ position: relative; z-index:2147483001; }
+  .overlay .modal .week-scale,
+  .overlay .modal .week-track{ position:relative; z-index:2147483002; }
+
+  .modal{width:min(80vw,320px);max-width:320px;border-radius:8px;padding:10px;background:var(--card-background-color);color:var(--primary-text-color);border:1px solid var(--divider-color)}
+  /* Wider modal when 12h editor controls (AM/PM) are shown */
+  .modal.modal-12h{ width: min(92vw, 400px); max-width: 400px; }
+  /* Wider weekday editor */
+  .modal-week{ width: min(95vw, 640px); max-width: 640px; position: relative; }
+  .modal-week .week-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 6px; }
+  .modal-week .week-room{ font-weight:600; color: var(--primary-text-color); opacity:.9; }
+  /* Indent scale and track so ticks/blocks are not against the edge */
+  .modal-week .week-scale{ margin: 0 16px; }
+  .modal-week .week-track{ margin: 0 16px; }
+  /* Weekday tabs */
+  .modal-week .week-tabs{ display:flex; gap:8px; flex-wrap:wrap; border-bottom: 1px solid var(--divider-color); padding-bottom:4px; }
+  .modal-week .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .modal-week .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
+  .modal-week .wk-actions{ display:flex; gap:8px; align-items:center; }
+  /* Copy to rooms modal */
+  .modal-copyrooms{ width:min(92vw,420px); max-width:420px; }
+  .copyrooms-list{ max-height: 260px; overflow:auto; border:1px solid var(--divider-color); border-radius:8px; padding:6px; display:grid; gap:6px; }
+  .copyrooms-list label{ display:flex; align-items:center; gap:8px; }
+  /* Onboarding modal */
+  .modal-onboard{ width:min(96vw,820px); max-width:820px; }
+  .ob-hero{ position:relative; width:100%; height:auto; max-height:60vh; border:1px dashed var(--divider-color); border-radius:10px; display:grid; place-items:center; overflow:hidden; background: var(--secondary-background-color, transparent); }
+  .ob-hero img, .ob-hero video{ display:block; width:100%; height:auto; max-height:100%; object-fit:contain; }
+  .ob-text{ margin-top:8px; font-size:.95rem; color: var(--primary-text-color); }
+  .ob-steps{ display:flex; gap:6px; justify-content:center; margin-top:6px; }
+  .ob-steps .dot{ width:8px; height:8px; border-radius:50%; background: var(--divider-color); }
+  .ob-steps .dot.active{ background: var(--primary-color); }
+  /* Inline tooltip for weekly blocks */
+  .wk-tooltip{ position:absolute; z-index:2147483003; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
+  /* While any overlay is open, hide underlying timeline elements to avoid bleed-through lines from the editor */
+  .card.overlay-open .scale,
+  .card.overlay-open .rows,
+  .card.overlay-open .footer { visibility: hidden; }
+  .card.overlay-open .now { display: none !important; }
+  /* Hide temp pill inside weekly preview blocks for cleaner look */
+  .modal-week .week-track .block .pill{ display:none; }
+  .modal-week .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
+        .modal h3{margin:0 0 10px;font-size:1rem}
+  .grid{display:grid;grid-template-columns:max-content max-content;column-gap:15px;row-gap:8px}
+  /* Add a bit of inner padding so right time input isn't hugging the edge */
+  .modal .grid{padding:0 4px}
+        .grid>div{display:grid;gap:6px;align-items:start}
+  .grid .time-inline{display:flex;flex-direction:row;align-items:center;gap:2px}
+  .grid .time-inline label{margin:0 4px 0 0; width:auto; flex:0 0 auto; white-space:nowrap}
+  /* Keep 'To' compact but readable */
+  .grid .time-right label{margin:0 4px 0 0; width:auto; flex:0 0 auto}
+  .grid .time-inline input[type=time]{flex:0 0 96px;min-width:96px;max-width:96px;box-sizing:border-box;border:1px solid var(--divider-color);border-radius:8px;background: var(--card-background-color);color: var(--primary-text-color);height:28px;padding:2px 6px}
+  .grid .time-inline select.mer-select{flex:0 0 60px;min-width:60px;max-width:60px;height:28px;padding:2px 6px;border:1px solid var(--divider-color);border-radius:8px;background:var(--card-background-color);color:var(--primary-text-color)}
+  .grid>div.time-right{justify-content:flex-start;padding-right:0}
+  /* Temperature input: compact and rounded */
+  .grid .rowfull .ed-temp { width: 140px; height:28px; padding:2px 6px; box-sizing:border-box; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
+      
+        /* remove button */
+  .remove-btn { flex-shrink: 0; padding:4px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--error-color); display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
+  /* Make disabled state clearly visible on remove-style buttons */
+  .remove-btn[disabled] { opacity: .55; cursor: not-allowed; filter: grayscale(60%); color: var(--disabled-text-color, var(--secondary-text-color)) !important; border-color: var(--divider-color) !important; pointer-events: none; }
+  .remove-btn[disabled] ha-icon { filter: grayscale(100%); opacity: .7; }
+  .remove-btn[disabled] span { color: var(--disabled-text-color, var(--secondary-text-color)); }
+        
+  .actions { display:flex; gap:8px; justify-content:flex-end; align-items:center; }
+  /* Give modal action buttons some space from inputs */
+  .modal .actions { margin-top: 10px; }
+        .order-btn {
+          display:inline-flex; align-items:center; justify-content:center;
+          width:32px; height:32px; border-radius:8px;
+          border:1px solid var(--divider-color);
+          background: var(--card-background-color);
+          cursor:pointer; user-select:none;
+        }
+        .order-btn[disabled] { opacity: .5; cursor: not-allowed; }
+        
+        /* Drag & drop */
+        .drag-handle {
+          display:inline-flex; align-items:center; justify-content:center;
+          width:32px; height:32px; border-radius:8px;
+          border:1px dashed var(--divider-color);
+          background: var(--card-background-color);
+          cursor: grab; user-select:none;
+        }
+        .drag-handle:active { cursor: grabbing; }
+        .inline.drag-over { outline: 2px dashed var(--primary-color); outline-offset: 2px; }
+        
+        /* Pointer-driven drag */
+        .drag-ghost {
+          position: fixed;
+          pointer-events: none;
+          opacity: .9;
+          z-index: 9999;
+        }
+        .placeholder { border:2px dashed var(--primary-color); border-radius:10px; margin:6px 0; }
+        
+        /* Merge chips */
+        .linked-chips { display:flex; flex-wrap:wrap; gap:6px; }
+        .pill-chip { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); color: var(--primary-text-color); }
+        .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
+        .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
+        /* Hide all popups and popup-trigger buttons when card has .hide-popups */
+  .card.hide-popups .overlay,
+  .card.hide-popups .overlay-week,
+  .card.hide-popups .overlay-profiles,
+        .card.hide-popups .overlay-settings,
+  .card.hide-popups .overlay-copyrooms,
+  .card.hide-popups .overlay-onboard { display: none !important; }
+  .card.hide-popups [data-role="addbtn"],
+  .card.hide-popups [data-role="weekbtn"],
+        .card.hide-popups [data-role="profbtn"],
+        .card.hide-popups [data-role="settingsbtn"] { display: none !important; }
+  /* Global pause button */
+  .pause-btn { width:26px; height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--primary-color); color: var(--text-primary-color, #fff); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .pause-btn.paused { background: var(--error-color); color: var(--text-primary-color, #fff); border-color: var(--error-color); }
+  .pause-btn ha-icon{ --mdc-icon-size: 16px; }
+  /* Settings button (header, top-right) */
+  .settings-btn { width:26px; height:26px; border-radius:999px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .settings-btn ha-icon{ --mdc-icon-size: 16px; }
+  .profiles-btn { height:26px; border-radius:999px; border:1px solid var(--primary-color); background: var(--card-background-color); color: var(--primary-text-color); padding:0 10px; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+  .profiles-btn.primary{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  .profiles-btn.success{ background: var(--success-color, #4caf50); color: var(--text-primary-color, #fff); border-color: var(--success-color, #4caf50); }
+  .prof-toolbar .btn ha-icon{ --mdc-icon-size: 16px; }
+  .prof-toolbar .btn.primary{ background: var(--primary-color) !important; color: var(--text-primary-color, #fff) !important; border-color: var(--primary-color) !important; }
+        .modal-pause{ width:min(86vw, 320px); max-width:320px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); }
+        .pause-list{ display:grid; gap:8px; }
+  /* Profiles modal */
+  /* Stack controls above preview to give them more space; match Weekly modal width */
+  /* Make tooltip positions relative to the profiles modal */
+  .modal-profiles, .modal-holiday{ width:min(95vw, 640px); max-width: 640px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); position: relative; }
+  .prof-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 6px; }
+  .prof-body{ display:grid; grid-template-columns: 1fr; gap:12px; align-items:start; }
+  .prof-controls{ display:grid; gap:8px; }
+  .prof-list{ display:grid; gap:6px; border:1px solid var(--divider-color); border-radius:8px; padding:6px; max-height:260px; overflow:auto; background: var(--secondary-background-color, transparent); }
+  .prof-item{ display:grid; grid-template-columns: 1fr auto; align-items:center; gap:6px; padding:4px 6px; border-radius:8px; }
+  .prof-item.active{ background: var(--secondary-background-color, rgba(0,0,0,.05)); }
+  .prof-chip{ display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border:1px solid var(--divider-color); border-radius:999px; background: var(--card-background-color); color: var(--primary-text-color); font-weight:600; }
+  .prof-chip:focus, .prof-chip:focus-visible{ outline: none; box-shadow: none; }
+  .prof-actions{ display:flex; gap:6px; align-items:center; }
+  .prof-actions .btn{ height:28px; padding:2px 8px; border-radius:8px; font-size:.78rem; }
+  /* Make profiles and holidays preview identical to weekday preview */
+  .modal-profiles .week-scale, .modal-holiday .week-scale{ margin: 0 16px; }
+  /* Hide the "Add profile" button – profiles are created on Save */
+  .modal-profiles .prof-add{ display:none !important; }
+  .modal-profiles .week-track, .modal-holiday .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
+  .modal-profiles .week-track .block .pill{ display:none; }
+  .modal-profiles .week-scale-inner .mer, .modal-holiday .week-scale-inner .mer{ display:block; font-size:.65rem; color: var(--secondary-text-color); text-align:center; }
+  /* Tabs styling reused (match weekdays look) */
+  .modal-profiles .wk-tab,
+  .modal-holiday .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .modal-profiles .wk-tab.active,
+  .modal-holiday .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
+  /* Small confirm popup inside overlays */
+  .mini-confirm{ position:fixed; inset:0; display:grid; place-items:center; background: rgba(0,0,0,.32); z-index:2147484000; }
+  .mini-confirm .box{ min-width:260px; max-width:420px; border-radius:8px; padding:12px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); box-shadow: var(--ha-card-box-shadow, 0 4px 12px rgba(0,0,0,.2)); }
+  .mini-confirm .box h4{ margin:0 0 8px; font-size:1rem; }
+  .mini-confirm .btns{ display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+  /* Presence combo chips (top of modal) */
+  .presence-combo-chips{ display:flex; gap:6px; flex-wrap:wrap; }
+  .presence-combo-chips .combo-pill{ max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  /* Presence vertical list */
+  .presence-rows{ display:grid; gap:6px; }
+  .presence-row{ text-align:left; padding:6px 10px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); cursor:pointer; white-space: normal; line-height:1.2; }
+  .presence-row.active{ border-color: var(--primary-color); background: var(--secondary-background-color, rgba(0,0,0,.05)); }
+  /* Sync pill next to title */
+  .sync-pill { margin-left: 8px; display:inline-flex; align-items:center; gap:6px; }
+  .sync-pill.ghost { background: var(--secondary-background-color, transparent); color: var(--secondary-text-color); border-color: var(--divider-color); }
+  .sync-pill.primary { background: var(--primary-color); color: var(--text-primary-color, #fff); border-color: var(--primary-color); }
+  .sync-pill.success { background: color-mix(in oklab, #2e7d32 20%, var(--card-background-color)); color: var(--primary-text-color); border-color: color-mix(in oklab, #2e7d32 50%, var(--divider-color)); }
+  .sync-pill ha-icon { --mdc-icon-size: 16px; }
+  /* Small red test button next to title */
+  .test-btn { width:22px; height:22px; border-radius:50%; border:1px solid var(--error-color); background: var(--error-color); color: var(--text-primary-color, #fff); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .test-btn ha-icon{ --mdc-icon-size: 14px; }
+  /* Test popup */
+  .modal-test{ width:min(92vw, 520px); max-width:520px; }
+  /* Settings popup */
+  .modal-settings{
+    width:min(95vw, 640px);
+    max-width:640px;
+    height:min(90vh, 720px);
+    max-height:min(90vh, 720px);
+    display:flex;
+    flex-direction:column;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+  .overlay-settings .settings-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 8px; }
+  .overlay-settings .settings-head .settings-title{ margin:0; }
+  .overlay-settings .settings-head .int-status{ cursor: default; }
+  .overlay-settings .int-status{ display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); }
+  .overlay-settings .int-status.ok{ color: var(--success-color, #2e7d32); border-color: color-mix(in oklab, var(--success-color, #2e7d32) 50%, var(--divider-color)); }
+  .overlay-settings .int-status.bad{ color: var(--error-color); border-color: color-mix(in oklab, var(--error-color) 50%, var(--divider-color)); }
+  .overlay-settings .int-status ha-icon{ --mdc-icon-size: 14px; }
+  .overlay-settings .int-status .text{ font-size:.8rem; white-space:nowrap; }
+  /* Keep header/tabs/buttons fixed; scroll content instead */
+  .overlay-settings .modal-settings .settings-body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow:auto;
+  }
+  .overlay-settings .modal-settings .actions{ flex:0 0 auto; }
+  .settings-tabs{ display:flex; flex-wrap:wrap; gap:12px 18px; align-items:flex-end; padding:0 6px; margin:8px 0 4px; border-bottom: 1px solid var(--divider-color); }
+  .settings-tab-btn{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); padding:10px 2px; margin:0; cursor:pointer; font-weight:600; position:relative; max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .settings-tab-btn::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background: transparent; border-radius:2px; }
+  .settings-tab-btn.active{ color: var(--primary-text-color); }
+  .settings-tab-btn.active::after{ background: var(--primary-color); }
+  .settings-tab-btn:focus{ outline:none; }
+  .settings-tab-btn:focus-visible{ outline: 2px solid var(--primary-color); outline-offset:2px; border-radius:4px; }
+  /* Popup settings content (reuse editor look) */
+  .settings-card{ border:1px solid var(--divider-color); border-radius:12px; background: var(--card-background-color); padding:12px; display:grid; gap:10px; }
+  .settings-card .grid4{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom: 6px; }
+  .settings-card .sfield{ display:grid; gap:2px; align-items:start; }
+  .settings-card .slabel{ font-size:.8rem; color: var(--secondary-text-color); line-height:1; padding-left:4px; }
+  .settings-card .settings-input{ width:88px; height:28px; padding:4px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing:border-box; }
+  .settings-card .setting{ display:grid; grid-template-columns: 1fr auto; align-items:center; gap:10px; padding:10px 4px; }
+  .settings-card .setting + .setting{ border-top: 1px solid var(--divider-color); }
+  .settings-card .title{ font-weight:600; }
+  .settings-card .desc{ font-size:.85rem; color: var(--secondary-text-color); margin-top:2px; }
+  /* Segmented control (used by popup Settings: time format/source, temperature unit) */
+  .settings-card .seg{ display:inline-flex; border:1px solid var(--divider-color); border-radius:10px; overflow:hidden; }
+  .settings-card .seg button{ padding:6px 10px; background: var(--card-background-color); color: var(--primary-text-color); border:0; cursor:pointer; }
+  .settings-card .seg button.active{ background: var(--primary-color); color: var(--text-primary-color, #fff); }
+  /* Popup inputs (used in Rooms, Holidays etc.) */
+  .overlay-settings input.tt-input{
+    width:100%;
+    height:36px;
+    min-height:36px;
+    padding:6px 10px;
+    box-sizing:border-box;
+    border:1px solid var(--divider-color);
+    border-radius:8px;
+    background: var(--card-background-color);
+    color: var(--primary-text-color);
+    display:block;
+  }
+  .overlay-settings input.tt-input.tt-input-lg{
+    height:48px;
+    min-height:48px;
+    max-height:48px;
+    padding:0 14px;
+    border-radius:10px;
+    background: var(--card-background-color);
+  }
+  .overlay-settings input.tt-input::placeholder{ color: var(--secondary-text-color); opacity: 1; }
+  .overlay-settings input.tt-input:focus{ outline:none; }
+  .overlay-settings input.tt-input:focus-visible{ outline: 2px solid var(--primary-color); outline-offset:2px; }
+
+  /* Popup entity pickers should match the Rooms details width */
+  .overlay-settings .inline tt-entity-picker,
+  .overlay-settings .inline ha-entity-picker{
+    width:100%;
+    min-width:250px;
+    max-width:440px;
+    min-height:48px;
+    display:block;
+  }
+  .settings-body{ display:grid; gap:10px; }
+  .settings-page{ display:none; }
+  .settings-page.active{ display:block; }
+  .test-list{ margin-top:8px; display:grid; gap:8px; max-height:360px; overflow:auto; border:1px solid var(--divider-color); border-radius:8px; padding:8px; }
+  .test-item{ padding:6px 8px; border:1px solid var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
+  .test-item h4{ margin:0 0 4px; font-size:.95rem; overflow-wrap:anywhere; }
+  .test-fields{ margin:0; padding-left:18px; color: var(--secondary-text-color); }
+  .test-empty{ color: var(--secondary-text-color); font-size:.95rem; }
+  /* Ensure test modal never overflows horizontally */
+  .modal-test{ box-sizing: border-box; overflow:hidden; }
+  .modal-test *{ box-sizing: border-box; }
+  .modal-test .test-list{ width:100%; overflow-x:auto; }
+  .modal-test .test-select{ width:100% !important; max-width:100% !important; display:block; }
+  .modal-test .test-picker, .modal-test ha-entity-picker{ width:100% !important; max-width:100% !important; display:block; }
+        </style>
+      <ha-card class="card">
+  <div class="header"><div class="title"></div><div class="weekday-full" style="display:none;"></div><div class="spacer"></div></div>
+        <div class="scale"><div class="scale-inner"></div></div>
+        <div class="rows"></div>
+  <div class="footer"><div class="label-end"><span class="lbl-start">00:00</span><span class="lbl-end">00:00</span></div></div>
+        <div class="overlay" part="overlay">
+          <div class="modal" role="dialog" aria-modal="true" aria-label="">
+            <h3 class="ed-modal-title"></h3>
+            <div class="grid">
+              <div class="time-inline"><label class="ed-from-label"></label><input class="ed-from" type="time" step="60" /><select class="mer-select ed-from-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
+              <div class="time-inline time-right"><label class="ed-to-label"></label><input class="ed-to" type="time" step="60" /><select class="mer-select ed-to-mer" style="display:none;"><option>AM</option><option>PM</option></select></div>
+              <div class="rowfull"><label class="ed-temp-label"></label><input class="ed-temp" type="number" step="0.5" min="0" max="120" /></div>
+            </div>
+            <div class="ed-error" role="alert" aria-live="assertive" style="color:var(--error-color); display:none; margin-top:8px; font-size:.95rem;"></div>
+            <div class="actions"><button class="btn ghost danger ed-delete" type="button"></button><button class="btn ghost ed-cancel" type="button"></button><button class="btn primary ed-save" type="button"></button></div>
+          </div>
+        </div>
+        <div class="overlay overlay-week" part="overlay">
+          <div class="modal modal-week" role="dialog" aria-modal="true" aria-label="">
+            <div class="week-head"><h3 class="week-title"></h3><div class="week-room"></div></div>
+            <div style="display:grid; gap:10px;">
+              <div class="week-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+              <div style="display:grid; gap:4px;">
+                <label style="font-size:.85rem; color: var(--secondary-text-color);" class="week-mode-label"></label>
+                <select class="week-mode" style="padding:6px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color);">
+                  <option value="weekday_weekend" class="opt-weekday-weekend"></option>
+                  <option value="weekday_sat_sun" class="opt-weekday-sat-sun"></option>
+                  <option value="all_7" class="opt-all-7"></option>
+                </select>
+              </div>
+              <div class="week-tabs" role="tablist"></div>
+              <div class="week-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <div class="week-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
+                <div class="wk-actions"></div>
+              </div>
+              <div class="week-pastebar" style="display:none; padding:2px 0; gap:6px; flex-wrap:wrap;"></div>
+              <div class="week-scale" style="position:relative; height:32px;">
+                <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+              </div>
+              <div class="week-track" style="position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden;"></div>
+              <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <button class="btn ghost wk-cancel" type="button"></button>
+                <button class="btn primary wk-save" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Copy entire week to other rooms -->
+        <!-- Profiles (named daily schedules per room) -->
+        <div class="overlay overlay-profiles" part="overlay">
+          <div class="modal modal-profiles" role="dialog" aria-modal="true">
+            <div class="prof-head">
+              <h3 class="prof-title"></h3>
+              <div class="prof-room" style="opacity:.9;"></div>
+            </div>
+            <div class="prof-body">
+              <div class="prof-controls" style="display:grid; gap:8px;">
+                <div class="prof-list"></div>
+                <button type="button" class="add-entity-btn prof-add"><ha-icon icon="mdi:plus"></ha-icon><span class="prof-add-text"></span></button>
+              </div>
+              <div style="display:grid; gap:8px; align-items:start;">
+                <div class="prof-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+                <div class="prof-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
+                <div class="week-scale" style="position:relative; height:32px;">
+                  <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+                </div>
+                <div class="week-track" style="position:relative;"></div>
+                <div style="display:flex; gap:8px; justify-content:flex-end;">
+                  <button class="btn primary prof-save" type="button"></button>
+                  <button class="btn ghost prof-close" type="button"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Holidays (single daily schedule per room) -->
+        <div class="overlay overlay-holiday" part="overlay">
+          <div class="modal modal-holiday" role="dialog" aria-modal="true">
+            <div class="prof-head">
+              <h3 class="holiday-title"></h3>
+              <div class="holiday-room" style="opacity:.9;"></div>
+            </div>
+            <div style="display:grid; gap:8px; align-items:start;">
+              <div class="holiday-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+              <div class="holiday-note" style="font-size:.85rem; color: var(--secondary-text-color);"></div>
+              <div class="week-scale" style="position:relative; height:32px;">
+                <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+              </div>
+              <div class="week-track" style="position:relative;"></div>
+              <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <button class="btn primary holiday-save" type="button"></button>
+                <button class="btn ghost holiday-close" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Presence (advanced away) -->
+        <div class="overlay overlay-presence" part="overlay">
+          <div class="modal modal-profiles" role="dialog" aria-modal="true">
+            <div class="prof-head">
+              <h3 class="presence-title"></h3>
+              <div class="presence-room" style="opacity:.9;"></div>
+            </div>
+            <div class="prof-body">
+              <div class="prof-controls" style="display:grid; gap:8px;">
+                <label class="presence-adv-row" style="display:none; align-items:center; gap:8px;">
+                  <input type="checkbox" class="presence-adv-toggle" />
+                  <span class="presence-adv-label"></span>
+                </label>
+                <div class="presence-combos"></div>
+              </div>
+              <div style="display:grid; gap:8px; align-items:start;">
+                <div class="presence-combo-active" style="font-size:.9rem; color: var(--secondary-text-color);"></div>
+                <div class="presence-roomtabs" role="tablist" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+                <div class="week-scale" style="position:relative; height:32px;">
+                  <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+                </div>
+                <div class="week-track" style="position:relative;"></div>
+                <div style="display:flex; gap:8px; justify-content:flex-end;">
+                  <button class="btn primary presence-save" type="button"></button>
+                  <button class="btn ghost presence-close" type="button"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Copy entire week to other rooms -->
+        <div class="overlay overlay-copyrooms" part="overlay">
+          <div class="modal modal-copyrooms" role="dialog" aria-modal="true">
+            <h3 class="copyrooms-title"></h3>
+            <div class="copyrooms-desc" style="font-size:.9rem; color: var(--secondary-text-color); margin-bottom:6px;"></div>
+            <div class="copyrooms-list"></div>
+            <div class="actions" style="margin-top:10px; display:flex; justify-content:flex-end; gap:8px;">
+              <button class="btn ghost copyrooms-cancel" type="button"></button>
+              <button class="btn primary copyrooms-apply" type="button"></button>
+            </div>
+          </div>
+        </div>
+        <!-- First-time onboarding -->
+        <div class="overlay overlay-onboard" part="overlay">
+          <div class="modal modal-onboard" role="dialog" aria-modal="true">
+            <h3 class="onb-title"></h3>
+            <div class="ob-hero">
+              <img class="onb-img" alt="guide" style="display:none;" />
+              <video class="onb-vid" muted playsinline loop style="display:none;"></video>
+            </div>
+            <div class="ob-text onb-text"></div>
+            <div class="ob-steps onb-dots"></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px; gap:8px;">
+              <label style="display:flex; align-items:center; gap:6px; font-size:.85rem; color: var(--secondary-text-color);"><input type="checkbox" class="onb-hide" /> <span class="onb-hide-lbl"></span></label>
+              <div class="actions" style="display:flex; gap:8px;">
+                <button class="btn ghost onb-prev" type="button"></button>
+                <button class="btn ghost onb-skip" type="button"></button>
+                <button class="btn primary onb-next" type="button"></button>
+                <button class="btn primary onb-done" type="button" style="display:none;"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pause auto-apply -->
+        <div class="overlay overlay-pause" part="overlay">
+          <div class="modal modal-pause" role="dialog" aria-modal="true">
+            <h3 class="pause-title"></h3>
+            <div class="pause-status" style="font-size:.9rem; color: var(--secondary-text-color); margin-bottom:6px;"></div>
+            <div class="pause-list">
+              <button type="button" class="btn ghost pause-1h"></button>
+              <button type="button" class="btn ghost pause-5h"></button>
+              <button type="button" class="btn ghost pause-custom"></button>
+              <button type="button" class="btn ghost pause-indef"></button>
+              <button type="button" class="btn success pause-resume"></button>
+              <button type="button" class="btn danger pause-close"></button>
+            </div>
+          </div>
+        </div>
+        <!-- In-card Settings (moved out of HA editor over time) -->
+        <div class="overlay overlay-settings" part="overlay">
+          <div class="modal modal-settings" role="dialog" aria-modal="true">
+            <div class="settings-head">
+              <h3 class="settings-title"></h3>
+              <span class="int-status sp-int-status" role="status">
+                <ha-icon class="icon" icon="mdi:cloud-off-outline"></ha-icon>
+                <span class="text"></span>
+              </span>
+            </div>
+            <div class="settings-tabs" role="tablist">
+              <button type="button" class="settings-tab-btn" data-tab="settings" role="tab" aria-selected="true"></button>
+              <button type="button" class="settings-tab-btn" data-tab="pause" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="weekdays" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="rooms" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="boiler" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="colors" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="owd" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="holidays" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="away" role="tab" aria-selected="false"></button>
+            </div>
+            <div class="settings-body" style="min-height:80px;">
+              <div class="settings-page" data-page="settings">
+                <div class="settings-card">
+                  <div class="grid4">
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-def"></div>
+                      <input class="settings-input sp-def" type="number" step="0.5" />
+                    </div>
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-rowh"></div>
+                      <input class="settings-input sp-rowh" type="number" step="1" min="40" max="120" />
+                    </div>
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-minc"></div>
+                      <input class="settings-input sp-minc" type="number" step="0.5" />
+                    </div>
+                    <div class="sfield">
+                      <div class="slabel sp-slabel-maxc"></div>
+                      <input class="settings-input sp-maxc" type="number" step="0.5" />
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-auto-title"></div>
+                      <div class="desc sp-auto-desc"></div>
+                    </div>
+                    <ha-switch class="sp-auto"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-applyedit-title"></div>
+                      <div class="desc sp-applyedit-desc"></div>
+                    </div>
+                    <ha-switch class="sp-applyedit"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-applydef-title"></div>
+                      <div class="desc sp-applydef-desc"></div>
+                    </div>
+                    <ha-switch class="sp-applydef"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-perroom-title"></div>
+                      <div class="desc sp-perroom-desc"></div>
+                    </div>
+                    <ha-switch class="sp-perroom"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-timefmt-title"></div>
+                      <div class="desc sp-timefmt-desc"></div>
+                    </div>
+                    <div class="seg sp-timefmt">
+                      <button type="button" class="sp-fmt24">24h</button>
+                      <button type="button" class="sp-fmt12">12h</button>
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-timesrc-title"></div>
+                      <div class="desc sp-timesrc-desc"></div>
+                    </div>
+                    <div class="seg sp-timesrc">
+                      <button type="button" class="sp-srcBrowser"></button>
+                      <button type="button" class="sp-srcHa"></button>
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-tempfmt-title"></div>
+                      <div class="desc sp-tempfmt-desc"></div>
+                    </div>
+                    <div class="seg sp-tempfmt">
+                      <button type="button" class="sp-unitC">°C</button>
+                      <button type="button" class="sp-unitF">°F</button>
+                    </div>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-profiles-title"></div>
+                      <div class="desc sp-profiles-desc"></div>
+                    </div>
+                    <ha-switch class="sp-profiles"></ha-switch>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-page" data-page="pause">
+                <div class="settings-card">
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-pausebtn-title"></div>
+                      <div class="desc sp-pausebtn-desc"></div>
+                    </div>
+                    <ha-switch class="sp-pausebtn"></ha-switch>
+                  </div>
+
+                  <div class="setting">
+                    <div class="text">
+                      <div class="title sp-pausesensor-title"></div>
+                      <div class="desc sp-pausesensor-desc"></div>
+                    </div>
+                    <ha-switch class="sp-pausesensor"></ha-switch>
+                  </div>
+
+                  <div class="setting sp-pausesensor-entity-setting" style="grid-template-columns: 1fr;">
+                    <div class="text">
+                      <div class="title sp-pausesensor-entity-title"></div>
+                      <div class="desc sp-pausesensor-entity-desc"></div>
+                    </div>
+                    <tt-entity-picker class="sp-pausesensor-entity" include-domains='["binary_sensor"]'></tt-entity-picker>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-page" data-page="weekdays"></div>
+              <div class="settings-page" data-page="rooms"></div>
+              <div class="settings-page" data-page="boiler"></div>
+              <div class="settings-page" data-page="colors"></div>
+              <div class="settings-page" data-page="owd"></div>
+              <div class="settings-page" data-page="holidays"></div>
+              <div class="settings-page" data-page="away"></div>
+            </div>
+            <div class="actions" style="margin-top:10px; display:flex; justify-content:flex-end; gap:8px;">
+              <button class="btn primary settings-save" type="button"></button>
+              <button class="btn ghost settings-close" type="button"></button>
+            </div>
+          </div>
+        </div>
+        <!-- Test popup: entity picker + list of available services for selected entity -->
+        <div class="overlay overlay-test" part="overlay">
+          <div class="modal modal-test" role="dialog" aria-modal="true">
+            <h3 style="margin-bottom:8px;" class="test-title"></h3>
+            <div style="display:grid; gap:6px;">
+              <label style="font-size:.9rem; color: var(--secondary-text-color);" class="test-label"></label>
+              <ha-entity-picker class="test-picker"></ha-entity-picker>
+              <!-- Simpel fallback hvis ha-entity-picker ikke er tilgængelig -->
+              <select class="test-select" style="display:none; padding:6px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color);"></select>
+              <div class="test-list">
+                <div class="test-empty"></div>
+              </div>
+              <div class="actions" style="display:flex; justify-content:flex-end; gap:8px;">
+                <button class="btn primary test-export" type="button" disabled class="test-export-btn"></button>
+                <button class="btn ghost test-close" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ha-card>`;    this._applyCardI18n();
+
+    // Apply hide-popups class if requested
+    try { const card = this.shadowRoot.querySelector('ha-card'); if (this._disablePopups && card) card.classList.add('hide-popups'); } catch {}
+
+
+    this._ensureSchedules();
+    this._startUiTimer();
+    // Show onboarding for first-time users (disabled while popups are turned off)
+    try { if (!this._disablePopups) this._maybeOpenOnboard(); } catch {}
+
+    // Wire pause overlay actions
+    try {
+      const ov = this.shadowRoot.querySelector('.overlay-pause');
+      const b1 = this.shadowRoot.querySelector('.pause-1h');
+      const b5 = this.shadowRoot.querySelector('.pause-5h');
+      const bc = this.shadowRoot.querySelector('.pause-custom');
+      const bi = this.shadowRoot.querySelector('.pause-indef');
+      const br = this.shadowRoot.querySelector('.pause-resume');
+      const bx = this.shadowRoot.querySelector('.pause-close');
+      b1?.addEventListener('click', ()=>{ this._setPauseForMinutes(60); });
+      b5?.addEventListener('click', ()=>{ this._setPauseForMinutes(300); });
+      bc?.addEventListener('click', ()=>{
+        try {
+          const txt = prompt(this._t('pause.off_custom') + ' (minutes):', '60');
+          const m = Number(txt);
+          if (Number.isFinite(m) && m > 0) this._setPauseForMinutes(m);
+        } catch {}
+      });
+      bi?.addEventListener('click', ()=>{ this._setPauseIndef(); });
+      br?.addEventListener('click', ()=>{ this._resumeNow(); });
+      bx?.addEventListener('click', ()=>{ try { ov?.classList.remove('open'); } catch {} });
+    } catch {}
+  }
+
+  _renderPauseStatus(){
+    try {
+      const st = this.shadowRoot && this.shadowRoot.querySelector('.pause-status');
+      if (!st) return;
+      if (!this._isPaused()) { st.textContent = ''; return; }
+      if (this._pauseIndef) { st.textContent = this._t('pause.active_indef'); return; }
+      const until = new Date(Number(this._pauseUntilMs||0));
+      // Format time according to card preference
+      const hh = until.getHours(), mm = until.getMinutes();
+      let label;
+      if (this._config?.time_12h) {
+        const am = hh < 12; let h = hh % 12; if (h===0) h=12;
+        label = `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')} ${am?'AM':'PM'}`;
+      } else {
+        label = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+      }
+      const msgTmpl = this._t('pause.active_until');
+      st.textContent = (msgTmpl || 'Paused until {time}').replace('{time}', label);
+    } catch {}
+  }
+
+  // --- Sync countdown helpers (delayed sync UI) ---
+  _formatSyncCountdown(){
+    try {
+      const leftMs = Math.max(0, Number(this._storeDelayDue||0) - Date.now());
+      const s = Math.ceil(leftMs/1000);
+      const mm = Math.floor(s/60), ss = s%60;
+      return `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+    } catch { return '00:00'; }
+  }
+  _startSyncTimer(){
+    if (this._syncTimer) return;
+    try { this._syncTimer = setInterval(()=>{ try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} }, 1000); } catch {}
+  }
+  _stopSyncTimer(){ try { if (this._syncTimer) clearInterval(this._syncTimer); } catch {} this._syncTimer = null; }
+
+  // Persist/restore delayed sync due time across hard refresh
+  _syncDueKey(){ return 'tt_sync_due:default'; }
+  _draftKey(){ return 'tt_sync_draft:default'; }
+  _persistDraftNow(){ try { localStorage.setItem(this._draftKey(), JSON.stringify({ ts: Date.now(), schedules: this._schedules })); } catch {} }
+  _tryRestoreDraftRecent(maxAgeMs=15*60*1000){ try { const raw = localStorage.getItem(this._draftKey()) || ''; if (!raw) return false; const parsed = JSON.parse(raw); const ts = Number(parsed?.ts); if (!Number.isFinite(ts) || (Date.now()-ts) > maxAgeMs) return false; const sch = parsed?.schedules && parsed.schedules.schedules ? parsed.schedules.schedules : (parsed?.schedules || parsed || {}); if (sch && typeof sch === 'object') { this._schedules = sch; this._ensureSchedules(); return true; } } catch {} return false; }
+  _restoreSyncDue(){
+    try {
+      if (!this._config?.storage_enabled || this._config?.storage_sync_mode !== 'delay') return;
+      // Prefer value from storage (already read in _loadStore); fallback to localStorage
+      if (Number.isFinite(this._storeDelayDue) && this._storeDelayDue > Date.now()) {
+        // Restore any recent local draft so UI shows latest edits
+        try { this._tryRestoreDraftRecent(); } catch {}
+        const remaining = Math.max(500, this._storeDelayDue - Date.now());
+        if (this._storeDelayTimer) { try { clearTimeout(this._storeDelayTimer); } catch {} }
+        this._storeDelayTimer = setTimeout(()=>{ this._storeDelayTimer = null; this._writeStoreNow(); }, remaining);
+        this._startSyncTimer();
+        return;
+      }
+      const key = this._syncDueKey();
+      const raw = localStorage.getItem(key) || '';
+      const due = Number(raw);
+      if (!Number.isFinite(due)) return;
+      if (due <= Date.now()) { try { localStorage.removeItem(key); } catch {} return; }
+      // Restore recent draft too
+      try { this._tryRestoreDraftRecent(); } catch {}
+      this._storeDelayDue = due;
+      const remaining = Math.max(500, due - Date.now());
+      if (this._storeDelayTimer) { try { clearTimeout(this._storeDelayTimer); } catch {} }
+      this._storeDelayTimer = setTimeout(()=>{ this._storeDelayTimer = null; this._writeStoreNow(); }, remaining);
+      this._startSyncTimer();
+    } catch {}
+  }
+
+  async _writeStoreNow(){
+    if (!this._config?.storage_enabled) return;
+    this._saving = true;
+    const key = this._syncDueKey();
+    try {
+      // Build away for backend: if advanced presence is enabled, disable basic away in backend
+      const _awayCfg = this._config?.away || {};
+      const _awayOut = { ..._awayCfg };
+      if (_awayOut.advanced_enabled) _awayOut.enabled = false;
+      const payload = this._makeStoragePayload(true);
+      payload.settings = { ...payload.settings, away: _awayOut };
+      // Push all data to the integration via set_store service (writes to file)
+      await this._hass.callService("thermostat_timeline", "set_store", payload);
+    }
+    catch (e) {}
+    finally {
+      setTimeout(() => {
+        this._saving = false;
+        this._syncJustUntil = Date.now() + 2500;
+        this._storeDelayDue = 0;
+        try { localStorage.removeItem(key); } catch {}
+        this._startSyncTimer();
+        this._render();
+      }, 600);
+    }
+  }
+
+  _setPauseForMinutes(mins){
+    try {
+      const ms = Math.max(1, Math.round(Number(mins)||0)) * 60000;
+      this._pauseIndef = false;
+      this._pauseUntilMs = Date.now() + ms;
+      // Persist to storage/local
+      this._debouncedSaveStore();
+      this._render();
+      this._renderPauseStatus();
+      // Reschedule apply/resume
+      this._scheduleNextApply();
+      // Notify backend immediately when shared storage is on
+      try { if (this._config?.storage_enabled) this._saveStore(); } catch {}
+      // Close overlay
+      try { this.shadowRoot.querySelector('.overlay-pause')?.classList.remove('open'); } catch {}
+    } catch {}
+  }
+
+  _setPauseIndef(){
+    try {
+      this._pauseIndef = true; this._pauseUntilMs = 0;
+      this._debouncedSaveStore();
+      this._render();
+      this._renderPauseStatus();
+      this._scheduleNextApply();
+      try { if (this._config?.storage_enabled) this._saveStore(); } catch {}
+      try { this.shadowRoot.querySelector('.overlay-pause')?.classList.remove('open'); } catch {}
+    } catch {}
+  }
+
+  _resumeNow(){
+    try {
+      this._pauseIndef = false; this._pauseUntilMs = 0;
+      this._debouncedSaveStore();
+      this._render();
+      this._scheduleNextApply();
+      // Apply immediately to match plan "now"
+      this._applyCurrentSetpoints(true, true);
+      try { if (this._config?.storage_enabled) this._saveStore(); } catch {}
+      try { this.shadowRoot.querySelector('.overlay-pause')?.classList.remove('open'); } catch {}
+    } catch {}
+  }
+
+  // If the editor asked to open the Holiday modal after the user pressed Save,
+  // read the flag from localStorage and open once, then clear the flag.
+  _maybeOpenDeferredHoliday(){
+    try {
+      const flag = localStorage.getItem('tt_defer_holiday_open');
+      if (flag === '1') {
+        localStorage.removeItem('tt_defer_holiday_open');
+        const first = (this._config?.entities||[])[0] || null;
+        this._openHolidayEditor(first);
+      }
+    } catch {}
+  }
+
+  _ensureSchedules() {
+    for (const eid of this._config.entities) {
+      if (!this._schedules[eid]) this._schedules[eid] = { defaultTemp: this._config.default_temp, blocks: [] };
+      // Always maintain structures so state is preserved if toggles are flipped later
+      this._ensureProfilesStruct(this._schedules[eid]);
+      this._ensureHolidayStruct(this._schedules[eid]);
+      this._ensurePresenceStruct(this._schedules[eid]);
+      if (this._config?.weekdays_enabled) this._ensureWeeklyStruct(this._schedules[eid]);
+    }
+  }
+
+  _startUiTimer() {
+    if (this._uiTimer) clearInterval(this._uiTimer);
+    this._uiTimer = setInterval(() => { if (!this._inlineEditing && !this._editing) this._render(); }, this._config.now_update_ms);
+  }
+
+  _startStoreWatchTimer(){
+    try { if (this._storeWatchTimer) clearInterval(this._storeWatchTimer); } catch {}
+    if (!this._config?.storage_enabled) { return; }
+    const ms = Math.max(800, Number(this._storeWatchMs||0) || 10000);
+    this._storeWatchTimer = setInterval(()=>{
+      if (this._storeWatchBusy) return;
+      this._storeWatchBusy = true;
+      (async () => {
+        try {
+          let verSched = NaN, verSet = NaN, verCol = NaN, verWeek = NaN, verProf = NaN;
+          let haveVersions = false;
+          // Always use API for version checking - file-based storage only
+          if (this._apiSupported()) {
+            const ver = await this._apiFetchVersion();
+            if (ver && typeof ver === 'object') {
+              verSched = Number(ver.version || 0);
+              verSet = Number(ver.settings_version || verSched || 0);
+              verCol = Number(ver.colors_version || verSet || verSched || 0);
+              verWeek = Number(ver.weekday_version || verCol || verSet || verSched || 0);
+              verProf = Number(ver.profile_version || verWeek || verCol || verSet || verSched || 0);
+              // Check for global profile changes from API data
+              const s = ver.settings || {};
+              const newGP = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null;
+              const newPE = typeof s.profiles_enabled === 'boolean' ? !!s.profiles_enabled : this._config?.profiles_enabled;
+              let changed = false;
+              if (newGP !== this._globalProfile) { this._globalProfile = newGP; changed = true; }
+              if (newPE !== this._config.profiles_enabled) { this._config.profiles_enabled = newPE; changed = true; }
+              if (changed) {
+                try {
+                  for (const id of (this._config?.entities||[])){
+                    const r = this._schedules[id]; if (!r) continue; this._ensureProfilesStruct(r);
+                    if (!this._globalProfile) { r.activeProfile = null; continue; }
+                    r.activeProfile = (r.profiles && r.profiles[this._globalProfile]) ? this._globalProfile : null;
+                  }
+                } catch {}
+                if (!this._inlineEditing && !this._editing) this._render();
+                this._scheduleNextApply();
+              }
+              haveVersions = true;
+            }
+          }
+          if (!haveVersions) return;
+          const schedChanged = this._config?.storage_enabled && !this._saving && !Number.isNaN(verSched) && verSched !== this._lastVersion;
+          const settingsChanged = this._config?.storage_enabled && !this._saving && !Number.isNaN(verSet) && verSet !== this._lastSettingsVersion;
+          const colorsChanged = this._config?.storage_enabled && !this._saving && !Number.isNaN(verCol) && verCol !== this._lastColorsVersion;
+          const weekdaysChanged = this._config?.storage_enabled && !this._saving && !Number.isNaN(verWeek) && verWeek !== this._lastWeekdayVersion;
+          const profilesChanged = this._config?.storage_enabled && !this._saving && !Number.isNaN(verProf) && verProf !== this._lastProfileVersion;
+          if (schedChanged || settingsChanged || colorsChanged || weekdaysChanged || profilesChanged){
+            this._lastVersion = verSched;
+            this._lastSettingsVersion = verSet;
+            this._lastColorsVersion = verCol;
+            this._lastWeekdayVersion = verWeek;
+            this._lastProfileVersion = verProf;
+            this._loadStore(false).then(()=>{ this._ensureSchedules(); if (!this._inlineEditing && !this._editing) this._render(); this._scheduleNextApply(); });
+          }
+        } catch {} finally {
+          this._storeWatchBusy = false;
+        }
+      })();
+    }, ms);
+  }
+
+  _render() {
+    // Do not re-render while the user is actively typing in inline inputs (to avoid caret/selection loss)
+    if (this._suspendRender) return;
+    const qs = (s) => this.shadowRoot.querySelector(s);
+  const titleEl = qs('.title');
+  const dayFull = qs('.weekday-full');
+  const rowsEl = qs('.rows');
+  const scaleEl = qs('.scale-inner');
+  const headerEl = qs('.header');
+    if (!rowsEl || !scaleEl || !titleEl) return;
+
+    // Helper: build "All rooms" / "All days" view switch
+    const makeWeekViewSeg = (extraClass='')=>{
+      try {
+        const isWeekEnabled = !!this._config?.weekdays_enabled;
+        const allowInlineViewSwitch = !!(this._config?.weekdays_view_switch_in_timeline);
+        const isHoliday = !!(this._isHolidayActive && this._isHolidayActive());
+        if (!isWeekEnabled || !allowInlineViewSwitch || isHoliday) return null;
+
+        const fullRooms = this._t('week.view.rooms_one_day') || 'All rooms • one day';
+        const fullDays = this._t('week.view.days_one_room') || 'All days • one room';
+        const short = (txt)=>{
+          try {
+            const s = String(txt || '').split('•')[0].trim();
+            return s || String(txt || '');
+          } catch { return String(txt || ''); }
+        };
+
+        const setView = (mode)=>{
+          try {
+            if (!this._config?.weekdays_enabled) return;
+            const next = (mode === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+            const cur = String(this._config?.weekdays_view || 'all_rooms_one_day');
+            if (cur === next) return;
+            this._config.weekdays_view = next;
+            // Keep selected room consistent
+            try {
+              const ents = Array.isArray(this._config?.entities) ? this._config.entities.filter(Boolean).map(String) : [];
+              if (next === 'one_room_all_days') {
+                const want = String(this._config?.weekdays_selected_room || '');
+                this._config.weekdays_selected_room = (want && ents.includes(want)) ? want : (ents[0] || '');
+              } else {
+                this._config.weekdays_selected_room = '';
+                try { this._setTimelineDisplayDayKey(this._todayKey()); } catch {}
+              }
+            } catch {}
+            this._render();
+            try { this._debouncedSaveStore(); } catch {}
+          } catch {}
+        };
+
+        const seg = document.createElement('div');
+        seg.className = 'sp-week-view-inline' + (extraClass ? (' ' + extraClass) : '');
+        seg.setAttribute('role','group');
+        seg.setAttribute('aria-label', this._t('week.title') || 'Weekdays');
+
+        const bRooms = document.createElement('button');
+        bRooms.type = 'button';
+        bRooms.textContent = short(fullRooms);
+        bRooms.title = String(fullRooms || '');
+        bRooms.classList.toggle('active', String(this._config?.weekdays_view || 'all_rooms_one_day') === 'all_rooms_one_day');
+        bRooms.addEventListener('click', ()=>setView('all_rooms_one_day'));
+
+        const bDays = document.createElement('button');
+        bDays.type = 'button';
+        bDays.textContent = short(fullDays);
+        bDays.title = String(fullDays || '');
+        bDays.classList.toggle('active', String(this._config?.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days');
+        bDays.addEventListener('click', ()=>setView('one_room_all_days'));
+
+        seg.append(bRooms, bDays);
+        return seg;
+      } catch { return null; }
+    };
+
+    // Determine first active profile (if any) for header pill
+    let _activeProfileName = null;
+    try {
+      if (this._config?.profiles_enabled) {
+        for (const eid of (this._config?.entities || [])) {
+          const row = this._schedules?.[eid];
+          if (!row) continue;
+          this._ensureProfilesStruct(row);
+          const ap = row.activeProfile || null;
+          if (ap) { _activeProfileName = String(ap); break; }
+        }
+      }
+    } catch {}
+
+    {
+      const isDef = (txt)=>{
+        try {
+          const s = String(txt || '').trim();
+          for (const k of Object.keys(TT_I18N || {})){
+            const v = TT_I18N[k] && TT_I18N[k]['card.title_default'];
+            if (v && String(v).trim() === s) return true;
+          }
+        } catch {}
+        return false;
+      };
+      const shown = (!this._config.title || isDef(this._config.title)) ? this._t('card.title_default') : this._config.title;
+      titleEl.innerHTML = '';
+      const tspan = document.createElement('span'); tspan.className = 'title-text'; tspan.textContent = shown; titleEl.append(tspan);
+      // Sync countdown/dots (left side, next to title)
+      try {
+        // Render only when shared storage enabled
+        const useDelay = !!(this._config?.storage_enabled) && (this._config?.storage_sync_mode === 'delay');
+        const due = Number(this._storeDelayDue||0);
+        const justDone = Number(this._syncJustUntil||0) > Date.now();
+        const running = !!this._saving;
+        if (useDelay && (running || justDone || (due > Date.now()))) {
+          const pill = document.createElement('span');
+          pill.className = 'profile-pill sync-pill';
+          const icon = document.createElement('ha-icon');
+          const txt = document.createElement('span');
+          txt.style.marginLeft = '6px';
+          if (running) {
+            icon.setAttribute('icon','mdi:sync');
+            pill.classList.add('primary');
+            txt.textContent = this._t('sync.running');
+          } else if (justDone) {
+            icon.setAttribute('icon','mdi:check-circle-outline');
+            pill.classList.add('success');
+            txt.textContent = this._t('sync.completed');
+          } else {
+            icon.setAttribute('icon','mdi:timer-outline');
+            pill.classList.add('ghost');
+            txt.textContent = this._formatSyncCountdown();
+            this._startSyncTimer();
+          }
+          pill.append(icon, txt);
+          titleEl.append(pill);
+          if (!running && !justDone && !(due> Date.now())) this._stopSyncTimer();
+        } else {
+          this._stopSyncTimer();
+        }
+      } catch {}
+      if (_activeProfileName) {
+        const p = document.createElement('span'); p.className = 'profile-pill success'; const prefix = this._t('profiles.active_label') || 'Manual profile active:'; p.textContent = `${prefix} ${_activeProfileName}`; titleEl.append(p);
+      }
+
+    }
+    // (Profile pill moved next to title; weekday center shows only day name now)
+    // Center header: show current weekday name when weekday mode is enabled
+    try {
+      if (dayFull) {
+        let label = '';
+        // Prefer a Holiday label if holidays are active
+        try { if (this._isHolidayActive && this._isHolidayActive()) { label = this._t('holidays.button') || 'Holidays'; } } catch {}
+        if (!label && this._config?.weekdays_enabled) {
+          // Localized full weekday, e.g., "Mandag" (or browsed day in weekdays view)
+          const viewDayKey = this._timelineDisplayDayKey();
+          const dayName = this._weekdayFullName(viewDayKey) || this._todayFullName();
+          // If viewing all days for a single room, append room name for clarity
+          try {
+            const perRoomAllDays = String(this._config?.weekdays_view||'all_rooms_one_day') === 'one_room_all_days';
+            if (perRoomAllDays) {
+              const ents = (this._config?.entities||[]);
+              const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room))
+                ? this._config.weekdays_selected_room
+                : (ents[0]||'');
+              const roomLabel = this._config?.labels?.[roomEid] || this._prettyName(roomEid);
+              label = `${dayName} - ${roomLabel}`.trim();
+            } else {
+              label = dayName;
+            }
+          } catch { label = dayName; }
+        }
+        if (label) {
+          dayFull.innerHTML = '';
+
+          const ents = (this._config?.entities || []);
+          const isWeekEnabled = !!this._config?.weekdays_enabled;
+          const viewMode = String(this._config?.weekdays_view || 'all_rooms_one_day');
+          const mkArrow = (dir)=>{
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'wd-arrow';
+            btn.textContent = dir < 0 ? '◀' : '▶';
+            btn.style.cssText = 'background:none; border:none; color:var(--primary-text-color); cursor:pointer; padding:0 4px; font-size:inherit;';
+            return btn;
+          };
+
+          let leftNavBtn = null;
+          let rightNavBtn = null;
+
+          // In "Alle rum • én dag" view: arrows browse days (Mon..Sun)
+          if (isWeekEnabled && viewMode === 'all_rooms_one_day') {
+            const prevBtn = mkArrow(-1);
+            prevBtn.title = 'Previous day';
+            prevBtn.addEventListener('click', () => {
+              const names = this._weekdayNames();
+              const cur = this._timelineDisplayDayKey();
+              const idx = Math.max(0, names.indexOf(cur));
+              const newIdx = (idx - 1 + names.length) % names.length;
+              this._setTimelineDisplayDayKey(names[newIdx]);
+              this._render();
+            });
+            leftNavBtn = prevBtn;
+
+            const nextBtn = mkArrow(1);
+            nextBtn.title = 'Next day';
+            nextBtn.addEventListener('click', () => {
+              const names = this._weekdayNames();
+              const cur = this._timelineDisplayDayKey();
+              const idx = Math.max(0, names.indexOf(cur));
+              const newIdx = (idx + 1) % names.length;
+              this._setTimelineDisplayDayKey(names[newIdx]);
+              this._render();
+            });
+            rightNavBtn = nextBtn;
+          }
+          // In "Alle dage • ét rum" view: keep room navigation arrows (only if multiple rooms)
+          else if (isWeekEnabled && viewMode === 'one_room_all_days' && ents.length > 1) {
+            const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room))
+              ? this._config.weekdays_selected_room
+              : (ents[0]||'');
+            const roomIdx = ents.indexOf(roomEid);
+
+            const prevBtn = mkArrow(-1);
+            prevBtn.title = 'Previous room';
+            prevBtn.addEventListener('click', () => {
+              const newIdx = roomIdx <= 0 ? ents.length - 1 : roomIdx - 1;
+              this._config.weekdays_selected_room = ents[newIdx];
+              this._render();
+            });
+            leftNavBtn = prevBtn;
+
+            const nextBtn = mkArrow(1);
+            nextBtn.title = 'Next room';
+            nextBtn.addEventListener('click', () => {
+              const newIdx = roomIdx >= ents.length - 1 ? 0 : roomIdx + 1;
+              this._config.weekdays_selected_room = ents[newIdx];
+              this._render();
+            });
+            rightNavBtn = nextBtn;
+          }
+
+          const leftWrap = document.createElement('div');
+          leftWrap.className = 'wd-left';
+          const centerWrap = document.createElement('div');
+          centerWrap.className = 'wd-center';
+          const rightWrap = document.createElement('div');
+          rightWrap.className = 'wd-right';
+
+          // Mobile-only: show view switch on the weekday row (left-aligned)
+          try {
+            const segMobile = makeWeekViewSeg('sp-week-view-mobile');
+            if (segMobile) leftWrap.appendChild(segMobile);
+          } catch {}
+
+          const labelSpan = document.createElement('span');
+          labelSpan.textContent = label;
+          // Keep arrows tight to the label (centered as a group)
+          if (leftNavBtn) centerWrap.appendChild(leftNavBtn);
+          centerWrap.appendChild(labelSpan);
+          if (rightNavBtn) centerWrap.appendChild(rightNavBtn);
+
+          dayFull.append(leftWrap, centerWrap, rightWrap);
+          
+          dayFull.style.display = '';
+        } else {
+          dayFull.textContent = '';
+          dayFull.style.display = 'none';
+        }
+      }
+    } catch {}
+
+    // Scale ticks
+    scaleEl.innerHTML = '';
+    const compact = this._isCompactScale();
+    for (let i = 0; i <= 24; i++) {
+      if (compact && i % 2 !== 0) continue;
+      const t = document.createElement('div');
+      t.className = 'tick ' + (i % 2 === 0 ? 'full' : 'short');
+      t.style.left = `${(i / 24) * 100}%`;
+      if (i % 2 === 0 || !compact) {
+        const l = document.createElement('label');
+        if (this._config?.time_12h){
+          const p = this._timeParts(i===24?0:i*60);
+          l.innerHTML = `<span class="t-main">${p.main}</span><span class="mer">${p.mer||''}</span>`;
+        } else {
+          l.textContent = (i === 24) ? this._label(0) : this._label(i*60);
+        }
+        t.append(l);
+      }
+      scaleEl.append(t);
+    }
+
+    // Rows
+    rowsEl.innerHTML = '';
+    // Right header tools: global pause toggle (absolute top-right)
+    try {
+      if (headerEl) {
+        const spacer = headerEl.querySelector('.spacer') || headerEl;
+        let wrap = headerEl.querySelector('.pause-wrap');
+        if (!wrap) { wrap = document.createElement('div'); wrap.className = 'pause-wrap'; spacer.append(wrap); }
+        else if (wrap.parentNode !== spacer) { try { spacer.append(wrap); } catch {} }
+        wrap.innerHTML = '';
+
+        // Desktop: show view switch in top row (hidden on mobile)
+        try {
+          const segDesktop = makeWeekViewSeg('sp-week-view-desktop');
+          if (segDesktop) wrap.append(segDesktop);
+        } catch {}
+
+        // Settings button (top-right)
+        try {
+          if (!this._disablePopups) {
+            const sbtn = document.createElement('button');
+            sbtn.className = 'settings-btn';
+            sbtn.type = 'button';
+            try { sbtn.dataset.role = 'settingsbtn'; } catch {}
+            const lab = this._t('editor.tabs.settings') || 'Settings';
+            sbtn.setAttribute('title', lab);
+            sbtn.setAttribute('aria-label', lab);
+            sbtn.innerHTML = '<ha-icon icon="mdi:cog-outline"></ha-icon>';
+            sbtn.addEventListener('click', ()=>{ try { this._openSettingsPopup(); } catch {} });
+            wrap.append(sbtn);
+          }
+        } catch {}
+        
+        if (this._config?.show_pause_button ?? true) {
+          const btn = document.createElement('button');
+          btn.className = 'pause-btn' + (this._isPaused() ? ' paused' : '');
+          btn.setAttribute('title', this._isPaused() ? this._t('pause.active_indef') : this._t('pause.menu_title'));
+          btn.innerHTML = '<ha-icon icon="mdi:pause"></ha-icon>';
+          btn.addEventListener('click', ()=>{
+            try {
+              const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-pause');
+              if (ov) ov.classList.add('open');
+              this._renderPauseStatus();
+            } catch {}
+          });
+          // Build optional bubble to the left
+          const paused = this._isPaused();
+          const until = Number(this._pauseUntilMs||0);
+          const showCountdown = paused && !this._pauseIndef && until > Date.now();
+          if (paused) {
+            const eta = document.createElement('span'); eta.className = 'pause-eta';
+            eta.textContent = showCountdown ? this._formatPauseCountdown() : (this._t('pause.off_indef'));
+            wrap.append(eta);
+            wrap.append(btn);
+            if (showCountdown) this._startCountdownTimer();
+            else if (this._countdownTimer) { try { clearInterval(this._countdownTimer); } catch {} this._countdownTimer = null; }
+          } else {
+            wrap.append(btn);
+            if (this._countdownTimer) { try { clearInterval(this._countdownTimer); } catch {} this._countdownTimer = null; }
+          }
+        }
+        // Global Away bypass button (visible when Away feature is enabled)
+        try {
+          if (this._config?.away?.enabled) {
+            const ab = document.createElement('button');
+            ab.className = 'profiles-btn';
+            // Make it red like a warning action
+            try {
+              ab.style.borderColor = 'var(--error-color)';
+              ab.style.background = 'var(--error-color)';
+              ab.style.color = 'var(--text-primary-color, #fff)';
+            } catch {}
+            ab.textContent = this._awayBypass ? (this._t('away.resume_away') || 'Resume Away temp') : (this._t('away.resume_schedule') || 'Resume schedule');
+            ab.addEventListener('click', async ()=>{
+              try {
+                this._awayBypass = !this._awayBypass;
+                try { await this._saveStore(); } catch {}
+                try { await this._applyCurrentSetpoints(true); } catch {}
+                try { if (this._config?.storage_enabled) this._nudgeBackgroundApplyNow(); } catch {}
+                this._scheduleNextApply();
+                ab.textContent = this._awayBypass ? (this._t('away.resume_away') || 'Resume Away temp') : (this._t('away.resume_schedule') || 'Resume schedule');
+              } catch {}
+            });
+            const pauseBtn = wrap.querySelector('.pause-btn');
+            if (pauseBtn && pauseBtn.parentNode === wrap) {
+              wrap.insertBefore(ab, pauseBtn);
+            } else {
+              wrap.append(ab);
+            }
+          }
+        } catch {}
+        // Presence live status for Away persons
+        try {
+          const persons = (this._presencePersons && typeof this._presencePersons === 'function') ? this._presencePersons().filter(Boolean) : [];
+          const advOn = !!(this._config?.away?.advanced_enabled);
+          const wantLive = advOn && !!(this._config?.presence_live_header ?? true);
+          if (persons.length && wantLive) {
+            let live = wrap.querySelector('.presence-live');
+            if (!live) { live = document.createElement('div'); live.className = 'presence-live';
+              const pauseBtn = wrap.querySelector('.pause-btn');
+              if (pauseBtn && pauseBtn.parentNode === wrap) wrap.insertBefore(live, pauseBtn); else wrap.append(live);
+            }
+            live.innerHTML = '';
+            for (const p of persons) {
+              const st = this._hass?.states?.[p];
+              const state = String(st?.state || 'unknown');
+              const friendly = st?.attributes?.friendly_name || (String(p||'').split('.')[1] || p);
+              const chip = document.createElement('span');
+              chip.className = 'presence-chip ' + (state.toLowerCase() === 'home' ? 'home' : 'away');
+              chip.setAttribute('title', `${friendly}: ${state}`);
+              const dot = document.createElement('span'); dot.className = 'presence-dot';
+              const name = document.createElement('span'); name.className = 'presence-name'; name.textContent = friendly;
+              chip.append(dot, name);
+              live.append(chip);
+            }
+          } else {
+            // Remove if disabled
+            const live = wrap.querySelector('.presence-live'); if (live) live.remove();
+          }
+        } catch {}
+        // Collapsible header tools (Presence / Profiles / Weekdays)
+        try {
+          let htools = wrap.querySelector('.head-tools');
+          if (!htools) { htools = document.createElement('div'); htools.className = 'head-tools toolbar' + (this._headToolsOpen ? ' open' : ''); wrap.append(htools); }
+          htools.innerHTML = '';
+          const toggleBtn = document.createElement('button'); toggleBtn.className='tools-toggle'; toggleBtn.type='button'; toggleBtn.setAttribute('aria-label','Toggle header tools'); toggleBtn.textContent = this._headToolsOpen ? '✕' : '❮';
+          const toolsWrap = document.createElement('div'); toolsWrap.className = 'tools-wrap';
+          const hasPending = !!this._pendingSaveAfterEdit;
+          const recentlySaved = (this._syncJustUntil || 0) > Date.now();
+          const showButton = hasPending || this._saving || recentlySaved;
+          // Explicit Save button that writes all pending changes to storage; always visible (outside fold), only when pending changes exist
+          let saveBtn = null;
+          try {
+            saveBtn = document.createElement('button');
+            saveBtn.className = 'profiles-btn success';
+            saveBtn.type = 'button';
+            saveBtn.style.marginRight = '6px';
+            const idleLabel = this._t('ui.save') || 'Save';
+            const savingLabel = this._t('sync.running') || 'Saving…';
+            const doneLabel = this._t('sync.completed') || 'Saved';
+            const setState = (state)=>{
+              if (state==='saving') { saveBtn.disabled = true; saveBtn.textContent = savingLabel; }
+              else if (state==='done') { saveBtn.disabled = false; saveBtn.textContent = doneLabel; }
+              else { saveBtn.disabled = false; saveBtn.textContent = idleLabel; }
+            };
+            setState(this._saving ? 'saving' : (recentlySaved ? 'done' : 'idle'));
+            if (!showButton) saveBtn.style.display = 'none';
+            saveBtn.addEventListener('click', async ()=>{
+              try {
+                setState('saving');
+                const savePromise = this._saveStore(true);
+                const delayPromise = new Promise(r => setTimeout(r, 800));
+                await Promise.all([savePromise, delayPromise]);
+                setState('done');
+                setTimeout(()=>{ setState('idle'); this._render(); }, 1000);
+              } catch {
+                setState('idle');
+              }
+            });
+          } catch {}
+          // Presence button
+          if (this._config?.away?.advanced_enabled) {
+            const prb = document.createElement('button'); prb.className='profiles-btn primary'; prb.type='button'; prb.textContent=this._t('presence.button'); prb.addEventListener('click', ()=>{ const first=(this._config?.entities||[])[0]||null; if (first) this._openPresenceEditor(first); }); toolsWrap.append(prb);
+          }
+          // Profiles button
+          const wantProfilesBtn = !!(this._config?.profiles_enabled || this._getLocalProfilesEnabled());
+          if ((this._config?.entities||[]).length && wantProfilesBtn) {
+            const pbtn = document.createElement('button'); pbtn.className='profiles-btn primary'; pbtn.type='button'; pbtn.textContent=this._t('profiles.button'); pbtn.addEventListener('click', ()=>{ const first=(this._config?.entities||[])[0]||null; if (first) this._openProfilesEditor(first); }); toolsWrap.append(pbtn);
+          }
+          // Weekdays button (header)
+          if (this._config?.weekdays_enabled && (this._config?.entities||[]).length) {
+            const wbtn = document.createElement('button'); wbtn.className='profiles-btn primary'; wbtn.type='button'; wbtn.textContent = this._t('week.button'); wbtn.addEventListener('click', ()=>{ const first=(this._config?.entities||[])[0]; if (first) this._openWeeklyEditor(first); }); toolsWrap.append(wbtn);
+            // When viewing all days for one room, show a small room selector
+            try {
+              const perDayView = String(this._config?.weekdays_view||'all_rooms_one_day')==='one_room_all_days';
+              if (perDayView) {
+                const sel = document.createElement('select');
+                sel.className = 'weekroom-select';
+                sel.style.height = '32px'; sel.style.border = '1px solid var(--divider-color)'; sel.style.borderRadius = '8px'; sel.style.background = 'var(--card-background-color)'; sel.style.color = 'var(--primary-text-color)'; sel.style.marginLeft = '6px';
+                const ents = (this._config?.entities || []);
+                for (const eid of ents){ const opt=document.createElement('option'); const label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); opt.value=eid; opt.textContent=label; sel.append(opt); }
+                const want = this._config?.weekdays_selected_room || ents[0] || '';
+                sel.value = want;
+                sel.addEventListener('change', (e)=>{ const v=String(e.target.value||''); this._config.weekdays_selected_room = v; this._render(); });
+                toolsWrap.append(sel);
+              }
+            } catch {}
+          }
+          // Toggle behavior
+          toggleBtn.addEventListener('click', ()=>{
+            this._headToolsOpen = !this._headToolsOpen; if (this._headToolsOpen) { htools.classList.add('open'); toggleBtn.textContent='✕'; requestAnimationFrame(()=>{ try { toolsWrap.style.maxWidth=(toolsWrap.scrollWidth+2)+'px'; } catch {} }); } else { try { toolsWrap.style.maxWidth=(toolsWrap.scrollWidth+2)+'px'; } catch {}; htools.classList.remove('open'); toggleBtn.textContent='❮'; requestAnimationFrame(()=>{ toolsWrap.style.maxWidth='0px'; }); }
+          });
+          // Place Save (if any) before collapsible tools, then toggle on the far right
+          if (saveBtn) htools.append(saveBtn);
+          htools.append(toolsWrap, toggleBtn);
+          // Hide toggle button if toolsWrap is empty
+          if (toolsWrap.children.length === 0) {
+            toggleBtn.style.display = 'none';
+          }
+          // Ensure initial width reflects current open state
+          try {
+            if (this._headToolsOpen) {
+              requestAnimationFrame(()=>{ try { toolsWrap.style.maxWidth = (toolsWrap.scrollWidth + 2) + 'px'; } catch {} });
+            } else {
+              toolsWrap.style.maxWidth = '0px';
+            }
+          } catch {}
+        } catch {}
+        // Ensure pause button is the rightmost item in the header
+        try {
+          const pauseBtn = wrap.querySelector('.pause-btn');
+          if (pauseBtn) wrap.appendChild(pauseBtn);
+          const settingsBtn = wrap.querySelector('.settings-btn');
+          if (settingsBtn) wrap.appendChild(settingsBtn);
+        } catch {}
+      }
+    } catch {}
+    const nowMin = this._getNowMin();
+    const nowPct = (nowMin / 1440) * 100;
+    const showTop = this._config.show_top_now;
+    const extendPx = this._config.now_extend_px;
+
+    // Optional: render all selected weekdays for one room
+    let __weeklyBuilt = false;
+    try {
+      const perRoomAllDays = !!(this._config?.weekdays_enabled) && String(this._config?.weekdays_view||'all_rooms_one_day')==='one_room_all_days';
+      if (perRoomAllDays) {
+        const ents = (this._config?.entities||[]);
+        const roomEid = (this._config?.weekdays_selected_room && ents.includes(this._config.weekdays_selected_room)) ? this._config.weekdays_selected_room : (ents[0]||null);
+        if (roomEid) {
+          const row = this._schedules[roomEid] || { defaultTemp: this._config.default_temp, blocks: [] };
+          this._ensureWeeklyStruct(row);
+          const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+          const groupKeys = mode==='weekday_weekend' ? ['weekdays','weekend'] : (mode==='weekday_sat_sun' ? ['weekdays','sat','sun'] : ['mon','tue','wed','thu','fri','sat','sun']);
+          const labelFor = (k)=>{
+            const map = { weekdays:'week.group.weekdays', weekend:'week.group.weekend', mon:'week.days_full.mon', tue:'week.days_full.tue', wed:'week.days_full.wed', thu:'week.days_full.thu', fri:'week.days_full.fri', sat:'week.days_full.sat', sun:'week.days_full.sun' };
+            return this._t(map[k]) || k;
+          };
+          const effKey = (k)=> (k==='weekdays') ? 'mon' : (k==='weekend' ? 'sat' : k);
+          const getBlocks = (dk)=>{
+            try { const src = row.weekly_modes?.[mode]?.days || {}; const arr = src?.[dk]; if (Array.isArray(arr)) return arr; } catch {}
+            try { const arr2 = row.weekly?.days?.[dk]; if (Array.isArray(arr2)) return arr2; } catch {}
+            return [];
+          };
+          for (const gk of groupKeys){
+            const rowEl = document.createElement('div'); rowEl.className='row';
+            const head = document.createElement('div'); head.className='row-head';
+            const meta = document.createElement('div'); meta.className='meta';
+            const name = document.createElement('span'); name.textContent = labelFor(gk); meta.append(name); head.append(meta);
+            
+            // Add toolbar with Add and Copy buttons for weekday view
+            const toolbar = document.createElement('div'); 
+            toolbar.className = 'toolbar' + (this._toolsOpen[roomEid + ':' + effKey(gk)] ? ' open' : '');
+            toolbar.style.minHeight = '32px';
+            const toolsWrap = document.createElement('div'); 
+            toolsWrap.className = 'tools-wrap';
+            
+            // Toggle button for collapsible toolbar
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'tools-toggle';
+            toggleBtn.type = 'button';
+            toggleBtn.setAttribute('aria-label', 'Toggle actions');
+            toggleBtn.textContent = this._toolsOpen[roomEid + ':' + effKey(gk)] ? '✕' : '❮';
+            toggleBtn.addEventListener('click', () => {
+              const toolKey = roomEid + ':' + effKey(gk);
+              const willOpen = !this._toolsOpen[toolKey];
+              this._toolsOpen[toolKey] = willOpen;
+              if (willOpen) {
+                try { toolsWrap.style.maxWidth = '0px'; } catch {}
+                toolbar.classList.add('open');
+                toggleBtn.textContent = '✕';
+                requestAnimationFrame(() => {
+                  try { const w = toolsWrap.scrollWidth || 0; toolsWrap.style.maxWidth = (w + 2) + 'px'; } catch {}
+                });
+              } else {
+                try { const w = toolsWrap.scrollWidth || 0; toolsWrap.style.maxWidth = (w + 2) + 'px'; } catch {}
+                toolbar.classList.remove('open');
+                toggleBtn.textContent = '❮';
+                requestAnimationFrame(() => { try { toolsWrap.style.maxWidth = '0px'; } catch {} });
+              }
+            });
+            
+            // Add block button
+            const addBtn = document.createElement('button');
+            addBtn.className = 'btn primary';
+            addBtn.textContent = '+ ' + this._t('ui.add_block');
+            addBtn.addEventListener('click', () => {
+              this._weeklyEntity = roomEid;
+              // Keep group/day key so editor respects current weekday mode.
+              // E.g. weekday_weekend: editing on Sunday should edit the "weekend" group.
+              this._ensureWeeklyStruct(row);
+              const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+              this._weeklyDayKey = gk;
+              // Build draft from active mode bucket (weekly_modes is the primary source).
+              try {
+                const src = row.weekly_modes?.[mode]?.days || row.weekly?.days || {};
+                const names = this._weekdayNames();
+                const draftDays = JSON.parse(JSON.stringify(src));
+                for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                this._weeklyDraft = { mode, days: draftDays };
+                // Include modes so edit/delete can fully reconcile sources.
+                try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+              } catch {
+                this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+                try { this._weeklyDraft.mode = this._weeklyDraft.mode || mode; } catch {}
+                try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+              }
+              this._autoSaveWeeklyFromTimeline = true;
+              this._openWeeklyBlockEditor(null, 0);
+            });
+            toolsWrap.append(addBtn);
+            
+            // Copy/Paste button
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'btn ghost';
+            const updateCopyBtn = ()=>{
+              if (!this._copyFrom) { copyBtn.textContent = this._t('ui.copy_plan'); copyBtn.classList.remove('success', 'danger'); copyBtn.classList.add('ghost'); }
+              else if (this._copyFrom === roomEid + ':' + effKey(gk)) { copyBtn.textContent = this._t('ui.cancel'); copyBtn.classList.remove('success', 'ghost'); copyBtn.classList.add('danger'); }
+              else { copyBtn.textContent = this._t('ui.paste_plan'); copyBtn.classList.remove('ghost', 'danger'); copyBtn.classList.add('success'); }
+            };
+            updateCopyBtn();
+            copyBtn.addEventListener('click', async () => {
+              const dayKey = effKey(gk);
+              const eid_day = roomEid + ':' + dayKey;
+              
+              if (this._copyFrom && this._copyFrom === eid_day) {
+                this._copyFrom = null; this._copyPayload = null; this._render(); return;
+              }
+              
+              if (this._copyFrom && this._copyPayload) {
+                try {
+                  const src = this._copyPayload;
+                  this._ensureWeeklyStruct(row);
+                  // Generate new IDs for copied blocks and paste them
+                  const pastedBlocks = src.map(b=>({ 
+                    ...b, 
+                    id: Math.random().toString(36).slice(2,9)
+                  }));
+                  
+                  // Paste to the same location where blocks come from
+                  // Check if blocks come from weekly_modes (first priority in getBlocks)
+                  const srcModes = row.weekly_modes?.[mode]?.days || {};
+                  if (srcModes?.[dayKey]) {
+                    // Blocks are in weekly_modes, paste there
+                    if (!row.weekly_modes[mode]) row.weekly_modes[mode] = { days: {} };
+                    row.weekly_modes[mode].days[dayKey] = pastedBlocks;
+                  } else {
+                    // Blocks are in weekly or new, paste to weekly
+                    row.weekly.days[dayKey] = pastedBlocks;
+                  }
+                  
+                  await this._saveStore();
+                  this._render();
+                } catch(e){}
+                return;
+              }
+              
+              try {
+                const dayBlocks = getBlocks(dayKey);
+                const payload = dayBlocks.map(b=>({ startMin:b.startMin, endMin:b.endMin, temp:b.temp }));
+                this._copyFrom = eid_day;
+                this._copyPayload = payload;
+                this._render();
+              } catch(e){}
+            });
+            toolsWrap.append(copyBtn);
+            
+            toolbar.append(toggleBtn);
+            toolbar.append(toolsWrap);
+            head.append(toolbar);
+            
+            rowEl.append(head);
+            const track = document.createElement('div'); track.className='track'; track.style.setProperty('--row-height', `${this._config.row_height}px`);
+            const dkey = effKey(gk);
+            const blocks = getBlocks(dkey);
+            for (const b of blocks){
+              const pctStart = (b.startMin / 1440) * 100; const pctWidth = ((b.endMin - b.startMin) / 1440) * 100;
+              const bl = document.createElement('div'); bl.className='block'; bl.style.left=`${pctStart}%`; bl.style.width=`${pctWidth}%`;
+              try { const clr = this._colorFor(roomEid, b.temp); if (clr){ bl.style.background = clr; bl.style.borderColor = clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color = txt; } } catch {}
+              const pillTemp = document.createElement('span'); pillTemp.className='pill'; pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pillTemp);
+              
+              // Add double-click to edit block
+              bl.addEventListener('dblclick', (e) => {
+                try { e.preventDefault(); e.stopPropagation(); } catch {}
+                this._weeklyEntity = roomEid;
+                // Keep group key (gk) so the editor knows whether it's weekdays/weekend vs specific day.
+                this._ensureWeeklyStruct(row);
+                const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+                this._weeklyDayKey = gk;
+                try {
+                  const src = row.weekly_modes?.[mode]?.days || row.weekly?.days || {};
+                  const names = this._weekdayNames();
+                  const draftDays = JSON.parse(JSON.stringify(src));
+                  for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                  this._weeklyDraft = { mode, days: draftDays };
+                  try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+                } catch {
+                  this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+                  try { this._weeklyDraft.mode = this._weeklyDraft.mode || mode; } catch {}
+                  try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+                }
+                this._autoSaveWeeklyFromTimeline = true;
+                this._openWeeklyBlockEditor(b.id);
+              });
+              
+              // Touch/iPad: detect double-tap
+              bl.addEventListener('touchend', (e) => {
+                const now = Date.now();
+                const last = this._lastWeeklyTap || { t: 0, target: null };
+                if (last.target === bl && (now - last.t) < 350) {
+                  try { e.preventDefault(); e.stopPropagation(); } catch {}
+                  this._lastWeeklyTap = { t: 0, target: null };
+                  this._weeklyEntity = roomEid;
+                  this._ensureWeeklyStruct(row);
+                  const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+                  this._weeklyDayKey = gk;
+                  try {
+                    const src = row.weekly_modes?.[mode]?.days || row.weekly?.days || {};
+                    const names = this._weekdayNames();
+                    const draftDays = JSON.parse(JSON.stringify(src));
+                    for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                    this._weeklyDraft = { mode, days: draftDays };
+                    try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+                  } catch {
+                    this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+                    try { this._weeklyDraft.mode = this._weeklyDraft.mode || mode; } catch {}
+                    try { this._weeklyDraft._weeklyModes = JSON.parse(JSON.stringify(row.weekly_modes || {})); } catch {}
+                  }
+                  this._autoSaveWeeklyFromTimeline = true;
+                  this._openWeeklyBlockEditor(b.id);
+                } else {
+                  this._lastWeeklyTap = { t: now, target: bl };
+                  setTimeout(() => { if (this._lastWeeklyTap?.target === bl) this._lastWeeklyTap = { t: 0, target: null }; }, 350);
+                }
+              });
+              
+              track.append(bl);
+            }
+            rowEl.append(track); rowsEl.append(rowEl);
+          }
+          __weeklyBuilt = true;
+        }
+      }
+    } catch {}
+
+    // Default: render one row per room
+    if (!__weeklyBuilt) { for (const eid of this._config.entities) {
+  const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      const rowEl = document.createElement('div');
+      rowEl.className = 'row';
+      const head = document.createElement('div');
+      head.className = 'row-head';
+  const meta = document.createElement('div');
+  meta.className = 'meta';
+  const name = document.createElement('span');
+      // Brug brugerdefineret label hvis sat i config.labels, ellers fallback til friendly_name/_prettyName
+      const customLabel = (this._config.labels && this._config.labels[eid]) ? this._config.labels[eid] : null;
+      name.textContent = customLabel || this._prettyName(eid);
+      meta.append(name);
+      // Per-room Default °C input (optional)
+      try {
+        if (this._config?.per_room_defaults) {
+          const inp = document.createElement('input');
+          inp.type = 'number';
+          inp.step = '0.5';
+          try { inp.min = String(this._minDisplay()); inp.max = String(this._maxDisplay()); } catch {}
+          const base = Number(row.defaultTemp ?? this._config.default_temp ?? 20);
+          inp.value = String(this._toDisplayTemp(base));
+          inp.title = this._t('editor.default_c').replace('°C', this._unitSymbol());
+          inp.addEventListener('change', async () => {
+            const before = this._config.apply_on_default_change ? this._desiredNowSnapshot() : null;
+            let raw = String(inp.value||'').replace(',','.');
+            let vDisp = Number(raw);
+            let vC = Number.isFinite(vDisp) ? this._fromDisplayTemp(vDisp) : (row.defaultTemp ?? this._config.default_temp ?? 20);
+            const mx = Number(this._config?.max_temp ?? 25);
+            const mn = Number(this._config?.min_temp ?? 5);
+            vC = Math.max(mn, Math.min(mx, vC));
+            row.defaultTemp = vC;
+            try { inp.value = String(this._toDisplayTemp(vC)); } catch {}
+            this._debouncedSaveStore();
+            if (before) { try { await this._applyIfDesiredChanged(before); } catch {} }
+            this._scheduleNextApply();
+          });
+          meta.append(inp);
+        }
+      } catch {}
+      // inline default temperature input removed from timeline to keep UI clean
+      // Current room temperature bubble: show climate.current_temperature
+      // If room is merged with additional thermostats, show the average temperature
+      try {
+        const wantF = this._isF();
+        const group = [eid, ...(this._config?.merges?.[eid] || [])];
+        const vals = [];
+        const haU = String(this._hass?.config?.unit_system?.temperature || '').toUpperCase();
+        const haIsF = haU.includes('F');
+        for (const g of group) {
+          const stg = this._hass?.states?.[g];
+          const curg = Number(stg?.attributes?.current_temperature);
+          if (!Number.isFinite(curg)) continue;
+          let c = curg;
+          if (haIsF && !wantF) c = (c - 32) * 5/9; // F -> C
+          if (!haIsF && wantF) c = (c * 9/5) + 32; // C -> F
+          vals.push(c);
+        }
+        if (vals.length) {
+          const avg = vals.reduce((a,b)=>a+b,0) / vals.length;
+          const sb = document.createElement('span');
+          sb.className = 'sensor-bubble';
+          sb.textContent = `${this._t('ui.current_temp')} ${String(Math.round(avg * 10) / 10)} ${this._unitSymbol()}`;
+          meta.append(sb);
+        }
+      } catch {}
+      // (Global Away bypass button moved to header; no per-room button)
+      // (manual indicator removed)
+      head.append(meta);
+  // Collapsible toolbar: tools slide out from a small arrow button
+  const toolbar = document.createElement('div');
+  toolbar.className = 'toolbar' + (this._toolsOpen[eid] ? ' open' : '');
+  // Keep header height stable regardless of open/closed
+  toolbar.style.minHeight = '32px';
+  const toolsWrap = document.createElement('div');
+  toolsWrap.className = 'tools-wrap';
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'tools-toggle';
+  toggleBtn.type = 'button';
+  toggleBtn.setAttribute('aria-label', 'Toggle actions');
+  toggleBtn.textContent = this._toolsOpen[eid] ? '✕' : '❮';
+      toggleBtn.addEventListener('click', () => {
+        const bar = toggleBtn.parentElement;
+        const wrap = toolsWrap;
+        const willOpen = !this._toolsOpen[eid];
+        this._toolsOpen[eid] = willOpen;
+        if (willOpen) {
+          // prepare then expand
+          try { wrap.style.maxWidth = '0px'; } catch {}
+          bar && bar.classList.add('open');
+          toggleBtn.textContent = '✕';
+          requestAnimationFrame(() => {
+            try { const w = wrap.scrollWidth || 0; wrap.style.maxWidth = (w + 2) + 'px'; } catch {}
+          });
+        } else {
+          // freeze width then collapse
+          try { const w = wrap.scrollWidth || 0; wrap.style.maxWidth = (w + 2) + 'px'; } catch {}
+          bar && bar.classList.remove('open');
+          toggleBtn.textContent = '❮';
+          requestAnimationFrame(() => { try { wrap.style.maxWidth = '0px'; } catch {} });
+        }
+      });
+      // (resume schedule button removed)
+  const addBtn = document.createElement('button');
+      addBtn.className = 'btn primary';
+      addBtn.textContent = '+ ' + this._t('ui.add_block');
+  try { addBtn.dataset.role = 'addbtn'; if (this._disablePopups) addBtn.style.display = 'none'; } catch {}
+      addBtn.addEventListener('click', () => {
+        // If weekdays are enabled, open the block editor directly for today's weekly plan
+        try {
+          const row = this._schedules[eid];
+          if (this._config?.weekdays_enabled && row) {
+            // Ensure weekly structures exist
+            this._ensureWeeklyStruct(row);
+            const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+            const today = this._timelineDisplayDayKey();
+            const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
+            let sel = today;
+            if (mode === 'weekday_weekend') sel = isWeekday ? 'weekdays' : 'weekend';
+            else if (mode === 'weekday_sat_sun') sel = isWeekday ? 'weekdays' : today; // sat/sun
+            // Prepare an in-memory weekly draft without opening the weekdays popup
+            try {
+              const src = row.weekly_modes?.[mode]?.days || {};
+              const names = this._weekdayNames();
+              const draftDays = JSON.parse(JSON.stringify(src));
+              for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+              this._weeklyDraft = { mode, days: draftDays };
+            } catch {
+              this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+            }
+            this._weeklyEntity = eid;
+            this._weeklyDayKey = sel;
+            this._autoSaveWeeklyFromTimeline = true;
+            const now = this._getNowMin();
+            this._openWeeklyBlockEditor(null, now);
+            return;
+          }
+        } catch {}
+        // Fallback: non-weekly add
+        this._openNewEditor(eid);
+      });
+  toolsWrap.append(addBtn);
+      // Copy/Paste schedule button
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'btn ghost';
+      const applyCopyStyle = (mode)=>{
+        // mode: 'copy' | 'paste' | 'cancel'
+        copyBtn.className = 'btn';
+        if (mode === 'copy') copyBtn.classList.add('ghost');
+        if (mode === 'paste') copyBtn.classList.add('success');
+        if (mode === 'cancel') copyBtn.classList.add('danger');
+      };
+      const updateCopyBtn = ()=>{
+        if (!this._copyFrom) { copyBtn.textContent = this._t('ui.copy_plan'); applyCopyStyle('copy'); }
+        else if (this._copyFrom === eid) { copyBtn.textContent = this._t('ui.cancel'); applyCopyStyle('cancel'); }
+        else { copyBtn.textContent = this._t('ui.paste_plan'); applyCopyStyle('paste'); }
+      };
+      updateCopyBtn();
+      copyBtn.addEventListener('click', async () => {
+        // Cancel on source row
+        if (this._copyFrom && this._copyFrom === eid) {
+          this._copyFrom = null; this._copyPayload = null; this._render(); return;
+        }
+        // Paste into this row when copy active
+        if (this._copyFrom && this._copyPayload) {
+          const before = this._desiredNowSnapshot();
+          const src = this._copyPayload;
+          try {
+            const tgt = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+            // Deep copy
+            const clone = JSON.parse(JSON.stringify(src));
+            tgt.defaultTemp = Number.isFinite(clone.defaultTemp) ? clone.defaultTemp : (tgt.defaultTemp || this._config.default_temp);
+            tgt.blocks = Array.isArray(clone.blocks) ? clone.blocks.map(b=>({ ...b, id: Math.random().toString(36).slice(2,9) })) : [];
+            // Weekday structures (keep modes if present)
+            if (clone.weekly) tgt.weekly = JSON.parse(JSON.stringify(clone.weekly));
+            if (clone.weekly_modes) tgt.weekly_modes = JSON.parse(JSON.stringify(clone.weekly_modes));
+            this._schedules[eid] = tgt;
+            await this._saveStore();
+            this._render();
+            if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
+            this._scheduleNextApply();
+          } catch(e){}
+          return;
+        }
+        // Start copy from this row
+        try {
+          const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+          const payload = { defaultTemp: row.defaultTemp, blocks: (row.blocks||[]).map(b=>({ startMin:b.startMin, endMin:b.endMin, temp:b.temp })), weekly: row.weekly ? JSON.parse(JSON.stringify(row.weekly)) : undefined, weekly_modes: row.weekly_modes ? JSON.parse(JSON.stringify(row.weekly_modes)) : undefined };
+          this._copyFrom = eid; this._copyPayload = payload;
+          this._render();
+        } catch(e){}
+      });
+  toolsWrap.append(copyBtn);
+      // Weekdays button moved to header tools; hidden on rows to avoid duplication
+      // Row-level Manual schedule button removed – profiles button now lives in the header only
+      try { /* intentionally no-op */ } catch {}
+      // (Profiles button moved to header)
+      toolbar.append(toolsWrap, toggleBtn);
+      // Hide toggle button if toolsWrap is empty
+      if (toolsWrap.children.length === 0) {
+        toggleBtn.style.display = 'none';
+      }
+      // Ensure correct initial width for open state without rerendering
+      try {
+        if (this._toolsOpen[eid]) {
+          requestAnimationFrame(() => { try { toolsWrap.style.maxWidth = (toolsWrap.scrollWidth + 2) + 'px'; } catch {} });
+        } else {
+          toolsWrap.style.maxWidth = '0px';
+        }
+      } catch {}
+      head.append(toolbar);
+      rowEl.append(head);
+      const track = document.createElement('div');
+      track.className = 'track';
+      track.style.setProperty('--row-height', `${this._config.row_height}px`);
+  // Use browsed day in weekdays view (all rooms • one day)
+  const displayDayKey = this._timelineDisplayDayKey();
+  let dayKey = displayDayKey;
+  try {
+    if (this._config?.weekdays_enabled && row?.weekly) {
+      const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+      dayKey = this._weekdaysStorageDayKeyForMode(displayDayKey, mode);
+    }
+  } catch { dayKey = displayDayKey; }
+  this._ensureHolidayStruct(row);
+  this._ensurePresenceStruct(row);
+  let showBlocks = (row.blocks || []);
+  try {
+    if (this._isHolidayActive() && row?.holiday?.blocks?.length) {
+      showBlocks = row.holiday.blocks || [];
+    } else {
+      // Advanced Presence overrides visual track as well (when a combo is active)
+      try {
+        const key = this._activePresenceComboKey && this._activePresenceComboKey();
+        if (key) {
+          const roomBlocks = (row.presence && Array.isArray(row.presence[key]?.blocks)) ? (row.presence[key].blocks || []) : [];
+          if (roomBlocks.length) {
+            showBlocks = roomBlocks;
+          } else {
+            // Presence combo active but no schedule for this room -> show a virtual all-day Away block
+            const awayC = Number(this._config?.away?.target_c ?? 17);
+            const fallback = Number.isFinite(awayC) ? awayC : this._rowDefaultTemp(row);
+            showBlocks = [{ id: '__presence_away__', startMin: 0, endMin: 1440, temp: fallback }];
+          }
+        } else if (this._config?.profiles_enabled) {
+          this._ensureProfilesStruct(row);
+          const ap = row.activeProfile;
+          if (ap && row.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
+            showBlocks = row.profiles[ap].blocks || [];
+          } else if (this._config?.weekdays_enabled) {
+            showBlocks = this._getBlocksForDay(row, dayKey) || [];
+          }
+        } else if (this._config?.weekdays_enabled) {
+          showBlocks = this._getBlocksForDay(row, dayKey) || [];
+        }
+      } catch { /* fallback below */ }
+    }
+  } catch {}
+  for (const b of showBlocks) {
+        const pctStart = (b.startMin / 1440) * 100;
+        const pctWidth = ((b.endMin - b.startMin) / 1440) * 100;
+        const bl = document.createElement('div');
+        bl.className = 'block';
+        bl.style.left = `${pctStart}%`;
+        bl.style.width = `${pctWidth}%`;
+    try {
+          const clr = this._colorFor(eid, b.temp);
+          if (clr) {
+            bl.style.background = clr;
+            bl.style.borderColor = clr;
+            const txt = this._contrastTextColor(clr);
+            if (txt) bl.style.color = txt;
+          }
+        } catch {}
+        if (this._active?.entity === eid && this._active?.id === b.id) bl.classList.add('active');
+  // Time will be shown in a hover tooltip (like the weekdays popup). Do not render time pill here.
+        const pillTemp = document.createElement('span');
+        pillTemp.className = 'pill';
+  pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+        bl.append(pillTemp);
+        // If we colored the block, soften pill background so the color is visible
+        try {
+          const bg = bl.style.background || '';
+          if (bg) {
+            const pills = [pillTemp];
+            const txt = bl.style.color || this._contrastTextColor(bg) || '';
+            const pillBg = txt === '#ffffff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
+            const pillBo = txt === '#ffffff' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.12)';
+            for (const p of pills){ p.style.background = pillBg; p.style.borderColor = pillBo; }
+          }
+        } catch {}
+        track.append(bl);
+
+        // Ensure a tooltip element exists for main timeline (reuse weekly style)
+        try {
+          let tooltip = this.shadowRoot.querySelector('.wk-tooltip.main');
+          const rowsEl = this.shadowRoot.querySelector('.rows');
+          const modalHost = rowsEl || this.shadowRoot.querySelector('ha-card');
+          if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.className = 'wk-tooltip main';
+            tooltip.style.display = 'none';
+            // append to rows so positioning is relative to timeline
+            if (modalHost) modalHost.append(tooltip);
+          }
+          const showTip = () => {
+            const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+            if (!tooltip) return;
+            // Cancel any pending hide
+            try { if (tooltip._hideTimer) { clearTimeout(tooltip._hideTimer); tooltip._hideTimer = null; } } catch {}
+            // Do not show while editor popup is open
+            try {
+              const ov = this.shadowRoot.querySelector('.overlay');
+              if (this._editing || (ov && ov.classList.contains('open'))) return;
+            } catch {}
+            tooltip.textContent = txt;
+            const box = bl.getBoundingClientRect();
+            const cont = (modalHost && modalHost.getBoundingClientRect) ? modalHost.getBoundingClientRect() : { left: 0, top: 0 };
+            const left = box.left + box.width / 2 - (cont.left || 0);
+            const top = (box.top - (cont.top || 0)) - 8;
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.style.transform = 'translate(-50%,-100%)';
+            tooltip.style.display = '';
+          };
+          const hideTip = () => {
+            if (!tooltip) return;
+            // On coarse pointers (tablet) keep tooltip a bit longer
+            const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
+            try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); } catch {}
+            tooltip._hideTimer = setTimeout(() => { try { tooltip.style.display = 'none'; tooltip._hideTimer = null; } catch {} }, delay);
+          };
+          bl.addEventListener('mouseenter', showTip);
+          bl.addEventListener('mouseleave', hideTip);
+        } catch (e) { /* ignore tooltip errors */ }
+        
+        // Open editor only on double interaction:
+        // - Desktop: double-click
+        // - Touch/iPad: double-tap within 350ms on the same block
+        const openEditor = () => {
+          // If a manual profile is active, edit that profile directly instead of weekdays
+          try {
+            if (this._config?.profiles_enabled) {
+              this._ensureProfilesStruct(row);
+              const ap = row?.activeProfile;
+              if (ap && row?.profiles && Array.isArray(row.profiles[ap]?.blocks) && (row.profiles[ap].blocks||[]).length) {
+                // Configure profile context and open profile block editor
+                this._profilesEntity = eid;
+                this._profilesSelected = ap;
+                this._profilesRoom = eid;
+                this._autoSaveProfileFromTimeline = true;
+                this._openProfileBlockEditor(b.id);
+                return;
+              }
+            }
+          } catch {}
+
+          // Else if weekdays are enabled, edit inline (no weekday popup); auto‑save back to weekdays
+          try {
+            const rowHasWeekly = !!(this._config?.weekdays_enabled && row?.weekly);
+            if (rowHasWeekly) {
+              // Prepare an in‑memory weekly draft for the current mode
+              this._ensureWeeklyStruct(row);
+              const mode = row.weekly?.mode || this._config?.weekdays_mode || 'weekday_weekend';
+              const today = displayDayKey; // computed earlier
+              const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
+              let sel = today;
+              if (mode === 'weekday_weekend') sel = isWeekday ? 'weekdays' : 'weekend';
+              else if (mode === 'weekday_sat_sun') sel = isWeekday ? 'weekdays' : today; // sat/sun
+              // Build draft from the selected mode bucket
+              try {
+                const src = row.weekly_modes?.[mode]?.days || {};
+                const names = this._weekdayNames();
+                const draftDays = JSON.parse(JSON.stringify(src));
+                for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+                this._weeklyDraft = { mode, days: draftDays };
+              } catch { this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly)); }
+              this._weeklyEntity = eid;
+              this._weeklyDayKey = sel;
+              this._autoSaveWeeklyFromTimeline = true;
+              // Locate corresponding block in effective day using midpoint
+              const eff = this._effectiveDayKey(sel);
+              const mid = Math.floor((b.startMin + b.endMin) / 2);
+              const effArr = (this._weeklyDraft?.days?.[eff] || []);
+              let targetId = b.id;
+              if (eff !== today) {
+                const match = effArr.find(x => mid >= x.startMin && mid < x.endMin);
+                targetId = match ? match.id : null;
+              }
+              if (targetId) this._openWeeklyBlockEditor(targetId);
+              else this._openWeeklyBlockEditor(null, mid);
+              return;
+            }
+          } catch {}
+          // Fallback to normal (non-weekly/non-profile) editor
+          this._openEditor(eid, b.id);
+        };
+
+        // Desktop/mouse
+        bl.addEventListener('dblclick', (e) => {
+          try { e.preventDefault(); e.stopPropagation(); } catch {}
+          openEditor();
+        });
+
+        // Touch/iPad: detect double-tap
+        bl.addEventListener('touchend', (e) => {
+          const now = Date.now();
+          const last = this._lastTap || { t: 0, target: null };
+          if (last.target === bl && (now - last.t) < 350) {
+            try { e.preventDefault(); e.stopPropagation(); } catch {}
+            this._lastTap = { t: 0, target: null };
+            openEditor();
+          } else {
+            this._lastTap = { t: now, target: bl };
+            // Clear after timeout to avoid stale reference
+            setTimeout(() => {
+              if (this._lastTap && this._lastTap.target === bl && (Date.now() - this._lastTap.t) > 350) {
+                this._lastTap = { t: 0, target: null };
+              }
+            }, 360);
+          }
+        }, { passive: false });
+        // Note: single click/tap no longer opens the editor
+       }
+      // Single-line NOW: rely on .now with extend; remove extra top pin
+      /* now-top removed */
+      rowEl.append(track);
+      rowsEl.append(rowEl);
+    }
+    }
+    // Single global NOW line across all rows
+    {
+      const nowEl = document.createElement('div');
+      nowEl.className = 'now';
+      // left will be set in pixels to account for row padding
+      rowsEl.append(nowEl);
+
+      const updateNowGeom = () => {
+        try {
+          const tracks = Array.from(this.shadowRoot.querySelectorAll('.track'));
+          const rowsBox = rowsEl.getBoundingClientRect();
+          // Vertical placement/height
+          if (tracks.length) {
+            const overhang = 12;
+            const firstBox = tracks[0].getBoundingClientRect();
+            const lastBox = tracks[tracks.length - 1].getBoundingClientRect();
+            const top = Math.round(firstBox.top - rowsBox.top - overhang);
+            const bottom = Math.round(lastBox.bottom - rowsBox.top);
+            nowEl.style.top = top + 'px';
+            nowEl.style.height = (bottom - top) + 'px';
+          }
+          // Horizontal left: respect rows padding so it matches .track coordinate system
+          const cs = getComputedStyle(rowsEl);
+          const pl = parseFloat(cs.paddingLeft || '0') || 0;
+          const pr = parseFloat(cs.paddingRight || '0') || 0;
+          const contentW = rowsEl.clientWidth - pl - pr;
+          const leftPx = pl + (nowMin / 1440) * contentW;
+          nowEl.style.left = leftPx + 'px';
+        } catch {}
+      };
+
+      updateNowGeom();
+
+      const ro = new ResizeObserver(() => {
+        updateNowGeom();
+      });
+      try { ro.observe(rowsEl); } catch {}
+    }
+
+    // Update footer labels to reflect time format
+    try {
+      const s = this.shadowRoot.querySelector('.lbl-start');
+      const e = this.shadowRoot.querySelector('.lbl-end');
+      if (s) s.textContent = this._label(0);
+      if (e) e.textContent = this._label(0);
+    } catch {}
+
+    // Editor modal events
+    const overlay = qs('.overlay');
+    const edSave = qs('.ed-save');
+    const edCancel = qs('.ed-cancel');
+    const edDelete = qs('.ed-delete');
+    if (edSave) edSave.addEventListener('click', () => this._saveEditor());
+    if (edCancel) edCancel.addEventListener('click', () => this._closeEditor());
+  if (edDelete) edDelete.addEventListener('click', () => this._deleteFromEditor());
+  // Do not close editor when clicking outside; require explicit buttons
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) { e.preventDefault(); e.stopPropagation(); } });
+    // Week overlay events
+    const wov = qs('.overlay-week');
+    const wsave = qs('.wk-save');
+    const wcancel = qs('.wk-cancel');
+    if (wsave) wsave.addEventListener('click', () => this._weeklySaveAll());
+  if (wcancel) wcancel.addEventListener('click', () => this._closeWeeklyEditor());
+  // Do not close weekly editor on outside click either
+  if (wov) wov.addEventListener('click', (e) => { if (e.target === wov) { e.preventDefault(); e.stopPropagation(); } });
+
+    // Profiles overlay events
+  const pov = qs('.overlay-profiles');
+  const pclose = qs('.prof-close');
+  const psave = qs('.prof-save');
+  if (psave) psave.addEventListener('click', () => { this._profilesSave(); });
+  const _maybeCloseProfiles = () => {
+    try { if (this._profilesDirty) { this._openConfirmCloseProfiles(); return false; } } catch {}
+    this._closeProfilesEditor(); return true;
+  };
+  if (pclose) pclose.addEventListener('click', _maybeCloseProfiles);
+    if (pov) pov.addEventListener('click', (e) => {
+      // Close profiles overlay when clicking outside the modal (with guard)
+      if (e.target === pov) { e.preventDefault(); _maybeCloseProfiles(); }
+    });
+
+    // Holidays overlay events
+    const hov = qs('.overlay-holiday');
+    const hsave = qs('.holiday-save');
+    const hclose = qs('.holiday-close');
+    if (hsave) hsave.addEventListener('click', () => this._holidaySave());
+    if (hclose) hclose.addEventListener('click', () => { this._closeHolidayEditor(); this._render(); });
+    if (hov) hov.addEventListener('click', (e)=>{ if (e.target === hov) { e.preventDefault(); this._closeHolidayEditor(); } });
+
+    // Onboarding controls
+    try {
+      const next = qs('.onb-next');
+      const prev = qs('.onb-prev');
+      const skip = qs('.onb-skip');
+      const done = qs('.onb-done');
+      const ov = qs('.overlay-onboard');
+      next && (next.onclick = ()=>{ this._onboardStep = Math.min(this._onboardSlides.length-1, this._onboardStep+1); this._renderOnboard(); });
+      prev && (prev.onclick = ()=>{ this._onboardStep = Math.max(0, this._onboardStep-1); this._renderOnboard(); });
+      skip && (skip.onclick = ()=>{ this._closeOnboard(true); });
+      done && (done.onclick = ()=>{ this._closeOnboard(true); });
+      ov && ov.addEventListener('click', (e)=>{ if (e.target === ov) { e.preventDefault(); e.stopPropagation(); } });
+    } catch {}
+
+    // Test popup events
+    try {
+      const tov = qs('.overlay-test');
+      const tclose = qs('.test-close');
+      const texport = qs('.test-export');
+      if (tclose) tclose.onclick = ()=>{ try { tov?.classList.remove('open'); } catch {} };
+      if (texport) texport.onclick = ()=>{ try { this._exportTestCommands(); } catch {} };
+      if (tov) tov.onclick = (e)=>{ if (e.target === tov) { e.preventDefault(); e.stopPropagation(); } };
+    } catch {}
+
+    // Settings popup events
+    try {
+      const sov = qs('.overlay-settings');
+      const sclose = qs('.settings-close');
+      const ssave = qs('.settings-save');
+      const stabs = qs('.settings-tabs');
+      if (sclose) sclose.onclick = ()=>{ try { this._closeSettingsPopup(false); } catch {} };
+      if (ssave) ssave.onclick = ()=>{ try { this._saveSettingsPopup(); } catch {} };
+      if (stabs) stabs.onclick = (ev)=>{
+        try {
+          // In Shadow DOM, the click target can be a Text node inside the button.
+          // Use composedPath() to reliably find the originating button.
+          const path = typeof ev.composedPath === 'function' ? ev.composedPath() : [];
+          let btn = null;
+          for (const n of path) {
+            if (n && n.classList && n.classList.contains('settings-tab-btn')) { btn = n; break; }
+          }
+          if (!btn) btn = (ev.target && ev.target.closest) ? ev.target.closest('.settings-tab-btn') : null;
+          if (!btn) return;
+          const tab = btn.getAttribute('data-tab') || 'settings';
+          this._setSettingsPopupTab(tab);
+        } catch {}
+      };
+      if (sov) sov.onclick = (e)=>{ if (e.target === sov) { e.preventDefault(); e.stopPropagation(); } };
+
+      // Prevent scroll wheel from accidentally changing number inputs (which triggers "unsaved" state)
+      try {
+        const scroller = qs('.overlay-settings .settings-body') || sov;
+        const onWheel = (ev)=>{
+          try {
+            const t = ev?.target;
+            if (!t || t.tagName !== 'INPUT' || t.type !== 'number') return;
+            // Stop number increment/decrement and treat it as scroll
+            try { t.blur?.(); } catch {}
+            ev.preventDefault();
+            const s = t.closest('.settings-body') || scroller;
+            if (s && typeof s.scrollTop === 'number') s.scrollTop += (Number(ev.deltaY) || 0);
+          } catch {}
+        };
+        try {
+          if (this._settingsPopupWheelHandler?.el && this._settingsPopupWheelHandler?.fn) {
+            this._settingsPopupWheelHandler.el.removeEventListener('wheel', this._settingsPopupWheelHandler.fn);
+          }
+        } catch {}
+        if (scroller) {
+          scroller.addEventListener('wheel', onWheel, { passive: false });
+          this._settingsPopupWheelHandler = { el: scroller, fn: onWheel };
+        }
+      } catch {}
+
+      // Settings tab controls (draft-only)
+      const onNum = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const v = e && e.target ? e.target.value : '';
+          if (v === '') return;
+          const n = Number(v);
+          if (!Number.isFinite(n)) return;
+          this._settingsDraft[key] = n;
+        } catch {}
+      };
+      const onTempNum = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const v = e && e.target ? e.target.value : '';
+          if (v === '') return;
+          const raw = String(v).trim().replace(',', '.');
+          const nDisp = Number(raw);
+          if (!Number.isFinite(nDisp)) return;
+          // Convert based on draft unit (config unit may not match while popup is open)
+          const wantF = String(this._settingsDraft?.temp_unit || 'C').toUpperCase() === 'F';
+          const nC = wantF ? ((nDisp - 32) * 5/9) : nDisp;
+          if (!Number.isFinite(nC)) return;
+          this._settingsDraft[key] = nC;
+        } catch {}
+      };
+      const onSw = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const checked = !!(e && e.target && e.target.checked);
+          this._settingsDraft[key] = checked;
+        } catch {}
+      };
+
+      const spDef = qs('.overlay-settings .sp-def');
+      const spRowH = qs('.overlay-settings .sp-rowh');
+      const spMinC = qs('.overlay-settings .sp-minc');
+      const spMaxC = qs('.overlay-settings .sp-maxc');
+      if (spDef) spDef.oninput = onTempNum('default_temp');
+      if (spRowH) spRowH.oninput = onNum('row_height');
+      if (spMinC) spMinC.oninput = onTempNum('min_temp');
+      if (spMaxC) spMaxC.oninput = onTempNum('max_temp');
+
+      const swAuto = qs('.overlay-settings .sp-auto');
+      const swApplyEdit = qs('.overlay-settings .sp-applyedit');
+      const swApplyDef = qs('.overlay-settings .sp-applydef');
+      const swPerRoom = qs('.overlay-settings .sp-perroom');
+      if (swAuto) swAuto.onchange = onSw('auto_apply');
+      if (swApplyEdit) swApplyEdit.onchange = onSw('apply_on_edit');
+      if (swApplyDef) swApplyDef.onchange = onSw('apply_on_default_change');
+      if (swPerRoom) swPerRoom.onchange = onSw('per_room_defaults');
+
+      // Segmented controls + profiles enable
+      const fmt24 = qs('.overlay-settings .sp-fmt24');
+      const fmt12 = qs('.overlay-settings .sp-fmt12');
+      const srcB = qs('.overlay-settings .sp-srcBrowser');
+      const srcH = qs('.overlay-settings .sp-srcHa');
+      const unitC = qs('.overlay-settings .sp-unitC');
+      const unitF = qs('.overlay-settings .sp-unitF');
+      const swProfiles = qs('.overlay-settings .sp-profiles');
+      if (fmt24) fmt24.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_12h = false; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (fmt12) fmt12.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_12h = true; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (srcB) srcB.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_source = 'browser'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (srcH) srcH.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_source = 'ha'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (unitC) unitC.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'C'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (unitF) unitF.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'F'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (swProfiles) swProfiles.onchange = onSw('profiles_enabled');
+    } catch {}
+  }
+
+  // --- Settings popup (in-card, not HA editor) ---
+  _openSettingsPopup(){
+    try {
+      if (this._disablePopups) return;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (!ov) return;
+      ov.classList.add('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+      try { if (!this._settingsPopupTab) this._settingsPopupTab = 'settings'; } catch {}
+      try { this._initSettingsPopupDraft(); } catch {}
+      try { this._applyCardI18n(); } catch {}
+      try { this._renderSettingsPopupTabs(); } catch {}
+      try { this._renderSettingsPopupTab(); } catch {}
+      try {
+        const onKey = (ev) => { if (ev.key === 'Escape') { this._closeSettingsPopup(false); } };
+        try { if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler); } catch {}
+        this._settingsPopupKeyHandler = onKey;
+        window.addEventListener('keydown', onKey);
+      } catch {}
+    } catch {}
+  }
+
+  _setSettingsPopupTab(tab){
+    try {
+      const allowed = new Set(['settings','pause','weekdays','rooms','boiler','colors','owd','holidays','away']);
+      const next = allowed.has(String(tab)) ? String(tab) : 'settings';
+      this._settingsPopupTab = next;
+      this._renderSettingsPopupTabs();
+      this._renderSettingsPopupTab();
+    } catch {}
+  }
+
+  _renderSettingsPopupTabs(){
+    try {
+      const active = String(this._settingsPopupTab || 'settings');
+      const btns = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-tab-btn')) : [];
+      for (const b of btns){
+        const isActive = (b.getAttribute('data-tab') === active);
+        try { b.classList.toggle('active', isActive); } catch {}
+        try { b.setAttribute('aria-selected', isActive ? 'true' : 'false'); } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupTab(){
+    try {
+      const active = String(this._settingsPopupTab || 'settings');
+      const pages = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-page')) : [];
+      for (const p of pages){
+        const isActive = (p.getAttribute('data-page') === active);
+        try { p.classList.toggle('active', isActive); } catch {}
+        // Some tab renderers apply inline display styles (e.g. grid). Clear those on inactive tabs
+        // so CSS `.settings-page{display:none}` can hide them properly.
+        if (!isActive) {
+          try { p.style.display = ''; } catch {}
+        }
+      }
+      if (active === 'settings') {
+        this._renderSettingsPopupSettingsTab();
+      } else if (active === 'pause') {
+        this._renderSettingsPopupPauseTab();
+      } else if (active === 'weekdays') {
+        this._renderSettingsPopupWeekdaysTab();
+      } else if (active === 'rooms') {
+        this._renderSettingsPopupRoomsTab();
+      } else if (active === 'boiler') {
+        this._renderSettingsPopupBoilerTab();
+      } else if (active === 'colors') {
+        this._renderSettingsPopupColorsTab();
+      } else if (active === 'owd') {
+        this._renderSettingsPopupOwdTab();
+      } else if (active === 'holidays') {
+        this._renderSettingsPopupHolidaysTab();
+      } else if (active === 'away') {
+        this._renderSettingsPopupAwayTab();
+      }
+      // Some pages (like Weekdays) are built dynamically; re-apply i18n after rendering.
+      try { this._applyCardI18n(); } catch {}
+    } catch {}
+  }
+
+  _initSettingsPopupDraft(){
+    try {
+      const cfg = this._config || {};
+      const ow = (cfg.open_window && typeof cfg.open_window === 'object') ? cfg.open_window : {};
+      const owEnabled = (typeof ow.enabled === 'boolean') ? ow.enabled : false;
+      const owSensors = (ow.sensors && typeof ow.sensors === 'object') ? ow.sensors : {};
+      const owOpenDelay = Number.isFinite(Number(ow.open_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.open_delay_min)))) : 2;
+      const owCloseDelay = Number.isFinite(Number(ow.close_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.close_delay_min)))) : 5;
+      let owSensorsClone = {};
+      try {
+        for (const k of Object.keys(owSensors||{})) {
+          const arr = Array.isArray(owSensors[k]) ? owSensors[k].filter(Boolean).map(String) : [];
+          if (arr.length) owSensorsClone[String(k)] = Array.from(new Set(arr));
+        }
+      } catch {}
+
+      // Holidays
+      let holDates = [];
+      try {
+        holDates = Array.isArray(cfg.holidays_dates) ? cfg.holidays_dates.filter(Boolean).map(String) : [];
+        holDates = Array.from(new Set(holDates)).sort();
+      } catch {}
+
+      // Away
+      const awayCfg = (cfg.away && typeof cfg.away === 'object') ? cfg.away : {};
+      const awayPersons = Array.isArray(awayCfg.persons) ? awayCfg.persons.filter(Boolean).map(String) : [];
+      const awayCombos = (awayCfg.combos && typeof awayCfg.combos === 'object') ? awayCfg.combos : {};
+      const awayCombosClone = (()=>{
+        try {
+          const out = {};
+          for (const k of Object.keys(awayCombos||{})) {
+            const v = awayCombos[k];
+            if (v && typeof v === 'object' && v.enabled) out[String(k)] = { enabled: true };
+          }
+          return out;
+        } catch { return {}; }
+      })();
+
+      this._settingsDraft = {
+        // Rooms (edited in popup, persisted via store)
+        entities: (()=>{
+          try { return Array.isArray(cfg.entities) ? cfg.entities.map(String) : []; } catch { return []; }
+        })(),
+        room_use_input_number: (()=>{
+          try {
+            const ents = Array.isArray(cfg.entities) ? cfg.entities.map(String) : [];
+            const modes = Array.isArray(cfg.room_use_input_number) ? cfg.room_use_input_number.slice() : [];
+            while (modes.length < ents.length) modes.push(false);
+            return modes.map(v => !!v).slice(0, ents.length);
+          } catch { return []; }
+        })(),
+        labels: (()=>{ try { return (cfg.labels && typeof cfg.labels === 'object') ? JSON.parse(JSON.stringify(cfg.labels)) : {}; } catch { return {}; } })(),
+        merges: (()=>{
+          try {
+            const src = (cfg.merges && typeof cfg.merges === 'object') ? cfg.merges : {};
+            const out = {};
+            for (const k of Object.keys(src||{})) {
+              const arr = Array.isArray(src[k]) ? src[k].filter(Boolean).map(String) : [];
+              if (arr.length) out[String(k)] = Array.from(new Set(arr));
+            }
+            return out;
+          } catch { return {}; }
+        })(),
+        temp_sensors: (()=>{ try { return (cfg.temp_sensors && typeof cfg.temp_sensors === 'object') ? JSON.parse(JSON.stringify(cfg.temp_sensors)) : {}; } catch { return {}; } })(),
+
+        default_temp: this._ttCoerceNum(cfg.default_temp, 20),
+        row_height: this._ttCoerceNum(cfg.row_height, 64),
+        min_temp: this._ttCoerceNum(cfg.min_temp, 5),
+        max_temp: this._ttCoerceNum(cfg.max_temp, 25),
+        auto_apply: !!cfg.auto_apply,
+        apply_on_edit: !!cfg.apply_on_edit,
+        apply_on_default_change: !!cfg.apply_on_default_change,
+        per_room_defaults: !!cfg.per_room_defaults,
+        show_pause_button: cfg.show_pause_button !== false,
+        pause_sensor_enabled: !!cfg.pause_sensor_enabled,
+        pause_sensor_entity: String(cfg.pause_sensor_entity || ''),
+        time_12h: !!cfg.time_12h,
+        time_source: (cfg.time_source === 'ha') ? 'ha' : 'browser',
+        temp_unit: (String(cfg.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C',
+        profiles_enabled: !!cfg.profiles_enabled,
+
+        weekdays_enabled: !!cfg.weekdays_enabled,
+        weekdays_view: String(cfg.weekdays_view || 'all_rooms_one_day'),
+        weekdays_view_switch_in_timeline: !!(cfg.weekdays_view_switch_in_timeline ?? false),
+        weekdays_selected_room: String(cfg.weekdays_selected_room || ''),
+
+        boiler_enabled: !!cfg.boiler_enabled,
+        boiler_switch: String(cfg.boiler_switch || ''),
+        boiler_temp_sensor: String(cfg.boiler_temp_sensor || ''),
+        boiler_min_temp: this._ttCoerceNum(cfg.boiler_min_temp, 20),
+        boiler_max_temp: this._ttCoerceNum(cfg.boiler_max_temp, 25),
+
+        color_ranges: (()=>{
+          try {
+            const src = (cfg.color_ranges && typeof cfg.color_ranges === 'object') ? cfg.color_ranges : {};
+            const out = {};
+            for (const k of Object.keys(src||{})) {
+              const arr = Array.isArray(src[k]) ? src[k] : [];
+              out[String(k)] = arr.map(r => ({
+                from: Number.isFinite(Number(r?.from)) ? Number(r.from) : (this._ttCoerceNum(cfg.default_temp, 20)),
+                to: Number.isFinite(Number(r?.to)) ? Number(r.to) : (this._ttCoerceNum(cfg.default_temp, 20)),
+                color: String(r?.color || '#ffb347')
+              }));
+            }
+            return out;
+          } catch { return {}; }
+        })(),
+        color_global: !!cfg.color_global,
+
+        open_window: {
+          enabled: !!owEnabled,
+          sensors: owSensorsClone,
+          open_delay_min: owOpenDelay,
+          close_delay_min: owCloseDelay,
+        },
+
+        holidays_enabled: !!cfg.holidays_enabled,
+        holidays_source: (cfg.holidays_source === 'manual') ? 'manual' : 'calendar',
+        holidays_entity: String(cfg.holidays_entity || ''),
+        holidays_dates: holDates,
+
+        away: {
+          enabled: !!awayCfg.enabled,
+          target_c: this._ttCoerceNum(awayCfg.target_c, 17),
+          persons: Array.from(new Set(awayPersons)),
+          advanced_enabled: !!awayCfg.advanced_enabled,
+          combos: awayCombosClone,
+        },
+        presence_live_header: !!(cfg.presence_live_header ?? true),
+      };
+    } catch { this._settingsDraft = null; }
+  }
+
+  _applySettingsPopupDraftToConfig(){
+    try {
+      const d = this._settingsDraft;
+      if (!d) return;
+      const cfg = { ...(this._config || {}) };
+
+      // Rooms settings (entities + per-room mode + merges/labels)
+      try {
+        const rawEnts = Array.isArray(d.entities) ? d.entities.map(x => String(x||'').trim()) : [];
+        const ents = rawEnts.filter(Boolean);
+        const rawModes = Array.isArray(d.room_use_input_number) ? d.room_use_input_number.slice() : [];
+        while (rawModes.length < rawEnts.length) rawModes.push(false);
+        const modes = ents.map((eid, idx) => {
+          // If the entity domain is explicit, prefer it to avoid inconsistent mode state
+          if (String(eid).startsWith('input_number.')) return true;
+          if (String(eid).startsWith('climate.')) return false;
+          // Otherwise, take draft mode
+          return !!rawModes[idx];
+        });
+        cfg.entities = ents;
+        cfg.room_use_input_number = modes;
+
+        // Labels: keep only for active rooms and only non-empty strings
+        try {
+          const src = (d.labels && typeof d.labels === 'object') ? d.labels : {};
+          const out = {};
+          for (const eid of ents) {
+            const v = (src && Object.prototype.hasOwnProperty.call(src, eid)) ? String(src[eid]||'').trim() : '';
+            if (v) out[eid] = v;
+          }
+          cfg.labels = out;
+        } catch {}
+
+        // Merges: only keep mappings for active primaries, only climate rooms, and only linked climate.* entities
+        try {
+          const src = (d.merges && typeof d.merges === 'object') ? d.merges : {};
+          const out = {};
+          const primSet = new Set(ents);
+          for (let i=0;i<ents.length;i++) {
+            const primary = ents[i];
+            const isInput = !!modes[i] || String(primary).startsWith('input_number.');
+            if (isInput) continue;
+            const arr = Array.isArray(src[primary]) ? src[primary].filter(Boolean).map(String) : [];
+            const cleaned = Array.from(new Set(arr.filter(x => String(x).startsWith('climate.') && !primSet.has(String(x)))));
+            if (cleaned.length) out[primary] = cleaned;
+          }
+          cfg.merges = out;
+        } catch {}
+
+        // Temp sensors: keep only for active rooms
+        try {
+          const src = (d.temp_sensors && typeof d.temp_sensors === 'object') ? d.temp_sensors : {};
+          const out = {};
+          for (const eid of ents) {
+            const v = (src && Object.prototype.hasOwnProperty.call(src, eid)) ? String(src[eid]||'').trim() : '';
+            if (v) out[eid] = v;
+          }
+          cfg.temp_sensors = out;
+        } catch {}
+      } catch {}
+
+      cfg.default_temp = this._ttClampNum(d.default_temp, -50, 80, cfg.default_temp);
+      cfg.row_height = this._ttClampNum(d.row_height, 30, 200, cfg.row_height);
+      cfg.min_temp = this._ttClampNum(d.min_temp, -50, 80, cfg.min_temp);
+      cfg.max_temp = this._ttClampNum(d.max_temp, -50, 80, cfg.max_temp);
+
+      // Normalize min/max if user swapped them
+      if (Number.isFinite(cfg.min_temp) && Number.isFinite(cfg.max_temp) && cfg.min_temp > cfg.max_temp) {
+        const tmp = cfg.min_temp;
+        cfg.min_temp = cfg.max_temp;
+        cfg.max_temp = tmp;
+      }
+
+      cfg.auto_apply = !!d.auto_apply;
+      cfg.apply_on_edit = !!d.apply_on_edit;
+      cfg.apply_on_default_change = !!d.apply_on_default_change;
+      cfg.per_room_defaults = !!d.per_room_defaults;
+      cfg.show_pause_button = !!d.show_pause_button;
+      cfg.pause_sensor_enabled = !!d.pause_sensor_enabled;
+      cfg.pause_sensor_entity = String(d.pause_sensor_entity || '');
+
+      cfg.time_12h = !!d.time_12h;
+      cfg.time_source = (d.time_source === 'ha') ? 'ha' : 'browser';
+      cfg.temp_unit = (String(d.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C';
+      cfg.profiles_enabled = !!d.profiles_enabled;
+
+      cfg.weekdays_enabled = !!d.weekdays_enabled;
+      cfg.weekdays_view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+      cfg.weekdays_view_switch_in_timeline = !!d.weekdays_view_switch_in_timeline;
+      // If per-room view, ensure we have a selected room
+      try {
+        const ents = Array.isArray(cfg.entities) ? cfg.entities.filter(Boolean) : [];
+        const want = String(d.weekdays_selected_room || '');
+        if (cfg.weekdays_view === 'one_room_all_days') {
+          cfg.weekdays_selected_room = (want && ents.includes(want)) ? want : (ents[0] || '');
+        } else {
+          cfg.weekdays_selected_room = '';
+        }
+      } catch {}
+
+      // Boiler settings
+      cfg.boiler_enabled = !!d.boiler_enabled;
+      cfg.boiler_switch = String(d.boiler_switch || '');
+      cfg.boiler_temp_sensor = String(d.boiler_temp_sensor || '');
+      const clampBoiler = (n, fallback)=>{
+        const v = Number(n);
+        if (!Number.isFinite(v)) return fallback;
+        return Math.max(0, Math.min(120, v));
+      };
+      cfg.boiler_min_temp = clampBoiler(d.boiler_min_temp, cfg.boiler_min_temp);
+      cfg.boiler_max_temp = clampBoiler(d.boiler_max_temp, cfg.boiler_max_temp);
+      // Normalize min/max if user swapped them
+      if (Number.isFinite(Number(cfg.boiler_min_temp)) && Number.isFinite(Number(cfg.boiler_max_temp)) && Number(cfg.boiler_min_temp) > Number(cfg.boiler_max_temp)) {
+        const tmpB = cfg.boiler_min_temp;
+        cfg.boiler_min_temp = cfg.boiler_max_temp;
+        cfg.boiler_max_temp = tmpB;
+      }
+
+      // Colors settings
+      try {
+        cfg.color_global = !!d.color_global;
+        const src = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+        const out = {};
+        const minC = Number.isFinite(Number(cfg.min_temp)) ? Number(cfg.min_temp) : 5;
+        const maxC = Number.isFinite(Number(cfg.max_temp)) ? Number(cfg.max_temp) : 25;
+        const clampC = (n, fallback)=>{
+          const v = Number(n);
+          if (!Number.isFinite(v)) return fallback;
+          return Math.max(minC, Math.min(maxC, v));
+        };
+        for (const k of Object.keys(src||{})) {
+          const arr = Array.isArray(src[k]) ? src[k] : [];
+          const cleaned = [];
+          for (const r of arr) {
+            const def = Number.isFinite(Number(cfg.default_temp)) ? Number(cfg.default_temp) : 20;
+            const from = clampC(r?.from, def);
+            const to = clampC(r?.to, def);
+            const color = String(r?.color || '#ffb347');
+            cleaned.push({ from, to, color });
+          }
+          out[String(k)] = cleaned;
+        }
+        cfg.color_ranges = out;
+      } catch {}
+
+      // Open Window Detection settings
+      try {
+        const ow = (d.open_window && typeof d.open_window === 'object') ? d.open_window : {};
+        const out = {};
+        out.enabled = !!ow.enabled;
+        out.open_delay_min = Number.isFinite(Number(ow.open_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.open_delay_min)))) : 2;
+        out.close_delay_min = Number.isFinite(Number(ow.close_delay_min)) ? Math.max(0, Math.min(1440, Math.round(Number(ow.close_delay_min)))) : 5;
+        out.sensors = {};
+        const sMap = (ow.sensors && typeof ow.sensors === 'object') ? ow.sensors : {};
+        for (const k of Object.keys(sMap||{})) {
+          const arr = Array.isArray(sMap[k]) ? sMap[k].filter(Boolean).map(String) : [];
+          if (arr.length) out.sensors[String(k)] = Array.from(new Set(arr));
+        }
+        cfg.open_window = out;
+      } catch {}
+
+      // Holidays settings
+      try {
+        cfg.holidays_enabled = !!d.holidays_enabled;
+        cfg.holidays_source = (d.holidays_source === 'manual') ? 'manual' : 'calendar';
+        cfg.holidays_entity = String(d.holidays_entity || '');
+        let dates = [];
+        try {
+          dates = Array.isArray(d.holidays_dates) ? d.holidays_dates.filter(Boolean).map(String) : [];
+          // Keep only YYYY-MM-DD (simple/strict)
+          dates = dates.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x)));
+          dates = Array.from(new Set(dates)).sort();
+        } catch {}
+        cfg.holidays_dates = dates;
+      } catch {}
+
+      // Away settings
+      try {
+        const src = (d.away && typeof d.away === 'object') ? d.away : {};
+        const cur = { ...(cfg.away || {}) };
+        cur.enabled = !!src.enabled;
+
+        // Clamp target C to min/max from draft (stored in C)
+        const mn = Number.isFinite(Number(d.min_temp)) ? Number(d.min_temp) : (Number.isFinite(Number(cfg.min_temp)) ? Number(cfg.min_temp) : 5);
+        const mx = Number.isFinite(Number(d.max_temp)) ? Number(d.max_temp) : (Number.isFinite(Number(cfg.max_temp)) ? Number(cfg.max_temp) : 25);
+        const tC = Number(src.target_c);
+        const safeTC = Number.isFinite(tC) ? Math.max(mn, Math.min(mx, tC)) : (Number.isFinite(Number(cur.target_c)) ? Number(cur.target_c) : 17);
+        cur.target_c = safeTC;
+
+        const persons = Array.isArray(src.persons) ? src.persons.filter(Boolean).map(String) : [];
+        cur.persons = Array.from(new Set(persons));
+        cur.advanced_enabled = !!src.advanced_enabled;
+
+        // Normalize combos (only keep enabled entries)
+        const combosSrc = (src.combos && typeof src.combos === 'object') ? src.combos : {};
+        const combosOut = {};
+        for (const k of Object.keys(combosSrc||{})) {
+          const v = combosSrc[k];
+          if (v && typeof v === 'object' && v.enabled) combosOut[String(k)] = { enabled: true };
+        }
+        cur.combos = combosOut;
+
+        // If Away is turned OFF, also disable Advanced Away and live presence chips
+        if (!cur.enabled) {
+          cur.advanced_enabled = false;
+          cfg.presence_live_header = false;
+        } else {
+          // Presence live header respects advanced toggle
+          const live = !!(d.presence_live_header ?? true);
+          cfg.presence_live_header = cur.advanced_enabled ? live : false;
+        }
+
+        cfg.away = cur;
+      } catch {}
+
+      this._config = cfg;
+    } catch {}
+  }
+
+  _renderSettingsPopupRoomsTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="rooms"]');
+      if (!page) return;
+
+      // Build base markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card" style="padding:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div class="text" style="display:grid; gap:2px;">
+                <div class="title sp-rooms-title"></div>
+                <div class="desc sp-rooms-desc"></div>
+              </div>
+              <button type="button" class="btn ghost sp-rooms-add"></button>
+            </div>
+            <div class="sp-rooms-list" style="display:grid; gap:10px;"></div>
+          </div>
+        `;
+      }
+
+      // Ensure draft shape
+      if (!Array.isArray(d.entities)) d.entities = [];
+      if (!Array.isArray(d.room_use_input_number)) d.room_use_input_number = [];
+      while (d.room_use_input_number.length < d.entities.length) d.room_use_input_number.push(false);
+      if (!d.labels || typeof d.labels !== 'object') d.labels = {};
+      if (!d.merges || typeof d.merges !== 'object') d.merges = {};
+      if (!d.temp_sensors || typeof d.temp_sensors !== 'object') d.temp_sensors = {};
+      try { if (!this._openPopupRooms) this._openPopupRooms = new Set(); } catch {}
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const list = q('.overlay-settings .sp-rooms-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      const ents = d.entities.map(x => String(x||''));
+      const usedPrimary = new Set(ents.filter(Boolean));
+      const usedLinked = new Set(Object.values(d.merges||{}).flat().filter(Boolean).map(String));
+
+      const titleEl = q('.overlay-settings .sp-rooms-title');
+      if (titleEl) titleEl.textContent = this._t('editor.tabs.rooms') || 'Rooms';
+      const descEl = q('.overlay-settings .sp-rooms-desc');
+      if (descEl) descEl.textContent = this._t('editor.select_entities') || 'Select rooms';
+      const addBtn = q('.overlay-settings .sp-rooms-add');
+      if (addBtn) addBtn.textContent = this._t('editor.add_entity') || 'Add room';
+
+      const getRowKey = (idx)=>{
+        const eid = ents[idx] || '';
+        return eid ? String(eid) : `#idx:${idx}`;
+      };
+
+      const pretty = (eid)=>{
+        try {
+          const lbl = d.labels?.[eid];
+          if (lbl) return String(lbl);
+        } catch {}
+        return this._prettyName(eid);
+      };
+
+      const mkFoldout = (idx)=>{
+        const line = document.createElement('div');
+        line.className = 'inline';
+
+        const summary = document.createElement('div');
+        summary.className = 'summary';
+        const sumLeft = document.createElement('div');
+        sumLeft.className = 'summary-left';
+        const exp = document.createElement('button');
+        exp.type = 'button';
+        exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+
+        const txtWrap = document.createElement('div');
+        txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'summary-title';
+        const subSpan = document.createElement('span');
+        subSpan.className = 'summary-sub';
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+        const handle = document.createElement('button');
+        handle.type = 'button';
+        handle.className = 'drag-handle';
+        try { handle.setAttribute('title', this._t('editor.drag_reorder') || 'Drag to reorder'); } catch {}
+        handle.innerHTML = '<ha-icon icon="mdi:drag"></ha-icon>';
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'remove-btn';
+        del.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+        actions.append(handle, del);
+
+        txtWrap.append(titleSpan, subSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft, actions);
+        line.append(summary);
+
+        const details = document.createElement('div');
+        details.className = 'details';
+        line.append(details);
+
+        // Inline styles (keep consistent with other popup foldouts)
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          subSpan.style.fontSize = '.85rem';
+          subSpan.style.color = 'var(--secondary-text-color)';
+          subSpan.style.overflow = 'hidden';
+          subSpan.style.textOverflow = 'ellipsis';
+          subSpan.style.whiteSpace = 'nowrap';
+          subSpan.style.maxWidth = '320px';
+
+          // Match the Colors foldout expander styling
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 520px)';
+          details.style.gap = '8px';
+          details.style.padding = '8px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const rowKey = getRowKey(idx);
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openPopupRooms) this._openPopupRooms = new Set();
+            if (nextOpen) this._openPopupRooms.add(String(rowKey));
+            else this._openPopupRooms.delete(String(rowKey));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea, tt-entity-picker, ha-entity-picker, ha-switch')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openPopupRooms?.has(String(rowKey))); } catch {}
+
+        // Build details content
+        const left = document.createElement('div');
+        left.style.display = 'grid';
+        left.style.gap = '6px';
+
+        const useInput = (()=>{
+          try {
+            const eid = String(ents[idx]||'');
+            if (eid.startsWith('input_number.')) return true;
+            if (eid.startsWith('climate.')) return false;
+            return !!d.room_use_input_number?.[idx];
+          } catch { return false; }
+        })();
+
+        const modeRow = document.createElement('div');
+        modeRow.style.display = 'flex';
+        modeRow.style.alignItems = 'center';
+        modeRow.style.justifyContent = 'space-between';
+        modeRow.style.gap = '10px';
+        const modeText = document.createElement('div');
+        modeText.style.display = 'grid';
+        modeText.style.gap = '2px';
+        const modeTitle = document.createElement('div');
+        modeTitle.style.fontWeight = '600';
+        modeTitle.textContent = this._t('editor.room_mode.title') || 'Use input_number instead of climate';
+        const modeDesc = document.createElement('div');
+        modeDesc.style.fontSize = '.85rem';
+        modeDesc.style.color = 'var(--secondary-text-color)';
+        modeDesc.textContent = this._t('editor.room_mode.desc') || '';
+        modeText.append(modeTitle, modeDesc);
+        const modeSwitch = document.createElement('ha-switch');
+        modeSwitch.className = 'sp-room-mode-switch';
+        modeSwitch.checked = !!useInput;
+        modeSwitch.addEventListener('change', (e)=>{
+          try {
+            const on = !!e.target.checked;
+            if (!Array.isArray(this._settingsDraft?.room_use_input_number)) this._settingsDraft.room_use_input_number = [];
+            while (this._settingsDraft.room_use_input_number.length < this._settingsDraft.entities.length) this._settingsDraft.room_use_input_number.push(false);
+            this._settingsDraft.room_use_input_number[idx] = on;
+
+            const oldEid = String(this._settingsDraft.entities[idx]||'').trim();
+            const mismatch = !!oldEid && ((on && !oldEid.startsWith('input_number.')) || (!on && !oldEid.startsWith('climate.')));
+            if (mismatch) {
+              // Clean mappings tied to old primary
+              try { if (this._settingsDraft.labels && this._settingsDraft.labels[oldEid]) { const next = { ...(this._settingsDraft.labels||{}) }; delete next[oldEid]; this._settingsDraft.labels = next; } } catch {}
+              try {
+                const merges = { ...(this._settingsDraft.merges||{}) };
+                if (merges[oldEid]) delete merges[oldEid];
+                for (const k of Object.keys(merges)) {
+                  merges[k] = (merges[k] || []).filter(x => String(x) !== String(oldEid));
+                  if (!merges[k].length) delete merges[k];
+                }
+                this._settingsDraft.merges = merges;
+              } catch {}
+              try { if (this._settingsDraft.temp_sensors && this._settingsDraft.temp_sensors[oldEid]) { const next = { ...(this._settingsDraft.temp_sensors||{}) }; delete next[oldEid]; this._settingsDraft.temp_sensors = next; } } catch {}
+              this._settingsDraft.entities[idx] = '';
+            }
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+        modeRow.append(modeText, modeSwitch);
+
+        const pick = document.createElement('tt-entity-picker');
+        try { pick.style.display = 'block'; pick.style.minHeight = '48px'; pick.style.maxWidth = '440px'; } catch {}
+        try { pick.hass = this._hass; } catch {}
+        pick.setAttribute('include-domains', useInput ? '["input_number"]' : '["climate"]');
+        pick.setAttribute('label', this._t('editor.entity_placeholder') || 'Entity');
+        try { pick.value = String(ents[idx] || ''); } catch {}
+        pick.entityFilter = (st) => {
+          try {
+            const id = st?.entity_id || st?.entityId || st?.entityID || '';
+            if (!id) return false;
+            const current = String(ents[idx] || '');
+            const blocked = new Set([...usedPrimary, ...usedLinked]);
+            return !blocked.has(id) || id === current;
+          } catch { return true; }
+        };
+
+        const nameLabel = document.createElement('div');
+        nameLabel.className = 'label';
+        nameLabel.textContent = this._t('editor.display_name_optional') || 'Room name (optional)';
+
+        const nameInp = document.createElement('input');
+        nameInp.type = 'text';
+        nameInp.className = 'label-input tt-input tt-input-lg';
+        try { nameInp.style.width = '100%'; nameInp.style.maxWidth = '440px'; } catch {}
+        nameInp.setAttribute('placeholder', this._t('editor.display_name_optional') || 'Room name (optional)');
+        try {
+          const curEid = String(ents[idx] || '');
+          nameInp.value = (d.labels && curEid && d.labels[curEid]) ? String(d.labels[curEid]) : '';
+        } catch {}
+        const setDraftLabel = (eid, value)=>{
+          try {
+            if (!eid) return;
+            const labels = { ...(this._settingsDraft.labels || {}) };
+            if (value) labels[eid] = value;
+            else delete labels[eid];
+            this._settingsDraft.labels = labels;
+          } catch {}
+        };
+        // Important: don't re-render the whole Rooms tab on every keystroke,
+        // otherwise the input element gets recreated and loses focus.
+        nameInp.addEventListener('input', (e)=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '').trim();
+            if (!eid) return;
+            const raw = String(e?.target?.value ?? '');
+            setDraftLabel(eid, raw ? raw : '');
+          } catch {}
+        });
+        nameInp.addEventListener('change', (e)=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '').trim();
+            if (!eid) return;
+            const val = String(e?.target?.value ?? '').trim();
+            setDraftLabel(eid, val);
+            try { e.target.value = val; } catch {}
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        // Merge UI
+        const linkWrap = document.createElement('div');
+        linkWrap.style.display = 'grid';
+        linkWrap.style.gap = '6px';
+        const linkLabel = document.createElement('div');
+        linkLabel.className = 'label';
+        linkLabel.textContent = this._t('editor.merge_label') || 'Merge with';
+        const linkPicker = document.createElement('tt-entity-picker');
+        try { linkPicker.style.display = 'block'; linkPicker.style.minHeight = '48px'; linkPicker.style.width = '100%'; linkPicker.style.maxWidth = '440px'; } catch {}
+        linkPicker.className = 'merge-picker';
+        linkPicker.setAttribute('include-domains', '["climate"]');
+        linkPicker.setAttribute('label', this._t('editor.merge_label') || 'Merge with');
+        try { linkPicker.hass = this._hass; } catch {}
+        linkPicker.entityFilter = (st) => {
+          try {
+            const id = st?.entity_id || st?.entityId || st?.entityID || '';
+            if (!id) return false;
+            const prims = (this._settingsDraft?.entities || []).filter(Boolean).map(String);
+            const allLinked = Object.values(this._settingsDraft?.merges || {}).flat().filter(Boolean).map(String);
+            const used = new Set([...prims, ...allLinked]);
+            const cur = String(this._settingsDraft?.entities?.[idx] || '');
+            return !used.has(id) && id !== cur;
+          } catch { return true; }
+        };
+
+        const chips = document.createElement('div');
+        chips.className = 'linked-chips';
+
+        const refreshSubtitle = ()=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '');
+            const links = (this._settingsDraft?.merges?.[eid] || []).map(String);
+            const linkedNames = links.map(id => this._prettyName(id));
+            const parts = [];
+            if (eid) parts.push(eid);
+            if (linkedNames.length) parts.push(`${this._t('editor.merged_with') || 'Merged with'}: ${linkedNames.join(', ')}`);
+            subSpan.textContent = parts.join(' • ');
+          } catch { subSpan.textContent = ''; }
+        };
+
+        const refreshChips = ()=>{
+          try {
+            chips.innerHTML = '';
+            const primary = String(this._settingsDraft?.entities?.[idx] || '');
+            const links = (this._settingsDraft?.merges?.[primary] || []).map(String);
+            for (const l of links) {
+              const chip = document.createElement('span');
+              chip.className = 'pill-chip';
+              const txt = document.createElement('span');
+              txt.textContent = this._prettyName(l);
+              const rm = document.createElement('button');
+              rm.type = 'button';
+              rm.className = 'rm';
+              rm.textContent = '×';
+              try { rm.setAttribute('aria-label', this._t('editor.remove') || 'Remove'); } catch {}
+              rm.addEventListener('click', ()=>{
+                try {
+                  const merges = { ...(this._settingsDraft.merges || {}) };
+                  merges[primary] = (merges[primary] || []).filter(x => String(x) !== String(l));
+                  if (!merges[primary]?.length) delete merges[primary];
+                  this._settingsDraft.merges = merges;
+                  this._renderSettingsPopupRoomsTab();
+                } catch {}
+              });
+              chip.append(txt, rm);
+              chips.append(chip);
+            }
+            refreshSubtitle();
+          } catch {}
+        };
+
+        linkPicker.addEventListener('value-changed', (e)=>{
+          try {
+            const toAdd = String(e?.detail?.value || '');
+            try { linkPicker.value = ''; } catch {}
+            const primary = String(this._settingsDraft?.entities?.[idx] || '');
+            if (!primary || !toAdd) return;
+            const merges = { ...(this._settingsDraft.merges || {}) };
+            const arr = Array.from(new Set([...(merges[primary] || []).map(String), toAdd]));
+            merges[primary] = arr;
+            this._settingsDraft.merges = merges;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        left.append(modeRow, pick, nameLabel, nameInp, linkWrap, chips);
+        try { linkWrap.append(linkLabel, linkPicker); } catch {}
+        details.append(left);
+
+        // Summary title
+        try {
+          const eid = String(ents[idx] || '').trim();
+          titleSpan.textContent = eid ? pretty(eid) : (this._t('editor.entity_placeholder') || 'Select entity');
+        } catch { titleSpan.textContent = this._t('editor.entity_placeholder') || 'Select entity'; }
+        refreshSubtitle();
+
+        // Remove room
+        del.addEventListener('click', (ev)=>{
+          try { ev.stopPropagation?.(); } catch {}
+          try {
+            const arr = [...(this._settingsDraft.entities || [])];
+            const modes = Array.isArray(this._settingsDraft.room_use_input_number) ? [...this._settingsDraft.room_use_input_number] : [];
+            const primary = String(arr[idx] || '');
+            arr.splice(idx, 1);
+            try { if (modes.length) modes.splice(idx, 1); } catch {}
+
+            // Clean labels
+            try {
+              const labels = { ...(this._settingsDraft.labels || {}) };
+              if (primary && labels[primary]) delete labels[primary];
+              this._settingsDraft.labels = labels;
+            } catch {}
+            // Clean merges
+            try {
+              const merges = { ...(this._settingsDraft.merges || {}) };
+              if (primary && merges[primary]) delete merges[primary];
+              for (const k of Object.keys(merges)) {
+                merges[k] = (merges[k] || []).filter(e => String(e) !== String(primary));
+                if (!merges[k].length) delete merges[k];
+              }
+              this._settingsDraft.merges = merges;
+            } catch {}
+            // Clean temp sensors
+            try {
+              const sensors = { ...(this._settingsDraft.temp_sensors || {}) };
+              if (primary && sensors[primary]) delete sensors[primary];
+              this._settingsDraft.temp_sensors = sensors;
+            } catch {}
+
+            this._settingsDraft.entities = arr;
+            this._settingsDraft.room_use_input_number = modes;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        // Primary picker change
+        pick.addEventListener('value-changed', (e)=>{
+          try {
+            const newPrimary = String(e?.detail?.value || '').trim();
+            const oldPrimary = String(this._settingsDraft?.entities?.[idx] || '').trim();
+
+            // Auto-sync mode based on chosen domain
+            try {
+              while (this._settingsDraft.room_use_input_number.length < this._settingsDraft.entities.length) this._settingsDraft.room_use_input_number.push(false);
+              if (newPrimary.startsWith('input_number.')) this._settingsDraft.room_use_input_number[idx] = true;
+              else if (newPrimary.startsWith('climate.')) this._settingsDraft.room_use_input_number[idx] = false;
+            } catch {}
+
+            // Migrate merges/temp sensors when primary changes
+            if (oldPrimary && newPrimary && oldPrimary !== newPrimary) {
+              try {
+                const merges = { ...(this._settingsDraft.merges || {}) };
+                if (merges[oldPrimary] && !merges[newPrimary]) { merges[newPrimary] = merges[oldPrimary]; delete merges[oldPrimary]; }
+                else if (merges[oldPrimary] && merges[newPrimary]) {
+                  merges[newPrimary] = Array.from(new Set([...(merges[newPrimary]||[]), ...(merges[oldPrimary]||[])]));
+                  delete merges[oldPrimary];
+                }
+                this._settingsDraft.merges = merges;
+              } catch {}
+              try {
+                const sensors = { ...(this._settingsDraft.temp_sensors || {}) };
+                if (sensors[oldPrimary] && !sensors[newPrimary]) sensors[newPrimary] = sensors[oldPrimary];
+                if (sensors[oldPrimary]) delete sensors[oldPrimary];
+                this._settingsDraft.temp_sensors = sensors;
+              } catch {}
+              try {
+                const labels = { ...(this._settingsDraft.labels || {}) };
+                if (labels[oldPrimary] && !labels[newPrimary]) labels[newPrimary] = labels[oldPrimary];
+                if (labels[oldPrimary]) delete labels[oldPrimary];
+                this._settingsDraft.labels = labels;
+              } catch {}
+              // Move open-state key old -> new
+              try {
+                if (this._openPopupRooms && this._openPopupRooms.has(oldPrimary)) { this._openPopupRooms.delete(oldPrimary); this._openPopupRooms.add(newPrimary); }
+              } catch {}
+            }
+
+            const next = [...(this._settingsDraft.entities || [])];
+            next[idx] = newPrimary;
+            this._settingsDraft.entities = next;
+            this._renderSettingsPopupRoomsTab();
+          } catch {}
+        });
+
+        // Drag reorder
+        handle.addEventListener('mousedown', (ev)=>{
+          try { ev.preventDefault(); } catch {}
+          try {
+            const wrap = line.parentElement;
+            const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+            this._startSettingsPopupRoomsPointerDnd(line, curIdx, ev);
+          } catch { this._startSettingsPopupRoomsPointerDnd(line, idx, ev); }
+        });
+        handle.addEventListener('touchstart', (ev)=>{
+          try { ev.preventDefault(); } catch {}
+          try {
+            const wrap = line.parentElement;
+            const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+            this._startSettingsPopupRoomsPointerDnd(line, curIdx, ev);
+          } catch { this._startSettingsPopupRoomsPointerDnd(line, idx, ev); }
+        }, { passive: false });
+
+        return line;
+      };
+
+      // Add rows
+      for (let i=0;i<ents.length;i++) {
+        list.append(mkFoldout(i));
+      }
+
+      // Bind top-level events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+        try {
+          const btn = q('.overlay-settings .sp-rooms-add');
+          if (btn) btn.addEventListener('click', ()=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.entities = [...(this._settingsDraft.entities || []), ''];
+              const modes = Array.isArray(this._settingsDraft.room_use_input_number) ? [...this._settingsDraft.room_use_input_number] : [];
+              modes.push(false);
+              this._settingsDraft.room_use_input_number = modes;
+              this._renderSettingsPopupRoomsTab();
+            } catch {}
+          });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _startSettingsPopupRoomsPointerDnd(line, idx, startEv){
+    try {
+      const wrap = line.parentElement;
+      if (!wrap) return;
+      if (this._settingsPopupPointerDndActive) return;
+      this._settingsPopupPointerDndActive = true;
+
+      const rect = line.getBoundingClientRect();
+      const ghost = line.cloneNode(true);
+      ghost.classList.add('drag-ghost');
+      ghost.style.width = rect.width + 'px';
+      ghost.style.height = rect.height + 'px';
+      ghost.style.top = rect.top + 'px';
+      ghost.style.left = rect.left + 'px';
+
+      const placeholder = document.createElement('div');
+      placeholder.className = 'placeholder';
+      placeholder.style.height = rect.height + 'px';
+
+      // place placeholder where line was, and hide line
+      wrap.insertBefore(placeholder, line);
+      line.style.display = 'none';
+      document.body.appendChild(ghost);
+
+      const readClient = (e)=>{
+        if (e?.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e?.clientX, y: e?.clientY };
+      };
+
+      const onMove = (ev)=>{
+        try { ev.preventDefault(); } catch {}
+        const { y, x } = readClient(ev);
+        if (!Number.isFinite(y) || !Number.isFinite(x)) return;
+        ghost.style.top = (y - rect.height/2) + 'px';
+
+        // find element under pointer within this shadowRoot
+        let el = this.shadowRoot && this.shadowRoot.elementFromPoint(x, y);
+        // climb to row in the same wrap
+        while (el && el !== wrap && !el.classList?.contains('inline')) el = el.parentElement;
+        if (!el || el===placeholder || el===wrap) return;
+        const targetRect = el.getBoundingClientRect();
+        const before = (y - targetRect.top) < targetRect.height/2;
+        if (before) wrap.insertBefore(placeholder, el);
+        else wrap.insertBefore(placeholder, el.nextSibling);
+      };
+
+      const endDrag = ()=>{
+        window.removeEventListener('mousemove', onMove, true);
+        window.removeEventListener('mouseup', onUp, true);
+        window.removeEventListener('touchmove', onMove, true);
+        window.removeEventListener('touchend', onUp, true);
+        try { ghost.remove(); } catch {}
+
+        try {
+          const from = idx;
+          const to = Array.prototype.indexOf.call(wrap.children, placeholder);
+          const arr = [...(this._settingsDraft?.entities || [])];
+          const modes = Array.isArray(this._settingsDraft?.room_use_input_number) ? [...this._settingsDraft.room_use_input_number] : [];
+          while (modes.length < arr.length) modes.push(false);
+          const [item] = arr.splice(from,1);
+          const [mItem] = modes.splice(from,1);
+          const correctedTo = Math.max(0, Math.min(to, arr.length));
+          arr.splice(correctedTo, 0, item);
+          modes.splice(correctedTo, 0, mItem);
+          this._settingsDraft.entities = arr;
+          this._settingsDraft.room_use_input_number = modes;
+        } catch {}
+
+        try { placeholder.remove(); } catch {}
+        try { line.style.display = ''; } catch {}
+        this._settingsPopupPointerDndActive = false;
+        try { this._renderSettingsPopupRoomsTab(); } catch {}
+      };
+
+      const onUp = (ev)=>{ try { ev.preventDefault?.(); } catch {} endDrag(); };
+
+      window.addEventListener('mousemove', onMove, true);
+      window.addEventListener('mouseup', onUp, true);
+      window.addEventListener('touchmove', onMove, true);
+      window.addEventListener('touchend', onUp, true);
+
+      // Initial nudge so the ghost doesn't feel stuck under finger
+      try {
+        const { x, y } = readClient(startEv || {});
+        if (Number.isFinite(y) && Number.isFinite(x)) ghost.style.top = (y - rect.height/2) + 'px';
+      } catch {}
+    } catch { this._settingsPopupPointerDndActive = false; }
+  }
+
+  _renderSettingsPopupAwayTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="away"]');
+      if (!page) return;
+
+      // Build markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-away-enable-title"></div>
+                <div class="desc sp-away-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-away-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-away-temp-row">
+              <div class="text">
+                <div class="title sp-away-temp-title"></div>
+                <div class="desc sp-away-temp-desc"></div>
+              </div>
+              <input class="settings-input sp-away-temp" type="number" step="0.5" />
+            </div>
+
+            <div class="setting sp-away-persons-row">
+              <div class="text">
+                <div class="title sp-away-persons-title"></div>
+                <div class="desc sp-away-persons-desc"></div>
+              </div>
+              <div style="display:grid; gap:8px;">
+                <tt-entity-picker class="sp-away-person-picker" include-domains='["person","device_tracker"]'></tt-entity-picker>
+                <div class="linked-chips sp-away-chips"></div>
+              </div>
+            </div>
+
+            <div class="setting sp-away-adv-row">
+              <div class="text">
+                <div class="title sp-away-adv-title"></div>
+                <div class="desc sp-away-adv-desc"></div>
+              </div>
+              <ha-switch class="sp-away-adv-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-presence-live-row">
+              <div class="text">
+                <div class="title sp-presence-live-title"></div>
+                <div class="desc sp-presence-live-desc"></div>
+              </div>
+              <ha-switch class="sp-presence-live-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-away-combos-row" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-presence-combos-title"></div>
+                <div class="desc sp-presence-combos-desc"></div>
+              </div>
+              <div class="sp-presence-combo-list" style="margin-top:6px; border:1px solid var(--divider-color); border-radius:8px; padding:6px; display:grid; gap:6px; max-height:180px; overflow:auto;"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Ensure draft shape
+      if (!d.away || typeof d.away !== 'object') d.away = { enabled:false, target_c:17, persons:[], advanced_enabled:false, combos:{} };
+      if (!Array.isArray(d.away.persons)) d.away.persons = [];
+      if (!d.away.combos || typeof d.away.combos !== 'object') d.away.combos = {};
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const awayOn = !!d.away.enabled;
+      const advOn = !!d.away.advanced_enabled;
+
+      // Show/hide dependent controls based on master toggle
+      try {
+        const tempRow = q('.overlay-settings .sp-away-temp-row');
+        const personsRow = q('.overlay-settings .sp-away-persons-row');
+        const advRow = q('.overlay-settings .sp-away-adv-row');
+        const liveRow = q('.overlay-settings .sp-presence-live-row');
+        const combosRow = q('.overlay-settings .sp-away-combos-row');
+        [tempRow, personsRow, advRow, liveRow, combosRow].forEach(r=>{ if (r) r.style.display = awayOn ? '' : 'none'; });
+      } catch {}
+
+      // Toggle states
+      try {
+        const sw = q('.overlay-settings .sp-away-enable');
+        if (sw) sw.checked = awayOn;
+      } catch {}
+      try {
+        const adv = q('.overlay-settings .sp-away-adv-enable');
+        if (adv) adv.checked = advOn;
+      } catch {}
+      try {
+        const pl = q('.overlay-settings .sp-presence-live-enable');
+        if (pl) {
+          pl.checked = !!(d.presence_live_header ?? true);
+          pl.disabled = !advOn;
+        }
+      } catch {}
+
+      // Temperature field formatting based on draft unit
+      try {
+        const inp = q('.overlay-settings .sp-away-temp');
+        if (inp) {
+          const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+          const toDisp = (c)=> wantF ? ((Number(c) * 9/5) + 32) : Number(c);
+          const mnC = Number.isFinite(Number(d.min_temp)) ? Number(d.min_temp) : (Number.isFinite(Number(this._config?.min_temp)) ? Number(this._config.min_temp) : 5);
+          const mxC = Number.isFinite(Number(d.max_temp)) ? Number(d.max_temp) : (Number.isFinite(Number(this._config?.max_temp)) ? Number(this._config.max_temp) : 25);
+          inp.setAttribute('min', String(toDisp(mnC)));
+          inp.setAttribute('max', String(toDisp(mxC)));
+          if (inp !== this.shadowRoot.activeElement) {
+            const v = Number.isFinite(Number(d.away.target_c)) ? Number(d.away.target_c) : 17;
+            inp.value = String(Math.round(toDisp(v) * 2) / 2);
+          }
+        }
+      } catch {}
+
+      // Entity picker
+      try {
+        const picker = q('.overlay-settings .sp-away-person-picker');
+        if (picker) {
+          picker.hass = this._hass;
+          picker.value = '';
+          try { picker.setAttribute('label', this._t('away.add_person') || 'Add person'); } catch {}
+        }
+      } catch {}
+
+      // Chips
+      try {
+        const chips = q('.overlay-settings .sp-away-chips');
+        if (chips) {
+          chips.innerHTML = '';
+          const arr = Array.isArray(d.away.persons) ? d.away.persons.filter(Boolean).map(String) : [];
+          for (const p of arr) {
+            const chip = document.createElement('span'); chip.className = 'pill-chip';
+            const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[p]?.attributes?.friendly_name || (p.split('.')[1]||p);
+            const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×';
+            try { rm.setAttribute('aria-label', this._t('editor.remove') || 'Remove'); } catch {}
+            rm.addEventListener('click', ()=>{
+              try {
+                if (!this._settingsDraft?.away) return;
+                this._settingsDraft.away.persons = (this._settingsDraft.away.persons||[]).filter(x=>String(x)!==String(p));
+                this._renderSettingsPopupAwayTab();
+              } catch {}
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        }
+      } catch {}
+
+      // Presence combinations checklist
+      try {
+        const comboWrap = q('.overlay-settings .sp-presence-combo-list');
+        if (comboWrap) {
+          comboWrap.innerHTML = '';
+          const persons = (d.away.persons || []).map(String);
+          const enabled = !!d.away.advanced_enabled;
+          const conf = (d.away.combos && typeof d.away.combos === 'object') ? d.away.combos : {};
+          const n = persons.length;
+          const labelOf = (arr)=> arr.map(e => (this._hass?.states?.[e]?.attributes?.friendly_name || (e.split('.')[1]||e))).join(', ');
+          for (let mask=0; mask < (1<<n); mask++){
+            const home=[], away=[];
+            for (let i=0;i<n;i++){ ((mask>>i)&1) ? home.push(persons[i]) : away.push(persons[i]); }
+            // Skip "All home" entry; fallback to main/weekdays when all are home
+            if (home.length===n) continue;
+            const key = `H:${home.slice().sort().join(',')}|A:${away.slice().sort().join(',')}`;
+            const row = document.createElement('label');
+            row.style.display='flex';
+            row.style.alignItems='center';
+            row.style.gap='8px';
+            row.style.opacity = enabled ? '' : '.6';
+            const cb = document.createElement('input');
+            cb.type='checkbox';
+            cb.disabled = !enabled || !persons.length;
+            cb.checked = !!conf[key]?.enabled;
+            cb.addEventListener('change', ()=>{
+              try {
+                if (!this._settingsDraft?.away) return;
+                const map = { ...(this._settingsDraft.away.combos || {}) };
+                if (cb.checked) map[key] = { ...(map[key]||{}), enabled:true };
+                else delete map[key];
+                this._settingsDraft.away.combos = map;
+              } catch {}
+            });
+            const sp = document.createElement('span');
+            let lab;
+            if (home.length===0) lab = this._t('presence.none_home');
+            else {
+              const h = (this._t('presence.home') || 'Home: {names}').replace('{names}', labelOf(home));
+              const a = (this._t('presence.away') || 'Away: {names}').replace('{names}', labelOf(away));
+              lab = `${h} • ${a}`;
+            }
+            sp.textContent = lab;
+            row.append(cb, sp);
+            comboWrap.append(row);
+          }
+        }
+      } catch {}
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+
+        try {
+          const sw = q('.overlay-settings .sp-away-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away) return;
+              const enabled = !!e.target.checked;
+              this._settingsDraft.away.enabled = enabled;
+              // If Away is turned OFF, also disable Advanced Away and live presence chips
+              if (!enabled) {
+                this._settingsDraft.away.advanced_enabled = false;
+                this._settingsDraft.presence_live_header = false;
+              }
+              this._renderSettingsPopupAwayTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const inp = q('.overlay-settings .sp-away-temp');
+          if (inp) inp.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away) return;
+              let raw = String(e.target.value||'').trim().replace(',', '.');
+              const vDisp = Number(raw);
+              if (!Number.isFinite(vDisp)) return;
+              const wantF = String(this._settingsDraft.temp_unit || 'C').toUpperCase() === 'F';
+              const fromDisp = (x)=> wantF ? ((Number(x) - 32) * 5/9) : Number(x);
+              let vC = fromDisp(vDisp);
+              const mn = Number.isFinite(Number(this._settingsDraft.min_temp)) ? Number(this._settingsDraft.min_temp) : 5;
+              const mx = Number.isFinite(Number(this._settingsDraft.max_temp)) ? Number(this._settingsDraft.max_temp) : 25;
+              vC = Math.max(mn, Math.min(mx, vC));
+              this._settingsDraft.away.target_c = vC;
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const picker = q('.overlay-settings .sp-away-person-picker');
+          if (picker) picker.addEventListener('value-changed', (e)=>{
+            try {
+              const val = e?.detail?.value;
+              if (!val || !this._settingsDraft?.away) return;
+              picker.value = '';
+              const set = new Set((this._settingsDraft.away.persons || []).map(String));
+              set.add(String(val));
+              this._settingsDraft.away.persons = Array.from(set);
+              this._renderSettingsPopupAwayTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const adv = q('.overlay-settings .sp-away-adv-enable');
+          if (adv) adv.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away) return;
+              this._settingsDraft.away.advanced_enabled = !!e.target.checked;
+              if (!this._settingsDraft.away.advanced_enabled) {
+                this._settingsDraft.presence_live_header = false;
+              }
+              this._renderSettingsPopupAwayTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const pl = q('.overlay-settings .sp-presence-live-enable');
+          if (pl) pl.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft?.away?.advanced_enabled) {
+                e.preventDefault?.();
+                pl.checked = false;
+                this._settingsDraft.presence_live_header = false;
+                return;
+              }
+              this._settingsDraft.presence_live_header = !!e.target.checked;
+            } catch {}
+          });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupOwdTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="owd"]');
+      if (!page) return;
+      page.innerHTML = '';
+      try { page.style.display = 'grid'; page.style.gap = '16px'; } catch {}
+
+      // Ensure draft shape
+      const cur = (d.open_window && typeof d.open_window === 'object') ? d.open_window : (d.open_window = { enabled:false, sensors:{}, open_delay_min:2, close_delay_min:5 });
+      if (typeof cur.enabled !== 'boolean') cur.enabled = false;
+      if (!cur.sensors || typeof cur.sensors !== 'object') cur.sensors = {};
+      if (!Number.isFinite(Number(cur.open_delay_min))) cur.open_delay_min = 2;
+      if (!Number.isFinite(Number(cur.close_delay_min))) cur.close_delay_min = 5;
+      cur.open_delay_min = Math.max(0, Math.min(1440, Math.round(Number(cur.open_delay_min))));
+      cur.close_delay_min = Math.max(0, Math.min(1440, Math.round(Number(cur.close_delay_min))));
+
+      // Enable toggle
+      const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
+      const enRow = document.createElement('div'); enRow.className = 'setting';
+      const enText = document.createElement('div'); enText.className = 'text';
+      const enTitle = document.createElement('div'); enTitle.className = 'title sp-owd-enable-title';
+      const enDesc = document.createElement('div'); enDesc.className = 'desc sp-owd-enable-desc';
+      enText.append(enTitle, enDesc);
+      const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'sp-owd-enable'; enSwitch.checked = !!cur.enabled;
+      enSwitch.addEventListener('change', (e)=>{
+        try {
+          if (!this._settingsDraft?.open_window) return;
+          this._settingsDraft.open_window.enabled = !!e.target.checked;
+          try { contentWrap.style.display = this._settingsDraft.open_window.enabled ? 'grid' : 'none'; } catch {}
+        } catch {}
+      });
+      enRow.append(enText, enSwitch);
+      enableCard.append(enRow);
+      page.append(enableCard);
+
+      // Remaining content shown only when enabled
+      const contentWrap = document.createElement('div'); contentWrap.className = 'owd-content';
+      try { contentWrap.style.display = cur.enabled ? 'grid' : 'none'; contentWrap.style.gap = '16px'; } catch {}
+      page.append(contentWrap);
+
+      // Rooms foldouts
+      const ents = Array.isArray(this._config?.entities) ? this._config.entities : [];
+
+      const roomsWrap = document.createElement('div');
+      try { roomsWrap.style.display = 'grid'; roomsWrap.style.gap = '10px'; } catch {}
+      contentWrap.append(roomsWrap);
+
+      if (!ents.length) {
+        const box = document.createElement('div'); box.className = 'empty-box';
+        const p = document.createElement('div'); p.textContent = this._t('editor.select_entities') || 'Rooms';
+        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
+        btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.add_entity') || 'Add room') + '</span>';
+        btn.onclick = ()=>{ this._setSettingsPopupTab('rooms'); };
+        box.append(p, btn);
+        roomsWrap.append(box);
+      }
+
+      // Remember open/closed state while popup is open
+      try { if (!this._openOwdRooms) this._openOwdRooms = new Set(); } catch {}
+
+      for (const eid of ents) {
+        if (!eid) continue;
+        // Foldout (same UI pattern as HA editor sections)
+        const line = document.createElement('div'); line.className = 'inline';
+        const summary = document.createElement('div'); summary.className = 'summary';
+        const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+        const exp = document.createElement('button'); exp.type = 'button'; exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+        const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+
+        // Inline styles to match the editor foldout appearance (robust across contexts)
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+        try {
+          const labels = this._config.labels || {};
+          const display = labels[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+          titleSpan.textContent = display;
+        } catch { titleSpan.textContent = this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid); }
+        txtWrap.append(titleSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft);
+        line.append(summary);
+
+        const details = document.createElement('div'); details.className = 'details';
+        line.append(details);
+
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 440px)';
+          details.style.gap = '6px';
+          details.style.padding = '6px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openOwdRooms) this._openOwdRooms = new Set();
+            if (nextOpen) this._openOwdRooms.add(String(eid));
+            else this._openOwdRooms.delete(String(eid));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          // Allow clicking the row header to toggle as well
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea, tt-entity-picker, ha-entity-picker')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openOwdRooms?.has(String(eid))); } catch {}
+
+        const wrap = document.createElement('div');
+        wrap.style.display = 'grid';
+        wrap.style.gap = '8px';
+        const lab = document.createElement('div'); lab.className = 'label sp-owd-sensors-label'; lab.style.display='block';
+        const picker = document.createElement('tt-entity-picker');
+        picker.className = 'sp-owd-sensor-picker';
+        picker.setAttribute('include-domains', '["binary_sensor"]');
+        try { picker.hass = this._hass; } catch {}
+        try { picker.value = ''; } catch {}
+        const chips = document.createElement('div'); chips.className = 'linked-chips sp-owd-chips';
+
+        const renderChips = ()=>{
+          chips.innerHTML = '';
+          const map = (this._settingsDraft?.open_window?.sensors && typeof this._settingsDraft.open_window.sensors === 'object') ? this._settingsDraft.open_window.sensors : {};
+          const arr = Array.isArray(map[eid]) ? map[eid] : [];
+          for (const sEid of arr) {
+            const chip = document.createElement('span'); chip.className = 'pill-chip';
+            const txt = document.createElement('span'); txt.textContent = this._hass?.states?.[sEid]?.attributes?.friendly_name || (sEid.split('.')[1]||sEid);
+            const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.setAttribute('aria-label', this._t('editor.remove'));
+            rm.addEventListener('click', ()=>{
+              try {
+                const ow = this._settingsDraft?.open_window;
+                if (!ow || !ow.sensors) return;
+                const next = { ...(ow.sensors || {}) };
+                const curArr = Array.isArray(next[eid]) ? next[eid] : [];
+                const out = curArr.filter(x => x !== sEid);
+                if (out.length) next[eid] = out; else delete next[eid];
+                ow.sensors = next;
+                renderChips();
+              } catch {}
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        };
+        renderChips();
+
+        picker.addEventListener('value-changed', (e)=>{
+          const val = e.detail?.value || '';
+          if (!val) return;
+          try { picker.value = ''; } catch {}
+          try {
+            const ow = this._settingsDraft?.open_window;
+            if (!ow) return;
+            const next = { ...(ow.sensors || {}) };
+            const set = new Set(Array.isArray(next[eid]) ? next[eid] : []);
+            set.add(String(val));
+            next[eid] = Array.from(set);
+            ow.sensors = next;
+            renderChips();
+          } catch {}
+        });
+
+        wrap.append(lab, picker, chips);
+        details.append(wrap);
+        roomsWrap.append(line);
+      }
+
+      // Global delay settings
+      const delayCard = document.createElement('div'); delayCard.className = 'settings-card';
+      const row = document.createElement('div'); row.className = 'setting'; row.style.gridTemplateColumns = '1fr';
+      const txt = document.createElement('div'); txt.className = 'text';
+      const title = document.createElement('div'); title.className = 'title sp-owd-delays-title';
+      const desc = document.createElement('div'); desc.className = 'desc sp-owd-delays-desc';
+      txt.append(title, desc);
+      row.append(txt);
+      delayCard.append(row);
+      const grid = document.createElement('div');
+      grid.style.display = 'flex';
+      grid.style.gap = '10px';
+      grid.style.flexWrap = 'wrap';
+      grid.style.alignItems = 'flex-end';
+
+      const mkField = (cls, labelKey, value, onChange)=>{
+        const f = document.createElement('div'); f.className = 'sfield';
+        const l = document.createElement('div'); l.className = 'slabel ' + cls + '-label'; l.textContent = (this._t(labelKey) || labelKey);
+        const inp = document.createElement('input'); inp.className = cls + ' settings-input'; inp.type = 'number'; inp.min='0'; inp.max='1440'; inp.step='1';
+        if (inp !== this.shadowRoot.activeElement) inp.value = String(value);
+        inp.addEventListener('change', (e)=>{
+          let v = Math.round(Number(String(e.target.value||'').replace(',','.')));
+          if (!Number.isFinite(v)) v = 0;
+          v = Math.max(0, Math.min(1440, v));
+          e.target.value = String(v);
+          onChange(v);
+        });
+        f.append(l, inp);
+        return f;
+      };
+
+      const openField = mkField('sp-owd-open-delay', 'owd.open_delay', Number(cur.open_delay_min||0), (v)=>{ try { if (!this._settingsDraft?.open_window) return; this._settingsDraft.open_window.open_delay_min = v; } catch {} });
+      const closeField = mkField('sp-owd-close-delay', 'owd.close_delay', Number(cur.close_delay_min||0), (v)=>{ try { if (!this._settingsDraft?.open_window) return; this._settingsDraft.open_window.close_delay_min = v; } catch {} });
+      grid.append(openField, closeField);
+      delayCard.append(grid);
+      contentWrap.append(delayCard);
+    } catch {}
+  }
+
+  _renderSettingsPopupHolidaysTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="holidays"]');
+      if (!page) return;
+
+      // Build markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-holidays-enable-title"></div>
+                <div class="desc sp-holidays-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-holidays-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-holidays-source-setting">
+              <div class="text">
+                <div class="title sp-holidays-source-title"></div>
+              </div>
+              <div class="seg sp-holidays-source-seg">
+                <button type="button" class="sp-holidays-source-cal"></button>
+                <button type="button" class="sp-holidays-source-man"></button>
+              </div>
+            </div>
+
+            <div class="setting sp-holidays-entity-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-holidays-entity-title"></div>
+                <div class="desc sp-holidays-entity-desc"></div>
+              </div>
+              <tt-entity-picker class="sp-holidays-entity-picker" include-domains='["calendar"]'></tt-entity-picker>
+            </div>
+
+            <div class="setting sp-holidays-dates-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-holidays-dates-title"></div>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                <input class="settings-input sp-holidays-date-input" type="date" />
+                <button type="button" class="btn ghost sp-holidays-add-date"></button>
+              </div>
+              <div class="linked-chips sp-holidays-date-chips"></div>
+            </div>
+
+            <div class="setting sp-holidays-edit-setting">
+              <div class="text">
+                <div class="title sp-holidays-edit-title"></div>
+              </div>
+              <button type="button" class="btn ghost sp-holidays-edit-btn"></button>
+            </div>
+          </div>
+        `;
+      }
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+
+      // Ensure draft shape
+      if (!Array.isArray(d.holidays_dates)) d.holidays_dates = [];
+      if (d.holidays_source !== 'manual') d.holidays_source = 'calendar';
+
+      // Visibility of dependent controls
+      const holOn = !!d.holidays_enabled;
+      const src = (d.holidays_source === 'manual') ? 'manual' : 'calendar';
+      try {
+        const editRow = q('.overlay-settings .sp-holidays-edit-setting');
+        const srcRow = q('.overlay-settings .sp-holidays-source-setting');
+        const entRow = q('.overlay-settings .sp-holidays-entity-setting');
+        const datesRow = q('.overlay-settings .sp-holidays-dates-setting');
+        if (editRow) editRow.style.display = holOn ? '' : 'none';
+        if (srcRow) srcRow.style.display = holOn ? '' : 'none';
+        if (entRow) entRow.style.display = (holOn && src === 'calendar') ? '' : 'none';
+        if (datesRow) datesRow.style.display = (holOn && src === 'manual') ? '' : 'none';
+      } catch {}
+
+      // Segmented UI state
+      try {
+        const bCal = q('.overlay-settings .sp-holidays-source-cal');
+        const bMan = q('.overlay-settings .sp-holidays-source-man');
+        if (bCal) bCal.classList.toggle('active', src === 'calendar');
+        if (bMan) bMan.classList.toggle('active', src === 'manual');
+      } catch {}
+
+      // Master toggle state
+      try {
+        const sw = q('.overlay-settings .sp-holidays-enable');
+        if (sw) sw.checked = !!d.holidays_enabled;
+      } catch {}
+
+      // Entity picker
+      try {
+        const p = q('.overlay-settings .sp-holidays-entity-picker');
+        if (p) {
+          p.hass = this._hass;
+          p.value = String(d.holidays_entity || '');
+          try { p.setAttribute('label', this._t('holidays.entity') || 'Holiday entity'); } catch {}
+        }
+      } catch {}
+
+      // Dates chips
+      const chips = q('.overlay-settings .sp-holidays-date-chips');
+      const renderChips = ()=>{
+        try {
+          if (!chips) return;
+          chips.innerHTML = '';
+          const arr = Array.isArray(this._settingsDraft?.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
+          const sorted = Array.from(new Set(arr.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+          for (const dt of sorted) {
+            const chip = document.createElement('span'); chip.className = 'pill-chip';
+            const txt = document.createElement('span'); txt.textContent = dt;
+            const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+            try { rm.setAttribute('aria-label', this._t('editor.remove') || 'Remove'); } catch {}
+            rm.addEventListener('click', ()=>{
+              try {
+                if (!this._settingsDraft) return;
+                const cur = Array.isArray(this._settingsDraft.holidays_dates) ? this._settingsDraft.holidays_dates : [];
+                this._settingsDraft.holidays_dates = cur.filter(x => String(x) !== dt);
+                renderChips();
+              } catch {}
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        } catch {}
+      };
+      renderChips();
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+
+        try {
+          const sw = q('.overlay-settings .sp-holidays-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.holidays_enabled = !!e.target.checked;
+              this._renderSettingsPopupHolidaysTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const btn = q('.overlay-settings .sp-holidays-edit-btn');
+          if (btn) btn.addEventListener('click', ()=>{
+            try {
+              const eid = (this._config?.entities || [])[0] || null;
+              if (!eid) return;
+              this._resumeSettingsAfterHoliday = true;
+              this._suspendSettingsPopup();
+              this._openHolidayEditor(eid);
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const bCal = q('.overlay-settings .sp-holidays-source-cal');
+          const bMan = q('.overlay-settings .sp-holidays-source-man');
+          if (bCal) bCal.addEventListener('click', ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.holidays_source = 'calendar'; this._renderSettingsPopupHolidaysTab(); } catch {} });
+          if (bMan) bMan.addEventListener('click', ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.holidays_source = 'manual'; this._renderSettingsPopupHolidaysTab(); } catch {} });
+        } catch {}
+
+        try {
+          const p = q('.overlay-settings .sp-holidays-entity-picker');
+          if (p) p.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.holidays_entity = e.detail?.value || ''; } catch {} });
+        } catch {}
+
+        try {
+          const inp = q('.overlay-settings .sp-holidays-date-input');
+          const add = q('.overlay-settings .sp-holidays-add-date');
+          const onAdd = ()=>{
+            try {
+              if (!this._settingsDraft || !inp) return;
+              const v = String(inp.value || '').trim();
+              if (!v) return;
+              if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return;
+              const cur = Array.isArray(this._settingsDraft.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
+              const next = Array.from(new Set(cur.concat([v]))).sort();
+              this._settingsDraft.holidays_dates = next;
+              try { inp.value = ''; } catch {}
+              renderChips();
+            } catch {}
+          };
+          if (add) add.addEventListener('click', onAdd);
+          if (inp) inp.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { try { e.preventDefault(); } catch {} onAdd(); } });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupColorsTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="colors"]');
+      if (!page) return;
+      page.innerHTML = '';
+
+      // Wrap the entire Colors tab in one settings-card (border around everything)
+      const outerCard = document.createElement('div');
+      outerCard.className = 'settings-card';
+      try {
+        outerCard.style.padding = '10px';
+        outerCard.style.display = 'grid';
+        outerCard.style.gap = '10px';
+      } catch {}
+      page.append(outerCard);
+
+      // Ensure draft shape
+      try {
+        if (typeof d.color_global !== 'boolean') d.color_global = !!(this._config?.color_global);
+        if (!d.color_ranges || typeof d.color_ranges !== 'object') d.color_ranges = {};
+      } catch {}
+
+      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+      const toDisp = (c)=>{ const v = Number(c); if (!Number.isFinite(v)) return 0; return wantF ? Math.round((v*9/5+32)*10)/10 : v; };
+      const fromDisp = (v)=>{ const n = Number(v); if (!Number.isFinite(n)) return NaN; return wantF ? ((n-32)*5/9) : n; };
+      const minC = Number.isFinite(Number(d.min_temp)) ? Number(d.min_temp) : (Number.isFinite(Number(this._config?.min_temp)) ? Number(this._config.min_temp) : 5);
+      const maxC = Number.isFinite(Number(d.max_temp)) ? Number(d.max_temp) : (Number.isFinite(Number(this._config?.max_temp)) ? Number(this._config.max_temp) : 25);
+      const minDisp = toDisp(minC);
+      const maxDisp = toDisp(maxC);
+      const defC = Number.isFinite(Number(d.default_temp)) ? Number(d.default_temp) : (Number.isFinite(Number(this._config?.default_temp)) ? Number(this._config.default_temp) : 20);
+
+      // Mode toggle (Per room | All rooms)
+      const modeWrap = document.createElement('div');
+      modeWrap.style.display = 'flex';
+      modeWrap.style.alignItems = 'center';
+      modeWrap.style.justifyContent = 'space-between';
+      modeWrap.style.gap = '10px';
+      const modeText = document.createElement('div');
+      modeText.style.display = 'grid';
+      modeText.style.gap = '2px';
+      const modeTitle = document.createElement('div');
+      modeTitle.className = 'colors-mode-title';
+      modeTitle.style.fontWeight = '600';
+      modeTitle.textContent = this._t('editor.colors.mode') || 'Color mode';
+      const modeDesc = document.createElement('div');
+      modeDesc.className = 'colors-mode-desc';
+      modeDesc.style.fontSize = '.85rem';
+      modeDesc.style.color = 'var(--secondary-text-color)';
+      modeDesc.textContent = this._t('editor.colors.mode.desc') || 'Choose per-room colors or one set for all rooms.';
+      modeText.append(modeTitle, modeDesc);
+      const seg = document.createElement('div'); seg.className = 'seg colors-mode';
+      const bRoom = document.createElement('button'); bRoom.type = 'button'; bRoom.className = 'mode-room';
+      bRoom.textContent = this._t('editor.colors.mode_per_room') || 'Per room';
+      const bGlob = document.createElement('button'); bGlob.type = 'button'; bGlob.className = 'mode-global';
+      bGlob.textContent = this._t('editor.colors.mode_global') || 'All rooms';
+      const applySegUi = ()=>{
+        const on = !!d.color_global;
+        bGlob.classList.toggle('active', on);
+        bRoom.classList.toggle('active', !on);
+      };
+      bRoom.onclick = ()=>{ try { d.color_global = false; applySegUi(); this._renderSettingsPopupColorsTab(); } catch {} };
+      bGlob.onclick = ()=>{ try { d.color_global = true; applySegUi(); this._renderSettingsPopupColorsTab(); } catch {} };
+      seg.append(bRoom, bGlob);
+      applySegUi();
+      modeWrap.append(modeText, seg);
+      outerCard.append(modeWrap);
+
+      const isGlobal = !!d.color_global;
+      const ents = Array.isArray(this._config?.entities) ? this._config.entities.filter(Boolean) : [];
+
+      // If per-room mode and there are no rooms yet, show helper box
+      if (!isGlobal && ents.length === 0) {
+        const box = document.createElement('div'); box.className = 'empty-box';
+        const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
+        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
+        btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
+        btn.onclick = ()=>{ this._setSettingsPopupTab('rooms'); };
+        box.append(p, btn);
+        outerCard.append(box);
+      }
+
+      // Remember open/closed state while popup is open
+      try { if (!this._openPopupColorRows) this._openPopupColorRows = new Set(); } catch {}
+
+      const roomsWrap = document.createElement('div');
+      try { roomsWrap.style.display = 'grid'; roomsWrap.style.gap = '10px'; } catch {}
+      outerCard.append(roomsWrap);
+
+      const buildFoldout = (key, titleText)=>{
+        const line = document.createElement('div'); line.className = 'inline';
+        const summary = document.createElement('div'); summary.className = 'summary';
+        const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+        const exp = document.createElement('button'); exp.type = 'button'; exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+        const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+        titleSpan.textContent = titleText;
+
+        // Inline styles to match the editor foldout appearance (robust across contexts)
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+
+        txtWrap.append(titleSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft);
+        line.append(summary);
+
+        const details = document.createElement('div'); details.className = 'details';
+        line.append(details);
+
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 440px)';
+          details.style.gap = '6px';
+          details.style.padding = '6px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openPopupColorRows) this._openPopupColorRows = new Set();
+            if (nextOpen) this._openPopupColorRows.add(String(key));
+            else this._openPopupColorRows.delete(String(key));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openPopupColorRows?.has(String(key))); } catch {}
+
+        return { line, details };
+      };
+
+      const renderRangesForKey = (key, details)=>{
+        details.innerHTML = '';
+        const card = document.createElement('div');
+        card.className = 'settings-card';
+        try { card.style.padding = '10px'; card.style.gap = '8px'; } catch {}
+        details.append(card);
+
+        const head = document.createElement('div');
+        head.className = 'colors-head';
+        try {
+          head.style.display = 'grid';
+          head.style.gridTemplateColumns = '88px 88px 70px 1fr';
+          head.style.gap = '8px';
+          head.style.alignItems = 'end';
+        } catch {}
+        const mkHead = (k)=>{
+          const el = document.createElement('div');
+          el.className = 'slabel';
+          el.textContent = this._t(k) || k;
+          return el;
+        };
+        head.append(
+          mkHead('editor.colors.col_from'),
+          mkHead('editor.colors.col_to'),
+          mkHead('editor.colors.col_color'),
+          document.createElement('div')
+        );
+
+        const getArr = ()=>{
+          const map = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+          return Array.isArray(map[key]) ? map[key] : [];
+        };
+        const setArr = (arr)=>{
+          try {
+            const map = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+            d.color_ranges = { ...map, [key]: arr };
+          } catch {}
+        };
+
+        const ranges = getArr();
+        if (ranges.length > 0) card.append(head);
+
+        ranges.forEach((r, ri)=>{
+          const outer = document.createElement('div'); outer.className = 'color-item';
+          const row = document.createElement('div'); row.className = 'colors-row';
+          try {
+            row.style.display = 'grid';
+            row.style.gridTemplateColumns = '88px 88px 70px 1fr';
+            row.style.gap = '8px';
+            row.style.alignItems = 'center';
+          } catch {}
+          const f = document.createElement('input');
+          f.type = 'number'; f.step = '0.5';
+          f.className = 'settings-input';
+          f.value = String(toDisp(r?.from ?? defC));
+          f.setAttribute('aria-label', this._t('editor.colors.col_from'));
+          f.title = this._t('editor.colors.col_from');
+          const t = document.createElement('input');
+          t.type = 'number'; t.step = '0.5';
+          t.className = 'settings-input';
+          t.value = String(toDisp(r?.to ?? defC));
+          t.setAttribute('aria-label', this._t('editor.colors.col_to'));
+          t.title = this._t('editor.colors.col_to');
+          const c = document.createElement('input');
+          c.type = 'color'; c.value = String(r?.color || '#ffb347');
+          c.setAttribute('aria-label', this._t('editor.colors.col_color'));
+          c.title = this._t('editor.colors.col_color');
+          try {
+            c.style.height = '28px';
+            c.style.width = '70px';
+            c.style.padding = '0';
+            c.style.borderRadius = '8px';
+            c.style.border = '1px solid var(--divider-color)';
+            c.style.background = 'var(--card-background-color)';
+            c.style.boxSizing = 'border-box';
+          } catch {}
+
+          f.min = String(minDisp); t.min = String(minDisp);
+          f.max = String(maxDisp); t.max = String(maxDisp);
+
+          const rm = document.createElement('button');
+          rm.type = 'button';
+          rm.className = 'btn ghost danger';
+          rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+          try {
+            rm.style.height = '28px';
+            rm.style.padding = '2px 10px';
+            rm.style.borderRadius = '8px';
+            rm.style.justifySelf = 'end';
+            rm.style.width = 'max-content';
+            rm.style.display = 'inline-flex';
+            rm.style.alignItems = 'center';
+            rm.style.gap = '6px';
+            rm.querySelector?.('ha-icon')?.style && (rm.querySelector('ha-icon').style.setProperty('--mdc-icon-size','16px'));
+          } catch {}
+
+          const updateAt = (idx, patch)=>{
+            const arr = getArr();
+            const next = arr.map((x, i)=> (i===idx ? ({ ...x, ...patch }) : x));
+            setArr(next);
+          };
+
+          f.onchange = ()=>{
+            let v = parseFloat(String(f.value||'').replace(',','.'));
+            if (!Number.isFinite(v)) v = minDisp;
+            v = Math.max(minDisp, Math.min(maxDisp, v));
+            f.value = String(v);
+            const vC = fromDisp(v);
+            const clampC = Math.max(minC, Math.min(maxC, Number.isFinite(vC) ? vC : defC));
+            updateAt(ri, { from: clampC });
+          };
+          t.onchange = ()=>{
+            let v = parseFloat(String(t.value||'').replace(',','.'));
+            if (!Number.isFinite(v)) v = minDisp;
+            v = Math.max(minDisp, Math.min(maxDisp, v));
+            t.value = String(v);
+            const vC = fromDisp(v);
+            const clampC = Math.max(minC, Math.min(maxC, Number.isFinite(vC) ? vC : defC));
+            updateAt(ri, { to: clampC });
+          };
+          c.onchange = ()=>{ updateAt(ri, { color: c.value }); };
+          rm.onclick = ()=>{
+            const arr = getArr();
+            const next = [...arr];
+            next.splice(ri, 1);
+            setArr(next);
+            renderRangesForKey(key, details);
+          };
+
+          row.append(f, t, c, rm);
+          outer.append(row);
+          card.append(outer);
+        });
+
+        const add = document.createElement('button');
+        add.className = 'add-entity-btn';
+        add.type = 'button';
+        add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
+        try { add.style.width = 'max-content'; add.style.justifySelf = 'start'; } catch {}
+        add.onclick = ()=>{
+          const arr = getArr();
+          const next = [...arr, { from: defC, to: defC, color: '#ffb347' }];
+          setArr(next);
+          renderRangesForKey(key, details);
+        };
+        card.append(add);
+      };
+
+      if (isGlobal) {
+        const key = '*';
+        const f = buildFoldout(key, this._t('editor.colors.global_title') || 'All rooms');
+        roomsWrap.append(f.line);
+        renderRangesForKey(key, f.details);
+      } else {
+        for (const eid of ents) {
+          const labels = this._config?.labels || {};
+          const title = labels?.[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+          const f = buildFoldout(eid, title);
+          roomsWrap.append(f.line);
+          renderRangesForKey(eid, f.details);
+        }
+      }
+
+      // Actions (Update schedule + Clear all)
+      const actions = document.createElement('div');
+      actions.className = 'colors-actions';
+      actions.style.display = 'flex';
+      actions.style.gap = '8px';
+      actions.style.alignItems = 'center';
+      actions.style.flexWrap = 'wrap';
+
+      const clrAll = document.createElement('button');
+      clrAll.className = 'remove-btn clr-colors-all-btn';
+      clrAll.type = 'button';
+      try { clrAll.style.width = 'max-content'; clrAll.style.justifySelf = 'start'; } catch {}
+      clrAll.innerHTML = '<ha-icon icon="mdi:delete-alert"></ha-icon><span>' + (this._t('editor.colors.clear_all') || 'Clear all color data') + '</span>';
+      clrAll.onclick = ()=>{
+        const ok = confirm(this._t('editor.colors.clear_all_confirm') || 'This will delete all color ranges. Continue?');
+        if (!ok) return;
+        try { d.color_ranges = {}; } catch {}
+        this._renderSettingsPopupColorsTab();
+      };
+
+      actions.append(clrAll);
+      outerCard.append(actions);
+    } catch {}
+  }
+
+  _renderSettingsPopupBoilerTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="boiler"]');
+      if (!page) return;
+
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-boiler-enable-title"></div>
+                <div class="desc sp-boiler-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-boiler-enable"></ha-switch>
+            </div>
+            <div class="setting sp-boiler-switch-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-boiler-switch-title"></div>
+              </div>
+              <tt-entity-picker class="sp-boiler-switch-picker" include-domains='["switch"]'></tt-entity-picker>
+            </div>
+            <div class="setting sp-boiler-sensor-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-boiler-sensor-title"></div>
+                <div class="desc sp-boiler-sensor-desc"></div>
+              </div>
+              <tt-entity-picker class="sp-boiler-temp-sensor-picker" include-domains='["sensor"]'></tt-entity-picker>
+            </div>
+            <div class="setting sp-boiler-temps-setting" style="grid-template-columns: 1fr;">
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+                <div class="sfield">
+                  <div class="slabel sp-boiler-min-temp-label"></div>
+                  <input class="settings-input sp-boiler-min-temp" type="number" step="0.5" placeholder="20" />
+                </div>
+                <div class="sfield">
+                  <div class="slabel sp-boiler-max-temp-label"></div>
+                  <input class="settings-input sp-boiler-max-temp" type="number" step="0.5" placeholder="25" />
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+
+      // Visibility of dependent controls
+      const boilerOn = !!d.boiler_enabled;
+      try {
+        const switchRow = q('.overlay-settings .sp-boiler-switch-setting');
+        const sensorRow = q('.overlay-settings .sp-boiler-sensor-setting');
+        const tempsRow = q('.overlay-settings .sp-boiler-temps-setting');
+        [switchRow, sensorRow, tempsRow].forEach(r=>{ if (r) r.style.display = boilerOn ? '' : 'none'; });
+      } catch {}
+
+      // Master toggle
+      try {
+        const sw = q('.overlay-settings .sp-boiler-enable');
+        if (sw) sw.checked = !!d.boiler_enabled;
+      } catch {}
+
+      // Pickers
+      try {
+        const p = q('.overlay-settings .sp-boiler-switch-picker');
+        if (p) {
+          p.hass = this._hass;
+          p.value = String(d.boiler_switch || '');
+        }
+      } catch {}
+      try {
+        const sp = q('.overlay-settings .sp-boiler-temp-sensor-picker');
+        if (sp) {
+          sp.hass = this._hass;
+          sp.value = String(d.boiler_temp_sensor || '');
+        }
+      } catch {}
+
+      // Temps (show in draft unit, store in °C)
+      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+      const toDisp = (c)=>{ try { const v = Number(c); if (!Number.isFinite(v)) return ''; return wantF ? Math.round((v*9/5+32)*10)/10 : v; } catch { return ''; } };
+      const toC = (vDisp)=>{ try { const v = Number(vDisp); if (!Number.isFinite(v)) return null; return wantF ? ((v-32)*5/9) : v; } catch { return null; } };
+      const setDisp = (sel, vC)=>{
+        const el = q(sel);
+        if (!el) return;
+        if (el === this.shadowRoot.activeElement) return;
+        el.value = (vC === null || vC === undefined || !Number.isFinite(Number(vC))) ? '' : String(toDisp(Number(vC)));
+      };
+      setDisp('.overlay-settings .sp-boiler-min-temp', d.boiler_min_temp);
+      setDisp('.overlay-settings .sp-boiler-max-temp', d.boiler_max_temp);
+      try {
+        const dMin = String(toDisp(0));
+        const dMax = String(toDisp(120));
+        const minEl = q('.overlay-settings .sp-boiler-min-temp');
+        const maxEl = q('.overlay-settings .sp-boiler-max-temp');
+        if (minEl) { minEl.setAttribute('min', dMin); minEl.setAttribute('max', dMax); }
+        if (maxEl) { maxEl.setAttribute('min', dMin); maxEl.setAttribute('max', dMax); }
+      } catch {}
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+        try {
+          const sw = q('.overlay-settings .sp-boiler-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.boiler_enabled = !!e.target.checked;
+              this._renderSettingsPopupBoilerTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const p = q('.overlay-settings .sp-boiler-switch-picker');
+          if (p) p.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.boiler_switch = e.detail?.value || ''; } catch {} });
+        } catch {}
+        try {
+          const sp = q('.overlay-settings .sp-boiler-temp-sensor-picker');
+          if (sp) sp.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.boiler_temp_sensor = e.detail?.value || ''; } catch {} });
+        } catch {}
+
+        const bindNum = (sel, key)=>{
+          try {
+            const el = q(sel);
+            if (!el) return;
+            el.addEventListener('change', (e)=>{
+              try {
+                if (!this._settingsDraft) return;
+                const raw = String(e.target.value||'').trim().replace(',', '.');
+                let vC = null;
+                if (raw !== '') {
+                  const vDisp = Number(raw);
+                  vC = toC(vDisp);
+                  if (vC !== null && Number.isFinite(Number(vC))) vC = Math.max(0, Math.min(120, Number(vC)));
+                } else {
+                  vC = (key === 'boiler_min_temp') ? 20 : 25;
+                }
+
+                if (key === 'boiler_min_temp') {
+                  this._settingsDraft.boiler_min_temp = vC;
+                  const mx = this._settingsDraft.boiler_max_temp;
+                  if (vC !== null && Number.isFinite(Number(mx)) && Number(vC) > Number(mx)) this._settingsDraft.boiler_max_temp = vC;
+                } else {
+                  this._settingsDraft.boiler_max_temp = vC;
+                  const mn = this._settingsDraft.boiler_min_temp;
+                  if (vC !== null && Number.isFinite(Number(mn)) && Number(vC) < Number(mn)) this._settingsDraft.boiler_min_temp = vC;
+                }
+                this._renderSettingsPopupBoilerTab();
+              } catch {}
+            });
+          } catch {}
+        };
+        bindNum('.overlay-settings .sp-boiler-min-temp', 'boiler_min_temp');
+        bindNum('.overlay-settings .sp-boiler-max-temp', 'boiler_max_temp');
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupWeekdaysTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="weekdays"]');
+      if (!page) return;
+
+      // Build markup once
+      if (!page.dataset.built) {
+        page.dataset.built = '1';
+        page.innerHTML = `
+          <div class="settings-card">
+            <div class="setting">
+              <div class="text">
+                <div class="title sp-week-enable-title"></div>
+                <div class="desc sp-week-enable-desc"></div>
+              </div>
+              <ha-switch class="sp-week-enable"></ha-switch>
+            </div>
+            <div class="setting sp-week-view-setting">
+              <div class="text">
+                <div class="title sp-week-view-title"></div>
+              </div>
+              <div class="seg sp-week-view">
+                <button type="button" class="sp-week-view-rooms"></button>
+                <button type="button" class="sp-week-view-days"></button>
+              </div>
+            </div>
+
+            <div class="setting sp-week-view-switch-setting">
+              <div class="text">
+                <div class="title sp-week-view-switch-title"></div>
+                <div class="desc sp-week-view-switch-desc"></div>
+              </div>
+              <ha-switch class="sp-week-view-switch"></ha-switch>
+            </div>
+
+            <div class="setting sp-week-open-setting">
+              <div class="text">
+                <div class="title sp-week-open-title"></div>
+                <div class="desc sp-week-open-desc"></div>
+              </div>
+              <button type="button" class="btn ghost sp-week-open-btn"></button>
+            </div>
+          </div>
+        `;
+      }
+
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
+      setChk('.overlay-settings .sp-week-enable', d.weekdays_enabled);
+      setChk('.overlay-settings .sp-week-view-switch', d.weekdays_view_switch_in_timeline);
+
+      const view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+      try {
+        const bRooms = q('.overlay-settings .sp-week-view-rooms');
+        const bDays = q('.overlay-settings .sp-week-view-days');
+        bRooms && bRooms.classList.toggle('active', view === 'all_rooms_one_day');
+        bDays && bDays.classList.toggle('active', view === 'one_room_all_days');
+        // Disable when weekdays are off (match editor behavior)
+        const on = !!d.weekdays_enabled;
+        const row = q('.overlay-settings .sp-week-view-setting');
+        if (row) row.style.opacity = on ? '' : '.5';
+        if (bRooms) { bRooms.disabled = !on; bRooms.setAttribute('aria-disabled', (!on).toString()); }
+        if (bDays)  { bDays.disabled  = !on; bDays.setAttribute('aria-disabled', (!on).toString()); }
+
+        const swRow = q('.overlay-settings .sp-week-view-switch-setting');
+        if (swRow) swRow.style.opacity = on ? '' : '.5';
+        const swInline = q('.overlay-settings .sp-week-view-switch');
+        if (swInline) { swInline.disabled = !on; swInline.setAttribute('aria-disabled', (!on).toString()); }
+
+        // Open weekdays editor button
+        const hasEnts = Array.isArray(this._config?.entities) && this._config.entities.filter(Boolean).length > 0;
+        const openRow = q('.overlay-settings .sp-week-open-setting');
+        if (openRow) openRow.style.display = (on && hasEnts) ? '' : 'none';
+        const openBtn = q('.overlay-settings .sp-week-open-btn');
+        if (openBtn) { openBtn.disabled = !(on && hasEnts); openBtn.setAttribute('aria-disabled', (!(on && hasEnts)).toString()); }
+      } catch {}
+
+      // Bind events once
+      if (!page.dataset.bound) {
+        page.dataset.bound = '1';
+        try {
+          const sw = q('.overlay-settings .sp-week-enable');
+          if (sw) sw.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              const on = !!e.target.checked;
+              this._settingsDraft.weekdays_enabled = on;
+              // When enabling, default view to all rooms
+              if (on && (!this._settingsDraft.weekdays_view || this._settingsDraft.weekdays_view === 'undefined')) {
+                this._settingsDraft.weekdays_view = 'all_rooms_one_day';
+              }
+              this._renderSettingsPopupWeekdaysTab();
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const swInline = q('.overlay-settings .sp-week-view-switch');
+          if (swInline) swInline.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              this._settingsDraft.weekdays_view_switch_in_timeline = !!e.target.checked;
+              this._renderSettingsPopupWeekdaysTab();
+            } catch {}
+          });
+        } catch {}
+
+        const applyView = (mode)=>{
+          try {
+            if (!this._settingsDraft) return;
+            if (!this._settingsDraft.weekdays_enabled) return;
+            this._settingsDraft.weekdays_view = (mode === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
+            this._renderSettingsPopupWeekdaysTab();
+          } catch {}
+        };
+        try {
+          const bRooms = q('.overlay-settings .sp-week-view-rooms');
+          const bDays = q('.overlay-settings .sp-week-view-days');
+          if (bRooms) bRooms.addEventListener('click', ()=>applyView('all_rooms_one_day'));
+          if (bDays) bDays.addEventListener('click', ()=>applyView('one_room_all_days'));
+        } catch {}
+        try {
+          const seg = q('.overlay-settings .sp-week-view');
+          if (seg) seg.addEventListener('click', (ev)=>{
+            try {
+              const el = ev.target && ev.target.closest ? ev.target.closest('.sp-week-view-rooms, .sp-week-view-days') : null;
+              if (!el) return;
+              if (el.classList.contains('sp-week-view-rooms')) applyView('all_rooms_one_day');
+              else if (el.classList.contains('sp-week-view-days')) applyView('one_room_all_days');
+            } catch {}
+          });
+        } catch {}
+
+        try {
+          const btn = q('.overlay-settings .sp-week-open-btn');
+          if (btn) btn.addEventListener('click', ()=>{
+            try {
+              const ents = Array.isArray(this._config?.entities) ? this._config.entities.filter(Boolean).map(String) : [];
+              if (!ents.length) return;
+              const want = String(this._settingsDraft?.weekdays_selected_room || this._config?.weekdays_selected_room || '');
+              const eid = (want && ents.includes(want)) ? want : (ents[0] || null);
+              if (!eid) return;
+              this._resumeSettingsAfterWeekdays = true;
+              this._suspendSettingsPopup();
+              this._openWeeklyEditor(eid);
+            } catch {}
+          });
+        } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupSettingsTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const setVal = (sel, v)=>{ const el=q(sel); if (el) el.value = (v ?? '') + ''; };
+      const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
+      // Show temps in display unit based on draft.temp_unit, but keep draft values in °C
+      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
+      const toDisp = (c)=>{ try { const v = Number(c); if (!Number.isFinite(v)) return c; return wantF ? this._toDisplayTemp(v) : v; } catch { return c; } };
+      setVal('.overlay-settings .sp-def', toDisp(d.default_temp));
+      setVal('.overlay-settings .sp-rowh', d.row_height);
+      setVal('.overlay-settings .sp-minc', toDisp(d.min_temp));
+      setVal('.overlay-settings .sp-maxc', toDisp(d.max_temp));
+      setChk('.overlay-settings .sp-auto', d.auto_apply);
+      setChk('.overlay-settings .sp-applyedit', d.apply_on_edit);
+      setChk('.overlay-settings .sp-applydef', d.apply_on_default_change);
+      setChk('.overlay-settings .sp-perroom', d.per_room_defaults);
+
+      // Segmented controls: active state
+      try {
+        const b24 = q('.overlay-settings .sp-fmt24');
+        const b12 = q('.overlay-settings .sp-fmt12');
+        const is12 = !!d.time_12h;
+        b24 && b24.classList.toggle('active', !is12);
+        b12 && b12.classList.toggle('active', is12);
+      } catch {}
+      try {
+        const bB = q('.overlay-settings .sp-srcBrowser');
+        const bH = q('.overlay-settings .sp-srcHa');
+        const useHa = String(d.time_source||'browser')==='ha';
+        bB && bB.classList.toggle('active', !useHa);
+        bH && bH.classList.toggle('active', useHa);
+      } catch {}
+      try {
+        const bC = q('.overlay-settings .sp-unitC');
+        const bF = q('.overlay-settings .sp-unitF');
+        bC && bC.classList.toggle('active', !wantF);
+        bF && bF.classList.toggle('active', wantF);
+      } catch {}
+      setChk('.overlay-settings .sp-profiles', d.profiles_enabled);
+
+      // Keep temp field labels in sync with draft unit
+      try {
+        const unitSym = wantF ? '°F' : '°C';
+        const t = (k)=> (this._t ? this._t(k) : k);
+        const setLbl = (sel, key)=>{ const el=q(sel); if (!el) return; const s = String(t(key)||''); el.textContent = s.includes('°C') ? s.replace('°C', unitSym) : (s + (s.includes('(') ? '' : '')); };
+        setLbl('.overlay-settings .sp-slabel-def', 'editor.default_c');
+        setLbl('.overlay-settings .sp-slabel-minc', 'editor.min_c');
+        setLbl('.overlay-settings .sp-slabel-maxc', 'editor.max_c');
+      } catch {}
+    } catch {}
+  }
+
+  _renderSettingsPopupPauseTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const q = (sel)=> this.shadowRoot.querySelector(sel);
+      const setChk = (sel, v)=>{ const el=q(sel); if (el) el.checked = !!v; };
+
+      setChk('.overlay-settings .sp-pausebtn', d.show_pause_button);
+      setChk('.overlay-settings .sp-pausesensor', d.pause_sensor_enabled);
+
+      // Pause sensor entity row visibility + picker value
+      try {
+        const row = q('.overlay-settings .sp-pausesensor-entity-setting');
+        if (row) row.style.display = d.pause_sensor_enabled ? '' : 'none';
+      } catch {}
+      try {
+        const p = q('.overlay-settings .sp-pausesensor-entity');
+        if (p) {
+          p.hass = this._hass;
+          p.value = String(d.pause_sensor_entity || '');
+          try { p.setAttribute('label', this._t('editor.pause_sensor.entity_title') || 'Pause sensor'); } catch {}
+        }
+      } catch {}
+
+      // Wire Pause tab controls
+      const onSw = (key) => (e)=>{
+        try {
+          if (!this._settingsDraft) return;
+          const checked = !!(e && e.target && e.target.checked);
+          this._settingsDraft[key] = checked;
+        } catch {}
+      };
+
+      try {
+        const swPauseBtn = q('.overlay-settings .sp-pausebtn');
+        if (swPauseBtn) swPauseBtn.onchange = onSw('show_pause_button');
+      } catch {}
+
+      try {
+        const swPauseSensor = q('.overlay-settings .sp-pausesensor');
+        if (swPauseSensor) swPauseSensor.onchange = (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.pause_sensor_enabled = !!e?.target?.checked; this._renderSettingsPopupPauseTab(); } catch {} };
+      } catch {}
+
+      // Pause sensor entity picker
+      try {
+        const p = q('.overlay-settings .sp-pausesensor-entity');
+        if (p) {
+          if (!p._ttBoundPausePicker) {
+            p._ttBoundPausePicker = true;
+            p.addEventListener('value-changed', (ev)=>{
+              try {
+                if (!this._settingsDraft) return;
+                const v = (ev?.detail && ev.detail.value != null) ? String(ev.detail.value) : '';
+                this._settingsDraft.pause_sensor_entity = v;
+              } catch {}
+            });
+          }
+        }
+      } catch {}
+    } catch {}
+  }
+
+  _ttCoerceNum(v, fallback){
+    const n = Number(v);
+    return Number.isFinite(n) ? n : fallback;
+  }
+  _ttClampNum(v, min, max, fallback){
+    const n = Number(v);
+    if (!Number.isFinite(n)) return fallback;
+    return Math.max(min, Math.min(max, n));
+  }
+  _settingsPopupHasUnsaved(){
+    try {
+      const d = this._settingsDraft;
+      const c = this._config || {};
+      if (!d) return false;
+      const eqNum = (a,b)=>{
+        const na = Number(a);
+        const nb = Number(b);
+        if (!Number.isFinite(na) && !Number.isFinite(nb)) return true;
+        return Math.abs(na - nb) < 0.0001;
+      };
+      // Normalize undefined config fields to the same defaults used in _initSettingsPopupDraft
+      const cDefaultTemp = this._ttCoerceNum(c.default_temp, 20);
+      const cRowHeight = this._ttCoerceNum(c.row_height, 64);
+      const cMinTemp = this._ttCoerceNum(c.min_temp, 5);
+      const cMaxTemp = this._ttCoerceNum(c.max_temp, 25);
+
+      if (!eqNum(d.default_temp, cDefaultTemp)) return true;
+      if (!eqNum(d.row_height, cRowHeight)) return true;
+      if (!eqNum(d.min_temp, cMinTemp)) return true;
+      if (!eqNum(d.max_temp, cMaxTemp)) return true;
+      if (!!d.auto_apply !== !!c.auto_apply) return true;
+      if (!!d.apply_on_edit !== !!c.apply_on_edit) return true;
+      if (!!d.apply_on_default_change !== !!c.apply_on_default_change) return true;
+      if (!!d.per_room_defaults !== !!c.per_room_defaults) return true;
+      if (!!d.show_pause_button !== !!(c.show_pause_button !== false)) return true;
+      if (!!d.pause_sensor_enabled !== !!c.pause_sensor_enabled) return true;
+      if (String(d.pause_sensor_entity||'') !== String(c.pause_sensor_entity||'')) return true;
+      if (!!d.time_12h !== !!c.time_12h) return true;
+      if (String(d.time_source||'browser') !== String(c.time_source||'browser')) return true;
+      if (String(d.temp_unit||'C').toUpperCase() !== String(c.temp_unit||'C').toUpperCase()) return true;
+      if (!!d.profiles_enabled !== !!c.profiles_enabled) return true;
+
+      if (!!d.weekdays_enabled !== !!c.weekdays_enabled) return true;
+      if (String(d.weekdays_view||'all_rooms_one_day') !== String(c.weekdays_view||'all_rooms_one_day')) return true;
+      if (String(d.weekdays_selected_room||'') !== String(c.weekdays_selected_room||'')) return true;
+
+      if (!!d.boiler_enabled !== !!c.boiler_enabled) return true;
+      if (String(d.boiler_switch||'') !== String(c.boiler_switch||'')) return true;
+      if (String(d.boiler_temp_sensor||'') !== String(c.boiler_temp_sensor||'')) return true;
+      const cBoilerMin = this._ttCoerceNum(c.boiler_min_temp, 20);
+      const cBoilerMax = this._ttCoerceNum(c.boiler_max_temp, 25);
+      if (!eqNum(d.boiler_min_temp, cBoilerMin)) return true;
+      if (!eqNum(d.boiler_max_temp, cBoilerMax)) return true;
+
+      // Colors
+      if (!!d.color_global !== !!c.color_global) return true;
+      try {
+        const dm = (d.color_ranges && typeof d.color_ranges === 'object') ? d.color_ranges : {};
+        const cm = (c.color_ranges && typeof c.color_ranges === 'object') ? c.color_ranges : {};
+        const keys = new Set([...Object.keys(dm||{}), ...Object.keys(cm||{})]);
+        for (const k of keys) {
+          const a = Array.isArray(dm[k]) ? dm[k] : [];
+          const b = Array.isArray(cm[k]) ? cm[k] : [];
+          if (a.length !== b.length) return true;
+          for (let i=0;i<a.length;i++) {
+            const ra = a[i] || {};
+            const rb = b[i] || {};
+            if (!eqNum(ra.from, rb.from)) return true;
+            if (!eqNum(ra.to, rb.to)) return true;
+            if (String(ra.color||'') !== String(rb.color||'')) return true;
+          }
+        }
+      } catch {}
+
+      // Open Window Detection
+      try {
+        const dn = (d.open_window && typeof d.open_window === 'object') ? d.open_window : {};
+        const cn = (c.open_window && typeof c.open_window === 'object') ? c.open_window : {};
+        if (!!dn.enabled !== !!cn.enabled) return true;
+        const clampOw = (v, fallback)=>{
+          const n = Number(v);
+          if (!Number.isFinite(n)) return fallback;
+          return Math.max(0, Math.min(1440, Math.round(n)));
+        };
+        if (!eqNum(dn.open_delay_min, clampOw(cn.open_delay_min, 2))) return true;
+        if (!eqNum(dn.close_delay_min, clampOw(cn.close_delay_min, 5))) return true;
+        const ds = (dn.sensors && typeof dn.sensors === 'object') ? dn.sensors : {};
+        const cs = (cn.sensors && typeof cn.sensors === 'object') ? cn.sensors : {};
+        const keys = new Set([...Object.keys(ds||{}), ...Object.keys(cs||{})]);
+        for (const k of keys) {
+          const a = Array.isArray(ds[k]) ? ds[k].filter(Boolean).map(String) : [];
+          const b = Array.isArray(cs[k]) ? cs[k].filter(Boolean).map(String) : [];
+          const sa = Array.from(new Set(a)).sort();
+          const sb = Array.from(new Set(b)).sort();
+          if (sa.length !== sb.length) return true;
+          for (let i=0;i<sa.length;i++){ if (sa[i] !== sb[i]) return true; }
+        }
+      } catch {}
+
+      // Holidays
+      try {
+        if (!!d.holidays_enabled !== !!c.holidays_enabled) return true;
+        const ds = (d.holidays_source === 'manual') ? 'manual' : 'calendar';
+        const cs = (c.holidays_source === 'manual') ? 'manual' : 'calendar';
+        if (ds !== cs) return true;
+        if (String(d.holidays_entity||'') !== String(c.holidays_entity||'')) return true;
+        const da = Array.isArray(d.holidays_dates) ? d.holidays_dates.filter(Boolean).map(String) : [];
+        const ca = Array.isArray(c.holidays_dates) ? c.holidays_dates.filter(Boolean).map(String) : [];
+        const sd = Array.from(new Set(da.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+        const sc = Array.from(new Set(ca.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+        if (sd.length !== sc.length) return true;
+        for (let i=0;i<sd.length;i++){ if (sd[i] !== sc[i]) return true; }
+      } catch {}
+
+      // Away
+      try {
+        const da = (d.away && typeof d.away === 'object') ? d.away : {};
+        const ca = (c.away && typeof c.away === 'object') ? c.away : {};
+        if (!!da.enabled !== !!ca.enabled) return true;
+        if (!eqNum(da.target_c, this._ttCoerceNum(ca.target_c, 17))) return true;
+        if (!!da.advanced_enabled !== !!ca.advanced_enabled) return true;
+        const dp = Array.isArray(da.persons) ? da.persons.filter(Boolean).map(String) : [];
+        const cp = Array.isArray(ca.persons) ? ca.persons.filter(Boolean).map(String) : [];
+        const sdp = Array.from(new Set(dp)).sort();
+        const scp = Array.from(new Set(cp)).sort();
+        if (sdp.length !== scp.length) return true;
+        for (let i=0;i<sdp.length;i++){ if (sdp[i] !== scp[i]) return true; }
+        const dcmb = (da.combos && typeof da.combos === 'object') ? da.combos : {};
+        const ccmb = (ca.combos && typeof ca.combos === 'object') ? ca.combos : {};
+        const dk = Object.keys(dcmb||{}).filter(k => !!dcmb[k]?.enabled).map(String).sort();
+        const ck = Object.keys(ccmb||{}).filter(k => !!ccmb[k]?.enabled).map(String).sort();
+        if (dk.length !== ck.length) return true;
+        for (let i=0;i<dk.length;i++){ if (dk[i] !== ck[i]) return true; }
+        const dlive = !!(d.presence_live_header ?? true);
+        const clive = !!(c.presence_live_header ?? true);
+        const effD = da.advanced_enabled ? dlive : false;
+        const effC = ca.advanced_enabled ? clive : false;
+        if (effD !== effC) return true;
+      } catch {}
+
+      // Rooms
+      try {
+        const de = Array.isArray(d.entities) ? d.entities.map(x=>String(x||'').trim()).filter(Boolean) : [];
+        const ce = Array.isArray(c.entities) ? c.entities.map(x=>String(x||'').trim()).filter(Boolean) : [];
+        if (JSON.stringify(de) !== JSON.stringify(ce)) return true;
+
+        const dm0 = Array.isArray(d.room_use_input_number) ? d.room_use_input_number.map(v=>!!v) : [];
+        const cm0 = Array.isArray(c.room_use_input_number) ? c.room_use_input_number.map(v=>!!v) : [];
+        const normModes = (ents, raw)=> ents.map((eid, idx)=>{
+          if (String(eid).startsWith('input_number.')) return true;
+          if (String(eid).startsWith('climate.')) return false;
+          return !!raw[idx];
+        });
+        const dm = normModes(de, dm0);
+        const cm = normModes(ce, cm0);
+        if (JSON.stringify(dm) !== JSON.stringify(cm)) return true;
+
+        const dl = (d.labels && typeof d.labels === 'object') ? d.labels : {};
+        const cl = (c.labels && typeof c.labels === 'object') ? c.labels : {};
+        const normMap = (src)=>{
+          const out = {};
+          for (const eid of de) {
+            const v = Object.prototype.hasOwnProperty.call(src, eid) ? String(src[eid]||'').trim() : '';
+            if (v) out[eid] = v;
+          }
+          return out;
+        };
+        if (JSON.stringify(normMap(dl)) !== JSON.stringify(normMap(cl))) return true;
+
+        const dmrg = (d.merges && typeof d.merges === 'object') ? d.merges : {};
+        const cmrg = (c.merges && typeof c.merges === 'object') ? c.merges : {};
+        const primSet = new Set(de);
+        const normMerges = (src)=>{
+          const out = {};
+          for (let i=0;i<de.length;i++) {
+            const primary = de[i];
+            const isInput = dm[i] || String(primary).startsWith('input_number.');
+            if (isInput) continue;
+            const arr = Array.isArray(src?.[primary]) ? src[primary].filter(Boolean).map(String) : [];
+            const cleaned = Array.from(new Set(arr.filter(x=>String(x).startsWith('climate.') && !primSet.has(String(x))))).sort();
+            if (cleaned.length) out[primary] = cleaned;
+          }
+          return out;
+        };
+        if (JSON.stringify(normMerges(dmrg)) !== JSON.stringify(normMerges(cmrg))) return true;
+
+        const dts = (d.temp_sensors && typeof d.temp_sensors === 'object') ? d.temp_sensors : {};
+        const cts = (c.temp_sensors && typeof c.temp_sensors === 'object') ? c.temp_sensors : {};
+        if (JSON.stringify(normMap(dts)) !== JSON.stringify(normMap(cts))) return true;
+      } catch {}
+      return false;
+    } catch { return false; }
+  }
+
+  _closeSettingsPopup(force){
+    try {
+      const mustConfirm = !force && this._settingsPopupHasUnsaved();
+      if (mustConfirm) {
+        const msg = this._t('ui.unsaved_confirm') || 'You have unsaved changes. Close anyway?';
+        const ok = window.confirm(msg);
+        if (!ok) return;
+      }
+      try {
+        if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler);
+      } catch {}
+      this._settingsPopupKeyHandler = null;
+      try {
+        if (this._settingsPopupWheelHandler?.el && this._settingsPopupWheelHandler?.fn) {
+          this._settingsPopupWheelHandler.el.removeEventListener('wheel', this._settingsPopupWheelHandler.fn);
+        }
+      } catch {}
+      this._settingsPopupWheelHandler = null;
+      this._settingsPopupSuspended = false;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (ov) ov.classList.remove('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+      this._settingsDraft = null;
+    } catch {}
+  }
+
+  _suspendSettingsPopup(){
+    try {
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (ov) ov.classList.remove('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+      this._settingsPopupSuspended = true;
+      try {
+        if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler);
+      } catch {}
+    } catch {}
+  }
+
+  _resumeSettingsPopup(){
+    try {
+      if (this._disablePopups) return;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings');
+      if (!ov) return;
+      ov.classList.add('open');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+      this._settingsPopupSuspended = false;
+      try { this._applyCardI18n(); } catch {}
+      try { this._renderSettingsPopupTabs(); } catch {}
+      try { this._renderSettingsPopupTab(); } catch {}
+      try {
+        const onKey = (ev) => { if (ev.key === 'Escape') { this._closeSettingsPopup(false); } };
+        try { if (this._settingsPopupKeyHandler) window.removeEventListener('keydown', this._settingsPopupKeyHandler); } catch {}
+        this._settingsPopupKeyHandler = onKey;
+        window.addEventListener('keydown', onKey);
+      } catch {}
+    } catch {}
+  }
+
+  async _saveSettingsPopup(){
+    try {
+      // IMPORTANT: do not persist on toggle/input; only commit+save here.
+      this._applySettingsPopupDraftToConfig();
+      if (this._config?.storage_enabled && typeof this._saveStore === 'function') {
+        await this._saveStore(true);
+      } else {
+        try { if (typeof this._debouncedSaveStore === 'function') this._debouncedSaveStore(); } catch {}
+      }
+    } catch {}
+    try { this._closeSettingsPopup(true); } catch {}
+    try { this._render(); } catch {}
+    // Ensure other card instances update immediately after Save (used for Colors "Update schedule")
+    try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+    try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+  }
+
+  // --- Test popup (entity picker + available services) ---
+  _openTestPopup(){
+    try {
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-test');
+      const picker = this.shadowRoot && this.shadowRoot.querySelector('.test-picker');
+      const select = this.shadowRoot && this.shadowRoot.querySelector('.test-select');
+      if (!ov || !picker) return;
+      ov.classList.add('open');
+      // If HA's entity picker web component isn't loaded, show a simple <select> fallback
+  // Force simple <select> to avoid menu overlays escaping the modal
+  const hasPicker = false && !!customElements.get('ha-entity-picker');
+      if (hasPicker) {
+        try { picker.style.display = ''; } catch {}
+        try { if (select) select.style.display = 'none'; } catch {}
+        // Bind hass to entity picker and set current value
+        try { picker.hass = this._hass; } catch {}
+        try { if (this._testEntity) picker.value = this._testEntity; } catch {}
+        // Attach one-time listener (avoid duplicates)
+        try {
+          if (!picker._ttBound) {
+            picker._ttBound = true;
+            picker.addEventListener('value-changed', (e)=>{ try { this._testEntity = e.detail?.value || e.target?.value || ''; this._renderTestCommands(); } catch {} });
+            picker.addEventListener('change', (e)=>{ try { this._testEntity = e.target?.value || ''; this._renderTestCommands(); } catch {} });
+          }
+        } catch {}
+      } else {
+        // Fallback: populate select with all entity ids
+        try { picker.style.display = 'none'; } catch {}
+        if (select) {
+          try { select.style.display = ''; } catch {}
+          // Build options once per open
+          select.innerHTML = '';
+          const states = this._hass?.states || {};
+          const items = Object.keys(states).map(id=>{
+            const fn = states[id]?.attributes?.friendly_name || id;
+            return { id, fn: String(fn) };
+          }).sort((a,b)=> a.fn.localeCompare(b.fn));
+          const ph = document.createElement('option'); ph.value=''; ph.textContent = this._t('editor.test_select_placeholder'); select.append(ph);
+          for (const it of items){ const o=document.createElement('option'); o.value=it.id; o.textContent=`${it.fn} (${it.id})`; if (this._testEntity===it.id) o.selected = true; select.append(o); }
+          if (!select._ttBound){ select._ttBound = true; select.addEventListener('change',(e)=>{ try { this._testEntity = e.target?.value || ''; this._renderTestCommands(); } catch {} }); }
+        }
+      }
+      this._renderTestCommands();
+      this._updateTestExportEnabled();
+    } catch {}
+  }
+
+  _renderTestCommands(){
+    try {
+      const list = this.shadowRoot && this.shadowRoot.querySelector('.test-list');
+      if (!list) return;
+      list.innerHTML = '';
+      const eid = String(this._testEntity || '').trim();
+      if (!eid) {
+        const empty = document.createElement('div'); empty.className = 'test-empty'; empty.textContent = this._t('editor.test_empty'); list.append(empty); return;
+      }
+      const domain = eid.split('.')[0];
+      const all = (this._hass && this._hass.services) ? this._hass.services : {};
+      const svcObj = all[domain] || {};
+      // If chosen entity is a climate, also show generic homeassistant "set_state" fields? Keep to domain services for now
+      const names = Object.keys(svcObj).sort();
+      if (!names.length) {
+        const empty = document.createElement('div'); empty.className = 'test-empty'; empty.textContent = `Ingen services fundet for domænet "${domain}".`; list.append(empty); return;
+      }
+      for (const s of names){
+        const def = svcObj[s] || {};
+        const item = document.createElement('div'); item.className = 'test-item';
+        const h = document.createElement('h4'); h.textContent = `${domain}.${s}`; item.append(h);
+        const ul = document.createElement('ul'); ul.className = 'test-fields';
+        const fields = def.fields || {};
+        const fNames = Object.keys(fields);
+        if (!fNames.length) {
+          const li = document.createElement('li'); li.textContent = this._t('editor.test_no_fields'); ul.append(li);
+        } else {
+          for (const fn of fNames){
+            const fd = fields[fn] || {};
+            const li = document.createElement('li');
+            const req = fd.required ? ' (påkrævet)' : '';
+            const desc = fd.description ? ` – ${fd.description}` : '';
+            const ex = typeof fd.example !== 'undefined' ? ` Eksempel: ${JSON.stringify(fd.example)}` : '';
+            li.textContent = `${fn}${req}${desc}${ex}`;
+            ul.append(li);
+          }
+        }
+        item.append(ul);
+        list.append(item);
+      }
+      this._updateTestExportEnabled();
+    } catch {}
+  }
+
+  _updateTestExportEnabled(){
+    try {
+      const btn = this.shadowRoot && this.shadowRoot.querySelector('.test-export');
+      if (!btn) return;
+      const eid = String(this._testEntity || '').trim();
+      const domain = eid && eid.includes('.') ? eid.split('.')[0] : '';
+      const has = domain && this._hass && this._hass.services && this._hass.services[domain] && Object.keys(this._hass.services[domain]).length;
+      btn.disabled = !(eid && has);
+    } catch {}
+  }
+
+  _exportTestCommands(){
+    try {
+      if (this._exporting) return; // throttle to avoid accidental multi-download
+      this._exporting = true; setTimeout(()=>{ this._exporting = false; }, 600);
+      const text = this._buildTestExportText();
+      if (!text) return;
+      const eid = String(this._testEntity || 'entity').replace(/[^a-zA-Z0-9_.-]+/g,'_');
+  const name = `${eid}-commands.md`;
+  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{ try { document.body.removeChild(a); URL.revokeObjectURL(url); } catch {} }, 0);
+    } catch {}
+  }
+
+  _buildTestExportText(){
+    try {
+      const eid = String(this._testEntity || '').trim();
+      if (!eid) return '';
+      const st = this._hass?.states?.[eid];
+      const friendly = st?.attributes?.friendly_name || '';
+      const domain = eid.split('.')[0];
+      const date = new Date();
+      const lines = [];
+      lines.push(`Entity: ${eid}${friendly?` (${friendly})`:''}`);
+      lines.push(`Domain: ${domain}`);
+      lines.push(`Generated: ${date.toISOString()}`);
+      lines.push('');
+      const svcObj = (this._hass?.services?.[domain]) || {};
+      const names = Object.keys(svcObj).sort();
+      if (!names.length) { lines.push('No services for this domain.'); return lines.join('\n'); }
+      for (const s of names){
+        // Mark command in Markdown-style bold for easier reading
+        lines.push(`**${domain}.${s}**`);
+        const fields = (svcObj[s] && svcObj[s].fields) || {};
+        const fNames = Object.keys(fields);
+        if (!fNames.length) { lines.push('  (no fields)'); continue; }
+        for (const fn of fNames){
+          const fd = fields[fn] || {};
+          const req = fd.required ? 'required' : 'optional';
+          const desc = fd.description ? ` - ${fd.description}` : '';
+          const ex = typeof fd.example !== 'undefined' ? ` Example: ${JSON.stringify(fd.example)}` : '';
+          lines.push(`  ${fn} (${req})${desc}${ex}`);
+        }
+        lines.push('');
+      }
+      return lines.join('\n');
+    } catch { return ''; }
+  }
+
+  // Allow editor to nudge a repaint explicitly
+  devRefreshFromEditor(){
+    try { this._ensureSchedules(); } catch {}
+    try { if (!this._inlineEditing && !this._editing) this._render(); } catch {}
+  }
+
+  _openEditor(entity, blockId) {
+    this._ensureEditModeOn();
+    if (!blockId) return this._openNewEditor(entity);
+    this._editing = { entity, blockId };
+    // Hide any tooltips while editing
+    try {
+      const tips = this.shadowRoot.querySelectorAll('.wk-tooltip');
+      tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display = 'none'; });
+    } catch {}
+    const row = this._schedules[entity];
+    if (!row) return;
+    const b = row.blocks.find(x => x.id === blockId);
+    if (!b) return;
+    const edTemp = this.shadowRoot.querySelector(".ed-temp");
+    const edFrom = this.shadowRoot.querySelector(".ed-from");
+  const edTo = this.shadowRoot.querySelector(".ed-to");
+  const fromMer = this.shadowRoot.querySelector('.ed-from-mer');
+  const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+    const overlay = this.shadowRoot.querySelector(".overlay");
+    const title = this.shadowRoot.querySelector('.modal h3');
+    const delBtn = this.shadowRoot.querySelector('.ed-delete');
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+    if (this._config?.time_12h) {
+      if (edFrom) edFrom.value = this._toTimeInput12h(b.startMin);
+      if (edTo) edTo.value = this._toTimeInput12h(b.endMin);
+      if (fromMer) { fromMer.style.display=''; fromMer.value = (b.startMin>=720)?'PM':'AM'; }
+      if (toMer) { toMer.style.display=''; toMer.value = (b.endMin>=720 && b.endMin<1440)?'PM':'AM'; }
+    } else {
+      if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
+      if (edTo) edTo.value = this._toTimeInput(b.endMin);
+      if (fromMer) fromMer.style.display='none';
+      if (toMer) toMer.style.display='none';
+    }
+    if (title) title.textContent = this._t('ui.edit_block');
+    if (delBtn) delBtn.style.display = '';
+    const err = this.shadowRoot.querySelector(".ed-error");
+    if (err) { err.style.display = "none"; err.textContent = ""; }
+
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  overlay.classList.add("open");
+    try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+    try {
+      const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
+      window.addEventListener('keydown', onKey, { once: true });
+    } catch {}
+    // Improved keyboard navigation between time fields (two-step Tab in "Fra")
+    try {
+      const fromInput = this.shadowRoot.querySelector(".ed-from");
+      const toInput = this.shadowRoot.querySelector(".ed-to");
+      if (fromInput && toInput) {
+        // Focus "Fra" on open for fast editing
+        setTimeout(() => { try { fromInput.focus(); fromInput.select?.(); } catch {} }, 0);
+        // Two-step Tab inside "Fra": hours -> minutes -> move to "Til"
+        let fraStep = 0;
+        fromInput.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && !e.shiftKey) {
+            e.preventDefault();
+            try {
+              const val = fromInput.value || "";
+              if (fraStep === 0) {
+                if (fromInput.setSelectionRange) {
+                  setTimeout(() => { try { fromInput.setSelectionRange(3, 5); } catch {} }, 0);
+                }
+                fraStep = 1;
+              } else {
+                fraStep = 0;
+                toInput.focus();
+                toInput.select?.();
+              }
+            } catch {
+              if (fraStep == 0) { fraStep = 1; } else { fraStep = 0; toInput.focus(); toInput.select?.(); }
+            }
+          }
+        });
+        // Shift+Tab from Til -> Fra
+        toInput.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && e.shiftKey) {
+            e.preventDefault();
+            fraStep = 1;
+            fromInput.focus();
+            try { fromInput.setSelectionRange?.(3,5); } catch {}
+          }
+        });
+        fromInput.addEventListener("input", () => { fraStep = 0; });
+      }
+    } catch {}
+
+    try {
+      const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
+      window.addEventListener('keydown', onKey, { once: true });
+    } catch {}
+    // Improved keyboard navigation between time fields
+    try {
+      const fromInput = this.shadowRoot.querySelector(".ed-from");
+      const toInput = this.shadowRoot.querySelector(".ed-to");
+      if (fromInput && toInput) {
+        // Focus "Fra" on open for fast editing
+        setTimeout(() => { try { fromInput.focus(); fromInput.select?.(); } catch {} }, 0);
+        // Tab from Fra -> Til (skip any intermediary focusable elements like clock icons)
+        fromInput.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && !e.shiftKey) {
+            e.preventDefault();
+            toInput.focus();
+            toInput.select?.();
+          }
+        });
+        // Shift+Tab from Til -> Fra
+        toInput.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && e.shiftKey) {
+            e.preventDefault();
+            fromInput.focus();
+            fromInput.select?.();
+          }
+        });
+      }
+    } catch {}
+
+    try {
+      const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
+      // Add once to avoid stacking listeners across multiple opens
+      window.addEventListener('keydown', onKey, { once: true });
+    } catch {}
+
+      // Also reflect the current option on the global select entity instantly
+      try {
+        const selOpt = (()=>{
+          const all = this._hass?.states || {};
+          for (const eid in all){
+            if (!Object.prototype.hasOwnProperty.call(all, eid)) continue;
+            if (!eid.startsWith('select.')) continue;
+            const st = all[eid];
+            const fn = String(st?.attributes?.friendly_name || '').toLowerCase();
+            if (fn === 'thermostat profile' || fn.startsWith('thermostat profile')){
+              return String(st?.state || '');
+            }
+          }
+          return null;
+        })();
+        if (selOpt !== null) {
+          const norm = (v)=>{ const s = String(v||'').trim(); return (s.toLowerCase()==='none' || s==='') ? null : s; };
+          const want = norm(selOpt);
+          const changed = want !== this._globalProfile;
+          if (changed) {
+            this._globalProfile = want;
+            if (want) this._config.profiles_enabled = true;
+            // Update local schedules so UI reflects change instantly (no save)
+            try {
+              for (const eid of (this._config?.entities || [])){
+                const r = this._schedules[eid]; if (!r) continue; this._ensureProfilesStruct(r);
+                if (!want) { r.activeProfile = null; continue; }
+                const has = !!(r.profiles && r.profiles[want]);
+                r.activeProfile = has ? want : null;
+              }
+            } catch {}
+            if (!this._inlineEditing && !this._editing) this._render();
+            this._scheduleNextApply();
+            // Persist back to integration so sensor version updates immediately
+            try { this._debouncedSaveStore(); } catch {}
+          }
+        }
+      } catch {}
+
+  }
+  _closeEditor(){
+    this._editing = null;
+  this.shadowRoot.querySelector(".overlay")?.classList.remove("open");
+  try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+    // If we hid the weekday modal for editing, decide whether to restore it
+    // Only restore when the edit was initiated from inside the weekdays popup.
+    // If the edit was initiated from the main timeline (auto-save flow), do not reopen the weekdays popup.
+    if (this._weeklyOverlayHiddenForEditor && this._weeklyDraft) {
+      const cameFromTimeline = !!this._autoSaveWeeklyFromTimeline;
+      this._weeklyOverlayHiddenForEditor = false;
+      if (cameFromTimeline) {
+        // Do not bounce back into weekdays popup on cancel; reset the auto-save flag and close weekly context
+        this._autoSaveWeeklyFromTimeline = false;
+        this._closeWeeklyEditor();
+      } else {
+        const wov = this.shadowRoot.querySelector('.overlay-week');
+        if (wov) wov.classList.add('open');
+        this._renderWeeklyModal();
+      }
+    }
+    // If we hid the profiles modal for editing, restore it on close
+    if (this._profilesOverlayHiddenForEditor && this._profilesOpen) {
+      this._profilesOverlayHiddenForEditor = false;
+      const pov = this.shadowRoot.querySelector('.overlay-profiles');
+      if (pov) pov.classList.add('open');
+      this._renderProfilesModal();
+    }
+    // If we hid the holiday modal for editing, restore it on close
+    if (this._holidayOverlayHiddenForEditor && this._holidayOpen) {
+      this._holidayOverlayHiddenForEditor = false;
+      const hov = this.shadowRoot.querySelector('.overlay-holiday');
+      if (hov) hov.classList.add('open');
+      this._renderHolidayModal();
+    }
+    // Restore presence modal if it is open
+    try {
+      if (this._presenceOpen) {
+        const pov = this.shadowRoot.querySelector('.overlay-presence');
+        if (pov) pov.classList.add('open');
+        this._renderPresenceModal();
+      }
+    } catch {}
+  }
+
+  async _deleteFromEditor(){ if (!this._editing) return; const { entity, blockId, weeklyDay, profileName }=this._editing; if (!blockId) { this._closeEditor(); return; }
+    if (weeklyDay && this._weeklyDraft) {
+      // Delete from both _weeklyDraft.days AND _weeklyDraft._weeklyModes to ensure complete removal
+      
+      // First, try to delete from _weeklyDraft.days
+      let foundInDays = false;
+      if (this._weeklyDraft.days?.[weeklyDay]) {
+        const arr = this._weeklyDraft.days[weeklyDay];
+        const idx = arr.findIndex(x=>x.id===blockId);
+        if (idx >= 0) {
+          arr.splice(idx, 1);
+          foundInDays = true;
+        }
+      }
+      
+      // Also delete from _weeklyDraft._weeklyModes if it exists (should delete from ALL modes to be safe)
+      let foundInModes = false;
+      if (this._weeklyDraft?._weeklyModes) {
+        for (const modeName in this._weeklyDraft._weeklyModes) {
+          const modeBlocks = this._weeklyDraft._weeklyModes[modeName]?.days?.[weeklyDay];
+          if (Array.isArray(modeBlocks)) {
+            const idx = modeBlocks.findIndex(x=>x.id===blockId);
+            if (idx >= 0) {
+              modeBlocks.splice(idx, 1);
+              foundInModes = true;
+            }
+          }
+        }
+      }
+      
+      // If the weekly editor was opened implicitly from the main timeline,
+      // save directly without applying group sync (which would re-copy deleted blocks)
+      if (this._autoSaveWeeklyFromTimeline) {
+        this._autoSaveWeeklyFromTimeline = false;
+        // Save without applying group propagation
+        const entity = this._weeklyEntity;
+        const row = this._schedules[entity];
+        if (row) {
+          const mode = this._weeklyDraft.mode || 'weekday_weekend';
+          this._ensureWeeklyStruct(row);
+          // Save to both weekly and weekly_modes without syncing across group days.
+          // IMPORTANT: main timeline builds _weeklyDraft from weekly_modes, so if we only
+          // update row.weekly.days here, the next edit will reload stale blocks from
+          // row.weekly_modes and "revive" deleted blocks.
+          const daysCopy = JSON.parse(JSON.stringify(this._weeklyDraft.days || {}));
+          // Keep any existing modes, but ensure the active mode reflects this draft.
+          try {
+            if (this._weeklyDraft._weeklyModes) {
+              row.weekly_modes = JSON.parse(JSON.stringify(this._weeklyDraft._weeklyModes));
+            }
+          } catch {}
+          try {
+            if (!row.weekly_modes || typeof row.weekly_modes !== 'object') row.weekly_modes = {};
+            row.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(daysCopy)) };
+          } catch {
+            try { row.weekly_modes = row.weekly_modes || {}; row.weekly_modes[mode] = { days: daysCopy }; } catch {}
+          }
+          row.weekly = { mode, days: JSON.parse(JSON.stringify(daysCopy)) };
+          this._schedules[entity] = row;
+          this._config.weekdays_mode = mode;
+          const before = this._desiredNowSnapshot();
+          try { this._persistDraftNow(); } catch {}
+          this._markPendingSave();
+          if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
+          this._scheduleNextApply();
+        }
+        this._closeEditor();
+        // Close weekly overlay when editing from main timeline
+        const wov = this.shadowRoot.querySelector('.overlay-week');
+        if (wov) wov.classList.remove('open');
+        this._weeklyOpen = false;
+        this._render();
+      } else {
+        // Regular flow when user is inside the weekdays popup: update preview and stay there
+        this._renderWeeklyModal();
+        this._closeEditor();
+      }
+      return;
+    }
+    if (this._editing.presence && this._presenceDraft && this._presenceDraft.rooms) {
+      try {
+        const eid = this._editing.entity;
+        const arr = (this._presenceDraft.rooms||{})[eid] || [];
+        const idx = arr.findIndex(x=>x.id===blockId);
+        if (idx>=0) arr.splice(idx,1);
+        (this._presenceDraft.rooms||{})[eid] = arr;
+        this._render(); this._closeEditor(); this._renderPresenceModal();
+      } catch { this._closeEditor(); }
+      return;
+    }
+    if (this._editing.holiday && this._holidayDraft && this._holidayDraft.rooms) {
+      try {
+        const eid = this._editing.entity;
+        const arr = (this._holidayDraft.rooms||{})[eid] || [];
+        const idx = arr.findIndex(x=>x.id===blockId);
+        if (idx>=0) arr.splice(idx,1);
+        (this._holidayDraft.rooms||{})[eid] = arr;
+        this._render(); this._closeEditor(); this._renderHolidayModal();
+      } catch { this._closeEditor(); }
+      return;
+    }
+    if (profileName) {
+      try {
+        // Ensure draft exists and operate on the current room's draft blocks map
+        const isNewProf = (profileName === '__new__');
+        const curRoom = this._profilesRoom || this._profilesEntity || entity;
+        if (!this._profilesDraft || (!isNewProf && this._profilesDraft.name !== profileName)) {
+          const row = this._schedules[entity];
+          const roomsMap = {};
+          for (const e of (this._config?.entities||[])){
+            const src = !isNewProf ? (this._schedules[e]?.profiles?.[profileName]?.blocks || []) : [];
+            roomsMap[e] = JSON.parse(JSON.stringify(src));
+          }
+          this._profilesDraft = { name: (isNewProf? null : profileName), rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        }
+        const arr = (this._profilesDraft.rooms||{})[curRoom] || [];
+        const idx = arr.findIndex(x=>x.id===blockId);
+        if (idx>=0) arr.splice(idx,1);
+        (this._profilesDraft.rooms||{})[curRoom] = arr;
+        this._profilesDirty = true;
+        // If deletion was initiated from the main timeline, persist immediately
+        if (this._autoSaveProfileFromTimeline) {
+          try { this._autoSaveProfileFromTimeline = false; await this._profilesSaveDraft(); } catch {}
+        }
+        this._render(); this._closeEditor(); if (this._profilesOpen) this._renderProfilesModal();
+      } catch { this._closeEditor(); }
+      return;
+    }
+    this._deleteBlock(entity, blockId); this._closeEditor(); }
+
+  _openNewEditor(entity){ this._ensureEditModeOn(); this._editing = { entity, blockId: null }; const row = this._schedules[entity]; if (!row) return; const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to"); const overlay = this.shadowRoot.querySelector(".overlay"); const now = this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start + 60, start + 15, 1440); if (edTemp) edTemp.value = String(this._toDisplayTemp(row.defaultTemp ?? 20)); if (edFrom) edFrom.value = this._toTimeInput(start); if (edTo)   edTo.value   = this._toTimeInput(end); const title = this.shadowRoot.querySelector('.modal h3'); if (title) title.textContent = this._t('ui.add_block'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); if (delBtn) delBtn.style.display = 'none'; const err = this.shadowRoot.querySelector(".ed-error"); if (err) { err.style.display = "none"; err.textContent = ""; }
+  /* popups visible: continue */
+  // Hide any tooltips while editing
+  try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  // Open after a frame to avoid half-rendered UI flash
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
+  try { const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer'); if (this._config?.time_12h) { if (edFrom) edFrom.value = this._toTimeInput12h(start); if (edTo) edTo.value = this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value = (start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value = (end>=720 && end<1440)?'PM':'AM'; } } else { if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; } } catch {}
+  if (edTemp) { edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+    try {
+      const onKey = (ev) => { if (ev.key === 'Escape') { this._closeEditor(); } };
+      window.addEventListener('keydown', onKey, { once: true });
+    } catch {}
+    // Improved keyboard navigation between time fields (two-step Tab in "Fra")
+    try {
+      const fromInput = this.shadowRoot.querySelector(".ed-from");
+      const toInput = this.shadowRoot.querySelector(".ed-to");
+      if (fromInput && toInput) {
+        // Focus "Fra" on open for fast editing
+        setTimeout(() => { try { fromInput.focus(); fromInput.select?.(); } catch {} }, 0);
+        // Two-step Tab inside "Fra": hours -> minutes -> move to "Til"
+        let fraStep = 0;
+        fromInput.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && !e.shiftKey) {
+            e.preventDefault();
+            try {
+              const val = fromInput.value || "";
+              if (fraStep === 0) {
+                if (fromInput.setSelectionRange) {
+                  setTimeout(() => { try { fromInput.setSelectionRange(3, 5); } catch {} }, 0);
+                }
+                fraStep = 1;
+              } else {
+                fraStep = 0;
+                toInput.focus();
+                toInput.select?.();
+              }
+            } catch {
+              if (fraStep == 0) { fraStep = 1; } else { fraStep = 0; toInput.focus(); toInput.select?.(); }
+            }
+          }
+        });
+        // Shift+Tab from Til -> Fra
+        toInput.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && e.shiftKey) {
+            e.preventDefault();
+            fraStep = 1;
+            fromInput.focus();
+            try { fromInput.setSelectionRange?.(3,5); } catch {}
+          }
+        });
+        fromInput.addEventListener("input", () => { fraStep = 0; });
+      }
+    } catch {}
+ }
+
+  // ---------- Weekdays modal ----------
+  _openWeeklyEditor(entity){
+    this._ensureEditModeOn();
+    this._weeklyEntity = entity;
+    const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
+    this._ensureWeeklyStruct(row);
+    // Reset any pending cross-room copies for this editing session
+    this._weeklyCopyTargets = [];
+    // Deep copy as draft from the dataset for current mode
+    try {
+      const curMode = (row.weekly?.mode) || (this._config?.weekdays_mode) || 'weekday_weekend';
+      const src = row.weekly_modes?.[curMode]?.days || {};
+      const names = this._weekdayNames();
+      const draftDays = JSON.parse(JSON.stringify(src));
+      for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+      this._weeklyDraft = { mode: curMode, days: draftDays };
+    } catch {
+      this._weeklyDraft = JSON.parse(JSON.stringify(row.weekly));
+    }
+    this._weeklyDayKey = this._todayKey();
+    this._weeklyOpen = true;
+  const ov = this.shadowRoot.querySelector('.overlay-week');
+  // Mark overlaying first to hide background artifacts
+  try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+  // Build the modal while hidden
+  this._renderWeeklyModal();
+  // Open after a paint
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
+  }
+  _closeWeeklyEditor(){
+    try { this._weeklyOpen = false; this._weeklyEntity = null; this._weeklyDraft = null; this._weeklyDayKey = null; } catch {}
+    try { this.shadowRoot.querySelector('.overlay-week')?.classList.remove('open'); } catch {}
+    try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+    try {
+      if (this._resumeSettingsAfterWeekdays) {
+        this._resumeSettingsAfterWeekdays = false;
+        this._resumeSettingsPopup?.();
+      }
+    } catch {}
+  }
+  _weeklySaveAll(){ try { if (!this._weeklyEntity || !this._weeklyDraft) { this._closeWeeklyEditor(); return; } const entity = this._weeklyEntity; const row = this._schedules[entity]; if (!row) { this._closeWeeklyEditor(); return; }
+      // Normalize by mode: propagate grouped days within the selected mode only
+      const mode = this._weeklyDraft.mode || 'weekday_weekend';
+      const d = this._weeklyDraft.days || {};
+      const applyGroup = (keys, srcKey)=>{ const src = JSON.parse(JSON.stringify(d[srcKey]||[])); for (const k of keys){ d[k] = JSON.parse(JSON.stringify(src)); } };
+      if (mode === 'weekday_weekend') {
+        applyGroup(['tue','wed','thu','fri'], 'mon');
+        applyGroup(['sun'], 'sat');
+      } else if (mode === 'weekday_sat_sun') {
+        applyGroup(['tue','wed','thu','fri'], 'mon');
+      } // all_7 -> keep individual
+      this._ensureWeeklyStruct(row);
+      // Save into mode bucket and set active weekly to this mode
+      try { row.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(d)) }; } catch { row.weekly_modes[mode] = { days: d }; }
+      row.weekly = { mode, days: JSON.parse(JSON.stringify(d)) };
+      this._schedules[entity] = row;
+      // Also update the global fallback mode so other rooms without per-room override follow this selection
+      this._config.weekdays_mode = mode;
+      // Also apply to any pending target rooms selected via "copy week to rooms"
+      const targets = Array.isArray(this._weeklyCopyTargets) ? this._weeklyCopyTargets : [];
+      if (targets.length) {
+        // Make a fresh copy for targets (don't reuse the modified 'd' which already has applyGroup applied)
+        const targetData = JSON.parse(JSON.stringify(this._weeklyDraft.days || {}));
+        for (const eid of targets){
+          try {
+            const trow = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+            this._ensureWeeklyStruct(trow);
+            // Apply group propagation on the target copy (independent from source)
+            const tdata = JSON.parse(JSON.stringify(targetData));
+            const applyGroupTarget = (keys, srcKey)=>{ const src = JSON.parse(JSON.stringify(tdata[srcKey]||[])); for (const k of keys){ tdata[k] = JSON.parse(JSON.stringify(src)); } };
+            if (mode === 'weekday_weekend') {
+              applyGroupTarget(['tue','wed','thu','fri'], 'mon');
+              applyGroupTarget(['sun'], 'sat');
+            } else if (mode === 'weekday_sat_sun') {
+              applyGroupTarget(['tue','wed','thu','fri'], 'mon');
+            }
+            trow.weekly_modes[mode] = { days: JSON.parse(JSON.stringify(tdata)) };
+            trow.weekly = { mode, days: JSON.parse(JSON.stringify(tdata)) };
+            this._schedules[eid] = trow;
+          } catch {}
+        }
+      }
+      // Clear pending list after Save
+      this._weeklyCopyTargets = [];
+      const before = this._desiredNowSnapshot();
+  try { this._persistDraftNow(); } catch {}
+  this._markPendingSave();
+  this._closeWeeklyEditor();
+  this._render();
+      if (this._config.apply_on_edit) this._applyIfDesiredChanged(before);
+      this._scheduleNextApply();
+    } catch(e){ this._closeWeeklyEditor(); }
+  }
+  _renderWeeklyModal(){ try {
+  const modeSel = this.shadowRoot.querySelector('.week-mode');
+  const titleEl = this.shadowRoot.querySelector('.week-title');
+  const roomEl = this.shadowRoot.querySelector('.week-room');
+  const roomTabs = this.shadowRoot.querySelector('.week-roomtabs');
+    const note = this.shadowRoot.querySelector('.week-note');
+    const tabsWrap = this.shadowRoot.querySelector('.week-tabs');
+    const pasteBar = this.shadowRoot.querySelector('.week-pastebar');
+    const actionsWrap = this.shadowRoot.querySelector('.wk-actions');
+    const track = this.shadowRoot.querySelector('.week-track');
+    const scale = this.shadowRoot.querySelector('.week-scale-inner');
+    const modalWeek = this.shadowRoot.querySelector('.modal-week');
+    if (!this._weeklyDraft) return;
+      // i18n
+      if (titleEl) titleEl.textContent = this._t('week.editor.title');
+      // Room name on the same header line
+      try {
+        if (roomEl) {
+          const eid = this._weeklyEntity;
+          let name = '';
+          if (eid) {
+            const custom = (this._config?.labels && this._config.labels[eid]) ? this._config.labels[eid] : null;
+            name = custom || this._prettyName(eid);
+          }
+          roomEl.textContent = name || '';
+        }
+      } catch {}
+      // Build room tabs (switch room in weekdays editor)
+      try {
+        if (roomTabs) {
+          roomTabs.innerHTML = '';
+          const ents = this._config?.entities || [];
+          if (!this._weeklyEntity || !ents.includes(this._weeklyEntity)) this._weeklyEntity = ents[0] || null;
+          
+          for (const eid of ents){
+            const btn = document.createElement('button');
+            btn.type='button';
+            btn.className = 'wk-tab' + (eid===this._weeklyEntity ? ' active' : '');
+            let label = '';
+            try { label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); } catch { label = eid; }
+            btn.textContent = label;
+            btn.addEventListener('click', ()=>{ if (eid!==this._weeklyEntity) this._openWeeklyEditor(eid); });
+            roomTabs.append(btn);
+          }
+          
+          // Hide tabs if only one room
+          roomTabs.style.display = (ents.length>1) ? 'flex' : 'none';
+        }
+      } catch (e) {}
+      const modeLab = this.shadowRoot.querySelector('.week-mode-label');
+      if (modeLab) modeLab.textContent = this._t('week.mode');
+  if (note) note.textContent = this._t('week.editor.preview_note');
+      if (modeSel) {
+        modeSel.value = this._weeklyDraft.mode || 'weekday_weekend';
+        // set option labels i18n
+        for (const opt of Array.from(modeSel.options)){
+          if (opt.value==='weekday_weekend') opt.textContent = this._t('week.mode.weekday_weekend');
+          if (opt.value==='weekday_sat_sun') opt.textContent = this._t('week.mode.weekday_sat_sun');
+          if (opt.value==='all_7') opt.textContent = this._t('week.mode.all_7');
+        }
+        modeSel.onchange = () => {
+          const newMode = modeSel.value;
+          this._weeklyDraft.mode = newMode;
+          // Update global fallback so per-room view reflects latest choice
+          this._config.weekdays_mode = newMode;
+          try {
+            const row = this._schedules[this._weeklyEntity];
+            this._ensureWeeklyStruct(row);
+            const src = row.weekly_modes?.[newMode]?.days || {};
+            const names = this._weekdayNames();
+            const draftDays = JSON.parse(JSON.stringify(src));
+            for (const k of names){ if (!Array.isArray(draftDays[k])) draftDays[k] = []; }
+            this._weeklyDraft.days = draftDays;
+          } catch {}
+          this._renderWeeklyModal();
+        };
+      }
+      // Copy/Paste day logic
+      // Helper to resolve which real days are in a group for current mode
+      const groupDaysForMode = (mode, key)=>{
+        if (mode === 'weekday_weekend') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='weekend') return ['sat','sun'];
+        } else if (mode === 'weekday_sat_sun') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='sat') return ['sat'];
+          if (key==='sun') return ['sun'];
+        } else if (mode === 'all_7') {
+          return [key];
+        }
+        return [this._effectiveDayKey(key)];
+      };
+      // Build per-day action buttons (unique DOM per tab)
+      const renderActions = () => {
+        if (!actionsWrap) return;
+        actionsWrap.innerHTML = '';
+        const curGroup = this._weeklyDayKey || 'weekdays';
+        const mode = this._weeklyDraft.mode || 'weekday_weekend';
+        // Global action: copy entire week to other rooms
+        const copyAllBtn = document.createElement('button');
+        copyAllBtn.type = 'button';
+        copyAllBtn.className = 'btn ghost wk-copyall';
+        copyAllBtn.textContent = this._t('week.copy_to_rooms');
+        copyAllBtn.onclick = (e)=>{ e.preventDefault(); this._openCopyWeekToRooms(); };
+        actionsWrap.append(copyAllBtn);
+        const itemsKeys = [];
+        if (this._weeklyDraft.mode === 'weekday_weekend') itemsKeys.push('weekdays','weekend');
+        else if (this._weeklyDraft.mode === 'weekday_sat_sun') itemsKeys.push('weekdays','sat','sun');
+        else itemsKeys.push('mon','tue','wed','thu','fri','sat','sun');
+        for (const key of itemsKeys){
+          const box = document.createElement('div');
+          box.style.display = key === curGroup ? 'flex' : 'none';
+          box.style.gap = '8px';
+          box.setAttribute('data-key', key);
+          // Copy/Paste button (contextual)
+          const cp = document.createElement('button');
+          cp.type = 'button';
+          cp.className = 'btn';
+          const setCpStyle = (m)=>{ cp.className='btn'; if (m==='copy') cp.classList.add('ghost'); if (m==='paste') cp.classList.add('success'); };
+          if (!this._weeklyCopyFromGroup) { cp.textContent = this._t('ui.copy_day'); setCpStyle('copy'); }
+          else if (this._weeklyCopyFromGroup === key) { cp.textContent = this._t('ui.copy_day'); setCpStyle('copy'); }
+          else { cp.textContent = this._t('ui.paste_day'); setCpStyle('paste'); }
+          // Disable on source day while copy mode is active
+          cp.disabled = !!this._weeklyCopyFromGroup && this._weeklyCopyFromGroup === key;
+          cp.onclick = (ev)=>{
+            ev.preventDefault(); ev.stopPropagation();
+            if (cp.disabled) return;
+            const modeNow = this._weeklyDraft.mode || 'weekday_weekend';
+            if (!this._weeklyCopyFromGroup) {
+              const gDays = groupDaysForMode(modeNow, key);
+              const srcDay = (modeNow==='all_7') ? this._effectiveDayKey(key) : gDays[0];
+              const arr = (this._weeklyDraft?.days?.[srcDay] || []);
+              this._weeklyCopyFromGroup = key;
+              this._weeklyCopyPayload = JSON.parse(JSON.stringify(arr));
+              renderActions();
+              return;
+            }
+            if (this._weeklyCopyFromGroup === key) {
+              // Refresh payload from same source, stay in copy mode
+              const gDays = groupDaysForMode(modeNow, key);
+              const srcDay = (modeNow==='all_7') ? this._effectiveDayKey(key) : gDays[0];
+              const arr = (this._weeklyDraft?.days?.[srcDay] || []);
+              this._weeklyCopyPayload = JSON.parse(JSON.stringify(arr));
+              return;
+            }
+            // Paste into this key
+            try {
+              const payload = Array.isArray(this._weeklyCopyPayload) ? this._weeklyCopyPayload.map(x=>({ ...x, id: Math.random().toString(36).slice(2,9) })) : [];
+              const targets = (modeNow==='all_7') ? [this._effectiveDayKey(key)] : groupDaysForMode(modeNow, key);
+              const daysClone = { ...(this._weeklyDraft.days || {}) };
+              for (const dk of targets){
+                const arr = payload.map(x=>({ ...x }));
+                arr.sort((a,b)=>a.startMin-b.startMin||a.endMin-b.endMin);
+                daysClone[dk] = arr;
+              }
+              this._weeklyDraft.days = daysClone;
+              this._ensureWeeklyStruct(this._schedules[this._weeklyEntity] || { weekly:{} });
+            } catch(e){}
+            this._weeklyDayKey = key; this._renderWeeklyModal();
+          };
+          // Add block button (per day) — doubles as Cancel while in copy mode
+          const add = document.createElement('button');
+          add.type = 'button';
+          const applyAddState = ()=>{
+            const inCopy = !!this._weeklyCopyFromGroup;
+            add.className = 'btn ' + (inCopy ? 'danger' : 'primary');
+            add.textContent = inCopy ? this._t('ui.cancel') : ('+ ' + this._t('ui.add_block'));
+          };
+          applyAddState();
+          add.onclick = ()=>{
+            if (this._weeklyCopyFromGroup) {
+              // Cancel copy mode
+              this._weeklyCopyFromGroup = null; this._weeklyCopyPayload = null; renderActions();
+            } else {
+              this._weeklyDayKey = key; this._openWeeklyBlockEditor(null);
+            }
+          };
+          box.append(cp, add);
+          actionsWrap.append(box);
+        }
+      };
+      renderActions();
+      // Ensure pastebar stays hidden with the new contextual control
+      try { const pb = this.shadowRoot.querySelector('.week-pastebar'); if (pb) { pb.style.display='none'; pb.innerHTML=''; } } catch{}
+      // Paste target bar (always real days mon..sun). Visible only in copy mode
+      if (pasteBar) {
+        if (!this._weeklyCopyFrom) {
+          pasteBar.style.display = 'none'; pasteBar.innerHTML = '';
+        } else {
+          pasteBar.style.display = 'flex'; pasteBar.innerHTML = '';
+          const names = this._weekdayNames();
+          for (const k of names){
+            const btn = document.createElement('button'); btn.type='button';
+            if (k === this._weeklyCopyFrom) {
+              btn.className = 'btn danger'; btn.textContent = this._t('ui.cancel');
+              btn.onclick = ()=>{ this._weeklyCopyFrom = null; this._weeklyCopyPayload = null; this._renderWeeklyModal(); };
+            } else {
+              btn.className = 'btn success';
+              const lab = (this._t('week.days_full.'+k) || this._t('week.days.'+k) || k);
+              btn.textContent = this._t('ui.paste_day') + ' ' + lab;
+              btn.onclick = ()=>{
+                try {
+                  const payload = Array.isArray(this._weeklyCopyPayload) ? this._weeklyCopyPayload.map(x=>({ ...x, id: Math.random().toString(36).slice(2,9) })) : [];
+                  this._weeklyDraft.days[k] = payload.sort((a,b)=>a.startMin-b.startMin||a.endMin-b.endMin);
+                  this._renderWeeklyModal();
+                } catch(e){}
+              };
+            }
+            pasteBar.append(btn);
+          }
+        }
+      }
+      // Build group/day tabs reflecting mode grouping
+      tabsWrap.innerHTML = '';
+      const editable = this._weeklyEditableKeys(this._weeklyDraft.mode);
+      const items = [];
+      if (this._weeklyDraft.mode === 'weekday_weekend') {
+        items.push({key:'weekdays', label: (this._t('week.group.weekdays')||'Weekdays')});
+        items.push({key:'weekend', label: (this._t('week.group.weekend')||'Weekend')});
+      } else if (this._weeklyDraft.mode === 'weekday_sat_sun') {
+        items.push({key:'weekdays', label: (this._t('week.group.weekdays')||'Weekdays')});
+        items.push({key:'sat', label: this._t('week.days_full.sat') || this._t('week.days.sat')});
+        items.push({key:'sun', label: this._t('week.days_full.sun') || this._t('week.days.sun')});
+      } else { // all_7
+        for (const k of this._weekdayNames()) items.push({key:k, label:(this._t('week.days_full.'+k) || this._t('week.days.'+k))});
+      }
+      if (!editable.includes(this._weeklyDayKey)) this._weeklyDayKey = editable[0] || 'weekdays';
+      // Helper: group -> array of real day keys
+  const groupDays2 = (mode, key)=>{
+        if (mode === 'weekday_weekend') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='weekend') return ['sat','sun'];
+        } else if (mode === 'weekday_sat_sun') {
+          if (key==='weekdays') return ['mon','tue','wed','thu','fri'];
+          if (key==='sat') return ['sat'];
+          if (key==='sun') return ['sun'];
+        } else if (mode === 'all_7') {
+          return [key];
+        }
+        return [this._effectiveDayKey(key)];
+      };
+      for (const it of items){
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'wk-tab' + (it.key === this._weeklyDayKey ? ' active' : '');
+        tab.textContent = it.label;
+        tab.addEventListener('click', ()=>{ this._weeklyDayKey = it.key; this._renderWeeklyModal(); });
+        tabsWrap.append(tab);
+      }
+      // Rebuild actions so the visible set matches active tab
+      renderActions();
+      // Compact scale ticks (every 2 hours)
+      if (scale) {
+        scale.innerHTML = '';
+        for (let i=0;i<=24;i+=2){
+          const t = document.createElement('div');
+          t.style.position='absolute';
+          t.style.left = (i/24*100)+'%';
+          t.style.top='4px'; t.style.bottom='4px';
+          t.style.borderLeft='1px solid var(--divider-color)';
+          const lab = document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+          if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24? this._label(0) : this._label(i*60)); }
+          t.append(lab); scale.append(t);
+        }
+      }
+      // Render preview track with today's selected day blocks
+      track.innerHTML = '';
+  const effKey = this._effectiveDayKey(this._weeklyDayKey);
+  const blocks = (this._weeklyDraft.days?.[effKey] || []);
+  // Ensure tooltip exists (scoped to the weekly modal to avoid conflicts with other tooltips)
+  let tooltip = (modalWeek?.querySelector('.wk-tooltip.week')) || this.shadowRoot.querySelector('.wk-tooltip.week');
+  if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip week'; tooltip.style.display='none'; modalWeek?.append(tooltip); }
+      for (const b of blocks){
+        const div = document.createElement('div');
+        div.className = 'block';
+        div.style.position='absolute';
+        div.style.top='6px'; div.style.bottom='6px';
+        div.style.left = (b.startMin/1440*100)+'%';
+        div.style.width = ((b.endMin-b.startMin)/1440*100)+'%';
+  // Only show temperature in the block in the weekly popup (hide time)
+  const t2 = document.createElement('span'); t2.className='pill'; t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; div.append(t2);
+  try {
+          const clr = this._colorFor(this._weeklyEntity, b.temp);
+          if (clr) {
+            div.style.background = clr;
+            div.style.borderColor = clr;
+            const txt = this._contrastTextColor(clr);
+            if (txt) div.style.color = txt;
+          }
+        } catch {}
+        // double-click to edit (prevent bubbling to track handler)
+        div.addEventListener('dblclick', (ev)=>{ try { ev.stopPropagation(); ev.preventDefault(); } catch {} this._openWeeklyBlockEditor(b.id); });
+        // Hover -> show tooltip with full time range + temp (no click needed)
+        const showTip = ()=>{
+          const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+          if (!tooltip) return;
+          try { if (tooltip._hideTimer) { clearTimeout(tooltip._hideTimer); tooltip._hideTimer = null; } } catch {}
+          // Do not show while editor popup is open
+          try {
+            const ov = this.shadowRoot.querySelector('.overlay');
+            if (this._editing || (ov && ov.classList.contains('open'))) return;
+          } catch {}
+          tooltip.textContent = txt;
+          const box = div.getBoundingClientRect();
+          const cont = modalWeek?.getBoundingClientRect();
+          const left = box.left + box.width/2 - (cont?.left||0);
+          const top = (box.top - (cont?.top||0)) - 8; // a little above
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = top + 'px';
+          tooltip.style.transform = 'translate(-50%,-100%)';
+          tooltip.style.display = '';
+        };
+        const hideTip = ()=>{
+          if (!tooltip) return;
+          const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
+          try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); } catch {}
+          tooltip._hideTimer = setTimeout(() => { try { tooltip.style.display='none'; tooltip._hideTimer = null; } catch {} }, delay);
+        };
+        div.addEventListener('mouseenter', showTip);
+        div.addEventListener('mouseleave', hideTip);
+        track.append(div);
+      }
+      // Add click on empty area to add
+      track.addEventListener('dblclick', (e)=>{
+        try {
+          if (e.target && (e.target.closest && e.target.closest('.block'))) return;
+          const box = track.getBoundingClientRect();
+          const rel = (e.clientX - box.left) / box.width; const min = this._clamp(Math.round(rel*1440),0,1439);
+          this._openWeeklyBlockEditor(null, min);
+        } catch { this._openWeeklyBlockEditor(null); }
+      });
+  track.addEventListener('mouseleave', ()=>{
+    const tip = modalWeek?.querySelector('.wk-tooltip.week');
+    if (!tip) return;
+    try { if (tip._hideTimer) { clearTimeout(tip._hideTimer); tip._hideTimer = null; } } catch {}
+  const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120;
+    tip._hideTimer = setTimeout(()=>{ try { tip.style.display='none'; tip._hideTimer = null; } catch{} }, delay);
+  });
+    } catch(e){}
+  }
+  // ---------- Profiles modal ----------
+  _openProfilesEditor(entity){
+    try {
+      this._ensureEditModeOn();
+      this._profilesEntity = entity;
+      const row = this._schedules[entity] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureProfilesStruct(row);
+      // New creation by default: empty timeline
+  this._profilesSelected = null;
+  // Initialize empty draft for ALL rooms
+  const roomsMap = {}; for (const eid of (this._config?.entities||[])) roomsMap[eid] = [];
+  this._profilesDraft = { name: null, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+      this._profilesDirty = false;
+      this._profilesEditingNew = true;
+  this._profilesRoom = (this._config?.entities||[])[0] || entity;
+      this._profilesOpen = true;
+  const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-profiles');
+  // Mark overlaying, render while hidden, then open after paint
+  try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+  this._renderProfilesModal();
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
+    } catch { /* no-op */ }
+  }
+  _openConfirmCloseProfiles(){ try {
+    const pov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-profiles'); if (!pov) return;
+    // If an existing confirm is open, do nothing
+    if (pov.querySelector('.mini-confirm')) return;
+    const wrap = document.createElement('div'); wrap.className='mini-confirm';
+    const box = document.createElement('div'); box.className='box';
+    const h = document.createElement('h4'); h.textContent = this._t('ui.unsaved_confirm');
+    const btns = document.createElement('div'); btns.className='btns';
+    const keep = document.createElement('button'); keep.type='button'; keep.className='btn ghost'; keep.textContent = this._t('ui.keep_editing') || 'Keep editing';
+    const discard = document.createElement('button'); discard.type='button'; discard.className='btn danger'; discard.textContent = this._t('ui.discard_changes') || 'Discard changes';
+    keep.addEventListener('click', ()=>{ try { wrap.remove(); } catch {} });
+    discard.addEventListener('click', ()=>{ try { wrap.remove(); } catch {}; this._closeProfilesEditor(); });
+    btns.append(keep, discard); box.append(h, btns); wrap.append(box); pov.append(wrap);
+  } catch {} }
+  _closeProfilesEditor(){
+    this._profilesOpen = false; this._profilesEntity = null; this._profilesSelected = null; this.shadowRoot.querySelector('.overlay-profiles')?.classList.remove('open');
+    try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+  }
+  _renderProfilesModal(){ try {
+      const title = this.shadowRoot.querySelector('.prof-title'); if (title) title.textContent = this._t('profiles.editor.title');
+      const roomEl = this.shadowRoot.querySelector('.prof-room'); if (roomEl) { const eid = this._profilesEntity; const custom = (this._config?.labels?.[eid]) || null; roomEl.textContent = custom || this._prettyName(eid||''); }
+  const note = this.shadowRoot.querySelector('.prof-note'); if (note) note.textContent = this._t('profiles.preview_note');
+  const list = this.shadowRoot.querySelector('.prof-list');
+  const addBtn = this.shadowRoot.querySelector('.prof-add');
+  const closeBtn = this.shadowRoot.querySelector('.prof-close');
+  const modalProf = this.shadowRoot.querySelector('.modal-profiles');
+  const scale = modalProf?.querySelector('.week-scale-inner') || this.shadowRoot.querySelector('.week-scale-inner');
+  const track = modalProf?.querySelector('.week-track') || this.shadowRoot.querySelector('.week-track');
+  const roomTabs = modalProf?.querySelector('.prof-roomtabs');
+      if (!list || !track || !this._profilesEntity) return;
+      const row = this._schedules[this._profilesEntity] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureProfilesStruct(row);
+      // Build room tabs (one per configured entity)
+      if (roomTabs) {
+        roomTabs.innerHTML = '';
+        const ents = this._config?.entities || [];
+        if (!this._profilesRoom || !ents.includes(this._profilesRoom)) this._profilesRoom = ents[0] || null;
+        for (const eid of ents){
+          const btn = document.createElement('button'); btn.type='button'; btn.className='wk-tab' + (eid===this._profilesRoom?' active':'');
+          let label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid));
+          btn.textContent = label; btn.addEventListener('click', ()=>{ this._profilesRoom = eid; this._renderProfilesModal(); });
+          roomTabs.append(btn);
+        }
+      }
+      // Build list
+      list.innerHTML = '';
+  const names = Object.keys(row.profiles || {});
+      if (!names.length) {
+        const p = document.createElement('div'); p.style.fontSize = '.9rem'; p.style.color='var(--secondary-text-color)'; p.textContent = this._t('profiles.none'); list.append(p);
+      }
+      for (const name of names){
+  const item = document.createElement('div'); item.className = 'prof-item' + (this._profilesSelected===name ? ' active' : '');
+  const left = document.createElement('button'); left.type='button'; left.className='prof-chip'; left.textContent = name; left.addEventListener('click', ()=>{ this._profilesSelected = name; this._profilesEditingNew = false; try { const roomsMap = {}; for (const eid of (this._config?.entities||[])){ const src = this._schedules[eid]?.profiles?.[name]?.blocks || []; roomsMap[eid] = JSON.parse(JSON.stringify(src)); } this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false; } catch { this._profilesDraft=null; this._profilesDirty=false; } this._renderProfilesModal(); });
+    const actions = document.createElement('div'); actions.className = 'prof-actions';
+  const editBtn = document.createElement('button'); editBtn.type='button'; editBtn.className='btn ghost'; editBtn.textContent=this._t('profiles.edit');
+  // Highlight Edit button when this profile is the one currently being edited
+  try { if (this._profilesSelected === name) { editBtn.classList.remove('ghost'); editBtn.classList.add('success'); editBtn.setAttribute('aria-pressed','true'); } else { editBtn.setAttribute('aria-pressed','false'); } } catch {}
+  editBtn.addEventListener('click', ()=>{ this._profilesSelected = name; this._profilesEditingNew = false; try { const roomsMap = {}; for (const eid of (this._config?.entities||[])){ const src = this._schedules[eid]?.profiles?.[name]?.blocks || []; roomsMap[eid] = JSON.parse(JSON.stringify(src)); } this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false; } catch { this._profilesDraft=null; this._profilesDirty=false; } this._renderProfilesModal(); try { const trk = modalProf?.querySelector('.week-track'); trk?.scrollIntoView({ behavior:'smooth', block:'center' }); } catch {} });
+        const act = document.createElement('button'); act.type='button'; act.className = 'btn ' + (row.activeProfile===name?'success':'ghost'); act.textContent = (row.activeProfile===name)? this._t('profiles.deactivate') : this._t('profiles.activate');
+  act.addEventListener('click', async ()=>{
+          const before = this._desiredNowSnapshot();
+          // Toggle global activation: if already globally selected, turn off; else activate this name for all rooms
+          const enable = (this._globalProfile !== name);
+          if (enable) {
+            this._globalProfile = name;
+            this._config.profiles_enabled = true;
+          } else {
+            this._globalProfile = null;
+            // Keep profiles_enabled as-is; user can still have per-room profiles
+          }
+          // Apply across all configured rooms
+          for (const eid of (this._config?.entities || [])){
+            const r = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+            this._ensureProfilesStruct(r);
+            if (enable) {
+              r.activeProfile = (r.profiles && r.profiles[name]) ? name : null;
+            } else {
+              r.activeProfile = null;
+            }
+            this._schedules[eid] = r;
+          }
+          this._markPendingSave();
+          this._render();
+          this._renderProfilesModal();
+          try {
+            if (this._config?.auto_apply && !this._config?.storage_enabled && !this._isPaused()) {
+              await this._applyIfDesiredChanged(before);
+            }
+          } catch {}
+          this._scheduleNextApply();
+          // Auto-close profiles modal when a profile is (de)activated
+          try { this._closeProfilesEditor(); } catch {}
+        });
+        const ren = document.createElement('button'); ren.type='button'; ren.className='btn ghost'; ren.textContent=this._t('profiles.rename'); ren.addEventListener('click', async ()=>{
+          const cur = name; const txt = prompt(this._t('profiles.rename'), cur) || '';
+            const nn = txt.trim(); if (!nn || nn===cur) return;
+            if (row.profiles[nn]) { alert('Name exists'); return; }
+            row.profiles[nn] = row.profiles[cur]; delete row.profiles[cur]; if (row.activeProfile===cur) row.activeProfile = nn; if (this._profilesSelected===cur) this._profilesSelected = nn; this._markPendingSave(); this._renderProfilesModal(); this._render();
+        });
+        const del = document.createElement('button'); del.type='button'; del.className='remove-btn'; del.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>'+this._t('profiles.delete')+'</span>';
+          del.addEventListener('click', async ()=>{ if (!confirm(this._t('profiles.delete')+'?')) return; delete row.profiles[name]; if (row.activeProfile===name) row.activeProfile=null; if (this._profilesSelected===name) this._profilesSelected = Object.keys(row.profiles||{})[0]||null; this._markPendingSave(); this._renderProfilesModal(); this._render(); this._scheduleNextApply(); });
+  actions.append(editBtn, act, ren, del); item.append(left, actions); list.append(item);
+      }
+  if (addBtn) {
+        try { const sp = addBtn.querySelector('span'); if (sp) sp.textContent = this._t('profiles.add'); } catch {}
+        addBtn.classList.remove('btn','primary'); addBtn.classList.add('add-entity-btn');
+        addBtn.onclick = ()=>{
+          // Reset to a brand‑new draft (empty timeline)
+          try {
+            const eid = this._profilesEntity; const row = this._schedules[eid] || { defaultTemp: this._config.default_temp };
+            this._profilesSelected = null; this._profilesEditingNew = true;
+            this._profilesDraft = { name: null, blocks: [], defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+            this._profilesDirty = false; this._renderProfilesModal();
+          } catch {}
+        };
+      }
+  if (closeBtn) { try { closeBtn.textContent = this._t('ui.close') || 'Close'; } catch {} }
+      // Draw scale
+      try {
+        if (scale) {
+          scale.innerHTML = '';
+          // Match the weekly preview: ticks every 2 hours using simple borders and small labels
+          for (let i=0;i<=24;i+=2){
+            const t = document.createElement('div');
+            t.style.position='absolute';
+            t.style.left = (i/24*100)+'%';
+            t.style.top='4px'; t.style.bottom='4px';
+            t.style.borderLeft='1px solid var(--divider-color)';
+            const lab = document.createElement('div');
+            lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+            if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24 ? this._label(0) : this._label(i*60)); }
+            t.append(lab); scale.append(t);
+          }
+        }
+      } catch {}
+      // Draw track for selected profile
+      track.innerHTML = '';
+  const sel = this._profilesSelected;
+  let pblocks = [];
+  const curRoom = this._profilesRoom || this._profilesEntity;
+  if (this._profilesDraft && (!sel || this._profilesDraft.name===sel)) {
+    const rooms = this._profilesDraft.rooms || {}; pblocks = rooms[curRoom] || [];
+  } else if (sel) {
+    // Fallback: show blocks from the current room's saved profile
+    const r = this._schedules[curRoom] || {}; pblocks = (r.profiles?.[sel]?.blocks) || [];
+  }
+      const addBtnInline = document.createElement('button'); addBtnInline.type='button'; addBtnInline.className='btn primary'; addBtnInline.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+this._t('ui.add_block')+'</span>'; addBtnInline.addEventListener('click', ()=>{
+        this._openProfileBlockEditor(null, this._getNowMin());
+      });
+      const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(addBtnInline);
+      // Place toolbar ABOVE the time scale (before the .week-scale container)
+      try {
+        const outerScale = (scale && scale.closest) ? scale.closest('.week-scale') : (modalProf?.querySelector('.week-scale') || null);
+        const parent = outerScale?.parentElement || track.parentElement;
+        if (parent) {
+          Array.from(parent.querySelectorAll('.prof-toolbar')).forEach(el=>el.remove());
+          if (outerScale) parent.insertBefore(toolbar, outerScale); else parent.insertBefore(toolbar, track);
+        }
+      } catch {}
+      // Tooltip (same style as weekdays)
+      let tooltip = this.shadowRoot.querySelector('.wk-tooltip.prof');
+      if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip prof'; tooltip.style.display='none'; modalProf?.append(tooltip); }
+      for (const b of pblocks){
+        const pctStart = (b.startMin/1440)*100; const pctW = ((b.endMin-b.startMin)/1440)*100;
+        const bl = document.createElement('div'); bl.className='block'; bl.style.left=`${pctStart}%`; bl.style.width=`${pctW}%`;
+        try { const clr = this._colorFor(this._profilesEntity, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
+        // Hide pill via CSS; use hover tooltip like weekdays
+        const pillTemp = document.createElement('span'); pillTemp.className='pill'; pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pillTemp);
+        bl.addEventListener('dblclick', ()=> this._openProfileBlockEditor(b.id));
+        const showTip = ()=>{
+          const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
+          if (!tooltip) return;
+          try { if (tooltip._hideTimer) { clearTimeout(tooltip._hideTimer); tooltip._hideTimer = null; } } catch {}
+          // Suppress while block editor is open
+          try { const ov = this.shadowRoot.querySelector('.overlay'); if (this._editing || (ov && ov.classList.contains('open'))) return; } catch {}
+          tooltip.textContent = txt;
+          const box = bl.getBoundingClientRect(); const cont = modalProf?.getBoundingClientRect();
+          const left = box.left + box.width/2 - (cont?.left||0); const top = (box.top - (cont?.top||0)) - 8;
+          tooltip.style.left = left + 'px'; tooltip.style.top = top + 'px'; tooltip.style.transform = 'translate(-50%,-100%)'; tooltip.style.display='';
+        };
+        const hideTip = ()=>{ if (!tooltip) return; const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); } catch {}; tooltip._hideTimer = setTimeout(()=>{ try { tooltip.style.display='none'; tooltip._hideTimer=null; } catch{} }, delay); };
+        bl.addEventListener('mouseenter', showTip);
+        bl.addEventListener('mouseleave', hideTip);
+        track.append(bl);
+      }
+    } catch { /* ignore */ }
+  }
+  _openProfileBlockEditor(blockId, atMin=null){
+    try {
+      this._ensureEditModeOn();
+  const eid = this._profilesRoom || this._profilesEntity; const name = this._profilesSelected; if (!eid) return;
+      const row = this._schedules[eid]; this._ensureProfilesStruct(row);
+      // Use draft while editing
+      if (!this._profilesDraft || this._profilesDraft.name !== name) {
+        try {
+          const roomsMap = {};
+          for (const e of (this._config?.entities||[])){
+            const src = name ? (this._schedules[e]?.profiles?.[name]?.blocks || []) : [];
+            roomsMap[e] = JSON.parse(JSON.stringify(src));
+          }
+          this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+          this._profilesDirty = false;
+        } catch {
+          const roomsMap = {}; for (const e of (this._config?.entities||[])) roomsMap[e] = [];
+          this._profilesDraft = { name, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) }; this._profilesDirty = false;
+        }
+      }
+      const arr = (this._profilesDraft.rooms||{})[eid] || [];
+      const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+      if (!blockId){
+        // New block default around now
+        const now = Number.isFinite(atMin) ? atMin : this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start+60, start+15, 1440);
+  this._editing = { entity: eid, blockId: null, profileName: (name || '__new__') };
+        if (edTemp) { const base = Number(row.defaultTemp||this._config.default_temp||20); edTemp.value = String(this._toDisplayTemp(base)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+        if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(start); if (edTo) edTo.value=this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value=(start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(end>=720 && end<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(start); if (edTo) edTo.value=this._toTimeInput(end); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+        if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
+      } else {
+        const b = arr.find(x=>x.id===blockId); if (!b) return;
+  this._editing = { entity: eid, blockId, profileName: (name || '__new__') };
+        if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+        if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(b.startMin); if (edTo) edTo.value=this._toTimeInput12h(b.endMin); if (fromMer){ fromMer.style.display=''; fromMer.value=(b.startMin>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(b.endMin>=720 && b.endMin<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(b.startMin); if (edTo) edTo.value=this._toTimeInput(b.endMin); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+        if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
+      }
+      // Hide profiles overlay while editing
+      const pov = this.shadowRoot.querySelector('.overlay-profiles'); if (pov) pov.classList.remove('open'); this._profilesOverlayHiddenForEditor = true;
+      try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+    try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
+    } catch {}
+  }
+  async _profilesSaveDraft(){
+    try {
+      const eid = this._profilesEntity; const sel = this._profilesSelected; const d = this._profilesDraft;
+      if (!eid || !sel || !d || d.name !== sel) return;
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureProfilesStruct(row);
+      // Persist current draft into storage structure
+      const blocks = (d.rooms && d.rooms[eid]) ? d.rooms[eid] : [];
+      row.profiles[sel] = { defaultTemp: row.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
+      this._schedules[eid] = row;
+      this._markPendingSave();
+      // Clear dirty flag and revert Add/Save button immediately
+      this._profilesDirty = false;
+      try {
+        const btn = this.shadowRoot && this.shadowRoot.querySelector('.prof-add');
+        const sp = btn && btn.querySelector && btn.querySelector('span');
+        if (btn && sp) { sp.textContent = this._t('profiles.add'); btn.classList.remove('btn','primary'); btn.classList.add('add-entity-btn'); btn.onclick = null; }
+      } catch {}
+      // Refresh UI and reschedule transitions
+      this._render();
+      this._renderProfilesModal();
+      this._scheduleNextApply();
+    } catch (e) {}
+  }
+  async _profilesSave(){
+    try {
+      // Prevent double-trigger when user presses Enter to confirm the prompt
+      if (this._profilesSaveLock) return; this._profilesSaveLock = true;
+  const eid = this._profilesEntity; if (!eid) return;
+  const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensureProfilesStruct(row);
+  const draft = this._profilesDraft || { name:null, rooms:{} };
+      // New profile: prompt for name
+      if (this._profilesEditingNew || !this._profilesSelected) {
+        const base = this._t('profiles.name_placeholder');
+        const txt = prompt(base||'Profile name', 'Profile');
+        const name = (txt||'').trim(); if (!name) return;
+        if (row.profiles[name]) { alert('Name exists'); return; }
+        // Save this profile for ALL rooms from the draft map
+        for (const rid of (this._config?.entities||[])){
+          const rrow = this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] };
+          this._ensureProfilesStruct(rrow);
+          const blocks = (draft.rooms?.[rid] || []);
+          rrow.profiles = rrow.profiles || {}; rrow.profiles[name] = { defaultTemp: rrow.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
+          this._schedules[rid] = rrow;
+        }
+        // Persist and reset timeline for a fresh new draft (ready for next)
+        this._profilesDirty = false;
+        this._markPendingSave();
+        try {
+          this._profilesSelected = null; this._profilesEditingNew = true;
+          const roomsMap = {}; for (const rid of (this._config?.entities||[])) roomsMap[rid] = [];
+          this._profilesDraft = { name: null, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        } catch {}
+        // Move focus away from Save to avoid immediate re-click from Enter
+        try { (this.shadowRoot && this.shadowRoot.activeElement && this.shadowRoot.activeElement.blur && this.shadowRoot.activeElement.blur()); } catch {}
+        this._renderProfilesModal(); this._render(); this._scheduleNextApply();
+        return;
+      }
+      // Edit existing: save without renaming, then reset timeline for next
+      const sel = this._profilesSelected;
+      for (const rid of (this._config?.entities||[])){
+        const rrow = this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] };
+        this._ensureProfilesStruct(rrow);
+        const blocks = (draft.rooms?.[rid] || []);
+        rrow.profiles = rrow.profiles || {}; rrow.profiles[sel] = { defaultTemp: rrow.defaultTemp, blocks: JSON.parse(JSON.stringify(blocks)) };
+        this._schedules[rid] = rrow;
+      }
+      this._profilesDirty = false;
+      this._markPendingSave();
+      try { (this.shadowRoot && this.shadowRoot.activeElement && this.shadowRoot.activeElement.blur && this.shadowRoot.activeElement.blur()); } catch {}
+      // Clear selection and show empty preview ready for a new schedule
+      try {
+        this._profilesSelected = null; this._profilesEditingNew = true;
+        const roomsMap = {}; for (const rid of (this._config?.entities||[])) roomsMap[rid] = [];
+        this._profilesDraft = { name: null, rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+      } catch {}
+      this._renderProfilesModal(); this._render(); this._scheduleNextApply();
+    } catch (e) {}
+    finally { setTimeout(()=>{ this._profilesSaveLock = false; }, 300); }
+  }
+  _openCopyWeekToRooms(){ try {
+      // Build list of target rooms (exclude current)
+      const list = this.shadowRoot.querySelector('.copyrooms-list');
+      const title = this.shadowRoot.querySelector('.copyrooms-title');
+      const desc = this.shadowRoot.querySelector('.copyrooms-desc');
+      const ov = this.shadowRoot.querySelector('.overlay-copyrooms');
+      if (title) title.textContent = this._t('week.copy_to_rooms.title');
+      if (desc) desc.textContent = this._t('week.copy_to_rooms.select');
+      if (list) {
+        list.innerHTML = '';
+        const ents = (this._config?.entities || []);
+        for (const eid of ents){
+          if (eid === this._weeklyEntity) continue;
+          const lbl = (this._config?.labels && this._config.labels[eid]) ? this._config.labels[eid] : this._prettyName(eid);
+          const row = document.createElement('label');
+          const cb = document.createElement('input'); cb.type='checkbox'; cb.value=eid;
+          const span = document.createElement('span'); span.textContent = lbl;
+          row.append(cb, span); list.append(row);
+        }
+      }
+      const cancel = this.shadowRoot.querySelector('.copyrooms-cancel');
+      const apply = this.shadowRoot.querySelector('.copyrooms-apply');
+      if (cancel) cancel.onclick = ()=>{ ov?.classList.remove('open'); };
+      if (apply) apply.onclick = ()=> this._applyCopyWeekToRooms();
+      ov?.classList.add('open');
+    } catch(e){}
+  }
+  async _applyCopyWeekToRooms(){ try {
+      const list = this.shadowRoot.querySelector('.copyrooms-list');
+      const ov = this.shadowRoot.querySelector('.overlay-copyrooms');
+      if (!this._weeklyDraft) { ov?.classList.remove('open'); return; }
+      const checked = Array.from(list?.querySelectorAll('input[type=checkbox]:checked') || []).map(x=>x.value);
+      // Queue the targets; actual copy occurs on Save in weekly editor
+      this._weeklyCopyTargets = checked;
+      ov?.classList.remove('open');
+      // Optionally re-render header/note to reflect queued action (no persistence yet)
+      this._renderWeeklyModal();
+    } catch(e){}
+  }
+  _openWeeklyBlockEditor(blockId, atMin=null){ if (!this._weeklyDraft) return; this._ensureEditModeOn(); const day = this._effectiveDayKey(this._weeklyDayKey || 'mon'); const arr = this._weeklyDraft.days?.[day] || []; if (!blockId){
+      // open new
+      const start = Number.isFinite(atMin) ? this._clamp(Math.round(atMin),0,1380) : this._clamp(Math.round(this._getNowMin()),0,1380);
+      const end = this._clamp(start+60, start+15, 1440);
+      const row = this._schedules[this._weeklyEntity] || { defaultTemp: this._config.default_temp };
+  const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+      this._editing = { entity: this._weeklyEntity, blockId: null, weeklyDay: day };
+  // Hide any tooltips while editing
+  try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(row.defaultTemp||20)); edTemp.max= String(this._maxDisplay()); }
+      if (this._config?.time_12h) {
+        if (edFrom) edFrom.value = this._toTimeInput12h(start);
+        if (edTo) edTo.value = this._toTimeInput12h(end);
+        if (fromMer){ fromMer.style.display=''; fromMer.value = (start>=720)?'PM':'AM'; }
+        if (toMer){ toMer.style.display=''; toMer.value = (end>=720 && end<1440)?'PM':'AM'; }
+      } else {
+        if (edFrom) edFrom.value = this._toTimeInput(start);
+        if (edTo) edTo.value = this._toTimeInput(end);
+        if (fromMer) fromMer.style.display='none';
+        if (toMer) toMer.style.display='none';
+      }
+      if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
+      // Hide weekday overlay while editing to avoid double-popups
+      const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
+    } else {
+  let b = arr.find(x=>x.id===blockId);
+      
+      // If not found in weekly.days, try searching in _weeklyModes
+      if (!b && this._weeklyDraft?._weeklyModes) {
+        for (const modeName in this._weeklyDraft._weeklyModes) {
+          const modeBlocks = this._weeklyDraft._weeklyModes[modeName]?.days?.[day];
+          if (Array.isArray(modeBlocks)) {
+            b = modeBlocks.find(x=>x.id===blockId);
+            if (b) break;
+          }
+        }
+      }
+      
+      if (!b) return;
+  const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+      this._editing = { entity: this._weeklyEntity, blockId, weeklyDay: day };
+  // Hide any tooltips while editing
+  try { const tips = this.shadowRoot.querySelectorAll('.wk-tooltip'); tips.forEach(t => { try { if (t._hideTimer) clearTimeout(t._hideTimer); } catch {} t.style.display='none'; }); } catch {}
+  if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max= String(this._maxDisplay()); }
+      if (this._config?.time_12h) {
+        if (edFrom) edFrom.value = this._toTimeInput12h(b.startMin);
+        if (edTo) edTo.value = this._toTimeInput12h(b.endMin);
+        if (fromMer){ fromMer.style.display=''; fromMer.value = (b.startMin>=720)?'PM':'AM'; }
+        if (toMer){ toMer.style.display=''; toMer.value = (b.endMin>=720 && b.endMin<1440)?'PM':'AM'; }
+      } else {
+        if (edFrom) edFrom.value = this._toTimeInput(b.startMin);
+        if (edTo) edTo.value = this._toTimeInput(b.endMin);
+        if (fromMer) fromMer.style.display='none';
+        if (toMer) toMer.style.display='none';
+      }
+      if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
+      const wov = this.shadowRoot.querySelector('.overlay-week'); if (wov) wov.classList.remove('open'); this._weeklyOverlayHiddenForEditor = true;
+  try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  overlay.classList.add('open');
+    }
+  }
+
+  // ---------- Holidays modal ----------
+  _openHolidayEditor(entity){
+    try {
+      this._ensureEditModeOn();
+      const ents = this._config?.entities || [];
+      this._holidayRoom = entity || ents[0] || null;
+      // Build a rooms map draft from all rooms
+      const roomsMap = {};
+      for (const eid of ents){
+        const r = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+        this._ensureHolidayStruct(r);
+        roomsMap[eid] = Array.isArray(r.holiday?.blocks) ? JSON.parse(JSON.stringify(r.holiday.blocks)) : [];
+      }
+      this._holidayDraft = { rooms: roomsMap };
+  this._holidayOpen = true;
+  const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-holiday');
+  // Mark card overlay state first, then render while hidden
+  try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+  this._renderHolidayModal();
+  // Open after a paint so timeline is fully laid out
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
+    } catch {}
+  }
+  _closeHolidayEditor(){
+    try { this._holidayOpen = false; this._holidayEntity = null; this._holidayRoom = null; this._holidayDraft = null; } catch {}
+    try { this.shadowRoot.querySelector('.overlay-holiday')?.classList.remove('open'); } catch {}
+    try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {}
+    try {
+      if (this._resumeSettingsAfterHoliday) {
+        this._resumeSettingsAfterHoliday = false;
+        this._resumeSettingsPopup?.();
+      }
+    } catch {}
+  }
+  _renderHolidayModal(){ try {
+    const title = this.shadowRoot && this.shadowRoot.querySelector('.holiday-title'); if (title) title.textContent = this._t('holidays.editor.title');
+    const roomEl = this.shadowRoot && this.shadowRoot.querySelector('.holiday-room'); if (roomEl) { const eid = this._holidayRoom; const custom = (this._config?.labels?.[eid]) || null; roomEl.textContent = custom || this._prettyName(eid||''); }
+    const note = this.shadowRoot && this.shadowRoot.querySelector('.holiday-note'); if (note) note.textContent = this._t('week.editor.preview_note');
+    try { const sv = this.shadowRoot.querySelector('.holiday-save'); if (sv) sv.textContent = this._t('ui.save'); const cl = this.shadowRoot.querySelector('.holiday-close'); if (cl) cl.textContent = this._t('ui.cancel'); } catch {}
+    const modalHost = this.shadowRoot && this.shadowRoot.querySelector('.modal-holiday');
+    const scale = modalHost?.querySelector('.week-scale-inner') || this.shadowRoot.querySelector('.week-scale-inner');
+    const track = modalHost?.querySelector('.week-track') || this.shadowRoot.querySelector('.week-track');
+    if (!track) return;
+  // Build room tabs
+  const tabs = modalHost?.querySelector('.holiday-roomtabs');
+    if (tabs) {
+      tabs.innerHTML = '';
+      const ents = this._config?.entities || [];
+      if (!this._holidayRoom || !ents.includes(this._holidayRoom)) this._holidayRoom = ents[0] || null;
+      for (const eid of ents){ const btn=document.createElement('button'); btn.type='button'; btn.className='wk-tab'+(eid===this._holidayRoom?' active':''); let label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); btn.textContent=label; btn.addEventListener('click', ()=>{ this._holidayRoom=eid; this._renderHolidayModal(); }); tabs.append(btn); }
+    }
+    // Draw scale every 2 hours
+    if (scale) {
+      scale.innerHTML = '';
+      for (let i=0;i<=24;i+=2){
+        const t = document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)';
+        const lab = document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+        if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24 ? this._label(0) : this._label(i*60)); }
+        t.append(lab); scale.append(t);
+      }
+    }
+    // Toolbar with Add
+  const addBtnInline = document.createElement('button'); addBtnInline.type='button'; addBtnInline.className='btn primary'; addBtnInline.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+this._t('ui.add_block')+'</span>';
+    addBtnInline.addEventListener('click', ()=>{ this._openHolidayBlockEditor(null, this._getNowMin()); });
+    const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(addBtnInline);
+    try {
+      const outerScale = (scale && scale.closest) ? scale.closest('.week-scale') : (modalHost?.querySelector('.week-scale') || null);
+      const parent = outerScale?.parentElement || track.parentElement;
+      if (parent) {
+        Array.from(parent.querySelectorAll('.prof-toolbar')).forEach(el=>el.remove());
+        if (outerScale) parent.insertBefore(toolbar, outerScale); else parent.insertBefore(toolbar, track);
+      }
+    } catch {}
+    // Draw blocks
+    track.innerHTML = '';
+  const blocks = (this._holidayDraft && this._holidayDraft.rooms) ? (this._holidayDraft.rooms[this._holidayRoom] || []) : [];
+    // Tooltip like weekly
+    let tooltip = this.shadowRoot.querySelector('.wk-tooltip.holiday');
+    if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip holiday'; tooltip.style.display='none'; modalHost?.append(tooltip); }
+    for (const b of blocks){
+      const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%';
+  try { const clr=this._colorFor(this._holidayRoom, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
+      const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill);
+      bl.addEventListener('dblclick', ()=> this._openHolidayBlockEditor(b.id));
+      const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; if (!tooltip) return; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); tooltip._hideTimer=null; } catch {} const box=bl.getBoundingClientRect(); const cont=modalHost?.getBoundingClientRect(); const left=box.left+box.width/2-(cont?.left||0); const top=(box.top-(cont?.top||0))-8; tooltip.textContent=txt; tooltip.style.left=left+'px'; tooltip.style.top=top+'px'; tooltip.style.transform='translate(-50%,-100%)'; tooltip.style.display=''; };
+      const hideTip = ()=>{ if (!tooltip) return; const delay=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?3000:120; try{ if(tooltip._hideTimer) clearTimeout(tooltip._hideTimer);}catch{} tooltip._hideTimer=setTimeout(()=>{ try{ tooltip.style.display='none'; tooltip._hideTimer=null; }catch{} }, delay); };
+      bl.addEventListener('mouseenter', showTip); bl.addEventListener('mouseleave', hideTip);
+      track.append(bl);
+    }
+    // Add on empty area
+    track.addEventListener('dblclick', (e)=>{ try { if (e.target && (e.target.closest && e.target.closest('.block'))) return; const box=track.getBoundingClientRect(); const rel=(e.clientX-box.left)/box.width; const min=this._clamp(Math.round(rel*1440),0,1439); this._openHolidayBlockEditor(null, min); } catch { this._openHolidayBlockEditor(null); } });
+  } catch {}
+  }
+
+  // ---------- Presence (advanced away) modal ----------
+  _openPresenceEditor(entity){
+    try {
+      this._ensureEditModeOn();
+      // Default to first room
+      const ents = this._config?.entities || [];
+      this._presenceRoom = entity || ents[0] || null;
+      // Select current active combo if any; else first combo
+      const combos = this._presenceAllCombos();
+      const activeKey = this._activePresenceComboKey();
+      this._presenceCombo = activeKey || (combos[0]?.key || null);
+      // Build draft map for current combo from all rooms
+      const roomsMap = {};
+      for (const eid of ents){
+        const r = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+        this._ensurePresenceStruct(r);
+        const arr = (this._presenceCombo && r.presence && r.presence[this._presenceCombo]) ? (r.presence[this._presenceCombo].blocks || []) : [];
+        roomsMap[eid] = JSON.parse(JSON.stringify(arr));
+      }
+      this._presenceDraft = { combo: this._presenceCombo, rooms: roomsMap };
+      this._presenceOpen = true;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-presence');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+      this._renderPresenceModal();
+      try { requestAnimationFrame(()=> requestAnimationFrame(()=> { if (ov) ov.classList.add('open'); })); } catch { if (ov) ov.classList.add('open'); }
+    } catch {}
+  }
+  _closePresenceEditor(){ this._presenceOpen = false; this._presenceCombo = null; this._presenceDraft = null; this._presenceRoom = null; this.shadowRoot.querySelector('.overlay-presence')?.classList.remove('open'); try { this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {} }
+  _renderPresenceModal(){ try {
+    const title = this.shadowRoot && this.shadowRoot.querySelector('.presence-title'); if (title) title.textContent = this._t('presence.editor.title');
+    const roomEl = this.shadowRoot && this.shadowRoot.querySelector('.presence-room'); if (roomEl) { const eid = this._presenceRoom; const custom = (this._config?.labels?.[eid]) || null; roomEl.textContent = custom || this._prettyName(eid||''); }
+  // Hide toggle in modal (selection happens in editor)
+  try { const advRow = this.shadowRoot && this.shadowRoot.querySelector('.presence-adv-row'); if (advRow) advRow.style.display = 'none'; } catch {}
+    const list = this.shadowRoot && this.shadowRoot.querySelector('.presence-combos');
+    const wrapActive = this.shadowRoot && this.shadowRoot.querySelector('.presence-combo-active');
+    const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-presence');
+    const modalHost = this.shadowRoot && this.shadowRoot.querySelector('.overlay-presence .modal');
+    const scale = modalHost?.querySelector('.week-scale-inner');
+    const track = modalHost?.querySelector('.week-track');
+  const tabs = modalHost?.querySelector('.presence-roomtabs');
+    const btnSave = modalHost?.querySelector('.presence-save'); const btnClose = modalHost?.querySelector('.presence-close');
+    // Build readonly vertical list of enabled combos (click to select)
+    if (list) {
+      list.innerHTML='';
+      const all = this._presenceAllCombos();
+      const conf = (this._config?.away?.combos) || {};
+      const enabled = all.filter(it => !!conf[it.key]?.enabled);
+      const grid = document.createElement('div'); grid.className = 'presence-rows'; grid.style.border='1px solid var(--divider-color)'; grid.style.borderRadius='8px'; grid.style.padding='6px'; grid.style.maxHeight='180px'; grid.style.overflow='auto';
+      const titleRow = document.createElement('div'); titleRow.style.fontSize='.9rem'; titleRow.style.color='var(--secondary-text-color)'; titleRow.textContent = this._t('presence.combos'); list.append(titleRow);
+      for (const it of enabled){
+        const btn = document.createElement('button'); btn.type='button'; btn.className='presence-row' + (it.key===this._presenceCombo?' active':'');
+        const full = it.label; btn.textContent = full; btn.title = full;
+        btn.addEventListener('click', ()=>{
+          this._presenceCombo = it.key;
+          const roomsMap={}; for (const eid of (this._config?.entities||[])){ const r=this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensurePresenceStruct(r); const arr=(r.presence && r.presence[it.key]) ? (r.presence[it.key].blocks || []) : []; roomsMap[eid]=JSON.parse(JSON.stringify(arr)); }
+          this._presenceDraft = { combo: it.key, rooms: roomsMap }; this._renderPresenceModal();
+        });
+        grid.append(btn);
+      }
+      list.append(grid);
+    }
+    // Active combo label
+    if (wrapActive) {
+      const combos = this._presenceAllCombos(); const conf=(this._config?.away?.combos)||{};
+      const cur = combos.find(x=>x.key===this._presenceCombo && !!conf[x.key]?.enabled);
+      if (cur) {
+        const nameOf = (eid)=>{
+          try { return this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid); } catch { return eid; }
+        };
+        const homeNames = (cur.home||[]).map(nameOf).join(', ') || '-';
+        const awayNames = (cur.away||[]).map(nameOf).join(', ') || '-';
+        const lh = this._t('presence.who_home') || 'Who is home';
+        const la = this._t('presence.who_away') || 'Who is not home';
+        wrapActive.innerHTML = `<div><strong>${lh}:</strong> ${homeNames}</div><div><strong>${la}:</strong> ${awayNames}</div>`;
+      } else {
+        wrapActive.textContent = '';
+        wrapActive.title = '';
+      }
+    }
+    // (combo tabs removed; selection happens via the list above)
+    // Room tabs
+    if (tabs) {
+      tabs.innerHTML='';
+      const ents = this._config?.entities || [];
+      if (!this._presenceRoom || !ents.includes(this._presenceRoom)) this._presenceRoom = ents[0] || null;
+      for (const eid of ents){ const btn=document.createElement('button'); btn.type='button'; btn.className='wk-tab'+(eid===this._presenceRoom?' active':''); let label = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); btn.textContent=label; btn.addEventListener('click', ()=>{ this._presenceRoom=eid; this._renderPresenceModal(); }); tabs.append(btn); }
+      try { tabs.style.display = (ents.length>1) ? 'flex' : 'none'; } catch {}
+    }
+    // Scale
+    if (scale) { scale.innerHTML=''; for (let i=0;i<=24;i+=2){ const t=document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)'; const lab=document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)'; if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML=`<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent=(i===24? this._label(0) : this._label(i*60)); } t.append(lab); scale.append(t);} }
+    // Toolbar Add
+    if (modalHost) {
+      const addBtnInline = document.createElement('button'); addBtnInline.type='button'; addBtnInline.className='btn primary'; addBtnInline.innerHTML='<ha-icon icon="mdi:plus"></ha-icon><span>'+this._t('ui.add_block')+'</span>';
+      addBtnInline.addEventListener('click', ()=>{ this._openPresenceBlockEditor(null, this._getNowMin()); });
+      const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(addBtnInline);
+      const outerScale = (scale && scale.closest) ? scale.closest('.week-scale') : (modalHost.querySelector('.week-scale') || null);
+      const parent = outerScale?.parentElement || track?.parentElement;
+      if (parent) { Array.from(parent.querySelectorAll('.prof-toolbar')).forEach(el=>el.remove()); if (outerScale) parent.insertBefore(toolbar, outerScale); else if (track) parent.insertBefore(toolbar, track); }
+    }
+    // Track blocks for current room/combo
+    if (track) {
+      track.innerHTML='';
+      const combo = this._presenceCombo; const room = this._presenceRoom;
+      const arr = (this._presenceDraft && this._presenceDraft.rooms) ? (this._presenceDraft.rooms[room] || []) : [];
+      // Tooltip reuse
+      let tooltip = this.shadowRoot.querySelector('.wk-tooltip.presence'); if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip presence'; tooltip.style.display='none'; (modalHost||document.body).append(tooltip); }
+      for (const b of arr){ const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%'; try { const clr=this._colorFor(room, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {} const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill); bl.addEventListener('dblclick', ()=> this._openPresenceBlockEditor(b.id)); const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; if (!tooltip) return; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); tooltip._hideTimer=null; } catch {} const box=bl.getBoundingClientRect(); const cont=modalHost?.getBoundingClientRect(); const left=box.left+box.width/2-(cont?.left||0); const top=(box.top-(cont?.top||0))-8; tooltip.textContent=txt; tooltip.style.left=left+'px'; tooltip.style.top=top+'px'; tooltip.style.transform='translate(-50%,-100%)'; tooltip.style.display=''; }; const hideTip = ()=>{ if (!tooltip) return; const delay=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?3000:120; try{ if(tooltip._hideTimer) clearTimeout(tooltip._hideTimer);}catch{} tooltip._hideTimer=setTimeout(()=>{ try{ tooltip.style.display='none'; tooltip._hideTimer=null; }catch{} }, delay); }; bl.addEventListener('mouseenter', showTip); bl.addEventListener('mouseleave', hideTip); track.append(bl); }
+      // dblclick to add
+      track.addEventListener('dblclick', (e)=>{ try { if (e.target && (e.target.closest && e.target.closest('.block'))) return; const box=track.getBoundingClientRect(); const rel=(e.clientX-box.left)/box.width; const min=this._clamp(Math.round(rel*1440),0,1439); this._openPresenceBlockEditor(null, min); } catch { this._openPresenceBlockEditor(null); } });
+    }
+    // Save/Close
+    if (btnSave) btnSave.onclick = ()=> this._presenceSave();
+    if (btnClose) btnClose.onclick = ()=> this._closePresenceEditor();
+  } catch {}
+  }
+  _openPresenceBlockEditor(blockId, atMin=null){ try {
+    this._ensureEditModeOn();
+    const eid = this._presenceRoom; if (!eid) return;
+    if (!this._presenceDraft || !this._presenceDraft.rooms) {
+      const roomsMap={}; for (const rid of (this._config?.entities||[])){ const r=this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensurePresenceStruct(r); const arr=(this._presenceCombo && r.presence && r.presence[this._presenceCombo]) ? (r.presence[this._presenceCombo].blocks || []) : []; roomsMap[rid]=JSON.parse(JSON.stringify(arr)); }
+      this._presenceDraft = { combo: this._presenceCombo, rooms: roomsMap };
+    }
+    const arr = (this._presenceDraft.rooms||{})[eid] || [];
+    const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+    const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+    if (!blockId){ const now = Number.isFinite(atMin) ? atMin : this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start+60, start+15, 1440); this._editing = { entity: eid, blockId: null, presence: true }; if (edTemp) { const base = Number(row.defaultTemp||this._config.default_temp||20); edTemp.value = String(this._toDisplayTemp(base)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); } if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(start); if (edTo) edTo.value=this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value=(start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(end>=720 && end<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(start); if (edTo) edTo.value=this._toTimeInput(end); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; } if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; } }
+    else { const b = arr.find(x=>x.id===blockId); if (!b) return; this._editing = { entity: eid, blockId, presence: true }; if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); } if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(b.startMin); if (edTo) edTo.value=this._toTimeInput12h(b.endMin); if (fromMer){ fromMer.style.display=''; fromMer.value=(b.startMin>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(b.endMin>=720 && b.endMin<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(b.startMin); if (edTo) edTo.value=this._toTimeInput(b.endMin); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; } if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; } }
+    // Hide presence overlay while editing
+    const pov = this.shadowRoot.querySelector('.overlay-presence'); if (pov) pov.classList.remove('open'); this._profilesOverlayHiddenForEditor = false; this._holidayOverlayHiddenForEditor = false; // independent
+    try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+    try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
+  } catch {}
+  }
+  async _presenceSave(){ try {
+    if (!this._presenceDraft || !this._presenceDraft.rooms || !this._presenceCombo) { this._closePresenceEditor(); return; }
+    // Persist for each room under row.presence[combo].blocks
+    for (const eid of (this._config?.entities||[])){
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensurePresenceStruct(row);
+      const arr = JSON.parse(JSON.stringify(this._presenceDraft.rooms?.[eid] || []));
+      row.presence = row.presence || {}; row.presence[this._presenceCombo] = { blocks: arr };
+      this._schedules[eid] = row;
+    }
+    const before = this._desiredNowSnapshot();
+    this._markPendingSave();
+    this._closePresenceEditor(); this._render();
+    if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply();
+  } catch {}
+  }
+  _openHolidayBlockEditor(blockId, atMin=null){ try {
+    this._ensureEditModeOn();
+    const eid = this._holidayRoom; if (!eid) return; const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] }; this._ensureHolidayStruct(row);
+    if (!this._holidayDraft || !this._holidayDraft.rooms) {
+      const roomsMap={}; for (const rid of (this._config?.entities||[])){ const src=this._schedules[rid]?.holiday?.blocks || []; roomsMap[rid]=JSON.parse(JSON.stringify(src)); }
+      this._holidayDraft = { rooms: roomsMap };
+    }
+    const arr = (this._holidayDraft.rooms||{})[eid] || [];
+    const edTemp = this.shadowRoot.querySelector('.ed-temp'); const edFrom = this.shadowRoot.querySelector('.ed-from'); const edTo = this.shadowRoot.querySelector('.ed-to'); const overlay = this.shadowRoot.querySelector('.overlay'); const title = this.shadowRoot.querySelector('.modal h3'); const delBtn = this.shadowRoot.querySelector('.ed-delete'); const err = this.shadowRoot.querySelector('.ed-error'); const fromMer = this.shadowRoot.querySelector('.ed-from-mer'); const toMer = this.shadowRoot.querySelector('.ed-to-mer');
+    if (!blockId){
+      const now = Number.isFinite(atMin) ? atMin : this._getNowMin(); const start = this._clamp(Math.round(now), 0, 1380); const end = this._clamp(start+60, start+15, 1440);
+  this._editing = { entity: eid, blockId: null, holiday: true };
+      if (edTemp) { const base = Number(row.defaultTemp||this._config.default_temp||20); edTemp.value = String(this._toDisplayTemp(base)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+      if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(start); if (edTo) edTo.value=this._toTimeInput12h(end); if (fromMer){ fromMer.style.display=''; fromMer.value=(start>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(end>=720 && end<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(start); if (edTo) edTo.value=this._toTimeInput(end); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+      if (title) title.textContent = this._t('ui.add_block'); if (delBtn) delBtn.style.display='none'; if (err){ err.style.display='none'; err.textContent=''; }
+    } else {
+  const b = arr.find(x=>x.id===blockId); if (!b) return; this._editing = { entity: eid, blockId, holiday: true };
+      if (edTemp) { edTemp.value = String(this._toDisplayTemp(b.temp)); edTemp.max = String(this._maxDisplay()); edTemp.min = String(this._minDisplay()); }
+      if (this._config?.time_12h) { if (edFrom) edFrom.value=this._toTimeInput12h(b.startMin); if (edTo) edTo.value=this._toTimeInput12h(b.endMin); if (fromMer){ fromMer.style.display=''; fromMer.value=(b.startMin>=720)?'PM':'AM'; } if (toMer){ toMer.style.display=''; toMer.value=(b.endMin>=720 && b.endMin<1440)?'PM':'AM'; } } else { if (edFrom) edFrom.value=this._toTimeInput(b.startMin); if (edTo) edTo.value=this._toTimeInput(b.endMin); if (fromMer) fromMer.style.display='none'; if (toMer) toMer.style.display='none'; }
+      if (title) title.textContent = this._t('ui.edit_block'); if (delBtn) delBtn.style.display=''; if (err){ err.style.display='none'; err.textContent=''; }
+    }
+    // Hide holiday overlay while editing to avoid double-popups
+    const hov = this.shadowRoot.querySelector('.overlay-holiday'); if (hov) hov.classList.remove('open'); this._holidayOverlayHiddenForEditor = true;
+    try { const modalEl = this.shadowRoot.querySelector('.overlay .modal:not(.modal-week)'); if (modalEl) modalEl.classList.toggle('modal-12h', !!this._config?.time_12h); } catch {}
+  try { requestAnimationFrame(()=> requestAnimationFrame(()=> { overlay.classList.add('open'); })); } catch { overlay.classList.add('open'); }
+  } catch {}
+  }
+  async _holidaySave(){ try {
+    if (!this._holidayDraft || !this._holidayDraft.rooms) { this._closeHolidayEditor(); return; }
+    const rooms = this._holidayDraft.rooms || {};
+    for (const eid of (this._config?.entities||[])){
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureHolidayStruct(row);
+      row.holiday = { blocks: JSON.parse(JSON.stringify(rooms[eid] || [])) };
+      this._schedules[eid] = row;
+    }
+    const before = this._desiredNowSnapshot();
+    this._markPendingSave();
+    this._closeHolidayEditor(); this._render();
+    if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
+    this._scheduleNextApply();
+  } catch {}
+  }
+
+  async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay, profileName, holiday } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (profileName) { this._ensureProfilesStruct(row); // Use the current draft for overlap/checks instead of stored profile
+    const curRoom = this._profilesRoom || this._profilesEntity || entity; const draftArr = (this._profilesDraft?.rooms?.[curRoom]) || []; sourceBlocks = draftArr; b = blockId ? draftArr.find(x=>x.id===blockId) : null; } else if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; if (!b && this._weeklyDraft?._weeklyModes) { for (const modeName in this._weeklyDraft._weeklyModes) { const modeBlocks = this._weeklyDraft._weeklyModes[modeName]?.days?.[weeklyDay]; if (Array.isArray(modeBlocks)) { b = modeBlocks.find(x=>x.id===blockId); if (b) { sourceBlocks = modeBlocks; break; } } } } } else if (holiday && Array.isArray(this._holidayDraft)) { sourceBlocks = this._holidayDraft; b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
+    const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
+    const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer'); const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
+    const rawFrom = String(edFrom.value || "");
+    const rawTo = String(edTo.value || "");
+    let start = this._fromTimeInput(rawFrom);
+    let end = this._fromTimeInput(rawTo);
+    // If 12h mode, adjust using AM/PM selects
+    if (this._config?.time_12h) {
+      const merF = (fromMerSel?.value || 'AM').toUpperCase();
+      const merT = (toMerSel?.value || 'AM').toUpperCase();
+      let sh = Math.floor(start/60), sm = start%60;
+      let eh = Math.floor(end/60), em = end%60;
+      if (sh <= 12) { if (merF==='AM' && sh===12) sh = 0; if (merF==='PM' && sh<12) sh += 12; }
+      if (eh <= 12) { if (merT==='AM' && eh===12) eh = 0; if (merT==='PM' && eh<12) eh += 12; }
+      start = sh*60 + sm; end = eh*60 + em;
+    }
+    // Treat end time 00:00 as end of day (24:00 -> 1440 minutes)
+    if (rawTo === '00:00') end = 1440;
+  let tempRaw = String(edTemp.value || "").replace(",", "."); let temp = parseFloat(tempRaw);
+  if (isNaN(start)) start = 0; if (isNaN(end)) end = 60; if (isNaN(temp)) temp = row.defaultTemp || 20;
+  const maxLimit = this._maxDisplay(); const minLimit = this._minDisplay(); if (Number.isFinite(maxLimit)) temp = Math.min(temp, maxLimit); if (Number.isFinite(minLimit)) temp = Math.max(temp, minLimit);
+    start = this._clamp(Math.floor(start), 0, 1439); end   = this._clamp(Math.ceil(end),   1, 1440);
+
+    // Helper to check overlap in an array of blocks (ignore current 'b' if provided)
+    const hasOverlap = (arr, s, e, ignoreId=null) => {
+      const othersArr = (arr||[]).filter(x=>!ignoreId || x.id !== ignoreId);
+      return othersArr.find(o => !(e <= o.startMin || s >= o.endMin));
+    };
+
+    // If interval crosses midnight (end <= start), split into two blocks
+    const crossesMidnight = end <= start;
+  // Early overlap check only for base/weekly/holiday editors; profiles are handled below using the draft state
+  if (!crossesMidnight && !profileName) {
+      const overlap = hasOverlap(sourceBlocks, start, end, b?.id);
+      if (overlap) {
+        const overlapStart = Math.max(start, overlap.startMin);
+        const overlapEnd = Math.min(end, overlap.endMin);
+        const errEl = this.shadowRoot.querySelector('.ed-error');
+        if (errEl) {
+          const msg = this._t('ui.overlap_msg').replace('{start}', this._label(overlapStart)).replace('{end}', this._label(overlapEnd));
+          const fixStartLab = this._t('ui.fix_start_to').replace('{time}', this._label(overlap.endMin));
+          const fixEndLab = this._t('ui.fix_end_to').replace('{time}', this._label(overlap.startMin));
+          // Decide which fixes are relevant
+          const startInside = start >= overlap.startMin && start < overlap.endMin;
+          const endInside = end > overlap.startMin && end <= overlap.endMin;
+          const showStart = startInside || (!startInside && endInside && end > overlap.endMin); // overlap at right edge
+          const showEnd = endInside || (!endInside && startInside && start < overlap.startMin);  // overlap at left edge
+          let btns = '';
+          if (showStart) btns += `<button class="btn success ed-fix-start" type="button">${fixStartLab}</button>`;
+          if (showEnd) btns += `<button class="btn success ed-fix-end" type="button">${fixEndLab}</button>`;
+          // No extra cancel button here; bottom Cancel handles it
+          errEl.innerHTML = `<div>${msg}</div><div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">${btns}</div>`;
+          errEl.style.display = 'block';
+          const applyFix = (kind)=>{
+            // Adjust inputs then re-run save
+            try {
+              const edFrom = this.shadowRoot.querySelector('.ed-from');
+              const edTo = this.shadowRoot.querySelector('.ed-to');
+              const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer');
+              const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
+              if (kind==='start') {
+                const ns = overlap.endMin;
+                if (this._config?.time_12h) {
+                  if (edFrom) edFrom.value = this._toTimeInput12h(ns);
+                  if (fromMerSel) fromMerSel.value = (ns>=720 && ns<1440)?'PM':'AM';
+                } else {
+                  if (edFrom) edFrom.value = this._toTimeInput(ns);
+                }
+              } else if (kind==='end') {
+                const ne = overlap.startMin;
+                if (this._config?.time_12h) {
+                  if (edTo) edTo.value = this._toTimeInput12h(ne);
+                  if (toMerSel) toMerSel.value = (ne>=720 && ne<1440)?'PM':'AM';
+                } else {
+                  if (edTo) edTo.value = this._toTimeInput(ne);
+                }
+              }
+            } catch {}
+            try { errEl.style.display='none'; errEl.textContent=''; } catch {}
+            // Defer to allow DOM to update
+            setTimeout(()=>{ this._saveEditor(); }, 0);
+          };
+          errEl.querySelector('.ed-fix-start')?.addEventListener('click', ()=>applyFix('start'));
+          errEl.querySelector('.ed-fix-end')?.addEventListener('click', ()=>applyFix('end'));
+          // No extra cancel handler
+        }
+        return;
+      }
+    }
+  temp = this._fromDisplayTemp(temp);
+  const before = this._desiredNowSnapshot();
+    if (profileName) {
+      // Save into a draft for the selected profile; persist only when user presses Save
+      const hasOverlap = (arr, s, e, ignoreId=null) => { const othersArr = (arr||[]).filter(x=>!ignoreId || x.id !== ignoreId); return othersArr.find(o => !(e <= o.startMin || s >= o.endMin)); };
+      const crossesMidnight = end <= start;
+      // Ensure draft exists for current room; don't re-init when creating a new (unnamed) profile
+      const isNewProf = (profileName === '__new__');
+      const curRoom = this._profilesRoom || this._profilesEntity || Object.keys(this._schedules)[0];
+      if (!this._profilesDraft || (!isNewProf && this._profilesDraft.name !== profileName)) {
+        try {
+          const roomsMap = {};
+          for (const e of (this._config?.entities||[])){
+            const src = !isNewProf ? (this._schedules[e]?.profiles?.[profileName]?.blocks || []) : [];
+            roomsMap[e] = JSON.parse(JSON.stringify(src));
+          }
+          this._profilesDraft = { name: (isNewProf? null : profileName), rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        } catch {
+          const roomsMap = {}; for (const e of (this._config?.entities||[])) roomsMap[e] = [];
+          this._profilesDraft = { name: (isNewProf? null : profileName), rooms: roomsMap, defaultTemp: Number(row.defaultTemp||this._config.default_temp||20) };
+        }
+      }
+      const arr = (this._profilesDraft.rooms||{})[curRoom] || [];
+      // Find the block within the draft, not the stored profile
+      let b = blockId ? arr.find(x=>x.id===blockId) : null;
+      if (crossesMidnight) {
+        const ov1 = hasOverlap(arr, start, 1440, b?.id);
+        const ov2 = hasOverlap(arr, 0, end, null);
+        if (ov1 || ov2) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const overlap = ov1 || ov2; const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end)); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp: this._fromDisplayTemp(temp) }); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); }
+      } else {
+        const overlap = hasOverlap(arr, start, end, b?.id);
+        if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp:this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=end; }
+      }
+  (this._profilesDraft.rooms||{})[curRoom] = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      this._profilesDirty = true;
+      // If the profile edit originated from the main timeline, persist immediately
+      if (this._autoSaveProfileFromTimeline) {
+        try {
+          this._autoSaveProfileFromTimeline = false;
+          // Persist draft for current room/profile
+          await this._profilesSaveDraft();
+          // Apply immediately if edit affects current time
+          try {
+            if (this._config?.auto_apply && this._config?.apply_on_edit) {
+              const nowMin = this._getNowMin();
+              const arrNow = Array.isArray((this._profilesDraft?.rooms||{})[curRoom]) ? this._profilesDraft.rooms[curRoom] : [];
+              const hit = arrNow.find(x => nowMin >= x.startMin && nowMin < x.endMin);
+              if (hit) { await this._applyImmediateForEntity(entity, Number(hit.temp), nowMin); this._scheduleNextApply(); }
+            }
+          } catch {}
+          this._closeEditor();
+          return;
+        } catch {
+          // Fall back to non-persisting flow
+        }
+      }
+      this._render(); this._closeEditor(); this._renderProfilesModal();
+      return;
+    }
+  if (weeklyDay && this._weeklyDraft) {
+      if (crossesMidnight) {
+        // Split into two parts on the SAME day: [start..1440] and [0..end]
+        const dayKey = weeklyDay;
+        const arrToday = this._weeklyDraft.days?.[dayKey] || [];
+        // Check overlaps for each part against the same day
+        const ov1 = hasOverlap(arrToday, start, 1440, b?.id);
+        const ov2 = hasOverlap(arrToday, 0, end, b?.id);
+        if (ov1 || ov2){
+          const errEl = this.shadowRoot.querySelector('.ed-error');
+          if (errEl) {
+            const overlap = ov1 || ov2;
+            const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max((ov1?start:0), overlap.startMin))).replace('{end}', this._label(Math.min((ov1?1440:end), overlap.endMin)));
+            errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block';
+          }
+          return;
+        }
+        // Apply changes on same day
+        if (!b) {
+          const id1 = Math.random().toString(36).slice(2,9);
+          const id2 = Math.random().toString(36).slice(2,9);
+          arrToday.push({ id:id1, startMin:start, endMin:1440, temp });
+          arrToday.push({ id:id2, startMin:0, endMin:end, temp });
+        } else {
+          b.temp = temp; b.startMin = start; b.endMin = 1440;
+          const id2 = Math.random().toString(36).slice(2,9);
+          arrToday.push({ id:id2, startMin:0, endMin:end, temp });
+        }
+        this._weeklyDraft.days[dayKey] = arrToday.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      } else {
+        if (!b) {
+          const id = Math.random().toString(36).slice(2,9);
+          b = { id, startMin: start, endMin: end, temp };
+          sourceBlocks.push(b);
+        } else {
+          b.temp = temp; b.startMin = start; b.endMin = end;
+        }
+        sourceBlocks.sort((a,bx)=>a.startMin - bx.startMin || a.endMin - bx.endMin);
+      }
+      // If started from main timeline, auto-save the whole weekly plan now
+      if (this._autoSaveWeeklyFromTimeline) {
+        this._autoSaveWeeklyFromTimeline = false;
+        this._closeEditor();
+        // Persist weekly draft (propagate groups) and apply if needed
+        this._weeklySaveAll();
+      } else {
+        // Close editor and re-render weekly preview; no immediate apply
+        this._closeEditor();
+        this._renderWeeklyModal();
+
+        // If "apply on edit" is enabled, and this weekly edit affects "right now",
+        // apply the new temperature immediately without requiring full Week Save.
+        try {
+          if (this._config?.auto_apply && this._config?.apply_on_edit) {
+            const today = this._todayKey();
+            // Determine if the edit impacts today given the current week mode and selected group
+            const mode = (this._weeklyDraft?.mode) || (row.weekly?.mode) || (this._config?.weekdays_mode) || 'weekday_weekend';
+            const selKey = this._weeklyDayKey || weeklyDay || today; // group key the user was editing
+
+            const isWeekday = ['mon','tue','wed','thu','fri'].includes(today);
+            let editImpactsToday = false;
+            let sourceKeyForToday = today; // which draft day array reflects today after grouping
+            if (mode === 'weekday_weekend') {
+              if (selKey === 'weekdays' && isWeekday) { editImpactsToday = true; sourceKeyForToday = 'mon'; }
+              if (selKey === 'weekend' && (today==='sat' || today==='sun')) { editImpactsToday = true; sourceKeyForToday = 'sat'; }
+              if (selKey === today) { editImpactsToday = true; sourceKeyForToday = today; }
+            } else if (mode === 'weekday_sat_sun') {
+              if (selKey === 'weekdays' && isWeekday) { editImpactsToday = true; sourceKeyForToday = 'mon'; }
+              if ((selKey === 'sat' && today==='sat') || (selKey==='sun' && today==='sun')) { editImpactsToday = true; sourceKeyForToday = today; }
+              if (selKey === today) { editImpactsToday = true; sourceKeyForToday = today; }
+            } else { // all_7
+              if (selKey === today) { editImpactsToday = true; sourceKeyForToday = today; }
+            }
+
+            if (editImpactsToday) {
+              const nowMin = this._getNowMin();
+              const arrNow = Array.isArray(this._weeklyDraft?.days?.[sourceKeyForToday]) ? this._weeklyDraft.days[sourceKeyForToday] : [];
+              const hit = arrNow.find(x => nowMin >= x.startMin && nowMin < x.endMin);
+              if (hit) {
+                // Apply immediately to reflect the new block that currently covers "now"
+                await this._applyImmediateForEntity(entity, Number(hit.temp), nowMin);
+                this._scheduleNextApply();
+              }
+            }
+          }
+        } catch {}
+      }
+      return;
+    }
+    if (this._editing.presence && this._presenceDraft) {
+      // Work on presence draft only; persist on Presence Save
+      const eid = this._editing.entity;
+      const arr = (this._presenceDraft.rooms||{})[eid] || [];
+      // Ensure we reference the correct block when editing (so overlap checks ignore itself)
+      let b = blockId ? arr.find(x=>x.id===blockId) : null;
+      if (crossesMidnight) {
+        const ov1 = hasOverlap(arr, start, 1440, b?.id);
+        const ov2 = hasOverlap(arr, 0, end, null);
+        if (ov1 || ov2) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const overlap = ov1 || ov2; const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end)); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp }); arr.push({ id:id2, startMin:0, endMin:end, temp }); } else { b.temp=temp; b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp }); }
+      } else {
+        const overlap = hasOverlap(arr, start, end, b?.id);
+        if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp }); } else { b.temp=temp; b.startMin=start; b.endMin=end; }
+      }
+      (this._presenceDraft.rooms||{})[eid] = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      this._render(); this._closeEditor(); if (this._presenceOpen) this._renderPresenceModal();
+      return;
+    }
+    if (holiday && Array.isArray(this._holidayDraft)) {
+      // Work on holiday draft only; persist on Holiday Save
+      const arr = this._holidayDraft;
+      if (crossesMidnight) {
+        const ov1 = hasOverlap(arr, start, 1440, b?.id);
+        const ov2 = hasOverlap(arr, 0, end, null);
+        if (ov1 || ov2) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const overlap = ov1 || ov2; const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end)); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id1=Math.random().toString(36).slice(2,9); const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id1, startMin:start, endMin:1440, temp: this._fromDisplayTemp(temp) }); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=1440; const id2=Math.random().toString(36).slice(2,9); arr.push({ id:id2, startMin:0, endMin:end, temp: this._fromDisplayTemp(temp) }); }
+      } else {
+        const overlap = hasOverlap(arr, start, end, b?.id);
+        if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
+        if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp:this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=end; }
+      }
+      this._holidayDraft = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      this._render(); this._closeEditor(); this._renderHolidayModal();
+      return;
+    }
+    // Normal (non-weekly) save
+    if (crossesMidnight) {
+      // Check overlaps for both parts
+      const ov1 = hasOverlap(row.blocks, start, 1440, b?.id);
+      const ov2 = hasOverlap(row.blocks, 0, end, null);
+      if (ov1 || ov2) {
+        const errEl = this.shadowRoot.querySelector('.ed-error');
+        if (errEl) {
+          const overlap = ov1 || ov2;
+          const msg = this._t('ui.overlap_msg').replace('{start}', this._label(ov1?Math.max(start, ov1.startMin):0)).replace('{end}', this._label(ov1?Math.min(1440, ov1.endMin):end));
+          const fixStartLab = this._t('ui.fix_start_to').replace('{time}', this._label((ov1?1440:overlap.endMin)));
+          const fixEndLab = this._t('ui.fix_end_to').replace('{time}', this._label((ov2?0:overlap.startMin)));
+          // Relevance: if first part [start..1440] overlaps -> offer start fix; if second part [0..end] overlaps -> offer end fix
+          const showStart = !!ov1;
+          const showEnd = !!ov2;
+          let btns = '';
+          if (showStart) btns += `<button class="btn success ed-fix-start" type="button">${fixStartLab}</button>`;
+          if (showEnd) btns += `<button class="btn success ed-fix-end" type="button">${fixEndLab}</button>`;
+          // No extra cancel here; use the modal cancel button
+          errEl.innerHTML = `<div>${msg}</div><div style=\"margin-top:8px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;\">${btns}</div>`;
+          errEl.style.display='block';
+          const applyFix = (kind)=>{
+            try {
+              const edFrom = this.shadowRoot.querySelector('.ed-from');
+              const edTo = this.shadowRoot.querySelector('.ed-to');
+              const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer');
+              const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
+              if (kind==='start') {
+                const ns = ov1 ? Math.max(start, (ov1.endMin||start)) : (overlap.endMin||start);
+                if (this._config?.time_12h) { if (edFrom) edFrom.value = this._toTimeInput12h(ns); if (fromMerSel) fromMerSel.value = (ns>=720 && ns<1440)?'PM':'AM'; } else { if (edFrom) edFrom.value = this._toTimeInput(ns); }
+              } else {
+                const ne = ov2 ? Math.min(end, (ov2.startMin||end)) : (overlap.startMin||end);
+                if (this._config?.time_12h) { if (edTo) edTo.value = this._toTimeInput12h(ne); if (toMerSel) toMerSel.value = (ne>=720 && ne<1440)?'PM':'AM'; } else { if (edTo) edTo.value = this._toTimeInput(ne); }
+              }
+            } catch {}
+            try { errEl.style.display='none'; errEl.textContent=''; } catch {}
+            setTimeout(()=>{ this._saveEditor(); }, 0);
+          };
+          errEl.querySelector('.ed-fix-start')?.addEventListener('click', ()=>applyFix('start'));
+          errEl.querySelector('.ed-fix-end')?.addEventListener('click', ()=>applyFix('end'));
+          // No extra cancel handler
+        }
+        return;
+      }
+      if (!b) {
+        const id1 = Math.random().toString(36).slice(2,9);
+        const id2 = Math.random().toString(36).slice(2,9);
+        row.blocks.push({ id:id1, startMin:start, endMin:1440, temp });
+        row.blocks.push({ id:id2, startMin:0, endMin:end, temp });
+      } else {
+        // Update current b to first part and add second
+        b.temp = temp; b.startMin = start; b.endMin = 1440;
+        const id2 = Math.random().toString(36).slice(2,9);
+        row.blocks.push({ id:id2, startMin:0, endMin:end, temp });
+      }
+      row.blocks.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+    } else {
+      if (!b) { const id = Math.random().toString(36).slice(2,9); b = { id, startMin: start, endMin: end, temp }; row.blocks.push(b); } else { b.temp = temp; b.startMin = start; b.endMin = end; }
+      this._applyNoOverlapResize(entity, b, "left", b.startMin); this._applyNoOverlapResize(entity, b, "right", b.endMin);
+    }
+  // Persist local draft immediately for resilience
+  try { this._persistDraftNow(); } catch {}
+  this._markPendingSave(); this._render(); this._closeEditor();
+    // Immediate apply if a block now covers the current time (non-weekly path)
+    try {
+      if (this._config?.auto_apply && this._config?.apply_on_edit) {
+        const nowMin = this._getNowMin();
+        const arrNow = Array.isArray(row.blocks) ? row.blocks : [];
+        const hitNow = arrNow.find(x => nowMin >= x.startMin && nowMin < x.endMin);
+        if (hitNow) await this._applyImmediateForEntity(entity, Number(hitNow.temp), nowMin);
+      }
+    } catch {}
+    if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before); this._scheduleNextApply(); } catch (e) { if (errElGlobal) { errElGlobal.style.display = 'block'; errElGlobal.textContent = this._t('editor.error_prefix') + (e && e.message ? e.message : String(e)); } }}
+
+  _toTimeInput(min){ if (!Number.isFinite(min)) min = 0; const m = ((Math.floor(min) % 1440) + 1440) % 1440; const hh=Math.floor(m/60), mm=Math.floor(m%60); return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
+  _fromTimeInput(str){ const m=/(\d{1,2}):(\d{2})$/.exec(str||""); if(!m) return 0; const h=Math.max(0,Math.min(23,parseInt(m[1],10))); const mi=Math.max(0,Math.min(59,parseInt(m[2],10))); return h*60+mi; }
+  _toTimeInput12h(min){ if (!Number.isFinite(min)) min=0; const m=((Math.floor(min)%1440)+1440)%1440; let hh=Math.floor(m/60); const mm=Math.floor(m%60); let h=hh%12; if(h===0) h=12; return `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; }
+
+  // ---------- Onboarding ----------
+  _onboardStorageKey(){ return 'thermostat_timeline_onboard_seen_v1'; }
+  _maybeOpenOnboard(){
+    try {
+      // Respect explicit disable flag
+      if (this._disableOnboard) return;
+      const flag = localStorage.getItem(this._onboardStorageKey());
+      if (!flag) this._openOnboard();
+    } catch {}
+  }
+  _openOnboard(){
+    try {
+      this._onboardOpen = true; this._onboardStep = 0; this._renderOnboard();
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-onboard');
+      if (ov) ov.classList.add('open');
+    } catch {}
+  }
+  _closeOnboard(markSeen=false){
+    try {
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-onboard'); if (ov) ov.classList.remove('open');
+      this._onboardOpen = false;
+      // store preference
+      const cb = this.shadowRoot && this.shadowRoot.querySelector('.onb-hide');
+      if (markSeen || (cb && cb.checked)) {
+        try { localStorage.setItem(this._onboardStorageKey(), '1'); } catch {}
+      }
+    } catch {}
+  }
+  _renderOnboard(){
+    try {
+  const img = this.shadowRoot && this.shadowRoot.querySelector('.onb-img');
+  const vid = this.shadowRoot && this.shadowRoot.querySelector('.onb-vid');
+      const hero = this.shadowRoot && this.shadowRoot.querySelector('.ob-hero');
+      const txt = this.shadowRoot && this.shadowRoot.querySelector('.onb-text');
+      const dots = this.shadowRoot && this.shadowRoot.querySelector('.onb-dots');
+      const next = this.shadowRoot && this.shadowRoot.querySelector('.onb-next');
+      const done = this.shadowRoot && this.shadowRoot.querySelector('.onb-done');
+      const step = Math.max(0, Math.min(this._onboardSlides.length-1, this._onboardStep));
+      const slide = this._onboardSlides[step] || { key:'onboard.step_main', img:'', fallback:'' };
+      if (img && vid) {
+        // First try HACS/relative asset; on error, try /local fallback if provided
+        const nextUrl = slide.img || slide.fallback || '';
+        if (this._onboardLastUrl !== nextUrl) {
+          this._onboardLastUrl = nextUrl;
+          const isVideo = /\.(mp4|webm|mov)(\?|#|$)/i.test(nextUrl);
+          // Reset state
+          img.style.display = 'none';
+          vid.style.display = 'none';
+          // Remove any previous message
+          try { const m = hero && hero.querySelector('.onb-missing'); if (m) m.remove(); } catch {}
+          if (isVideo) {
+            // Setup video
+            vid.onerror = null; vid.onloadeddata = null; vid.oncanplay = null;
+            vid.muted = true; vid.playsInline = true; vid.loop = true; vid.autoplay = true;
+            vid.onloadeddata = ()=>{ try { vid.style.display=''; img.style.display='none'; vid.play().catch(()=>{}); } catch{} };
+            vid.onerror = ()=>{
+              try {
+                if (slide.fallback && vid.src !== slide.fallback) { vid.src = slide.fallback; vid.load?.(); return; }
+                vid.style.display='none';
+                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent='Video not found'; }
+              } catch{}
+            };
+            vid.src = nextUrl; vid.load?.();
+          } else {
+            // Setup image
+            img.onerror = null; img.onload = null;
+            img.onerror = ()=>{
+              try {
+                if (slide.fallback && img.src !== slide.fallback) { img.src = slide.fallback; return; }
+                img.style.display='none';
+                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent='Image not found'; }
+              } catch{}
+            };
+            img.onload = ()=>{ try { img.style.display=''; vid.style.display='none'; } catch{} };
+            img.src = nextUrl;
+          }
+        }
+      }
+      if (txt) txt.textContent = this._t(slide.key);
+      if (dots) {
+        dots.innerHTML = '';
+        for (let i=0;i<this._onboardSlides.length;i++){
+          const d = document.createElement('div'); d.className = 'dot' + (i===step?' active':''); dots.append(d);
+        }
+      }
+      if (next) next.style.display = step < this._onboardSlides.length-1 ? '' : 'none';
+      if (done) done.style.display = step === this._onboardSlides.length-1 ? '' : 'none';
+      // Apply i18n for title/buttons
+      this._applyCardI18n();
+    } catch {}
+  }
+
+  // ---------- Mutations ----------
+  _addBlock(entity){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; const now=this._getNowMin(); const start=this._clamp(Math.round(now),0,1380); const end=this._clamp(Math.round(start+60), start+15, 1440); const id=Math.random().toString(36).slice(2,9); let t=(row.defaultTemp||20)+2; const mx=this._config?.max_temp ?? 25; if (Number.isFinite(mx)) t=Math.min(t,mx); const b={id,startMin:start,endMin:end,temp:t}; row.blocks.push(b); this._applyNoOverlapResize(entity,b,"left",b.startMin); this._applyNoOverlapResize(entity,b,"right",b.endMin); this._active={entity,id}; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
+  _deleteBlock(entity,id){ const before = this._desiredNowSnapshot(); const row=this._schedules[entity]; row.blocks=row.blocks.filter(b=>b.id!==id); if(this._active&&this._active.entity===entity&&this._active.id===id) this._active=null; this._debouncedSaveStore(); this._render(); if (this._config.apply_on_edit) this._applyIfDesiredChanged(before); this._scheduleNextApply(); }
+
+  _t(k){ return ttLocalize(k, this._hass || this._lang || 'en'); }
+
+  _applyCardI18n(){
+    try {
+      const t = (k)=> this._t(k);
+      // Main modal: Edit block
+      const modal = this.shadowRoot && this.shadowRoot.querySelector('.overlay:not(.overlay-week):not(.overlay-profiles):not(.overlay-holiday):not(.overlay-presence):not(.overlay-copyrooms):not(.overlay-onboard):not(.overlay-pause):not(.overlay-test):not(.overlay-settings) .modal');
+      if (modal) {
+        modal.setAttribute('aria-label', t('ui.edit_block'));
+        const h3 = modal.querySelector('.ed-modal-title');
+        if (h3) h3.textContent = t('ui.edit_block');
+        const fromLab = modal.querySelector('.ed-from-label');
+        if (fromLab) fromLab.textContent = t('ui.from');
+        const toLab = modal.querySelector('.ed-to-label');
+        if (toLab) toLab.textContent = t('ui.to');
+        const tempLab = modal.querySelector('.ed-temp-label');
+        if (tempLab) tempLab.textContent = t('ui.temperature') + ' ('+ this._unitSymbol() +')';
+        const del = modal.querySelector('.ed-delete');
+        if (del) del.textContent = t('ui.delete');
+        const cancel = modal.querySelector('.ed-cancel');
+        if (cancel) cancel.textContent = t('ui.cancel');
+        const save = modal.querySelector('.ed-save');
+        if (save) save.textContent = t('ui.save');
+      }
+      
+      // Week modal
+      try {
+        const wt = this.shadowRoot && this.shadowRoot.querySelector('.week-title'); 
+        if (wt) wt.textContent = t('week.editor.title');
+        const wml = this.shadowRoot && this.shadowRoot.querySelector('.week-mode-label'); 
+        if (wml) wml.textContent = t('week.mode');
+        const wnote = this.shadowRoot && this.shadowRoot.querySelector('.week-note'); 
+        if (wnote) wnote.textContent = t('week.editor.preview_note');
+        const wsel = this.shadowRoot && this.shadowRoot.querySelector('.week-mode'); 
+        if (wsel) {
+          const opt1 = wsel.querySelector('.opt-weekday-weekend');
+          if (opt1) opt1.textContent = t('week.mode.weekday_weekend');
+          const opt2 = wsel.querySelector('.opt-weekday-sat-sun');
+          if (opt2) opt2.textContent = t('week.mode.weekday_sat_sun');
+          const opt3 = wsel.querySelector('.opt-all-7');
+          if (opt3) opt3.textContent = t('week.mode.all_7');
+        }
+        const wcancelBtn = this.shadowRoot && this.shadowRoot.querySelector('.wk-cancel');
+        if (wcancelBtn) wcancelBtn.textContent = t('ui.cancel');
+        const wsaveBtn = this.shadowRoot && this.shadowRoot.querySelector('.wk-save');
+        if (wsaveBtn) wsaveBtn.textContent = t('ui.save');
+      } catch {}
+      
+      // Profiles modal
+      try {
+        const proftitle = this.shadowRoot && this.shadowRoot.querySelector('.prof-title');
+        if (proftitle) proftitle.textContent = t('profiles.editor.title');
+        const profadd = this.shadowRoot && this.shadowRoot.querySelector('.prof-add-text');
+        if (profadd) profadd.textContent = t('profiles.add');
+        const ps = this.shadowRoot && this.shadowRoot.querySelector('.prof-save');
+        if (ps) ps.textContent = t('ui.save');
+        const pc = this.shadowRoot && this.shadowRoot.querySelector('.prof-close');
+        if (pc) pc.textContent = t('ui.close');
+      } catch {}
+      
+      // Holiday modal
+      try {
+        const ht = this.shadowRoot && this.shadowRoot.querySelector('.holiday-title');
+        if (ht) ht.textContent = t('holidays.button');
+        const hs = this.shadowRoot && this.shadowRoot.querySelector('.holiday-save');
+        if (hs) hs.textContent = t('ui.save');
+        const hc = this.shadowRoot && this.shadowRoot.querySelector('.holiday-close');
+        if (hc) hc.textContent = t('ui.close');
+      } catch {}
+      
+      // Presence modal
+      try {
+        const pttl = this.shadowRoot && this.shadowRoot.querySelector('.presence-title');
+        if (pttl) pttl.textContent = t('presence.editor.title');
+        const padv = this.shadowRoot && this.shadowRoot.querySelector('.presence-adv-label');
+        if (padv) padv.textContent = t('presence.enable_advanced');
+        const ps = this.shadowRoot && this.shadowRoot.querySelector('.presence-save');
+        if (ps) ps.textContent = t('ui.save');
+        const pcl = this.shadowRoot && this.shadowRoot.querySelector('.presence-close');
+        if (pcl) pcl.textContent = t('ui.close');
+      } catch {}
+      
+      // Copy to rooms modal
+      try {
+        const crt = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-title');
+        if (crt) crt.textContent = t('week.copy_to_rooms.title');
+        const crd = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-desc');
+        if (crd) crd.textContent = t('week.copy_to_rooms.select');
+        const crc = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-cancel');
+        if (crc) crc.textContent = t('ui.cancel');
+        const cra = this.shadowRoot && this.shadowRoot.querySelector('.copyrooms-apply');
+        if (cra) cra.textContent = t('week.copy_to_rooms.apply');
+      } catch {}
+      
+      // Onboarding modal
+      try {
+        const ttl = this.shadowRoot && this.shadowRoot.querySelector('.onb-title');
+        if (ttl) ttl.textContent = t('onboard.title');
+        const prev = this.shadowRoot && this.shadowRoot.querySelector('.onb-prev');
+        if (prev) prev.textContent = t('onboard.prev');
+        const next = this.shadowRoot && this.shadowRoot.querySelector('.onb-next');
+        if (next) next.textContent = t('onboard.next');
+        const skip = this.shadowRoot && this.shadowRoot.querySelector('.onb-skip');
+        if (skip) skip.textContent = t('onboard.skip');
+        const done = this.shadowRoot && this.shadowRoot.querySelector('.onb-done');
+        if (done) done.textContent = t('onboard.done');
+        const hideLbl = this.shadowRoot && this.shadowRoot.querySelector('.onb-hide-lbl');
+        if (hideLbl) hideLbl.textContent = t('onboard.dont_show');
+      } catch {}
+      
+      // Pause modal
+      try {
+        const pt = this.shadowRoot && this.shadowRoot.querySelector('.pause-title');
+        if (pt) pt.textContent = t('pause.menu_title');
+        const p1 = this.shadowRoot && this.shadowRoot.querySelector('.pause-1h');
+        if (p1) p1.textContent = t('pause.off_1h');
+        const p5 = this.shadowRoot && this.shadowRoot.querySelector('.pause-5h');
+        if (p5) p5.textContent = t('pause.off_5h');
+        const pcu = this.shadowRoot && this.shadowRoot.querySelector('.pause-custom');
+        if (pcu) pcu.textContent = t('pause.off_custom');
+        const pi = this.shadowRoot && this.shadowRoot.querySelector('.pause-indef');
+        if (pi) pi.textContent = t('pause.off_indef');
+        const pr = this.shadowRoot && this.shadowRoot.querySelector('.pause-resume');
+        if (pr) pr.textContent = t('pause.resume');
+        const px = this.shadowRoot && this.shadowRoot.querySelector('.pause-close');
+        if (px) px.textContent = t('pause.close');
+      } catch {}
+      
+      // Test modal
+      try {
+        const testtitle = this.shadowRoot && this.shadowRoot.querySelector('.test-title');
+        if (testtitle) testtitle.textContent = t('editor.test_tool') || 'Testværktøj';
+        const testlabel = this.shadowRoot && this.shadowRoot.querySelector('.test-label');
+        if (testlabel) testlabel.textContent = t('editor.test_select_entity') || 'Vælg entitet';
+        const testempty = this.shadowRoot && this.shadowRoot.querySelector('.test-empty');
+        if (testempty) testempty.textContent = t('editor.test_empty') || 'Vælg en entitet for at se tilgængelige kommandoer…';
+        const testexport = this.shadowRoot && this.shadowRoot.querySelector('.test-export-btn');
+        if (testexport) testexport.textContent = t('editor.test_export') || 'Export .md';
+        const testclose = this.shadowRoot && this.shadowRoot.querySelector('.test-close');
+        if (testclose) testclose.textContent = t('ui.close');
+      } catch {}
+
+      // Settings modal (in-card)
+      try {
+        const sm = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .modal');
+        if (sm) sm.setAttribute('aria-label', t('editor.tabs.settings'));
+        const st = this.shadowRoot && this.shadowRoot.querySelector('.settings-title');
+        if (st) st.textContent = t('editor.tabs.settings');
+
+        // Integration availability status chip (moved from HA editor into popup header)
+        try {
+          const chip = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-int-status');
+          const icon = chip?.querySelector('ha-icon');
+          const txt = chip?.querySelector('.text');
+          const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
+          if (chip && icon && txt) {
+            if (hasService) {
+              chip.classList.remove('bad'); chip.classList.add('ok');
+              icon.setAttribute('icon','mdi:cloud-check-outline');
+              txt.textContent = t('editor.integration.connected') || 'Connected to integration';
+            } else {
+              chip.classList.remove('ok'); chip.classList.add('bad');
+              icon.setAttribute('icon','mdi:cloud-off-outline');
+              txt.textContent = t('editor.integration.disconnected') || 'Not connected to integration';
+            }
+          }
+        } catch {}
+
+        // Use the draft unit while the popup is open (so unit toggles update labels immediately).
+        const popupUnit = (() => {
+          try {
+            if (this._settingsPopupOpen && this._settingsDraft && this._settingsDraft.temp_unit != null) {
+              const u = String(this._settingsDraft.temp_unit).toUpperCase();
+              if (u === 'F' || u === 'FAHRENHEIT') return '°F';
+              if (u === 'C' || u === 'CELSIUS') return '°C';
+            }
+          } catch {}
+          try {
+            return this._unitSymbol();
+          } catch {}
+          return '°C';
+        })();
+
+        // Tab strip (same labels as editor tabs; excludes Sync/Backup intentionally)
+        const tabMap = {
+          settings: 'editor.tabs.settings',
+          pause: 'editor.tabs.pause',
+          weekdays: 'editor.tabs.weekdays',
+          rooms: 'editor.tabs.rooms',
+          boiler: 'editor.tabs.boiler',
+          colors: 'editor.tabs.colors',
+          owd: 'editor.tabs.owd',
+          holidays: 'editor.tabs.holidays',
+          away: 'editor.tabs.away'
+        };
+        const btns = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-tab-btn')) : [];
+        for (const b of btns){
+          const key = tabMap[b.getAttribute('data-tab')] || null;
+          if (!key) continue;
+          b.textContent = t(key);
+        }
+        const ss = this.shadowRoot && this.shadowRoot.querySelector('.settings-save');
+        if (ss) ss.textContent = t('ui.save');
+        const sc = this.shadowRoot && this.shadowRoot.querySelector('.settings-close');
+        if (sc) sc.textContent = t('ui.close');
+
+        // Settings tab content labels
+        const defLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-def');
+        if (defLab) defLab.textContent = String(t('editor.default_c')||'').replace('°C', this._unitSymbol());
+        const rowHLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-rowh');
+        if (rowHLab) rowHLab.textContent = t('editor.row_height_px');
+        const minLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-minc');
+        if (minLab) minLab.textContent = String(t('editor.min_c')||'').replace('°C', this._unitSymbol());
+        const maxLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-maxc');
+        if (maxLab) maxLab.textContent = String(t('editor.max_c')||'').replace('°C', this._unitSymbol());
+
+        const at = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-auto-title');
+        if (at) at.textContent = t('editor.auto_apply.title');
+        const ad = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-auto-desc');
+        if (ad) ad.textContent = t('editor.auto_apply.desc');
+
+        const et = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applyedit-title');
+        if (et) et.textContent = t('editor.apply_edit.title');
+        const ed = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applyedit-desc');
+        if (ed) ed.textContent = t('editor.apply_edit.desc');
+
+        const dt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applydef-title');
+        if (dt) dt.textContent = t('editor.apply_default.title');
+        const dd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-applydef-desc');
+        if (dd) dd.textContent = t('editor.apply_default.desc');
+
+        const prt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-perroom-title');
+        if (prt) prt.textContent = t('editor.perroom.title');
+        const prd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-perroom-desc');
+        if (prd) prd.textContent = t('editor.perroom.desc');
+
+        const pbt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausebtn-title');
+        if (pbt) pbt.textContent = t('editor.pausebtn.title');
+        const pbd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausebtn-desc');
+        if (pbd) pbd.textContent = t('editor.pausebtn.desc');
+
+        const pst = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-title');
+        if (pst) pst.textContent = t('editor.pause_sensor.title');
+        const psd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-desc');
+        if (psd) psd.textContent = t('editor.pause_sensor.desc');
+        const psEt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-entity-title');
+        if (psEt) psEt.textContent = t('editor.pause_sensor.entity_title');
+        const psEd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-pausesensor-entity-desc');
+        if (psEd) psEd.textContent = t('editor.pause_sensor.entity_desc');
+
+        // New popup-only settings (moved from HA editor)
+        const tft = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timefmt-title');
+        if (tft) tft.textContent = t('editor.timefmt.title');
+        const tfd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timefmt-desc');
+        if (tfd) tfd.textContent = t('editor.timefmt.desc');
+        const tst = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timesrc-title');
+        if (tst) tst.textContent = t('editor.timesrc.title');
+        const tsd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-timesrc-desc');
+        if (tsd) tsd.textContent = t('editor.timesrc.desc');
+        const sb = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-srcBrowser');
+        if (sb) sb.textContent = t('editor.timesrc.browser');
+        const sh = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-srcHa');
+        if (sh) sh.textContent = t('editor.timesrc.ha');
+        const tut = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-tempfmt-title');
+        if (tut) tut.textContent = t('editor.tempfmt.title');
+        const tud = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-tempfmt-desc');
+        if (tud) tud.textContent = t('editor.tempfmt.desc');
+        const pt = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-profiles-title');
+        if (pt) pt.textContent = t('profiles.enable');
+        const pd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-profiles-desc');
+        if (pd) pd.textContent = t('profiles.enable.desc');
+
+        // Weekdays tab content labels
+        const weT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-enable-title');
+        if (weT) weT.textContent = t('week.enable');
+        const weD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-enable-desc');
+        if (weD) weD.textContent = t('week.enable.desc');
+        const wvT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-title');
+        if (wvT) wvT.textContent = t('week.view.title');
+        const wvR = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-rooms');
+        if (wvR) wvR.textContent = t('week.view.rooms_one_day');
+        const wvD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-days');
+        if (wvD) wvD.textContent = t('week.view.days_one_room');
+
+        const wvsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-switch-title');
+        if (wvsT) wvsT.textContent = t('week.view_switch.title');
+        const wvsD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-view-switch-desc');
+        if (wvsD) wvsD.textContent = t('week.view_switch.desc');
+
+        const woT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-title');
+        if (woT) woT.textContent = t('week.editor.title');
+        const woD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-desc');
+        if (woD) woD.textContent = t('week.open_editor.desc');
+        const woB = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-week-open-btn');
+        if (woB) woB.textContent = t('week.open_editor.btn');
+
+        // Boiler tab content labels
+        const beT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-enable-title');
+        if (beT) beT.textContent = t('boiler.enable');
+        const beD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-enable-desc');
+        if (beD) beD.textContent = t('boiler.enable.desc');
+        const bsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-switch-title');
+        if (bsT) bsT.textContent = t('boiler.switch');
+        const btT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-sensor-title');
+        if (btT) btT.textContent = t('boiler.temp_sensor');
+        const btD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-sensor-desc');
+        if (btD) btD.textContent = t('boiler.temp_sensor.desc');
+        const bmin = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-min-temp-label');
+        if (bmin) bmin.textContent = String(t('boiler.min_temp')||'').replace('°C', popupUnit);
+        const bmax = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-max-temp-label');
+        if (bmax) bmax.textContent = String(t('boiler.max_temp')||'').replace('°C', popupUnit);
+
+        // Open Window Detection tab content labels
+        const owdT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-enable-title');
+        if (owdT) owdT.textContent = t('owd.enable');
+        const owdD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-enable-desc');
+        if (owdD) owdD.textContent = t('owd.enable.desc');
+        const owdS = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .sp-owd-sensors-label')) : [];
+        for (const el of owdS) { try { el.textContent = t('owd.sensors'); } catch {} }
+        const owdDT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-delays-title');
+        if (owdDT) owdDT.textContent = t('owd.delays.title');
+        const owdDD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-delays-desc');
+        if (owdDD) owdDD.textContent = t('owd.delays.desc');
+        const owdOpen = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-open-delay-label');
+        if (owdOpen) owdOpen.textContent = t('owd.open_delay');
+        const owdClose = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-owd-close-delay-label');
+        if (owdClose) owdClose.textContent = t('owd.close_delay');
+
+        // Holidays tab content labels
+        const heT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-enable-title');
+        if (heT) heT.textContent = t('holidays.enable');
+        const heD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-enable-desc');
+        if (heD) heD.textContent = t('holidays.desc');
+        const hsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-source-title');
+        if (hsT) hsT.textContent = t('holidays.source');
+        const hCal = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-source-cal');
+        if (hCal) hCal.textContent = t('holidays.source.calendar');
+        const hMan = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-source-man');
+        if (hMan) hMan.textContent = t('holidays.source.manual');
+        const hEntT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-entity-title');
+        if (hEntT) hEntT.textContent = t('holidays.entity');
+        const hEntD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-entity-desc');
+        if (hEntD) hEntD.textContent = t('holidays.entity_desc');
+        const hDatesT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-dates-title');
+        if (hDatesT) hDatesT.textContent = t('holidays.dates');
+        const hAdd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-add-date');
+        if (hAdd) hAdd.textContent = t('holidays.add_date');
+        const hEditT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-edit-title');
+        if (hEditT) hEditT.textContent = t('holidays.editor.title');
+        const hEditB = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-edit-btn');
+        if (hEditB) hEditB.textContent = t('holidays.edit');
+
+        // Away tab content labels
+        const aeT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-enable-title');
+        if (aeT) aeT.textContent = t('away.enable');
+        const aeD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-enable-desc');
+        if (aeD) aeD.textContent = t('away.desc');
+        const atT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-temp-title');
+        if (atT) atT.textContent = String(t('away.temp')||'').replace('°C', popupUnit);
+        const apT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-persons-title');
+        if (apT) apT.textContent = t('away.persons');
+        const aaT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-adv-title');
+        if (aaT) aaT.textContent = t('presence.enable_advanced');
+        const plT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-live-title');
+        if (plT) plT.textContent = t('presence.live_header');
+        const plD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-live-desc');
+        if (plD) plD.textContent = t('presence.live_header.desc');
+        const pcT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-combos-title');
+        if (pcT) pcT.textContent = t('presence.combos');
+      } catch {}
+      
+    } catch (e) { /* ignore */ }
+  }
+
+  _colorFor(eid, tempC){
+    try {
+
+      // Onboarding i18n
+      try {
+        const ttl = this.shadowRoot && this.shadowRoot.querySelector('.onb-title'); if (ttl) ttl.textContent = t('onboard.title');
+        const prev = this.shadowRoot && this.shadowRoot.querySelector('.onb-prev'); if (prev) prev.textContent = t('onboard.prev');
+        const next = this.shadowRoot && this.shadowRoot.querySelector('.onb-next'); if (next) next.textContent = t('onboard.next');
+        const skip = this.shadowRoot && this.shadowRoot.querySelector('.onb-skip'); if (skip) skip.textContent = t('onboard.skip');
+        const done = this.shadowRoot && this.shadowRoot.querySelector('.onb-done'); if (done) done.textContent = t('onboard.done');
+        const hideLbl = this.shadowRoot && this.shadowRoot.querySelector('.onb-hide-lbl'); if (hideLbl) hideLbl.textContent = t('onboard.dont_show');
+      } catch {}
+      // Support merged entities by always resolving to primary
+  const primary = this._groupPrimaryOf ? this._groupPrimaryOf(eid) : eid;
+  const cr = (this._config?.color_ranges) || {};
+  const globalFirst = !!this._config?.color_global;
+  const candidates = globalFirst ? ['*', 'default', primary, eid] : [primary, eid, '*', 'default'];
+      let ranges = [];
+      for (const k of candidates){ if (Array.isArray(cr[k]) && cr[k].length){ ranges = cr[k]; break; } }
+      for (const r of ranges){
+        const from = Number(r.from);
+        const to = Number(r.to);
+        if (!Number.isFinite(from) || !Number.isFinite(to)) continue;
+        if (tempC >= Math.min(from,to) && tempC <= Math.max(from,to)) return r.color || '';
+      }
+    } catch {}
+    return '';
+  }
+
+  // Compute readable text color for a given background
+  _contrastTextColor(bg){
+    try {
+      const rgb = (c)=>{
+        if(!c) return null;
+        let s=String(c).trim();
+        if (s.startsWith('rgb')){
+          const m=s.match(/rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i); if(!m) return null; return {r:+m[1], g:+m[2], b:+m[3]};
+        }
+        if (s[0]==='#') s=s.slice(1);
+        if (s.length===3) s = s.split('').map(x=>x+x).join('');
+        if (s.length!==6) return null;
+        const r=parseInt(s.slice(0,2),16), g=parseInt(s.slice(2,4),16), b=parseInt(s.slice(4,6),16);
+        if ([r,g,b].some(x=>Number.isNaN(x))) return null; return {r,g,b};
+      };
+      const o = rgb(bg); if (!o) return null;
+      // Perceived luminance (sRGB)
+      const lum = (v)=>{ v/=255; return v<=0.03928? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); };
+      const L = 0.2126*lum(o.r) + 0.7152*lum(o.g) + 0.0722*lum(o.b);
+      return L > 0.5 ? '#000000' : '#ffffff';
+    } catch { return null; }
+  }
+
+}
+// Avoid hard failures if the resource is loaded multiple times.
+try {
+  if (!customElements.get("thermostat-timeline-card")) {
+    customElements.define("thermostat-timeline-card", ThermostatTimelineCard);
+  }
+} catch {}
+
+/* ----------------- LIGHTWEIGHT PICKER (TTEntityPicker) ----------------- */
+class TTEntityPicker extends HTMLElement {
+  static get observedAttributes(){ return ['include-domains','label','disabled']; }
+  constructor(){
+    super();
+    this.attachShadow({ mode: 'open' });
+    this._hass = null;
+    this._value = '';
+    this._filter = null; // function
+    this._domains = [];
+    this._disabled = false;
+  }
+  set hass(h){ this._hass = h; this._render(); }
+  get hass(){ return this._hass; }
+  set value(v){ this._value = v || ''; this._render(); }
+  get value(){ return this._value || ''; }
+  set entityFilter(fn){ this._filter = typeof fn === 'function' ? fn : null; this._render(); }
+  get entityFilter(){ return this._filter; }
+  set disabled(v){ this._disabled = !!v; this._render(); }
+  get disabled(){ return !!this._disabled; }
+  attributeChangedCallback(name, _old, val){
+    if (name === 'disabled') this._disabled = val !== null;
+    this._render();
+  }
+  connectedCallback(){ this._render(); }
+  _parseDomains(){
+    try {
+      const a = this.getAttribute('include-domains');
+      if (!a) return [];
+      const v = typeof a === 'string' ? JSON.parse(a) : a;
+      return Array.isArray(v) ? v.map(x=>String(x)) : [];
+    } catch { return []; }
+  }
+  _render(){
+    const label = this.getAttribute('label') || '';
+    this._domains = this._parseDomains();
+    const opts = [];
+    try {
+      const states = this._hass?.states || {};
+      for (const id of Object.keys(states)){
+        const dom = id.split('.')[0];
+        if (this._domains.length && !this._domains.includes(dom)) continue;
+        const st = states[id];
+        if (this._filter && !this._filter(st)) continue;
+        const name = st?.attributes?.friendly_name || (id.split('.')[1] || id);
+        opts.push({ id, name });
+      }
+    } catch {}
+    opts.sort((a,b)=> a.name.localeCompare(b.name,'en',{sensitivity:'base'}));
+    const selOpts = ['<option value="">'+(label||'Select')+'</option>'].concat(
+      opts.map(o=>`<option value="${o.id}">${o.name} (${o.id})</option>`)
+    );
+    const css = `
+      :host{ display:block; }
+      .wrap{ width:100%; min-width:250px; max-width:440px; }
+      .sel{ position: relative; }
+      select{ width:100%; height:36px; min-height:36px; appearance:none; -webkit-appearance:none; -moz-appearance:none; padding:6px 34px 6px 10px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing: border-box; }
+      .backup-slot-select{ width:auto; min-width:260px; height:40px; min-height:40px; padding:8px 42px 8px 14px; font-size:14px; font-weight:500; border:1px solid var(--divider-color); border-radius:10px; background: var(--card-background-color); color: var(--primary-text-color); box-shadow: 0 1px 2px rgba(0,0,0,0.08) inset, 0 1px 4px rgba(0,0,0,0.12); transition: border-color 120ms ease, box-shadow 120ms ease; }
+      .backup-slot-select:focus{ outline:none; border-color: var(--primary-color); box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary-color) 60%, transparent), 0 1px 4px rgba(0,0,0,0.14); }
+      select:focus{ outline:none; border-color: var(--primary-color); box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary-color) 35%, transparent); }
+      select:hover{ border-color: color-mix(in oklab, var(--primary-text-color) 20%, var(--divider-color)); }
+      select:disabled{ opacity:.6; cursor: not-allowed; }
+      .dd-arrow{ position:absolute; right:12px; top:50%; transform: translateY(-50%); width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid var(--secondary-text-color); pointer-events:none; }
+      select:disabled + .dd-arrow{ opacity:.6; }
+      .label{ font-size:.85rem; color: var(--secondary-text-color); margin: 2px 0 4px; display:none; }
+    `;
+    this.shadowRoot.innerHTML = `<style>${css}</style><div class="wrap"><div class="label"></div><div class="sel"><select aria-label="${label}">${selOpts.join('')}</select><span class="dd-arrow" aria-hidden="true"></span></div></div>`;
+    const select = this.shadowRoot.querySelector('select');
+    if (select) {
+      try { select.value = this._value || ''; } catch {}
+      try { select.disabled = !!this._disabled; } catch {}
+      // Signal picker open early (helps pause editor re-render on macOS in Safari/Chrome)
+      try {
+        select.addEventListener('pointerdown', () => {
+          this.dispatchEvent(new CustomEvent('picker-opened', { bubbles: true, composed: true }));
+        }, { passive: true });
+        select.addEventListener('focus', () => {
+          this.dispatchEvent(new CustomEvent('picker-opened', { bubbles: true, composed: true }));
+        }, { passive: true });
+      } catch {}
+      select.onchange = (e)=>{
+        this._value = e.target.value || '';
+        this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: this._value }, bubbles: true, composed: true }));
+        // Signal picker closed after a selection is made
+        try { this.dispatchEvent(new CustomEvent('picker-closed', { bubbles: true, composed: true })); } catch {}
+      };
+      // Also signal closed on blur (if user clicks away without changing)
+      try {
+        select.addEventListener('blur', ()=>{
+          this.dispatchEvent(new CustomEvent('picker-closed', { bubbles: true, composed: true }));
+        });
+      } catch {}
+    }
+  }
+}
+// Avoid hard failures if another resource already defined the picker.
+try {
+  if (!customElements.get('tt-entity-picker')) {
+    customElements.define('tt-entity-picker', TTEntityPicker);
+  }
+} catch {}
+
+/* ----------------- CONFIG EDITOR ----------------- */
+class ThermostatTimelineCardEditor extends HTMLElement {
+  setConfig(config) { this._config = { ...ThermostatTimelineCard.getStubConfig(), ...(config||{}) }; this._storageLoaded = false; this._render(); }
+  // Helper to check if API is available
+  _apiSupported(){ try { return !!(this._hass?.callApi); } catch { return false; } }
+  async _apiFetchState(){ if (!this._apiSupported()) return null; try { return await this._hass.callApi('GET', 'thermostat_timeline/state'); } catch { return null; } }
+  set hass(hass) { this._hass = hass; this._lang = ttGetLangFromHass(hass);
+  // On first hass set, merge settings from file storage via API
+  if (!this._storageLoaded && this._config?.storage_enabled) {
+    this._storageLoaded = true;
+    (async () => {
+      try {
+        const resp = await this._apiFetchState();
+        const s = resp?.settings;
+        if (s && typeof s === 'object') {
+          if (typeof s.time_source === 'string') this._config.time_source = (s.time_source === 'ha' ? 'ha' : 'browser');
+          if (typeof s.time_12h === 'boolean') this._config.time_12h = !!s.time_12h;
+          if (typeof s.temp_unit === 'string') this._config.temp_unit = (String(s.temp_unit).toUpperCase()==='F' ? 'F' : 'C');
+          if (Number.isFinite(s.default_temp)) this._config.default_temp = Number(s.default_temp);
+          if (Number.isFinite(s.row_height)) this._config.row_height = Math.max(30, Math.min(200, Math.round(Number(s.row_height))));
+          if (Number.isFinite(s.min_temp)) this._config.min_temp = Number(s.min_temp);
+          if (Number.isFinite(s.max_temp)) this._config.max_temp = Number(s.max_temp);
+          if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
+          if (typeof s.profiles_enabled === 'boolean') this._config.profiles_enabled = !!s.profiles_enabled;
+          if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled;
+          if (typeof s.holidays_enabled === 'boolean') this._config.holidays_enabled = !!s.holidays_enabled;
+          if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
+          if (typeof s.pause_sensor_enabled === 'boolean') this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
+          if (typeof s.pause_sensor_entity === 'string') this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
+          if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
+          if (typeof s.apply_on_default_change === 'boolean') this._config.apply_on_default_change = !!s.apply_on_default_change;
+          if (typeof s.per_room_defaults === 'boolean') this._config.per_room_defaults = !!s.per_room_defaults;
+          if (typeof s.backup_auto_enabled === 'boolean') this._config.backup_auto_enabled = !!s.backup_auto_enabled;
+          if (Number.isFinite(s.backup_interval_days)) this._config.backup_interval_days = s.backup_interval_days;
+          if (s.open_window && typeof s.open_window === 'object') this._config.open_window = s.open_window;
+        }
+        // Re-render after merging settings
+        try { this._render(); } catch {}
+      } catch (err) {}
+    })();
+  }
+  // Avoid clobbering inputs while user is typing (preserve previous behavior)
+  const ae = this.shadowRoot && this.shadowRoot.activeElement;
+  if (this._suspendRender) return;
+  if (ae) {
+    try {
+      if (ae.classList?.contains("title") || ae.classList?.contains('label-input')
+          || ae.classList?.contains('mi-from') || ae.classList?.contains('mi-to') || ae.classList?.contains('mi-temp')
+          || (ae.closest && ae.closest('.mini-ed'))) return;
+      if (ae.closest && (ae.closest('ha-entity-picker') || ae.closest('tt-entity-picker'))) return;
+    } catch {}
+  }
+  // Keep title preset in sync with language when user hasn't customized it
+  try {
+    if (this._config) {
+      const cur = String(this._config.title || '');
+      if (!cur || this._isDefaultTitle(cur)) {
+        const next = ttLocalize('card.title_default', this._hass || this._lang || 'en');
+        if (next && next !== cur) { this._config.title = next; this._emit(); }
+      }
+    }
+  } catch {}
+  // Full render and i18n apply (normal path)
+  this._render(); this._applyEditorI18n();
+  // Ensure entity pickers are hydrated with hass after hard refresh
+  try { this._forcePickerRefresh && this._forcePickerRefresh(); } catch {}
+  // Also run a lightweight service-availability-only check in case services changed while editor open
+  try {
+    const root = this.shadowRoot;
+    if (root) {
+      const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
+      if (!hasService) {
+        const warnText = this._t ? this._t('editor.store_missing') : null;
+  const msg = warnText && warnText !== 'editor.store_missing' ? warnText : 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.';
+        let warn = root.querySelector('.store-missing');
+        if (!warn) {
+          warn = document.createElement('div'); warn.className = 'store-missing'; warn.style.color = 'var(--error-color)'; warn.style.fontSize = '.9rem'; warn.style.marginTop = '6px';
+          const controls = root.querySelector('.store-controls'); if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
+        }
+        while (warn.firstChild) warn.removeChild(warn.firstChild);
+          warn.appendChild(document.createTextNode(msg.replace(/\.$/, '') + '. '));
+          (function(){
+            let link = document.createElement('a');
+            // Use my.home-assistant.io deep link to the HACS repository page
+            link.href = 'https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=thermostat-pro-timeline-sync';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.style.color = 'var(--error-color)';
+            link.style.textDecoration = 'underline';
+            link.style.fontWeight = '500';
+            link.textContent = this._t('editor.open_in_hacs');
+            warn.appendChild(link);
+          })();
+        const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
+        const picker = root.querySelector('.storage'); if (picker) picker.disabled = true;
+      } else {
+        const rootWarn = root.querySelector('.store-missing'); if (rootWarn && rootWarn.parentNode) rootWarn.parentNode.removeChild(rootWarn);
+        const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
+        const picker = root.querySelector('.storage'); if (picker) picker.disabled = false;
+      }
+      // Update integration status chip in tabs
+      try {
+        const chip = root.querySelector('.int-status');
+        const icon = chip?.querySelector('ha-icon');
+        const txt = chip?.querySelector('.text');
+        if (chip && icon && txt) {
+          if (hasService) {
+            chip.classList.remove('bad'); chip.classList.add('ok');
+            icon.setAttribute('icon','mdi:cloud-check-outline');
+            txt.textContent = this._t ? this._t('editor.integration.connected') : 'Connected to integration';
+          } else {
+            chip.classList.remove('ok'); chip.classList.add('bad');
+            icon.setAttribute('icon','mdi:cloud-off-outline');
+            txt.textContent = this._t ? this._t('editor.integration.disconnected') : 'Not connected to integration';
+          }
+          // Click to jump to Sync tab
+          try { chip.style.userSelect='none'; chip.onclick = ()=>{ this._activeTab='sync'; this._render(); }; } catch {}
+        }
+      } catch {}
+    }
+  } catch {}
+ }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  this._openCount = 0;
+    this._pendingEmit = false;
+  this._openRows = new Set();
+  this._openColorRows = new Set();
+  this._openOwdRows = new Set();
+  this._suspendRender = false;
+  this._activeTab = 'settings';
+  // Holidays inline editor state
+  this._holDraft = null;      // { rooms: { [eid]: [ {id,startMin,endMin,temp} ] } }
+  this._holRoom = null;       // active room eid
+  this._holEditing = null;    // { room, blockId }
+  this._holMini = null;       // { room, blk }
+    this.shadowRoot.innerHTML = `
+      <style>
+        .wrap { padding:8px 12px; display:grid; gap:16px; max-width: 480px; }
+        .owd-content { display:grid; gap:16px; }
+        .row { display:grid; gap:10px; }
+        .label { font-size:.85rem; color: var(--secondary-text-color); }
+        .entities { display:grid; gap:10px; }
+        /* Entity row (summary + collapsible details) */
+        .inline { transition: none; display:grid; gap:6px; max-width: 480px; grid-template-columns: 1fr; grid-auto-rows: auto; align-items: start; }
+        /* actions are inside summary; details always stack below summary */
+        .inline > div:first-child { grid-column:  1; grid-row: 1 / span 2; }
+        .inline > .actions { grid-column: 2; grid-row: 2; align-self: center; }
+
+        .inline .summary { display:flex; align-items:center; justify-content:space-between; padding:6px; border:1px dashed var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
+        .inline .summary-left { display:flex; align-items:center; gap:8px; min-width:0; }
+        .inline .summary-title { font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 320px; }
+        /* New: subtitle below title with merged entities */
+        .inline .summary-text { display:grid; gap:2px; min-width:0; }
+        .inline .summary-sub { font-size:.8rem; color: var(--secondary-text-color); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 320px; }
+        .inline .expander { width:28px; height:28px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+        .inline.open .expander { transform: rotate(180deg); }
+  .inline .details { display:none; grid-template-columns: minmax(250px, 440px); gap:6px; padding:6px; border:1px dashed var(--divider-color); border-radius:8px; background: var(--secondary-background-color, transparent); }
+  /* segmented control */
+  .seg { display:inline-flex; border:1px solid var(--divider-color); border-radius:10px; overflow:hidden; }
+  .seg button { padding:6px 10px; background: var(--card-background-color); color: var(--primary-text-color); border:0; cursor:pointer; }
+  .seg button.active { background: var(--primary-color); color: var(--text-primary-color, #fff); }
+        .inline.open .details { display:grid; }
+         ha-textfield { width:100%; max-width:440px; }
+    .label-input { width:100%; max-width:440px; display:block; }
+    /* Custom input style matching pickers */
+    .tt-input { height:36px; min-height:36px; padding:6px 10px; box-sizing:border-box; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
+    .tt-input.tt-input-lg {
+      height:48px;
+      min-height:48px;
+      padding:0 14px;
+      border-radius:10px;
+      background: var(--secondary-background-color, transparent);
+    }
+    .tt-input.tt-input-lg::placeholder { color: var(--secondary-text-color); opacity: 1; }
+    .tt-input.tt-input-lg:focus { outline: none; }
+    .tt-input.tt-input-lg:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+  /* entity picker width constraint */
+  .inline ha-entity-picker, .inline tt-entity-picker { width: 100%; min-width: 250px; max-width: 440px; overflow: hidden; text-overflow: ellipsis; display:block; min-height: 48px; }
+        /* Add entity button styles */
+.add-entity-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  width:max-content; padding:8px 12px;
+  border-radius:10px; border:1px solid var(--divider-color);
+  background: var(--card-background-color);
+  color: var(--primary-text-color);
+  cursor:pointer; user-select:none;
+  max-width: 480px;
+}
+.add-entity-btn:focus { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+      
+        /* remove button */
+        .remove-btn { flex-shrink: 0; padding:4px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--error-color); display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
+        
+        .actions { display:flex; gap:8px; justify-content:flex-end; align-items:center; }
+        .order-btn {
+          display:inline-flex; align-items:center; justify-content:center;
+          width:32px; height:32px; border-radius:8px;
+          border:1px solid var(--divider-color);
+          background: var(--card-background-color);
+          cursor:pointer; user-select:none;
+        }
+        .order-btn[disabled] { opacity: .5; cursor: not-allowed; }
+        
+        /* Drag & drop */
+        .drag-handle {
+          display:inline-flex; align-items:center; justify-content:center;
+          width:32px; height:32px; border-radius:8px;
+          border:1px dashed var(--divider-color);
+          background: var(--card-background-color);
+          cursor: grab; user-select:none;
+        }
+        .drag-handle:active { cursor: grabbing; }
+        .inline.drag-over { outline: 2px dashed var(--primary-color); outline-offset: 2px; }
+        
+        /* Pointer-driven drag */
+        .drag-ghost {
+          position: fixed;
+          pointer-events: none;
+          opacity: .9;
+          z-index: 9999;
+        }
+        .placeholder { border:2px dashed var(--primary-color); border-radius:10px; margin:6px 0; }
+        
+        /* Merge chips */
+        .linked-chips { display:flex; flex-wrap:wrap; gap:6px; }
+        .pill-chip { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); color: var(--primary-text-color); }
+        .pill-chip .rm { cursor:pointer; border:none; background:transparent; color: var(--error-color); font-weight:700; line-height:1; padding:0 2px; }
+        .pill-chip .rm:focus { outline: 2px solid var(--primary-color); outline-offset:2px; }
+  /* Tabs */
+  /* Tabs: show as two rows (3 columns) to avoid cramped layout */
+  /* Tabs: wrap to next line when space runs out; keep nice gaps */
+  .tabs { display:flex; flex-wrap: wrap; gap:12px 18px; align-items:flex-end; padding:0 6px; margin:8px 0; border-bottom: 1px solid var(--divider-color); position:relative; z-index:3; }
+  .tab-btn { appearance:none; border:none; background:transparent; color: var(--secondary-text-color); padding:10px 2px; margin:0; cursor:pointer; font-weight:600; position:relative; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tab-btn::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background: transparent; border-radius:2px; }
+  .tab-btn.active { color: var(--primary-text-color); }
+  .tab-btn.active::after { background: var(--primary-color); }
+  /* Integration availability status (small badge under tabs) */
+  .status-wrap { display:flex; justify-content:flex-start; padding:0 6px 4px; }
+  .int-status { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; border:1px solid var(--divider-color); border-radius:999px; background: var(--secondary-background-color, transparent); cursor:pointer; }
+  .int-status.ok { color: var(--success-color, #2e7d32); border-color: color-mix(in oklab, var(--success-color, #2e7d32) 50%, var(--divider-color)); }
+  .int-status.bad { color: var(--error-color); border-color: color-mix(in oklab, var(--error-color) 50%, var(--divider-color)); }
+  .int-status ha-icon { --mdc-icon-size: 14px; }
+  .int-status .text { font-size:.8rem; white-space:nowrap; }
+  /* Remove blue focus ring on click; keep it for keyboard users only */
+  .tab-btn:focus { outline: none; }
+  .tab-btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset:2px; border-radius:4px; }
+  /* Compact inputs for Colors tab */
+  .colors-row { display:grid; grid-template-columns: 88px 88px 48px 1fr; gap:8px; align-items:center; padding-right:6px; }
+  .colors-row input[type=number] { width:88px; height:28px; padding:4px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing: border-box; display:block; }
+  .colors-row input[type=color] { width:48px; height:28px; padding:0; border:1px solid var(--divider-color); border-radius:6px; background: transparent; box-sizing: border-box; display:block; }
+  .colors-row .remove-btn { padding:4px 10px; width:auto; justify-self:end; align-self:center; }
+  .colors-head { display:grid; grid-template-columns: 88px 88px 48px 1fr; gap:8px; align-items:center; margin:0; color: var(--secondary-text-color); font-size:.8rem; line-height:1; }
+  /* Visual card for each color range */
+  .color-item { border:1px dashed var(--divider-color); border-radius:10px; padding:6px; background: var(--secondary-background-color, transparent); }
+  .color-item + .color-item { margin-top:6px; }
+  /* Compact info icon with native tooltip (title) */
+  .info-icon { width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--divider-color); border-radius:50%; color: var(--secondary-text-color); font-weight:700; font-size:.75rem; cursor:pointer; background: transparent; }
+  .info-icon::after { content:'?'; line-height:1; }
+  .info-pop { position: fixed; z-index: 10000; max-width: 520px; padding: 10px 12px; border-radius: 8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); box-shadow: var(--ha-card-box-shadow, 0 4px 12px rgba(0,0,0,.2)); font-size:.9rem; }
+  .info-pop.hidden { display:none; }
+  /* Space the add button away from header line */
+  .tab-colors .add-entity-btn { margin-top:6px; }
+  .colors-head span:nth-child(1),
+  .colors-head span:nth-child(2),
+  .colors-head span:nth-child(3) { padding-left:10px; }
+  /* Away tab: fix picker width */
+  .tab-away .away-person-picker { width: 320px; min-width: 320px; max-width: 320px; }
+  /* Colors tab actions row */
+  .tab-colors .colors-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:6px; }
+  /* Bottom action row: align heights of buttons */
+  .row-bottom-actions .reset-onboard { padding:4px 8px; border-radius:8px; display:none !important; }
+        /* Empty state + attention pulse */
+        .empty-box { border:1px dashed var(--divider-color); border-radius:10px; padding:14px; max-width:480px; color: var(--secondary-text-color); display:grid; gap:10px; }
+        .pulse-attn { position:relative; }
+        .pulse-attn.pulse { animation: tt-pulse 1.2s ease-in-out 0s 4; }
+        @keyframes tt-pulse { 0% { box-shadow: 0 0 0 0 rgba(var(--rgb-primary-color, 3,155,229), .8); }
+          70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+          100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
+        /* Store controls: dropdown above, then buttons side-by-side */
+        .store-controls { display:flex; flex-direction: column; gap:8px; align-items: flex-start; }
+        .store-controls .storage, .store-controls .storage-settings { width: 100%; }
+  .store-controls .store-btns { display:flex; gap:8px; align-items:stretch; flex-wrap: nowrap; justify-content: flex-start; width:100%; }
+  .store-controls .store-btns .remove-btn { flex: 1 1 0; justify-content: center; height:100%; text-align:center; }
+  /* Holidays inline editor */
+  .holiday-ed { display:grid; gap:8px; }
+  .holiday-ed .wk-tab{ appearance:none; border:none; background:transparent; color: var(--secondary-text-color); cursor:pointer; padding:6px 10px; border-bottom:2px solid transparent; border-radius:0; font-weight:600; }
+  .holiday-ed .wk-tab.active{ color: var(--primary-text-color); border-bottom-color: var(--primary-color); }
+  .holiday-ed .week-scale{ position:relative; height:32px; margin:0 6px; }
+  .holiday-ed .week-track{ position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; margin:0 6px; }
+  .holiday-ed .block{ position:absolute; top:6px; bottom:6px; border:1px solid var(--divider-color); border-radius:10px; background: var(--secondary-background-color, rgba(0,0,0,.05)); display:flex; align-items:center; gap:10px; padding:0 10px; box-sizing:border-box; }
+  .holiday-ed .block .pill{ display:none; }
+  .holiday-ed .hol-toolbar{ display:flex; justify-content:flex-end; gap:8px; }
+  .holiday-ed .mini-ed{ border:1px solid var(--divider-color); border-radius:10px; padding:8px; display:grid; gap:8px; max-width: 460px; background: var(--secondary-background-color, transparent); }
+  .holiday-ed .mini-ed .row{ display:flex; gap:8px; align-items:center; }
+  .holiday-ed input[type=time], .holiday-ed input[type=number]{ height:28px; padding:2px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); }
+  /* Make mini-editor buttons same height */
+  .holiday-ed .mini-ed .row .add-entity-btn,
+  .holiday-ed .mini-ed .row .remove-btn{ height:36px; min-height:36px; display:inline-flex; align-items:center; }
+  /* Make Backup row buttons equal height */
+  .tab-backup .add-entity-btn,
+  .tab-backup .remove-btn{ height:40px; min-height:40px; display:inline-flex; align-items:center; }
+  /* Match add-date button height to date input */
+  .tab-holidays .settings-card .add-entity-btn { height:36px; min-height:36px; display:inline-flex; align-items:center; }
+  .tab-holidays .settings-card input.tt-input[type=date] { height:36px; min-height:36px; }
+  /* Tooltip style (same as card) */
+  .wk-tooltip{ position:absolute; z-index:10000; pointer-events:none; padding:6px 8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); font-size:.85rem; box-shadow: var(--ha-card-box-shadow, 0 2px 6px rgba(0,0,0,.2)); }
+        </style>
+  <div class="tabs" role="tablist"><button type="button" class="tab-btn tab-settings-btn active" role="tab" aria-selected="true">Settings</button><button type="button" class="tab-btn tab-backup-btn" role="tab" aria-selected="false">Backup</button></div>
+      <div class="wrap tab-settings">
+        <div class="row"><div class="label">Titel</div><ha-textfield class="title" label="Titel"></ha-textfield></div>
+        
+        
+        
+<style>
+/* Settings (grouped card with separators) */
+.settings-card {
+  border:1px solid var(--divider-color);
+  border-radius:12px;
+  background: var(--card-background-color);
+  padding:12px;
+  display:grid;
+  gap:10px;
+  max-width: 480px;
+}
+.settings-card .grid2 {
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:10px;
+  margin-bottom: 6px;
+}
+.settings-card .sfield { display:grid; gap:2px; align-items:start; }
+.settings-card .slabel { font-size:.8rem; color: var(--secondary-text-color); line-height:1; padding-left:4px; }
+.settings-card .settings-input { width:88px; height:28px; padding:4px 6px; border:1px solid var(--divider-color); border-radius:8px; background: var(--card-background-color); color: var(--primary-text-color); box-sizing:border-box; }
+.settings-card .setting {
+  display:grid;
+  grid-template-columns: 1fr auto;
+  align-items:center;
+  gap:10px;
+  padding:10px 4px;
+}
+.settings-card .setting + .setting {
+  border-top: 1px solid var(--divider-color);
+}
+.settings-card .title { font-weight:600; }
+.settings-card .desc { font-size:.85rem; color: var(--secondary-text-color); margin-top:2px; }
+</style>
+
+        <!-- Sync Engine (moved into Settings tab) -->
+        <div class="row">
+          <div class="label"></div>
+          <div class="settings-card store-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div style="display:grid; gap:2px;">
+                <div class="store-title" style="font-weight:600; display:flex; align-items:center; gap:6px;"><span class="store-title-text">Shared storage + background control</span><button type="button" class="info-icon" aria-label="Info"></button></div>
+                <div class="store-desc" style="font-size:.85rem; color:var(--secondary-text-color);"><span class="store-desc-text">Saves schedules to file storage and enables background control.</span></div>
+              </div>
+              <ha-switch class="store-enable"></ha-switch>
+            </div>
+            
+            <div class="store-controls" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start; margin-top:6px;">
+              <!-- Note: Entity pickers removed - file-based storage is always used -->
+              <div class="store-btns">
+                <button type="button" class="remove-btn migrate-to-store"><ha-icon icon="mdi:upload"></ha-icon><span>Transfer browser data to storage</span></button>
+                <button type="button" class="remove-btn clear-all"><ha-icon icon="mdi:delete"></ha-icon><span>Clear all data</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom actions: clear local + reset onboarding -->
+        <div class="row row-bottom-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="remove-btn clear-local-only" type="button"><ha-icon icon="mdi:delete-outline"></ha-icon><span>Clear local only</span></button>
+          <button class="add-entity-btn reset-onboard" type="button"><ha-icon icon="mdi:movie-play"></ha-icon><span>Show welcome again</span></button>
+        </div>
+  </div>
+  <!-- Backup tab (top-level sibling) -->
+  <div class="wrap tab-backup" style="display:none; max-width:640px;">
+    <div class="settings-card">
+      <div class="setting">
+        <div class="text">
+          <div class="title backup-title">Backup</div>
+          <div class="desc backup-desc">Kopiér hele indholdet af din sync‑sensor til backup‑sensoren og gendan den igen ved behov.</div>
+        </div>
+        <div></div>
+      </div>
+      <div class="setting" style="display:flex; flex-direction:column; gap:10px; align-items:stretch;">
+        <div class="text">
+          <div class="title backup-slot-title">Choose backup</div>
+          <div class="desc backup-slot-desc">Select which backup slot to restore.</div>
+        </div>
+        <div style="display:flex; width:100%;">
+          <select class="backup-slot-select" style="min-width:200px; max-width:320px; width:100%;"></select>
+        </div>
+        <div class="backup-actions-row" style="display:flex; align-items:center; gap:8px; justify-content:flex-start; flex-wrap:wrap; width:100%;">
+          <button type="button" class="add-entity-btn btn-backup-now"><ha-icon icon="mdi:archive-arrow-down"></ha-icon><span class="backup-now-label">Backup now</span></button>
+          <button type="button" class="remove-btn btn-restore-now"><ha-icon icon="mdi:archive-arrow-up"></ha-icon><span class="backup-restore-label">Restore</span></button>
+          <button type="button" class="remove-btn btn-delete-backup"><ha-icon icon="mdi:delete-outline"></ha-icon><span class="backup-delete-label">Delete</span></button>
+        </div>
+      </div>
+      <div class="setting">
+        <div class="text">
+          <div class="title backup-auto-title">Auto backup</div>
+          <div class="desc backup-auto-desc">Lav automatisk backup med faste intervaller.</div>
+        </div>
+        <ha-switch class="backup-auto"></ha-switch>
+      </div>
+      <div class="setting backup-interval-row">
+        <div class="text">
+          <div class="title backup-int-title">Interval (dage)</div>
+          <div class="desc backup-int-desc">Hvor mange dage der skal gå mellem automatiske backups (min. 1).</div>
+        </div>
+        <input class="backup-days settings-input" type="number" min="1" max="365" step="1" />
+      </div>
+      <div class="setting">
+        <div class="text">
+          <div class="title backup-last-title">Sidste backup</div>
+          <div class="desc last-backup-desc"></div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>`;    this._applyEditorI18n();
+
+    const qs = (s)=>this.shadowRoot.querySelector(s);
+    qs(".title")?.addEventListener("change", e => this._upd("title", e.target.value));
+    // Note: storage_entity_* pickers removed - file-based storage is always used
+    qs('.store-enable')?.addEventListener('change', e => {
+      const on = !!e.target.checked;
+      this._upd('storage_enabled', on);
+      // Disable the bottom "Clear local only" button when shared storage is ON
+      try {
+        const clrLocal = this.shadowRoot.querySelector('.clear-local-only');
+        if (clrLocal) {
+          clrLocal.disabled = on;
+          clrLocal.setAttribute('aria-disabled', on ? 'true' : 'false');
+          clrLocal.title = on ? 'Disabled while shared storage is ON' : '';
+          // Hide button entirely when shared storage is enabled (requested)
+          clrLocal.style.display = on ? 'none' : '';
+        }
+      } catch {}
+      // Show/hide storage controls when shared storage is toggled
+      try {
+        const ctrls = this.shadowRoot.querySelector('.store-controls');
+        if (ctrls) ctrls.style.display = on ? 'flex' : 'none';
+      } catch {}
+      // Sync controls removed (instant-only via Save button)
+  this._applyEditorI18n();
+      // Re-render so Colors tab shared-clear button visibility updates immediately
+  try { this._render(); } catch {}
+  // Ensure integration side knows current auto-apply state when enabling shared storage
+  try { if (on) this._pushSettingsToStoreDebounced(); } catch {}
+      // On enabling shared storage: offer to migrate local browser data to storage
+      (async ()=>{
+        try {
+          if (on) {
+            const localRaw = localStorage.getItem('thermostat_timeline_store');
+            const hasLocal = !!(localRaw && localRaw.length > 2);
+            if (hasLocal) {
+              const ok = confirm(this._t('editor.migrate_confirm'));
+              if (ok) {
+                // Properly unwrap the local payload and send both schedules and settings
+                let parsed = {};
+                try { parsed = JSON.parse(localRaw || '{}'); } catch { parsed = {}; }
+                let schedules = parsed && typeof parsed === 'object' && parsed.schedules ? parsed.schedules : (parsed || {});
+                let settings = parsed && typeof parsed === 'object' && parsed.settings ? parsed.settings : { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, entities: Array.isArray(this._config.entities) ? this._config.entities : [], room_use_input_number: Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : [], color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
+                let colors = parsed && typeof parsed === 'object' && parsed.colors ? parsed.colors : { color_ranges: settings?.color_ranges || this._config.color_ranges, color_global: typeof settings?.color_global === 'boolean' ? settings.color_global : !!this._config.color_global };
+                settings = { ...settings, entities: Array.isArray(settings?.entities) ? settings.entities : (Array.isArray(this._config.entities) ? this._config.entities : []), room_use_input_number: Array.isArray(settings?.room_use_input_number) ? settings.room_use_input_number : (Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : []), row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+                if (this._hass) {
+                  // Use set_store service directly - file-based storage
+                  await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings, colors });
+                }
+              } else {
+                // If user cancels, offer to import schedules FROM storage into local browser
+                try {
+                  // Fetch from API instead of sensor states
+                  const resp = await this._apiFetchState();
+                  if (resp && typeof resp === 'object') {
+                    let sch = resp.schedules || {};
+                    let set = resp.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, entities: Array.isArray(this._config.entities) ? this._config.entities : [], room_use_input_number: Array.isArray(this._config.room_use_input_number) ? this._config.room_use_input_number : [], color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))), sync_delay_sec: Number(this._config.storage_sync_sec||0) };
+                    let colors = resp.colors || { color_ranges: set.color_ranges || this._config.color_ranges, color_global: !!set.color_global };
+                    if (Object.keys(sch || {}).length) {
+                      const pull = confirm(this._t('editor.migrate_pull_confirm'));
+                      if (pull) {
+                        try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules: sch, settings: set, colors })); } catch {}
+                      }
+                    }
+                  }
+                } catch {}
+              }
+            }
+          }
+        } catch {}
+      })();
+    });
+  // Sync mode controls removed (instant-only via Save button)
+  // (reload buttons removed)
+      // Holidays enable (migrated into in-card settings popup)
+    // (clear storage only button removed)
+
+    // Clear all data (storage + local)
+    qs('.clear-all')?.addEventListener('click', async () => {
+      const msg = this._t('editor.clear_all_confirm');
+      if (!confirm(msg)) return;
+      try {
+        // Wipe local browser copy
+        try { localStorage.removeItem('thermostat_timeline_store'); } catch {}
+        // Also wipe in-memory schedules so UI reflects deletion immediately
+        try {
+          this._schedules = {};
+          this._config.color_ranges = {};
+          // Reset any profiles editing state
+          this._profilesSelected = null; this._profilesDraft = null; this._profilesDirty = false; this._profilesEditingNew = false;
+        } catch {}
+        if (this._hass) {
+          // Call explicit clear service (backend wipes schedules+settings and bumps versions)
+          try { await this._hass.callService('thermostat_timeline', 'clear_store', {}); } catch {}
+          // Note: sensor update removed - file-based storage is used
+        }
+        // Clear any pending delayed sync/draft keys so nothing repopulates
+        try { localStorage.removeItem(this._syncDueKey()); } catch {}
+        try { localStorage.removeItem(this._draftKey()); } catch {}
+        // Repaint editor/live cards
+        try { this._emit(true); } catch {}
+        try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+      } catch (e) {}
+    });
+
+    // Clear local only (bottom)
+    qs('.clear-local-only')?.addEventListener('click', async (ev) => {
+      // Hard guard: do nothing if shared storage is enabled
+      if (this._config?.storage_enabled) { try { ev.preventDefault(); ev.stopPropagation(); } catch {} return; }
+      const msg = this._t('editor.clear_local_only_confirm');
+      if (!confirm(msg)) return;
+      try {
+        localStorage.removeItem('thermostat_timeline_store');
+        // Clear in-memory schedules when using local storage only
+        this._schedules = {};
+        this._profilesSelected = null; this._profilesDraft = null; this._profilesDirty = false; this._profilesEditingNew = false;
+        this._emit(true);
+        try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+      } catch {}
+    });
+    // Reset onboarding (show intro again)
+    qs('.reset-onboard')?.addEventListener('click', async () => {
+      try { localStorage.removeItem('thermostat_timeline_onboard_seen_v1'); } catch {}
+      try { alert(this._t('onboard.reset_ok') || 'Welcome will be shown next time.'); } catch {}
+    });
+    qs('.migrate-to-store')?.addEventListener('click', async (ev) => {
+      try {
+        // File-based storage only - no sensor entity IDs needed
+        const raw = localStorage.getItem('thermostat_timeline_store') || '';
+        if (!raw) { alert(this._t('editor.no_local_data')); return; }
+        const ok = confirm(this._t('editor.migrate_confirm'));
+        if (!ok) return;
+        const parsed = JSON.parse(raw || '{}');
+        const schedules = parsed.schedules || parsed || {};
+        const weekdays = parsed.weekdays || {};
+        const profiles = parsed.profiles || {};
+        let settings = parsed.settings || { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp||20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [] };
+        let colors = parsed.colors || { color_ranges: settings?.color_ranges || this._config.color_ranges, color_global: typeof settings?.color_global === 'boolean' ? settings.color_global : !!this._config.color_global };
+        settings = { ...settings, row_height: Number(settings?.row_height ?? (this._config.row_height ?? 64)), min_temp: Number(settings?.min_temp ?? (this._config.min_temp ?? 5)), max_temp: Number(settings?.max_temp ?? (this._config.max_temp ?? 25)), apply_on_default_change: (typeof settings?.apply_on_default_change === 'boolean') ? settings.apply_on_default_change : !!(this._config.apply_on_default_change ?? true), show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+        if (this._hass) {
+          // Use set_store service directly - file-based storage
+          await this._hass.callService('thermostat_timeline', 'set_store', { schedules, weekdays, profiles, settings, colors });
+        }
+      } catch (e) {}
+    });
+    // Tabs behavior is handled via robust click delegation in _render()
+  }
+
+  _roomUsesInputNumber(idx){
+    try {
+      const ent = (this._config?.entities||[])[idx] || '';
+      const inferred = String(ent).startsWith('input_number.');
+      const arr = Array.isArray(this._config?.room_use_input_number) ? this._config.room_use_input_number : [];
+      const explicit = (typeof arr[idx] === 'boolean') ? arr[idx] : null;
+      return (explicit === null) ? inferred : explicit;
+    } catch { return false; }
+  }
+
+  _setRoomUseInputNumber(idx, on){
+    try {
+      const ents = [...(this._config.entities||[])];
+      const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+      while (modes.length < ents.length) modes.push(false);
+      modes[idx] = !!on;
+
+      const oldEid = ents[idx];
+      // If existing selection doesn't match new mode, clear and clean mappings
+      const mismatch = !!oldEid && ((!!on && !String(oldEid).startsWith('input_number.')) || (!on && !String(oldEid).startsWith('climate.')));
+      if (mismatch) {
+        // Clean up labels/merges/temp_sensors for the old primary
+        try {
+          const labels = { ...(this._config.labels || {}) };
+          if (oldEid && labels[oldEid]) delete labels[oldEid];
+          this._config.labels = labels;
+        } catch {}
+        try {
+          const merges = { ...(this._config.merges || {}) };
+          if (oldEid && merges[oldEid]) delete merges[oldEid];
+          for (const k of Object.keys(merges)) {
+            merges[k] = (merges[k] || []).filter((e) => e !== oldEid);
+            if (!merges[k].length) delete merges[k];
+          }
+          this._config.merges = merges;
+        } catch {}
+        try {
+          const sensors = { ...(this._config.temp_sensors || {}) };
+          if (oldEid && sensors[oldEid]) delete sensors[oldEid];
+          this._config.temp_sensors = sensors;
+        } catch {}
+        ents[idx] = '';
+      }
+
+      this._config.entities = ents;
+      this._config.room_use_input_number = modes;
+      this._emit(true);
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+    } catch { this._emit(true); }
+  }
+
+  // --- Local helpers for unit/time conversions (editor context) ---
+  _isF(){ try { return (this._config?.temp_unit||'C')==='F'; } catch { return false; } }
+  _unitSymbol(){ return this._isF() ? '°F' : '°C'; }
+  _toDisplayTemp(c){
+    // Always round display values to avoid long decimals (e.g. whole °F becomes fractional °C internally).
+    try {
+      const v = Number(c);
+      if (!Number.isFinite(v)) return c;
+      const disp = this._isF() ? (v*9/5+32) : v;
+      return Math.round(disp * 10) / 10;
+    } catch { return c; }
+  }
+  _fromDisplayTemp(v){ try { return this._isF() ? ((Number(v)-32)*5/9) : Number(v); } catch { return Number(v); } }
+
+  
+
+  // Force re-hydration of entity pickers on the Rooms tab with the latest hass
+  // reference. This helps cases where the tab was hidden during first render
+  // or after a hard refresh and the picker didn't populate.
+  _forcePickerRefresh(){
+    try {
+      const tab = this.shadowRoot && this.shadowRoot.querySelector('.tab-rooms');
+      if (!tab) return;
+      const pickers = Array.from(tab.querySelectorAll('ha-entity-picker, tt-entity-picker'));
+      for (const p of pickers){
+        try {
+          p.hass = this._hass;
+          p.style.display = 'block';
+          p.style.minHeight = '48px';
+          if (typeof p.requestUpdate === 'function') p.requestUpdate();
+          // Fallback: if element still has no height, poke its internal input later
+          setTimeout(()=>{ try { if (p.offsetHeight < 8 && typeof p.requestUpdate === 'function') p.requestUpdate(); } catch {} }, 50);
+        } catch {}
+      }
+    } catch {}
+  }
+
+  connectedCallback(){
+    this._render();
+    try {
+      // Extra-robust suspend on pointer start inside any entity picker (captures from Shadow DOM)
+      const capHandler = (e)=>{
+        try {
+          const path = typeof e.composedPath === 'function' ? e.composedPath() : [];
+          const hit = path && path.some(n => {
+            const t = (n && n.tagName ? n.tagName.toLowerCase() : '');
+            return t === 'ha-entity-picker' || t === 'tt-entity-picker';
+          });
+          if (hit) this._suspendRender = true;
+        } catch {}
+      };
+      this.shadowRoot.addEventListener('pointerdown', capHandler, { capture: true });
+      this.shadowRoot.addEventListener('touchstart', capHandler, { capture: true, passive: true });
+
+      // Suspend render while interacting with any entity picker to avoid closing dropdowns
+      this.shadowRoot.addEventListener('focusin', (e)=>{
+        try { if (e.target?.closest && (e.target.closest('ha-entity-picker') || e.target.closest('tt-entity-picker'))) this._suspendRender = true; } catch {}
+        try {
+          // Also suspend while editing inputs in Colors tab (prevents HA hass updates from re-rendering and killing focus)
+          const t = e.target;
+          if (t && t.closest && t.closest('.tab-colors')) {
+            if (t.tagName === 'INPUT' || t.classList?.contains('remove-btn')) {
+              this._suspendRender = true;
+            }
+          }
+        } catch {}
+      });
+      this.shadowRoot.addEventListener('focusout', ()=>{
+        // Give a tiny delay so click into next field doesn't flicker
+        setTimeout(()=>{ this._suspendRender = false; }, 150);
+      });
+      // React to explicit picker open/close signals (from tt-entity-picker)
+      this.shadowRoot.addEventListener('picker-opened', ()=>{ try { this._suspendRender = true; } catch {} });
+      this.shadowRoot.addEventListener('picker-closed', ()=>{ try { this._suspendRender = false; } catch {} });
+      this.shadowRoot.addEventListener('value-changed', (e)=>{
+        try {
+          const tag = e.target?.tagName?.toLowerCase();
+          if (tag === 'ha-entity-picker' || tag === 'tt-entity-picker') { this._suspendRender = false; }
+        } catch {}
+      });
+      // After hard refresh, wait for HA to define pickers and hydrate them
+      try {
+        customElements.whenDefined('ha-entity-picker').then(()=>{ try { this._forcePickerRefresh(); } catch {} });
+      } catch {}
+      // Extra retry shortly after mount
+      try { setTimeout(()=>{ try { this._forcePickerRefresh(); } catch {} }, 300); } catch {}
+    } catch {}
+  }
+
+  // ---------- Storage helpers (editor context) ----------
+  // Note: File-based storage is always used now - no sensor entities needed
+  // Stub function for backwards compatibility - always returns empty string
+  _storageEntity(kind = 'schedules') { return ''; }
+
+  // Debounced push of settings (labels/merges/colors/min/max/away/unit/format) to shared storage
+  _pushSettingsToStoreDebounced(){
+    clearTimeout(this._storePushTimer);
+    this._storePushTimer = setTimeout(()=>this._pushSettingsToStore(), 500);
+  }
+  async _pushSettingsToStore(){
+    try {
+      if (!this._hass || !this._config?.storage_enabled) { return; }
+      // IMPORTANT: The backend replaces the entire settings object when provided.
+      // Base our write on the current stored settings to avoid wiping popup-managed keys.
+      const resp = await this._apiFetchState();
+      const base = resp?.settings;
+      if (!base || typeof base !== 'object') return;
+
+      const settings = {
+        ...base,
+
+        // Editor-managed settings only (popup-managed keys are preserved from base)
+        away: this._config.away,
+        // open_window is now configured via in-card popup; preserve base.open_window
+
+        merges: this._config.merges,
+        labels: this._config.labels,
+        temp_sensors: this._config.temp_sensors,
+
+        backup_auto_enabled: !!this._config.backup_auto_enabled,
+        backup_interval_min: Number(this._config.backup_interval_min||1440),
+
+        holidays_enabled: !!this._config.holidays_enabled,
+        holidays_source: this._config.holidays_source || base.holidays_source || 'calendar',
+        holidays_entity: this._config.holidays_entity || '',
+        holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : (Array.isArray(base.holidays_dates) ? base.holidays_dates : []),
+
+        sync_mode: (this._config.storage_sync_mode||base.sync_mode||'instant'),
+        sync_delay_min: Number(this._config.storage_sync_min ?? base.sync_delay_min ?? 0),
+      };
+      await this._hass.callService('thermostat_timeline','set_store', { settings });
+    } catch (err) {}
+  }
+
+  // Replace this editor element with a fresh instance (simulates closing/reopening)
+  _hardReloadEditor(){
+    try {
+      const cfg = JSON.parse(JSON.stringify(this._config || {}));
+      const hass = this._hass;
+      const parent = this.parentNode || (this.getRootNode && this.getRootNode().host && this.getRootNode().host.parentNode) || null;
+      const next = this.nextSibling || null;
+      const fresh = document.createElement('thermostat-timeline-card-editor');
+      try { fresh.setConfig(cfg); } catch {}
+      try { if (hass) fresh.hass = hass; } catch {}
+      if (parent) {
+        parent.insertBefore(fresh, next);
+        parent.removeChild(this);
+      } else {
+        // Fallback: force re-render + picker refresh
+        this._render();
+        this._forcePickerRefresh && this._forcePickerRefresh();
+      }
+    } catch (e) {
+      try { this._render(); this._forcePickerRefresh && this._forcePickerRefresh(); } catch {}
+    }
+  }
+
+  // Full dashboard reload with cache-busting query param
+  _hardReloadPage(){
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('ttcb', String(Date.now()));
+      window.location.replace(url.toString());
+    } catch {
+      try { window.location.reload(); } catch {}
+    }
+  }
+
+  _render(){
+    if(!this._hass || !this.shadowRoot || !this._config) return;
+    if(this._openCount > 0) return;
+
+    // Boiler tab was migrated into the in-card settings popup
+    if (this._activeTab === 'boiler') this._activeTab = 'settings';
+
+    // Open Window Detection tab was migrated into the in-card settings popup
+    if (this._activeTab === 'owd') this._activeTab = 'settings';
+
+    // Colors tab was migrated into the in-card settings popup
+    if (this._activeTab === 'colors') this._activeTab = 'settings';
+
+    // Holidays tab was migrated into the in-card settings popup
+    if (this._activeTab === 'holidays') this._activeTab = 'settings';
+
+    // Away tab was migrated into the in-card settings popup
+    if (this._activeTab === 'away') this._activeTab = 'settings';
+
+    // Rooms tab was migrated into the in-card settings popup
+    if (this._activeTab === 'rooms') this._activeTab = 'settings';
+
+    // If HA hasn't registered core editor elements yet (after hard refresh),
+    // re-render once they are defined so pickers/textfields upgrade properly.
+    try {
+      if (!customElements.get('ha-entity-picker')) {
+        customElements.whenDefined('ha-entity-picker').then(()=>{ try { this._render(); } catch {} });
+      }
+      if (!customElements.get('ha-textfield')) {
+        customElements.whenDefined('ha-textfield').then(()=>{ try { this._render(); } catch {} });
+      }
+    } catch {}
+
+    // Robust tab delegation (ensure any tab can be opened reliably)
+    if (!this._tabHandlersBound) {
+      this._tabHandlersBound = true;
+      try {
+        this.shadowRoot.addEventListener('click', (ev)=>{
+          // Shadow DOM can yield a Text node as event.target; use composedPath()
+          // to find the actual button element.
+          const path = typeof ev.composedPath === 'function' ? ev.composedPath() : [];
+          let el = null;
+          for (const n of path) {
+            if (n && n.classList && n.classList.contains('tab-btn')) { el = n; break; }
+          }
+          if (!el) {
+            const t = (ev.target && ev.target.closest) ? ev.target : null;
+            el = t && t.closest ? t.closest('.tab-btn') : null;
+          }
+          if (!el) return;
+          if (el.classList.contains('tab-settings-btn')) { this._activeTab = 'settings'; this._render(); }
+          if (el.classList.contains('tab-backup-btn')) { this._activeTab = 'backup'; this._render(); }
+        });
+      } catch {}
+    }
+
+  const t = this.shadowRoot.querySelector(".title");
+  // Note: storage entity pickers removed - file-based storage is always used
+  const seEn = this.shadowRoot.querySelector('.store-enable');
+  const hol = this.shadowRoot.querySelector('.holidays-enable');
+  if (t)  t.value  = this._config.title ?? "";
+    if (seEn) {
+      const enabled = !!this._config.storage_enabled;
+      seEn.checked = enabled;
+      // Note: storage entity pickers removed - file-based storage is always used
+      // Ensure controls visibility matches toggle
+      try {
+        const ctrls = this.shadowRoot.querySelector('.store-controls');
+        if (ctrls) ctrls.style.display = enabled ? 'flex' : 'none';
+      } catch {}
+      // Sync controls removed (instant-only via Save button)
+      // Reflect state for bottom "Clear local only" button
+      try {
+        const clrLocal = this.shadowRoot.querySelector('.clear-local-only');
+        if (clrLocal) {
+          clrLocal.disabled = enabled;
+          clrLocal.setAttribute('aria-disabled', enabled ? 'true' : 'false');
+          clrLocal.title = enabled ? 'Disabled while shared storage is ON' : '';
+          // Hide when shared storage is enabled
+          clrLocal.style.display = enabled ? 'none' : '';
+        }
+      } catch {}
+    }
+    this._applyEditorI18n();
+  if (hol){ hol.checked = !!this._config.holidays_enabled; }
+  // Note: storage entity pickers removed - file-based storage is always used
+  // Backup tab controls
+  try {
+  const bAuto = this.shadowRoot.querySelector('.backup-auto');
+  const bMin = this.shadowRoot.querySelector('.backup-days');
+  const bRow = this.shadowRoot.querySelector('.backup-interval-row');
+    const bBtn = this.shadowRoot.querySelector('.btn-backup-now');
+    const rBtn = this.shadowRoot.querySelector('.btn-restore-now');
+    const dBtn = this.shadowRoot.querySelector('.btn-delete-backup');
+    const slotSel = this.shadowRoot.querySelector('.backup-slot-select');
+    const lastDesc = this.shadowRoot.querySelector('.last-backup-desc');
+  if (bAuto) bAuto.checked = !!this._config.backup_auto_enabled;
+  if (bRow) bRow.style.display = (!!this._config.backup_auto_enabled) ? '' : 'none';
+    if (bMin && bMin !== this.shadowRoot.activeElement) bMin.value = String(this._config.backup_interval_days || 1);
+    // No master toggle; all individual checkboxes remain enabled
+    const fmt = (iso)=>{
+      try {
+        if(!iso) return '';
+        const d=new Date(iso);
+        const lang = ttGetLangFromHass(this._hass || this._lang || 'en');
+        const opts={ dateStyle:'medium', timeStyle:'short', hour12: !!this._config?.time_12h };
+        if (this._config?.time_source==='ha' && this._hass?.config?.time_zone) opts.timeZone=this._hass.config.time_zone;
+        return new Intl.DateTimeFormat(lang, opts).format(d);
+      } catch {
+        return String(iso||'');
+      }
+    };
+    // Fetch backup info from API
+    const fetchBackupInfo = async ()=>{
+      try {
+        if (!this._apiSupported?.()) return null;
+        return await this._hass.callApi('GET', 'thermostat_timeline/state');
+      } catch { return null; }
+    };
+    (async ()=>{
+      const api = await fetchBackupInfo();
+      if (lastDesc && api){
+        const ts = api?.backup?.last_backup_ts;
+        lastDesc.textContent = ts ? fmt(ts) : '';
+      }
+      if (slotSel && api){
+        const prevSel = slotSel.value;
+        const slots = Array.isArray(api?.backup?.slots) ? api.backup.slots : [];
+        const opts=[];
+        slots.forEach((entry, i)=>{
+          if(!entry) return;
+          const ts = entry.ts || entry.created_at || entry.created || null;
+          const labelTs = ts ? fmt(ts) : '';
+          const label = labelTs || 'Backup';
+          opts.push({value:String(i+1), label});
+        });
+        slotSel.innerHTML='';
+        const newOpt = document.createElement('option');
+        newOpt.value = 'new';
+        newOpt.textContent = (this._t && this._t('backup.new')) ? this._t('backup.new') : 'New backup';
+        slotSel.append(newOpt);
+        opts.forEach((o)=>{ const opt=document.createElement('option'); opt.value=o.value; opt.textContent=o.label; slotSel.append(opt); });
+
+        // Restore previous selection if still valid, else default to first backup (if any) otherwise new
+        const validValues = new Set(['new', ...opts.map(o=>o.value)]);
+        let targetVal = 'new';
+        if (prevSel && validValues.has(prevSel)) {
+          targetVal = prevSel;
+        } else if (opts.length > 0) {
+          targetVal = opts[0].value;
+        }
+        slotSel.value = targetVal;
+        const applyStates = ()=>{
+          const val = slotSel.value;
+          const isNew = (val === 'new' || !val);
+          const setState = (btn, disabled)=>{
+            if (!btn) return;
+            btn.disabled = !!disabled;
+            btn.style.opacity = disabled ? '0.55' : '';
+            btn.style.pointerEvents = disabled ? 'none' : '';
+            btn.style.filter = disabled ? 'grayscale(0.35)' : '';
+          };
+          setState(rBtn, isNew);
+          setState(dBtn, isNew);
+          setState(bBtn, !isNew);
+        };
+        applyStates();
+        slotSel.onchange = applyStates;
+      }
+    })();
+  bBtn && (bBtn.onclick = async ()=>{
+    try {
+      // Always full backup
+      await this._hass.callService('thermostat_timeline','backup_now', {});
+      // Note: sensor update removed - file-based storage is used
+      // give HA a moment to persist
+      await new Promise(res=>setTimeout(res, 800));
+      setTimeout(()=>{ try { this._render(); } catch{} }, 1200);
+    } catch {}
+  });
+  rBtn && (rBtn.onclick = async ()=>{
+    try {
+      const slot = Number(this.shadowRoot.querySelector('.backup-slot-select')?.value || '0') || undefined;
+      if (confirm('Restore from backup? This will overwrite current schedules and settings.')) {
+        const payload = { mode: 'replace' };
+        if (slot) payload.slot = slot;
+        await this._hass.callService('thermostat_timeline','restore_now', payload);
+        setTimeout(()=>{ try { this._render(); } catch{} }, 800);
+      }
+    } catch {}
+  });
+  dBtn && (dBtn.onclick = async ()=>{
+    try {
+      const slot = Number(this.shadowRoot.querySelector('.backup-slot-select')?.value || '0') || undefined;
+      if (!slot) return;
+      const msg = this._t ? this._t('backup.delete.confirm') : null;
+      if (!confirm(msg || 'Delete selected backup?')) return;
+      await this._hass.callService('thermostat_timeline','delete_backup', { slot });
+      setTimeout(()=>{ try { this._render(); } catch{} }, 800);
+    } catch {}
+  });
+  bAuto && bAuto.addEventListener('change', (e)=>{ const on=!!e.target.checked; this._upd('backup_auto_enabled', on); if (bRow) bRow.style.display = on? '' : 'none'; try { this._pushSettingsToStoreDebounced(); } catch {} });
+    bMin && bMin.addEventListener('change', (e)=>{ let v=Math.round(Number(e.target.value||1)); if(!Number.isFinite(v)) v=1; v=Math.max(1, Math.min(365, v)); e.target.value=String(v); this._upd('backup_interval_days', v); try { this._pushSettingsToStoreDebounced(); } catch {} });
+  } catch {}
+  // No mode dropdown in editor
+
+    const wrap = this.shadowRoot.querySelector(".entities");
+    const want = (this._config.entities || []).length;
+    if (wrap) {
+      // Rebuild rows; preserve which are open using a stable key per row (entity id or placeholder)
+      wrap.innerHTML = '';
+      for (let i=0;i<want;i++) {
+        const line = this._makeEntityRow(i);
+        const key = (this._config.entities?.[i]) || `#idx:${i}`;
+        if (this._openRows.has(key)) line.classList.add('open');
+        wrap.append(line);
+      }
+
+      // If Rooms tab is visible, proactively hydrate all pickers
+      try { if (this._activeTab === 'rooms') this._forcePickerRefresh(); } catch {}
+
+      for (let i=0;i<want;i++){
+        const row = wrap.children[i];
+        const picker = row.querySelector("tt-entity-picker, ha-entity-picker");
+        if (picker) {
+          picker.hass = this._hass;
+          try { picker.style.display = 'block'; picker.style.minHeight = '48px'; } catch {}
+          try { if (typeof picker.requestUpdate === 'function') picker.requestUpdate(); } catch {}
+          picker.value = this._config.entities[i] || "";
+          // Exclude entities already selected in other rows, or linked elsewhere; allow the current selection
+          picker.entityFilter = (st) => {
+            try {
+              const id = st?.entity_id || st?.entityId || st?.entityID || "";
+              if (!id) return false;
+              const chosenPrim = (this._config.entities || []).filter(Boolean);
+              const allLinked = Object.values(this._config.merges || {}).flat();
+              const blocked = new Set([...chosenPrim, ...allLinked]);
+              const current = this._config.entities[i];
+              return !blocked.has(id) || id === current;
+            } catch { return true; }
+          };
+        }
+
+      // Update header title and label input to reflect current selection/override
+      try {
+        const eid = this._config.entities[i] || "";
+        const labels = this._config.labels || {};
+        const titleEl = row.querySelector('.summary-title');
+        const subEl = row.querySelector('.summary-sub');
+        const nameInp = row.querySelector('.label-input');
+        const friendly = eid ? (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid)) : '';
+  const shown = labels[eid] || friendly || this._t('editor.entity_placeholder');
+        if (titleEl) titleEl.textContent = shown;
+        if (nameInp && nameInp !== this.shadowRoot.activeElement) nameInp.value = labels[eid] || '';
+        // Build merged subtitle text
+        if (subEl) {
+          const linked = (this._config.merges?.[eid] || []).map(id => (
+            this._hass?.states?.[id]?.attributes?.friendly_name || (id.split('.')[1] || id)
+          ));
+          const parts = [];
+          if (eid) parts.push(eid);
+          if (linked.length) parts.push(`${this._t('editor.merged_with')}: ${linked.join(', ')}`);
+          subEl.textContent = parts.join(' • ');
+        }
+      } catch {}
+
+      // Rebuild merge chips every render
+      try {
+        const eid = this._config.entities[i] || '';
+        const chips = row.querySelector('.linked-chips');
+        const mergePicker = row.querySelector('.merge-picker');
+        if (mergePicker) mergePicker.hass = this._hass;
+        if (chips && eid){
+          chips.innerHTML = '';
+          const links = (this._config.merges?.[eid] || []);
+          for (const l of links){
+            const chip = document.createElement('span');
+            chip.className = 'pill-chip';
+            const txt = document.createElement('span');
+            txt.textContent = this._hass?.states?.[l]?.attributes?.friendly_name || (l.split('.')[1]||l);
+            const rm = document.createElement('button');
+            rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+            rm.setAttribute('aria-label', this._t('editor.remove'));
+            rm.addEventListener('click', ()=>{
+              const merges = { ...(this._config.merges || {}) };
+              merges[eid] = (merges[eid]||[]).filter(x=>x!==l);
+              if (!merges[eid]?.length) delete merges[eid];
+              this._config.merges = merges;
+              this._emit(true);
+            });
+            chip.append(txt, rm);
+            chips.append(chip);
+          }
+        }
+
+          // (colors tab content and visibility now rendered once outside the entity loop)
+      } catch {}
+     }
+    }
+
+    // Build colors tab content (always render once, even with zero rooms)
+    // Build colors tab content (always render once, even with zero rooms)
+    try {
+      const root = this.shadowRoot.querySelector('.tab-colors');
+      if (root) {
+        root.innerHTML = '';
+
+        // Colors mode toggle (Per room | All rooms)
+        const modeWrap = document.createElement('div');
+        modeWrap.style.display = 'flex';
+        modeWrap.style.alignItems = 'center';
+        modeWrap.style.justifyContent = 'space-between';
+        modeWrap.style.gap = '10px';
+        modeWrap.style.marginBottom = '6px';
+        const modeText = document.createElement('div');
+        modeText.style.display = 'grid';
+        modeText.style.gap = '2px';
+        const modeTitle = document.createElement('div'); modeTitle.className = 'colors-mode-title'; modeTitle.style.fontWeight = '600'; modeTitle.textContent = this._t('editor.colors.mode') || 'Color mode';
+        const modeDesc = document.createElement('div'); modeDesc.className = 'colors-mode-desc'; modeDesc.style.fontSize = '.85rem'; modeDesc.style.color = 'var(--secondary-text-color)'; modeDesc.textContent = this._t('editor.colors.mode.desc') || 'Choose per-room colors or one set for all rooms.';
+        modeText.append(modeTitle, modeDesc);
+        const seg = document.createElement('div'); seg.className = 'seg colors-mode';
+        const bRoom = document.createElement('button'); bRoom.type = 'button'; bRoom.className = 'mode-room'; bRoom.textContent = this._t('editor.colors.mode_per_room') || 'Per room';
+        const bGlob = document.createElement('button'); bGlob.type = 'button'; bGlob.className = 'mode-global'; bGlob.textContent = this._t('editor.colors.mode_global') || 'All rooms';
+        const applySegUi = ()=>{ const on = !!this._config.color_global; bGlob.classList.toggle('active', on); bRoom.classList.toggle('active', !on); };
+        bRoom.onclick = ()=>{ this._config.color_global = false; this._emit(true); this._pushSettingsToStoreDebounced(); };
+        bGlob.onclick = ()=>{ this._config.color_global = true; this._emit(true); this._pushSettingsToStoreDebounced(); };
+        seg.append(bRoom, bGlob);
+        applySegUi();
+        modeWrap.append(modeText, seg);
+        root.append(modeWrap);
+
+        const isGlobal = !!this._config.color_global;
+
+        // If per-room mode and there are no rooms yet, show helper box
+        if (!isGlobal && want === 0) {
+          const box = document.createElement('div'); box.className = 'empty-box';
+          const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
+          const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn'; btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
+          btn.onclick = () => {
+            this._activeTab = 'rooms'; this._render();
+            const add = this.shadowRoot.querySelector('.add-room-btn');
+            if (add) { add.classList.add('pulse-attn','pulse'); setTimeout(() => add.classList.remove('pulse'), 3500); add.scrollIntoView({ behavior:'smooth', block:'center' }); }
+          };
+          box.append(p, btn); root.append(box);
+        }
+
+        // --- FIXED: GLOBAL EDITOR ---
+        if (isGlobal) {
+          const eid = '*';
+          const line = document.createElement('div'); line.className = 'inline';
+          const summary = document.createElement('div'); summary.className = 'summary';
+          const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+          const exp = document.createElement('button'); exp.className = 'expander'; exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+          const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+          const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = this._t('editor.colors.global_title') || 'All rooms';
+          txtWrap.append(titleSpan); sumLeft.append(exp, txtWrap); summary.append(sumLeft);
+          line.append(summary);
+          const details = document.createElement('div'); details.className = 'details'; line.append(details);
+          const colorsWrap = document.createElement('div'); colorsWrap.style.display = 'grid'; colorsWrap.style.gap = '0px'; details.append(colorsWrap);
+          const head = document.createElement('div'); head.className = 'colors-head';
+          head.innerHTML = `<span>${this._t('editor.colors.col_from')}</span><span>${this._t('editor.colors.col_to')}</span><span>${this._t('editor.colors.col_color')}</span><span></span>`;
+          try { if (this._openColorRows.has(eid)) line.classList.add('open'); } catch {}
+          const renderRanges = () => {
+            colorsWrap.innerHTML = '';
+            // Get current list (treat as read-only)
+            const ranges = (this._config.color_ranges?.[eid]) || [];
+            if (ranges.length > 0) colorsWrap.append(head);
+            ranges.forEach((r, ri) => {
+              const outer = document.createElement('div'); outer.className = 'color-item';
+              const row = document.createElement('div'); row.className = 'colors-row';
+              const f = document.createElement('input'); f.type = 'number'; f.step = '0.5'; f.value = String(this._toDisplayTemp(r.from ?? 0)); f.setAttribute('aria-label', this._t('editor.colors.col_from')); f.title = this._t('editor.colors.col_from');
+              const t = document.createElement('input'); t.type = 'number'; t.step = '0.5'; t.value = String(this._toDisplayTemp(r.to ?? 0)); t.setAttribute('aria-label', this._t('editor.colors.col_to')); t.title = this._t('editor.colors.col_to');
+              const c = document.createElement('input'); c.type = 'color'; c.value = r.color || '#ffb347'; c.setAttribute('aria-label', this._t('editor.colors.col_color')); c.title = this._t('editor.colors.col_color');
+              const maxDisp = this._toDisplayTemp(this._config.max_temp ?? 25);
+              const minDisp = this._toDisplayTemp(this._config.min_temp ?? 5);
+              f.min = String(minDisp); t.min = String(minDisp);
+              f.max = String(maxDisp); t.max = String(maxDisp);
+              const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+              
+              const repaint = ()=>{ this._emit(true); try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {} try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {} };
+              
+              // --- SAFE IMMUTABLE UPDATES ---
+              f.onchange = () => { 
+                let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v); 
+                // Copy array
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                // Copy object and update
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], from: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                repaint(); 
+              };
+              t.onchange = () => { 
+                let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v); 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], to: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                repaint(); 
+              };
+              c.onchange = () => { 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], color: c.value };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                repaint(); 
+              };
+              rm.onclick = () => { 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                copied_config.splice(ri, 1);
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config }; 
+                this._emit(true); renderRanges(); 
+              };
+              // -----------------------------
+
+              row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
+            });
+            const add = document.createElement('button'); add.className = 'add-entity-btn'; add.type = 'button'; add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
+            add.onclick = () => { const arr = [...(this._config.color_ranges?.[eid] || [])]; arr.push({ from: this._config.default_temp || 20, to: this._config.default_temp || 20, color: '#ffb347' }); this._config.color_ranges = { ...(this._config.color_ranges || {}), [eid]: arr }; this._emit(true); renderRanges(); };
+            colorsWrap.append(add);
+          };
+          renderRanges();
+          exp.onclick = () => { line.classList.toggle('open'); const key = eid; if (line.classList.contains('open')) this._openColorRows.add(key); else this._openColorRows.delete(key); };
+          root.append(line);
+        }
+
+        // --- FIXED: PER-ROOM EDITOR ---
+        for (let i = 0; !isGlobal && i < want; i++) {
+          const eid = this._config.entities[i]; if (!eid) continue;
+          const line = document.createElement('div'); line.className = 'inline';
+          const summary = document.createElement('div'); summary.className = 'summary';
+          const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+          const exp = document.createElement('button'); exp.className = 'expander'; exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+          const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+          const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+          try {
+            const labels = this._config.labels || {};
+            const display = labels[eid] || this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid);
+            titleSpan.textContent = display;
+          } catch { titleSpan.textContent = this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid); }
+          txtWrap.append(titleSpan); sumLeft.append(exp, txtWrap); summary.append(sumLeft);
+          line.append(summary);
+          const details = document.createElement('div'); details.className = 'details'; line.append(details);
+          const colorsWrap = document.createElement('div'); colorsWrap.style.display = 'grid'; colorsWrap.style.gap = '0px'; details.append(colorsWrap);
+          const head = document.createElement('div'); head.className = 'colors-head';
+          head.innerHTML = `<span>${this._t('editor.colors.col_from')}</span><span>${this._t('editor.colors.col_to')}</span><span>${this._t('editor.colors.col_color')}</span><span></span>`;
+          try { if (this._openColorRows.has(eid)) line.classList.add('open'); } catch {}
+          const renderRanges = () => {
+            colorsWrap.innerHTML = '';
+            // Get current list (treat as read-only)
+            const ranges = (this._config.color_ranges?.[eid]) || [];
+            if (ranges.length > 0) colorsWrap.append(head);
+            ranges.forEach((r, ri) => {
+              const outer = document.createElement('div'); outer.className = 'color-item';
+              const row = document.createElement('div'); row.className = 'colors-row';
+              const f = document.createElement('input'); f.type = 'number'; f.step = '0.5'; f.value = String(this._toDisplayTemp(r.from ?? 0)); f.setAttribute('aria-label', this._t('editor.colors.col_from')); f.title = this._t('editor.colors.col_from');
+              const t = document.createElement('input'); t.type = 'number'; t.step = '0.5'; t.value = String(this._toDisplayTemp(r.to ?? 0)); t.setAttribute('aria-label', this._t('editor.colors.col_to')); t.title = this._t('editor.colors.col_to');
+              const c = document.createElement('input'); c.type = 'color'; c.value = r.color || '#ffb347'; c.setAttribute('aria-label', this._t('editor.colors.col_color')); c.title = this._t('editor.colors.col_color');
+              const maxDisp = this._toDisplayTemp(this._config.max_temp ?? 25);
+              const minDisp = this._toDisplayTemp(this._config.min_temp ?? 5);
+              f.min = String(minDisp); t.min = String(minDisp);
+              f.max = String(maxDisp); t.max = String(maxDisp);
+              const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>' + (this._t('editor.remove') || 'Remove') + '</span>';
+              
+              const repaint = ()=>{
+                this._emit(true);
+                try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+                try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+              };
+
+              // --- SAFE IMMUTABLE UPDATES ---
+              f.onchange = () => {
+                let v=parseFloat(f.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); f.value=String(v);
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], from: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
+                repaint();
+              };
+              t.onchange = () => {
+                let v=parseFloat(t.value); if (isNaN(v)) v=minDisp; v=Math.max(minDisp, Math.min(maxDisp, v)); t.value=String(v);
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], to: this._fromDisplayTemp(v) };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
+                repaint();
+              };
+              c.onchange = () => {
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                if(copied_config[ri]) copied_config[ri] = { ...copied_config[ri], color: c.value };
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
+                repaint();
+              };
+              rm.onclick = () => { 
+                const copied_config = [...(this._config.color_ranges?.[eid] || [])];
+                copied_config.splice(ri, 1);
+                this._config.color_ranges = { ...(this._config.color_ranges||{}), [eid]: copied_config };
+                this._emit(true); renderRanges(); 
+              };
+              // -----------------------------
+
+              row.append(f, t, c, rm); outer.append(row); colorsWrap.append(outer);
+            });
+            const add = document.createElement('button'); add.className = 'add-entity-btn'; add.type = 'button'; add.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.heat_colors.add') || 'Add color range') + '</span>';
+            add.onclick = () => { const arr = [...(this._config.color_ranges?.[eid] || [])]; arr.push({ from: this._config.default_temp || 20, to: this._config.default_temp || 20, color: '#ffb347' }); this._config.color_ranges = { ...(this._config.color_ranges || {}), [eid]: arr }; this._emit(true); renderRanges(); };
+            colorsWrap.append(add);
+          };
+          renderRanges();
+          exp.onclick = () => {
+            line.classList.toggle('open');
+            const key = eid;
+            if (line.classList.contains('open')) this._openColorRows.add(key);
+            else this._openColorRows.delete(key);
+          };
+          root.append(line);
+        }
+
+  // Add explicit refresh/apply button for colors
+  const refresh = document.createElement('button');
+        refresh.className = 'add-entity-btn';
+        refresh.type = 'button';
+        refresh.innerHTML = '<ha-icon icon="mdi:refresh"></ha-icon><span>' + (this._t('editor.colors.refresh') || 'Update schedule') + '</span>';
+  refresh.onclick = async () => {
+          // Persist color settings to local/shared storage so live card instances pick them up
+          try {
+            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+            const colors = { color_ranges: this._config.color_ranges, color_global: !!this._config.color_global };
+            let schedules = {};
+            // Prefer current file storage schedules when enabled - use API
+            try {
+              if (this._config?.storage_enabled && this._apiSupported?.()) {
+                const resp = await this._apiFetchState?.();
+                if (resp && typeof resp === 'object' && resp.schedules) {
+                  schedules = JSON.parse(JSON.stringify(resp.schedules));
+                }
+              }
+            } catch {}
+            // Fallback to localStorage copy
+            if (!schedules || Object.keys(schedules).length===0){
+              try {
+                const raw = localStorage.getItem('thermostat_timeline_store') || '';
+                const parsed = JSON.parse(raw||'{}');
+                schedules = parsed.schedules || {};
+                // Unwrap if accidentally saved nested
+                if (schedules && schedules.schedules && typeof schedules.schedules === 'object') schedules = schedules.schedules;
+              } catch {}
+            }
+            // Write local copy
+            try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings: { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) }, colors })); } catch {}
+            // And update shared file storage if available
+            try {
+              if (this._config.storage_enabled) {
+                const setPayload = { ...settings, show_pause_button: !!(this._config.show_pause_button ?? true), pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false), pause_sensor_entity: String(this._config.pause_sensor_entity || ''), auto_apply_enabled: !!(this._config.auto_apply ?? true), pause_indef: !!this._pauseIndef, pause_until_ms: Number(this._pauseUntilMs||0) };
+                await this._hass.callService('thermostat_timeline','set_store', { schedules, settings: setPayload, colors });
+              }
+            } catch {}
+          } catch {}
+          // Emit config change and force preview card re-render
+          this._emit(true);
+          try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+          try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+        };
+  // Append buttons stacked (each on its own line) and aligned left
+  // Update schedule button
+  root.append(refresh);
+
+        // Single button: clear all color data (local + shared if available)
+        const clrAll = document.createElement('button');
+        clrAll.className = 'remove-btn clr-colors-all-btn';
+        clrAll.type = 'button';
+        try { clrAll.style.width = 'max-content'; clrAll.style.justifySelf = 'start'; } catch {}
+        clrAll.innerHTML = '<ha-icon icon="mdi:delete-alert"></ha-icon><span>' + (this._t('editor.colors.clear_all') || 'Clear all color data') + '</span>';
+        clrAll.onclick = async () => {
+          const ok = confirm(this._t('editor.colors.clear_all_confirm') || 'This will delete all color ranges from both local and shared storage. Continue?');
+          if (!ok) return;
+          try {
+            // 1) Clear in-memory config
+            this._config.color_ranges = {};
+            // 2) Clear localStorage copy
+            try {
+              const raw = localStorage.getItem('thermostat_timeline_store') || '';
+              let schedules = {};
+              let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), color_ranges: {}, color_global: !!this._config.color_global, min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+              let colors = { color_ranges: {}, color_global: !!this._config.color_global };
+              if (raw) {
+                try {
+                  const parsed = JSON.parse(raw || '{}');
+                  schedules = parsed.schedules || {};
+                  const prev = parsed.settings || {};
+                  settings = { ...prev, color_ranges: {} };
+                  colors = parsed.colors || colors;
+                } catch {}
+              }
+              localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings, colors }));
+            } catch {}
+            // 3) Clear shared file storage if enabled
+            try {
+              if (this._hass && this._config?.storage_enabled) {
+                let schedules = {};
+                let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), color_ranges: {}, color_global: !!this._config.color_global, min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+                let colors = { color_ranges: {}, color_global: !!this._config.color_global };
+                // Fetch current schedules from API to preserve them while clearing colors
+                try {
+                  const resp = await this._apiFetchState?.();
+                  if (resp && typeof resp === 'object') {
+                    if (resp.schedules) schedules = JSON.parse(JSON.stringify(resp.schedules));
+                    if (resp.settings) settings = { ...resp.settings, color_ranges: {} };
+                    if (resp.colors) colors = { ...resp.colors, color_ranges: {} };
+                  }
+                } catch {}
+                await this._hass.callService('thermostat_timeline', 'set_store', { schedules, settings, colors });
+              }
+            } catch (e) {}
+          } catch {}
+          // Repaint editor + live cards
+          this._emit(true);
+          try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+          try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+        };
+        root.append(clrAll);
+      }
+    } catch {}
+
+    // Build Holidays tab content
+    try {
+      const root = this.shadowRoot.querySelector('.tab-holidays');
+      if (root) {
+        root.innerHTML = '';
+        // Toggle enable inside Holidays tab
+        const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
+        const enRow = document.createElement('div'); enRow.className='setting';
+        const enText = document.createElement('div'); enText.className='text';
+        const enTitle = document.createElement('div'); enTitle.className='title'; enTitle.textContent = this._t('holidays.enable');
+        const enDesc = document.createElement('div'); enDesc.className='desc'; enDesc.textContent = this._t('holidays.desc');
+        enText.append(enTitle, enDesc);
+        const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'holidays-enable'; enSwitch.checked = !!this._config.holidays_enabled;
+        enSwitch.addEventListener('change', (e)=>{ const on = !!e.target.checked; this._upd('holidays_enabled', on); try { contentWrap.style.display = on ? '' : 'none'; } catch {} try { this._pushSettingsToStoreDebounced(); } catch {} });
+        enRow.append(enText, enSwitch); enableCard.append(enRow); root.append(enableCard);
+        // Container for remaining content (shown only when enabled)
+        const contentWrap = document.createElement('div'); contentWrap.className='holidays-content'; contentWrap.style.display = this._config.holidays_enabled ? '' : 'none'; root.append(contentWrap);
+        // Enable hint if no rooms
+        if ((this._config.entities||[]).length === 0) {
+          const box = document.createElement('div'); box.className='empty-box';
+          const p = document.createElement('div'); p.textContent = this._t('editor.select_entities');
+          const btn = document.createElement('button'); btn.type='button'; btn.className='add-entity-btn'; btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+(this._t('editor.add_entity')||'Add room')+'</span>';
+          btn.onclick = ()=>{ this._activeTab='rooms'; this._render(); };
+          box.append(p, btn); contentWrap.append(box);
+        }
+        // Source selector
+        const sourceWrap = document.createElement('div'); sourceWrap.className='settings-card';
+        const sRow = document.createElement('div'); sRow.className='setting';
+        const sText = document.createElement('div'); sText.className='text';
+        const sTitle = document.createElement('div'); sTitle.className='title'; sTitle.textContent = this._t('holidays.source');
+        const sDesc = document.createElement('div'); sDesc.className='desc'; sDesc.textContent = this._t('holidays.desc');
+        sText.append(sTitle, sDesc);
+  const sSeg = document.createElement('div'); sSeg.className='seg';
+  const bCal = document.createElement('button'); bCal.type='button'; bCal.className='h-src-cal'; bCal.textContent = this._t('holidays.source.calendar');
+  const bMan = document.createElement('button'); bMan.type='button'; bMan.className='h-src-man'; bMan.textContent = this._t('holidays.source.manual');
+  const applySegUi = ()=>{ const src = this._config.holidays_source || 'calendar'; bCal.classList.toggle('active', src==='calendar'); bMan.classList.toggle('active', src==='manual'); };
+  bCal.onclick = ()=>{ this._config.holidays_source='calendar'; applySegUi(); this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
+  bMan.onclick = ()=>{ this._config.holidays_source='manual'; applySegUi(); this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
+  sSeg.append(bCal, bMan); sRow.append(sText, sSeg); sourceWrap.append(sRow); applySegUi();
+        // Calendar entity picker
+    const rowCal = document.createElement('div'); rowCal.className='setting'; rowCal.style.display = (this._config.holidays_source||'calendar')==='calendar' ? 'grid' : 'none';
+    // Override layout to single-column so description can sit under the dropdown
+    try { rowCal.style.gridTemplateColumns = '1fr'; } catch {}
+    const calTxt = document.createElement('div'); calTxt.className='text';
+    const calTitle = document.createElement('div'); calTitle.className='title'; calTitle.textContent = this._t('holidays.entity');
+    calTxt.append(calTitle);
+  const picker = document.createElement('tt-entity-picker'); picker.className='holiday-entity'; picker.setAttribute('include-domains','["calendar"]'); picker.setAttribute('label', this._t('holidays.entity'));
+        try { picker.hass = this._hass; picker.value = this._config.holidays_entity || ''; } catch {}
+        picker.addEventListener('value-changed', (e)=>{ this._upd('holidays_entity', e.detail.value||''); try { this._pushSettingsToStoreDebounced(); } catch {} });
+    // Description moved below the dropdown to avoid cramped layout
+    const calDesc = document.createElement('div'); calDesc.className='desc'; calDesc.textContent = this._t('holidays.entity_desc');
+  rowCal.append(calTxt, picker, calDesc); sourceWrap.append(rowCal);
+        // Manual dates list
+        const rowMan = document.createElement('div'); rowMan.className='setting'; rowMan.style.display = (this._config.holidays_source||'calendar')==='manual' ? 'grid' : 'none';
+        const manTxt = document.createElement('div'); manTxt.className='text';
+        const manTitle = document.createElement('div'); manTitle.className='title'; manTitle.textContent = this._t('holidays.dates');
+        const manDesc = document.createElement('div'); manDesc.className='desc'; manDesc.textContent=''; manTxt.append(manTitle, manDesc);
+        const manWrap = document.createElement('div'); manWrap.style.display='grid'; manWrap.style.gap='8px';
+        const addRow = document.createElement('div'); addRow.style.display='flex'; addRow.style.gap='8px'; addRow.style.alignItems='center';
+        const inp = document.createElement('input'); inp.type='date'; inp.className='tt-input';
+        const addBtn = document.createElement('button'); addBtn.type='button'; addBtn.className='add-entity-btn'; addBtn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+(this._t('holidays.add_date')||'Add date')+'</span>';
+        addBtn.onclick = ()=>{ const v=inp.value; if (!v) return; const arr = Array.isArray(this._config.holidays_dates)?[...this._config.holidays_dates]:[]; if (!arr.includes(v)) arr.push(v); this._config.holidays_dates = arr.sort(); inp.value=''; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
+        addRow.append(inp, addBtn); manWrap.append(addRow);
+        const chips = document.createElement('div'); chips.className='linked-chips';
+        const arr = Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[];
+        chips.innerHTML='';
+        for (const d of arr){ const chip=document.createElement('span'); chip.className='pill-chip'; const txt=document.createElement('span'); txt.textContent=d; const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} }); chip.append(txt, rm); chips.append(chip); }
+    manWrap.append(chips); rowMan.append(manTxt, manWrap); sourceWrap.append(rowMan);
+    contentWrap.append(sourceWrap);
+        // Inline Holidays editor (preview + edit) inside editor
+  const edWrap = document.createElement('div'); edWrap.className = 'holiday-ed'; edWrap.style.position = 'relative';
+        // Room tabs
+        const tabs = document.createElement('div'); tabs.className='hol-tabs'; tabs.style.display='flex'; tabs.style.gap='8px'; tabs.style.flexWrap='wrap'; edWrap.append(tabs);
+        const note = document.createElement('div'); note.style.fontSize='.85rem'; note.style.color='var(--secondary-text-color)'; note.textContent = this._t('week.editor.preview_note'); edWrap.append(note);
+        // Scale
+        const scaleOuter = document.createElement('div'); scaleOuter.className='week-scale'; const scale = document.createElement('div'); scale.className='week-scale-inner'; scaleOuter.append(scale); edWrap.append(scaleOuter);
+        // Track
+        const track = document.createElement('div'); track.className='week-track'; edWrap.append(track);
+        // Toolbar
+  const tools = document.createElement('div'); tools.className='hol-toolbar';
+  const addBlkBtn = document.createElement('button'); addBlkBtn.className='add-entity-btn'; addBlkBtn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+ (this._t('ui.add_block') || 'Add block') +'</span>';
+  const saveBtn = document.createElement('button'); saveBtn.className='add-entity-btn'; saveBtn.innerHTML = '<ha-icon icon="mdi:content-save"></ha-icon><span>'+ (this._t('ui.save')||'Save') +'</span>';
+  tools.append(addBlkBtn, saveBtn); edWrap.append(tools);
+        // Inline mini block editor panel
+        const mini = document.createElement('div'); mini.className='mini-ed'; mini.style.display='none'; mini.innerHTML = `
+          <div class="row"><label style="min-width:64px;">${this._t('ui.from')}</label><input class="mi-from" type="time" step="60"></div>
+          <div class="row"><label style="min-width:64px;">${this._t('ui.to')}</label><input class="mi-to" type="time" step="60"></div>
+          <div class="row"><label style="min-width:64px;">${this._t('ui.temperature')}</label><input class="mi-temp" type="number" step="0.5"></div>
+          <div class="row" style="justify-content:flex-end; gap:8px;">
+            <button type="button" class="remove-btn mi-del"><ha-icon icon="mdi:close"></ha-icon><span>${this._t('ui.delete')}</span></button>
+            <button type="button" class="add-entity-btn mi-cancel"><ha-icon icon="mdi:close-circle-outline"></ha-icon><span>${this._t('ui.cancel')}</span></button>
+            <button type="button" class="add-entity-btn mi-save"><ha-icon icon="mdi:content-save"></ha-icon><span>${this._t('ui.save')}</span></button>
+          </div>
+        `;
+  edWrap.append(mini);
+  contentWrap.append(edWrap);
+
+        // Helpers
+        const toTime = (min)=>{ min=(Number(min)||0)%1440; const hh=String(Math.floor(min/60)).padStart(2,'0'); const mm=String(min%60).padStart(2,'0'); return `${hh}:${mm}`; };
+        const fromTime = (s)=>{ const m=(/^(\d{1,2}):(\d{2})$/).exec(String(s||'')); if(!m) return 0; let h=Number(m[1]); let mi=Number(m[2]); h=Math.min(23,Math.max(0,h)); mi=Math.min(59,Math.max(0,mi)); return h*60+mi; };
+        const toDisp = (c)=> this._toDisplayTemp(Number(c));
+        const fromDisp = (v)=> this._fromDisplayTemp(Number(v));
+
+        // Color helpers (mirror of card logic)
+        const colorFor = (eid, tempC)=>{
+          try {
+            const cr = this._config?.color_ranges || {};
+            const list = this._config?.color_global ? (cr['*'] || []) : (cr[eid] || cr['*'] || []);
+            for (const r of (list||[])){
+              const f = Number(r.from); const t = Number(r.to);
+              if (Number.isFinite(f) && Number.isFinite(t) && tempC >= f && tempC <= t) return r.color || null;
+            }
+          } catch {}
+          return null;
+        };
+        const contrastText = (hex)=>{
+          try { const h = String(hex||'').replace('#',''); if (h.length!==6) return '#000000'; const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16); const yiq=(r*299+g*587+b*114)/1000; return yiq>=140 ? '#000000' : '#ffffff'; } catch { return '#000000'; }
+        };
+
+          const ensureHolDraft = async ()=>{
+          if (this._holDraft) return;
+          let schedules = {}; let settings={};
+          // Load from file storage via API
+          try {
+            if (this._config?.storage_enabled && this._apiSupported?.()) {
+              const resp = await this._apiFetchState?.();
+              if (resp && typeof resp === 'object') {
+                schedules = resp.schedules || {};
+                if (schedules.schedules) schedules = schedules.schedules;
+                settings = resp.settings || {};
+              }
+            }
+          } catch {}
+          if (!Object.keys(schedules||{}).length){ try { const raw=localStorage.getItem('thermostat_timeline_store')||''; const parsed=JSON.parse(raw||'{}'); schedules=parsed.schedules||{}; if (schedules.schedules) schedules=schedules.schedules; settings=parsed.settings||{}; } catch {} }
+          const roomsMap={}; for (const eid of (this._config?.entities||[])){ const row=schedules[eid]||{}; const arr=(row.holiday && Array.isArray(row.holiday.blocks))?row.holiday.blocks:[]; roomsMap[eid]=JSON.parse(JSON.stringify(arr)); }
+          this._holDraft={ rooms: roomsMap }; this._holRoom = this._holRoom || (this._config?.entities||[])[0] || null;
+        };
+
+        const paintScale = ()=>{ scale.innerHTML=''; for(let i=0;i<=24;i+=2){ const t=document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)'; const lab=document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)'; lab.textContent=(i===24?'00:00':toTime(i*60)); t.append(lab); scale.append(t);} };
+
+        const paintTabs = ()=>{ tabs.innerHTML=''; const ents=this._config?.entities||[]; if (!this._holRoom || !ents.includes(this._holRoom)) this._holRoom=ents[0]||null; for (const eid of ents){ const b=document.createElement('button'); b.type='button'; b.className='wk-tab'+(eid===this._holRoom?' active':''); let lbl=this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1]||eid)); b.textContent=lbl; b.onclick=()=>{ this._holRoom=eid; paintTrack(); }; tabs.append(b);} };
+
+        const openMini = (blk)=>{ mini.style.display=''; const f=mini.querySelector('.mi-from'); const t=mini.querySelector('.mi-to'); const tmp=mini.querySelector('.mi-temp'); f.value=toTime(blk.startMin); t.value=toTime(blk.endMin%1440); tmp.value=String(toDisp(blk.temp)); this._holMini = { room: this._holRoom, blk: { id: blk.id, startMin: blk.startMin, endMin: blk.endMin, temp: blk.temp } };
+          // Focus first field so global editor render guard keeps panel open
+          try { f.focus(); f.select && f.select(); } catch {}
+          mini.querySelector('.mi-save').onclick=()=>{ const s=fromTime(f.value); let e=fromTime(t.value); if (e===0 && t.value==='00:00') e=1440; const arr=(this._holDraft.rooms||{})[this._holRoom]||[]; let b=arr.find(x=>x.id===blk.id); if (!b) { b = { id: blk.id, startMin:s, endMin:e, temp: fromDisp(tmp.value) }; arr.push(b); } else { b.startMin=Math.max(0,Math.min(1439,s)); b.endMin=Math.max(1,Math.min(1440,e)); b.temp=fromDisp(tmp.value); } arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin); (this._holDraft.rooms||{})[this._holRoom]=arr; this._holMini = null; mini.style.display='none'; paintTrack(); };
+          mini.querySelector('.mi-cancel').onclick=()=>{ this._holMini = null; mini.style.display='none'; };
+          mini.querySelector('.mi-del').onclick=()=>{ const arr=(this._holDraft.rooms||{})[this._holRoom]||[]; const i=arr.findIndex(x=>x.id===blk.id); if (i>=0) { arr.splice(i,1); (this._holDraft.rooms||{})[this._holRoom]=arr; paintTrack(); } this._holMini = null; mini.style.display='none'; };
+        };
+
+        const paintTrack = async ()=>{ await ensureHolDraft(); paintTabs(); paintScale(); track.innerHTML='';
+          // Ensure tooltip exists once
+          let tip = edWrap.querySelector('.ed-hol-tooltip');
+          if (!tip) { tip = document.createElement('div'); tip.className='wk-tooltip ed-hol-tooltip'; tip.style.display='none'; edWrap.append(tip); }
+          const arr=(this._holDraft.rooms||{})[this._holRoom]||[];
+          for (const b of arr){ const div=document.createElement('div'); div.className='block'; div.style.left=(b.startMin/1440*100)+'%'; div.style.width=((b.endMin-b.startMin)/1440*100)+'%';
+            // Apply heat color if configured
+            try { const clr = colorFor(this._holRoom, Number(b.temp)); if (clr) { div.style.background = clr; div.style.borderColor = clr; const txt=contrastText(clr); if (txt) div.style.color = txt; } } catch {}
+            const showTip = ()=>{
+              const txt = `${toTime(b.startMin)} - ${toTime(b.endMin)} • ${toDisp(b.temp)} ${this._isF()? '°F':'°C'}`;
+              tip.textContent = txt; tip.style.display = '';
+              const box = div.getBoundingClientRect();
+              const cont = edWrap.getBoundingClientRect();
+              const tbox = track.getBoundingClientRect();
+              // Base center: visual center of the hovered block element
+              let center = box.left + box.width/2 - cont.left;
+              const tipW = tip.offsetWidth || 0; const tipH = tip.offsetHeight || 0; const pad = 8;
+              const minC = (tbox.left - cont.left) + pad + tipW/2;
+              const maxC = (tbox.right - cont.left) - pad - tipW/2;
+              center = Math.max(minC, Math.min(maxC, center));
+              // Prefer above the block; if not enough space, flip below
+              const yAbove = box.top - cont.top - 8; // anchor a bit above block
+              const yBelow = box.bottom - cont.top + 8; // a bit below block
+              if (yAbove - tipH < pad) {
+                tip.style.top = Math.min(cont.height - pad, yBelow) + 'px';
+                tip.style.transform = 'translate(-50%,0)';
+              } else {
+                // Place right above the block top edge
+                tip.style.top = Math.max(pad, box.top - cont.top + 6) + 'px';
+                tip.style.transform = 'translate(-50%,-100%)';
+              }
+              tip.style.left = center + 'px';
+            };
+            const hideTip = ()=>{ const delay = (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) ? 3000 : 120; if (tip._hideTimer) try{ clearTimeout(tip._hideTimer);}catch{}; tip._hideTimer = setTimeout(()=>{ try { tip.style.display='none'; tip._hideTimer = null; } catch{} }, delay); };
+            div.addEventListener('mouseenter', showTip); div.addEventListener('mouseleave', hideTip);
+            div.ondblclick=()=>openMini(b); track.append(div);
+          }
+          // Re-open mini editor if it was open before a re-render
+          if (this._holMini && this._holMini.room === this._holRoom) {
+            openMini(this._holMini.blk);
+          }
+        };
+
+  addBlkBtn.onclick = async ()=>{ await ensureHolDraft(); const now=new Date(); const m=now.getHours()*60+now.getMinutes(); const start=Math.max(0,Math.min(1380, Math.round(m))); const end=Math.min(1440,start+60); const blk={ id: Math.random().toString(36).slice(2,9), startMin:start, endMin:end, temp: fromDisp(this._config.default_temp||20) }; openMini(blk); };
+
+  saveBtn.onclick = async ()=>{
+    await ensureHolDraft();
+    let schedules={};
+    let settings={};
+    // Load current schedules from file storage via API
+    try {
+      if (this._config?.storage_enabled && this._apiSupported?.()) {
+        const resp = await this._apiFetchState?.();
+        if (resp && typeof resp === 'object') {
+          schedules = resp.schedules || {};
+          if (schedules.schedules) schedules = schedules.schedules;
+          settings = resp.settings || {};
+        }
+      }
+    } catch {}
+    if (!Object.keys(schedules||{}).length){
+      try {
+        const raw=localStorage.getItem('thermostat_timeline_store')||'';
+        const parsed=JSON.parse(raw||'{}');
+        schedules=parsed.schedules||{};
+        if (schedules.schedules) schedules=schedules.schedules;
+        settings=parsed.settings||{};
+      } catch {}
+    }
+    for (const eid of (this._config?.entities||[])){
+      const row=schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      const arr=(this._holDraft.rooms||{})[eid]||[];
+      row.holiday={ blocks: JSON.parse(JSON.stringify(arr)) };
+      schedules[eid]=row;
+    }
+    const wantF = this._isF();
+    const schOut = wantF ? this._convertSchedulesTemps(schedules,'F') : schedules;
+    let settingsOut = { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] };
+    try {
+      if (wantF) {
+        const toStore=(n)=>{ const v=Number(n); return Number.isFinite(v)? this._cToF(v): n; };
+        if (settingsOut.default_temp!==undefined) settingsOut.default_temp = toStore(settingsOut.default_temp);
+        if (settingsOut.min_temp!==undefined) settingsOut.min_temp = toStore(settingsOut.min_temp);
+        if (settingsOut.max_temp!==undefined) settingsOut.max_temp = toStore(settingsOut.max_temp);
+        if (settingsOut.away && typeof settingsOut.away==='object' && settingsOut.away.target_c!==undefined) {
+          settingsOut.away = { ...settingsOut.away, target_c: toStore(settingsOut.away.target_c) };
+        }
+      }
+    } catch {}
+    try { localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules: schOut, settings: settingsOut })); } catch {}
+    // Save to file storage via service
+    try {
+      if (this._config.storage_enabled) {
+        await this._hass.callService('thermostat_timeline','set_store',{ schedules: schOut, settings: settingsOut });
+      }
+    } catch {}
+    try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+  };
+
+        // Initial render
+        (async()=>{ await ensureHolDraft(); await paintTrack(); })();
+      }
+    } catch {}
+
+    // Apply tab visibility/class based on current state
+    try {
+      const sBtn = this.shadowRoot.querySelector('.tab-settings-btn');
+      const bBtn = this.shadowRoot.querySelector('.tab-backup-btn');
+
+      const sSec = this.shadowRoot.querySelector('.tab-settings');
+      const bSec = this.shadowRoot.querySelector('.tab-backup');
+
+      const setActive = (btn, on) => {
+        if (!btn) return;
+        try { btn.classList.toggle('active', !!on); } catch {}
+        try { btn.setAttribute('aria-selected', on ? 'true' : 'false'); } catch {}
+      };
+      const setShow = (sec, on) => {
+        if (!sec) return;
+        try { sec.style.display = on ? '' : 'none'; } catch {}
+      };
+
+      const showBackup = !!this._config.storage_enabled;
+      if (!showBackup && this._activeTab === 'backup') this._activeTab = 'settings';
+      if (this._activeTab === 'sync') this._activeTab = 'settings';
+      if (!['settings', 'backup'].includes(this._activeTab)) this._activeTab = 'settings';
+
+      const isSettings = this._activeTab === 'settings';
+      const isBackup = this._activeTab === 'backup';
+
+      setActive(sBtn, isSettings);
+      if (bBtn) {
+        setActive(bBtn, isBackup);
+        try { bBtn.style.display = showBackup ? '' : 'none'; } catch {}
+      }
+
+      setShow(sSec, isSettings);
+      setShow(bSec, showBackup && isBackup);
+    } catch {}
+
+  }
+
+  // Pointer-driven Drag & Drop (works reliably inside HA editors)
+  _startPointerDnd(line, idx){
+    const wrap = line.parentElement;
+    if (!wrap) return;
+    if (this._pointerDndActive) return;
+    this._pointerDndActive = true;
+    // Avoid any re-render while dragging which could disrupt DOM
+    try { this._suspendRender = true; } catch {}
+
+    const rect = line.getBoundingClientRect();
+    const ghost = line.cloneNode(true);
+    ghost.classList.add('drag-ghost');
+    ghost.style.width = rect.width + 'px';
+    ghost.style.height = rect.height + 'px';
+    ghost.style.top = rect.top + 'px';
+    ghost.style.left = rect.left + 'px';
+
+    const placeholder = document.createElement('div');
+    placeholder.className = 'placeholder';
+    placeholder.style.height = rect.height + 'px';
+
+    // place placeholder where line was, and hide line
+    wrap.insertBefore(placeholder, line);
+    line.style.display = 'none';
+    document.body.appendChild(ghost);
+
+    const readClient = (e)=>{
+      if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      return { x: e.clientX, y: e.clientY };
+    };
+
+    const onMove = (ev)=>{
+      try { ev.preventDefault(); } catch {}
+      const { y, x } = readClient(ev);
+      ghost.style.top = (y - rect.height/2) + 'px';
+
+      // find element under pointer within this shadowRoot
+      let el = this.shadowRoot && this.shadowRoot.elementFromPoint(x, y);
+      // climb to row in the same wrap
+      while (el && el !== wrap && !el.classList?.contains('inline')) el = el.parentElement;
+      if (!el || el===placeholder || el===wrap) return;
+      const targetRect = el.getBoundingClientRect();
+      const before = (y - targetRect.top) < targetRect.height/2;
+      if (before) wrap.insertBefore(placeholder, el);
+      else wrap.insertBefore(placeholder, el.nextSibling);
+    };
+
+    const endDrag = ()=>{
+      window.removeEventListener('mousemove', onMove, true);
+      window.removeEventListener('mouseup', onUp, true);
+      window.removeEventListener('touchmove', onMove, true);
+      window.removeEventListener('touchend', onUp, true);
+      ghost.remove();
+      // compute new order
+      const from = idx;
+      const to = Array.prototype.indexOf.call(wrap.children, placeholder);
+      const arr = [...(this._config.entities||[])];
+      const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+      while (modes.length < arr.length) modes.push(false);
+      const [item] = arr.splice(from,1);
+      const [mItem] = modes.splice(from,1);
+      const correctedTo = Math.max(0, Math.min(to, arr.length));
+      arr.splice(correctedTo, 0, item);
+      modes.splice(correctedTo, 0, mItem);
+      placeholder.remove();
+      line.style.display = '';
+      this._pointerDndActive = false;
+      this._config.entities = arr;
+      this._config.room_use_input_number = modes;
+      try { this._suspendRender = false; } catch {}
+      this._emit(true);
+    };
+
+    const onUp = (ev)=>{ try { ev.preventDefault?.(); } catch {} endDrag(); };
+
+    window.addEventListener('mousemove', onMove, true);
+    window.addEventListener('mouseup', onUp, true);
+    window.addEventListener('touchmove', onMove, true);
+    window.addEventListener('touchend', onUp, true);
+  }
+
+  // Async creator used with lit's `until` to delay row insertion until HA elements are ready
+  async _createRoomLine(ent, idx){
+    try { await customElements.whenDefined('ha-entity-picker'); } catch {}
+    try { await customElements.whenDefined('ha-textfield'); } catch {}
+    const line = this._makeEntityRow(idx);
+    // Restore open state for this row
+    try {
+      const key = ent || `#idx:${idx}`;
+      if (this._openRows.has(key)) line.classList.add('open');
+    } catch {}
+    return line;
+  }
+
+    _makeEntityRow(idx){
+    const line = document.createElement("div"); line.className = "inline";
+
+    // Summary bar (collapsed row header)
+    const summary = document.createElement('div');
+    summary.className = 'summary';
+    const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+    const expander = document.createElement('button'); expander.className = 'expander'; expander.innerHTML = `<ha-icon icon="mdi:chevron-down"></ha-icon>`; sumLeft.append(expander);
+    // Title and subtitle container
+    const textWrap = document.createElement('div'); textWrap.className = 'summary-text';
+  const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title'; titleSpan.textContent = this._t('editor.entity_placeholder');
+    const subSpan = document.createElement('span'); subSpan.className = 'summary-sub'; subSpan.textContent = '';
+    textWrap.append(titleSpan, subSpan);
+    sumLeft.append(textWrap);
+    summary.append(sumLeft);
+    const actions = document.createElement("div"); actions.className = "actions";
+  const handle = document.createElement("button"); handle.className = "drag-handle"; handle.setAttribute("draggable","true"); handle.setAttribute("title", this._t('editor.drag_reorder')); handle.innerHTML = `<ha-icon icon="mdi:drag"></ha-icon>`; actions.append(handle);
+    // Start pointer-driven drag on mousedown (more reliable inside HA editors than native DnD)
+    handle.addEventListener('mousedown', (ev)=>{
+      ev.preventDefault();
+      try {
+        const wrap = line.parentElement;
+        const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+        this._startPointerDnd(line, curIdx);
+      } catch { this._startPointerDnd(line, idx); }
+    });
+    // Touch support
+    handle.addEventListener('touchstart', (ev)=>{
+      try { ev.preventDefault(); } catch {}
+      try {
+        const wrap = line.parentElement;
+        const curIdx = wrap ? Array.prototype.indexOf.call(wrap.children, line) : idx;
+        this._startPointerDnd(line, curIdx);
+      } catch { this._startPointerDnd(line, idx); }
+    }, { passive: false });
+  const del = document.createElement("button"); del.className = "remove-btn"; del.innerHTML = `<ha-icon icon="mdi:close"></ha-icon><span>${this._t('editor.remove')}</span>`; actions.append(del);
+    summary.append(actions);
+
+    // Details (expanded content)
+    const details = document.createElement('div'); details.className = 'details';
+
+    // Left column: entity picker + optional label + merge UI
+    const left = document.createElement("div"); left.style.display = "grid"; left.style.gap = "6px";
+
+    const useInput = this._roomUsesInputNumber(idx);
+
+    // Per-room mode toggle
+    const modeRow = document.createElement('div');
+    modeRow.style.display = 'flex';
+    modeRow.style.alignItems = 'center';
+    modeRow.style.justifyContent = 'space-between';
+    modeRow.style.gap = '10px';
+    const modeText = document.createElement('div');
+    modeText.style.display = 'grid';
+    modeText.style.gap = '2px';
+    const modeTitle = document.createElement('div');
+    modeTitle.style.fontWeight = '600';
+    modeTitle.textContent = this._t('editor.room_mode.title') || 'Use input_number instead of climate';
+    const modeDesc = document.createElement('div');
+    modeDesc.style.fontSize = '.85rem';
+    modeDesc.style.color = 'var(--secondary-text-color)';
+    modeDesc.textContent = this._t('editor.room_mode.desc') || '';
+    modeText.append(modeTitle, modeDesc);
+    const modeSwitch = document.createElement('ha-switch');
+    modeSwitch.className = 'room-mode-switch';
+    modeSwitch.checked = !!useInput;
+    modeSwitch.addEventListener('change', (e)=>{ this._setRoomUseInputNumber(idx, !!e.target.checked); });
+    modeRow.append(modeText, modeSwitch);
+
+  const pick = document.createElement("tt-entity-picker");
+  try { pick.style.display = 'block'; pick.style.minHeight = '48px'; } catch {}
+  try { pick.hass = this._hass; } catch {}
+  try { pick.value = this._config.entities[idx] || ""; } catch {}
+    pick.setAttribute("include-domains", useInput ? '["input_number"]' : '["climate"]');
+    pick.setAttribute("label", this._t("editor.entity_placeholder"));
+    // Filter out already-selected entities in other pickers (but allow the current one)
+    pick.entityFilter = (st) => {
+      try {
+        const id = st?.entity_id || st?.entityId || st?.entityID || "";
+        if (!id) return false;
+        const chosenPrim = (this._config.entities || []).filter(Boolean);
+        const allLinked = Object.values(this._config.merges || {}).flat();
+        const blocked = new Set([...chosenPrim, ...allLinked]);
+        const current = this._config.entities[idx];
+        return !blocked.has(id) || id === current;
+      } catch { return true; }
+    };
+
+  const nameInp = document.createElement("input");
+    nameInp.type = 'text';
+    nameInp.className = "label-input tt-input";
+    nameInp.setAttribute("placeholder", this._t('editor.display_name_optional'));
+    try {
+      const curEid = this._config.entities[idx];
+      const curLbl = (this._config.labels || {})[curEid] || '';
+      nameInp.value = curLbl;
+    } catch {}
+    nameInp.addEventListener("change", (e)=>{
+      const eid = this._config.entities[idx];
+      if (!eid) return;
+      const labels = { ...(this._config.labels || {}) };
+      const val = (e.target.value || "").trim();
+      if (val) labels[eid] = val; else delete labels[eid];
+      this._config.labels = labels;
+      // Repaint so the summary header updates immediately with the custom name
+      this._emit(true);
+      // Persist label to local browser storage so live preview doesn’t get
+      // overwritten by periodic hass() reloads when shared storage is OFF
+      try {
+        const raw = localStorage.getItem('thermostat_timeline_store') || '';
+        let parsed = {};
+        try { parsed = JSON.parse(raw || '{}'); } catch {}
+        const schedules = parsed.schedules || {};
+        const prevSettings = parsed.settings || {};
+        const settings = { ...prevSettings, labels: { ...(prevSettings.labels||{}), ...labels } };
+        localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings }));
+      } catch {}
+      // Nudge any live preview card instances to refresh immediately
+      try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+      try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+    });
+
+    // Merge/Link section
+  const linkWrap = document.createElement('div');
+  linkWrap.style.display = 'grid';
+  linkWrap.style.gap = '6px';
+  // Visible label for merge/link section
+  const linkLabel = document.createElement('div');
+  linkLabel.className = 'label';
+  linkLabel.textContent = this._t('editor.merge_label') || 'Flet med (tilføj ekstra termostat)';
+  const linkPicker = document.createElement('tt-entity-picker');
+  try { linkPicker.style.display = 'block'; linkPicker.style.minHeight = '48px'; } catch {}
+    linkPicker.className = 'merge-picker';
+    linkPicker.setAttribute('include-domains', '["climate"]');
+    linkPicker.setAttribute('label', this._t('editor.merge_label') || 'Flet med (tilføj ekstra termostat)');
+    linkPicker.hass = this._hass;
+    const linkFilter = (st) => {
+      try {
+        const id = st?.entity_id || st?.entityId || st?.entityID || '';
+        if (!id) return false;
+        const prims = (this._config.entities || []).filter(Boolean);
+        const allLinked = Object.values(this._config.merges || {}).flat();
+        const used = new Set([...prims, ...allLinked]);
+        // Allow selecting if not already used anywhere and not equal to current primary
+        const cur = this._config.entities[idx];
+        return !used.has(id) && id !== cur;
+      } catch { return true; }
+    };
+    linkPicker.entityFilter = linkFilter;
+    linkPicker.addEventListener('value-changed', (e)=>{
+      const toAdd = e.detail.value;
+      linkPicker.value = '';
+      const primary = this._config.entities[idx];
+      if (!primary || !toAdd) return;
+      const merges = { ...(this._config.merges || {}) };
+      const arr = Array.from(new Set([...(merges[primary] || []), toAdd]));
+      merges[primary] = arr;
+      this._config.merges = merges;
+      this._emit(true);
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+    });
+
+    const chips = document.createElement('div');
+    chips.className = 'linked-chips';
+
+  left.append(pick, nameInp, linkWrap, chips);
+  // Insert mode toggle at the top
+  try { left.insertBefore(modeRow, left.firstChild); } catch { left.prepend(modeRow); }
+  // Hide merge UI when controlling input_number
+  try { if (useInput) { linkWrap.style.display = 'none'; chips.style.display = 'none'; } } catch {}
+    details.append(left);
+
+    // Expand/collapse
+    const toggle = ()=>{
+      line.classList.toggle('open');
+      try {
+        const eid = this._config.entities[idx] || `#idx:${idx}`;
+        if (line.classList.contains('open')) this._openRows.add(eid);
+        else this._openRows.delete(eid);
+      } catch {}
+      // When a row is opened, force-hydrate the pickers so they render immediately
+      try {
+        if (line.classList.contains('open')) {
+          // Primary picker
+          try {
+            pick.hass = this._hass;
+            pick.style.display = 'block';
+            pick.style.minHeight = '48px';
+            if (typeof pick.requestUpdate === 'function') pick.requestUpdate();
+            // Nudge again after layout for stubborn cases
+            setTimeout(()=>{ try { if (typeof pick.requestUpdate === 'function') pick.requestUpdate(); } catch {} }, 50);
+          } catch {}
+          // Merge picker
+          try {
+            linkPicker.hass = this._hass;
+            linkPicker.style.display = 'block';
+            linkPicker.style.minHeight = '48px';
+            if (typeof linkPicker.requestUpdate === 'function') linkPicker.requestUpdate();
+            setTimeout(()=>{ try { if (typeof linkPicker.requestUpdate === 'function') linkPicker.requestUpdate(); } catch {} }, 50);
+          } catch {}
+        }
+      } catch {}
+    };
+    expander.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
+    sumLeft.addEventListener('click', (e)=>{ if (e.target === expander) return; toggle(); });
+
+    line.append(summary, details);
+
+    // populate chips on render
+    const refreshChips = () => {
+      try {
+        linkPicker.hass = this._hass;
+        const primary = this._config.entities[idx];
+        const links = (this._config.merges?.[primary] || []);
+        chips.innerHTML = '';
+        for (const l of links){
+          const chip = document.createElement('span');
+          chip.className = 'pill-chip';
+          const txt = document.createElement('span');
+          txt.textContent = this._hass?.states?.[l]?.attributes?.friendly_name || (l.split('.')[1]||l);
+          const rm = document.createElement('button');
+          rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+          rm.setAttribute('aria-label', this._t('editor.remove'));
+          rm.addEventListener('click', ()=>{
+            const merges = { ...(this._config.merges || {}) };
+            merges[primary] = (merges[primary]||[]).filter(x=>x!==l);
+            if (!merges[primary]?.length) delete merges[primary];
+            this._config.merges = merges;
+            this._emit(true);
+            try { this._pushSettingsToStoreDebounced(); } catch {}
+          });
+          chip.append(txt, rm);
+          chips.append(chip);
+        }
+        // Update subtitle after chip changes
+        try {
+          const subEl = line.querySelector('.summary-sub');
+          const linkedNames = links.map(id => this._hass?.states?.[id]?.attributes?.friendly_name || (id.split('.')[1]||id));
+          const parts = [];
+          const eid = primary;
+          if (eid) parts.push(eid);
+          if (linkedNames.length) parts.push(`${this._t('editor.merged_with')}: ${linkedNames.join(', ')}`);
+          if (subEl) subEl.textContent = parts.join(' • ');
+        } catch {}
+        linkWrap.innerHTML = '';
+        linkWrap.append(linkLabel, linkPicker);
+      } catch {}
+    };
+
+    // Initial render of merge section
+    if (!useInput) refreshChips();
+
+    // Remove this room/entity
+    del.addEventListener('click', () => {
+      try {
+        const arr = [...(this._config.entities || [])];
+        const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+        const primary = arr[idx];
+        // Remove the primary from entities
+        arr.splice(idx, 1);
+        try { if (modes.length) modes.splice(idx, 1); } catch {}
+        // Clean up labels
+        const labels = { ...(this._config.labels || {}) };
+        if (primary && labels[primary]) delete labels[primary];
+        // Clean up merges: remove mapping for this primary and remove it from other arrays
+        const merges = { ...(this._config.merges || {}) };
+        if (primary && merges[primary]) delete merges[primary];
+        for (const k of Object.keys(merges)) {
+          merges[k] = (merges[k] || []).filter((e) => e !== primary);
+          if (!merges[k].length) delete merges[k];
+        }
+        this._config.entities = arr;
+        this._config.room_use_input_number = modes;
+        this._config.labels = labels;
+        this._config.merges = merges;
+        this._emit(true);
+      } catch (e) {}
+    });
+
+    // When picker changes primary value, migrate merges
+    pick.addEventListener("value-changed", (e)=>{
+      const oldPrimary = this._config.entities[idx];
+      const newPrimary = e.detail.value;
+
+      // Auto-sync mode based on chosen domain (defensive)
+      try {
+        const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+        const ents = [...(this._config.entities || [])];
+        while (modes.length < ents.length) modes.push(false);
+        if (typeof newPrimary === 'string') {
+          if (newPrimary.startsWith('input_number.')) modes[idx] = true;
+          else if (newPrimary.startsWith('climate.')) modes[idx] = false;
+        }
+        this._config.room_use_input_number = modes;
+      } catch {}
+      if (oldPrimary && newPrimary && oldPrimary !== newPrimary){
+        const merges = { ...(this._config.merges || {}) };
+        if (merges[oldPrimary] && !merges[newPrimary]) { merges[newPrimary] = merges[oldPrimary]; delete merges[oldPrimary]; }
+        else if (merges[oldPrimary] && merges[newPrimary]) { merges[newPrimary] = Array.from(new Set([...(merges[newPrimary]||[]), ...(merges[oldPrimary]||[])])); delete merges[oldPrimary]; }
+        this._config.merges = merges;
+        // migrate temp sensor mapping to new primary key
+        try {
+          const sensors = { ...(this._config.temp_sensors || {}) };
+          if (sensors[oldPrimary] && !sensors[newPrimary]) sensors[newPrimary] = sensors[oldPrimary];
+          if (sensors[oldPrimary]) delete sensors[oldPrimary];
+          this._config.temp_sensors = sensors;
+        } catch {}
+      }
+      // Avoid mutating a potentially frozen array (some browsers/HA paths freeze config)
+      try {
+        const ents = [...(this._config.entities || [])];
+        ents[idx] = newPrimary;
+        this._config.entities = ents;
+      } catch {
+        // Fallback (should not happen, but keep previous behavior if cloning fails)
+        try { this._config.entities[idx] = newPrimary; } catch {}
+      }
+      // Move open-state key from old -> new entity id
+      try {
+        const oldKey = oldPrimary || `#idx:${idx}`;
+        const newKey = newPrimary || `#idx:${idx}`;
+        if (this._openRows.has(oldKey)) { this._openRows.delete(oldKey); this._openRows.add(newKey); }
+      } catch {}
+  try { nameInp.value = (this._config.labels || {})[newPrimary] || ""; if (nameInp && typeof nameInp.requestUpdate === 'function') nameInp.requestUpdate(); } catch {}
+  if (this._openCount > 0) this._pendingEmit = true; else this._emit(true);
+  try { this._pushSettingsToStoreDebounced(); } catch {}
+      if (!this._roomUsesInputNumber(idx)) refreshChips();
+      // Also update subtitle on primary change
+      try {
+        const subEl = line.querySelector('.summary-sub');
+        const eid = this._config.entities[idx];
+        const linkedNames = (this._config.merges?.[eid] || []).map(id => this._hass?.states?.[id]?.attributes?.friendly_name || (id.split('.')[1]||id));
+        const parts = [];
+        if (eid) parts.push(eid);
+        if (linkedNames.length) parts.push(`${this._t('editor.merged_with')}: ${linkedNames.join(', ')}`);
+        if (subEl) subEl.textContent = parts.join(' • ');
+      } catch {}
+    });
+
+    return line;
+  }
+
+  // (Removed unused pointer-driven drag & drop prototype)
+
+  _addEntity(){
+    this._config.entities = [...(this._config.entities||[]), ""]; 
+    try {
+      const modes = Array.isArray(this._config.room_use_input_number) ? [...this._config.room_use_input_number] : [];
+      modes.push(false);
+      this._config.room_use_input_number = modes;
+    } catch {}
+    this._emit(true);
+  }
+  _upd(key,val){ this._config[key] = val; this._emit(); }
+  _emit(repaint=false){
+    if (this._openCount > 0) { this._pendingEmit = true; return; }
+    // Emit a fresh cloned config to ensure HA editor detects changes immediately
+    try { this._config.respect_storage_weekdays = false; } catch {}
+    let cfg;
+    try { cfg = JSON.parse(JSON.stringify(this._config)); }
+    catch { cfg = { ...this._config }; }
+    // These settings are now edited in the in-card popup + stored in shared/local storage,
+    // so they should not be emitted into YAML config.
+    try {
+      for (const k of ['row_height','default_temp','min_temp','max_temp','auto_apply','apply_on_edit','apply_on_default_change','per_room_defaults','show_pause_button','pause_sensor_enabled','pause_sensor_entity','time_12h','time_source','temp_unit','profiles_enabled','weekdays_enabled','weekdays_view','weekdays_selected_room','boiler_enabled','boiler_switch','boiler_temp_sensor','boiler_min_temp','boiler_max_temp','open_window','color_ranges','color_global','respect_storage_weekdays']) {
+        if (k in cfg) delete cfg[k];
+      }
+    } catch {}
+    this.dispatchEvent(new CustomEvent("config-changed", { detail:{ config: cfg }, bubbles:true, composed:true }));
+    if (repaint) this._render();
+  }
+
+  _t(k){ return ttLocalize(k, this._hass || this._lang || 'en'); }
+
+  _applyEditorI18n(){
+    try {
+      
+      const t = (k)=> this._t(k);
+      const root = this.shadowRoot;
+      if (!root) return;
+      // Title row
+      const titleRow = root.querySelector('.row .title')?.closest('.row');
+      const titleLabel = titleRow?.querySelector('.label') || root.querySelector('.row .label');
+      if (titleLabel) titleLabel.textContent = t('editor.title_label');
+      const titleField = root.querySelector('ha-textfield.title');
+      if (titleField) {
+        titleField.setAttribute('label', t('editor.title_label'));
+        // Show localized preset when empty, and keep it updated with language
+        try { titleField.setAttribute('placeholder', this._t('card.title_default')); } catch {}
+      }
+
+      // Storage entity (use the .storage picker to find its label robustly)
+      const storagePicker = root.querySelector('.storage');
+      if (storagePicker) {
+        const storageLabel = storagePicker.closest('.row')?.querySelector('.label');
+  // Hide the label text for the storage section
+  if (storageLabel) storageLabel.textContent = '';
+        // toggle texts
+        const stTitle = root.querySelector('.store-title');
+        const stDesc = root.querySelector('.store-desc');
+        // Title + info icon (click to open popover)
+        const stTitleText = root.querySelector('.store-title .store-title-text');
+        if (stTitleText) stTitleText.textContent = t('editor.store_enable.title');
+        if (stDesc) {
+          const shortTxt = this._t('editor.store_enable.short');
+          const icon = root.querySelector('.info-icon');
+          const textSpan = root.querySelector('.store-desc-text');
+          if (textSpan) textSpan.textContent = shortTxt !== 'editor.store_enable.short' ? shortTxt : (this._t('editor.store_enable.title') || '');
+
+          // Build popover once
+          let pop = root.querySelector('.info-pop');
+          if (!pop) {
+            pop = document.createElement('div');
+            pop.className = 'info-pop hidden';
+            pop.setAttribute('role','dialog');
+            root.append(pop);
+          }
+          const openPop = () => {
+            const desc = this._t('editor.store_enable.desc');
+            pop.textContent = desc;
+            const r = icon.getBoundingClientRect();
+            const maxW = Math.min(520, Math.max(240, Math.floor(window.innerWidth*0.9)));
+            pop.style.maxWidth = maxW + 'px';
+            let left = Math.max(8, Math.min(window.innerWidth - maxW - 8, r.left));
+            let top = r.bottom + 8;
+            pop.style.left = left + 'px';
+            pop.style.top = top + 'px';
+            pop.classList.remove('hidden');
+          };
+          const closePop = () => { if (pop) pop.classList.add('hidden'); };
+
+          // Bind click/tap once
+          if (icon && !icon.dataset.bound) {
+            icon.dataset.bound = '1';
+            icon.addEventListener('click', (e) => { e.stopPropagation(); if (pop.classList.contains('hidden')) openPop(); else closePop(); });
+            icon.addEventListener('touchend', (e) => { try { e.preventDefault(); } catch{}; e.stopPropagation(); if (pop.classList.contains('hidden')) openPop(); else closePop(); }, { passive:false });
+            // Close on outside click or ESC
+            const onOutside = (ev)=>{
+              const path = ev.composedPath ? ev.composedPath() : [];
+              if (path.includes(icon) || path.includes(pop)) return; closePop();
+            };
+            window.addEventListener('click', onOutside);
+            window.addEventListener('keydown', (ev)=>{ if (ev.key==='Escape') closePop(); });
+          }
+        }
+        // Check that the thermostat_timeline integration/service exists in Home Assistant
+        try {
+          const hasService = !!(this._hass && this._hass.services && this._hass.services['thermostat_timeline']);
+          let warn = root.querySelector('.store-missing');
+          const warnText = this._t ? this._t('editor.store_missing') : null;
+          const msg = warnText && warnText !== 'editor.store_missing'
+            ? warnText
+            : 'Integration "Thermostat Pro Timeline Sync" is not installed. Shared storage is unavailable.';
+          var githubLink = ' <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=thermostat-pro-timeline-sync" target="_blank" rel="noopener noreferrer" style="color:var(--error-color);text-decoration:underline;font-weight:500;">[Åbn i HACS]</a>';
+          if (!warn) {
+            warn = document.createElement('div');
+            warn.className = 'store-missing';
+            warn.style.color = 'var(--error-color)';
+            warn.style.fontSize = '.9rem';
+            warn.style.marginTop = '6px';
+            warn.style.display = 'none';
+            const controls = root.querySelector('.store-controls');
+            if (controls && controls.parentNode) controls.parentNode.insertBefore(warn, controls);
+          }
+          // Always update warning content
+          // Sæt tekst og link som separate child nodes
+          // Fjern alle eksisterende child nodes
+          while (warn.firstChild) warn.removeChild(warn.firstChild);
+          // Tilføj tekst og link igen
+          warn.appendChild(document.createTextNode(msg.replace(/\.$/, '') + '. '));
+          let link = document.createElement('a');
+          link.href = 'https://my.home-assistant.io/redirect/hacs_repository/?owner=qlerup&repository=thermostat-pro-timeline-sync';
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.style.color = 'var(--error-color)';
+          link.style.textDecoration = 'underline';
+          link.style.fontWeight = '500';
+          link.textContent = this._t('editor.open_in_hacs');
+          warn.appendChild(link);
+          if (!hasService) {
+            warn.style.display = 'block';
+            const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = true;
+            const picker = root.querySelector('.storage'); if (picker) { try { picker.disabled = true; picker.setAttribute('disabled',''); } catch {} }
+          } else {
+            warn.style.display = 'none';
+            const sw = root.querySelector('.store-enable'); if (sw) sw.disabled = false;
+            const picker = root.querySelector('.storage'); if (picker) { try { picker.disabled = false; picker.removeAttribute('disabled'); } catch {} }
+          }
+          // Update small status chip in tabs
+          try {
+            const chip = root.querySelector('.int-status');
+            const icon = chip?.querySelector('ha-icon');
+            const txt = chip?.querySelector('.text');
+            if (chip && icon && txt) {
+              if (hasService) {
+                chip.classList.remove('bad'); chip.classList.add('ok');
+                icon.setAttribute('icon', 'mdi:cloud-check-outline');
+                txt.textContent = t('editor.integration.connected') || 'Connected to integration';
+              } else {
+                chip.classList.remove('ok'); chip.classList.add('bad');
+                icon.setAttribute('icon', 'mdi:cloud-off-outline');
+                txt.textContent = t('editor.integration.disconnected') || 'Not connected to integration';
+              }
+              // Make the chip clickable to jump to Settings (Sync is inside Settings)
+              chip.style.userSelect = 'none';
+              chip.addEventListener('click', ()=>{ try { this._activeTab = 'settings'; this._render(); } catch {} });
+            }
+          } catch {}
+        } catch {}
+  // (clear storage only button removed)
+        const clrAllBtn = root.querySelector('.clear-all span');
+        if (clrAllBtn) clrAllBtn.textContent = t('editor.clear_all');
+        const migBtn = root.querySelector('.migrate-to-store span');
+        if (migBtn) migBtn.textContent = t('editor.migrate_to_store');
+      }
+      const clrLocalBtn = root.querySelector('.clear-local-only span');
+      if (clrLocalBtn) clrLocalBtn.textContent = t('editor.clear_local_only');
+    const resetOnbBtn = root.querySelector('.reset-onboard span');
+    if (resetOnbBtn) resetOnbBtn.textContent = t('onboard.reset');
+
+      // Entities section label (use the .entities container to find its label robustly)
+      const entitiesWrap = root.querySelector('.entities');
+      if (entitiesWrap) {
+        const entitiesLabel = entitiesWrap.closest('.row')?.querySelector('.label');
+        if (entitiesLabel) entitiesLabel.textContent = t('editor.select_entities');
+      }
+
+  // Add room button text (target only the actual add-room control)
+  const addBtn = root.querySelector('.add-room-btn span');
+  if (addBtn) addBtn.textContent = t('editor.add_entity');
+
+  const bMinLbl = root.querySelector('.boiler-min-temp-label');
+  if (bMinLbl) bMinLbl.textContent = (t('boiler.min_temp') || 'Min boiler temp (°C)').replace('°C', this._unitSymbol());
+  const bMaxLbl = root.querySelector('.boiler-max-temp-label');
+  if (bMaxLbl) bMaxLbl.textContent = (t('boiler.max_temp') || 'Max boiler temp (°C)').replace('°C', this._unitSymbol());
+  const bEnTitle = root.querySelector('.boiler-enable-title');
+  if (bEnTitle) bEnTitle.textContent = t('boiler.enable') || 'Enable boiler controls';
+  const bEnDesc = root.querySelector('.boiler-enable-desc');
+  if (bEnDesc) bEnDesc.textContent = t('boiler.enable.desc') || '';
+  const bSensTitle = root.querySelector('.boiler-sensor-title');
+  if (bSensTitle) bSensTitle.textContent = t('boiler.temp_sensor') || 'Boiler temperature sensor';
+  const bSensDesc = root.querySelector('.boiler-sensor-desc');
+  if (bSensDesc) bSensDesc.textContent = t('boiler.temp_sensor.desc') || '';
+      // Tabs labels
+      try {
+  const sBtn = root.querySelector('.tab-settings-btn'); if (sBtn) sBtn.textContent = t('editor.tabs.settings');
+  const rBtn = root.querySelector('.tab-rooms-btn'); if (rBtn) rBtn.textContent = t('editor.tabs.rooms');
+      const oBtn = root.querySelector('.tab-boiler-btn'); if (oBtn) oBtn.textContent = t('editor.tabs.boiler') || 'Boiler';
+        const cBtn = root.querySelector('.tab-colors-btn'); if (cBtn) cBtn.textContent = t('editor.tabs.colors');
+        const owBtn = root.querySelector('.tab-owd-btn'); if (owBtn) owBtn.textContent = t('editor.tabs.owd') || 'Open Window Detection';
+    const bBtn = root.querySelector('.tab-backup-btn'); if (bBtn) bBtn.textContent = t('editor.tabs.backup') || 'Backup';
+    const hBtn = root.querySelector('.tab-holidays-btn'); if (hBtn) hBtn.textContent = t('editor.tabs.holidays');
+      const boTitle = root.querySelector('.boiler-switch-title'); if (boTitle) boTitle.textContent = t('boiler.switch') || 'Boiler switch';
+    // Holidays tab inner labels
+    try {
+      const srcTitle = root.querySelector('.tab-holidays .settings-card .setting .title'); if (srcTitle) srcTitle.textContent = t('holidays.source');
+      const srcDesc = root.querySelector('.tab-holidays .settings-card .setting .desc'); if (srcDesc) srcDesc.textContent = t('holidays.desc');
+      const calTitle = root.querySelector('.tab-holidays .settings-card .setting:nth-child(2) .title'); if (calTitle) calTitle.textContent = t('holidays.entity');
+      const manTitle = root.querySelector('.tab-holidays .settings-card .setting:nth-child(3) .title'); if (manTitle) manTitle.textContent = t('holidays.dates');
+      const editBtns = root.querySelectorAll('.tab-holidays .inline .actions .btn'); editBtns.forEach(b=>{ try { b.textContent = t('holidays.edit'); } catch{} });
+      const segCal = root.querySelector('.tab-holidays .h-src-cal'); if (segCal) segCal.textContent = t('holidays.source.calendar');
+      const segMan = root.querySelector('.tab-holidays .h-src-man'); if (segMan) segMan.textContent = t('holidays.source.manual');
+      const addDate = root.querySelector('.tab-holidays .add-entity-btn span'); if (addDate) addDate.textContent = t('holidays.add_date');
+    } catch {}
+        // (reload buttons removed)
+    // Colors mode labels
+    const cmTitle = root.querySelector('.colors-mode-title'); if (cmTitle) cmTitle.textContent = t('editor.colors.mode');
+    const cmDesc = root.querySelector('.colors-mode-desc'); if (cmDesc) cmDesc.textContent = t('editor.colors.mode.desc');
+    const cmRoom = root.querySelector('.colors-mode .mode-room'); if (cmRoom) cmRoom.textContent = t('editor.colors.mode_per_room');
+    const cmGlob = root.querySelector('.colors-mode .mode-global'); if (cmGlob) cmGlob.textContent = t('editor.colors.mode_global');
+  // Colors tab action label (single clear-all button)
+  const clrAllBtn = root.querySelector('.clr-colors-all-btn span'); if (clrAllBtn) clrAllBtn.textContent = t('editor.colors.clear_all');
+        // Away tab labels
+        const awayTitle = root.querySelector('.away-enable-title'); if (awayTitle) awayTitle.textContent = t('away.enable');
+        const awayDesc = root.querySelector('.away-desc'); if (awayDesc) awayDesc.textContent = t('away.desc');
+        const awayTemp = root.querySelector('.away-temp-title'); if (awayTemp) awayTemp.textContent = t('away.temp');
+        const awayPersons = root.querySelector('.away-persons-title'); if (awayPersons) awayPersons.textContent = t('away.persons');
+        // Presence labels in Away tab
+        const advTitle = root.querySelector('.away-adv-title'); if (advTitle) advTitle.textContent = t('presence.enable_advanced');
+        const advDesc = root.querySelector('.away-adv-desc'); if (advDesc) advDesc.textContent = '';
+  const pcTitle = root.querySelector('.presence-combos-title'); if (pcTitle) pcTitle.textContent = t('presence.combos');
+  const plTitle = root.querySelector('.presence-live-title'); if (plTitle) plTitle.textContent = t('presence.live_header');
+  const plDesc = root.querySelector('.presence-live-desc'); if (plDesc) plDesc.textContent = t('presence.live_header.desc');
+        const pcDesc = root.querySelector('.presence-combos-desc'); if (pcDesc) pcDesc.textContent = '';
+      } catch {}
+
+      // Sync delay labels removed (controls removed)
+
+      // Backup tab labels
+      try {
+        const bt = root.querySelector('.backup-title'); if (bt) bt.textContent = t('backup.title') || 'Backup';
+        const bd = root.querySelector('.backup-desc'); if (bd) bd.textContent = t('backup.desc') || 'Copy schedules/settings to backup and restore when needed.';
+        // Selection UI removed; no per-section labels to set
+        const bn = root.querySelector('.backup-now-label'); if (bn) bn.textContent = t('backup.now') || 'Backup now';
+        const brl = root.querySelector('.backup-restore-label'); if (brl) brl.textContent = t('backup.restore') || 'Restore';
+        const bdl = root.querySelector('.backup-delete-label'); if (bdl) bdl.textContent = t('backup.delete') || 'Delete';
+        const bat = root.querySelector('.backup-auto-title'); if (bat) bat.textContent = t('backup.auto');
+        const bad = root.querySelector('.backup-auto-desc'); if (bad) bad.textContent = t('backup.auto.desc');
+        const bit = root.querySelector('.backup-int-title'); if (bit) bit.textContent = t('backup.interval');
+        const bid = root.querySelector('.backup-int-desc'); if (bid) bid.textContent = t('backup.interval.desc');
+        const bst = root.querySelector('.backup-sensor-title'); if (bst) bst.textContent = t('backup.sensor');
+        const blt = root.querySelector('.backup-last-title'); if (blt) blt.textContent = t('backup.last');
+      } catch {}
+
+    } catch(e){ /* ignore */ }
+  }
+
+  // Detect whether a given title equals any built-in localized default
+  _isDefaultTitle(txt){
+    try {
+      const s = String(txt || '').trim();
+      for (const k of Object.keys(TT_I18N || {})){
+        const v = TT_I18N[k] && TT_I18N[k]['card.title_default'];
+        if (v && String(v).trim() === s) return true;
+      }
+    } catch {}
+    return false;
+  }
+
+}
+// Avoid hard failures if the editor gets registered elsewhere/earlier.
+try {
+  if (!customElements.get("thermostat-timeline-card-editor")) {
+    customElements.define("thermostat-timeline-card-editor", ThermostatTimelineCardEditor);
+  }
+} catch {}
+
+// Registrér i “Custom cards”
+window.customCards = window.customCards || [];
+window.customCards.push({ type: "thermostat-timeline-card", name: "Thermostat Pro Timeline Card", description: "24h tidslinje – transition-baseret set_temperature + smart replan & apply-on-change", version: TT_CARD_VERSION });
+
+function loadCard() {}
+loadCard();
