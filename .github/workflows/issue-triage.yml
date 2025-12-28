@@ -1,4 +1,4 @@
-name: Issue triage (label + title + bug version questions)
+name: Issue triage (label + conditional retitle + bug version questions)
 
 on:
   issues:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Classify + build title/label + check versions
+      - name: Classify + label + conditional title + check versions
         id: decide
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,49 +29,50 @@ jobs:
           original_title = (issue.get("title") or "").strip()
           body = (issue.get("body") or "").strip()
 
-          # Avoid double prefix if someone already used [Bug], etc.
-          prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
-          stripped_title = prefix_re.sub("", original_title).strip() or original_title
+          # Detect existing prefix
+          any_prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
+          has_any_prefix = bool(any_prefix_re.match(original_title))
+
+          # Strip our prefixes for internal comparison/prompt
+          stripped_title = any_prefix_re.sub("", original_title).strip() or original_title
 
           # ---------- Robust JSON parse ----------
           def safe_parse_model_json(content: str):
             s = (content or "").strip()
-
-            # Remove ```json ... ``` fences if present
             s = re.sub(r"^\s*```(?:json)?\s*", "", s, flags=re.I)
             s = re.sub(r"\s*```\s*$", "", s)
-
-            # Extract first {...} block
             start = s.find("{")
             end = s.rfind("}")
             if start == -1 or end == -1 or end <= start:
               return None, f"No JSON braces found. Raw:\n{s}"
-
             candidate = s[start:end+1].strip()
-
             try:
               return json.loads(candidate), None
             except Exception as e:
               return None, f"JSON parse failed: {e}\nCandidate:\n{candidate}\nRaw:\n{s}"
           # --------------------------------------
 
-          # ---------- LLM: classification + short title + optional locale ----------
+          # ---------- LLM: classification + decide if title matches ----------
           messages = [
             {
               "role": "system",
               "content": (
                 "You are a GitHub triage bot.\n"
-                "Classify the issue into exactly one category:\n"
-                "- bug: broken behavior, error, regression, unexpected result, steps to reproduce.\n"
-                "- feature: request for new functionality or enhancement.\n"
-                "- locale: request to add/translate language/locale/i18n (e.g. 'add Danish', 'translation', 'da-DK').\n\n"
+                "Your job:\n"
+                "1) Classify the issue into exactly one category:\n"
+                "   - bug: broken behavior, error, regression, unexpected result, steps to reproduce.\n"
+                "   - feature: request for new functionality or enhancement.\n"
+                "   - locale: request to add/translate language/locale/i18n (e.g. 'add Danish', 'translation', 'da-DK').\n"
+                "2) Decide whether the current user title matches the issue body.\n\n"
                 "Return ONLY valid JSON with keys:\n"
                 "category: one of [bug, feature, locale]\n"
-                "locale: empty string unless category=locale; then set requested language/locale (e.g. 'Danish' or 'da-DK').\n"
-                "short_title: concise title WITHOUT any bracket prefix.\n\n"
-                "Rules:\n"
-                "- short_title must be plain text, <= 120 chars.\n"
-                "- For locale issues, if the requested language/locale is clear, prefer that as short_title.\n"
+                "title_matches: boolean (true if the user title reasonably matches the body)\n"
+                "suggested_title: string (ONLY if title_matches=false; otherwise empty string)\n"
+                "locale: string (ONLY if category=locale and language/locale is clear; otherwise empty string)\n\n"
+                "Rules for suggested_title:\n"
+                "- plain text, <= 120 chars, no markdown.\n"
+                "- should be specific and based on the body.\n"
+                "- if category=locale and requested language is clear, suggested_title should be that language/locale.\n"
               )
             },
             {
@@ -84,8 +85,7 @@ jobs:
             "model": "openai/gpt-4.1",
             "messages": messages,
             "temperature": 0,
-            # If supported by the endpoint, this helps enforce JSON output.
-            # If it causes an error, just comment it out again.
+            # If this causes an error on your setup, comment it out:
             # "response_format": {"type": "json_object"},
           }
 
@@ -104,33 +104,21 @@ jobs:
           with urllib.request.urlopen(req) as r:
             data = json.load(r)
 
-          content = data["choices"][0]["message"]["content"].strip()
+          content = (data.get("choices", [{}])[0].get("message", {}).get("content") or "").strip()
 
           obj, err = safe_parse_model_json(content)
           if obj is None:
             print("WARN: Could not parse model output as JSON.")
             print(err)
             obj = {}
-          # -------------------------------------------------------------------
 
           category = (obj.get("category") or "").strip().lower()
+          title_matches = bool(obj.get("title_matches"))  # default False if missing
+          suggested_title = (obj.get("suggested_title") or "").strip()
           locale = (obj.get("locale") or "").strip()
-          short_title = (obj.get("short_title") or "").strip()
 
           if category not in {"bug", "feature", "locale"}:
             category = "bug"
-
-          short_title = re.sub(r"\s+", " ", short_title).strip()
-          if not short_title:
-            short_title = stripped_title
-          if len(short_title) > 120:
-            short_title = short_title[:120].rstrip()
-
-          # Locale: use locale directly as title if available
-          if category == "locale" and locale:
-            short_title = re.sub(r"\s+", " ", locale).strip()
-            if len(short_title) > 120:
-              short_title = short_title[:120].rstrip()
 
           # Your exact label names:
           label_map = {
@@ -145,28 +133,42 @@ jobs:
             "feature": "[New feature request]",
             "locale": "[Locale request]",
           }
-          new_title = f"{prefix_map[category]} {short_title}".strip()
+          prefix = prefix_map[category]
 
-          # Avoid no-op
-          if new_title.lower() == original_title.lower():
-            new_title = ""
+          # Choose base title text:
+          # - If locale and locale value exists: use locale
+          # - Else if title doesn't match: use suggested_title (fallback to stripped_title if empty)
+          # - Else (matches): keep user's stripped title
+          def clean(s: str) -> str:
+            s = re.sub(r"\s+", " ", (s or "").strip())
+            return s[:120].rstrip() if len(s) > 120 else s
+
+          if category == "locale" and locale:
+            base_title = clean(locale)
+          elif not title_matches:
+            base_title = clean(suggested_title) or clean(stripped_title)
+          else:
+            base_title = clean(stripped_title)
+
+          # Title update policy:
+          # - If title already has ANY of our prefixes: we won't touch it (keeps user title as-is)
+          # - Else: add the correct prefix
+          # - Only "rewrite" happens when title_matches=false (base_title becomes suggested_title)
+          new_title = ""
+          if not has_any_prefix:
+            candidate = f"{prefix} {base_title}".strip()
+            if candidate.lower() != original_title.lower():
+              new_title = candidate
 
           # ---------- Version check (bugs only) ----------
           def has_version_for(kind: str, text: str) -> bool:
-            """
-            Heuristic: find versions near keywords.
-            Matches e.g. 1.2, 1.2.3, v1.2.3, 1.2.3-beta.1
-            """
             version_pat = r"(?:v)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z\.-]+)?"
             t = text or ""
             if kind == "card":
               kw = r"(?:\bcard\b|\bkort\b)"
-            else:  # sync
+            else:
               kw = r"(?:\bsync\b(?:\s+integration)?|\bsync-integration\b)"
-
-            # keyword ... version
             p1 = re.compile(rf"{kw}[^\n]{{0,80}}\b({version_pat})\b", re.I)
-            # version ... keyword
             p2 = re.compile(rf"\b({version_pat})\b[^\n]{{0,40}}{kw}", re.I)
             return bool(p1.search(t) or p2.search(t))
 
@@ -193,7 +195,6 @@ jobs:
                 "Please reply here with the missing details — thank you 🙏"
               ]
               comment_body = "\n".join(lines)
-          # ----------------------------------------------
 
           # Outputs (multiline-safe)
           out = os.environ["GITHUB_OUTPUT"]
