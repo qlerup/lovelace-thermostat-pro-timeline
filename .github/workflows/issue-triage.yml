@@ -1,4 +1,4 @@
-name: Issue triage (label + title prefix)
+name: Issue triage (label + title + bug version questions)
 
 on:
   issues:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Classify issue with GitHub Models
+      - name: Classify + build title/label + check versions
         id: decide
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,10 +29,11 @@ jobs:
           original_title = (issue.get("title") or "").strip()
           body = (issue.get("body") or "").strip()
 
-          # Undgå dobbelt prefix hvis nogen allerede skriver [Bug] osv.
+          # Undgå dobbelt prefix hvis nogen allerede skriver det
           prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
           stripped_title = prefix_re.sub("", original_title).strip() or original_title
 
+          # --- LLM: klassificering + kort titel + evt. locale ---
           messages = [
             {
               "role": "system",
@@ -48,7 +49,7 @@ jobs:
                 "short_title: concise title WITHOUT any bracket prefix.\n\n"
                 "Rules:\n"
                 "- short_title must be plain text, <= 120 chars.\n"
-                "- For locale issues, if the requested language/locale is clear, prefer that as the short_title.\n"
+                "- For locale issues, if the requested language/locale is clear, prefer that as short_title.\n"
               )
             },
             {
@@ -96,7 +97,6 @@ jobs:
           if len(short_title) > 120:
             short_title = short_title[:120].rstrip()
 
-          # Locale: brug locale direkte som titel, hvis den blev fundet
           if category == "locale" and locale:
             short_title = re.sub(r"\s+", " ", locale).strip()
             if len(short_title) > 120:
@@ -117,14 +117,62 @@ jobs:
           }
           new_title = f"{prefix_map[category]} {short_title}".strip()
 
-          # Undgå no-op
           if new_title.lower() == original_title.lower():
             new_title = ""
 
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+          # --- Version-tjek (kun for bugs) ---
+          def has_version_for(kind: str, text: str) -> bool:
+            """
+            Heuristik: finder versionsnumre i nærheden af nøgleord.
+            Matcher fx 1.2, 1.2.3, v1.2.3, 1.2.3-beta.1
+            """
+            version_pat = r"(?:v)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z\.-]+)?"
+            t = text or ""
+            if kind == "card":
+              kw = r"(?:\bcard\b|\bkort\b)"
+            else:  # sync
+              kw = r"(?:\bsync\b(?:\s+integration)?|\bsync-integration\b)"
+
+            # keyword ... version
+            p1 = re.compile(rf"{kw}[^\n]{{0,80}}\b({version_pat})\b", re.I)
+            # version ... keyword
+            p2 = re.compile(rf"\b({version_pat})\b[^\n]{{0,40}}{kw}", re.I)
+            return bool(p1.search(t) or p2.search(t))
+
+          missing_card = False
+          missing_sync = False
+          comment_body = ""
+
+          if category == "bug":
+            text = f"{stripped_title}\n\n{body}"
+            card_ok = has_version_for("card", text)
+            sync_ok = has_version_for("sync", text)
+
+            missing_card = not card_ok
+            missing_sync = not sync_ok
+
+            if missing_card or missing_sync:
+              lines = [
+                "Hej! For at vi kan reproducere buggen hurtigere, mangler vi lige versionsinfo:",
+                ""
+              ]
+              if missing_card:
+                lines.append("- **Card version**: (fx 1.2.3)")
+              if missing_sync:
+                lines.append("- **Sync integration version**: (fx 0.9.1)")
+              lines += [
+                "",
+                "Skriv dem gerne her i tråden – tak 🙏"
+              ]
+              comment_body = "\n".join(lines)
+
+          # Output
+          out = os.environ["GITHUB_OUTPUT"]
+          with open(out, "a", encoding="utf-8") as f:
             f.write(f"category={category}\n")
             f.write("label<<EOF\n" + label + "\nEOF\n")
-            f.write("new_title<<EOF\n" + new_title + "\nEOF\n")
+            f.write("new_title<<EOF\n" + (new_title or "") + "\nEOF\n")
+            f.write("comment_body<<EOF\n" + (comment_body or "") + "\nEOF\n")
           PY
 
       - name: Apply label + title
@@ -141,7 +189,6 @@ jobs:
             const labelName = process.env.LABEL?.trim();
             const newTitle = process.env.NEW_TITLE?.trim();
 
-            // Tilføj label (forudsætter den findes, som du har oprettet)
             if (labelName) {
               await github.rest.issues.addLabels({
                 owner, repo, issue_number,
@@ -149,10 +196,23 @@ jobs:
               });
             }
 
-            // Opdater titel
             if (newTitle) {
               await github.rest.issues.update({
                 owner, repo, issue_number,
                 title: newTitle,
               });
             }
+
+      - name: Ask for missing versions (bug only)
+        if: steps.decide.outputs.comment_body != ''
+        uses: actions/github-script@v7
+        env:
+          COMMENT: ${{ steps.decide.outputs.comment_body }}
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: process.env.COMMENT
+            });
