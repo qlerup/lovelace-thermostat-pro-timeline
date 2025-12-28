@@ -26,9 +26,14 @@ jobs:
             const LABELS = {
               bugWaiting: 'Bug fixed - created - waiting for release',
               bugReleased: 'Bug fixed - released',
+
               featureWaiting: 'New feature - created - waiting for release',
-              featureAdded: 'Feature added',
+              featureAddedReleased: 'Feature added - released',
               featurePlanned: 'Feature will be added',
+
+              // Legacy labels you said existed before (safe to remove if present)
+              legacyBugFixed: 'Bug fixed',
+              legacyFeatureAdded: 'Feature added',
             };
 
             // ---- Comment markers (so we can update instead of spamming) ----
@@ -134,18 +139,18 @@ jobs:
               const releases = await github.rest.repos.listReleases({ owner, repo, per_page: 50 });
               const latest = releases.data.find(r => !r.draft && !r.prerelease);
               if (!latest) return null;
+
               return {
                 version: latest.tag_name || latest.name || 'unknown',
                 url: latest.html_url,
               };
             }
 
-            async function processReleaseForLabel(waitingLabel, type) {
+            async function issuesWithLabelOpen(labelName) {
               const issues = await github.paginate(
                 github.rest.issues.listForRepo,
-                { owner, repo, state: 'open', labels: waitingLabel, per_page: 100 }
+                { owner, repo, state: 'open', labels: labelName, per_page: 100 }
               );
-
               return issues.filter(i => !i.pull_request);
             }
 
@@ -162,12 +167,25 @@ jobs:
               // 2) Labels
               if (type === 'bug') {
                 await safeRemoveLabel(issue_number, LABELS.bugWaiting);
-                await github.rest.issues.addLabels({ owner, repo, issue_number, labels: [LABELS.bugReleased] });
+                await safeRemoveLabel(issue_number, LABELS.legacyBugFixed); // legacy cleanup
+
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number,
+                  labels: [LABELS.bugReleased],
+                });
               } else {
                 await safeRemoveLabel(issue_number, LABELS.featureWaiting);
-                // optional cleanup: remove planned label when it is actually released
-                await safeRemoveLabel(issue_number, LABELS.featurePlanned);
-                await github.rest.issues.addLabels({ owner, repo, issue_number, labels: [LABELS.featureAdded] });
+                await safeRemoveLabel(issue_number, LABELS.featurePlanned); // optional cleanup
+                await safeRemoveLabel(issue_number, LABELS.legacyFeatureAdded); // legacy cleanup
+
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number,
+                  labels: [LABELS.featureAddedReleased],
+                });
               }
 
               // 3) Close
@@ -214,12 +232,12 @@ jobs:
               return;
             }
 
-            // Make sure target labels exist
+            // Create target labels if they somehow don't exist
             await ensureLabel(LABELS.bugReleased, '0e8a16', 'Bug fixed and released');
-            await ensureLabel(LABELS.featureAdded, '0e8a16', 'Feature implemented and released');
+            await ensureLabel(LABELS.featureAddedReleased, '1d76db', 'Feature released');
 
-            const bugIssues = await processReleaseForLabel(LABELS.bugWaiting, 'bug');
-            const featureIssues = await processReleaseForLabel(LABELS.featureWaiting, 'feature');
+            const bugIssues = await issuesWithLabelOpen(LABELS.bugWaiting);
+            const featureIssues = await issuesWithLabelOpen(LABELS.featureWaiting);
 
             for (const issue of bugIssues) {
               await closeAsReleased(issue, 'bug', rel.version, rel.url);
