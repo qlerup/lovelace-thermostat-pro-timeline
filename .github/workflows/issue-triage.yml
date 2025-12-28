@@ -1,4 +1,4 @@
-name: Issue triage (label + stricter title policy + bug version questions)
+name: Issue triage (label + prefix + conservative retitle + version questions)
 
 on:
   issues:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Classify + label + stricter title logic + check versions
+      - name: Classify + label + title + check versions
         id: decide
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,15 +29,14 @@ jobs:
           original_title = (issue.get("title") or "").strip()
           body = (issue.get("body") or "").strip()
 
-          # Prefix parsing
+          # Recognize our title prefixes
           prefix_re = re.compile(r'^\[(Bug|New feature request|Locale request)\]\s*', re.I)
-          m = prefix_re.match(original_title)
-          existing_prefix = m.group(0).strip() if m else ""
           stripped_title = prefix_re.sub("", original_title).strip() or original_title
 
           # ---------- Robust JSON parse ----------
           def safe_parse_model_json(content: str):
             s = (content or "").strip()
+            # Remove ```json fences
             s = re.sub(r"^\s*```(?:json)?\s*", "", s, flags=re.I)
             s = re.sub(r"\s*```\s*$", "", s)
 
@@ -53,51 +52,44 @@ jobs:
               return None, f"JSON parse failed: {e}\nCandidate:\n{candidate}\nRaw:\n{s}"
           # --------------------------------------
 
-          # ---------- Local "strictness" heuristics (force retitle on vague titles) ----------
+          # ---------- Conservative "vague title" heuristic ----------
           def is_vague_title(t: str) -> bool:
             tl = (t or "").strip().lower()
             if not tl:
               return True
 
-            # Very generic titles
+            # Purely generic
             generic_exact = {
-              "bug", "issue", "problem", "help", "question", "error", "crash",
-              "broken", "not working", "doesn't work", "does not work", "doesnt work",
-              "please help", "urgent"
+              "bug","issue","problem","help","question","error","crash",
+              "broken","not working","doesn't work","does not work","doesnt work",
+              "please help","urgent"
             }
             if tl in generic_exact:
               return True
 
-            # Generic substrings at start
-            generic_starts = (
-              "bug", "issue", "problem", "help", "question", "error", "crash", "broken",
-              "not working", "doesn't work", "does not work", "doesnt work"
-            )
-            if any(tl.startswith(x) for x in generic_starts) and len(tl) <= 25:
-              return True
-
-            # Token-based heuristics
             tokens = re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9]+", tl)
             wc = len(tokens)
 
-            component_tokens = {"card", "kort", "sync", "integration"}
-            locale_tokens = {"locale", "translation", "language", "lang", "i18n"}
-
-            has_component = any(tok in component_tokens for tok in tokens)
-            has_locale = any(tok in locale_tokens for tok in tokens)
-
-            # If extremely short and no clear component/locale hint -> vague
-            if wc <= 2 and not has_component and not has_locale:
+            # 1-word titles are almost always vague (unless it's clearly a locale like "da-DK")
+            if wc <= 1:
+              if re.fullmatch(r"[a-z]{2}-[A-Z]{2}", (t or "").strip()):
+                return False
               return True
 
-            # Very short single-word titles that are not clearly a locale or component
-            if wc == 1 and not has_component and not has_locale:
+            # Very short titles can still be fine if they contain clear failure language
+            failure_markers = ("not work", "doesn't", "does not", "fails", "failing", "error", "crash", "broken", "cannot", "can't")
+            if wc <= 2 and not any(m in tl for m in failure_markers):
               return True
 
+            # Otherwise: assume not vague
             return False
-          # -------------------------------------------------------------------------------
+          # --------------------------------------
 
-          # ---------- LLM: classification + strict title match decision ----------
+          def clean(s: str) -> str:
+            s = re.sub(r"\s+", " ", (s or "").strip())
+            return s[:120].rstrip() if len(s) > 120 else s
+
+          # ---------- LLM: classify + decide rewrite conservatively ----------
           messages = [
             {
               "role": "system",
@@ -105,23 +97,22 @@ jobs:
                 "You are a GitHub triage bot.\n"
                 "Tasks:\n"
                 "1) Classify the issue into exactly one category:\n"
-                "   - bug: broken behavior, error, regression, unexpected result, steps to reproduce.\n"
+                "   - bug: broken behavior, error, regression, unexpected result.\n"
                 "   - feature: request for new functionality or enhancement.\n"
-                "   - locale: request to add/translate language/locale/i18n (e.g. 'add Danish', 'translation', 'da-DK').\n"
-                "2) Decide if the user title is GOOD ENOUGH and matches the body.\n\n"
-                "Be strict:\n"
-                "- If the title is vague/generic (e.g. 'bug', 'help', 'problem', 'not working') -> title_matches must be false.\n"
-                "- If the title does NOT mention what area/component it concerns (card/sync/feature/locale/etc.) OR does NOT hint at the symptom/goal -> title_matches must be false.\n"
-                "- Only set title_matches=true if the title is short but still clearly describes the topic.\n\n"
+                "   - locale: request to add/translate language/locale/i18n.\n\n"
+                "2) Decide whether the user title should be rewritten.\n"
+                "Be conservative: ONLY rewrite if the title is clearly misleading, off-topic, or too vague to be useful.\n"
+                "If the title is reasonably descriptive (even with imperfect grammar), do NOT rewrite.\n\n"
                 "Return ONLY valid JSON with keys:\n"
                 "category: one of [bug, feature, locale]\n"
-                "title_matches: boolean\n"
-                "suggested_title: string (ONLY if title_matches=false; otherwise empty string)\n"
-                "locale: string (ONLY if category=locale and language/locale is clear; otherwise empty string)\n\n"
+                "rewrite: boolean (true ONLY if misleading/off-topic/vague)\n"
+                "rewrite_reason: one of [none, vague, misleading, off_topic]\n"
+                "suggested_title: string (ONLY if rewrite=true; otherwise empty string)\n"
+                "locale: string (ONLY if category=locale and the requested language/locale is clear; otherwise empty string)\n\n"
                 "Rules for suggested_title:\n"
                 "- plain text, <= 120 chars, no markdown.\n"
-                "- should be concise and specific: include component/area + symptom/goal.\n"
-                "- if category=locale and requested language is clear, suggested_title should be that language/locale.\n"
+                "- preserve the user's wording when possible; avoid unnecessary paraphrasing.\n"
+                "- if category=locale and language is clear, suggested_title should be that language/locale.\n"
               )
             },
             {
@@ -134,7 +125,7 @@ jobs:
             "model": "openai/gpt-4.1",
             "messages": messages,
             "temperature": 0,
-            # If this causes an error on your setup, comment it out:
+            # If your endpoint supports it, uncomment:
             # "response_format": {"type": "json_object"},
           }
 
@@ -162,16 +153,24 @@ jobs:
             obj = {}
 
           category = (obj.get("category") or "").strip().lower()
-          title_matches = bool(obj.get("title_matches"))
+          rewrite = bool(obj.get("rewrite"))
+          rewrite_reason = (obj.get("rewrite_reason") or "none").strip().lower()
           suggested_title = (obj.get("suggested_title") or "").strip()
           locale = (obj.get("locale") or "").strip()
 
           if category not in {"bug", "feature", "locale"}:
             category = "bug"
 
-          # Force stricter behavior with local heuristic
-          if is_vague_title(stripped_title):
-            title_matches = False
+          # Heuristic force-rewrite only for truly vague titles
+          locally_vague = is_vague_title(stripped_title)
+          if locally_vague:
+            rewrite = True
+            if rewrite_reason == "none":
+              rewrite_reason = "vague"
+
+          # If model says "vague" but local heuristic says NOT vague, trust local and keep title
+          if rewrite and rewrite_reason == "vague" and not locally_vague:
+            rewrite = False
 
           # Your exact label names:
           label_map = {
@@ -181,42 +180,43 @@ jobs:
           }
           label = label_map[category]
 
+          # Prefixes you want in titles:
           prefix_map = {
             "bug": "[Bug]",
             "feature": "[New feature request]",
             "locale": "[Locale request]",
           }
-          desired_prefix = prefix_map[category]
+          prefix = prefix_map[category]
 
-          def clean(s: str) -> str:
-            s = re.sub(r"\s+", " ", (s or "").strip())
-            return s[:120].rstrip() if len(s) > 120 else s
-
-          # Base title selection
-          if category == "locale" and locale:
-            base_title = clean(locale)
-          elif not title_matches:
-            base_title = clean(suggested_title) or clean(stripped_title)
+          # Build base title text:
+          if category == "locale":
+            # Prefer explicit locale if detected; otherwise keep user's stripped title
+            base_title = clean(locale) if locale else clean(stripped_title)
           else:
-            base_title = clean(stripped_title)
+            if rewrite:
+              base_title = clean(suggested_title) or clean(stripped_title)
+            else:
+              base_title = clean(stripped_title)
 
-          # Always ensure the prefix matches the detected category.
-          candidate_title = f"{desired_prefix} {base_title}".strip()
-
-          # Avoid no-op updates
+          candidate_title = f"{prefix} {base_title}".strip()
           new_title = "" if candidate_title.lower() == original_title.lower() else candidate_title
 
           # ---------- Version check (bugs only) ----------
           def has_version_for(kind: str, text: str) -> bool:
+            """
+            Heuristic: find versions near keywords.
+            Matches e.g. 1.2, 1.2.3, v1.2.3, 1.2.3-beta.1
+            """
             version_pat = r"(?:v)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z\.-]+)?"
             t = text or ""
             if kind == "card":
+              # includes Danish "kort" just in case
               kw = r"(?:\bcard\b|\bkort\b)"
             else:
-              kw = r"(?:\bsync\b(?:\s+integration)?|\bsync-integration\b)"
+              kw = r"(?:\bsync\b(?:\s+integration)?|\bsync-integration\b|\bsync\s+integration\b)"
 
-            p1 = re.compile(rf"{kw}[^\n]{{0,80}}\b({version_pat})\b", re.I)
-            p2 = re.compile(rf"\b({version_pat})\b[^\n]{{0,40}}{kw}", re.I)
+            p1 = re.compile(rf"{kw}[^\n]{{0,120}}\b({version_pat})\b", re.I)
+            p2 = re.compile(rf"\b({version_pat})\b[^\n]{{0,80}}{kw}", re.I)
             return bool(p1.search(t) or p2.search(t))
 
           comment_body = ""
@@ -267,6 +267,7 @@ jobs:
             const labelName = process.env.LABEL?.trim();
             const newTitle = process.env.NEW_TITLE?.trim();
 
+            // Add label (assumes it exists; if it doesn't, GitHub will error)
             if (labelName) {
               await github.rest.issues.addLabels({
                 owner, repo, issue_number,
@@ -274,6 +275,7 @@ jobs:
               });
             }
 
+            // Update title (prefix always enforced; rewrite only if needed)
             if (newTitle) {
               await github.rest.issues.update({
                 owner, repo, issue_number,
