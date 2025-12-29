@@ -270,12 +270,30 @@ const TT_I18N = {
   'holidays.editor.title': 'Holiday schedule',
   'holidays.edit': 'Edit holiday schedule',
   'holidays.button': 'Holidays',
+  // Holiday copy-from popup
+  'holidays.copy_from': 'Copy from…',
+  'holidays.copy.title': 'Copy into holiday',
+  'holidays.copy.select': 'Select source',
+  'holidays.copy.apply': 'Insert',
+  'holidays.copy.replace_confirm': 'Replace existing holiday blocks?',
+  'holidays.copy.group.main': 'Main plan',
+  'holidays.copy.group.weekdays': 'Weekdays',
+  'holidays.copy.group.profiles': 'Profiles',
+  'holidays.copy.group.presence': 'Presence',
 
   'presence.button': 'Presence schedules',
   'presence.editor.title': 'Presence schedules',
-  'presence.enable_advanced': 'Enable advanced presence',
+  'presence.enable_advanced': 'Enable advanced presence schedules',
+  'presence.enable_advanced.desc': 'Use combinations and schedules based on who is home/away.',
   'presence.live_header': 'Show live presence in header',
-  'presence.live_header.desc': 'Show chips next to the pause button with who is home/away.',
+  'presence.live_header.desc': 'Chips are shown in the right corner.',
+  // Away delay
+  'away.delay_enable': 'Delay Away actions',
+  'away.delay_desc': 'Wait before applying Away changes.',
+  'away.delay_value': 'Delay',
+  'away.delay_unit': 'Unit',
+  'away.delay_unit.seconds': 'Seconds',
+  'away.delay_unit.minutes': 'Minutes',
   'presence.combos': 'Combinations',
   'presence.enable_combo': 'Enable this combination',
   'presence.all_home': 'All home',
@@ -542,11 +560,29 @@ const TT_I18N = {
     'holidays.editor.title': 'Helligdags‑skema',
     'holidays.edit': 'Redigér helligdags‑skema',
     'holidays.button': 'Helligdage',
+    // Holiday copy-from popup
+    'holidays.copy_from': 'Kopiér fra…',
+    'holidays.copy.title': 'Kopiér til helligdags‑skema',
+    'holidays.copy.select': 'Vælg kilde',
+    'holidays.copy.apply': 'Indsæt',
+    'holidays.copy.replace_confirm': 'Erstat eksisterende helligdags‑blokke?',
+    'holidays.copy.group.main': 'Hovedskema',
+    'holidays.copy.group.weekdays': 'Ugedage',
+    'holidays.copy.group.profiles': 'Skemaer',
+    'holidays.copy.group.presence': 'Tilstede skemaer',
     'presence.button': 'Tilstede skemaer',
     'presence.editor.title': 'Tilstede skemaer',
-    'presence.enable_advanced': 'Aktivér avanceret tilstedeværelse',
+    'presence.enable_advanced': 'Aktivér avancerede tilstede‑skemaer',
+    'presence.enable_advanced.desc': 'Brug kombinationer og skemaer baseret på hvem der er hjemme/ude.',
+    // Away delay
+    'away.delay_enable': 'Forsink Away‑handlinger',
+    'away.delay_desc': 'Vent før Away ændringer anvendes.',
+    'away.delay_value': 'Forsinkelse',
+    'away.delay_unit': 'Enhed',
+    'away.delay_unit.seconds': 'Sekunder',
+    'away.delay_unit.minutes': 'Minutter',
     'presence.live_header': 'Vis live personstatus i header',
-    'presence.live_header.desc': 'Vis chips ved pause-knappen med hvem der er hjemme/ude.',
+    'presence.live_header.desc': 'Chips vises i højre hjørne.',
     'presence.combos': 'Kombinationer',
     'presence.enable_combo': 'Aktivér denne kombination',
     'presence.all_home': 'Alle hjemme',
@@ -766,7 +802,14 @@ const TT_I18N = {
   , 'away.resume_away': 'Återuppta bortatemperatur'
   , 'presence.button': 'Närvaroscheman'
   , 'presence.editor.title': 'Närvaroscheman'
-  , 'presence.enable_advanced': 'Aktivera avancerad närvaro'
+  , 'presence.enable_advanced': 'Aktivera avancerade närvaroscheman'
+  , 'presence.enable_advanced.desc': 'Använd kombinationer och scheman baserade på vem som är hemma/borta.'
+  , 'away.delay_enable': 'Fördröj borta‑åtgärder'
+  , 'away.delay_desc': 'Vänta innan borta‑ändringar tillämpas.'
+  , 'away.delay_value': 'Fördröjning'
+  , 'away.delay_unit': 'Enhet'
+  , 'away.delay_unit.seconds': 'Sekunder'
+  , 'away.delay_unit.minutes': 'Minuter'
   , 'presence.combos': 'Kombinationer'
   , 'presence.enable_combo': 'Aktivera denna kombination'
   , 'presence.all_home': 'Alla hemma'
@@ -813,7 +856,7 @@ const TT_I18N = {
   , 'boiler.max_temp': 'Max pann‑temp (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Visa live‑närvaro i rubriken'
-  , 'presence.live_header.desc': 'Visa chips vid pausknappen med vilka som är hemma/borta.'
+  , 'presence.live_header.desc': 'Chips visas i högra hörnet.'
   , 'profiles.enable': 'Aktivera profiler (åsidosättning)'
   , 'profiles.enable.desc': 'Tillåt namngivna dagsscheman som kan aktiveras för att åsidosätta huvudplanen.'
   , 'profiles.active_label': 'Manuell profil aktiv:'
@@ -1035,7 +1078,14 @@ const TT_I18N = {
   , 'away.resume_away': 'Gjenoppta borte‑temperatur'
   , 'presence.button': 'Tilstede‑skjemaer'
   , 'presence.editor.title': 'Tilstede‑skjemaer'
-  , 'presence.enable_advanced': 'Aktiver avansert tilstedeværelse'
+  , 'presence.enable_advanced': 'Aktiver avanserte tilstede‑skjemaer'
+  , 'presence.enable_advanced.desc': 'Bruk kombinasjoner og skjemaer basert på hvem som er hjemme/borte.'
+  , 'away.delay_enable': 'Forsink borte‑handlinger'
+  , 'away.delay_desc': 'Vent før borte‑endringer brukes.'
+  , 'away.delay_value': 'Forsinkelse'
+  , 'away.delay_unit': 'Enhet'
+  , 'away.delay_unit.seconds': 'Sekunder'
+  , 'away.delay_unit.minutes': 'Minutter'
   , 'presence.combos': 'Kombinasjoner'
   , 'presence.enable_combo': 'Aktiver denne kombinasjonen'
   , 'presence.all_home': 'Alle hjemme'
@@ -1082,7 +1132,7 @@ const TT_I18N = {
   , 'boiler.max_temp': 'Maks kjeltemperatur (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Vis live tilstedeværelse i headeren'
-  , 'presence.live_header.desc': 'Vis chips ved pause‑knappen med hvem som er hjemme/borte.'
+  , 'presence.live_header.desc': 'Chips vises i høyre hjørne.'
   , 'profiles.enable': 'Aktiver profiler (overstyring)'
   , 'profiles.enable.desc': 'Tillat navngitte dagsskjemaer som kan aktiveres for å overstyre hovedplanen.'
   , 'profiles.active_label': 'Manuell profil aktiv:'
@@ -1303,7 +1353,14 @@ const TT_I18N = {
   , 'away.resume_away': 'Abwesenheits‑Temperatur fortsetzen'
   , 'presence.button': 'Anwesenheitspläne'
   , 'presence.editor.title': 'Anwesenheitspläne'
-  , 'presence.enable_advanced': 'Erweiterte Anwesenheit aktivieren'
+  , 'presence.enable_advanced': 'Erweiterte Anwesenheitspläne aktivieren'
+  , 'presence.enable_advanced.desc': 'Verwende Kombinationen und Zeitpläne basierend darauf, wer zu Hause/abwesend ist.'
+  , 'away.delay_enable': 'Abwesenheits‑Aktionen verzögern'
+  , 'away.delay_desc': 'Vor Anwendung der Abwesenheitsänderungen warten.'
+  , 'away.delay_value': 'Verzögerung'
+  , 'away.delay_unit': 'Einheit'
+  , 'away.delay_unit.seconds': 'Sekunden'
+  , 'away.delay_unit.minutes': 'Minuten'
   , 'presence.combos': 'Kombinationen'
   , 'presence.enable_combo': 'Diese Kombination aktivieren'
   , 'presence.all_home': 'Alle zu Hause'
@@ -1350,7 +1407,7 @@ const TT_I18N = {
   , 'boiler.max_temp': 'Max. Kesseltemperatur (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Live‑Anwesenheit in Kopfzeile anzeigen'
-  , 'presence.live_header.desc': 'Chips neben der Pause‑Taste anzeigen, wer zu Hause/abwesend ist.'
+  , 'presence.live_header.desc': 'Chips werden in der rechten Ecke angezeigt.'
   , 'profiles.enable': 'Profile aktivieren (Überschreiben)'
   , 'profiles.enable.desc': 'Benannte Tagespläne erlauben, die den Hauptplan bei Aktivierung überschreiben.'
   , 'profiles.active_label': 'Manuelles Profil aktiv:'
@@ -1571,7 +1628,14 @@ const TT_I18N = {
   , 'away.resume_away': 'Reanudar temperatura de ausencia'
   , 'presence.button': 'Horarios de presencia'
   , 'presence.editor.title': 'Horarios de presencia'
-  , 'presence.enable_advanced': 'Habilitar presencia avanzada'
+  , 'presence.enable_advanced': 'Habilitar horarios avanzados de presencia'
+  , 'presence.enable_advanced.desc': 'Usa combinaciones y horarios según quién esté en casa/ausente.'
+  , 'away.delay_enable': 'Retrasar acciones de ausencia'
+  , 'away.delay_desc': 'Espera antes de aplicar cambios de ausencia.'
+  , 'away.delay_value': 'Retraso'
+  , 'away.delay_unit': 'Unidad'
+  , 'away.delay_unit.seconds': 'Segundos'
+  , 'away.delay_unit.minutes': 'Minutos'
   , 'presence.combos': 'Combinaciones'
   , 'presence.enable_combo': 'Habilitar esta combinación'
   , 'presence.all_home': 'Todos en casa'
@@ -1618,7 +1682,7 @@ const TT_I18N = {
   , 'boiler.max_temp': 'Temp. máxima de caldera (°C)'
   , 'editor.temp_sensor': 'Sensor de temperatura'
   , 'presence.live_header': 'Mostrar presencia en vivo en la cabecera'
-  , 'presence.live_header.desc': 'Mostrar chips junto al botón de pausa con quién está en casa/ausente.'
+  , 'presence.live_header.desc': 'Las fichas se muestran en la esquina derecha.'
   , 'profiles.enable': 'Habilitar perfiles (sobrescribir)'
   , 'profiles.enable.desc': 'Permitir horarios diarios con nombre que puedas activar para sobrescribir el plan principal.'
   , 'profiles.active_label': 'Perfil manual activo:'
@@ -1832,7 +1896,14 @@ const TT_I18N = {
   , 'away.resume_away': 'Reprendre la température d’absence'
   , 'presence.button': 'Programmes de présence'
   , 'presence.editor.title': 'Programmes de présence'
-  , 'presence.enable_advanced': 'Activer la présence avancée'
+  , 'presence.enable_advanced': 'Activer les plannings de présence avancés'
+  , 'presence.enable_advanced.desc': 'Utilisez des combinaisons et des plannings selon qui est présent/absent.'
+  , 'away.delay_enable': 'Retarder les actions d’absence'
+  , 'away.delay_desc': 'Attendre avant d’appliquer les changements d’absence.'
+  , 'away.delay_value': 'Délai'
+  , 'away.delay_unit': 'Unité'
+  , 'away.delay_unit.seconds': 'Secondes'
+  , 'away.delay_unit.minutes': 'Minutes'
   , 'presence.combos': 'Combinaisons'
   , 'presence.enable_combo': 'Activer cette combinaison'
   , 'presence.all_home': 'Tous à la maison'
@@ -1879,7 +1950,7 @@ const TT_I18N = {
   , 'boiler.max_temp': 'Temp. max. chaudière (°C)'
   , 'editor.temp_sensor': 'Capteur de température'
   , 'presence.live_header': 'Afficher la présence en direct dans l’en‑tête'
-  , 'presence.live_header.desc': 'Afficher des chips près du bouton Pause indiquant qui est présent/absent.'
+  , 'presence.live_header.desc': 'Les puces sont affichées dans le coin droit.'
   , 'profiles.enable': 'Activer les profils (remplacement)'
   , 'profiles.enable.desc': 'Autoriser des plannings journaliers nommés pouvant remplacer le plan principal lorsque vous les activez.'
   , 'profiles.active_label': 'Profil manuel actif :'
@@ -2145,9 +2216,16 @@ const TT_I18N = {
   , 'holidays.button': 'Festività'
   , 'presence.button': 'Programmi presenza'
   , 'presence.editor.title': 'Programmi presenza'
-  , 'presence.enable_advanced': 'Abilita presenza avanzata'
+  , 'presence.enable_advanced': 'Abilita pianificazioni di presenza avanzate'
+  , 'presence.enable_advanced.desc': 'Usa combinazioni e pianificazioni in base a chi è in casa/fuori.'
+  , 'away.delay_enable': 'Ritarda azioni di assenza'
+  , 'away.delay_desc': 'Attendi prima di applicare i cambi di assenza.'
+  , 'away.delay_value': 'Ritardo'
+  , 'away.delay_unit': 'Unità'
+  , 'away.delay_unit.seconds': 'Secondi'
+  , 'away.delay_unit.minutes': 'Minuti'
   , 'presence.live_header': 'Mostra presenza live nell\'intestazione'
-  , 'presence.live_header.desc': 'Mostra chip accanto al pulsante Pausa con chi è in casa/fuori.'
+  , 'presence.live_header.desc': 'Le chip vengono visualizzate nell’angolo destro.'
   , 'presence.combos': 'Combinazioni'
   , 'presence.enable_combo': 'Abilita questa combinazione'
   , 'presence.all_home': 'Tutti a casa'
@@ -2367,7 +2445,14 @@ const TT_I18N = {
   , 'away.resume_away': 'Jatka poissaololämpötilaa'
   , 'presence.button': 'Läsnäoloaikataulut'
   , 'presence.editor.title': 'Läsnäoloaikataulut'
-  , 'presence.enable_advanced': 'Ota käyttöön edistynyt läsnäolo'
+  , 'presence.enable_advanced': 'Ota käyttöön kehittyneet läsnäoloaikataulut'
+  , 'presence.enable_advanced.desc': 'Käytä yhdistelmiä ja aikatauluja sen mukaan kuka on kotona/poissa.'
+  , 'away.delay_enable': 'Viivästytä poissaolo‑toimia'
+  , 'away.delay_desc': 'Odotetaan ennen poissaolomuutosten soveltamista.'
+  , 'away.delay_value': 'Viive'
+  , 'away.delay_unit': 'Yksikkö'
+  , 'away.delay_unit.seconds': 'Sekunnit'
+  , 'away.delay_unit.minutes': 'Minuutit'
   , 'presence.combos': 'Yhdistelmät'
   , 'presence.enable_combo': 'Ota tämä yhdistelmä käyttöön'
   , 'presence.all_home': 'Kaikki kotona'
@@ -2414,7 +2499,7 @@ const TT_I18N = {
   , 'boiler.max_temp': 'Kattilan maksimi (°C)'
   , 'editor.temp_sensor': 'Lämpötila‑anturi'
   , 'presence.live_header': 'Näytä live‑läsnäolo yläreunassa'
-  , 'presence.live_header.desc': 'Näytä sirut taukopainikkeen vieressä siitä, kuka on kotona/poissa.'
+  , 'presence.live_header.desc': 'Siruja näytetään oikeassa kulmassa.'
   , 'profiles.enable': 'Ota profiilit käyttöön (ohitus)'
   , 'profiles.enable.desc': 'Salli nimettyjä päiväaikatauluja, jotka voit aktivoida ohittaaksesi pääsuunnitelman.'
   , 'profiles.active_label': 'Manuaalinen profiili aktiivinen:'
@@ -2685,7 +2770,14 @@ const TT_I18N = {
     'away.resume_away': 'Obnovit teplotu mimo domov',
     'presence.button': 'Plány přítomnosti',
     'presence.editor.title': 'Plány přítomnosti',
-    'presence.enable_advanced': 'Povolit pokročilou přítomnost',
+    'presence.enable_advanced': 'Povolit pokročilé rozvrhy přítomnosti',
+    'presence.enable_advanced.desc': 'Použijte kombinace a rozvrhy podle toho, kdo je doma/pryč.',
+    'away.delay_enable': 'Zpozdit akce Nepřítomnosti',
+    'away.delay_desc': 'Před použitím změn nepřítomnosti vyčkejte.',
+    'away.delay_value': 'Zpoždění',
+    'away.delay_unit': 'Jednotka',
+    'away.delay_unit.seconds': 'Sekundy',
+    'away.delay_unit.minutes': 'Minuty',
     'presence.combos': 'Kombinace',
     'presence.enable_combo': 'Povolit tuto kombinaci',
     'presence.all_home': 'Všichni doma',
@@ -2706,7 +2798,7 @@ const TT_I18N = {
     , 'backup.opt.colors': 'Barevné bloky'
     , 'editor.tabs.weekdays': 'Dny v týdnu'
     , 'presence.live_header': 'Zobrazit živou přítomnost v záhlaví'
-    , 'presence.live_header.desc': 'Zobrazit štítky u tlačítka pauzy s tím, kdo je doma/pryč.'
+    , 'presence.live_header.desc': 'Štítky jsou zobrazeny v pravém rohu.'
     , 'week.view.title': 'Pohled na týden'
     , 'week.view.rooms_one_day': 'Všechny místnosti • jeden den'
     , 'week.view.days_one_room': 'Všechny dny • jedna místnost'
@@ -2969,9 +3061,16 @@ const TT_I18N = {
   , 'holidays.button': 'Prazniki'
   , 'presence.button': 'Urniki prisotnosti'
   , 'presence.editor.title': 'Urniki prisotnosti'
-  , 'presence.enable_advanced': 'Omogoči napredno prisotnost'
+  , 'presence.enable_advanced': 'Omogoči napredne urnike prisotnosti'
+  , 'presence.enable_advanced.desc': 'Uporabi kombinacije in urnike glede na to, kdo je doma/odsoten.'
+  , 'away.delay_enable': 'Zakasni dejanja odsotnosti'
+  , 'away.delay_desc': 'Počakaj preden uporabiš spremembe odsotnosti.'
+  , 'away.delay_value': 'Zamik'
+  , 'away.delay_unit': 'Enota'
+  , 'away.delay_unit.seconds': 'Sekunde'
+  , 'away.delay_unit.minutes': 'Minute'
   , 'presence.live_header': 'Prikaži živo prisotnost v glavi'
-  , 'presence.live_header.desc': 'Ob gumbu za premor prikaži oznake s tem, kdo je doma ali odsoten.'
+  , 'presence.live_header.desc': 'Oznake so prikazane v desnem kotu.'
   , 'presence.combos': 'Kombinacije'
   , 'presence.enable_combo': 'Omogoči to kombinacijo'
   , 'presence.all_home': 'Vsi doma'
@@ -3017,7 +3116,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.28-weekdays-view-switch-1";
+const TT_CARD_VERSION = "2025.12.28-room-labels-3";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -3166,8 +3265,10 @@ class ThermostatTimelineCard extends HTMLElement {
     if (!this._initialized) {
       this._initialized = true;
       this._init();
-      this._loadStore(true).then(() => {
+      this._loadStore(true).then(async () => {
         this._ensureSchedules();
+        // Ensure labels/merges/temp_sensors from backend are reflected in config before first render
+        try { await this._hydrateUiNamesFromBackend(); } catch {}
         // Restore delayed sync countdown if previously scheduled
         try { this._restoreSyncDue(); } catch {}
         this._render();
@@ -3189,6 +3290,26 @@ class ThermostatTimelineCard extends HTMLElement {
     } else {
       if (!this._inlineEditing && !this._editing) this._render();
     }
+  }
+
+  // Ensure UI-friendly names (labels) are hydrated from backend if missing locally
+  async _hydrateUiNamesFromBackend(){
+    try {
+      if (!this._config) return;
+      const hasAnyLabel = this._config.labels && typeof this._config.labels==='object' && Object.keys(this._config.labels).length>0;
+      const hasAnyMerge = this._config.merges && typeof this._config.merges==='object' && Object.keys(this._config.merges).length>0;
+      const hasAnySensors = this._config.temp_sensors && typeof this._config.temp_sensors==='object' && Object.keys(this._config.temp_sensors).length>0;
+      if (hasAnyLabel && hasAnyMerge && hasAnySensors) return;
+      const api = await this._apiFetchState();
+      const s = api?.settings || {};
+      let changed = false;
+      if (!hasAnyLabel && s.labels && typeof s.labels==='object' && Object.keys(s.labels).length){ this._config.labels = { ...s.labels }; changed = true; }
+      if (!hasAnyMerge && s.merges && typeof s.merges==='object' && Object.keys(s.merges).length){ this._config.merges = { ...s.merges }; changed = true; }
+      if (!hasAnySensors && s.temp_sensors && typeof s.temp_sensors==='object' && Object.keys(s.temp_sensors).length){ this._config.temp_sensors = { ...s.temp_sensors }; changed = true; }
+      if (changed){
+        try { const payload = this._makeStoragePayload(true); localStorage.setItem('thermostat_timeline_store', JSON.stringify(payload)); } catch {}
+      }
+    } catch {}
   }
 
   // ---------- Config ----------
@@ -3300,7 +3421,10 @@ class ThermostatTimelineCard extends HTMLElement {
       persons: [...(config.away?.persons || [])],
       target_c: Number.isFinite(config.away?.target_c) ? Number(config.away.target_c) : 17,
       advanced_enabled: !!(config.away?.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
-      combos: { ...(config.away?.combos || this._config?.away?.combos || {}) }
+      combos: { ...(config.away?.combos || this._config?.away?.combos || {}) },
+      delay_enabled: !!(config.away?.delay_enabled ?? this._config?.away?.delay_enabled ?? false),
+      delay_value: Number.isFinite(config.away?.delay_value) ? Number(config.away.delay_value) : (this._config?.away?.delay_value ?? 0),
+      delay_unit: String(config.away?.delay_unit || this._config?.away?.delay_unit || 'minutes')
     }
   , holidays_enabled: !!(config.holidays_enabled ?? this._config?.holidays_enabled ?? false)
   , holidays_source: (config.holidays_source || this._config?.holidays_source || 'calendar')
@@ -3467,6 +3591,9 @@ class ThermostatTimelineCard extends HTMLElement {
     this._holidayRoom = null;      // current room eid being edited in holiday modal
     this._holidayDraft = null;     // { rooms: { [eid]: [blocks] } }
     this._holidayOverlayHiddenForEditor = false;
+    // Holiday copy popup
+    this._holidayCopyOpen = false;
+    this._holidayCopySel = null; // value string like 'main::main', 'weekday::mon', 'profile::Name', 'presence::key'
 
     // External refresh hook (from editor button)
     this._onExternalRefresh = () => { try { if (!this._inlineEditing && !this._editing) this._render(); } catch {} };
@@ -3724,6 +3851,46 @@ class ThermostatTimelineCard extends HTMLElement {
             if (s.merges && typeof s.merges === 'object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
             if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
             if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+
+            // Fallbacks for Rooms tab settings if backend didn't persist them:
+            // Merge from local browser copy to avoid losing user edits (e.g., custom room names)
+            try {
+              const rawLocal = localStorage.getItem("thermostat_timeline_store") || '';
+              if (rawLocal) {
+                const parsed = JSON.parse(rawLocal);
+                const ls = parsed?.settings || {};
+                // Only merge when YAML did not provide the key and backend didn't send it
+                const isEmptyObj = (o)=>{ try { return o && typeof o==='object' && Object.keys(o).length===0; } catch { return false; } };
+                if (!this._yamlProvided?.labels && (!s.labels || typeof s.labels !== 'object' || isEmptyObj(s.labels))) {
+                  if (ls.labels && typeof ls.labels === 'object') {
+                    this._config.labels = { ...(this._config.labels || {}), ...ls.labels };
+                  }
+                }
+                if (!this._yamlProvided?.merges && (!s.merges || typeof s.merges !== 'object' || isEmptyObj(s.merges))) {
+                  if (ls.merges && typeof ls.merges === 'object') {
+                    this._config.merges = { ...(this._config.merges || {}), ...ls.merges };
+                  }
+                }
+                if (!this._yamlProvided?.temp_sensors && (!s.temp_sensors || typeof s.temp_sensors !== 'object' || isEmptyObj(s.temp_sensors))) {
+                  if (ls.temp_sensors && typeof ls.temp_sensors === 'object') {
+                    this._config.temp_sensors = { ...(this._config.temp_sensors || {}), ...ls.temp_sensors };
+                  }
+                }
+                if (Array.isArray(this._config.entities) && (!Array.isArray(s.entities) || !s.entities.length)) {
+                  if (Array.isArray(ls.entities) && ls.entities.length) {
+                    this._config.entities = ls.entities.filter(Boolean).map(String);
+                    // room_use_input_number alignment
+                    const rawModes = Array.isArray(ls.room_use_input_number) ? ls.room_use_input_number.map(v=>!!v) : [];
+                    while (rawModes.length < this._config.entities.length) rawModes.push(false);
+                    this._config.room_use_input_number = this._config.entities.map((eid, idx)=>{
+                      if (String(eid).startsWith('input_number.')) return true;
+                      if (String(eid).startsWith('climate.')) return false;
+                      return !!rawModes[idx];
+                    });
+                  }
+                }
+              }
+            } catch {}
             if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
             if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
             if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
@@ -3744,6 +3911,8 @@ class ThermostatTimelineCard extends HTMLElement {
             if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
             if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
             if (typeof s.apply_on_default_change === 'boolean') this._config.apply_on_default_change = !!s.apply_on_default_change;
+            // Open Window Detection from shared storage
+            try { if (s.open_window && typeof s.open_window === 'object') this._config.open_window = { ...s.open_window }; } catch {}
             // Holidays shared settings
             try {
               if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
@@ -3775,7 +3944,10 @@ class ThermostatTimelineCard extends HTMLElement {
                   persons: Array.isArray(a.persons) ? [...a.persons] : [],
                   target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17),
                   advanced_enabled: !!(a.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
-                  combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {})
+                  combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {}),
+                  delay_enabled: !!(a.delay_enabled ?? this._config?.away?.delay_enabled ?? false),
+                  delay_value: Number.isFinite(a.delay_value) ? Number(a.delay_value) : (this._config?.away?.delay_value ?? 0),
+                  delay_unit: String(a.delay_unit || this._config?.away?.delay_unit || 'minutes')
                 };
               } catch {}
             }
@@ -3791,6 +3963,18 @@ class ThermostatTimelineCard extends HTMLElement {
               if (Number.isFinite(due) && due > Date.now()) {
                 this._storeDelayDue = due;
                 try { localStorage.setItem(this._syncDueKey(), String(due)); } catch {}
+                // While a delayed sync is pending, prefer local browser draft for settings that affect UI immediately
+                try {
+                  const rawLocal = localStorage.getItem("thermostat_timeline_store") || '';
+                  if (rawLocal) {
+                    const parsed = JSON.parse(rawLocal);
+                    const ls = parsed?.settings || {};
+                    if (typeof ls.holidays_enabled === 'boolean') this._config.holidays_enabled = !!ls.holidays_enabled;
+                    if (typeof ls.holidays_source === 'string') this._config.holidays_source = (ls.holidays_source === 'manual') ? 'manual' : 'calendar';
+                    if (typeof ls.holidays_entity === 'string') this._config.holidays_entity = String(ls.holidays_entity||'');
+                    if (Array.isArray(ls.holidays_dates)) this._config.holidays_dates = [...ls.holidays_dates];
+                  }
+                } catch {}
               }
             } catch {}
           } catch {}
@@ -3909,6 +4093,8 @@ class ThermostatTimelineCard extends HTMLElement {
     else { const v = Number(s.boiler_max_temp); if (Number.isFinite(v)) this._config.boiler_max_temp = v; }
   }
   try { this._awayBypass = !!s.away_bypass; } catch {}
+  // Open Window Detection from local storage copy
+  try { if (s.open_window && typeof s.open_window==='object') this._config.open_window = { ...s.open_window }; } catch {}
   // Weekdays flags and view (persist across refresh) — skip if editor preview forbids overrides
   if (this._config?.respect_storage_weekdays !== false) {
     try { if (typeof s.weekdays_enabled === 'boolean') this._config.weekdays_enabled = !!s.weekdays_enabled; } catch {}
@@ -3929,7 +4115,10 @@ class ThermostatTimelineCard extends HTMLElement {
           persons: Array.isArray(a.persons) ? [...a.persons] : [],
           target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17),
           advanced_enabled: !!(a.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
-          combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {})
+          combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {}),
+          delay_enabled: !!(a.delay_enabled ?? this._config?.away?.delay_enabled ?? false),
+          delay_value: Number.isFinite(a.delay_value) ? Number(a.delay_value) : (this._config?.away?.delay_value ?? 0),
+          delay_unit: String(a.delay_unit || this._config?.away?.delay_unit || 'minutes')
         };
       } catch {}
     }
@@ -4004,6 +4193,7 @@ class ThermostatTimelineCard extends HTMLElement {
               pause_sensor_entity: String(this._config.pause_sensor_entity || ''),
               pause_indef: !!this._pauseIndef, 
               pause_until_ms: Number(this._pauseUntilMs||0), 
+              open_window: this._config.open_window || { enabled:false, sensors:{}, open_delay_min:2, close_delay_min:5 },
               holidays_enabled: !!this._config.holidays_enabled, 
               holidays_source: this._config.holidays_source || 'calendar', 
               holidays_entity: this._config.holidays_entity || '', 
@@ -4016,7 +4206,27 @@ class ThermostatTimelineCard extends HTMLElement {
       }
       this._saving = true;
       try {
-        const payload = this._makeStoragePayload(true);
+        let payload = this._makeStoragePayload(true);
+        // Merge with current backend settings to avoid wiping keys the editor/card doesn't currently include (e.g. labels)
+        try {
+          const state = await this._apiFetchState();
+          const base = (state && typeof state === 'object' && state.settings && typeof state.settings === 'object') ? state.settings : {};
+          const incoming = payload.settings || {};
+          const merged = { ...base, ...incoming };
+          const keepIfEmpty = (key)=>{
+            try {
+              const inc = incoming[key];
+              const hasInc = inc && typeof inc === 'object' && Object.keys(inc).length > 0;
+              const baseVal = base[key];
+              const hasBase = baseVal && typeof baseVal === 'object' && Object.keys(baseVal).length > 0;
+              if (!hasInc && hasBase) merged[key] = baseVal; // preserve backend value when our copy is empty
+            } catch {}
+          };
+          keepIfEmpty('labels');
+          keepIfEmpty('merges');
+          keepIfEmpty('temp_sensors');
+          payload = { ...payload, settings: merged };
+        } catch {}
         // Push all data to the integration via set_store service (writes to file)
         await this._hass.callService("thermostat_timeline", "set_store", payload);
       } catch (e) {}
@@ -4582,13 +4792,24 @@ class ThermostatTimelineCard extends HTMLElement {
       const persons = this._presencePersons(); if (!persons.length) return null;
       const home=[], away=[];
       for (const p of persons){ const st = this._hass?.states?.[p]; const s = String(st?.state||'').toLowerCase(); if (s==='home') home.push(p); else away.push(p); }
+      // Apply optional delay before switching into (or out of) presence mode
+      try {
+        const delayMs = this._awayDelayThresholdMs();
+        if (delayMs > 0){
+          const anyAway = (home.length !== persons.length);
+          const now = Date.now();
+          if (this._awayWant !== anyAway) { this._awayWant = anyAway; this._awayWantSinceMs = now; }
+          const stable = (now - (this._awayWantSinceMs||0)) >= delayMs;
+          if (!stable) return this._lastPresenceKey || null;
+        }
+      } catch {}
       // When everyone is home, do not use advanced presence at all — fall back to
       // the main/weekdays schedule. No need for an "all home" presence plan.
       if (home.length === persons.length) return null;
       const key = this._presenceComboKey(home, away);
       const combos = (this._config?.away?.combos) || {};
       const meta = combos[key];
-      if (meta && meta.enabled) return key;
+      if (meta && meta.enabled) { this._lastPresenceKey = key; return key; }
       return null;
     } catch { return null; }
   }
@@ -4703,14 +4924,23 @@ class ThermostatTimelineCard extends HTMLElement {
     } catch {}
     return want; }
 
+  _awayDelayThresholdMs(){ try { const a=this._config?.away||{}; if (!a.delay_enabled) return 0; const v = Number(a.delay_value||0); const u = String(a.delay_unit||'minutes'); const ms = Math.max(0, Math.round(v)) * (u==='seconds'?1000:60000); return ms; } catch { return 0; } }
   _isAwayActive(){
     try {
       const a = this._config?.away; if (!a || !a.enabled) return false;
       const persons = Array.isArray(a.persons) ? a.persons : [];
       if (!persons.length) return false;
-      // Consider away if none are 'home'
-      for (const p of persons){ const st = this._hass?.states?.[p]; const s = (st?.state||'').toLowerCase(); if (s === 'home') return false; }
-      return true;
+      let want = true; // assume away until we find someone home
+      for (const p of persons){ const st = this._hass?.states?.[p]; const s = (st?.state||'').toLowerCase(); if (s === 'home') { want = false; break; } }
+      const delayMs = this._awayDelayThresholdMs();
+      if (!delayMs) { this._lastAwayActive = want; return want; }
+      const now = Date.now();
+      if (this._awayWant !== want) { this._awayWant = want; this._awayWantSinceMs = now; }
+      const stable = (now - (this._awayWantSinceMs||0)) >= delayMs;
+      const prev = !!this._lastAwayActive;
+      const out = stable ? want : prev;
+      this._lastAwayActive = out;
+      return out;
     } catch { return false; }
   }
 
@@ -4996,7 +5226,18 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   // Ping backend to apply now without waiting for delayed sync
-  async _nudgeBackgroundApplyNow(){ try { if (!this._hass || !this._config?.storage_enabled) return; const _awayCfg = this._config?.away || {}; const _awayOut = { ..._awayCfg }; if (_awayOut.advanced_enabled) _awayOut.enabled = false; const payload = this._makeStoragePayload(false); payload.settings = { ...payload.settings, away: _awayOut }; await this._hass.callService('thermostat_timeline','set_store', { settings: payload.settings, force: true }); } catch {} }
+  async _nudgeBackgroundApplyNow(){
+    try {
+      if (!this._hass || !this._config?.storage_enabled) return;
+      const _awayCfg = this._config?.away || {};
+      const _awayOut = { ..._awayCfg };
+      // When bypassing or using advanced presence, disable simple Away in backend apply
+      if (this._awayBypass || _awayOut.advanced_enabled) _awayOut.enabled = false;
+      const payload = this._makeStoragePayload(false);
+      payload.settings = { ...payload.settings, away: _awayOut };
+      await this._hass.callService('thermostat_timeline','set_store', { settings: payload.settings, force: true });
+    } catch {}
+  }
 
   // Apply a setpoint immediately for the given entity (and its merged entities)
   // using the provided temperature (in °C). Honours away override and min/max.
@@ -5352,6 +5593,11 @@ class ThermostatTimelineCard extends HTMLElement {
   /* Stack controls above preview to give them more space; match Weekly modal width */
   /* Make tooltip positions relative to the profiles modal */
   .modal-profiles, .modal-holiday{ width:min(95vw, 640px); max-width: 640px; border-radius:8px; padding:10px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); position: relative; }
+  /* Holiday copy popup */
+  .modal-hcopy{ width:min(95vw, 640px); max-width: 640px; border-radius:8px; padding:12px; background: var(--card-background-color); color: var(--primary-text-color); border:1px solid var(--divider-color); position: relative; }
+  .modal-hcopy .hcopy-select{ width:100%; padding:8px; border-radius:8px; border:1px solid var(--divider-color); background: var(--card-background-color); color: var(--primary-text-color); }
+  .modal-hcopy .week-scale{ margin: 8px 16px; }
+  .modal-hcopy .week-track{ margin: 0 16px; position:relative; height:64px; border:1px dashed var(--divider-color); border-radius:10px; overflow:hidden; }
   .prof-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 6px; }
   .prof-body{ display:grid; grid-template-columns: 1fr; gap:12px; align-items:start; }
   .prof-controls{ display:grid; gap:8px; }
@@ -5589,6 +5835,31 @@ class ThermostatTimelineCard extends HTMLElement {
             </div>
           </div>
         </div>
+        <!-- Presence (advanced away) -->
+        <!-- Holiday: copy from other schedule types -->
+        <div class="overlay overlay-hcopy" part="overlay">
+          <div class="modal modal-hcopy" role="dialog" aria-modal="true">
+            <div class="prof-head">
+              <h3 class="hcopy-title"></h3>
+              <div class="holiday-room hcopy-room" style="opacity:.9;"></div>
+            </div>
+            <div style="display:grid; gap:10px;">
+              <label style="display:grid; gap:6px;">
+                <span style="font-size:.9rem; color: var(--secondary-text-color);" class="hcopy-label"></span>
+                <select class="hcopy-select"></select>
+              </label>
+              <div class="week-scale" style="position:relative; height:32px;">
+                <div class="week-scale-inner" style="position:relative; height:100%;"></div>
+              </div>
+              <div class="week-track" style="position:relative;"></div>
+              <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <button class="btn primary hcopy-apply" type="button"></button>
+                <button class="btn ghost hcopy-close" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <!-- Presence (advanced away) -->
         <div class="overlay overlay-presence" part="overlay">
           <div class="modal modal-profiles" role="dialog" aria-modal="true">
@@ -5957,8 +6228,28 @@ class ThermostatTimelineCard extends HTMLElement {
       const _awayCfg = this._config?.away || {};
       const _awayOut = { ..._awayCfg };
       if (_awayOut.advanced_enabled) _awayOut.enabled = false;
-      const payload = this._makeStoragePayload(true);
+      let payload = this._makeStoragePayload(true);
       payload.settings = { ...payload.settings, away: _awayOut };
+      // Merge with current backend settings to avoid clearing omitted keys (e.g., labels) on delayed write
+      try {
+        const state = await this._apiFetchState();
+        const base = (state && typeof state === 'object' && state.settings && typeof state.settings === 'object') ? state.settings : {};
+        const incoming = payload.settings || {};
+        const merged = { ...base, ...incoming };
+        const keepIfEmpty = (key)=>{
+          try {
+            const inc = incoming[key];
+            const hasInc = inc && typeof inc === 'object' && Object.keys(inc).length > 0;
+            const baseVal = base[key];
+            const hasBase = baseVal && typeof baseVal === 'object' && Object.keys(baseVal).length > 0;
+            if (!hasInc && hasBase) merged[key] = baseVal;
+          } catch {}
+        };
+        keepIfEmpty('labels');
+        keepIfEmpty('merges');
+        keepIfEmpty('temp_sensors');
+        payload = { ...payload, settings: merged };
+      } catch {}
       // Push all data to the integration via set_store service (writes to file)
       await this._hass.callService("thermostat_timeline", "set_store", payload);
     }
@@ -6459,11 +6750,13 @@ class ThermostatTimelineCard extends HTMLElement {
             if (this._countdownTimer) { try { clearInterval(this._countdownTimer); } catch {} this._countdownTimer = null; }
           }
         }
-        // Global Away bypass button (visible when Away feature is enabled)
+        // Global Away bypass button (visible only when Away is active: nobody home)
         try {
-          if (this._config?.away?.enabled) {
+          const advOn = !!(this._config?.away?.advanced_enabled);
+          const awayActive = !!this._isAwayActive();
+          if (this._config?.away?.enabled && !advOn && awayActive) {
             const ab = document.createElement('button');
-            ab.className = 'profiles-btn';
+            ab.className = 'profiles-btn away-bypass-btn';
             // Make it red like a warning action
             try {
               ab.style.borderColor = 'var(--error-color)';
@@ -6487,13 +6780,17 @@ class ThermostatTimelineCard extends HTMLElement {
             } else {
               wrap.append(ab);
             }
+          } else {
+            // Remove if not applicable
+            const old = wrap.querySelector('.away-bypass-btn'); if (old) old.remove();
           }
         } catch {}
         // Presence live status for Away persons
         try {
           const persons = (this._presencePersons && typeof this._presencePersons === 'function') ? this._presencePersons().filter(Boolean) : [];
+          const awayOn = !!(this._config?.away?.enabled);
           const advOn = !!(this._config?.away?.advanced_enabled);
-          const wantLive = advOn && !!(this._config?.presence_live_header ?? true);
+          const wantLive = (awayOn || advOn) && !!(this._config?.presence_live_header ?? true);
           if (persons.length && wantLive) {
             let live = wrap.querySelector('.presence-live');
             if (!live) { live = document.createElement('div'); live.className = 'presence-live';
@@ -7363,6 +7660,10 @@ class ThermostatTimelineCard extends HTMLElement {
     if (hclose) hclose.addEventListener('click', () => { this._closeHolidayEditor(); this._render(); });
     if (hov) hov.addEventListener('click', (e)=>{ if (e.target === hov) { e.preventDefault(); this._closeHolidayEditor(); } });
 
+    // Holiday copy popup overlay events
+    const hcov = qs('.overlay-hcopy');
+    if (hcov) hcov.addEventListener('click', (e)=>{ if (e.target === hcov) { e.preventDefault(); this._closeHolidayCopy(); } });
+
     // Onboarding controls
     try {
       const next = qs('.onb-next');
@@ -7717,6 +8018,10 @@ class ThermostatTimelineCard extends HTMLElement {
           combos: awayCombosClone,
         },
         presence_live_header: !!(cfg.presence_live_header ?? true),
+        // Away delay (defaults)
+        away_delay_enabled: !!(awayCfg.delay_enabled ?? false),
+        away_delay_value: Number.isFinite(Number(awayCfg.delay_value)) ? Number(awayCfg.delay_value) : 0,
+        away_delay_unit: String(awayCfg.delay_unit || 'minutes'),
       };
     } catch { this._settingsDraft = null; }
   }
@@ -7913,6 +8218,14 @@ class ThermostatTimelineCard extends HTMLElement {
         const persons = Array.isArray(src.persons) ? src.persons.filter(Boolean).map(String) : [];
         cur.persons = Array.from(new Set(persons));
         cur.advanced_enabled = !!src.advanced_enabled;
+        // Delay fields from draft
+        try {
+          cur.delay_enabled = !!(d.away_delay_enabled ?? cur.delay_enabled ?? false);
+          const v = Number(d.away_delay_value);
+          cur.delay_value = Number.isFinite(v) ? Math.max(0, Math.round(v)) : (Number.isFinite(cur.delay_value) ? cur.delay_value : 0);
+          const u = String(d.away_delay_unit || cur.delay_unit || 'minutes');
+          cur.delay_unit = (u === 'seconds') ? 'seconds' : 'minutes';
+        } catch {}
 
         // Normalize combos (only keep enabled entries)
         const combosSrc = (src.combos && typeof src.combos === 'object') ? src.combos : {};
@@ -7923,14 +8236,14 @@ class ThermostatTimelineCard extends HTMLElement {
         }
         cur.combos = combosOut;
 
-        // If Away is turned OFF, also disable Advanced Away and live presence chips
+        // If Away is turned OFF, disable live presence chips (and advanced)
         if (!cur.enabled) {
           cur.advanced_enabled = false;
           cfg.presence_live_header = false;
         } else {
-          // Presence live header respects advanced toggle
+          // Presence live header is available whenever Away mode is enabled
           const live = !!(d.presence_live_header ?? true);
-          cfg.presence_live_header = cur.advanced_enabled ? live : false;
+          cfg.presence_live_header = live;
         }
 
         cfg.away = cur;
@@ -8604,12 +8917,23 @@ class ThermostatTimelineCard extends HTMLElement {
               </div>
             </div>
 
-            <div class="setting sp-away-adv-row">
+            <div class="setting sp-away-delay-row">
               <div class="text">
-                <div class="title sp-away-adv-title"></div>
-                <div class="desc sp-away-adv-desc"></div>
+                <div class="title sp-away-delay-title"></div>
+                <div class="desc sp-away-delay-desc"></div>
               </div>
-              <ha-switch class="sp-away-adv-enable"></ha-switch>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <ha-switch class="sp-away-delay-enable"></ha-switch>
+                <div class="inline" style="display:flex; gap:8px; align-items:center;">
+                  <label class="sp-away-delay-value-label" style="opacity:0.8;"></label>
+                  <input class="settings-input sp-away-delay-value" type="number" step="1" min="0" style="width:90px;" />
+                  <label class="sp-away-delay-unit-label" style="opacity:0.8;"></label>
+                  <select class="settings-input sp-away-delay-unit">
+                    <option value="seconds"></option>
+                    <option value="minutes"></option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div class="setting sp-presence-live-row">
@@ -8618,6 +8942,14 @@ class ThermostatTimelineCard extends HTMLElement {
                 <div class="desc sp-presence-live-desc"></div>
               </div>
               <ha-switch class="sp-presence-live-enable"></ha-switch>
+            </div>
+
+            <div class="setting sp-away-adv-row">
+              <div class="text">
+                <div class="title sp-away-adv-title"></div>
+                <div class="desc sp-away-adv-desc"></div>
+              </div>
+              <ha-switch class="sp-away-adv-enable"></ha-switch>
             </div>
 
             <div class="setting sp-away-combos-row" style="grid-template-columns: 1fr;">
@@ -8645,9 +8977,10 @@ class ThermostatTimelineCard extends HTMLElement {
         const tempRow = q('.overlay-settings .sp-away-temp-row');
         const personsRow = q('.overlay-settings .sp-away-persons-row');
         const advRow = q('.overlay-settings .sp-away-adv-row');
+        const delayRow = q('.overlay-settings .sp-away-delay-row');
         const liveRow = q('.overlay-settings .sp-presence-live-row');
         const combosRow = q('.overlay-settings .sp-away-combos-row');
-        [tempRow, personsRow, advRow, liveRow, combosRow].forEach(r=>{ if (r) r.style.display = awayOn ? '' : 'none'; });
+        [tempRow, personsRow, delayRow, advRow, liveRow, combosRow].forEach(r=>{ if (r) r.style.display = awayOn ? '' : 'none'; });
       } catch {}
 
       // Toggle states
@@ -8663,7 +8996,8 @@ class ThermostatTimelineCard extends HTMLElement {
         const pl = q('.overlay-settings .sp-presence-live-enable');
         if (pl) {
           pl.checked = !!(d.presence_live_header ?? true);
-          pl.disabled = !advOn;
+          // Enabled whenever Away mode is enabled
+          pl.disabled = !awayOn;
         }
       } catch {}
 
@@ -8682,6 +9016,13 @@ class ThermostatTimelineCard extends HTMLElement {
             inp.value = String(Math.round(toDisp(v) * 2) / 2);
           }
         }
+      } catch {}
+
+      // Delay controls
+      try {
+        const en = q('.overlay-settings .sp-away-delay-enable'); if (en) en.checked = !!d.away_delay_enabled;
+        const val = q('.overlay-settings .sp-away-delay-value'); if (val && val !== this.shadowRoot.activeElement) val.value = String(Number.isFinite(Number(d.away_delay_value)) ? Number(d.away_delay_value) : 0);
+        const unit = q('.overlay-settings .sp-away-delay-unit'); if (unit) unit.value = (String(d.away_delay_unit || 'minutes'));
       } catch {}
 
       // Entity picker
@@ -8828,9 +9169,8 @@ class ThermostatTimelineCard extends HTMLElement {
             try {
               if (!this._settingsDraft?.away) return;
               this._settingsDraft.away.advanced_enabled = !!e.target.checked;
-              if (!this._settingsDraft.away.advanced_enabled) {
-                this._settingsDraft.presence_live_header = false;
-              }
+              // Do not force presence chips off when advanced is disabled;
+              // availability is controlled by Away mode.
               this._renderSettingsPopupAwayTab();
             } catch {}
           });
@@ -8840,7 +9180,7 @@ class ThermostatTimelineCard extends HTMLElement {
           const pl = q('.overlay-settings .sp-presence-live-enable');
           if (pl) pl.addEventListener('change', (e)=>{
             try {
-              if (!this._settingsDraft?.away?.advanced_enabled) {
+              if (!this._settingsDraft?.away?.enabled) {
                 e.preventDefault?.();
                 pl.checked = false;
                 this._settingsDraft.presence_live_header = false;
@@ -8849,6 +9189,20 @@ class ThermostatTimelineCard extends HTMLElement {
               this._settingsDraft.presence_live_header = !!e.target.checked;
             } catch {}
           });
+        } catch {}
+
+        // Delay bindings
+        try {
+          const en = q('.overlay-settings .sp-away-delay-enable');
+          if (en) en.addEventListener('change', (e)=>{ try { this._settingsDraft.away_delay_enabled = !!e.target.checked; } catch {} });
+        } catch {}
+        try {
+          const unit = q('.overlay-settings .sp-away-delay-unit');
+          if (unit) unit.addEventListener('change', (e)=>{ try { this._settingsDraft.away_delay_unit = String(e.target.value||'minutes'); } catch {} });
+        } catch {}
+        try {
+          const val = q('.overlay-settings .sp-away-delay-value');
+          if (val) val.addEventListener('change', (e)=>{ try { const n=Number(e.target.value); this._settingsDraft.away_delay_value = Number.isFinite(n)? Math.max(0,Math.round(n)) : 0; } catch {} });
         } catch {}
       }
     } catch {}
@@ -8861,7 +9215,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="owd"]');
       if (!page) return;
       page.innerHTML = '';
-      try { page.style.display = 'grid'; page.style.gap = '16px'; } catch {}
+      try { page.style.display = ''; page.style.gap = ''; } catch {}
 
       // Ensure draft shape
       const cur = (d.open_window && typeof d.open_window === 'object') ? d.open_window : (d.open_window = { enabled:false, sensors:{}, open_delay_min:2, close_delay_min:5 });
@@ -8872,7 +9226,7 @@ class ThermostatTimelineCard extends HTMLElement {
       cur.open_delay_min = Math.max(0, Math.min(1440, Math.round(Number(cur.open_delay_min))));
       cur.close_delay_min = Math.max(0, Math.min(1440, Math.round(Number(cur.close_delay_min))));
 
-      // Enable toggle
+      // Card with all OWD content
       const enableCard = document.createElement('div'); enableCard.className = 'settings-card';
       const enRow = document.createElement('div'); enRow.className = 'setting';
       const enText = document.createElement('div'); enText.className = 'text';
@@ -8889,19 +9243,25 @@ class ThermostatTimelineCard extends HTMLElement {
       });
       enRow.append(enText, enSwitch);
       enableCard.append(enRow);
+
+      // Remaining content shown only when enabled (inside the same card, like other tabs)
+      const contentWrap = document.createElement('div'); contentWrap.className = 'owd-content';
+      try { contentWrap.style.display = cur.enabled ? 'grid' : 'none'; contentWrap.style.gap = '16px'; contentWrap.style.marginTop = '6px'; } catch {}
+      enableCard.append(contentWrap);
       page.append(enableCard);
 
-      // Remaining content shown only when enabled
-      const contentWrap = document.createElement('div'); contentWrap.className = 'owd-content';
-      try { contentWrap.style.display = cur.enabled ? 'grid' : 'none'; contentWrap.style.gap = '16px'; } catch {}
-      page.append(contentWrap);
-
-      // Rooms foldouts
+      // Rooms foldouts, wrapped in a setting row (like Boiler)
       const ents = Array.isArray(this._config?.entities) ? this._config.entities : [];
+      const sensorsRow = document.createElement('div'); sensorsRow.className = 'setting'; sensorsRow.style.gridTemplateColumns = '1fr';
+      const sensorsText = document.createElement('div'); sensorsText.className = 'text';
+      const sensorsTitle = document.createElement('div'); sensorsTitle.className = 'title sp-owd-sensors-label';
+      sensorsText.append(sensorsTitle);
+      sensorsRow.append(sensorsText);
 
       const roomsWrap = document.createElement('div');
       try { roomsWrap.style.display = 'grid'; roomsWrap.style.gap = '10px'; } catch {}
-      contentWrap.append(roomsWrap);
+      sensorsRow.append(roomsWrap);
+      contentWrap.append(sensorsRow);
 
       if (!ents.length) {
         const box = document.createElement('div'); box.className = 'empty-box';
@@ -9017,7 +9377,6 @@ class ThermostatTimelineCard extends HTMLElement {
         const wrap = document.createElement('div');
         wrap.style.display = 'grid';
         wrap.style.gap = '8px';
-        const lab = document.createElement('div'); lab.className = 'label sp-owd-sensors-label'; lab.style.display='block';
         const picker = document.createElement('tt-entity-picker');
         picker.className = 'sp-owd-sensor-picker';
         picker.setAttribute('include-domains', '["binary_sensor"]');
@@ -9067,20 +9426,20 @@ class ThermostatTimelineCard extends HTMLElement {
           } catch {}
         });
 
-        wrap.append(lab, picker, chips);
+        wrap.append(picker, chips);
         details.append(wrap);
         roomsWrap.append(line);
       }
 
       // Global delay settings
-      const delayCard = document.createElement('div'); delayCard.className = 'settings-card';
+      // Delay row inside same card
       const row = document.createElement('div'); row.className = 'setting'; row.style.gridTemplateColumns = '1fr';
       const txt = document.createElement('div'); txt.className = 'text';
       const title = document.createElement('div'); title.className = 'title sp-owd-delays-title';
       const desc = document.createElement('div'); desc.className = 'desc sp-owd-delays-desc';
       txt.append(title, desc);
       row.append(txt);
-      delayCard.append(row);
+      contentWrap.append(row);
       const grid = document.createElement('div');
       grid.style.display = 'flex';
       grid.style.gap = '10px';
@@ -9106,8 +9465,7 @@ class ThermostatTimelineCard extends HTMLElement {
       const openField = mkField('sp-owd-open-delay', 'owd.open_delay', Number(cur.open_delay_min||0), (v)=>{ try { if (!this._settingsDraft?.open_window) return; this._settingsDraft.open_window.open_delay_min = v; } catch {} });
       const closeField = mkField('sp-owd-close-delay', 'owd.close_delay', Number(cur.close_delay_min||0), (v)=>{ try { if (!this._settingsDraft?.open_window) return; this._settingsDraft.open_window.close_delay_min = v; } catch {} });
       grid.append(openField, closeField);
-      delayCard.append(grid);
-      contentWrap.append(delayCard);
+      contentWrap.append(grid);
     } catch {}
   }
 
@@ -10366,6 +10724,18 @@ class ThermostatTimelineCard extends HTMLElement {
       this._applySettingsPopupDraftToConfig();
       if (this._config?.storage_enabled && typeof this._saveStore === 'function') {
         await this._saveStore(true);
+        // Pull fresh settings back from the integration to avoid any race where UI shows defaults after a hard refresh
+        try {
+          const api = await this._apiFetchState();
+          const s = api?.settings || null;
+          if (s && typeof s === 'object') {
+            if (typeof s.holidays_enabled === 'boolean') this._config.holidays_enabled = !!s.holidays_enabled;
+            if (typeof s.holidays_source === 'string') this._config.holidays_source = (s.holidays_source === 'manual') ? 'manual' : 'calendar';
+            if (typeof s.holidays_entity === 'string') this._config.holidays_entity = String(s.holidays_entity || '');
+            if (Array.isArray(s.holidays_dates)) this._config.holidays_dates = [...s.holidays_dates];
+            if (s.open_window && typeof s.open_window === 'object') this._config.open_window = { ...s.open_window };
+          }
+        } catch {}
       } else {
         try { if (typeof this._debouncedSaveStore === 'function') this._debouncedSaveStore(); } catch {}
       }
@@ -10937,6 +11307,10 @@ class ThermostatTimelineCard extends HTMLElement {
     this._ensureWeeklyStruct(row);
     // Reset any pending cross-room copies for this editing session
     this._weeklyCopyTargets = [];
+
+    // Away delay tracking
+    this._awayWant = null; // boolean | null
+    this._awayWantSinceMs = 0; // timestamp when away want last changed
     // Deep copy as draft from the dataset for current mode
     try {
       const curMode = (row.weekly?.mode) || (this._config?.weekdays_mode) || 'weekday_weekend';
@@ -11861,7 +12235,9 @@ class ThermostatTimelineCard extends HTMLElement {
     // Toolbar with Add
   const addBtnInline = document.createElement('button'); addBtnInline.type='button'; addBtnInline.className='btn primary'; addBtnInline.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+this._t('ui.add_block')+'</span>';
     addBtnInline.addEventListener('click', ()=>{ this._openHolidayBlockEditor(null, this._getNowMin()); });
-    const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(addBtnInline);
+    const copyBtn = document.createElement('button'); copyBtn.type='button'; copyBtn.className='btn ghost'; copyBtn.innerHTML = '<ha-icon icon="mdi:content-copy"></ha-icon><span>'+ (this._t('holidays.copy_from') || this._t('ui.copy_plan')) +'</span>';
+    copyBtn.addEventListener('click', ()=> this._openHolidayCopy());
+    const toolbar = document.createElement('div'); toolbar.className='prof-toolbar'; toolbar.style.display='flex'; toolbar.style.justifyContent='flex-end'; toolbar.style.gap='8px'; toolbar.append(copyBtn, addBtnInline);
     try {
       const outerScale = (scale && scale.closest) ? scale.closest('.week-scale') : (modalHost?.querySelector('.week-scale') || null);
       const parent = outerScale?.parentElement || track.parentElement;
@@ -12082,6 +12458,147 @@ class ThermostatTimelineCard extends HTMLElement {
     if (this._config.apply_on_edit) await this._applyIfDesiredChanged(before);
     this._scheduleNextApply();
   } catch {}
+  }
+
+  // ---- Holiday: Copy from other schedule types ----
+  _holidayCopySourcesForRoom(eid){
+    const out = [];
+    try {
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureWeeklyStruct(row); this._ensureProfilesStruct(row); this._ensurePresenceStruct(row); this._ensureHolidayStruct(row);
+      // Main plan
+      out.push({ group: 'main', label: this._t('holidays.copy.group.main'), items: [{ value: 'main::main', label: this._t('holidays.copy.group.main') }] });
+      // Weekdays – list all 7 days, regardless of mode
+      try {
+        const days = this._weekdayNames();
+        const items = days.map(k=>({ value: `weekday::${k}`, label: (this._t('week.days_full.'+k) || this._t('week.days.'+k) || k) }));
+        out.push({ group: 'weekdays', label: this._t('holidays.copy.group.weekdays'), items });
+      } catch {}
+      // Profiles
+      try {
+        const names = Object.keys(row.profiles || {});
+        if (names.length) {
+          const items = [];
+          // Put active profile first if any
+          const ap = row.activeProfile && names.includes(row.activeProfile) ? row.activeProfile : null;
+          if (ap) items.push({ value: `profile::${ap}`, label: `${(this._t('profiles.button')||'Manual schedule')}: ${ap}` });
+          for (const n of names){ if (n!==ap) items.push({ value: `profile::${n}`, label: n }); }
+          out.push({ group: 'profiles', label: this._t('holidays.copy.group.profiles'), items });
+        }
+      } catch {}
+      // Presence combinations (show enabled + any with saved blocks)
+      try {
+        const conf = (this._config?.away?.combos) || {};
+        const all = this._presenceAllCombos();
+        const items = [];
+        for (const it of all){
+          const meta = conf[it.key] || {};
+          const hasBlocks = !!(row.presence && row.presence[it.key] && Array.isArray(row.presence[it.key].blocks) && row.presence[it.key].blocks.length);
+          if (meta.enabled || hasBlocks) {
+            const lab = meta.enabled ? it.label : `${it.label} (off)`;
+            items.push({ value:`presence::${it.key}`, label: lab });
+          }
+        }
+        if (items.length) out.push({ group: 'presence', label: this._t('holidays.copy.group.presence'), items });
+      } catch {}
+    } catch {}
+    return out;
+  }
+  _holidayCopyBlocks(eid, value){
+    try {
+      const [type, keyRaw] = String(value||'').split('::');
+      const row = this._schedules[eid] || { defaultTemp: this._config.default_temp, blocks: [] };
+      this._ensureWeeklyStruct(row); this._ensureProfilesStruct(row); this._ensurePresenceStruct(row);
+      if (type === 'main') return JSON.parse(JSON.stringify(row.blocks||[]));
+      if (type === 'weekday') {
+        const k = keyRaw || 'mon';
+        const src = row.weekly?.days?.[k] || [];
+        return JSON.parse(JSON.stringify(src));
+      }
+      if (type === 'profile') {
+        const src = row.profiles?.[keyRaw]?.blocks || [];
+        return JSON.parse(JSON.stringify(src));
+      }
+      if (type === 'presence') {
+        const src = row.presence?.[keyRaw]?.blocks || null;
+        if (Array.isArray(src)) return JSON.parse(JSON.stringify(src));
+        // Fallback: all‑day away
+        const awayC = Number(this._config?.away?.target_c ?? 17);
+        const fallback = Number.isFinite(awayC) ? awayC : (row.defaultTemp || this._config.default_temp || 20);
+        return [{ id: '__presence_away__', startMin: 0, endMin: 1440, temp: fallback }];
+      }
+    } catch {}
+    return [];
+  }
+  _openHolidayCopy(){
+    try {
+      this._ensureEditModeOn();
+      const eid = this._holidayRoom; if (!eid) return;
+      const ov = this.shadowRoot && this.shadowRoot.querySelector('.overlay-hcopy');
+      try { this.shadowRoot.querySelector('ha-card')?.classList.add('overlay-open'); } catch {}
+      this._holidayCopyOpen = true;
+      this._holidayCopySel = 'main::main';
+      this._renderHolidayCopy();
+      try { requestAnimationFrame(()=> requestAnimationFrame(()=> { ov?.classList.add('open'); })); } catch { ov?.classList.add('open'); }
+    } catch {}
+  }
+  _closeHolidayCopy(){ try { this._holidayCopyOpen = false; this._holidayCopySel = null; this.shadowRoot.querySelector('.overlay-hcopy')?.classList.remove('open'); this.shadowRoot.querySelector('ha-card')?.classList.remove('overlay-open'); } catch {} }
+  _renderHolidayCopy(){ try {
+      const modal = this.shadowRoot && this.shadowRoot.querySelector('.overlay-hcopy .modal-hcopy'); if (!modal) return;
+      const eid = this._holidayRoom; const rowName = this._config?.labels?.[eid] || (this._hass?.states?.[eid]?.attributes?.friendly_name || (eid?.split?.('.')[1]||eid));
+      const title = modal.querySelector('.hcopy-title'); if (title) title.textContent = this._t('holidays.copy.title');
+      const roomEl = modal.querySelector('.hcopy-room'); if (roomEl) roomEl.textContent = rowName || '';
+      const selLab = modal.querySelector('.hcopy-label'); if (selLab) selLab.textContent = this._t('holidays.copy.select');
+      const applyBtn = modal.querySelector('.hcopy-apply'); if (applyBtn) { applyBtn.textContent = this._t('holidays.copy.apply'); applyBtn.onclick = ()=>{
+          try {
+            const cur = (this._holidayDraft?.rooms?.[eid] || []);
+            if (cur.length) { const ok = confirm(this._t('holidays.copy.replace_confirm')); if (!ok) return; }
+          } catch {}
+          const blocks = this._holidayCopyBlocks(eid, this._holidayCopySel);
+          if (!this._holidayDraft || !this._holidayDraft.rooms) {
+            const roomsMap = {}; for (const r of (this._config?.entities||[])) { const arr = (this._schedules[r]?.holiday?.blocks || []); roomsMap[r] = JSON.parse(JSON.stringify(arr)); }
+            this._holidayDraft = { rooms: roomsMap };
+          }
+          this._holidayDraft.rooms[eid] = blocks.map(b=>({ ...b, id: (b.id && String(b.id).startsWith('__')? b.id : Math.random().toString(36).slice(2)) }));
+          this._renderHolidayModal(); this._closeHolidayCopy();
+        }; }
+      const closeBtn = modal.querySelector('.hcopy-close'); if (closeBtn) { closeBtn.textContent = this._t('ui.cancel'); closeBtn.onclick = ()=> this._closeHolidayCopy(); }
+      // Build select options
+      const select = modal.querySelector('.hcopy-select');
+      if (select) {
+        select.innerHTML = '';
+        const groups = this._holidayCopySourcesForRoom(eid);
+        for (const g of groups){
+          const og = document.createElement('optgroup'); og.label = g.label || g.group;
+          for (const it of (g.items||[])){
+            const opt = document.createElement('option'); opt.value = it.value; opt.textContent = it.label; if (this._holidayCopySel===it.value) opt.selected = true; og.append(opt);
+          }
+          select.append(og);
+        }
+        select.onchange = ()=>{ this._holidayCopySel = String(select.value||''); this._renderHolidayCopy(); };
+      }
+      // Draw scale and preview
+      const scale = modal.querySelector('.week-scale-inner'); const track = modal.querySelector('.week-track');
+      if (scale) {
+        scale.innerHTML = '';
+        for (let i=0;i<=24;i+=2){
+          const t = document.createElement('div'); t.style.position='absolute'; t.style.left=(i/24*100)+'%'; t.style.top='4px'; t.style.bottom='4px'; t.style.borderLeft='1px solid var(--divider-color)';
+          const lab = document.createElement('div'); lab.style.position='absolute'; lab.style.top='-2px'; lab.style.transform='translate(-50%,0)'; lab.style.left='0'; lab.style.fontSize='.75rem'; lab.style.color='var(--secondary-text-color)';
+          if (this._config?.time_12h){ const p=this._timeParts(i===24?0:i*60); lab.innerHTML = `<div class="t-main">${p.main}</div><div class="mer">${p.mer||''}</div>`; } else { lab.textContent = (i===24 ? this._label(0) : this._label(i*60)); }
+          t.append(lab); scale.append(t);
+        }
+      }
+      if (track) {
+        track.innerHTML = '';
+        const blocks = this._holidayCopyBlocks(eid, this._holidayCopySel);
+        for (const b of blocks){
+          const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%';
+          try { const clr=this._colorFor(eid, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
+          const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill);
+          track.append(bl);
+        }
+      }
+    } catch {}
   }
 
   async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay, profileName, holiday } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (profileName) { this._ensureProfilesStruct(row); // Use the current draft for overlap/checks instead of stored profile
@@ -12897,8 +13414,19 @@ class ThermostatTimelineCard extends HTMLElement {
         if (atT) atT.textContent = String(t('away.temp')||'').replace('°C', popupUnit);
         const apT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-persons-title');
         if (apT) apT.textContent = t('away.persons');
+        const adT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-delay-title');
+        if (adT) adT.textContent = t('away.delay_enable');
+        const adD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-delay-desc');
+        if (adD) adD.textContent = t('away.delay_desc');
+        const adVL = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-delay-value-label');
+        if (adVL) adVL.textContent = t('away.delay_value');
+        const adUL = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-delay-unit-label');
+        if (adUL) adUL.textContent = t('away.delay_unit');
+        try { const sel = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-delay-unit'); if (sel) { const opts = sel.querySelectorAll('option'); if (opts[0]) opts[0].textContent = t('away.delay_unit.seconds'); if (opts[1]) opts[1].textContent = t('away.delay_unit.minutes'); } } catch {}
         const aaT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-adv-title');
         if (aaT) aaT.textContent = t('presence.enable_advanced');
+        const aaD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-away-adv-desc');
+        if (aaD) aaD.textContent = t('presence.enable_advanced.desc');
         const plT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-live-title');
         if (plT) plT.textContent = t('presence.live_header');
         const plD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-presence-live-desc');
@@ -15447,7 +15975,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const awayPersons = root.querySelector('.away-persons-title'); if (awayPersons) awayPersons.textContent = t('away.persons');
         // Presence labels in Away tab
         const advTitle = root.querySelector('.away-adv-title'); if (advTitle) advTitle.textContent = t('presence.enable_advanced');
-        const advDesc = root.querySelector('.away-adv-desc'); if (advDesc) advDesc.textContent = '';
+        const advDesc = root.querySelector('.away-adv-desc'); if (advDesc) advDesc.textContent = t('presence.enable_advanced.desc');
   const pcTitle = root.querySelector('.presence-combos-title'); if (pcTitle) pcTitle.textContent = t('presence.combos');
   const plTitle = root.querySelector('.presence-live-title'); if (plTitle) plTitle.textContent = t('presence.live_header');
   const plDesc = root.querySelector('.presence-live-desc'); if (plDesc) plDesc.textContent = t('presence.live_header.desc');
