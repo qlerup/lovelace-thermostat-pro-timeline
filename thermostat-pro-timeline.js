@@ -267,6 +267,10 @@ const TT_I18N = {
   'holidays.entity_desc': 'Select a calendar that only provides on/off. It must be on on holidays and off on other days.',
   'holidays.dates': 'Holiday dates',
   'holidays.add_date': 'Add date',
+  'holidays.add_range': 'Add range',
+  'holidays.date_in_range': 'Date already covered by a range',
+  'holidays.ranges': 'Holiday ranges',
+  'holidays.single_dates': 'Single dates',
   'holidays.editor.title': 'Holiday schedule',
   'holidays.edit': 'Edit holiday schedule',
   'holidays.button': 'Holidays',
@@ -557,6 +561,10 @@ const TT_I18N = {
     'holidays.entity_desc': 'Vælg en kalender, der kun giver on/off. Den skal være on på helligdage og off på andre dage.',
     'holidays.dates': 'Helligdagsdatoer',
     'holidays.add_date': 'Tilføj dato',
+    'holidays.add_range': 'Tilføj periode',
+    'holidays.date_in_range': 'Dato findes allerede i en periode',
+    'holidays.ranges': 'Ferieperioder',
+    'holidays.single_dates': 'Enkeltdatoer',
     'holidays.editor.title': 'Helligdags‑skema',
     'holidays.edit': 'Redigér helligdags‑skema',
     'holidays.button': 'Helligdage',
@@ -3116,7 +3124,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.28-room-labels-3";
+const TT_CARD_VERSION = "2025.12.30-holiday-range";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -3160,6 +3168,7 @@ class ThermostatTimelineCard extends HTMLElement {
       holidays_source: 'calendar', // 'calendar' | 'manual'
       holidays_entity: '',         // calendar.* or binary_sensor.* that is on/off for holiday
       holidays_dates: [],          // [ 'YYYY-MM-DD', ... ]
+      holidays_groups: [],         // UI groups for manual ranges: [{id, from, to, dates:[...] }]
       presence_live_header: true // Show live presence chips in header
       , room_use_input_number: [] // per-room toggle: show/select input_number instead of climate (matches entities[] index)
     };
@@ -3430,6 +3439,7 @@ class ThermostatTimelineCard extends HTMLElement {
   , holidays_source: (config.holidays_source || this._config?.holidays_source || 'calendar')
   , holidays_entity: String(config.holidays_entity || this._config?.holidays_entity || '')
   , holidays_dates: Array.isArray(config.holidays_dates) ? [...config.holidays_dates] : ([...(this._config?.holidays_dates || [])])
+  , holidays_groups: Array.isArray(config.holidays_groups) ? [...config.holidays_groups] : ([...(this._config?.holidays_groups || [])])
     };
 
     // If YAML explicitly changed default_temp, update rows that still use the old
@@ -3915,10 +3925,11 @@ class ThermostatTimelineCard extends HTMLElement {
             try { if (s.open_window && typeof s.open_window === 'object') this._config.open_window = { ...s.open_window }; } catch {}
             // Holidays shared settings
             try {
-              if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
+              if (typeof s.holidays_enabled === 'boolean') this._config.holidays_enabled = !!s.holidays_enabled;
               if (typeof s.holidays_source === 'string' && !this._yamlProvided?.holidays_source) this._config.holidays_source = s.holidays_source === 'manual' ? 'manual' : 'calendar';
               if (typeof s.holidays_entity === 'string' && !this._yamlProvided?.holidays_entity) this._config.holidays_entity = s.holidays_entity || '';
               if (Array.isArray(s.holidays_dates) && !this._yamlProvided?.holidays_dates) this._config.holidays_dates = [...s.holidays_dates];
+              if (Array.isArray(s.holidays_groups)) this._config.holidays_groups = [...s.holidays_groups];
             } catch {}
             // Weekdays settings (shared)
             if (this._config?.respect_storage_weekdays !== false) {
@@ -3973,6 +3984,7 @@ class ThermostatTimelineCard extends HTMLElement {
                     if (typeof ls.holidays_source === 'string') this._config.holidays_source = (ls.holidays_source === 'manual') ? 'manual' : 'calendar';
                     if (typeof ls.holidays_entity === 'string') this._config.holidays_entity = String(ls.holidays_entity||'');
                     if (Array.isArray(ls.holidays_dates)) this._config.holidays_dates = [...ls.holidays_dates];
+                    if (Array.isArray(ls.holidays_groups)) this._config.holidays_groups = [...ls.holidays_groups];
                   }
                 } catch {}
               }
@@ -4137,7 +4149,7 @@ class ThermostatTimelineCard extends HTMLElement {
   } catch {}
   // Holidays from local storage
   try {
-    if (typeof s.holidays_enabled === 'boolean' && !this._yamlProvided?.holidays_enabled) this._config.holidays_enabled = !!s.holidays_enabled;
+    if (typeof s.holidays_enabled === 'boolean') this._config.holidays_enabled = !!s.holidays_enabled;
     if (typeof s.holidays_source === 'string' && !this._yamlProvided?.holidays_source) this._config.holidays_source = s.holidays_source === 'manual' ? 'manual' : 'calendar';
     if (typeof s.holidays_entity === 'string' && !this._yamlProvided?.holidays_entity) this._config.holidays_entity = s.holidays_entity || '';
     if (Array.isArray(s.holidays_dates) && !this._yamlProvided?.holidays_dates) this._config.holidays_dates = [...s.holidays_dates];
@@ -4211,8 +4223,36 @@ class ThermostatTimelineCard extends HTMLElement {
         try {
           const state = await this._apiFetchState();
           const base = (state && typeof state === 'object' && state.settings && typeof state.settings === 'object') ? state.settings : {};
+          // If no base available (early startup), avoid writing holidays_enabled unless user toggled
+          if ((!state || !state.settings) && !this._holidaysToggleTouched) {
+            try { if (payload?.settings && Object.prototype.hasOwnProperty.call(payload.settings,'holidays_enabled')) delete payload.settings.holidays_enabled; } catch {}
+          }
           const incoming = payload.settings || {};
           const merged = { ...base, ...incoming };
+          // If user didn't toggle holidays during this session, keep backend value explicitly
+          try {
+            if (!this._holidaysToggleTouched && typeof base.holidays_enabled === 'boolean') {
+              merged.holidays_enabled = base.holidays_enabled;
+            }
+          } catch {}
+          // Heuristic: avoid flipping holidays_enabled=true -> false on startup if nothing holiday-related changed.
+          try {
+            const bHE = typeof base.holidays_enabled === 'boolean' ? base.holidays_enabled : undefined;
+            const iHE = typeof incoming.holidays_enabled === 'boolean' ? incoming.holidays_enabled : undefined;
+            // If background push (no user toggle) tries to change the value, ignore and keep backend
+            if (this._holidaysToggleTouched !== true && bHE !== undefined && iHE !== undefined && bHE !== iHE) {
+              merged.holidays_enabled = bHE;
+            } else if (bHE === true && iHE === false) {
+              const normArr = (a)=>{ try { return Array.from(new Set((a||[]).map(String))).sort(); } catch { return []; } };
+              const eqDates = JSON.stringify(normArr(incoming.holidays_dates)) === JSON.stringify(normArr(base.holidays_dates));
+              const eqSource = String(incoming.holidays_source||'') === String(base.holidays_source||'');
+              const eqEntity = String(incoming.holidays_entity||'') === String(base.holidays_entity||'');
+              const eqGroups = JSON.stringify(incoming.holidays_groups||[]) === JSON.stringify(base.holidays_groups||[]);
+              if (eqDates && eqSource && eqEntity && eqGroups) {
+                merged.holidays_enabled = true;
+              }
+            }
+          } catch {}
           const keepIfEmpty = (key)=>{
             try {
               const inc = incoming[key];
@@ -4222,7 +4262,8 @@ class ThermostatTimelineCard extends HTMLElement {
               if (!hasInc && hasBase) merged[key] = baseVal; // preserve backend value when our copy is empty
             } catch {}
           };
-          keepIfEmpty('labels');
+          // If labels were explicitly edited in this session, allow an empty object to clear labels
+          if (!this._labelsTouched) keepIfEmpty('labels');
           keepIfEmpty('merges');
           keepIfEmpty('temp_sensors');
           payload = { ...payload, settings: merged };
@@ -4233,6 +4274,8 @@ class ThermostatTimelineCard extends HTMLElement {
       finally {
         setTimeout(() => {
           this._saving = false;
+          try { this._holidaysToggleTouched = false; } catch {}
+          try { this._labelsTouched = false; } catch {}
           // Show "done" for a short moment and ensure UI keeps ticking
           this._syncJustUntil = Date.now() + 2500;
           // Clear previous due so countdown disappears until next change
@@ -4580,10 +4623,13 @@ class ThermostatTimelineCard extends HTMLElement {
         holidays_source: this._config.holidays_source || 'calendar',
         holidays_entity: this._config.holidays_entity || '',
         holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [],
+        holidays_groups: Array.isArray(this._config.holidays_groups) ? this._config.holidays_groups : [],
         sync_mode: (this._config.storage_sync_mode||'instant'),
         sync_delay_min: Number(Math.max(0, Math.round((this._config.storage_sync_sec||0)/60))),
         sync_delay_sec: Number(this._config.storage_sync_sec||0)
       };
+      // Do not include holidays_enabled in generic payload unless user toggled it in this session
+      try { if (!this._holidaysToggleTouched) delete settings.holidays_enabled; } catch {}
       const colors = { color_ranges: this._config.color_ranges, color_global: !!this._config.color_global };
       // When a dedicated colors sensor is configured, avoid duplicating colors inside settings payload
       if (this._config?.storage_enabled && this._storageEntity('colors')) {
@@ -6245,7 +6291,8 @@ class ThermostatTimelineCard extends HTMLElement {
             if (!hasInc && hasBase) merged[key] = baseVal;
           } catch {}
         };
-        keepIfEmpty('labels');
+        // Respect explicit label edits: allow an empty object to clear labels when touched
+        if (!this._labelsTouched) keepIfEmpty('labels');
         keepIfEmpty('merges');
         keepIfEmpty('temp_sensors');
         payload = { ...payload, settings: merged };
@@ -6262,6 +6309,7 @@ class ThermostatTimelineCard extends HTMLElement {
         try { localStorage.removeItem(key); } catch {}
         this._startSyncTimer();
         this._render();
+        try { this._labelsTouched = false; } catch {}
       }, 600);
     }
   }
@@ -8009,6 +8057,7 @@ class ThermostatTimelineCard extends HTMLElement {
         holidays_source: (cfg.holidays_source === 'manual') ? 'manual' : 'calendar',
         holidays_entity: String(cfg.holidays_entity || ''),
         holidays_dates: holDates,
+        holidays_groups: (()=>{ try { return Array.isArray(cfg.holidays_groups) ? JSON.parse(JSON.stringify(cfg.holidays_groups)) : []; } catch { return []; } })(),
 
         away: {
           enabled: !!awayCfg.enabled,
@@ -8200,6 +8249,16 @@ class ThermostatTimelineCard extends HTMLElement {
           dates = Array.from(new Set(dates)).sort();
         } catch {}
         cfg.holidays_dates = dates;
+        try {
+          const groups = Array.isArray(d.holidays_groups) ? d.holidays_groups : [];
+          const cleaned = groups.map(g=>({
+            id: String(g?.id || ('hg_'+Date.now())),
+            from: String(g?.from||''),
+            to: String(g?.to||''),
+            dates: Array.isArray(g?.dates) ? Array.from(new Set(g.dates.filter(Boolean).map(String))).sort() : []
+          }));
+          cfg.holidays_groups = cleaned;
+        } catch {}
       } catch {}
 
       // Away settings
@@ -8482,7 +8541,7 @@ class ThermostatTimelineCard extends HTMLElement {
             const mismatch = !!oldEid && ((on && !oldEid.startsWith('input_number.')) || (!on && !oldEid.startsWith('climate.')));
             if (mismatch) {
               // Clean mappings tied to old primary
-              try { if (this._settingsDraft.labels && this._settingsDraft.labels[oldEid]) { const next = { ...(this._settingsDraft.labels||{}) }; delete next[oldEid]; this._settingsDraft.labels = next; } } catch {}
+              try { if (this._settingsDraft.labels && this._settingsDraft.labels[oldEid]) { const next = { ...(this._settingsDraft.labels||{}) }; delete next[oldEid]; this._settingsDraft.labels = next; this._labelsTouched = true; } } catch {}
               try {
                 const merges = { ...(this._settingsDraft.merges||{}) };
                 if (merges[oldEid]) delete merges[oldEid];
@@ -8536,6 +8595,8 @@ class ThermostatTimelineCard extends HTMLElement {
             if (value) labels[eid] = value;
             else delete labels[eid];
             this._settingsDraft.labels = labels;
+            // Mark labels as edited so an empty labels object should clear stored labels
+            this._labelsTouched = true;
           } catch {}
         };
         // Important: don't re-render the whole Rooms tab on every keystroke,
@@ -9511,11 +9572,24 @@ class ThermostatTimelineCard extends HTMLElement {
               <div class="text">
                 <div class="title sp-holidays-dates-title"></div>
               </div>
-              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                <input class="settings-input sp-holidays-date-input" type="date" />
-                <button type="button" class="btn ghost sp-holidays-add-date"></button>
+              <div class="hol-sec hol-single" style="display:grid; gap:8px; padding:10px; border:1px solid var(--divider-color); border-radius:10px; background: color-mix(in srgb, var(--card-background-color) 92%, var(--primary-text-color));">
+                <div class="title sp-holidays-single-title" style="font-size:.95rem;"></div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                  <input class="settings-input sp-holidays-date-input" type="date" />
+                  <button type="button" class="btn ghost sp-holidays-add-date"></button>
+                  <span class="sp-holidays-add-date-msg" style="color:var(--error-color); font-size:.85rem;"></span>
+                </div>
+                <div class="linked-chips sp-holidays-date-chips"></div>
               </div>
-              <div class="linked-chips sp-holidays-date-chips"></div>
+              <div class="hol-sec hol-range" style="display:grid; gap:8px; padding:10px; border:1px solid var(--divider-color); border-radius:10px; background: color-mix(in srgb, var(--card-background-color) 92%, var(--primary-text-color));">
+                <div class="title sp-holidays-ranges-title" style="font-size:.95rem;"></div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                  <input class="settings-input sp-holidays-range-from" type="date" />
+                  <input class="settings-input sp-holidays-range-to" type="date" />
+                  <button type="button" class="btn ghost sp-holidays-add-range"></button>
+                </div>
+                <div class="linked-chips sp-holidays-range-chips"></div>
+              </div>
             </div>
 
             <div class="setting sp-holidays-edit-setting">
@@ -9579,7 +9653,9 @@ class ThermostatTimelineCard extends HTMLElement {
           if (!chips) return;
           chips.innerHTML = '';
           const arr = Array.isArray(this._settingsDraft?.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
-          const sorted = Array.from(new Set(arr.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))))).sort();
+          const groups = Array.isArray(this._settingsDraft?.holidays_groups) ? this._settingsDraft.holidays_groups : [];
+          const groupDates = new Set([].concat(...groups.map(g=>g.dates||[])).map(String));
+          const sorted = Array.from(new Set(arr.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x)) && !groupDates.has(String(x))))).sort();
           for (const dt of sorted) {
             const chip = document.createElement('span'); chip.className = 'pill-chip';
             const txt = document.createElement('span'); txt.textContent = dt;
@@ -9600,6 +9676,36 @@ class ThermostatTimelineCard extends HTMLElement {
       };
       renderChips();
 
+      // Range group chips
+      const grpChips = q('.overlay-settings .sp-holidays-range-chips');
+      const renderGrpChips = ()=>{
+        try {
+          if (!grpChips) return;
+          grpChips.innerHTML = '';
+          const groups = Array.isArray(this._settingsDraft?.holidays_groups) ? this._settingsDraft.holidays_groups : [];
+          for (const g of groups) {
+            const chip = document.createElement('span'); chip.className='pill-chip';
+            const txt = document.createElement('span'); txt.textContent = `${g.from} – ${g.to}`;
+            const rm = document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×';
+            rm.addEventListener('click', ()=>{
+              try {
+                if (!this._settingsDraft) return;
+                const all = Array.isArray(this._settingsDraft.holidays_groups) ? this._settingsDraft.holidays_groups : [];
+                const others = all.filter(x=>x!==g);
+                const othersDates = new Set([].concat(...others.map(o=>o.dates||[])).map(String));
+                const cur = new Set((this._settingsDraft.holidays_dates||[]).map(String));
+                for (const d of (g.dates||[])) { if (!othersDates.has(String(d))) cur.delete(String(d)); }
+                this._settingsDraft.holidays_groups = others;
+                this._settingsDraft.holidays_dates = Array.from(cur).sort();
+                renderChips(); renderGrpChips();
+              } catch {}
+            });
+            chip.append(txt, rm); grpChips.append(chip);
+          }
+        } catch {}
+      };
+      renderGrpChips();
+
       // Bind events once
       if (!page.dataset.bound) {
         page.dataset.bound = '1';
@@ -9610,6 +9716,7 @@ class ThermostatTimelineCard extends HTMLElement {
             try {
               if (!this._settingsDraft) return;
               this._settingsDraft.holidays_enabled = !!e.target.checked;
+              this._holidaysToggleTouched = true;
               this._renderSettingsPopupHolidaysTab();
             } catch {}
           });
@@ -9643,21 +9750,72 @@ class ThermostatTimelineCard extends HTMLElement {
         try {
           const inp = q('.overlay-settings .sp-holidays-date-input');
           const add = q('.overlay-settings .sp-holidays-add-date');
+          const msg = q('.overlay-settings .sp-holidays-add-date-msg');
           const onAdd = ()=>{
             try {
               if (!this._settingsDraft || !inp) return;
               const v = String(inp.value || '').trim();
               if (!v) return;
               if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return;
+              // Show info if v is inside any existing range; do not add
+              try {
+                const groups = Array.isArray(this._settingsDraft.holidays_groups) ? this._settingsDraft.holidays_groups : [];
+                const covered = groups.some(g => Array.isArray(g?.dates) && g.dates.map(String).includes(String(v)));
+                if (covered) { if (msg) msg.textContent = this._t('holidays.date_in_range') || 'Date already covered by a range'; return; }
+              } catch {}
               const cur = Array.isArray(this._settingsDraft.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
               const next = Array.from(new Set(cur.concat([v]))).sort();
               this._settingsDraft.holidays_dates = next;
-              try { inp.value = ''; } catch {}
+              try { inp.value = ''; if (msg) msg.textContent = ''; } catch {}
               renderChips();
             } catch {}
           };
           if (add) add.addEventListener('click', onAdd);
           if (inp) inp.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { try { e.preventDefault(); } catch {} onAdd(); } });
+        } catch {}
+
+        // Range add in settings overlay
+        try {
+          const inpf = q('.overlay-settings .sp-holidays-range-from');
+          const inpt = q('.overlay-settings .sp-holidays-range-to');
+          const addr = q('.overlay-settings .sp-holidays-add-range');
+          const onAddRange = ()=>{
+            try {
+              if (!this._settingsDraft || !inpf || !inpt) return;
+              const f = String(inpf.value||'').trim();
+              const t = String(inpt.value||'').trim();
+              if (!f || !t) return;
+              if (!/^\d{4}-\d{2}-\d{2}$/.test(f) || !/^\d{4}-\d{2}-\d{2}$/.test(t)) return;
+              let d1 = new Date(f+'T00:00:00');
+              let d2 = new Date(t+'T00:00:00');
+              if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return;
+              if (d1.getTime() > d2.getTime()) { const tmp=d1; d1=d2; d2=tmp; }
+              const fmt = (d)=>{ const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const dd=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${dd}`; };
+              const curArr = Array.isArray(this._settingsDraft.holidays_dates) ? this._settingsDraft.holidays_dates.filter(Boolean).map(String) : [];
+              const cur = new Set(curArr);
+              const grpDates = [];
+              for (let d=new Date(d1); d.getTime()<=d2.getTime(); d.setDate(d.getDate()+1)) { const s=fmt(d); cur.add(s); grpDates.push(s); }
+              this._settingsDraft.holidays_dates = Array.from(cur).sort();
+              // Add a group tag for UI
+              const gid = 'hg_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+              const groups = Array.isArray(this._settingsDraft.holidays_groups) ? [...this._settingsDraft.holidays_groups] : [];
+              groups.push({ id: gid, from: fmt(d1), to: fmt(d2), dates: grpDates });
+              this._settingsDraft.holidays_groups = groups;
+              // Mirror into live config so the main card view updates as well
+              try {
+                this._config.holidays_dates = Array.from(cur).sort();
+                const liveGroups = Array.isArray(this._config.holidays_groups) ? [...this._config.holidays_groups] : [];
+                liveGroups.push({ id: gid, from: fmt(d1), to: fmt(d2), dates: grpDates.slice() });
+                this._config.holidays_groups = liveGroups;
+              } catch {}
+              try { inpf.value=''; inpt.value=''; } catch {}
+              renderChips();
+              try { renderGrpChips(); } catch {}
+            } catch {}
+          };
+          if (addr) addr.addEventListener('click', onAddRange);
+          if (inpf) inpf.addEventListener('keydown', (e)=>{ if (e.key==='Enter') { try { e.preventDefault(); } catch {} onAddRange(); } });
+          if (inpt) inpt.addEventListener('keydown', (e)=>{ if (e.key==='Enter') { try { e.preventDefault(); } catch {} onAddRange(); } });
         } catch {}
       }
     } catch {}
@@ -12602,7 +12760,7 @@ class ThermostatTimelineCard extends HTMLElement {
   }
 
   async _saveEditor(){ const errElGlobal = this.shadowRoot?.querySelector('.ed-error'); try { if (!this._editing) return; const { entity, blockId, weeklyDay, profileName, holiday } = this._editing; const row = this._schedules[entity]; if (!row) return; let b = null; let sourceBlocks = row.blocks; if (profileName) { this._ensureProfilesStruct(row); // Use the current draft for overlap/checks instead of stored profile
-    const curRoom = this._profilesRoom || this._profilesEntity || entity; const draftArr = (this._profilesDraft?.rooms?.[curRoom]) || []; sourceBlocks = draftArr; b = blockId ? draftArr.find(x=>x.id===blockId) : null; } else if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; if (!b && this._weeklyDraft?._weeklyModes) { for (const modeName in this._weeklyDraft._weeklyModes) { const modeBlocks = this._weeklyDraft._weeklyModes[modeName]?.days?.[weeklyDay]; if (Array.isArray(modeBlocks)) { b = modeBlocks.find(x=>x.id===blockId); if (b) { sourceBlocks = modeBlocks; break; } } } } } else if (holiday && Array.isArray(this._holidayDraft)) { sourceBlocks = this._holidayDraft; b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
+    const curRoom = this._profilesRoom || this._profilesEntity || entity; const draftArr = (this._profilesDraft?.rooms?.[curRoom]) || []; sourceBlocks = draftArr; b = blockId ? draftArr.find(x=>x.id===blockId) : null; } else if (weeklyDay && this._weeklyDraft) { sourceBlocks = (this._weeklyDraft.days?.[weeklyDay] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; if (!b && this._weeklyDraft?._weeklyModes) { for (const modeName in this._weeklyDraft._weeklyModes) { const modeBlocks = this._weeklyDraft._weeklyModes[modeName]?.days?.[weeklyDay]; if (Array.isArray(modeBlocks)) { b = modeBlocks.find(x=>x.id===blockId); if (b) { sourceBlocks = modeBlocks; break; } } } } } else if (holiday && this._holidayDraft?.rooms) { sourceBlocks = (this._holidayDraft.rooms?.[entity] || []); b = blockId ? sourceBlocks.find(x=>x.id===blockId) : null; } else { if (blockId) b = row.blocks.find(x => x.id === blockId); }
     const edTemp = this.shadowRoot.querySelector(".ed-temp"); const edFrom = this.shadowRoot.querySelector(".ed-from"); const edTo   = this.shadowRoot.querySelector(".ed-to");
     const fromMerSel = this.shadowRoot.querySelector('.ed-from-mer'); const toMerSel = this.shadowRoot.querySelector('.ed-to-mer');
     const rawFrom = String(edFrom.value || "");
@@ -12634,8 +12792,8 @@ class ThermostatTimelineCard extends HTMLElement {
 
     // If interval crosses midnight (end <= start), split into two blocks
     const crossesMidnight = end <= start;
-  // Early overlap check only for base/weekly/holiday editors; profiles are handled below using the draft state
-  if (!crossesMidnight && !profileName) {
+  // Early overlap check only for base/weekly editors; profiles and holiday are handled below using the draft state
+  if (!crossesMidnight && !profileName && !holiday) {
       const overlap = hasOverlap(sourceBlocks, start, end, b?.id);
       if (overlap) {
         const overlapStart = Math.max(start, overlap.startMin);
@@ -12862,9 +13020,10 @@ class ThermostatTimelineCard extends HTMLElement {
       this._render(); this._closeEditor(); if (this._presenceOpen) this._renderPresenceModal();
       return;
     }
-    if (holiday && Array.isArray(this._holidayDraft)) {
+    if (holiday && this._holidayDraft?.rooms) {
       // Work on holiday draft only; persist on Holiday Save
-      const arr = this._holidayDraft;
+      const eid = entity;
+      const arr = (this._holidayDraft.rooms||{})[eid] || [];
       if (crossesMidnight) {
         const ov1 = hasOverlap(arr, start, 1440, b?.id);
         const ov2 = hasOverlap(arr, 0, end, null);
@@ -12875,7 +13034,7 @@ class ThermostatTimelineCard extends HTMLElement {
         if (overlap) { const errEl = this.shadowRoot.querySelector('.ed-error'); if (errEl) { const msg = this._t('ui.overlap_msg').replace('{start}', this._label(Math.max(start, overlap.startMin))).replace('{end}', this._label(Math.min(end, overlap.endMin))); errEl.innerHTML = `<div>${msg}</div>`; errEl.style.display='block'; } return; }
         if (!b) { const id=Math.random().toString(36).slice(2,9); arr.push({ id, startMin:start, endMin:end, temp:this._fromDisplayTemp(temp) }); } else { b.temp=this._fromDisplayTemp(temp); b.startMin=start; b.endMin=end; }
       }
-      this._holidayDraft = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
+      (this._holidayDraft.rooms||{})[eid] = arr.sort((a,bx)=>a.startMin-bx.startMin||a.endMin-bx.endMin);
       this._render(); this._closeEditor(); this._renderHolidayModal();
       return;
     }
@@ -13398,8 +13557,14 @@ class ThermostatTimelineCard extends HTMLElement {
         if (hEntD) hEntD.textContent = t('holidays.entity_desc');
         const hDatesT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-dates-title');
         if (hDatesT) hDatesT.textContent = t('holidays.dates');
+        const hSinglesT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-single-title');
+        if (hSinglesT) hSinglesT.textContent = t('holidays.single_dates');
         const hAdd = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-add-date');
         if (hAdd) hAdd.textContent = t('holidays.add_date');
+        const hAddR = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-add-range');
+        if (hAddR) hAddR.textContent = t('holidays.add_range');
+        const hRangesT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-ranges-title');
+        if (hRangesT) hRangesT.textContent = t('holidays.ranges');
         const hEditT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-edit-title');
         if (hEditT) hEditT.textContent = t('holidays.editor.title');
         const hEditB = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-holidays-edit-btn');
@@ -14331,7 +14496,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       const base = resp?.settings;
       if (!base || typeof base !== 'object') return;
 
-      const settings = {
+      let settings = {
         ...base,
 
         // Editor-managed settings only (popup-managed keys are preserved from base)
@@ -14349,10 +14514,32 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         holidays_source: this._config.holidays_source || base.holidays_source || 'calendar',
         holidays_entity: this._config.holidays_entity || '',
         holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : (Array.isArray(base.holidays_dates) ? base.holidays_dates : []),
+        holidays_groups: Array.isArray(this._config.holidays_groups) ? this._config.holidays_groups : (Array.isArray(base.holidays_groups) ? base.holidays_groups : []),
 
         sync_mode: (this._config.storage_sync_mode||base.sync_mode||'instant'),
         sync_delay_min: Number(this._config.storage_sync_min ?? base.sync_delay_min ?? 0),
       };
+      // Prevent accidental flip of holidays_enabled=true->false on load when nothing holiday-related changed
+      try {
+        const bHE = typeof base.holidays_enabled === 'boolean' ? base.holidays_enabled : undefined;
+        const iHE = typeof settings.holidays_enabled === 'boolean' ? settings.holidays_enabled : undefined;
+        if (bHE === true && iHE === false) {
+          const normArr = (a)=>{ try { return Array.from(new Set((a||[]).map(String))).sort(); } catch { return []; } };
+          const eqDates = JSON.stringify(normArr(settings.holidays_dates)) === JSON.stringify(normArr(base.holidays_dates));
+          const eqSource = String(settings.holidays_source||'') === String(base.holidays_source||'');
+          const eqEntity = String(settings.holidays_entity||'') === String(base.holidays_entity||'');
+          const eqGroups = JSON.stringify(settings.holidays_groups||[]) === JSON.stringify(base.holidays_groups||[]);
+          if (eqDates && eqSource && eqEntity && eqGroups) {
+            settings = { ...settings, holidays_enabled: true };
+          }
+        }
+      } catch {}
+      // If user hasn't toggled holidays explicitly, keep backend value
+      try {
+        if (!this._holidaysToggleTouched && typeof base.holidays_enabled === 'boolean') {
+          settings = { ...settings, holidays_enabled: base.holidays_enabled };
+        }
+      } catch {}
       await this._hass.callService('thermostat_timeline','set_store', { settings });
     } catch (err) {}
   }
@@ -14911,7 +15098,14 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   refresh.onclick = async () => {
           // Persist color settings to local/shared storage so live card instances pick them up
           try {
-            const settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+            let settings = { time_12h: this._config.time_12h, temp_unit: this._config.temp_unit, time_source: this._config.time_source, row_height: Number(this._config.row_height ?? 64), default_temp: Number(this._config.default_temp || 20), min_temp: Number(this._config.min_temp ?? 5), max_temp: Number(this._config.max_temp ?? 25), per_room_defaults: !!(this._config.per_room_defaults ?? false), apply_on_edit: !!(this._config.apply_on_edit ?? true), apply_on_default_change: !!(this._config.apply_on_default_change ?? true), color_ranges: this._config.color_ranges, color_global: !!this._config.color_global, away: this._config.away, merges: this._config.merges, labels: this._config.labels, temp_sensors: this._config.temp_sensors, profiles_enabled: !!this._config.profiles_enabled, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates) ? this._config.holidays_dates : [], sync_mode: (this._config.storage_sync_mode||'instant'), sync_delay_min: Number(this._config.storage_sync_min||0) };
+            try {
+              if (!this._holidaysToggleTouched) {
+                const st = await this._apiFetchState?.();
+                const base = st?.settings;
+                if (typeof base?.holidays_enabled === 'boolean') settings.holidays_enabled = base.holidays_enabled; else delete settings.holidays_enabled;
+              }
+            } catch {}
             const colors = { color_ranges: this._config.color_ranges, color_global: !!this._config.color_global };
             let schedules = {};
             // Prefer current file storage schedules when enabled - use API
@@ -15022,7 +15216,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const enDesc = document.createElement('div'); enDesc.className='desc'; enDesc.textContent = this._t('holidays.desc');
         enText.append(enTitle, enDesc);
         const enSwitch = document.createElement('ha-switch'); enSwitch.className = 'holidays-enable'; enSwitch.checked = !!this._config.holidays_enabled;
-        enSwitch.addEventListener('change', (e)=>{ const on = !!e.target.checked; this._upd('holidays_enabled', on); try { contentWrap.style.display = on ? '' : 'none'; } catch {} try { this._pushSettingsToStoreDebounced(); } catch {} });
+        enSwitch.addEventListener('change', (e)=>{ const on = !!e.target.checked; this._upd('holidays_enabled', on); this._holidaysToggleTouched = true; try { contentWrap.style.display = on ? '' : 'none'; } catch {} try { this._pushSettingsToStoreDebounced(); } catch {} });
         enRow.append(enText, enSwitch); enableCard.append(enRow); root.append(enableCard);
         // Container for remaining content (shown only when enabled)
         const contentWrap = document.createElement('div'); contentWrap.className='holidays-content'; contentWrap.style.display = this._config.holidays_enabled ? '' : 'none'; root.append(contentWrap);
@@ -15067,16 +15261,96 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const manTitle = document.createElement('div'); manTitle.className='title'; manTitle.textContent = this._t('holidays.dates');
         const manDesc = document.createElement('div'); manDesc.className='desc'; manDesc.textContent=''; manTxt.append(manTitle, manDesc);
         const manWrap = document.createElement('div'); manWrap.style.display='grid'; manWrap.style.gap='8px';
-        const addRow = document.createElement('div'); addRow.style.display='flex'; addRow.style.gap='8px'; addRow.style.alignItems='center';
+        const addRow = document.createElement('div'); addRow.style.display='flex'; addRow.style.gap='8px'; addRow.style.alignItems='center'; addRow.style.flexWrap='wrap';
         const inp = document.createElement('input'); inp.type='date'; inp.className='tt-input';
         const addBtn = document.createElement('button'); addBtn.type='button'; addBtn.className='add-entity-btn'; addBtn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>'+(this._t('holidays.add_date')||'Add date')+'</span>';
-        addBtn.onclick = ()=>{ const v=inp.value; if (!v) return; const arr = Array.isArray(this._config.holidays_dates)?[...this._config.holidays_dates]:[]; if (!arr.includes(v)) arr.push(v); this._config.holidays_dates = arr.sort(); inp.value=''; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} };
-        addRow.append(inp, addBtn); manWrap.append(addRow);
+        const dateMsg = document.createElement('span'); dateMsg.style.color='var(--error-color)'; dateMsg.style.fontSize='.85rem'; dateMsg.style.marginLeft='6px';
+        addBtn.onclick = ()=>{
+          const v=inp.value; if (!v) return;
+          // If date is already covered by a range, show hint and do nothing
+          try {
+            const groups = Array.isArray(this._config.holidays_groups) ? this._config.holidays_groups : [];
+            const covered = groups.some(g => Array.isArray(g?.dates) && g.dates.map(String).includes(String(v)));
+            if (covered) { dateMsg.textContent = this._t('holidays.date_in_range') || 'Date already covered by a range'; return; }
+          } catch {}
+          const arr = Array.isArray(this._config.holidays_dates)?[...this._config.holidays_dates]:[]; if (!arr.includes(v)) arr.push(v);
+          this._config.holidays_dates = arr.sort(); inp.value=''; dateMsg.textContent=''; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {}
+        };
+        addRow.append(inp, addBtn, dateMsg); manWrap.append(addRow);
+
+        // Range add: from date .. to date
+        const rangeRow = document.createElement('div'); rangeRow.style.display='flex'; rangeRow.style.gap='8px'; rangeRow.style.alignItems='center'; rangeRow.style.flexWrap='wrap';
+        const inpFrom = document.createElement('input'); inpFrom.type='date'; inpFrom.className='tt-input';
+        const inpTo = document.createElement('input'); inpTo.type='date'; inpTo.className='tt-input';
+        const addRangeBtn = document.createElement('button'); addRangeBtn.type='button'; addRangeBtn.className='add-entity-btn'; addRangeBtn.innerHTML = '<ha-icon icon="mdi:calendar-range"></ha-icon><span>'+(this._t('holidays.add_range')||'Add range')+'</span>';
+        addRangeBtn.onclick = ()=>{
+          try {
+            const f = String(inpFrom.value||''); const t = String(inpTo.value||'');
+            if (!f || !t) return;
+            let d1 = new Date(f+'T00:00:00'); let d2 = new Date(t+'T00:00:00');
+            if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return;
+            if (d1.getTime() > d2.getTime()) { const tmp=d1; d1=d2; d2=tmp; }
+            const fmt = (d)=>{ const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const dd=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${dd}`; };
+            const cur = Array.isArray(this._config.holidays_dates)? new Set(this._config.holidays_dates.map(String)) : new Set();
+            const grpDates = [];
+            for (let d=new Date(d1); d.getTime()<=d2.getTime(); d.setDate(d.getDate()+1)) { const s=fmt(d); cur.add(s); grpDates.push(s); }
+            const next = Array.from(cur).sort();
+            this._config.holidays_dates = next;
+            // Create UI range group tag for easier removal later
+            try {
+              const fromS = fmt(d1), toS = fmt(d2);
+              const gid = 'hg_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+              const groups = Array.isArray(this._config.holidays_groups) ? [...this._config.holidays_groups] : [];
+              groups.push({ id: gid, from: fromS, to: toS, dates: grpDates });
+              this._config.holidays_groups = groups;
+            } catch {}
+            try { inpFrom.value=''; inpTo.value=''; } catch {}
+            this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {}
+          } catch {}
+        };
+        rangeRow.append(inpFrom, inpTo, addRangeBtn); manWrap.append(rangeRow);
+        const singlesLbl = document.createElement('div'); singlesLbl.className='title'; singlesLbl.style.fontSize='.9rem'; singlesLbl.textContent = this._t('holidays.single_dates')||'Single dates';
         const chips = document.createElement('div'); chips.className='linked-chips';
         const arr = Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[];
+        const groupDatesSet = (()=>{ try { const gs = Array.isArray(this._config.holidays_groups)?this._config.holidays_groups:[]; return new Set([].concat(...gs.map(g=>g.dates||[])).map(String)); } catch { return new Set(); } })();
+        const singles = arr.filter(d=>!groupDatesSet.has(String(d)));
         chips.innerHTML='';
-        for (const d of arr){ const chip=document.createElement('span'); chip.className='pill-chip'; const txt=document.createElement('span'); txt.textContent=d; const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} }); chip.append(txt, rm); chips.append(chip); }
-    manWrap.append(chips); rowMan.append(manTxt, manWrap); sourceWrap.append(rowMan);
+        for (const d of singles){ const chip=document.createElement('span'); chip.className='pill-chip'; const txt=document.createElement('span'); txt.textContent=d; const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×'; rm.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} }); chip.append(txt, rm); chips.append(chip); }
+        manWrap.append(singlesLbl, chips);
+        // Range group chips
+        const grpLbl = document.createElement('div'); grpLbl.className='title'; grpLbl.style.fontSize='.9rem'; grpLbl.textContent = this._t('holidays.ranges')||'Holiday ranges';
+        const grpChips = document.createElement('div'); grpChips.className='linked-chips';
+        const renderGrp = ()=>{
+          try {
+            grpChips.innerHTML='';
+            const groups = Array.isArray(this._config.holidays_groups) ? this._config.holidays_groups : [];
+            for (const g of groups){
+              const chip=document.createElement('span'); chip.className='pill-chip';
+              const txt=document.createElement('span'); txt.textContent = `${g.from} – ${g.to}`;
+              const rm=document.createElement('button'); rm.type='button'; rm.className='rm'; rm.textContent='×';
+              rm.addEventListener('click', ()=>{
+                try {
+                  const all = Array.isArray(this._config.holidays_groups) ? this._config.holidays_groups : [];
+                  const others = all.filter(x=>x!==g);
+                  const othersDates = new Set([].concat(...others.map(o=>o.dates||[])).map(String));
+                  const curSet = new Set((this._config.holidays_dates||[]).map(String));
+                  for (const d of (g.dates||[])) { if (!othersDates.has(String(d))) curSet.delete(String(d)); }
+                  this._config.holidays_dates = Array.from(curSet).sort();
+                  this._config.holidays_groups = others;
+                  this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {}
+                  // rerender both lists
+                  chips.innerHTML='';
+                  for (const d of this._config.holidays_dates){ const c=document.createElement('span'); c.className='pill-chip'; const t=document.createElement('span'); t.textContent=d; const r=document.createElement('button'); r.type='button'; r.className='rm'; r.textContent='×'; r.addEventListener('click', ()=>{ const v=(this._config.holidays_dates||[]).filter(x=>x!==d); this._config.holidays_dates=v; this._emit(true); try { this._pushSettingsToStoreDebounced(); } catch {} }); c.append(t,r); chips.append(c); }
+                  renderGrp();
+                } catch {}
+              });
+              chip.append(txt, rm); grpChips.append(chip);
+            }
+          } catch {}
+        };
+        renderGrp();
+        manWrap.append(grpLbl, grpChips);
+        rowMan.append(manTxt, manWrap); sourceWrap.append(rowMan);
     contentWrap.append(sourceWrap);
         // Inline Holidays editor (preview + edit) inside editor
   const edWrap = document.createElement('div'); edWrap.className = 'holiday-ed'; edWrap.style.position = 'relative';
@@ -15236,7 +15510,15 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     }
     const wantF = this._isF();
     const schOut = wantF ? this._convertSchedulesTemps(schedules,'F') : schedules;
-    let settingsOut = { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[] };
+    let settingsOut = { ...settings, holidays_enabled: !!this._config.holidays_enabled, holidays_source: this._config.holidays_source || 'calendar', holidays_entity: this._config.holidays_entity || '', holidays_dates: Array.isArray(this._config.holidays_dates)?this._config.holidays_dates:[], holidays_groups: Array.isArray(this._config.holidays_groups)?this._config.holidays_groups:[] };
+    // Preserve backend holidays_enabled unless explicitly toggled in this session
+    try {
+      if (!this._holidaysToggleTouched) {
+        const st = await this._apiFetchState?.();
+        const base = st?.settings;
+        if (typeof base?.holidays_enabled === 'boolean') settingsOut.holidays_enabled = base.holidays_enabled; else delete settingsOut.holidays_enabled;
+      }
+    } catch {}
     try {
       if (wantF) {
         const toStore=(n)=>{ const v=Number(n); return Number.isFinite(v)? this._cToF(v): n; };
