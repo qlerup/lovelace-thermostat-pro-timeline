@@ -7647,6 +7647,9 @@ class ThermostatTimelineCard extends HTMLElement {
           const contentW = rowsEl.clientWidth - pl - pr;
           const leftPx = pl + (nowMin / 1440) * contentW;
           nowEl.style.left = leftPx + 'px';
+          // Set visibility of this NowGeo elt depending on the selected day key
+          const selectedDKIsToday = String(this._weekdaysViewDayKey || '').toLowerCase() === this._todayKey();
+          nowEl.style.visibility = selectedDKIsToday ? "visible" : "hidden";
         } catch {}
       };
 
