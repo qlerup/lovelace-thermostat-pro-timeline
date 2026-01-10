@@ -4,6 +4,7 @@ const TT_I18N = {
   en: {
     // Card
     'card.title_default': 'Thermostat Timeline',
+    'err.config_entities': "Config must have 'entities: [climate.xxx, ...]'.",
     // Modal / editor (inline)
     'ui.edit_block': 'Edit block',
     'ui.add_block': 'Add block',
@@ -49,6 +50,12 @@ const TT_I18N = {
     'editor.room_mode.title': 'Room entity type',
     'editor.room_mode.desc': 'When enabled, select an input_number (target temperature). When disabled, select a climate entity.',
 
+    'editor.turn_on.title': 'Send turn_on command',
+    'editor.turn_on.desc': 'Some thermostats require a turn_on command in addition to set_temperature.',
+    'editor.turn_on.order': 'Order',
+    'editor.turn_on.order.before': 'Before set_temperature',
+    'editor.turn_on.order.after': 'After set_temperature',
+
     'editor.merge_label': 'Merge with (add extra thermostat)',
     'editor.display_name_optional': 'Room name (optional)',
     'editor.merged_with': 'Merged with',
@@ -65,6 +72,13 @@ const TT_I18N = {
     'editor.migrate_pull_confirm': 'Import schedules from storage and overwrite local browser data?',
     'editor.select_storage_first': 'Select a storage sensor first.',
     'editor.no_local_data': 'No local browser data was found.',
+    'editor.test_tool': 'Test tool',
+    'editor.test_select_entity': 'Select entity',
+    'editor.test_empty': 'Select an entity to see available commands…',
+    'editor.test_export': 'Export .md',
+    'editor.test_no_fields': 'No fields',
+    'editor.test_select_placeholder': '— Select —',
+    'editor.error_prefix': 'Error: ',
     'editor.clear_all': 'Clear all data',
     'editor.clear_all_confirm': 'This deletes both storage and local/browser schedules. Continue?',
     'editor.clear_storage_only': 'Clear storage data only',
@@ -159,6 +173,7 @@ const TT_I18N = {
   'backup.desc': 'Copy the full content of your sync sensor to the backup sensor and restore it when needed.',
   'backup.now': 'Backup now',
   'backup.restore': 'Restore',
+  'backup.restore.confirm_overwrite': 'Restore from backup? This will overwrite current schedules and settings.',
   'backup.delete': 'Delete backup',
   'backup.delete.confirm': 'Delete selected backup?',
   'backup.new': 'New backup',
@@ -180,6 +195,15 @@ const TT_I18N = {
   'backup.opt.settings': 'Editor settings',
   'backup.opt.holiday': 'Holiday schedules',
   'backup.opt.colors': 'Color blocks',
+
+  'backup.import.title': 'Import thermostat_timeline.json',
+  'backup.import.desc': 'Upload a thermostat_timeline.json file and import it. A new backup is created first.',
+  'backup.import.btn': 'Import file',
+  'backup.import.err_no_hass': 'Home Assistant not ready',
+  'backup.import.err_storage_off': 'Shared storage is OFF. Turn it on first.',
+  'backup.import.err_no_integration': 'Integration thermostat_timeline not available',
+  'backup.import.err_json': 'Invalid JSON',
+  'backup.import.err_invalid': 'Invalid file: missing data.schedules',
 
   'away.enable': 'Enable Away mode',
   'away.desc': 'When none of the selected persons are home, thermostats are automatically lowered to the specified temperature.',
@@ -216,6 +240,8 @@ const TT_I18N = {
   'onboard.skip': 'Skip',
   'onboard.done': 'Done',
   'onboard.dont_show': 'Don’t show again',
+  'onboard.video_not_found': 'Video not found',
+  'onboard.image_not_found': 'Image not found',
   'onboard.step_main': 'This is the main timeline. It shows target temperatures over 24 hours for each room.',
   'onboard.step_add': 'Add a heat block via + Add block or by double-clicking the timeline.',
   'onboard.step_edit': 'Edit or delete a block by double-clicking it. Use Weekdays for different days.',
@@ -226,6 +252,7 @@ const TT_I18N = {
   'pause.off_1h': 'Pause for 1 hour',
   'pause.off_5h': 'Pause for 5 hours',
   'pause.off_custom': 'Custom duration…',
+  'pause.prompt_minutes': 'Enter duration (minutes):',
   'pause.off_indef': 'Pause until I resume',
   'pause.resume': 'Resume now',
   'pause.close': 'Close',
@@ -253,6 +280,7 @@ const TT_I18N = {
   'profiles.active': 'Active',
   'profiles.none': 'None',
   'profiles.name_placeholder': 'Profile name',
+  'profiles.name_exists': 'Name exists',
   'profiles.edit': 'Edit',
   'profiles.preview_note': 'Preview only. Profiles become active when you activate them.',
   'profiles.active_label': 'Active profile:',
@@ -311,6 +339,7 @@ const TT_I18N = {
   da: {
     // Card
     'card.title_default': 'Thermostat Timeline',
+    'err.config_entities': "Config skal have 'entities: [climate.xxx, ...]'.",
     // Modal / editor (inline)
     'ui.edit_block': 'Edit block',
     'ui.add_block': 'Add block',
@@ -379,6 +408,12 @@ const TT_I18N = {
     'editor.perroom.desc': 'Vis et Standard °C‑felt på hver række. Når slået fra, bruges global Standard °C for alle rum.',
     'editor.room_mode.title': 'Rumtype (entitet)',
     'editor.room_mode.desc': 'Når slået til vælger du en input_number (måltemperatur). Når slået fra vælger du en climate‑entitet.',
+
+    'editor.turn_on.title': 'Send turn_on kommando',
+    'editor.turn_on.desc': 'Nogle termostater kræver en turn_on kommando ud over set_temperature.',
+    'editor.turn_on.order': 'Rækkefølge',
+    'editor.turn_on.order.before': 'Før set_temperature',
+    'editor.turn_on.order.after': 'Efter set_temperature',
     'editor.display_name_optional': 'Rum navn (valgfri)',
     'editor.merge_label': 'Flet med (tilføj ekstra termostat)',
     'editor.merged_with': 'Flettet med',
@@ -461,6 +496,7 @@ const TT_I18N = {
     'backup.desc': 'Kopiér hele indholdet af din sync‑sensor til backup‑sensoren og gendan den igen ved behov.',
     'backup.now': 'Backup nu',
     'backup.restore': 'Gendan',
+    'backup.restore.confirm_overwrite': 'Gendan fra backup? Dette overskriver nuværende tidsplaner og indstillinger.',
     'backup.delete': 'Slet backup',
     'backup.delete.confirm': 'Slet valgt backup?',
     'backup.new': 'Ny backup',
@@ -482,6 +518,14 @@ const TT_I18N = {
     'backup.opt.settings': 'Editor-indstillinger',
     'backup.opt.holiday': 'Helligdags-skemaer',
     'backup.opt.colors': 'Farveblokke',
+    'backup.import.title': 'Importér thermostat_timeline.json',
+    'backup.import.desc': 'Upload en thermostat_timeline.json fil og importér den. Der laves først en ny backup.',
+    'backup.import.btn': 'Importér fil',
+    'backup.import.err_no_hass': 'Home Assistant er ikke klar',
+    'backup.import.err_storage_off': 'Delt lager er slået fra. Slå det til først.',
+    'backup.import.err_no_integration': 'Integrationen thermostat_timeline er ikke tilgængelig',
+    'backup.import.err_json': 'Ugyldigt JSON',
+    'backup.import.err_invalid': 'Ugyldig fil: mangler data.schedules',
     'away.enable': 'Aktivér væk-tilstand',
     'away.desc': 'Når ingen af de valgte personer er hjemme, sænkes termostaterne automatisk til den angivne temperatur.',
     'away.temp': 'Væk-temperatur',
@@ -519,10 +563,13 @@ const TT_I18N = {
     'onboard.step_edit': 'Redigér eller slet en blok ved dobbeltklik. Brug Ugedage til forskellige dage.',
     'onboard.reset': 'Vis guide igen',
     'onboard.reset_ok': 'Guiden vises næste gang.',
+    'onboard.video_not_found': 'Video ikke fundet',
+    'onboard.image_not_found': 'Billede ikke fundet',
     'pause.menu_title': 'Pause auto-apply',
     'pause.off_1h': 'Sluk i 1 time',
     'pause.off_5h': 'Sluk i 5 timer',
     'pause.off_custom': 'Tilpasset varighed…',
+    'pause.prompt_minutes': 'Angiv varighed (minutter):',
     'pause.off_indef': 'Sluk til jeg tænder',
     'pause.resume': 'Tænd igen nu',
     'pause.close': 'Luk',
@@ -548,6 +595,7 @@ const TT_I18N = {
     'profiles.active': 'Aktiv',
     'profiles.none': 'Ingen',
     'profiles.name_placeholder': 'Skemanavn',
+    'profiles.name_exists': 'Navnet findes allerede',
     'profiles.edit': 'Redigér',
     'profiles.preview_note': 'Kun forhåndsvisning. Skemaerne bliver først aktive, når profilen aktiveres.',
     'profiles.active_label': 'Manuelt skema aktivt:',
@@ -875,6 +923,23 @@ const TT_I18N = {
   , 'week.view_switch.desc': 'Visa en växlare i tidslinjens rubrik så att du kan byta mellan de två veckodagsvisningarna.'
   , 'week.title': 'Veckodagar'
   , 'week.select_room': 'Välj rum'
+  , 'err.config_entities': "Konfigurationen måste ha 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Video hittades inte'
+  , 'onboard.image_not_found': 'Bild hittades inte'
+  , 'pause.prompt_minutes': 'Ange varaktighet (minuter):'
+  , 'editor.test_tool': 'Testverktyg'
+  , 'editor.test_select_entity': 'Välj en entitet'
+  , 'editor.test_empty': 'Inget att exportera'
+  , 'editor.test_export': 'Exportera'
+  , 'editor.test_no_fields': 'Inga fält att visa'
+  , 'editor.test_select_placeholder': 'Välj...'
+  , 'editor.error_prefix': 'Fel: '
+  , 'backup.restore.confirm_overwrite': 'Återställ från säkerhetskopia? Detta kommer att skriva över nuvarande scheman och inställningar.'
+  , 'backup.import.err_no_hass': 'Home Assistant är inte redo'
+  , 'backup.import.err_storage_off': 'Delad lagring är AV. Slå på den först.'
+  , 'backup.import.err_no_integration': 'Integrationen thermostat_timeline är inte tillgänglig'
+  , 'backup.import.err_json': 'Ogiltig JSON'
+  , 'profiles.name_exists': 'Namnet finns redan'
   },
   nb: {
     'card.title_default': 'Termostat tidslinje',
@@ -1151,6 +1216,23 @@ const TT_I18N = {
   , 'week.view_switch.desc': 'Vis en bryter i tidslinjens toppfelt for å bytte mellom de to ukedagsvisningene.'
   , 'week.title': 'Ukedager'
   , 'week.select_room': 'Velg rom'
+  , 'err.config_entities': "Konfig må ha 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Video ble ikke funnet'
+  , 'onboard.image_not_found': 'Bilde ble ikke funnet'
+  , 'pause.prompt_minutes': 'Angi varighet (minutter):'
+  , 'editor.test_tool': 'Testverktøy'
+  , 'editor.test_select_entity': 'Velg en entitet'
+  , 'editor.test_empty': 'Ingenting å eksportere'
+  , 'editor.test_export': 'Eksporter'
+  , 'editor.test_no_fields': 'Ingen felter å vise'
+  , 'editor.test_select_placeholder': 'Velg...'
+  , 'editor.error_prefix': 'Feil: '
+  , 'backup.restore.confirm_overwrite': 'Gjenopprett fra sikkerhetskopi? Dette vil overskrive nåværende tidsplaner og innstillinger.'
+  , 'backup.import.err_no_hass': 'Home Assistant er ikke klar'
+  , 'backup.import.err_storage_off': 'Delt lagring er AV. Slå den på først.'
+  , 'backup.import.err_no_integration': 'Integrasjonen thermostat_timeline er ikke tilgjengelig'
+  , 'backup.import.err_json': 'Ugyldig JSON'
+  , 'profiles.name_exists': 'Navnet finnes allerede'
   },
   de: {
     'card.title_default': 'Thermostat-Zeitlinie',
@@ -1426,6 +1508,23 @@ const TT_I18N = {
   , 'week.view_switch.desc': 'Zeigt einen Umschalter in der Kopfzeile der Zeitleiste, um zwischen den beiden Wochentagsansichten zu wechseln.'
   , 'week.title': 'Wochentage'
   , 'week.select_room': 'Raum auswählen'
+  , 'err.config_entities': "Die Konfiguration muss 'entities: [climate.xxx, ...]' enthalten."
+  , 'onboard.video_not_found': 'Video nicht gefunden'
+  , 'onboard.image_not_found': 'Bild nicht gefunden'
+  , 'pause.prompt_minutes': 'Dauer eingeben (Minuten):'
+  , 'editor.test_tool': 'Testwerkzeug'
+  , 'editor.test_select_entity': 'Entität auswählen'
+  , 'editor.test_empty': 'Nichts zu exportieren'
+  , 'editor.test_export': 'Exportieren'
+  , 'editor.test_no_fields': 'Keine Felder zum Anzeigen'
+  , 'editor.test_select_placeholder': 'Auswählen...'
+  , 'editor.error_prefix': 'Fehler: '
+  , 'backup.restore.confirm_overwrite': 'Aus Backup wiederherstellen? Dadurch werden aktuelle Zeitpläne und Einstellungen überschrieben.'
+  , 'backup.import.err_no_hass': 'Home Assistant ist nicht bereit'
+  , 'backup.import.err_storage_off': 'Gemeinsamer Speicher ist AUS. Bitte zuerst aktivieren.'
+  , 'backup.import.err_no_integration': 'Integration thermostat_timeline ist nicht verfügbar'
+  , 'backup.import.err_json': 'Ungültiges JSON'
+  , 'profiles.name_exists': 'Name existiert bereits'
   },
   es: {
     'card.title_default': 'Línea de tiempo del termostato',
@@ -1701,6 +1800,23 @@ const TT_I18N = {
   , 'week.view_switch.desc': 'Muestra un selector en el encabezado de la línea de tiempo para alternar entre los dos modos de vista de los días de la semana.'
   , 'week.title': 'Días de la semana'
   , 'week.select_room': 'Seleccionar habitación'
+  , 'err.config_entities': "La configuración debe tener 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Video no encontrado'
+  , 'onboard.image_not_found': 'Imagen no encontrada'
+  , 'pause.prompt_minutes': 'Introduce la duración (minutos):'
+  , 'editor.test_tool': 'Herramienta de prueba'
+  , 'editor.test_select_entity': 'Selecciona una entidad'
+  , 'editor.test_empty': 'Nada que exportar'
+  , 'editor.test_export': 'Exportar'
+  , 'editor.test_no_fields': 'No hay campos para mostrar'
+  , 'editor.test_select_placeholder': 'Seleccionar...'
+  , 'editor.error_prefix': 'Error: '
+  , 'backup.restore.confirm_overwrite': '¿Restaurar desde una copia de seguridad? Esto sobrescribirá los horarios y ajustes actuales.'
+  , 'backup.import.err_no_hass': 'Home Assistant no está listo'
+  , 'backup.import.err_storage_off': 'El almacenamiento compartido está DESACTIVADO. Actívalo primero.'
+  , 'backup.import.err_no_integration': 'La integración thermostat_timeline no está disponible'
+  , 'backup.import.err_json': 'JSON no válido'
+  , 'profiles.name_exists': 'El nombre ya existe'
   },
   fr: {
     'card.title_default': 'Chronologie du thermostat',
@@ -1969,6 +2085,23 @@ const TT_I18N = {
   , 'week.view_switch.desc': 'Affiche un sélecteur dans l’en-tête de la frise pour basculer entre les deux modes de vue des jours de semaine.'
   , 'week.title': 'Jours de semaine'
   , 'week.select_room': 'Sélectionner une pièce'
+  , 'err.config_entities': "La configuration doit contenir 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Vidéo introuvable'
+  , 'onboard.image_not_found': 'Image introuvable'
+  , 'pause.prompt_minutes': 'Saisir la durée (minutes) :'
+  , 'editor.test_tool': 'Outil de test'
+  , 'editor.test_select_entity': 'Sélectionnez une entité'
+  , 'editor.test_empty': 'Rien à exporter'
+  , 'editor.test_export': 'Exporter'
+  , 'editor.test_no_fields': 'Aucun champ à afficher'
+  , 'editor.test_select_placeholder': 'Sélectionner...'
+  , 'editor.error_prefix': 'Erreur : '
+  , 'backup.restore.confirm_overwrite': 'Restaurer depuis une sauvegarde ? Cela écrasera les plannings et paramètres actuels.'
+  , 'backup.import.err_no_hass': "Home Assistant n'est pas prêt"
+  , 'backup.import.err_storage_off': 'Le stockage partagé est DÉSACTIVÉ. Activez-le d’abord.'
+  , 'backup.import.err_no_integration': "L'intégration thermostat_timeline n'est pas disponible"
+  , 'backup.import.err_json': 'JSON invalide'
+  , 'profiles.name_exists': 'Le nom existe déjà'
   },
   it: {
     'card.title_default': 'Cronologia del termostato',
@@ -2243,6 +2376,23 @@ const TT_I18N = {
   , 'presence.manage': 'Gestisci combinazioni'
   , 'presence.who_home': 'Chi è a casa'
   , 'presence.who_away': 'Chi non è a casa'
+  , 'err.config_entities': "La configurazione deve avere 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Video non trovato'
+  , 'onboard.image_not_found': 'Immagine non trovata'
+  , 'pause.prompt_minutes': 'Inserisci la durata (minuti):'
+  , 'editor.test_tool': 'Strumento di test'
+  , 'editor.test_select_entity': "Seleziona un'entità"
+  , 'editor.test_empty': 'Niente da esportare'
+  , 'editor.test_export': 'Esporta'
+  , 'editor.test_no_fields': 'Nessun campo da mostrare'
+  , 'editor.test_select_placeholder': 'Seleziona...'
+  , 'editor.error_prefix': 'Errore: '
+  , 'backup.restore.confirm_overwrite': 'Ripristinare da backup? Questo sovrascriverà pianificazioni e impostazioni correnti.'
+  , 'backup.import.err_no_hass': 'Home Assistant non è pronto'
+  , 'backup.import.err_storage_off': "L'archiviazione condivisa è DISATTIVATA. Attivala prima."
+  , 'backup.import.err_no_integration': "L'integrazione thermostat_timeline non è disponibile"
+  , 'backup.import.err_json': 'JSON non valido'
+  , 'profiles.name_exists': 'Il nome esiste già'
   },
   fi: {
     'card.title_default': 'Termostaatin aikajana',
@@ -2518,6 +2668,23 @@ const TT_I18N = {
   , 'week.view_switch.desc': 'Näyttää valitsimen aikajanan otsikossa, jolla voi vaihtaa kahden viikonpäivänäkymän välillä.'
   , 'week.title': 'Viikonpäivät'
   , 'week.select_room': 'Valitse huone'
+  , 'err.config_entities': "Määrityksessä täytyy olla 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Videota ei löytynyt'
+  , 'onboard.image_not_found': 'Kuvaa ei löytynyt'
+  , 'pause.prompt_minutes': 'Anna kesto (minuuttia):'
+  , 'editor.test_tool': 'Testityökalu'
+  , 'editor.test_select_entity': 'Valitse entiteetti'
+  , 'editor.test_empty': 'Ei mitään vietävää'
+  , 'editor.test_export': 'Vie'
+  , 'editor.test_no_fields': 'Ei kenttiä näytettäväksi'
+  , 'editor.test_select_placeholder': 'Valitse...'
+  , 'editor.error_prefix': 'Virhe: '
+  , 'backup.restore.confirm_overwrite': 'Palautetaanko varmuuskopiosta? Tämä korvaa nykyiset aikataulut ja asetukset.'
+  , 'backup.import.err_no_hass': 'Home Assistant ei ole valmis'
+  , 'backup.import.err_storage_off': 'Jaettu tallennus on POIS PÄÄLTÄ. Ota se ensin käyttöön.'
+  , 'backup.import.err_no_integration': 'Integraatio thermostat_timeline ei ole käytettävissä'
+  , 'backup.import.err_json': 'Virheellinen JSON'
+  , 'profiles.name_exists': 'Nimi on jo olemassa'
   },
   cs: {
     // Karta
@@ -2814,6 +2981,23 @@ const TT_I18N = {
     , 'week.view_switch.desc': 'Zobrazí přepínač v záhlaví časové osy pro přepínání mezi dvěma režimy zobrazení dnů v týdnu.'
     , 'week.title': 'Dny v týdnu'
     , 'week.select_room': 'Vyberte místnost'
+    , 'err.config_entities': "Konfigurace musí obsahovat 'entities: [climate.xxx, ...]'."
+    , 'onboard.video_not_found': 'Video nebylo nalezeno'
+    , 'onboard.image_not_found': 'Obrázek nebyl nalezen'
+    , 'pause.prompt_minutes': 'Zadejte dobu trvání (minuty):'
+    , 'editor.test_tool': 'Testovací nástroj'
+    , 'editor.test_select_entity': 'Vyberte entitu'
+    , 'editor.test_empty': 'Nic k exportu'
+    , 'editor.test_export': 'Exportovat'
+    , 'editor.test_no_fields': 'Žádná pole k zobrazení'
+    , 'editor.test_select_placeholder': 'Vybrat...'
+    , 'editor.error_prefix': 'Chyba: '
+    , 'backup.restore.confirm_overwrite': 'Obnovit ze zálohy? Tím se přepíší aktuální plány a nastavení.'
+    , 'backup.import.err_no_hass': 'Home Assistant není připraven'
+    , 'backup.import.err_storage_off': 'Sdílené úložiště je VYPNUTÉ. Nejprve jej zapněte.'
+    , 'backup.import.err_no_integration': 'Integrace thermostat_timeline není dostupná'
+    , 'backup.import.err_json': 'Neplatný JSON'
+    , 'profiles.name_exists': 'Název již existuje'
   },
   sl: {
     'card.title_default': 'Časovnica termostata',
@@ -3088,6 +3272,23 @@ const TT_I18N = {
   , 'presence.manage': 'Upravljaj kombinacije'
   , 'presence.who_home': 'Kdo je doma'
   , 'presence.who_away': 'Kdo ni doma'
+  , 'err.config_entities': "Konfiguracija mora imeti 'entities: [climate.xxx, ...]'."
+  , 'onboard.video_not_found': 'Videoposnetka ni bilo mogoče najti'
+  , 'onboard.image_not_found': 'Slike ni bilo mogoče najti'
+  , 'pause.prompt_minutes': 'Vnesite trajanje (minute):'
+  , 'editor.test_tool': 'Orodje za testiranje'
+  , 'editor.test_select_entity': 'Izberite entiteto'
+  , 'editor.test_empty': 'Ni ničesar za izvoz'
+  , 'editor.test_export': 'Izvozi'
+  , 'editor.test_no_fields': 'Ni polj za prikaz'
+  , 'editor.test_select_placeholder': 'Izberite...'
+  , 'editor.error_prefix': 'Napaka: '
+  , 'backup.restore.confirm_overwrite': 'Obnovi iz varnostne kopije? To bo prepisalo trenutne urnike in nastavitve.'
+  , 'backup.import.err_no_hass': 'Home Assistant ni pripravljen'
+  , 'backup.import.err_storage_off': 'Skupna shramba je IZKLOPLJENA. Najprej jo vklopite.'
+  , 'backup.import.err_no_integration': 'Integracija thermostat_timeline ni na voljo'
+  , 'backup.import.err_json': 'Neveljaven JSON'
+  , 'profiles.name_exists': 'Ime že obstaja'
   },
 };
 const TT_LANG_ALIAS = { no: 'nb', cz: 'cs', dk: 'da' };
@@ -3124,7 +3325,7 @@ function ttLocalize(key, langOrHass) {
 // Simple runtime version to help with cache-busting diagnostics in HA.
 // Update this when shipping changes so the version appears in the
 // "Custom cards" panel and in logs.
-const TT_CARD_VERSION = "2025.12.30-holiday-range";
+const TT_CARD_VERSION = "2026.01.01-import-json";
 
 class ThermostatTimelineCard extends HTMLElement {
   static get version() { return TT_CARD_VERSION; }
@@ -3150,6 +3351,7 @@ class ThermostatTimelineCard extends HTMLElement {
       labels: {},
       merges: {},              // { [primary_eid]: [linked_eid, ...] }
       temp_sensors: {},        // { [primary_eid]: sensor.temperature_entity_id }
+      turn_on: {},             // { [primary_eid]: { enabled: bool, order: 'before'|'after' } }
       boiler_enabled: false,   // enable boiler controls in editor and runtime
       boiler_switch: '',       // optional switch.* entity used for boiler control
       boiler_temp_sensor: '',  // optional sensor.* entity used for boiler temperature control
@@ -3308,13 +3510,15 @@ class ThermostatTimelineCard extends HTMLElement {
       const hasAnyLabel = this._config.labels && typeof this._config.labels==='object' && Object.keys(this._config.labels).length>0;
       const hasAnyMerge = this._config.merges && typeof this._config.merges==='object' && Object.keys(this._config.merges).length>0;
       const hasAnySensors = this._config.temp_sensors && typeof this._config.temp_sensors==='object' && Object.keys(this._config.temp_sensors).length>0;
-      if (hasAnyLabel && hasAnyMerge && hasAnySensors) return;
+      const hasAnyTurnOn = this._config.turn_on && typeof this._config.turn_on==='object' && Object.keys(this._config.turn_on).length>0;
+      if (hasAnyLabel && hasAnyMerge && hasAnySensors && hasAnyTurnOn) return;
       const api = await this._apiFetchState();
       const s = api?.settings || {};
       let changed = false;
       if (!hasAnyLabel && s.labels && typeof s.labels==='object' && Object.keys(s.labels).length){ this._config.labels = { ...s.labels }; changed = true; }
       if (!hasAnyMerge && s.merges && typeof s.merges==='object' && Object.keys(s.merges).length){ this._config.merges = { ...s.merges }; changed = true; }
       if (!hasAnySensors && s.temp_sensors && typeof s.temp_sensors==='object' && Object.keys(s.temp_sensors).length){ this._config.temp_sensors = { ...s.temp_sensors }; changed = true; }
+      if (!hasAnyTurnOn && s.turn_on && typeof s.turn_on==='object' && Object.keys(s.turn_on).length){ this._config.turn_on = { ...s.turn_on }; changed = true; }
       if (changed){
         try { const payload = this._makeStoragePayload(true); localStorage.setItem('thermostat_timeline_store', JSON.stringify(payload)); } catch {}
       }
@@ -3323,7 +3527,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   // ---------- Config ----------
   setConfig(config) {
-    if (!config || !Array.isArray(config.entities)) throw new Error("Config skal have 'entities: [climate.xxx, ...]'.");
+    if (!config || !Array.isArray(config.entities)) throw new Error(ttLocalize('err.config_entities', navigator.language || 'en'));
     const prevDefault = Number(this._config?.default_temp);
     const yamlSetsDefault = Object.prototype.hasOwnProperty.call(config, 'default_temp');
     let rowh = Number(config.row_height ?? 64); rowh = isNaN(rowh) ? 64 : Math.max(40, Math.min(120, Math.round(rowh)));
@@ -3354,6 +3558,7 @@ class ThermostatTimelineCard extends HTMLElement {
       min_temp: Object.prototype.hasOwnProperty.call(config, 'min_temp'),
       max_temp: Object.prototype.hasOwnProperty.call(config, 'max_temp'),
       temp_sensors: Object.prototype.hasOwnProperty.call(config, 'temp_sensors'),
+      turn_on: Object.prototype.hasOwnProperty.call(config, 'turn_on'),
       boiler_enabled: Object.prototype.hasOwnProperty.call(config, 'boiler_enabled'),
       boiler_switch: Object.prototype.hasOwnProperty.call(config, 'boiler_switch'),
       boiler_temp_sensor: Object.prototype.hasOwnProperty.call(config, 'boiler_temp_sensor'),
@@ -3410,6 +3615,7 @@ class ThermostatTimelineCard extends HTMLElement {
   labels: { ...(config.labels || {}) },
       merges: { ...(config.merges || {}) },
     temp_sensors: { ...(config.temp_sensors || {}) },
+  turn_on: { ...(config.turn_on || {}) },
   boiler_enabled: !!(config.boiler_enabled ?? this._config?.boiler_enabled ?? false),
   boiler_switch: String(config.boiler_switch ?? this._config?.boiler_switch ?? ''),
   boiler_temp_sensor: String(config.boiler_temp_sensor ?? this._config?.boiler_temp_sensor ?? ''),
@@ -3861,6 +4067,7 @@ class ThermostatTimelineCard extends HTMLElement {
             if (s.merges && typeof s.merges === 'object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
             if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
             if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+            if (s.turn_on && typeof s.turn_on === 'object' && !this._yamlProvided?.turn_on) this._config.turn_on = { ...s.turn_on };
 
             // Fallbacks for Rooms tab settings if backend didn't persist them:
             // Merge from local browser copy to avoid losing user edits (e.g., custom room names)
@@ -3884,6 +4091,11 @@ class ThermostatTimelineCard extends HTMLElement {
                 if (!this._yamlProvided?.temp_sensors && (!s.temp_sensors || typeof s.temp_sensors !== 'object' || isEmptyObj(s.temp_sensors))) {
                   if (ls.temp_sensors && typeof ls.temp_sensors === 'object') {
                     this._config.temp_sensors = { ...(this._config.temp_sensors || {}), ...ls.temp_sensors };
+                  }
+                }
+                if (!this._yamlProvided?.turn_on && (!s.turn_on || typeof s.turn_on !== 'object' || isEmptyObj(s.turn_on))) {
+                  if (ls.turn_on && typeof ls.turn_on === 'object') {
+                    this._config.turn_on = { ...(this._config.turn_on || {}), ...ls.turn_on };
                   }
                 }
                 if (Array.isArray(this._config.entities) && (!Array.isArray(s.entities) || !s.entities.length)) {
@@ -4600,6 +4812,7 @@ class ThermostatTimelineCard extends HTMLElement {
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
+        turn_on: this._config.turn_on,
         open_window: this._config.open_window,
         boiler_enabled: !!this._config.boiler_enabled,
           boiler_switch: String(this._config.boiler_switch || ''),
@@ -6185,7 +6398,7 @@ class ThermostatTimelineCard extends HTMLElement {
       b5?.addEventListener('click', ()=>{ this._setPauseForMinutes(300); });
       bc?.addEventListener('click', ()=>{
         try {
-          const txt = prompt(this._t('pause.off_custom') + ' (minutes):', '60');
+          const txt = prompt(this._t('pause.prompt_minutes') || 'Enter duration (minutes):', '60');
           const m = Number(txt);
           if (Number.isFinite(m) && m > 0) this._setPauseForMinutes(m);
         } catch {}
@@ -8001,6 +8214,7 @@ class ThermostatTimelineCard extends HTMLElement {
           } catch { return {}; }
         })(),
         temp_sensors: (()=>{ try { return (cfg.temp_sensors && typeof cfg.temp_sensors === 'object') ? JSON.parse(JSON.stringify(cfg.temp_sensors)) : {}; } catch { return {}; } })(),
+        turn_on: (()=>{ try { return (cfg.turn_on && typeof cfg.turn_on === 'object') ? JSON.parse(JSON.stringify(cfg.turn_on)) : {}; } catch { return {}; } })(),
 
         default_temp: this._ttCoerceNum(cfg.default_temp, 20),
         row_height: this._ttCoerceNum(cfg.row_height, 64),
@@ -8133,6 +8347,23 @@ class ThermostatTimelineCard extends HTMLElement {
             if (v) out[eid] = v;
           }
           cfg.temp_sensors = out;
+        } catch {}
+
+        // Per-room turn_on behavior: keep only for active climate rooms
+        try {
+          const src = (d.turn_on && typeof d.turn_on === 'object') ? d.turn_on : {};
+          const out = {};
+          for (let i=0;i<ents.length;i++) {
+            const primary = ents[i];
+            const isInput = !!modes[i] || String(primary).startsWith('input_number.');
+            if (isInput) continue;
+            const cfg0 = (src && Object.prototype.hasOwnProperty.call(src, primary) && src[primary] && typeof src[primary] === 'object') ? src[primary] : null;
+            if (!cfg0) continue;
+            const enabled = !!cfg0.enabled;
+            const order = (String(cfg0.order||'before') === 'after') ? 'after' : 'before';
+            out[primary] = { enabled, order };
+          }
+          cfg.turn_on = out;
         } catch {}
       } catch {}
 
@@ -8552,6 +8783,7 @@ class ThermostatTimelineCard extends HTMLElement {
                 this._settingsDraft.merges = merges;
               } catch {}
               try { if (this._settingsDraft.temp_sensors && this._settingsDraft.temp_sensors[oldEid]) { const next = { ...(this._settingsDraft.temp_sensors||{}) }; delete next[oldEid]; this._settingsDraft.temp_sensors = next; } } catch {}
+              try { if (this._settingsDraft.turn_on && this._settingsDraft.turn_on[oldEid]) { const next = { ...(this._settingsDraft.turn_on||{}) }; delete next[oldEid]; this._settingsDraft.turn_on = next; } } catch {}
               this._settingsDraft.entities[idx] = '';
             }
             this._renderSettingsPopupRoomsTab();
@@ -8619,6 +8851,102 @@ class ThermostatTimelineCard extends HTMLElement {
             this._renderSettingsPopupRoomsTab();
           } catch {}
         });
+
+        // Per-room: optional turn_on behavior
+        const turnOnWrap = document.createElement('div');
+        turnOnWrap.style.display = 'grid';
+        turnOnWrap.style.gap = '6px';
+        const turnOnRow = document.createElement('div');
+        turnOnRow.style.display = 'flex';
+        turnOnRow.style.alignItems = 'center';
+        turnOnRow.style.justifyContent = 'space-between';
+        turnOnRow.style.gap = '10px';
+        const turnOnText = document.createElement('div');
+        turnOnText.style.display = 'grid';
+        turnOnText.style.gap = '2px';
+        const turnOnTitle = document.createElement('div');
+        turnOnTitle.style.fontWeight = '600';
+        turnOnTitle.textContent = this._t('editor.turn_on.title') || 'Send turn_on command';
+        const turnOnDesc = document.createElement('div');
+        turnOnDesc.style.fontSize = '.85rem';
+        turnOnDesc.style.color = 'var(--secondary-text-color)';
+        turnOnDesc.textContent = this._t('editor.turn_on.desc') || '';
+        turnOnText.append(turnOnTitle, turnOnDesc);
+        const turnOnSwitch = document.createElement('ha-switch');
+        turnOnSwitch.className = 'turn-on-switch';
+
+        // Dropdown (only visible when enabled)
+        const turnOnOrderRow = document.createElement('div');
+        turnOnOrderRow.style.display = 'grid';
+        turnOnOrderRow.style.gap = '2px';
+        const orderLbl = document.createElement('div');
+        orderLbl.className = 'slabel';
+        orderLbl.textContent = this._t('editor.turn_on.order') || 'Order';
+        const orderSel = document.createElement('select');
+        orderSel.className = 'turn-on-order';
+        try {
+          orderSel.style.height = '32px';
+          orderSel.style.border = '1px solid var(--divider-color)';
+          orderSel.style.borderRadius = '8px';
+          orderSel.style.background = 'var(--card-background-color)';
+          orderSel.style.color = 'var(--primary-text-color)';
+          orderSel.style.padding = '0 10px';
+          orderSel.style.width = '100%';
+          orderSel.style.maxWidth = '440px';
+        } catch {}
+        const optBefore = document.createElement('option');
+        optBefore.value = 'before';
+        optBefore.textContent = this._t('editor.turn_on.order.before') || 'Before set_temperature';
+        const optAfter = document.createElement('option');
+        optAfter.value = 'after';
+        optAfter.textContent = this._t('editor.turn_on.order.after') || 'After set_temperature';
+        orderSel.append(optBefore, optAfter);
+
+        const readTurnOnCfg = ()=>{
+          try {
+            const eid = String(this._settingsDraft?.entities?.[idx] || '').trim();
+            const map = (this._settingsDraft?.turn_on && typeof this._settingsDraft.turn_on === 'object') ? this._settingsDraft.turn_on : {};
+            const cfg0 = (eid && map[eid] && typeof map[eid] === 'object') ? map[eid] : {};
+            const enabled = !!cfg0.enabled;
+            const order = String(cfg0.order || 'before');
+            return { eid, enabled, order: (order === 'after' ? 'after' : 'before') };
+          } catch { return { eid: String(this._settingsDraft?.entities?.[idx] || '').trim(), enabled: false, order: 'before' }; }
+        };
+        const writeTurnOnCfg = (eid, patch)=>{
+          try {
+            if (!eid) return;
+            const prev = (this._settingsDraft.turn_on && typeof this._settingsDraft.turn_on === 'object') ? this._settingsDraft.turn_on : {};
+            const cur = (prev[eid] && typeof prev[eid] === 'object') ? prev[eid] : {};
+            this._settingsDraft.turn_on = { ...prev, [eid]: { ...cur, ...patch } };
+          } catch {}
+        };
+        const applyTurnOnUi = ()=>{
+          const { enabled, order } = readTurnOnCfg();
+          try { turnOnSwitch.checked = !!enabled; } catch {}
+          try { orderSel.value = (order === 'after' ? 'after' : 'before'); } catch {}
+          try { turnOnOrderRow.style.display = enabled ? '' : 'none'; } catch {}
+        };
+        turnOnSwitch.addEventListener('change', (e)=>{
+          try {
+            const { eid, order } = readTurnOnCfg();
+            const enabled = !!e.target.checked;
+            writeTurnOnCfg(eid, { enabled, order });
+            applyTurnOnUi();
+          } catch {}
+        });
+        orderSel.addEventListener('change', ()=>{
+          try {
+            const { eid, enabled } = readTurnOnCfg();
+            const order = String(orderSel.value || 'before');
+            writeTurnOnCfg(eid, { enabled: !!enabled, order: (order === 'after' ? 'after' : 'before') });
+            applyTurnOnUi();
+          } catch {}
+        });
+        applyTurnOnUi();
+        turnOnRow.append(turnOnText, turnOnSwitch);
+        turnOnOrderRow.append(orderLbl, orderSel);
+        turnOnWrap.append(turnOnRow, turnOnOrderRow);
+        try { if (useInput) turnOnWrap.style.display = 'none'; } catch {}
 
         // Merge UI
         const linkWrap = document.createElement('div');
@@ -8705,7 +9033,7 @@ class ThermostatTimelineCard extends HTMLElement {
           } catch {}
         });
 
-        left.append(modeRow, pick, nameLabel, nameInp, linkWrap, chips);
+        left.append(modeRow, pick, nameLabel, nameInp, turnOnWrap, linkWrap, chips);
         try { linkWrap.append(linkLabel, linkPicker); } catch {}
         details.append(left);
 
@@ -8749,6 +9077,13 @@ class ThermostatTimelineCard extends HTMLElement {
               this._settingsDraft.temp_sensors = sensors;
             } catch {}
 
+            // Clean turn_on
+            try {
+              const t = { ...(this._settingsDraft.turn_on || {}) };
+              if (primary && t[primary]) delete t[primary];
+              this._settingsDraft.turn_on = t;
+            } catch {}
+
             this._settingsDraft.entities = arr;
             this._settingsDraft.room_use_input_number = modes;
             this._renderSettingsPopupRoomsTab();
@@ -8790,6 +9125,13 @@ class ThermostatTimelineCard extends HTMLElement {
                 if (labels[oldPrimary] && !labels[newPrimary]) labels[newPrimary] = labels[oldPrimary];
                 if (labels[oldPrimary]) delete labels[oldPrimary];
                 this._settingsDraft.labels = labels;
+              } catch {}
+
+              try {
+                const t = { ...(this._settingsDraft.turn_on || {}) };
+                if (t[oldPrimary] && !t[newPrimary]) t[newPrimary] = t[oldPrimary];
+                if (t[oldPrimary]) delete t[oldPrimary];
+                this._settingsDraft.turn_on = t;
               } catch {}
               // Move open-state key old -> new
               try {
@@ -12013,7 +12355,7 @@ class ThermostatTimelineCard extends HTMLElement {
         const ren = document.createElement('button'); ren.type='button'; ren.className='btn ghost'; ren.textContent=this._t('profiles.rename'); ren.addEventListener('click', async ()=>{
           const cur = name; const txt = prompt(this._t('profiles.rename'), cur) || '';
             const nn = txt.trim(); if (!nn || nn===cur) return;
-            if (row.profiles[nn]) { alert('Name exists'); return; }
+            if (row.profiles[nn]) { alert(this._t('profiles.name_exists') || 'Name exists'); return; }
             row.profiles[nn] = row.profiles[cur]; delete row.profiles[cur]; if (row.activeProfile===cur) row.activeProfile = nn; if (this._profilesSelected===cur) this._profilesSelected = nn; this._markPendingSave(); this._renderProfilesModal(); this._render();
         });
         const del = document.createElement('button'); del.type='button'; del.className='remove-btn'; del.innerHTML = '<ha-icon icon="mdi:close"></ha-icon><span>'+this._t('profiles.delete')+'</span>';
@@ -12182,7 +12524,7 @@ class ThermostatTimelineCard extends HTMLElement {
         const base = this._t('profiles.name_placeholder');
         const txt = prompt(base||'Profile name', 'Profile');
         const name = (txt||'').trim(); if (!name) return;
-        if (row.profiles[name]) { alert('Name exists'); return; }
+        if (row.profiles[name]) { alert(this._t('profiles.name_exists') || 'Name exists'); return; }
         // Save this profile for ALL rooms from the draft map
         for (const rid of (this._config?.entities||[])){
           const rrow = this._schedules[rid] || { defaultTemp: this._config.default_temp, blocks: [] };
@@ -13175,7 +13517,7 @@ class ThermostatTimelineCard extends HTMLElement {
               try {
                 if (slide.fallback && vid.src !== slide.fallback) { vid.src = slide.fallback; vid.load?.(); return; }
                 vid.style.display='none';
-                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent='Video not found'; }
+                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent=this._t('onboard.video_not_found') || 'Video not found'; }
               } catch{}
             };
             vid.src = nextUrl; vid.load?.();
@@ -13186,7 +13528,7 @@ class ThermostatTimelineCard extends HTMLElement {
               try {
                 if (slide.fallback && img.src !== slide.fallback) { img.src = slide.fallback; return; }
                 img.style.display='none';
-                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent='Image not found'; }
+                if (hero) { let msg = hero.querySelector('.onb-missing'); if (!msg){ msg=document.createElement('div'); msg.className='onb-missing'; msg.style.fontSize='.9rem'; msg.style.color='var(--secondary-text-color)'; msg.style.padding='8px'; hero.append(msg); } msg.textContent=this._t('onboard.image_not_found') || 'Image not found'; }
               } catch{}
             };
             img.onload = ()=>{ try { img.style.display=''; vid.style.display='none'; } catch{} };
@@ -13343,11 +13685,11 @@ class ThermostatTimelineCard extends HTMLElement {
       // Test modal
       try {
         const testtitle = this.shadowRoot && this.shadowRoot.querySelector('.test-title');
-        if (testtitle) testtitle.textContent = t('editor.test_tool') || 'Testværktøj';
+        if (testtitle) testtitle.textContent = t('editor.test_tool') || 'Test tool';
         const testlabel = this.shadowRoot && this.shadowRoot.querySelector('.test-label');
-        if (testlabel) testlabel.textContent = t('editor.test_select_entity') || 'Vælg entitet';
+        if (testlabel) testlabel.textContent = t('editor.test_select_entity') || 'Select entity';
         const testempty = this.shadowRoot && this.shadowRoot.querySelector('.test-empty');
-        if (testempty) testempty.textContent = t('editor.test_empty') || 'Vælg en entitet for at se tilgængelige kommandoer…';
+        if (testempty) testempty.textContent = t('editor.test_empty') || 'Select an entity to see available commands…';
         const testexport = this.shadowRoot && this.shadowRoot.querySelector('.test-export-btn');
         if (testexport) testexport.textContent = t('editor.test_export') || 'Export .md';
         const testclose = this.shadowRoot && this.shadowRoot.querySelector('.test-close');
@@ -13903,6 +14245,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   this._holRoom = null;       // active room eid
   this._holEditing = null;    // { room, blockId }
   this._holMini = null;       // { room, blk }
+  // Import state (Backup tab)
+  this._importStoreError = '';
+  this._importStoreBusy = false;
     this.shadowRoot.innerHTML = `
       <style>
         .wrap { padding:8px 12px; display:grid; gap:16px; max-width: 480px; }
@@ -14165,6 +14510,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           <button type="button" class="remove-btn btn-restore-now"><ha-icon icon="mdi:archive-arrow-up"></ha-icon><span class="backup-restore-label">Restore</span></button>
           <button type="button" class="remove-btn btn-delete-backup"><ha-icon icon="mdi:delete-outline"></ha-icon><span class="backup-delete-label">Delete</span></button>
         </div>
+      </div>
+      <div class="setting" style="display:flex; flex-direction:column; gap:10px; align-items:stretch;">
+        <div class="text">
+          <div class="title backup-import-title">Import thermostat_timeline.json</div>
+          <div class="desc backup-import-desc">Upload a thermostat_timeline.json file and import it. A new backup is created first.</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; width:100%;">
+          <input class="backup-import-file" type="file" accept=".json,application/json" />
+          <button type="button" class="add-entity-btn btn-import-store"><ha-icon icon="mdi:file-upload-outline"></ha-icon><span class="backup-import-btn-label">Import file</span></button>
+        </div>
+        <div class="backup-import-error" style="display:none; color: var(--error-color); font-size:.85rem;"></div>
       </div>
       <div class="setting">
         <div class="text">
@@ -14506,6 +14862,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         merges: this._config.merges,
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
+        turn_on: this._config.turn_on,
 
         backup_auto_enabled: !!this._config.backup_auto_enabled,
         backup_interval_min: Number(this._config.backup_interval_min||1440),
@@ -14575,6 +14932,106 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       window.location.replace(url.toString());
     } catch {
       try { window.location.reload(); } catch {}
+    }
+  }
+
+  _normalizeImportedStoreFile(obj){
+    // Accept either raw data object ({schedules,...}) or full HA .storage wrapper ({key,data:{...}}).
+    const isObj = (v)=>!!v && typeof v === 'object' && !Array.isArray(v);
+    const root = isObj(obj) ? obj : null;
+    const data = (root && isObj(root.data)) ? root.data : root;
+    if (!isObj(data)) return null;
+
+    const schedules = data.schedules;
+    if (!isObj(schedules)) return null;
+
+    const out = { schedules };
+    if (isObj(data.settings)) out.settings = data.settings;
+    if (isObj(data.weekdays)) out.weekdays = data.weekdays;
+    if (isObj(data.profiles)) out.profiles = data.profiles;
+    if (isObj(data.colors)) out.colors = data.colors;
+    return out;
+  }
+
+  async _importThermostatTimelineJsonFile(file){
+    const safeMsg = (e)=>{ try { return String(e?.message || e || ''); } catch { return 'Error'; } };
+    this._importStoreError = '';
+    if (!file) return;
+
+    try {
+      if (!this._hass) throw new Error((this._t && (this._t('backup.import.err_no_hass') || 'Home Assistant not ready')) || 'Home Assistant not ready');
+      if (!this._config?.storage_enabled) throw new Error((this._t && (this._t('backup.import.err_storage_off') || 'Shared storage is OFF. Turn it on first.')) || 'Shared storage is OFF. Turn it on first.');
+      const hasService = !!(this._hass?.services && this._hass.services['thermostat_timeline']);
+      if (!hasService) throw new Error((this._t && (this._t('backup.import.err_no_integration') || 'Integration thermostat_timeline not available')) || 'Integration thermostat_timeline not available');
+
+      this._importStoreBusy = true;
+      try { this._render(); } catch {}
+
+      let parsed;
+      try {
+        const text = await file.text();
+        parsed = JSON.parse(text);
+      } catch {
+        throw new Error((this._t && (this._t('backup.import.err_json') || 'Invalid JSON')) || 'Invalid JSON');
+      }
+
+      const store = this._normalizeImportedStoreFile(parsed);
+      if (!store) throw new Error(this._t ? (this._t('backup.import.err_invalid') || 'Invalid file') : 'Invalid file');
+
+      // 1) Create a new backup slot of the current store
+      await this._hass.callService('thermostat_timeline', 'backup_now', {});
+      // Give HA a moment to persist the backup
+      await new Promise((res)=>setTimeout(res, 600));
+
+      // 2) Overwrite store with imported data
+      const payload = { force: true, schedules: store.schedules };
+      if (store.settings) payload.settings = store.settings;
+      if (store.weekdays) payload.weekdays = store.weekdays;
+      if (store.profiles) payload.profiles = store.profiles;
+      if (store.colors) payload.colors = store.colors;
+      await this._hass.callService('thermostat_timeline', 'set_store', payload);
+
+      // 3) Sync editor UI with imported settings (best-effort)
+      try {
+        const s = store.settings;
+        if (s && Array.isArray(s.entities)) {
+          const ents = s.entities.filter(Boolean).map(String);
+          this._config.entities = ents;
+          const rawModes = Array.isArray(s.room_use_input_number) ? s.room_use_input_number.map(v=>!!v) : [];
+          while (rawModes.length < ents.length) rawModes.push(false);
+          this._config.room_use_input_number = ents.map((eid, idx)=>{
+            if (String(eid).startsWith('input_number.')) return true;
+            if (String(eid).startsWith('climate.')) return false;
+            return !!rawModes[idx];
+          });
+          this._emit(true);
+        }
+      } catch {}
+
+      // 4) Update local browser cache and refresh open cards
+      try {
+        const st = await this._apiFetchState();
+        if (st && typeof st === 'object') {
+          localStorage.setItem('thermostat_timeline_store', JSON.stringify({
+            schedules: st.schedules || {},
+            weekdays: st.weekdays || {},
+            profiles: st.profiles || {},
+            settings: st.settings || {},
+            colors: st.colors || {},
+          }));
+        }
+      } catch {}
+      try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+
+      // Re-render backup tab so the new slot shows up
+      await new Promise((res)=>setTimeout(res, 600));
+      try { this._render(); } catch {}
+    } catch (e) {
+      this._importStoreError = safeMsg(e);
+      try { this._render(); } catch {}
+    } finally {
+      this._importStoreBusy = false;
+      try { this._render(); } catch {}
     }
   }
 
@@ -14672,11 +15129,25 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const bBtn = this.shadowRoot.querySelector('.btn-backup-now');
     const rBtn = this.shadowRoot.querySelector('.btn-restore-now');
     const dBtn = this.shadowRoot.querySelector('.btn-delete-backup');
+    const impInput = this.shadowRoot.querySelector('.backup-import-file');
+    const impBtn = this.shadowRoot.querySelector('.btn-import-store');
+    const impErr = this.shadowRoot.querySelector('.backup-import-error');
     const slotSel = this.shadowRoot.querySelector('.backup-slot-select');
     const lastDesc = this.shadowRoot.querySelector('.last-backup-desc');
   if (bAuto) bAuto.checked = !!this._config.backup_auto_enabled;
   if (bRow) bRow.style.display = (!!this._config.backup_auto_enabled) ? '' : 'none';
     if (bMin && bMin !== this.shadowRoot.activeElement) bMin.value = String(this._config.backup_interval_days || 1);
+
+    // Import UI state
+    try {
+      const msg = String(this._importStoreError || '');
+      if (impErr) {
+        impErr.textContent = msg;
+        impErr.style.display = msg ? '' : 'none';
+      }
+      if (impBtn) impBtn.disabled = !!this._importStoreBusy;
+      if (impInput) impInput.disabled = !!this._importStoreBusy;
+    } catch {}
     // No master toggle; all individual checkboxes remain enabled
     const fmt = (iso)=>{
       try {
@@ -14761,7 +15232,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   rBtn && (rBtn.onclick = async ()=>{
     try {
       const slot = Number(this.shadowRoot.querySelector('.backup-slot-select')?.value || '0') || undefined;
-      if (confirm('Restore from backup? This will overwrite current schedules and settings.')) {
+      if (confirm((this._t && this._t('backup.restore.confirm_overwrite')) || 'Restore from backup? This will overwrite current schedules and settings.')) {
         const payload = { mode: 'replace' };
         if (slot) payload.slot = slot;
         await this._hass.callService('thermostat_timeline','restore_now', payload);
@@ -14779,6 +15250,17 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       setTimeout(()=>{ try { this._render(); } catch{} }, 800);
     } catch {}
   });
+  // Import from thermostat_timeline.json file
+  const runImport = async ()=>{
+    try {
+      const file = impInput?.files?.[0];
+      await this._importThermostatTimelineJsonFile(file);
+    } finally {
+      try { if (impInput) impInput.value = ''; } catch {}
+    }
+  };
+  if (impBtn) impBtn.onclick = runImport;
+  if (impInput) impInput.onchange = runImport;
   bAuto && bAuto.addEventListener('change', (e)=>{ const on=!!e.target.checked; this._upd('backup_auto_enabled', on); if (bRow) bRow.style.display = on? '' : 'none'; try { this._pushSettingsToStoreDebounced(); } catch {} });
     bMin && bMin.addEventListener('change', (e)=>{ let v=Math.round(Number(e.target.value||1)); if(!Number.isFinite(v)) v=1; v=Math.max(1, Math.min(365, v)); e.target.value=String(v); this._upd('backup_interval_days', v); try { this._pushSettingsToStoreDebounced(); } catch {} });
   } catch {}
@@ -15800,6 +16282,119 @@ class ThermostatTimelineCardEditor extends HTMLElement {
       try { this._pushSettingsToStoreDebounced(); } catch {}
     });
 
+    // Per-room: optional turn_on behavior
+    const turnOnWrap = document.createElement('div');
+    turnOnWrap.style.display = 'grid';
+    turnOnWrap.style.gap = '6px';
+    const turnOnRow = document.createElement('div');
+    turnOnRow.style.display = 'flex';
+    turnOnRow.style.alignItems = 'center';
+    turnOnRow.style.justifyContent = 'space-between';
+    turnOnRow.style.gap = '10px';
+    const turnOnText = document.createElement('div');
+    turnOnText.style.display = 'grid';
+    turnOnText.style.gap = '2px';
+    const turnOnTitle = document.createElement('div');
+    turnOnTitle.style.fontWeight = '600';
+    turnOnTitle.textContent = this._t('editor.turn_on.title') || 'Send turn_on command';
+    const turnOnDesc = document.createElement('div');
+    turnOnDesc.style.fontSize = '.85rem';
+    turnOnDesc.style.color = 'var(--secondary-text-color)';
+    turnOnDesc.textContent = this._t('editor.turn_on.desc') || '';
+    turnOnText.append(turnOnTitle, turnOnDesc);
+    const turnOnSwitch = document.createElement('ha-switch');
+    turnOnSwitch.className = 'turn-on-switch';
+    // Dropdown (only visible when enabled)
+    const turnOnOrderRow = document.createElement('div');
+    turnOnOrderRow.style.display = 'grid';
+    turnOnOrderRow.style.gap = '2px';
+    const orderLbl = document.createElement('div');
+    orderLbl.className = 'slabel';
+    orderLbl.textContent = this._t('editor.turn_on.order') || 'Order';
+    const orderSel = document.createElement('select');
+    orderSel.className = 'turn-on-order';
+    try {
+      orderSel.style.height = '32px';
+      orderSel.style.border = '1px solid var(--divider-color)';
+      orderSel.style.borderRadius = '8px';
+      orderSel.style.background = 'var(--card-background-color)';
+      orderSel.style.color = 'var(--primary-text-color)';
+      orderSel.style.padding = '0 10px';
+      orderSel.style.width = '100%';
+      orderSel.style.maxWidth = '440px';
+    } catch {}
+    const optBefore = document.createElement('option');
+    optBefore.value = 'before';
+    optBefore.textContent = this._t('editor.turn_on.order.before') || 'Before set_temperature';
+    const optAfter = document.createElement('option');
+    optAfter.value = 'after';
+    optAfter.textContent = this._t('editor.turn_on.order.after') || 'After set_temperature';
+    orderSel.append(optBefore, optAfter);
+
+    const readTurnOnCfg = ()=>{
+      try {
+        const eid = this._config.entities[idx];
+        const map = (this._config.turn_on && typeof this._config.turn_on === 'object') ? this._config.turn_on : {};
+        const cfg = (eid && map[eid] && typeof map[eid] === 'object') ? map[eid] : {};
+        const enabled = !!cfg.enabled;
+        const order = String(cfg.order || 'before');
+        return { eid, enabled, order: (order === 'after' ? 'after' : 'before') };
+      } catch { return { eid: this._config.entities[idx], enabled: false, order: 'before' }; }
+    };
+    const writeTurnOnCfg = (eid, patch)=>{
+      try {
+        if (!eid) return;
+        const prev = (this._config.turn_on && typeof this._config.turn_on === 'object') ? this._config.turn_on : {};
+        const cur = (prev[eid] && typeof prev[eid] === 'object') ? prev[eid] : {};
+        const next = { ...prev, [eid]: { ...cur, ...patch } };
+        // If disabling, keep order but store enabled=false (so it can be re-enabled without losing selection)
+        this._config.turn_on = next;
+      } catch {}
+      // Persist to local browser storage for immediate live preview when Sync is OFF
+      try {
+        const raw = localStorage.getItem('thermostat_timeline_store') || '';
+        let parsed = {};
+        try { parsed = JSON.parse(raw || '{}'); } catch { parsed = {}; }
+        const schedules = parsed.schedules || {};
+        const prevSettings = parsed.settings || {};
+        const settings = { ...prevSettings, turn_on: { ...(prevSettings.turn_on||{}), ...(this._config.turn_on||{}) } };
+        localStorage.setItem('thermostat_timeline_store', JSON.stringify({ schedules, settings }));
+      } catch {}
+      try { this._pushSettingsToStoreDebounced(); } catch {}
+      try { window.dispatchEvent(new CustomEvent('thermostat-timeline-refresh')); } catch {}
+      try { document.querySelectorAll('thermostat-timeline-card').forEach(el=>el?.devRefreshFromEditor?.()); } catch {}
+    };
+
+    const applyTurnOnUi = ()=>{
+      const { enabled, order } = readTurnOnCfg();
+      try { turnOnSwitch.checked = !!enabled; } catch {}
+      try { orderSel.value = (order === 'after' ? 'after' : 'before'); } catch {}
+      try { turnOnOrderRow.style.display = enabled ? '' : 'none'; } catch {}
+    };
+
+    turnOnSwitch.addEventListener('change', (e)=>{
+      try {
+        const { eid, order } = readTurnOnCfg();
+        const enabled = !!e.target.checked;
+        writeTurnOnCfg(eid, { enabled, order });
+        applyTurnOnUi();
+        this._emit(true);
+      } catch {}
+    });
+    orderSel.addEventListener('change', ()=>{
+      try {
+        const { eid, enabled } = readTurnOnCfg();
+        const order = String(orderSel.value || 'before');
+        writeTurnOnCfg(eid, { enabled: !!enabled, order: (order === 'after' ? 'after' : 'before') });
+        this._emit(true);
+      } catch {}
+    });
+    // Initial values
+    applyTurnOnUi();
+    turnOnRow.append(turnOnText, turnOnSwitch);
+    turnOnOrderRow.append(orderLbl, orderSel);
+    turnOnWrap.append(turnOnRow, turnOnOrderRow);
+
     // Merge/Link section
   const linkWrap = document.createElement('div');
   linkWrap.style.display = 'grid';
@@ -15843,11 +16438,11 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     const chips = document.createElement('div');
     chips.className = 'linked-chips';
 
-  left.append(pick, nameInp, linkWrap, chips);
+  left.append(pick, nameInp, turnOnWrap, linkWrap, chips);
   // Insert mode toggle at the top
   try { left.insertBefore(modeRow, left.firstChild); } catch { left.prepend(modeRow); }
   // Hide merge UI when controlling input_number
-  try { if (useInput) { linkWrap.style.display = 'none'; chips.style.display = 'none'; } } catch {}
+  try { if (useInput) { linkWrap.style.display = 'none'; chips.style.display = 'none'; turnOnWrap.style.display = 'none'; } } catch {}
     details.append(left);
 
     // Expand/collapse
@@ -15942,6 +16537,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         // Clean up labels
         const labels = { ...(this._config.labels || {}) };
         if (primary && labels[primary]) delete labels[primary];
+        // Clean up turn_on
+        const turnOn = { ...(this._config.turn_on || {}) };
+        if (primary && turnOn[primary]) delete turnOn[primary];
         // Clean up merges: remove mapping for this primary and remove it from other arrays
         const merges = { ...(this._config.merges || {}) };
         if (primary && merges[primary]) delete merges[primary];
@@ -15953,6 +16551,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         this._config.room_use_input_number = modes;
         this._config.labels = labels;
         this._config.merges = merges;
+        this._config.turn_on = turnOn;
         this._emit(true);
       } catch (e) {}
     });
@@ -15985,6 +16584,13 @@ class ThermostatTimelineCardEditor extends HTMLElement {
           if (sensors[oldPrimary]) delete sensors[oldPrimary];
           this._config.temp_sensors = sensors;
         } catch {}
+        // migrate per-room turn_on mapping to new primary key
+        try {
+          const to = { ...(this._config.turn_on || {}) };
+          if (to[oldPrimary] && !to[newPrimary]) to[newPrimary] = to[oldPrimary];
+          if (to[oldPrimary]) delete to[oldPrimary];
+          this._config.turn_on = to;
+        } catch {}
       }
       // Avoid mutating a potentially frozen array (some browsers/HA paths freeze config)
       try {
@@ -16005,6 +16611,8 @@ class ThermostatTimelineCardEditor extends HTMLElement {
   if (this._openCount > 0) this._pendingEmit = true; else this._emit(true);
   try { this._pushSettingsToStoreDebounced(); } catch {}
       if (!this._roomUsesInputNumber(idx)) refreshChips();
+      // refresh per-room turn_on UI after primary change
+      try { applyTurnOnUi(); } catch {}
       // Also update subtitle on primary change
       try {
         const subEl = line.querySelector('.summary-sub');
@@ -16274,6 +16882,9 @@ class ThermostatTimelineCardEditor extends HTMLElement {
         const bn = root.querySelector('.backup-now-label'); if (bn) bn.textContent = t('backup.now') || 'Backup now';
         const brl = root.querySelector('.backup-restore-label'); if (brl) brl.textContent = t('backup.restore') || 'Restore';
         const bdl = root.querySelector('.backup-delete-label'); if (bdl) bdl.textContent = t('backup.delete') || 'Delete';
+        const bitl = root.querySelector('.backup-import-title'); if (bitl) bitl.textContent = t('backup.import.title') || 'Import thermostat_timeline.json';
+        const bidl = root.querySelector('.backup-import-desc'); if (bidl) bidl.textContent = t('backup.import.desc') || '';
+        const bibl = root.querySelector('.backup-import-btn-label'); if (bibl) bibl.textContent = t('backup.import.btn') || 'Import file';
         const bat = root.querySelector('.backup-auto-title'); if (bat) bat.textContent = t('backup.auto');
         const bad = root.querySelector('.backup-auto-desc'); if (bad) bad.textContent = t('backup.auto.desc');
         const bit = root.querySelector('.backup-int-title'); if (bit) bit.textContent = t('backup.interval');
