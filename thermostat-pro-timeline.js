@@ -143,12 +143,19 @@ const TT_I18N = {
   'editor.tabs.pause': 'Pause',
   'editor.tabs.weekdays': 'Weekdays',
   'editor.tabs.rooms': 'Rooms',
-  'editor.tabs.boiler': 'Boiler',
+  'editor.tabs.boiler': 'Boiler control',
   'editor.tabs.colors': 'Colors',
+  'editor.tabs.presence_sensor': 'Presence sensor (not finished)',
   'editor.tabs.owd': 'Open Window Detection',
   'editor.tabs.away': 'Away from home',
   'editor.tabs.sync': 'Sync Engine',
   'editor.tabs.backup': 'Backup',
+
+  'editor.presence_sensor.enable.title': 'Presence sensor (not finished)',
+  'editor.presence_sensor.enable.desc': 'This feature is not finished yet and is disabled for now.',
+
+  'editor.presence_sensor.entity.title': 'Presence entity',
+  'editor.presence_sensor.entity.desc': 'Select the binary_sensor that indicates presence in this room.',
 
   'owd.enable': 'Open Window Detection',
   'owd.enable.desc': 'Turns off thermostats in a room when selected window/door sensors are open.',
@@ -159,12 +166,18 @@ const TT_I18N = {
   'owd.close_delay': 'After closed (min)',
 
   'boiler.switch': 'Boiler switch',
+  'boiler.rooms': 'Rooms included',
+  'boiler.rooms.desc': 'Select which rooms should be included in boiler control.',
   'boiler.enable': 'Enable boiler control',
   'boiler.enable.desc': 'Show boiler settings in this card editor.',
   'boiler.temp_sensor': 'Boiler temperature sensor',
   'boiler.temp_sensor.desc': 'Temperature sensor that controls the boiler switch.',
   'boiler.min_temp': 'Min boiler temp (°C)',
   'boiler.max_temp': 'Max boiler temp (°C)',
+  'boiler.offsets': 'Offsets',
+  'boiler.offsets.desc': 'ON offset: how far below the scheduled target before turning ON. OFF offset: how far above the scheduled target before turning OFF.',
+  'boiler.on_offset': 'ON offset (°C)',
+  'boiler.off_offset': 'OFF offset (°C)',
 
   'sync.running': 'Sync in progress…',
   'sync.completed': 'Sync completed',
@@ -470,7 +483,7 @@ const TT_I18N = {
     'editor.tabs.pause': 'Pause',
     'editor.tabs.weekdays': 'Ugedage',
     'editor.tabs.rooms': 'Rum',
-    'editor.tabs.boiler': 'Boiler',
+    'editor.tabs.boiler': 'Kedelstyring',
     'editor.tabs.colors': 'Farver',
     'editor.tabs.owd': 'Open Window Detection',
     'owd.enable': 'Open Window Detection',
@@ -483,12 +496,18 @@ const TT_I18N = {
     'editor.tabs.away': 'Væk fra hjemme',
     'editor.tabs.sync': 'Sync Engine',
     'boiler.switch': 'Boiler switch',
+    'boiler.rooms': 'Rum der er med',
+    'boiler.rooms.desc': 'Vælg hvilke rum der skal være med i kedelstyringen.',
     'boiler.enable': 'Aktivér kedelstyring',
     'boiler.enable.desc': 'Vis kedelindstillinger i denne cards editor.',
     'boiler.temp_sensor': 'Kedel temperatursensor',
     'boiler.temp_sensor.desc': 'Temperatursensor som styrer kedel‑switchen.',
     'boiler.min_temp': 'Min kedeltemp (°C)',
     'boiler.max_temp': 'Maks kedeltemp (°C)',
+    'boiler.offsets': 'Offset',
+    'boiler.offsets.desc': 'ON offset: hvor langt under skema-temperaturen den må gå før den tænder. OFF offset: hvor langt over skema-temperaturen den må gå før den slukker.',
+    'boiler.on_offset': 'ON offset (°C)',
+    'boiler.off_offset': 'OFF offset (°C)',
     'sync.running': 'Igangværende sync…',
     'sync.completed': 'Sync gennemført',
     'editor.tabs.backup': 'Backup',
@@ -902,14 +921,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Borta hemifrån'
-  , 'editor.tabs.boiler': 'Panna'
+  , 'editor.tabs.boiler': 'Pannstyrning'
   , 'boiler.switch': 'Pannbrytare'
+  , 'boiler.rooms': 'Rum som ingår'
+  , 'boiler.rooms.desc': 'Välj vilka rum som ska ingå i pannstyrningen.'
   , 'boiler.enable': 'Aktivera pannstyrning'
   , 'boiler.enable.desc': 'Visa panninställningar i den här korteditorn.'
   , 'boiler.temp_sensor': 'Pannans temperatursensor'
   , 'boiler.temp_sensor.desc': 'Temperatursensor som styr pannbrytaren.'
   , 'boiler.min_temp': 'Min pann‑temp (°C)'
   , 'boiler.max_temp': 'Max pann‑temp (°C)'
+  , 'boiler.offsets': 'Offset'
+  , 'boiler.offsets.desc': 'ON‑offset: hur långt under schemamålet innan den slår PÅ. OFF‑offset: hur långt över schemamålet innan den slår AV.'
+  , 'boiler.on_offset': 'ON offset (°C)'
+  , 'boiler.off_offset': 'OFF offset (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Visa live‑närvaro i rubriken'
   , 'presence.live_header.desc': 'Chips visas i högra hörnet.'
@@ -1195,14 +1220,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Borte fra hjemmet'
-  , 'editor.tabs.boiler': 'Kjel'
+  , 'editor.tabs.boiler': 'Kjelstyring'
   , 'boiler.switch': 'Kjelbryter'
+  , 'boiler.rooms': 'Rom som er med'
+  , 'boiler.rooms.desc': 'Velg hvilke rom som skal være med i kjelstyringen.'
   , 'boiler.enable': 'Aktiver kjelstyring'
   , 'boiler.enable.desc': 'Vis kjelinnstillinger i denne kort‑editoren.'
   , 'boiler.temp_sensor': 'Kjelens temperatursensor'
   , 'boiler.temp_sensor.desc': 'Temperatursensor som styrer kjelbryteren.'
   , 'boiler.min_temp': 'Min kjeltemperatur (°C)'
   , 'boiler.max_temp': 'Maks kjeltemperatur (°C)'
+  , 'boiler.offsets': 'Offset'
+  , 'boiler.offsets.desc': 'ON offset: hvor langt under planlagt temperatur før den slår PÅ. OFF offset: hvor langt over planlagt temperatur før den slår AV.'
+  , 'boiler.on_offset': 'ON offset (°C)'
+  , 'boiler.off_offset': 'OFF offset (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Vis live tilstedeværelse i headeren'
   , 'presence.live_header.desc': 'Chips vises i høyre hjørne.'
@@ -1487,14 +1518,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Abwesend von zu Hause'
-  , 'editor.tabs.boiler': 'Kessel'
+  , 'editor.tabs.boiler': 'Kesselsteuerung'
   , 'boiler.switch': 'Kesselschalter'
+  , 'boiler.rooms': 'Einbezogene Räume'
+  , 'boiler.rooms.desc': 'Wähle, welche Räume in der Kesselsteuerung berücksichtigt werden.'
   , 'boiler.enable': 'Kesselsteuerung aktivieren'
   , 'boiler.enable.desc': 'Kesseleinstellungen in diesem Karten‑Editor anzeigen.'
   , 'boiler.temp_sensor': 'Kessel‑Temperatursensor'
   , 'boiler.temp_sensor.desc': 'Temperatursensor zur Steuerung des Kesselschalters.'
   , 'boiler.min_temp': 'Min. Kesseltemperatur (°C)'
   , 'boiler.max_temp': 'Max. Kesseltemperatur (°C)'
+  , 'boiler.offsets': 'Offsets'
+  , 'boiler.offsets.desc': 'ON‑Offset: wie weit unter dem Zeitplan‑Sollwert bevor EIN geschaltet wird. OFF‑Offset: wie weit über dem Zeitplan‑Sollwert bevor AUS geschaltet wird.'
+  , 'boiler.on_offset': 'ON‑Offset (°C)'
+  , 'boiler.off_offset': 'OFF‑Offset (°C)'
   , 'editor.temp_sensor': 'Temperatursensor'
   , 'presence.live_header': 'Live‑Anwesenheit in Kopfzeile anzeigen'
   , 'presence.live_header.desc': 'Chips werden in der rechten Ecke angezeigt.'
@@ -1779,14 +1816,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Fuera de casa'
-  , 'editor.tabs.boiler': 'Caldera'
+  , 'editor.tabs.boiler': 'Control de caldera'
   , 'boiler.switch': 'Interruptor de caldera'
+  , 'boiler.rooms': 'Habitaciones incluidas'
+  , 'boiler.rooms.desc': 'Selecciona qué habitaciones deben incluirse en el control de la caldera.'
   , 'boiler.enable': 'Activar control de caldera'
   , 'boiler.enable.desc': 'Mostrar ajustes de caldera en el editor de esta tarjeta.'
   , 'boiler.temp_sensor': 'Sensor de temperatura de caldera'
   , 'boiler.temp_sensor.desc': 'Sensor de temperatura usado para controlar el interruptor de la caldera.'
   , 'boiler.min_temp': 'Temp. mínima de caldera (°C)'
   , 'boiler.max_temp': 'Temp. máxima de caldera (°C)'
+  , 'boiler.offsets': 'Offsets'
+  , 'boiler.offsets.desc': 'Offset ON: cuánto por debajo del objetivo programado antes de encender. Offset OFF: cuánto por encima del objetivo programado antes de apagar.'
+  , 'boiler.on_offset': 'Offset ON (°C)'
+  , 'boiler.off_offset': 'Offset OFF (°C)'
   , 'editor.temp_sensor': 'Sensor de temperatura'
   , 'presence.live_header': 'Mostrar presencia en vivo en la cabecera'
   , 'presence.live_header.desc': 'Las fichas se muestran en la esquina derecha.'
@@ -2064,14 +2107,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Absence du domicile'
-  , 'editor.tabs.boiler': 'Chaudière'
+  , 'editor.tabs.boiler': 'Contrôle chaudière'
   , 'boiler.switch': 'Interrupteur de chaudière'
+  , 'boiler.rooms': 'Pièces incluses'
+  , 'boiler.rooms.desc': 'Sélectionnez les pièces à inclure dans le contrôle de la chaudière.'
   , 'boiler.enable': 'Activer le contrôle chaudière'
   , 'boiler.enable.desc': 'Afficher les réglages de chaudière dans l’éditeur de cette carte.'
   , 'boiler.temp_sensor': 'Capteur de température chaudière'
   , 'boiler.temp_sensor.desc': 'Capteur de température utilisé pour piloter l’interrupteur de la chaudière.'
   , 'boiler.min_temp': 'Temp. min. chaudière (°C)'
   , 'boiler.max_temp': 'Temp. max. chaudière (°C)'
+  , 'boiler.offsets': 'Décalages'
+  , 'boiler.offsets.desc': 'Décalage ON : à combien en dessous de la consigne planifiée avant d’allumer. Décalage OFF : à combien au‑dessus de la consigne planifiée avant d’éteindre.'
+  , 'boiler.on_offset': 'Décalage ON (°C)'
+  , 'boiler.off_offset': 'Décalage OFF (°C)'
   , 'editor.temp_sensor': 'Capteur de température'
   , 'presence.live_header': 'Afficher la présence en direct dans l’en‑tête'
   , 'presence.live_header.desc': 'Les puces sont affichées dans le coin droit.'
@@ -2237,14 +2286,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Fuori casa'
-  , 'editor.tabs.boiler': 'Caldaia'
+  , 'editor.tabs.boiler': 'Controllo caldaia'
   , 'boiler.switch': 'Interruttore caldaia'
+  , 'boiler.rooms': 'Stanze incluse'
+  , 'boiler.rooms.desc': 'Seleziona quali stanze includere nel controllo della caldaia.'
   , 'boiler.enable': 'Attiva controllo caldaia'
   , 'boiler.enable.desc': 'Mostra le impostazioni caldaia nell’editor di questa scheda.'
   , 'boiler.temp_sensor': 'Sensore temperatura caldaia'
   , 'boiler.temp_sensor.desc': 'Sensore di temperatura usato per controllare l’interruttore della caldaia.'
   , 'boiler.min_temp': 'Temperatura min. caldaia (°C)'
   , 'boiler.max_temp': 'Temperatura max. caldaia (°C)'
+  , 'boiler.offsets': 'Offset'
+  , 'boiler.offsets.desc': 'Offset ON: quanto sotto l’obiettivo programmato prima di accendere. Offset OFF: quanto sopra l’obiettivo programmato prima di spegnere.'
+  , 'boiler.on_offset': 'Offset ON (°C)'
+  , 'boiler.off_offset': 'Offset OFF (°C)'
   , 'editor.tabs.sync': 'Motore di sincronizzazione'
   , 'sync.running': 'Sincronizzazione in corso…'
   , 'sync.completed': 'Sincronizzazione completata'
@@ -2647,14 +2702,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Poissa kotoa'
-  , 'editor.tabs.boiler': 'Kattila'
+  , 'editor.tabs.boiler': 'Kattilan ohjaus'
   , 'boiler.switch': 'Kattilakytkin'
+  , 'boiler.rooms': 'Mukana olevat huoneet'
+  , 'boiler.rooms.desc': 'Valitse, mitkä huoneet otetaan mukaan kattilan ohjaukseen.'
   , 'boiler.enable': 'Ota kattilan ohjaus käyttöön'
   , 'boiler.enable.desc': 'Näytä kattila-asetukset tämän kortin editorissa.'
   , 'boiler.temp_sensor': 'Kattilan lämpötila‑anturi'
   , 'boiler.temp_sensor.desc': 'Lämpötila‑anturi, joka ohjaa kattilakytkintä.'
   , 'boiler.min_temp': 'Kattilan minimi (°C)'
   , 'boiler.max_temp': 'Kattilan maksimi (°C)'
+  , 'boiler.offsets': 'Offsetit'
+  , 'boiler.offsets.desc': 'ON‑offset: kuinka paljon alle aikataulun tavoitteen ennen kuin kytkeytyy päälle. OFF‑offset: kuinka paljon yli aikataulun tavoitteen ennen kuin kytkeytyy pois.'
+  , 'boiler.on_offset': 'ON offset (°C)'
+  , 'boiler.off_offset': 'OFF offset (°C)'
   , 'editor.temp_sensor': 'Lämpötila‑anturi'
   , 'presence.live_header': 'Näytä live‑läsnäolo yläreunassa'
   , 'presence.live_header.desc': 'Siruja näytetään oikeassa kulmassa.'
@@ -2802,14 +2863,27 @@ const TT_I18N = {
     'editor.tabs.settings': 'Nastavení',
     'editor.tabs.pause': 'Pauza',
     'editor.tabs.rooms': 'Místnosti',
-    'editor.tabs.boiler': 'Kotel',
+    'editor.tabs.boiler': 'Ovládání kotle',
     'boiler.switch': 'Spínač kotle',
+    'boiler.rooms': 'Zahrnuté místnosti',
+    'boiler.rooms.desc': 'Vyberte, které místnosti mají být zahrnuty do ovládání kotle.',
+    'editor.tabs.presence_sensor': 'Tilstedeværelsessensor (ikke færdig)',
     'boiler.enable': 'Povolit ovládání kotle',
     'boiler.enable.desc': 'Zobrazit nastavení kotle v editoru této karty.',
     'boiler.temp_sensor': 'Teplotní senzor kotle',
     'boiler.temp_sensor.desc': 'Teplotní senzor používaný k ovládání spínače kotle.',
+
+    'editor.presence_sensor.enable.title': 'Tilstedeværelsessensor (ikke færdig)',
+    'editor.presence_sensor.enable.desc': 'Denne funktion er ikke færdig endnu og er slået fra indtil videre.',
+
+    'editor.presence_sensor.entity.title': 'Tilstedeværelses-entity',
+    'editor.presence_sensor.entity.desc': 'Vælg den binary_sensor der indikerer tilstedeværelse i dette rum.',
     'boiler.min_temp': 'Min. teplota kotle (°C)',
     'boiler.max_temp': 'Max. teplota kotle (°C)',
+    'boiler.offsets': 'Offsety',
+    'boiler.offsets.desc': 'ON offset: o kolik pod plánovanou teplotu před zapnutím. OFF offset: o kolik nad plánovanou teplotu před vypnutím.',
+    'boiler.on_offset': 'ON offset (°C)',
+    'boiler.off_offset': 'OFF offset (°C)',
     'editor.test_tool': 'Testovací nástroj',
     'editor.test_select_entity': 'Vybrat entitu',
     'editor.test_empty': 'Vyberte entitu pro zobrazení dostupných příkazů…',
@@ -3133,14 +3207,20 @@ const TT_I18N = {
   , 'owd.open_delay': 'After open (min)'
   , 'owd.close_delay': 'After closed (min)'
   , 'editor.tabs.away': 'Odsotnost'
-  , 'editor.tabs.boiler': 'Kotel'
+  , 'editor.tabs.boiler': 'Krmiljenje kotla'
   , 'boiler.switch': 'Stikalo kotla'
+  , 'boiler.rooms': 'Vključeni prostori'
+  , 'boiler.rooms.desc': 'Izberite, kateri prostori naj bodo vključeni v krmiljenje kotla.'
   , 'boiler.enable': 'Omogoči krmiljenje kotla'
   , 'boiler.enable.desc': 'Prikaži nastavitve kotla v urejevalniku te kartice.'
   , 'boiler.temp_sensor': 'Temperaturni senzor kotla'
   , 'boiler.temp_sensor.desc': 'Temperaturni senzor za krmiljenje stikala kotla.'
   , 'boiler.min_temp': 'Min. temperatura kotla (°C)'
   , 'boiler.max_temp': 'Maks. temperatura kotla (°C)'
+  , 'boiler.offsets': 'Odmiki'
+  , 'boiler.offsets.desc': 'ON odmik: kako daleč pod načrtovanim ciljem, preden se vklopi. OFF odmik: kako daleč nad načrtovanim ciljem, preden se izklopi.'
+  , 'boiler.on_offset': 'ON odmik (°C)'
+  , 'boiler.off_offset': 'OFF odmik (°C)'
   , 'editor.tabs.sync': 'Sinhronizacijski pogon'
   , 'sync.running': 'Sinhronizacija poteka…'
   , 'sync.completed': 'Sinhronizacija končana'
@@ -3354,6 +3434,9 @@ class ThermostatTimelineCard extends HTMLElement {
       turn_on: {},             // { [primary_eid]: { enabled: bool, order: 'before'|'after' } }
       boiler_enabled: false,   // enable boiler controls in editor and runtime
       boiler_switch: '',       // optional switch.* entity used for boiler control
+      boiler_rooms: null,      // null = all rooms; array = selected climate rooms
+      boiler_on_offset: 0,     // °C relative to target: ON when current < target - on_offset
+      boiler_off_offset: 0,    // °C relative to target: OFF when current >= target + off_offset
       boiler_temp_sensor: '',  // optional sensor.* entity used for boiler temperature control
       boiler_min_temp: 20,     // boiler min temp (stored internally as °C)
       boiler_max_temp: 25,     // boiler max temp (stored internally as °C)
@@ -3561,6 +3644,9 @@ class ThermostatTimelineCard extends HTMLElement {
       turn_on: Object.prototype.hasOwnProperty.call(config, 'turn_on'),
       boiler_enabled: Object.prototype.hasOwnProperty.call(config, 'boiler_enabled'),
       boiler_switch: Object.prototype.hasOwnProperty.call(config, 'boiler_switch'),
+      boiler_rooms: Object.prototype.hasOwnProperty.call(config, 'boiler_rooms'),
+      boiler_on_offset: Object.prototype.hasOwnProperty.call(config, 'boiler_on_offset'),
+      boiler_off_offset: Object.prototype.hasOwnProperty.call(config, 'boiler_off_offset'),
       boiler_temp_sensor: Object.prototype.hasOwnProperty.call(config, 'boiler_temp_sensor'),
       boiler_min_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_min_temp'),
       boiler_max_temp: Object.prototype.hasOwnProperty.call(config, 'boiler_max_temp'),
@@ -3575,6 +3661,8 @@ class ThermostatTimelineCard extends HTMLElement {
       holidays_source: Object.prototype.hasOwnProperty.call(config, 'holidays_source'),
       holidays_entity: Object.prototype.hasOwnProperty.call(config, 'holidays_entity'),
       holidays_dates: Object.prototype.hasOwnProperty.call(config, 'holidays_dates'),
+      presence_sensor_enabled: Object.prototype.hasOwnProperty.call(config, 'presence_sensor_enabled'),
+      presence_sensors: Object.prototype.hasOwnProperty.call(config, 'presence_sensors'),
     };
 
     this._config = {
@@ -3609,6 +3697,9 @@ class ThermostatTimelineCard extends HTMLElement {
   show_pause_button: !!(config.show_pause_button ?? true),
   pause_sensor_enabled: !!(config.pause_sensor_enabled ?? this._config?.pause_sensor_enabled ?? false),
   pause_sensor_entity: String(config.pause_sensor_entity ?? this._config?.pause_sensor_entity ?? ''),
+  // Presence sensor is not released yet (force OFF)
+  presence_sensor_enabled: false,
+  presence_sensors: { ...(config.presence_sensors || {}) },
       auto_apply: config.auto_apply ?? true,
       apply_on_edit: config.apply_on_edit ?? true,
       apply_on_default_change: config.apply_on_default_change ?? true,
@@ -3618,6 +3709,36 @@ class ThermostatTimelineCard extends HTMLElement {
   turn_on: { ...(config.turn_on || {}) },
   boiler_enabled: !!(config.boiler_enabled ?? this._config?.boiler_enabled ?? false),
   boiler_switch: String(config.boiler_switch ?? this._config?.boiler_switch ?? ''),
+  boiler_rooms: (()=>{
+    try {
+      const ents = Array.isArray(config.entities) ? config.entities.filter(Boolean).map(String) : [];
+      const climateRooms = ents.filter(e=>String(e).startsWith('climate.'));
+      const raw = Object.prototype.hasOwnProperty.call(config, 'boiler_rooms')
+        ? config.boiler_rooms
+        : (this._config?.boiler_rooms ?? null);
+      if (Array.isArray(raw)) {
+        const want = new Set(raw.filter(Boolean).map(String));
+        return climateRooms.filter(eid => want.has(eid));
+      }
+      return null;
+    } catch { return null; }
+  })(),
+  boiler_on_offset: (()=>{
+    try {
+      const prev = Number(this._config?.boiler_on_offset);
+      const raw = (config.boiler_on_offset === undefined) ? prev : Number(config.boiler_on_offset);
+      const v = Number.isFinite(raw) ? raw : (Number.isFinite(prev) ? prev : 0);
+      return Math.max(-10, Math.min(10, v));
+    } catch { return 0; }
+  })(),
+  boiler_off_offset: (()=>{
+    try {
+      const prev = Number(this._config?.boiler_off_offset);
+      const raw = (config.boiler_off_offset === undefined) ? prev : Number(config.boiler_off_offset);
+      const v = Number.isFinite(raw) ? raw : (Number.isFinite(prev) ? prev : 0);
+      return Math.max(-10, Math.min(10, v));
+    } catch { return 0; }
+  })(),
   boiler_temp_sensor: String(config.boiler_temp_sensor ?? this._config?.boiler_temp_sensor ?? ''),
   boiler_min_temp: boilerMin,
   boiler_max_temp: boilerMax,
@@ -3633,7 +3754,7 @@ class ThermostatTimelineCard extends HTMLElement {
     profiles_enabled: !!(config.profiles_enabled ?? false),
     away: {
       enabled: !!(config.away?.enabled ?? false),
-      persons: [...(config.away?.persons || [])],
+      persons: [...(config.away?.persons || [])].filter(Boolean).map(String),
       target_c: Number.isFinite(config.away?.target_c) ? Number(config.away.target_c) : 17,
       advanced_enabled: !!(config.away?.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
       combos: { ...(config.away?.combos || this._config?.away?.combos || {}) },
@@ -3647,6 +3768,16 @@ class ThermostatTimelineCard extends HTMLElement {
   , holidays_dates: Array.isArray(config.holidays_dates) ? [...config.holidays_dates] : ([...(this._config?.holidays_dates || [])])
   , holidays_groups: Array.isArray(config.holidays_groups) ? [...config.holidays_groups] : ([...(this._config?.holidays_groups || [])])
     };
+
+    // Guard: Away/Presence should not be active until at least one person is selected.
+    try {
+      const ap = Array.isArray(this._config?.away?.persons) ? this._config.away.persons.filter(Boolean).map(String) : [];
+      this._config.away.persons = ap;
+      if (!ap.length) {
+        this._config.away.enabled = false;
+        this._config.away.advanced_enabled = false;
+      }
+    } catch {}
 
     // If YAML explicitly changed default_temp, update rows that still use the old
     // default value (do not overwrite rooms with a user-specific override)
@@ -4068,6 +4199,7 @@ class ThermostatTimelineCard extends HTMLElement {
             if (s.labels && typeof s.labels === 'object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
             if (s.temp_sensors && typeof s.temp_sensors === 'object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
             if (s.turn_on && typeof s.turn_on === 'object' && !this._yamlProvided?.turn_on) this._config.turn_on = { ...s.turn_on };
+            if (s.presence_sensors && typeof s.presence_sensors === 'object' && !this._yamlProvided?.presence_sensors) this._config.presence_sensors = { ...s.presence_sensors };
 
             // Fallbacks for Rooms tab settings if backend didn't persist them:
             // Merge from local browser copy to avoid losing user edits (e.g., custom room names)
@@ -4098,6 +4230,11 @@ class ThermostatTimelineCard extends HTMLElement {
                     this._config.turn_on = { ...(this._config.turn_on || {}), ...ls.turn_on };
                   }
                 }
+                if (!this._yamlProvided?.presence_sensors && (!s.presence_sensors || typeof s.presence_sensors !== 'object' || isEmptyObj(s.presence_sensors))) {
+                  if (ls.presence_sensors && typeof ls.presence_sensors === 'object') {
+                    this._config.presence_sensors = { ...(this._config.presence_sensors || {}), ...ls.presence_sensors };
+                  }
+                }
                 if (Array.isArray(this._config.entities) && (!Array.isArray(s.entities) || !s.entities.length)) {
                   if (Array.isArray(ls.entities) && ls.entities.length) {
                     this._config.entities = ls.entities.filter(Boolean).map(String);
@@ -4115,6 +4252,18 @@ class ThermostatTimelineCard extends HTMLElement {
             } catch {}
             if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
             if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
+            if (!this._yamlProvided?.boiler_rooms) {
+              if (Array.isArray(s.boiler_rooms)) this._config.boiler_rooms = s.boiler_rooms.filter(Boolean).map(String);
+              else if (s.boiler_rooms === null) this._config.boiler_rooms = null;
+            }
+            if (!this._yamlProvided?.boiler_on_offset) {
+              if (s.boiler_on_offset === null) this._config.boiler_on_offset = 0;
+              else { const v = Number(s.boiler_on_offset); if (Number.isFinite(v)) this._config.boiler_on_offset = Math.max(-10, Math.min(10, v)); }
+            }
+            if (!this._yamlProvided?.boiler_off_offset) {
+              if (s.boiler_off_offset === null) this._config.boiler_off_offset = 0;
+              else { const v = Number(s.boiler_off_offset); if (Number.isFinite(v)) this._config.boiler_off_offset = Math.max(-10, Math.min(10, v)); }
+            }
             if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
             if (!this._yamlProvided?.boiler_min_temp) {
               if (s.boiler_min_temp === null) this._config.boiler_min_temp = 20;
@@ -4129,6 +4278,8 @@ class ThermostatTimelineCard extends HTMLElement {
             if (typeof s.show_pause_button === 'boolean') this._config.show_pause_button = !!s.show_pause_button;
             if (typeof s.pause_sensor_enabled === 'boolean' && !this._yamlProvided?.pause_sensor_enabled) this._config.pause_sensor_enabled = !!s.pause_sensor_enabled;
             if (typeof s.pause_sensor_entity === 'string' && !this._yamlProvided?.pause_sensor_entity) this._config.pause_sensor_entity = String(s.pause_sensor_entity || '');
+            // Presence sensor is not released yet (force OFF)
+            this._config.presence_sensor_enabled = false;
             if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled;
             if (typeof s.auto_apply_enabled === 'boolean') this._config.auto_apply = !!s.auto_apply_enabled;
             if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit;
@@ -4164,7 +4315,7 @@ class ThermostatTimelineCard extends HTMLElement {
                 const a = s.away;
                 this._config.away = {
                   enabled: !!a.enabled,
-                  persons: Array.isArray(a.persons) ? [...a.persons] : [],
+                  persons: Array.isArray(a.persons) ? [...a.persons].filter(Boolean).map(String) : [],
                   target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17),
                   advanced_enabled: !!(a.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
                   combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {}),
@@ -4174,6 +4325,12 @@ class ThermostatTimelineCard extends HTMLElement {
                 };
               } catch {}
             }
+            // Guard: Away/Presence should not be active until at least one person is selected.
+            try {
+              const ap = Array.isArray(this._config?.away?.persons) ? this._config.away.persons.filter(Boolean).map(String) : [];
+              this._config.away.persons = ap;
+              if (!ap.length) { this._config.away.enabled = false; this._config.away.advanced_enabled = false; }
+            } catch {}
             // Pause flags from shared storage
             try {
               this._pauseIndef = !!s.pause_indef;
@@ -4305,8 +4462,21 @@ class ThermostatTimelineCard extends HTMLElement {
     if (s.merges && typeof s.merges==='object' && !this._yamlProvided?.merges) this._config.merges = { ...s.merges };
     if (s.labels && typeof s.labels==='object' && !this._yamlProvided?.labels) this._config.labels = { ...s.labels };
   if (s.temp_sensors && typeof s.temp_sensors==='object' && !this._yamlProvided?.temp_sensors) this._config.temp_sensors = { ...s.temp_sensors };
+  if (s.presence_sensors && typeof s.presence_sensors==='object' && !this._yamlProvided?.presence_sensors) this._config.presence_sensors = { ...s.presence_sensors };
     if ((typeof s.boiler_enabled === 'boolean' || typeof s.boiler_enabled === 'number') && !this._yamlProvided?.boiler_enabled) this._config.boiler_enabled = !!s.boiler_enabled;
     if (typeof s.boiler_switch === 'string' && !this._yamlProvided?.boiler_switch) this._config.boiler_switch = s.boiler_switch || '';
+    if (!this._yamlProvided?.boiler_rooms) {
+      if (Array.isArray(s.boiler_rooms)) this._config.boiler_rooms = s.boiler_rooms.filter(Boolean).map(String);
+      else if (s.boiler_rooms === null) this._config.boiler_rooms = null;
+    }
+    if (!this._yamlProvided?.boiler_on_offset) {
+      if (s.boiler_on_offset === null) this._config.boiler_on_offset = 0;
+      else { const v = Number(s.boiler_on_offset); if (Number.isFinite(v)) this._config.boiler_on_offset = Math.max(-10, Math.min(10, v)); }
+    }
+    if (!this._yamlProvided?.boiler_off_offset) {
+      if (s.boiler_off_offset === null) this._config.boiler_off_offset = 0;
+      else { const v = Number(s.boiler_off_offset); if (Number.isFinite(v)) this._config.boiler_off_offset = Math.max(-10, Math.min(10, v)); }
+    }
     if (typeof s.boiler_temp_sensor === 'string' && !this._yamlProvided?.boiler_temp_sensor) this._config.boiler_temp_sensor = s.boiler_temp_sensor || '';
   if (!this._yamlProvided?.boiler_min_temp) {
       if (s.boiler_min_temp === null) this._config.boiler_min_temp = 20;
@@ -4336,7 +4506,7 @@ class ThermostatTimelineCard extends HTMLElement {
         const a = s.away;
         this._config.away = {
           enabled: !!a.enabled,
-          persons: Array.isArray(a.persons) ? [...a.persons] : [],
+          persons: Array.isArray(a.persons) ? [...a.persons].filter(Boolean).map(String) : [],
           target_c: Number.isFinite(a.target_c) ? Number(a.target_c) : (this._config.away?.target_c ?? 17),
           advanced_enabled: !!(a.advanced_enabled ?? this._config?.away?.advanced_enabled ?? false),
           combos: (a.combos && typeof a.combos === 'object') ? { ...a.combos } : (this._config?.away?.combos || {}),
@@ -4346,9 +4516,17 @@ class ThermostatTimelineCard extends HTMLElement {
         };
       } catch {}
     }
+  // Guard: Away/Presence should not be active until at least one person is selected.
+  try {
+    const ap = Array.isArray(this._config?.away?.persons) ? this._config.away.persons.filter(Boolean).map(String) : [];
+    this._config.away.persons = ap;
+    if (!ap.length) { this._config.away.enabled = false; this._config.away.advanced_enabled = false; }
+  } catch {}
   // Load flags from local storage copy
     try { this._pauseIndef = !!s.pause_indef; const pu = Number(s.pause_until_ms); this._pauseUntilMs = Number.isFinite(pu) ? pu : 0; } catch {}
   try { if (typeof s.profiles_enabled === 'boolean' && !this._yamlProvided?.profiles_enabled) this._config.profiles_enabled = !!s.profiles_enabled; } catch {}
+  // Presence sensor is not released yet (force OFF)
+  try { this._config.presence_sensor_enabled = false; } catch {}
   try { if (typeof s.apply_on_edit === 'boolean') this._config.apply_on_edit = !!s.apply_on_edit; } catch {}
   try { this._globalProfile = (typeof s.global_profile === 'string' && s.global_profile) ? String(s.global_profile) : null; } catch {}
   try { if (typeof s.backup_auto_enabled === 'boolean') this._config.backup_auto_enabled = !!s.backup_auto_enabled; if (Number.isFinite(s.backup_interval_days)) this._config.backup_interval_days = Math.max(1, Math.min(365, Math.round(Number(s.backup_interval_days)))); else if (Number.isFinite(s.backup_interval_min)) this._config.backup_interval_days = Math.max(1, Math.min(365, Math.ceil(Number(s.backup_interval_min)/1440))); } catch {}
@@ -4409,6 +4587,9 @@ class ThermostatTimelineCard extends HTMLElement {
               global_profile: this._globalProfile || null, 
               boiler_enabled: !!this._config.boiler_enabled,
               boiler_switch: String(this._config.boiler_switch || ''), 
+              boiler_rooms: Array.isArray(this._config.boiler_rooms) ? this._config.boiler_rooms.filter(Boolean).map(String) : null,
+              boiler_on_offset: (this._config.boiler_on_offset === null || this._config.boiler_on_offset === undefined) ? null : Number(this._config.boiler_on_offset),
+              boiler_off_offset: (this._config.boiler_off_offset === null || this._config.boiler_off_offset === undefined) ? null : Number(this._config.boiler_off_offset),
               boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
               boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : Number(this._config.boiler_min_temp),
               boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : Number(this._config.boiler_max_temp),
@@ -4776,6 +4957,11 @@ class ThermostatTimelineCard extends HTMLElement {
       const toStore = (n)=>{ const v = Number(n); if (!Number.isFinite(v)) return n; return v; };
       const awayCfg = this._config?.away || {};
       const awayOut = { ...awayCfg };
+      // Guard: Away/Presence should not be active until at least one person is selected.
+      try {
+        awayOut.persons = Array.isArray(awayOut.persons) ? awayOut.persons.filter(Boolean).map(String) : [];
+        if (!awayOut.persons.length) { awayOut.enabled = false; awayOut.advanced_enabled = false; }
+      } catch {}
       if (typeof awayOut.target_c !== 'undefined') awayOut.target_c = toStore(awayOut.target_c);
       const settings = {
         // Rooms (used by Settings popup)
@@ -4813,15 +4999,20 @@ class ThermostatTimelineCard extends HTMLElement {
         labels: this._config.labels,
         temp_sensors: this._config.temp_sensors,
         turn_on: this._config.turn_on,
+        presence_sensors: this._config.presence_sensors,
         open_window: this._config.open_window,
         boiler_enabled: !!this._config.boiler_enabled,
           boiler_switch: String(this._config.boiler_switch || ''),
+        boiler_rooms: Array.isArray(this._config.boiler_rooms) ? this._config.boiler_rooms.filter(Boolean).map(String) : null,
+        boiler_on_offset: (this._config.boiler_on_offset === null || this._config.boiler_on_offset === undefined) ? null : toStore(this._config.boiler_on_offset),
+        boiler_off_offset: (this._config.boiler_off_offset === null || this._config.boiler_off_offset === undefined) ? null : toStore(this._config.boiler_off_offset),
         boiler_temp_sensor: String(this._config.boiler_temp_sensor || ''),
         boiler_min_temp: (this._config.boiler_min_temp === null || this._config.boiler_min_temp === undefined) ? null : toStore(this._config.boiler_min_temp),
         boiler_max_temp: (this._config.boiler_max_temp === null || this._config.boiler_max_temp === undefined) ? null : toStore(this._config.boiler_max_temp),
         show_pause_button: !!(this._config.show_pause_button ?? true),
           pause_sensor_enabled: !!(this._config.pause_sensor_enabled ?? false),
           pause_sensor_entity: String(this._config.pause_sensor_entity || ''),
+              presence_sensor_enabled: false,
   presence_live_header: !!(this._config.presence_live_header ?? true),
         auto_apply_enabled: !!this._config.auto_apply,
         apply_on_edit: !!this._config.apply_on_edit,
@@ -5390,9 +5581,7 @@ class ThermostatTimelineCard extends HTMLElement {
       if (!this._config?.auto_apply) return;
       if (!this._config?.boiler_enabled) return;
       const sw = String(this._config.boiler_switch || '');
-      const sens = String(this._config.boiler_temp_sensor || '');
       if (!sw || !sw.startsWith('switch.')) return;
-      if (!sens || !sens.includes('.')) return;
 
       // Run once immediately + then every minute.
       try { this._boilerTick(); } catch {}
@@ -5409,33 +5598,59 @@ class ThermostatTimelineCard extends HTMLElement {
       if (this._isPaused && this._isPaused()) return;
 
       const sw = String(this._config.boiler_switch || '');
-      const sens = String(this._config.boiler_temp_sensor || '');
-      if (!sw || !sens) return;
+      if (!sw) return;
 
-      const stSens = this._hass.states?.[sens];
-      if (!stSens) return;
-      const raw = Number(stSens.state);
-      if (!Number.isFinite(raw)) return;
+      // New logic: compare each selected climate entity's current_temperature to
+      // its scheduled target temperature for "now".
+      // - If ANY room is below its scheduled target -> switch ON
+      // - If ALL rooms are at/above their scheduled target -> switch OFF
+      // If some rooms have missing data, we only turn OFF when we can confirm
+      // ALL rooms are at/above target.
+      const nowMin = this._getNowMin();
+      const allRooms = (Array.isArray(this._config.entities) ? this._config.entities : [])
+        .map(e=>String(e||''))
+        .filter(e=>e.startsWith('climate.'));
+      const allSet = new Set(allRooms);
+      const cfgRooms = this._config?.boiler_rooms;
+      const roomEntities = Array.isArray(cfgRooms)
+        ? cfgRooms.map(e=>String(e||'')).filter(e=>allSet.has(e) && e.startsWith('climate.'))
+        : allRooms;
+      if (!roomEntities.length) return;
 
-      // Convert sensor value to °C for comparisons
-      let vC = raw;
-      try {
-        const u = String(stSens.attributes?.unit_of_measurement || '').trim();
-        const haU = String(this._hass?.config?.unit_system?.temperature || '').trim();
-        const isF = (u === '°F' || u === 'F') || (!u && (haU === '°F' || haU === 'F'));
-        if (isF) vC = this._fToC(raw);
-      } catch {}
+      const haIsF = (this._haIsF && this._haIsF()) ? true : false;
+      const onOff = (()=>{ const v = Number(this._config?.boiler_on_offset ?? 0); return Number.isFinite(v) ? v : 0; })();
+      const offOff = (()=>{ const v = Number(this._config?.boiler_off_offset ?? 0); return Number.isFinite(v) ? v : 0; })();
+      let anyNeedHeat = false;
+      let anyUnknown = false;
+      let anySeen = false;
+      let allOkForOff = true;
 
-      let minC = Number(this._config.boiler_min_temp);
-      let maxC = Number(this._config.boiler_max_temp);
-      if (!Number.isFinite(minC)) minC = 20;
-      if (!Number.isFinite(maxC)) maxC = 25;
-      const lo = Math.min(minC, maxC);
-      const hi = Math.max(minC, maxC);
+      for (const eid of roomEntities) {
+        const desiredC = Number(this._desiredTempFor ? this._desiredTempFor(eid, nowMin) : null);
+        const st = this._hass.states?.[eid];
+        const curRaw = Number(st?.attributes?.current_temperature ?? st?.attributes?.current_temp ?? st?.attributes?.temperature);
+
+        if (!Number.isFinite(desiredC) || !Number.isFinite(curRaw)) {
+          anyUnknown = true;
+          continue;
+        }
+
+        const curC = haIsF ? this._fToC(curRaw) : curRaw;
+        if (!Number.isFinite(curC)) {
+          anyUnknown = true;
+          continue;
+        }
+
+        anySeen = true;
+        if (curC < (desiredC - onOff)) { anyNeedHeat = true; break; }
+        if (curC < (desiredC + offOff)) allOkForOff = false;
+      }
+
+      if (!anySeen) return;
 
       let want = null;
-      if (vC < lo) want = 'on';
-      else if (vC > hi) want = 'off';
+      if (anyNeedHeat) want = 'on';
+      else if (!anyUnknown && allOkForOff) want = 'off';
       else return;
 
       const stSw = this._hass.states?.[sw];
@@ -6214,6 +6429,7 @@ class ThermostatTimelineCard extends HTMLElement {
               <button type="button" class="settings-tab-btn" data-tab="rooms" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="boiler" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="colors" role="tab" aria-selected="false"></button>
+              <button type="button" class="settings-tab-btn" data-tab="presence_sensor" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="owd" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="holidays" role="tab" aria-selected="false"></button>
               <button type="button" class="settings-tab-btn" data-tab="away" role="tab" aria-selected="false"></button>
@@ -6345,6 +6561,7 @@ class ThermostatTimelineCard extends HTMLElement {
               <div class="settings-page" data-page="rooms"></div>
               <div class="settings-page" data-page="boiler"></div>
               <div class="settings-page" data-page="colors"></div>
+              <div class="settings-page" data-page="presence_sensor"></div>
               <div class="settings-page" data-page="owd"></div>
               <div class="settings-page" data-page="holidays"></div>
               <div class="settings-page" data-page="away"></div>
@@ -7860,9 +8077,23 @@ class ThermostatTimelineCard extends HTMLElement {
           const contentW = rowsEl.clientWidth - pl - pr;
           const leftPx = pl + (nowMin / 1440) * contentW;
           nowEl.style.left = leftPx + 'px';
+          // Hide NOW line in "All days • one room" view (multi-day timeline)
+          try {
+            const perRoomAllDays = !!(this._config?.weekdays_enabled) && String(this._config?.weekdays_view||'all_rooms_one_day') === 'one_room_all_days';
+            if (perRoomAllDays) { nowEl.style.display = 'none'; return; }
+            nowEl.style.display = '';
+          } catch {}
           // Set visibility of this NowGeo elt depending on the selected day key
-          const selectedDKIsToday = String(this._weekdaysViewDayKey || '').toLowerCase() === this._todayKey();
-          nowEl.style.visibility = selectedDKIsToday ? "visible" : "hidden";
+          let selectedDayKey = '';
+          try {
+            // In normal timeline, the current display day is derived from the timeline browsing state.
+            // In weekdays view, _weekdaysViewDayKey may be used.
+            selectedDayKey = String((this._timelineDisplayDayKey && this._timelineDisplayDayKey()) || this._weekdaysViewDayKey || '').toLowerCase();
+          } catch { selectedDayKey = String(this._weekdaysViewDayKey || '').toLowerCase(); }
+          const todayKey = String(this._todayKey && this._todayKey() || '').toLowerCase();
+          // If we don't have a selected day (common in normal view), assume today.
+          if (!selectedDayKey) selectedDayKey = todayKey;
+          nowEl.style.visibility = (selectedDayKey === todayKey) ? "visible" : "hidden";
         } catch {}
       };
 
@@ -8066,8 +8297,8 @@ class ThermostatTimelineCard extends HTMLElement {
       if (fmt12) fmt12.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_12h = true; this._renderSettingsPopupSettingsTab(); } catch {} };
       if (srcB) srcB.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_source = 'browser'; this._renderSettingsPopupSettingsTab(); } catch {} };
       if (srcH) srcH.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.time_source = 'ha'; this._renderSettingsPopupSettingsTab(); } catch {} };
-      if (unitC) unitC.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'C'; this._renderSettingsPopupSettingsTab(); } catch {} };
-      if (unitF) unitF.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'F'; this._renderSettingsPopupSettingsTab(); } catch {} };
+      if (unitC) unitC.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'C'; this._renderSettingsPopupTab(); } catch {} };
+      if (unitF) unitF.onclick = ()=>{ try { if (!this._settingsDraft) return; this._settingsDraft.temp_unit = 'F'; this._renderSettingsPopupTab(); } catch {} };
       if (swProfiles) swProfiles.onchange = onSw('profiles_enabled');
     } catch {}
   }
@@ -8096,7 +8327,7 @@ class ThermostatTimelineCard extends HTMLElement {
 
   _setSettingsPopupTab(tab){
     try {
-      const allowed = new Set(['settings','pause','weekdays','rooms','boiler','colors','owd','holidays','away']);
+      const allowed = new Set(['settings','pause','weekdays','rooms','boiler','colors','presence_sensor','owd','holidays','away']);
       const next = allowed.has(String(tab)) ? String(tab) : 'settings';
       this._settingsPopupTab = next;
       this._renderSettingsPopupTabs();
@@ -8141,6 +8372,8 @@ class ThermostatTimelineCard extends HTMLElement {
         this._renderSettingsPopupBoilerTab();
       } else if (active === 'colors') {
         this._renderSettingsPopupColorsTab();
+      } else if (active === 'presence_sensor') {
+        this._renderSettingsPopupPresenceSensorTab();
       } else if (active === 'owd') {
         this._renderSettingsPopupOwdTab();
       } else if (active === 'holidays') {
@@ -8235,6 +8468,10 @@ class ThermostatTimelineCard extends HTMLElement {
         temp_unit: (String(cfg.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C',
         profiles_enabled: !!cfg.profiles_enabled,
 
+        presence_sensor_enabled: !!cfg.presence_sensor_enabled,
+
+        presence_sensors: (()=>{ try { return (cfg.presence_sensors && typeof cfg.presence_sensors === 'object') ? JSON.parse(JSON.stringify(cfg.presence_sensors)) : {}; } catch { return {}; } })(),
+
         weekdays_enabled: !!cfg.weekdays_enabled,
         weekdays_view: String(cfg.weekdays_view || 'all_rooms_one_day'),
         weekdays_view_switch_in_timeline: !!(cfg.weekdays_view_switch_in_timeline ?? false),
@@ -8242,6 +8479,20 @@ class ThermostatTimelineCard extends HTMLElement {
 
         boiler_enabled: !!cfg.boiler_enabled,
         boiler_switch: String(cfg.boiler_switch || ''),
+        boiler_rooms: (()=>{
+          try {
+            const ents = Array.isArray(cfg.entities) ? cfg.entities.map(String) : [];
+            const climateRooms = ents.filter(e=>String(e).startsWith('climate.'));
+            const raw = cfg.boiler_rooms;
+            if (Array.isArray(raw)) {
+              const want = new Set(raw.filter(Boolean).map(String));
+              return climateRooms.filter(eid => want.has(eid));
+            }
+            return climateRooms;
+          } catch { return []; }
+        })(),
+        boiler_on_offset: (()=>{ try { const v = Number(cfg.boiler_on_offset); return Number.isFinite(v) ? v : 0; } catch { return 0; } })(),
+        boiler_off_offset: (()=>{ try { const v = Number(cfg.boiler_off_offset); return Number.isFinite(v) ? v : 0; } catch { return 0; } })(),
         boiler_temp_sensor: String(cfg.boiler_temp_sensor || ''),
         boiler_min_temp: this._ttCoerceNum(cfg.boiler_min_temp, 20),
         boiler_max_temp: this._ttCoerceNum(cfg.boiler_max_temp, 25),
@@ -8395,6 +8646,20 @@ class ThermostatTimelineCard extends HTMLElement {
       cfg.temp_unit = (String(d.temp_unit || 'C').toUpperCase() === 'F') ? 'F' : 'C';
       cfg.profiles_enabled = !!d.profiles_enabled;
 
+      cfg.presence_sensor_enabled = !!d.presence_sensor_enabled;
+
+      // Presence sensors: keep only for active rooms + only binary_sensor.*
+      try {
+        const ents = Array.isArray(cfg.entities) ? cfg.entities.filter(Boolean).map(String) : [];
+        const src = (d.presence_sensors && typeof d.presence_sensors === 'object') ? d.presence_sensors : {};
+        const out = {};
+        for (const eid of ents) {
+          const v = (src && Object.prototype.hasOwnProperty.call(src, eid)) ? String(src[eid]||'').trim() : '';
+          if (v && String(v).startsWith('binary_sensor.')) out[eid] = v;
+        }
+        cfg.presence_sensors = out;
+      } catch {}
+
       cfg.weekdays_enabled = !!d.weekdays_enabled;
       cfg.weekdays_view = (String(d.weekdays_view || 'all_rooms_one_day') === 'one_room_all_days') ? 'one_room_all_days' : 'all_rooms_one_day';
       cfg.weekdays_view_switch_in_timeline = !!d.weekdays_view_switch_in_timeline;
@@ -8412,6 +8677,20 @@ class ThermostatTimelineCard extends HTMLElement {
       // Boiler settings
       cfg.boiler_enabled = !!d.boiler_enabled;
       cfg.boiler_switch = String(d.boiler_switch || '');
+      try {
+        const ents = Array.isArray(cfg.entities) ? cfg.entities.filter(Boolean).map(String) : [];
+        const climateRooms = ents.filter(e=>String(e).startsWith('climate.'));
+        const wantRaw = Array.isArray(d.boiler_rooms) ? d.boiler_rooms.filter(Boolean).map(String) : climateRooms;
+        const wantSet = new Set(wantRaw);
+        cfg.boiler_rooms = climateRooms.filter(eid => wantSet.has(eid));
+      } catch { cfg.boiler_rooms = []; }
+      const clampOffset = (n, fallback)=>{
+        const v = Number(n);
+        if (!Number.isFinite(v)) return fallback;
+        return Math.max(-10, Math.min(10, v));
+      };
+      cfg.boiler_on_offset = clampOffset(d.boiler_on_offset, (cfg.boiler_on_offset ?? 0));
+      cfg.boiler_off_offset = clampOffset(d.boiler_off_offset, (cfg.boiler_off_offset ?? 0));
       cfg.boiler_temp_sensor = String(d.boiler_temp_sensor || '');
       const clampBoiler = (n, fallback)=>{
         const v = Number(n);
@@ -8787,6 +9066,7 @@ class ThermostatTimelineCard extends HTMLElement {
               } catch {}
               try { if (this._settingsDraft.temp_sensors && this._settingsDraft.temp_sensors[oldEid]) { const next = { ...(this._settingsDraft.temp_sensors||{}) }; delete next[oldEid]; this._settingsDraft.temp_sensors = next; } } catch {}
               try { if (this._settingsDraft.turn_on && this._settingsDraft.turn_on[oldEid]) { const next = { ...(this._settingsDraft.turn_on||{}) }; delete next[oldEid]; this._settingsDraft.turn_on = next; } } catch {}
+              try { if (this._settingsDraft.presence_sensors && this._settingsDraft.presence_sensors[oldEid]) { const next = { ...(this._settingsDraft.presence_sensors||{}) }; delete next[oldEid]; this._settingsDraft.presence_sensors = next; } } catch {}
               this._settingsDraft.entities[idx] = '';
             }
             this._renderSettingsPopupRoomsTab();
@@ -9080,6 +9360,13 @@ class ThermostatTimelineCard extends HTMLElement {
               this._settingsDraft.temp_sensors = sensors;
             } catch {}
 
+            // Clean presence sensors
+            try {
+              const ps = { ...(this._settingsDraft.presence_sensors || {}) };
+              if (primary && ps[primary]) delete ps[primary];
+              this._settingsDraft.presence_sensors = ps;
+            } catch {}
+
             // Clean turn_on
             try {
               const t = { ...(this._settingsDraft.turn_on || {}) };
@@ -9135,6 +9422,13 @@ class ThermostatTimelineCard extends HTMLElement {
                 if (t[oldPrimary] && !t[newPrimary]) t[newPrimary] = t[oldPrimary];
                 if (t[oldPrimary]) delete t[oldPrimary];
                 this._settingsDraft.turn_on = t;
+              } catch {}
+
+              try {
+                const ps = { ...(this._settingsDraft.presence_sensors || {}) };
+                if (ps[oldPrimary] && !ps[newPrimary]) ps[newPrimary] = ps[oldPrimary];
+                if (ps[oldPrimary]) delete ps[oldPrimary];
+                this._settingsDraft.presence_sensors = ps;
               } catch {}
               // Move open-state key old -> new
               try {
@@ -10545,6 +10839,23 @@ class ThermostatTimelineCard extends HTMLElement {
       const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="boiler"]');
       if (!page) return;
 
+      const wantF = String(d?.temp_unit || 'C').toUpperCase() === 'F';
+      const toDispDelta = (nC)=>{
+        const v = Number(nC);
+        if (!Number.isFinite(v)) return 0;
+        return wantF ? (v * 9/5) : v;
+      };
+      const fromDispDelta = (nDisp)=>{
+        const v = Number(nDisp);
+        if (!Number.isFinite(v)) return NaN;
+        return wantF ? (v * 5/9) : v;
+      };
+      const round1 = (n)=>{
+        const v = Number(n);
+        if (!Number.isFinite(v)) return 0;
+        return Math.round(v * 10) / 10;
+      };
+
       if (!page.dataset.built) {
         page.dataset.built = '1';
         page.innerHTML = `
@@ -10562,22 +10873,26 @@ class ThermostatTimelineCard extends HTMLElement {
               </div>
               <tt-entity-picker class="sp-boiler-switch-picker" include-domains='["switch"]'></tt-entity-picker>
             </div>
-            <div class="setting sp-boiler-sensor-setting" style="grid-template-columns: 1fr;">
+            <div class="setting sp-boiler-rooms-setting" style="grid-template-columns: 1fr;">
               <div class="text">
-                <div class="title sp-boiler-sensor-title"></div>
-                <div class="desc sp-boiler-sensor-desc"></div>
+                <div class="title sp-boiler-rooms-title"></div>
+                <div class="desc sp-boiler-rooms-desc"></div>
               </div>
-              <tt-entity-picker class="sp-boiler-temp-sensor-picker" include-domains='["sensor"]'></tt-entity-picker>
+              <div class="copyrooms-list sp-boiler-rooms-list"></div>
             </div>
-            <div class="setting sp-boiler-temps-setting" style="grid-template-columns: 1fr;">
-              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+            <div class="setting sp-boiler-offsets-setting" style="grid-template-columns: 1fr;">
+              <div class="text">
+                <div class="title sp-boiler-offsets-title"></div>
+                <div class="desc sp-boiler-offsets-desc"></div>
+              </div>
+              <div class="grid2" style="margin-top:6px;">
                 <div class="sfield">
-                  <div class="slabel sp-boiler-min-temp-label"></div>
-                  <input class="settings-input sp-boiler-min-temp" type="number" step="0.5" placeholder="20" />
+                  <div class="slabel sp-boiler-on-offset-label"></div>
+                  <input class="settings-input sp-boiler-on-offset" type="number" step="0.1" min="-10" max="10" />
                 </div>
                 <div class="sfield">
-                  <div class="slabel sp-boiler-max-temp-label"></div>
-                  <input class="settings-input sp-boiler-max-temp" type="number" step="0.5" placeholder="25" />
+                  <div class="slabel sp-boiler-off-offset-label"></div>
+                  <input class="settings-input sp-boiler-off-offset" type="number" step="0.1" min="-10" max="10" />
                 </div>
               </div>
             </div>
@@ -10591,9 +10906,9 @@ class ThermostatTimelineCard extends HTMLElement {
       const boilerOn = !!d.boiler_enabled;
       try {
         const switchRow = q('.overlay-settings .sp-boiler-switch-setting');
-        const sensorRow = q('.overlay-settings .sp-boiler-sensor-setting');
-        const tempsRow = q('.overlay-settings .sp-boiler-temps-setting');
-        [switchRow, sensorRow, tempsRow].forEach(r=>{ if (r) r.style.display = boilerOn ? '' : 'none'; });
+        const roomsRow = q('.overlay-settings .sp-boiler-rooms-setting');
+        const offRow = q('.overlay-settings .sp-boiler-offsets-setting');
+        [switchRow, roomsRow, offRow].forEach(r=>{ if (r) r.style.display = boilerOn ? '' : 'none'; });
       } catch {}
 
       // Master toggle
@@ -10610,33 +10925,66 @@ class ThermostatTimelineCard extends HTMLElement {
           p.value = String(d.boiler_switch || '');
         }
       } catch {}
+
+      // Rooms list (checkboxes)
       try {
-        const sp = q('.overlay-settings .sp-boiler-temp-sensor-picker');
-        if (sp) {
-          sp.hass = this._hass;
-          sp.value = String(d.boiler_temp_sensor || '');
+        const list = q('.overlay-settings .sp-boiler-rooms-list');
+        if (list) {
+          list.innerHTML = '';
+          const ents = Array.isArray(d.entities) ? d.entities.map(String) : [];
+          const rooms = ents.filter(e=>String(e).startsWith('climate.'));
+          const selected = Array.isArray(d.boiler_rooms) ? new Set(d.boiler_rooms.map(String)) : new Set(rooms);
+          const labels = (this._config && this._config.labels && typeof this._config.labels === 'object') ? this._config.labels : {};
+          const byName = (eid)=>{
+            try {
+              const lbl = labels && Object.prototype.hasOwnProperty.call(labels, eid) ? String(labels[eid]||'').trim() : '';
+              if (lbl) return lbl;
+              return String(this._hass?.states?.[eid]?.attributes?.friendly_name || (eid.split('.')[1] || eid));
+            } catch { return eid; }
+          };
+          for (const eid of rooms) {
+            const row = document.createElement('label');
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.checked = selected.has(eid);
+            cb.setAttribute('data-eid', eid);
+            cb.addEventListener('change', (ev)=>{
+              try {
+                if (!this._settingsDraft) return;
+                const cur = Array.isArray(this._settingsDraft.boiler_rooms) ? this._settingsDraft.boiler_rooms.map(String) : rooms;
+                const curSet = new Set(cur);
+                const on = !!ev?.target?.checked;
+                if (on) curSet.add(eid); else curSet.delete(eid);
+                // Preserve order as in entities[]
+                this._settingsDraft.boiler_rooms = rooms.filter(x => curSet.has(x));
+              } catch {}
+            });
+            const sp = document.createElement('span');
+            sp.textContent = byName(eid);
+            row.append(cb, sp);
+            list.append(row);
+          }
         }
       } catch {}
 
-      // Temps (show in draft unit, store in °C)
-      const wantF = String(d.temp_unit || 'C').toUpperCase() === 'F';
-      const toDisp = (c)=>{ try { const v = Number(c); if (!Number.isFinite(v)) return ''; return wantF ? Math.round((v*9/5+32)*10)/10 : v; } catch { return ''; } };
-      const toC = (vDisp)=>{ try { const v = Number(vDisp); if (!Number.isFinite(v)) return null; return wantF ? ((v-32)*5/9) : v; } catch { return null; } };
-      const setDisp = (sel, vC)=>{
-        const el = q(sel);
-        if (!el) return;
-        if (el === this.shadowRoot.activeElement) return;
-        el.value = (vC === null || vC === undefined || !Number.isFinite(Number(vC))) ? '' : String(toDisp(Number(vC)));
-      };
-      setDisp('.overlay-settings .sp-boiler-min-temp', d.boiler_min_temp);
-      setDisp('.overlay-settings .sp-boiler-max-temp', d.boiler_max_temp);
+      // Offsets
       try {
-        const dMin = String(toDisp(0));
-        const dMax = String(toDisp(120));
-        const minEl = q('.overlay-settings .sp-boiler-min-temp');
-        const maxEl = q('.overlay-settings .sp-boiler-max-temp');
-        if (minEl) { minEl.setAttribute('min', dMin); minEl.setAttribute('max', dMax); }
-        if (maxEl) { maxEl.setAttribute('min', dMin); maxEl.setAttribute('max', dMax); }
+        const onIn = q('.overlay-settings .sp-boiler-on-offset');
+        if (onIn) {
+          const lim = wantF ? 18 : 10;
+          onIn.min = String(-lim);
+          onIn.max = String(lim);
+          onIn.value = String(round1(toDispDelta(d.boiler_on_offset ?? 0)));
+        }
+      } catch {}
+      try {
+        const offIn = q('.overlay-settings .sp-boiler-off-offset');
+        if (offIn) {
+          const lim = wantF ? 18 : 10;
+          offIn.min = String(-lim);
+          offIn.max = String(lim);
+          offIn.value = String(round1(toDispDelta(d.boiler_off_offset ?? 0)));
+        }
       } catch {}
 
       // Bind events once
@@ -10657,44 +11005,35 @@ class ThermostatTimelineCard extends HTMLElement {
           const p = q('.overlay-settings .sp-boiler-switch-picker');
           if (p) p.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.boiler_switch = e.detail?.value || ''; } catch {} });
         } catch {}
+
         try {
-          const sp = q('.overlay-settings .sp-boiler-temp-sensor-picker');
-          if (sp) sp.addEventListener('value-changed', (e)=>{ try { if (!this._settingsDraft) return; this._settingsDraft.boiler_temp_sensor = e.detail?.value || ''; } catch {} });
+          const onIn = q('.overlay-settings .sp-boiler-on-offset');
+          if (onIn) onIn.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              const raw = String(e?.target?.value ?? '').trim().replace(',', '.');
+              if (raw === '') return;
+              const nDisp = Number(raw);
+              const nC = fromDispDelta(nDisp);
+              if (!Number.isFinite(nC)) return;
+              this._settingsDraft.boiler_on_offset = Math.max(-10, Math.min(10, nC));
+            } catch {}
+          });
         } catch {}
-
-        const bindNum = (sel, key)=>{
-          try {
-            const el = q(sel);
-            if (!el) return;
-            el.addEventListener('change', (e)=>{
-              try {
-                if (!this._settingsDraft) return;
-                const raw = String(e.target.value||'').trim().replace(',', '.');
-                let vC = null;
-                if (raw !== '') {
-                  const vDisp = Number(raw);
-                  vC = toC(vDisp);
-                  if (vC !== null && Number.isFinite(Number(vC))) vC = Math.max(0, Math.min(120, Number(vC)));
-                } else {
-                  vC = (key === 'boiler_min_temp') ? 20 : 25;
-                }
-
-                if (key === 'boiler_min_temp') {
-                  this._settingsDraft.boiler_min_temp = vC;
-                  const mx = this._settingsDraft.boiler_max_temp;
-                  if (vC !== null && Number.isFinite(Number(mx)) && Number(vC) > Number(mx)) this._settingsDraft.boiler_max_temp = vC;
-                } else {
-                  this._settingsDraft.boiler_max_temp = vC;
-                  const mn = this._settingsDraft.boiler_min_temp;
-                  if (vC !== null && Number.isFinite(Number(mn)) && Number(vC) < Number(mn)) this._settingsDraft.boiler_min_temp = vC;
-                }
-                this._renderSettingsPopupBoilerTab();
-              } catch {}
-            });
-          } catch {}
-        };
-        bindNum('.overlay-settings .sp-boiler-min-temp', 'boiler_min_temp');
-        bindNum('.overlay-settings .sp-boiler-max-temp', 'boiler_max_temp');
+        try {
+          const offIn = q('.overlay-settings .sp-boiler-off-offset');
+          if (offIn) offIn.addEventListener('change', (e)=>{
+            try {
+              if (!this._settingsDraft) return;
+              const raw = String(e?.target?.value ?? '').trim().replace(',', '.');
+              if (raw === '') return;
+              const nDisp = Number(raw);
+              const nC = fromDispDelta(nDisp);
+              if (!Number.isFinite(nC)) return;
+              this._settingsDraft.boiler_off_offset = Math.max(-10, Math.min(10, nC));
+            } catch {}
+          });
+        } catch {}
       }
     } catch {}
   }
@@ -10849,6 +11188,201 @@ class ThermostatTimelineCard extends HTMLElement {
             } catch {}
           });
         } catch {}
+      }
+    } catch {}
+  }
+
+  _renderSettingsPopupPresenceSensorTab(){
+    try {
+      const d = this._settingsDraft;
+      if (!d || !this.shadowRoot) return;
+      const page = this.shadowRoot.querySelector('.overlay-settings .settings-page[data-page="presence_sensor"]');
+      if (!page) return;
+      page.innerHTML = '';
+
+      const card = document.createElement('div');
+      card.className = 'settings-card';
+      page.append(card);
+
+      // Toggle
+      const row = document.createElement('div');
+      row.className = 'setting';
+      const text = document.createElement('div');
+      text.className = 'text';
+      const title = document.createElement('div');
+      title.className = 'title';
+      title.textContent = this._t('editor.presence_sensor.enable.title') || 'Presence sensor';
+      const desc = document.createElement('div');
+      desc.className = 'desc';
+      desc.textContent = this._t('editor.presence_sensor.enable.desc') || 'Enable per-room presence sensor configuration.';
+      text.append(title, desc);
+      const sw = document.createElement('ha-switch');
+      // Feature is not finished yet — keep disabled for release.
+      try { d.presence_sensor_enabled = false; } catch {}
+      try { sw.checked = false; sw.disabled = true; } catch {}
+      row.append(text, sw);
+      card.append(row);
+
+      // Rooms list
+      const ents = (()=>{
+        try {
+          const arr = Array.isArray(d.entities) ? d.entities : (Array.isArray(this._config?.entities) ? this._config.entities : []);
+          return arr.filter(Boolean).map(String);
+        } catch { return []; }
+      })();
+
+      if (!ents.length) {
+        const box = document.createElement('div'); box.className = 'empty-box';
+        const p = document.createElement('div'); p.textContent = this._t('editor.colors.empty') || 'No rooms added yet.';
+        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'add-entity-btn';
+        btn.innerHTML = '<ha-icon icon="mdi:plus"></ha-icon><span>' + (this._t('editor.colors.go_add') || 'Add room') + '</span>';
+        btn.onclick = ()=>{ this._setSettingsPopupTab('rooms'); };
+        box.append(p, btn);
+        card.append(box);
+        return;
+      }
+
+      try { if (!this._openPopupPresenceSensorRows) this._openPopupPresenceSensorRows = new Set(); } catch {}
+      const wrap = document.createElement('div');
+      try { wrap.style.display = 'grid'; wrap.style.gap = '10px'; } catch {}
+      card.append(wrap);
+
+      const buildFoldout = (key, titleText)=>{
+        const line = document.createElement('div'); line.className = 'inline';
+        const summary = document.createElement('div'); summary.className = 'summary';
+        const sumLeft = document.createElement('div'); sumLeft.className = 'summary-left';
+        const exp = document.createElement('button'); exp.type = 'button'; exp.className = 'expander';
+        exp.innerHTML = '<ha-icon icon="mdi:chevron-down"></ha-icon>';
+        const txtWrap = document.createElement('div'); txtWrap.className = 'summary-text';
+        const titleSpan = document.createElement('span'); titleSpan.className = 'summary-title';
+        titleSpan.textContent = titleText;
+
+        try {
+          summary.style.display = 'flex';
+          summary.style.alignItems = 'center';
+          summary.style.justifyContent = 'space-between';
+          summary.style.padding = '6px';
+          summary.style.border = '1px dashed var(--divider-color)';
+          summary.style.borderRadius = '8px';
+          summary.style.background = 'var(--secondary-background-color, transparent)';
+          sumLeft.style.display = 'flex';
+          sumLeft.style.alignItems = 'center';
+          sumLeft.style.gap = '8px';
+          sumLeft.style.minWidth = '0';
+          txtWrap.style.display = 'grid';
+          txtWrap.style.gap = '2px';
+          txtWrap.style.minWidth = '0';
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+          titleSpan.style.maxWidth = '320px';
+          exp.style.width = '28px';
+          exp.style.height = '28px';
+          exp.style.borderRadius = '8px';
+          exp.style.border = '1px solid var(--divider-color)';
+          exp.style.background = 'var(--card-background-color)';
+          exp.style.display = 'inline-flex';
+          exp.style.alignItems = 'center';
+          exp.style.justifyContent = 'center';
+          exp.style.cursor = 'pointer';
+        } catch {}
+
+        txtWrap.append(titleSpan);
+        sumLeft.append(exp, txtWrap);
+        summary.append(sumLeft);
+        line.append(summary);
+
+        const details = document.createElement('div'); details.className = 'details';
+        line.append(details);
+
+        try {
+          details.style.display = 'none';
+          details.style.gridTemplateColumns = 'minmax(250px, 440px)';
+          details.style.gap = '6px';
+          details.style.padding = '6px';
+          details.style.border = '1px dashed var(--divider-color)';
+          details.style.borderRadius = '8px';
+          details.style.background = 'var(--secondary-background-color, transparent)';
+        } catch {}
+
+        const applyOpen = (isOpen)=>{
+          try {
+            if (isOpen) {
+              line.classList.add('open');
+              details.style.display = 'grid';
+              exp.style.transform = 'rotate(180deg)';
+            } else {
+              line.classList.remove('open');
+              details.style.display = 'none';
+              exp.style.transform = '';
+            }
+          } catch {}
+        };
+        const toggle = (ev)=>{
+          try { ev?.stopPropagation?.(); } catch {}
+          const nextOpen = !line.classList.contains('open');
+          applyOpen(nextOpen);
+          try {
+            if (!this._openPopupPresenceSensorRows) this._openPopupPresenceSensorRows = new Set();
+            if (nextOpen) this._openPopupPresenceSensorRows.add(String(key));
+            else this._openPopupPresenceSensorRows.delete(String(key));
+          } catch {}
+        };
+        exp.addEventListener('click', toggle);
+        summary.style.cursor = 'pointer';
+        summary.addEventListener('click', (ev)=>{
+          try { if (ev?.target?.closest?.('button, a, input, select, textarea')) return; } catch {}
+          toggle(ev);
+        });
+        try { applyOpen(!!this._openPopupPresenceSensorRows?.has(String(key))); } catch {}
+
+        return { line, details };
+      };
+
+      try { if (!d.presence_sensors || typeof d.presence_sensors !== 'object') d.presence_sensors = {}; } catch {}
+
+      for (const eid of ents) {
+        const labels = (d.labels && typeof d.labels === 'object') ? d.labels : (this._config?.labels || {});
+        const friendly = this._hass?.states?.[eid]?.attributes?.friendly_name;
+        const titleText = labels?.[eid] || friendly || (eid.split('.')[1] || eid);
+        const { line, details } = buildFoldout(eid, titleText);
+
+        try {
+          const fieldWrap = document.createElement('div');
+          fieldWrap.style.display = 'grid';
+          fieldWrap.style.gap = '2px';
+
+          const tTitle = document.createElement('div');
+          tTitle.style.fontWeight = '600';
+          tTitle.textContent = this._t('editor.presence_sensor.entity.title') || 'Presence entity';
+          const tDesc = document.createElement('div');
+          tDesc.style.fontSize = '.85rem';
+          tDesc.style.color = 'var(--secondary-text-color)';
+          tDesc.textContent = this._t('editor.presence_sensor.entity.desc') || 'Select the binary_sensor that indicates presence in this room.';
+          fieldWrap.append(tTitle, tDesc);
+
+          const picker = document.createElement('tt-entity-picker');
+          try { picker.style.display = 'block'; picker.style.minHeight = '48px'; picker.style.maxWidth = '440px'; } catch {}
+          picker.setAttribute('include-domains', '["binary_sensor"]');
+          picker.setAttribute('label', this._t('editor.presence_sensor.entity.title') || 'Presence entity');
+          try { picker.hass = this._hass; } catch {}
+          try { picker.value = String(d.presence_sensors?.[eid] || ''); } catch {}
+          try { picker.disabled = true; } catch {}
+          picker.addEventListener('value-changed', (e)=>{
+            try {
+              const val = String(e?.detail?.value || '').trim();
+              const next = { ...(d.presence_sensors || {}) };
+              if (val && String(val).startsWith('binary_sensor.')) next[eid] = val;
+              else delete next[eid];
+              d.presence_sensors = next;
+            } catch {}
+          });
+
+          details.append(fieldWrap, picker);
+        } catch {}
+
+        wrap.append(line);
       }
     } catch {}
   }
@@ -11011,17 +11545,39 @@ class ThermostatTimelineCard extends HTMLElement {
       if (String(d.temp_unit||'C').toUpperCase() !== String(c.temp_unit||'C').toUpperCase()) return true;
       if (!!d.profiles_enabled !== !!c.profiles_enabled) return true;
 
+      if (!!d.presence_sensor_enabled !== !!c.presence_sensor_enabled) return true;
+
       if (!!d.weekdays_enabled !== !!c.weekdays_enabled) return true;
       if (String(d.weekdays_view||'all_rooms_one_day') !== String(c.weekdays_view||'all_rooms_one_day')) return true;
       if (String(d.weekdays_selected_room||'') !== String(c.weekdays_selected_room||'')) return true;
 
       if (!!d.boiler_enabled !== !!c.boiler_enabled) return true;
       if (String(d.boiler_switch||'') !== String(c.boiler_switch||'')) return true;
+
+      // boiler_rooms: compare sets; default is "all climate rooms"
+      try {
+        const cEnts = Array.isArray(c.entities) ? c.entities.filter(Boolean).map(String) : [];
+        const climateRooms = cEnts.filter(e=>String(e).startsWith('climate.'));
+        const norm = (arr)=>{
+          const set = new Set((Array.isArray(arr) ? arr : climateRooms).filter(Boolean).map(String));
+          return climateRooms.filter(eid => set.has(eid));
+        };
+        const dRooms = norm(d.boiler_rooms);
+        const cRooms = norm(c.boiler_rooms);
+        if (dRooms.length !== cRooms.length) return true;
+        for (let i=0;i<dRooms.length;i++){ if (dRooms[i] !== cRooms[i]) return true; }
+      } catch {}
+
       if (String(d.boiler_temp_sensor||'') !== String(c.boiler_temp_sensor||'')) return true;
       const cBoilerMin = this._ttCoerceNum(c.boiler_min_temp, 20);
       const cBoilerMax = this._ttCoerceNum(c.boiler_max_temp, 25);
       if (!eqNum(d.boiler_min_temp, cBoilerMin)) return true;
       if (!eqNum(d.boiler_max_temp, cBoilerMax)) return true;
+
+      const cOnOff = this._ttCoerceNum(c.boiler_on_offset, 0);
+      const cOffOff = this._ttCoerceNum(c.boiler_off_offset, 0);
+      if (!eqNum(d.boiler_on_offset, cOnOff)) return true;
+      if (!eqNum(d.boiler_off_offset, cOffOff)) return true;
 
       // Colors
       if (!!d.color_global !== !!c.color_global) return true;
@@ -11158,6 +11714,19 @@ class ThermostatTimelineCard extends HTMLElement {
         const dts = (d.temp_sensors && typeof d.temp_sensors === 'object') ? d.temp_sensors : {};
         const cts = (c.temp_sensors && typeof c.temp_sensors === 'object') ? c.temp_sensors : {};
         if (JSON.stringify(normMap(dts)) !== JSON.stringify(normMap(cts))) return true;
+
+        // Presence sensors: one binary_sensor per active room
+        const dps = (d.presence_sensors && typeof d.presence_sensors === 'object') ? d.presence_sensors : {};
+        const cps = (c.presence_sensors && typeof c.presence_sensors === 'object') ? c.presence_sensors : {};
+        const normPresence = (src)=>{
+          const out = {};
+          for (const eid of de) {
+            const v = Object.prototype.hasOwnProperty.call(src, eid) ? String(src[eid]||'').trim() : '';
+            if (v && String(v).startsWith('binary_sensor.')) out[eid] = v;
+          }
+          return out;
+        };
+        if (JSON.stringify(normPresence(dps)) !== JSON.stringify(normPresence(cps))) return true;
       } catch {}
       return false;
     } catch { return false; }
@@ -13725,10 +14294,10 @@ class ThermostatTimelineCard extends HTMLElement {
           }
         } catch {}
 
-        // Use the draft unit while the popup is open (so unit toggles update labels immediately).
+        // Use the draft unit for the settings popup (so unit toggles update labels immediately, before Save).
         const popupUnit = (() => {
           try {
-            if (this._settingsPopupOpen && this._settingsDraft && this._settingsDraft.temp_unit != null) {
+            if (this._settingsDraft && this._settingsDraft.temp_unit != null) {
               const u = String(this._settingsDraft.temp_unit).toUpperCase();
               if (u === 'F' || u === 'FAHRENHEIT') return '°F';
               if (u === 'C' || u === 'CELSIUS') return '°C';
@@ -13748,15 +14317,29 @@ class ThermostatTimelineCard extends HTMLElement {
           rooms: 'editor.tabs.rooms',
           boiler: 'editor.tabs.boiler',
           colors: 'editor.tabs.colors',
+          presence_sensor: 'editor.tabs.presence_sensor',
           owd: 'editor.tabs.owd',
           holidays: 'editor.tabs.holidays',
           away: 'editor.tabs.away'
         };
+        const tabFallback = {
+          settings: 'Settings',
+          pause: 'Pause',
+          weekdays: 'Weekdays',
+          rooms: 'Rooms',
+          boiler: 'Boiler',
+          colors: 'Colors',
+          presence_sensor: 'Presence sensor',
+          owd: 'Open Window Detection',
+          holidays: 'Holidays',
+          away: 'Away from home'
+        };
         const btns = this.shadowRoot ? Array.from(this.shadowRoot.querySelectorAll('.overlay-settings .settings-tab-btn')) : [];
         for (const b of btns){
-          const key = tabMap[b.getAttribute('data-tab')] || null;
+          const tab = String(b.getAttribute('data-tab') || '');
+          const key = tabMap[tab] || null;
           if (!key) continue;
-          b.textContent = t(key);
+          b.textContent = t(key) || tabFallback[tab] || tab;
         }
         const ss = this.shadowRoot && this.shadowRoot.querySelector('.settings-save');
         if (ss) ss.textContent = t('ui.save');
@@ -13765,13 +14348,13 @@ class ThermostatTimelineCard extends HTMLElement {
 
         // Settings tab content labels
         const defLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-def');
-        if (defLab) defLab.textContent = String(t('editor.default_c')||'').replace('°C', this._unitSymbol());
+        if (defLab) defLab.textContent = String(t('editor.default_c')||'').replace('°C', popupUnit);
         const rowHLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-rowh');
         if (rowHLab) rowHLab.textContent = t('editor.row_height_px');
         const minLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-minc');
-        if (minLab) minLab.textContent = String(t('editor.min_c')||'').replace('°C', this._unitSymbol());
+        if (minLab) minLab.textContent = String(t('editor.min_c')||'').replace('°C', popupUnit);
         const maxLab = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-slabel-maxc');
-        if (maxLab) maxLab.textContent = String(t('editor.max_c')||'').replace('°C', this._unitSymbol());
+        if (maxLab) maxLab.textContent = String(t('editor.max_c')||'').replace('°C', popupUnit);
 
         const at = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-auto-title');
         if (at) at.textContent = t('editor.auto_apply.title');
@@ -13860,6 +14443,18 @@ class ThermostatTimelineCard extends HTMLElement {
         if (beD) beD.textContent = t('boiler.enable.desc');
         const bsT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-switch-title');
         if (bsT) bsT.textContent = t('boiler.switch');
+        const brT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-rooms-title');
+        if (brT) brT.textContent = t('boiler.rooms');
+        const brD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-rooms-desc');
+        if (brD) brD.textContent = t('boiler.rooms.desc');
+        const boT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-offsets-title');
+        if (boT) boT.textContent = t('boiler.offsets');
+        const boD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-offsets-desc');
+        if (boD) boD.textContent = t('boiler.offsets.desc');
+        const bon = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-on-offset-label');
+        if (bon) bon.textContent = String(t('boiler.on_offset')||'').replace('°C', popupUnit);
+        const bof = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-off-offset-label');
+        if (bof) bof.textContent = String(t('boiler.off_offset')||'').replace('°C', popupUnit);
         const btT = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-sensor-title');
         if (btT) btT.textContent = t('boiler.temp_sensor');
         const btD = this.shadowRoot && this.shadowRoot.querySelector('.overlay-settings .sp-boiler-sensor-desc');
@@ -16653,7 +17248,7 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     // These settings are now edited in the in-card popup + stored in shared/local storage,
     // so they should not be emitted into YAML config.
     try {
-      for (const k of ['row_height','default_temp','min_temp','max_temp','auto_apply','apply_on_edit','apply_on_default_change','per_room_defaults','show_pause_button','pause_sensor_enabled','pause_sensor_entity','time_12h','time_source','temp_unit','profiles_enabled','weekdays_enabled','weekdays_view','weekdays_selected_room','boiler_enabled','boiler_switch','boiler_temp_sensor','boiler_min_temp','boiler_max_temp','open_window','color_ranges','color_global','respect_storage_weekdays']) {
+      for (const k of ['row_height','default_temp','min_temp','max_temp','auto_apply','apply_on_edit','apply_on_default_change','per_room_defaults','show_pause_button','pause_sensor_enabled','pause_sensor_entity','presence_sensor_enabled','presence_sensors','time_12h','time_source','temp_unit','profiles_enabled','weekdays_enabled','weekdays_view','weekdays_selected_room','boiler_enabled','boiler_switch','boiler_temp_sensor','boiler_min_temp','boiler_max_temp','open_window','color_ranges','color_global','respect_storage_weekdays']) {
         if (k in cfg) delete cfg[k];
       }
     } catch {}
