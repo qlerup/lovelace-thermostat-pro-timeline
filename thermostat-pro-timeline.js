@@ -6823,7 +6823,7 @@ class ThermostatTimelineCard extends HTMLElement {
                 ? this._config.weekdays_selected_room
                 : (ents[0]||'');
               const roomLabel = this._config?.labels?.[roomEid] || this._prettyName(roomEid);
-              label = `${dayName} - ${roomLabel}`.trim();
+              label = `${roomLabel}`.trim();
             } else {
               label = dayName;
             }
