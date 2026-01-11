@@ -7549,10 +7549,30 @@ class ThermostatTimelineCard extends HTMLElement {
             const dkey = effKey(gk);
             const blocks = getBlocks(dkey);
             for (const b of blocks){
-              const pctStart = (b.startMin / 1440) * 100; const pctWidth = ((b.endMin - b.startMin) / 1440) * 100;
-              const bl = document.createElement('div'); bl.className='block'; bl.style.left=`${pctStart}%`; bl.style.width=`${pctWidth}%`;
-              try { const clr = this._colorFor(roomEid, b.temp); if (clr){ bl.style.background = clr; bl.style.borderColor = clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color = txt; } } catch {}
-              const pillTemp = document.createElement('span'); pillTemp.className='pill'; pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pillTemp);
+              const pctStart = (b.startMin / 1440) * 100; 
+              const pctWidth = ((b.endMin - b.startMin) / 1440) * 100;
+              const bl = document.createElement('div'); 
+              bl.className='block'; 
+              bl.style.left=`${pctStart}%`; 
+              bl.style.width=`${pctWidth}%`;
+              try { 
+                const clr = this._colorFor(roomEid, b.temp); 
+                if (clr){ 
+                  bl.style.background = clr; 
+                  bl.style.borderColor = clr; 
+                  const txt=this._contrastTextColor(clr); 
+                  if (txt) bl.style.color = txt; 
+                } 
+              } catch {}
+              UiHelper.genBlockPill(
+                this, 
+                bl,
+                `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+              );
+              /*const pillTemp = document.createElement('span'); 
+              pillTemp.className='pill'; 
+              pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+              bl.append(pillTemp);*/
               
               // Add double-click to edit block
               bl.addEventListener('dblclick', (e) => {
@@ -7895,7 +7915,12 @@ class ThermostatTimelineCard extends HTMLElement {
         } catch {}
         if (this._active?.entity === eid && this._active?.id === b.id) bl.classList.add('active');
   // Time will be shown in a hover tooltip (like the weekdays popup). Do not render time pill here.
-        const pillTemp = document.createElement('span');
+        UiHelper.genBlockPill(
+          this, 
+          bl, 
+          `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+        );
+        /*const pillTemp = document.createElement('span');
         pillTemp.className = 'pill';
   pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
         bl.append(pillTemp);
@@ -7907,9 +7932,12 @@ class ThermostatTimelineCard extends HTMLElement {
             const txt = bl.style.color || this._contrastTextColor(bg) || '';
             const pillBg = txt === '#ffffff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
             const pillBo = txt === '#ffffff' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.12)';
-            for (const p of pills){ p.style.background = pillBg; p.style.borderColor = pillBo; }
+            for (const p of pills){ 
+              p.style.background = pillBg; 
+              p.style.borderColor = pillBo; 
+            }
           }
-        } catch {}
+        } catch {}*/
         track.append(bl);
 
         // Ensure a tooltip element exists for main timeline (reuse weekly style)
@@ -12747,9 +12775,12 @@ class ThermostatTimelineCard extends HTMLElement {
         div.style.top='6px'; div.style.bottom='6px';
         div.style.left = (b.startMin/1440*100)+'%';
         div.style.width = ((b.endMin-b.startMin)/1440*100)+'%';
-  // Only show temperature in the block in the weekly popup (hide time)
-  const t2 = document.createElement('span'); t2.className='pill'; t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; div.append(t2);
-  try {
+        // Only show temperature in the block in the weekly popup (hide time)
+        /*const t2 = document.createElement('span'); 
+        t2.className='pill'; 
+        t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+        div.append(t2);*/
+        try {
           const clr = this._colorFor(this._weeklyEntity, b.temp);
           if (clr) {
             div.style.background = clr;
@@ -12758,6 +12789,11 @@ class ThermostatTimelineCard extends HTMLElement {
             if (txt) div.style.color = txt;
           }
         } catch {}
+        UiHelper.genBlockPill(
+          this,
+          div,
+          `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+        );
         // double-click to edit (prevent bubbling to track handler)
         div.addEventListener('dblclick', (ev)=>{ try { ev.stopPropagation(); ev.preventDefault(); } catch {} this._openWeeklyBlockEditor(b.id); });
         // Hover -> show tooltip with full time range + temp (no click needed)
@@ -12998,7 +13034,14 @@ class ThermostatTimelineCard extends HTMLElement {
         const bl = document.createElement('div'); bl.className='block'; bl.style.left=`${pctStart}%`; bl.style.width=`${pctW}%`;
         try { const clr = this._colorFor(this._profilesEntity, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
         // Hide pill via CSS; use hover tooltip like weekdays
-        const pillTemp = document.createElement('span'); pillTemp.className='pill'; pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pillTemp);
+        /*const pillTemp = document.createElement('span'); 
+        pillTemp.className='pill'; 
+        pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+        bl.append(pillTemp);*/
+        UiHelper.genBlockPill(
+          this, bl,
+          `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+        );
         bl.addEventListener('dblclick', ()=> this._openProfileBlockEditor(b.id));
         const showTip = ()=>{
           const txt = `${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
@@ -13327,7 +13370,14 @@ class ThermostatTimelineCard extends HTMLElement {
     for (const b of blocks){
       const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%';
   try { const clr=this._colorFor(this._holidayRoom, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
-      const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill);
+      /*const pill=document.createElement('span'); 
+      pill.className='pill'; 
+      pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+      bl.append(pill);*/
+      UiHelper.genBlockPill(
+        this, b,
+        `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+      );
       bl.addEventListener('dblclick', ()=> this._openHolidayBlockEditor(b.id));
       const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; if (!tooltip) return; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); tooltip._hideTimer=null; } catch {} const box=bl.getBoundingClientRect(); const cont=modalHost?.getBoundingClientRect(); const left=box.left+box.width/2-(cont?.left||0); const top=(box.top-(cont?.top||0))-8; tooltip.textContent=txt; tooltip.style.left=left+'px'; tooltip.style.top=top+'px'; tooltip.style.transform='translate(-50%,-100%)'; tooltip.style.display=''; };
       const hideTip = ()=>{ if (!tooltip) return; const delay=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?3000:120; try{ if(tooltip._hideTimer) clearTimeout(tooltip._hideTimer);}catch{} tooltip._hideTimer=setTimeout(()=>{ try{ tooltip.style.display='none'; tooltip._hideTimer=null; }catch{} }, delay); };
@@ -13445,7 +13495,62 @@ class ThermostatTimelineCard extends HTMLElement {
       const arr = (this._presenceDraft && this._presenceDraft.rooms) ? (this._presenceDraft.rooms[room] || []) : [];
       // Tooltip reuse
       let tooltip = this.shadowRoot.querySelector('.wk-tooltip.presence'); if (!tooltip) { tooltip = document.createElement('div'); tooltip.className='wk-tooltip presence'; tooltip.style.display='none'; (modalHost||document.body).append(tooltip); }
-      for (const b of arr){ const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%'; try { const clr=this._colorFor(room, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {} const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill); bl.addEventListener('dblclick', ()=> this._openPresenceBlockEditor(b.id)); const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; if (!tooltip) return; try { if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); tooltip._hideTimer=null; } catch {} const box=bl.getBoundingClientRect(); const cont=modalHost?.getBoundingClientRect(); const left=box.left+box.width/2-(cont?.left||0); const top=(box.top-(cont?.top||0))-8; tooltip.textContent=txt; tooltip.style.left=left+'px'; tooltip.style.top=top+'px'; tooltip.style.transform='translate(-50%,-100%)'; tooltip.style.display=''; }; const hideTip = ()=>{ if (!tooltip) return; const delay=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?3000:120; try{ if(tooltip._hideTimer) clearTimeout(tooltip._hideTimer);}catch{} tooltip._hideTimer=setTimeout(()=>{ try{ tooltip.style.display='none'; tooltip._hideTimer=null; }catch{} }, delay); }; bl.addEventListener('mouseenter', showTip); bl.addEventListener('mouseleave', hideTip); track.append(bl); }
+      for (const b of arr){ 
+        const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; 
+        const bl=document.createElement('div'); 
+        bl.className='block'; bl.style.left=pctStart+'%'; 
+        bl.style.width=pctW+'%'; 
+        try { 
+          const clr=this._colorFor(room, b.temp); 
+          if (clr){ 
+            bl.style.background=clr; 
+            bl.style.borderColor=clr; 
+            const txt=this._contrastTextColor(clr); 
+            if (txt) bl.style.color=txt; 
+          } 
+        } catch {} 
+        UiHelper.genBlockPill(
+          this, bl,
+          `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+        );
+        /*const pill=document.createElement('span'); 
+        pill.className='pill'; 
+        pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+        bl.append(pill); */
+        bl.addEventListener('dblclick', ()=> this._openPresenceBlockEditor(b.id)); 
+        const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+        if (!tooltip) return;
+        try { 
+          if (tooltip._hideTimer) clearTimeout(tooltip._hideTimer); 
+          tooltip._hideTimer=null; 
+        } catch {} 
+        const box=bl.getBoundingClientRect(); 
+        const cont=modalHost?.getBoundingClientRect(); 
+        const left=box.left+box.width/2-(cont?.left||0); 
+        const top=(box.top-(cont?.top||0))-8; 
+        tooltip.textContent=txt; 
+        tooltip.style.left=left+'px'; 
+        tooltip.style.top=top+'px'; 
+        tooltip.style.transform='translate(-50%,-100%)'; 
+        tooltip.style.display=''; }; 
+        const hideTip = ()=>{ 
+          if (!tooltip) return; 
+          const delay=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?3000:120; 
+          try{ 
+            if(tooltip._hideTimer) clearTimeout(tooltip._hideTimer);
+          }catch{} 
+          tooltip._hideTimer=setTimeout(
+            ()=>{ 
+              try{ 
+                tooltip.style.display='none'; 
+                tooltip._hideTimer=null; 
+              } catch{} 
+            }, delay
+          ); 
+        }; 
+        bl.addEventListener('mouseenter', showTip); 
+        bl.addEventListener('mouseleave', hideTip); 
+        track.append(bl); }
       // dblclick to add
       track.addEventListener('dblclick', (e)=>{ try { if (e.target && (e.target.closest && e.target.closest('.block'))) return; const box=track.getBoundingClientRect(); const rel=(e.clientX-box.left)/box.width; const min=this._clamp(Math.round(rel*1440),0,1439); this._openPresenceBlockEditor(null, min); } catch { this._openPresenceBlockEditor(null); } });
     }
@@ -13666,7 +13771,14 @@ class ThermostatTimelineCard extends HTMLElement {
         for (const b of blocks){
           const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%';
           try { const clr=this._colorFor(eid, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
-          const pill=document.createElement('span'); pill.className='pill'; pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; bl.append(pill);
+          UiHelper.genBlockPill(
+            this, bl,
+            `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
+          );
+          /*const pill=document.createElement('span'); 
+          pill.className='pill'; 
+          pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
+          bl.append(pill);*/
           track.append(bl);
         }
       }
@@ -17505,8 +17617,42 @@ class ThermostatTimelineCardEditor extends HTMLElement {
     } catch {}
     return false;
   }
-
 }
+
+class UiHelper {
+  // BinarydustFF - fix
+  // Block's pills (showing temperature) were rendered differently between modes
+  // Creating a unique helper to unify the rendering method
+  /**
+   * Generate a pill element inside a parent block
+   * @param {ThermostatTimelineCard} ttcInst Current `ThermostatTimelineCard` instance
+   * @param {HTMLDivElement} parentBlock 
+   * @param {string} content The string content
+   * @returns {HTMLSpanElement} The generated pill
+   */
+  static genBlockPill(ttcInst, parentBlock, content) { 
+    // Pill creation
+    const pill = document.createElement('span');
+    pill.className = 'pill';
+    pill.textContent = content;
+    parentBlock.append(pill);
+
+    // Pill styling
+    try {
+      const blcBgClr = parentBlock.style.backgroundColor || '';
+      if (!blcBgClr) { // possible?
+        // console.warn("ThermostatTimelineCard: Block without background color", parentBlock)
+        // Skip the styling part
+        return pill
+      }
+      const pillTxtClr = parentBlock.style.color || ttcInst._contrastTextColor(blcBgClr) || '';
+      pill.style.backgroundColor = pillTxtClr === '#ffffff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
+      pill.style.backgroundColor = pillTxtClr === '#ffffff' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.12)';
+    } catch {}
+    return pill;
+  }
+}
+
 // Avoid hard failures if the editor gets registered elsewhere/earlier.
 try {
   if (!customElements.get("thermostat-timeline-card-editor")) {
