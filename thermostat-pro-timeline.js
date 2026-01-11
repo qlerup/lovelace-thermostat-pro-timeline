@@ -7569,10 +7569,6 @@ class ThermostatTimelineCard extends HTMLElement {
                 bl,
                 `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
               );
-              /*const pillTemp = document.createElement('span'); 
-              pillTemp.className='pill'; 
-              pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
-              bl.append(pillTemp);*/
               
               // Add double-click to edit block
               bl.addEventListener('dblclick', (e) => {
@@ -7920,24 +7916,6 @@ class ThermostatTimelineCard extends HTMLElement {
           bl, 
           `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
         );
-        /*const pillTemp = document.createElement('span');
-        pillTemp.className = 'pill';
-  pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`;
-        bl.append(pillTemp);
-        // If we colored the block, soften pill background so the color is visible
-        try {
-          const bg = bl.style.background || '';
-          if (bg) {
-            const pills = [pillTemp];
-            const txt = bl.style.color || this._contrastTextColor(bg) || '';
-            const pillBg = txt === '#ffffff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
-            const pillBo = txt === '#ffffff' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.12)';
-            for (const p of pills){ 
-              p.style.background = pillBg; 
-              p.style.borderColor = pillBo; 
-            }
-          }
-        } catch {}*/
         track.append(bl);
 
         // Ensure a tooltip element exists for main timeline (reuse weekly style)
@@ -12776,10 +12754,6 @@ class ThermostatTimelineCard extends HTMLElement {
         div.style.left = (b.startMin/1440*100)+'%';
         div.style.width = ((b.endMin-b.startMin)/1440*100)+'%';
         // Only show temperature in the block in the weekly popup (hide time)
-        /*const t2 = document.createElement('span'); 
-        t2.className='pill'; 
-        t2.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
-        div.append(t2);*/
         try {
           const clr = this._colorFor(this._weeklyEntity, b.temp);
           if (clr) {
@@ -13034,10 +13008,6 @@ class ThermostatTimelineCard extends HTMLElement {
         const bl = document.createElement('div'); bl.className='block'; bl.style.left=`${pctStart}%`; bl.style.width=`${pctW}%`;
         try { const clr = this._colorFor(this._profilesEntity, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
         // Hide pill via CSS; use hover tooltip like weekdays
-        /*const pillTemp = document.createElement('span'); 
-        pillTemp.className='pill'; 
-        pillTemp.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
-        bl.append(pillTemp);*/
         UiHelper.genBlockPill(
           this, bl,
           `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
@@ -13370,10 +13340,6 @@ class ThermostatTimelineCard extends HTMLElement {
     for (const b of blocks){
       const pctStart=(b.startMin/1440)*100, pctW=((b.endMin-b.startMin)/1440)*100; const bl=document.createElement('div'); bl.className='block'; bl.style.left=pctStart+'%'; bl.style.width=pctW+'%';
   try { const clr=this._colorFor(this._holidayRoom, b.temp); if (clr){ bl.style.background=clr; bl.style.borderColor=clr; const txt=this._contrastTextColor(clr); if (txt) bl.style.color=txt; } } catch {}
-      /*const pill=document.createElement('span'); 
-      pill.className='pill'; 
-      pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
-      bl.append(pill);*/
       UiHelper.genBlockPill(
         this, b,
         `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
@@ -13513,10 +13479,6 @@ class ThermostatTimelineCard extends HTMLElement {
           this, bl,
           `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
         );
-        /*const pill=document.createElement('span'); 
-        pill.className='pill'; 
-        pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
-        bl.append(pill); */
         bl.addEventListener('dblclick', ()=> this._openPresenceBlockEditor(b.id)); 
         const showTip = ()=>{ const txt=`${this._label(b.startMin)} - ${this._label(b.endMin)} • ${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
         if (!tooltip) return;
@@ -13775,10 +13737,6 @@ class ThermostatTimelineCard extends HTMLElement {
             this, bl,
             `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`
           );
-          /*const pill=document.createElement('span'); 
-          pill.className='pill'; 
-          pill.textContent = `${this._toDisplayTemp(b.temp)} ${this._unitSymbol()}`; 
-          bl.append(pill);*/
           track.append(bl);
         }
       }
