@@ -2,6 +2,14 @@
 
 [![hacs\_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz) [![Downloads](https://img.shields.io/github/downloads/qlerup/lovelace-thermostat-pro-timeline/total)](https://github.com/qlerup/lovelace-thermostat-pro-timeline/releases)
 
+> [!WARNING]
+> **This card is no longer being updated in this repository.**
+>
+> The project has been moved into the integration, so the *integration + card* are now bundled as **one package** instead of two.
+>
+> ✅ Please use: https://github.com/qlerup/thermostat-pro-timeline
+>
+> This repo is kept for historical reference / older versions only.
 
 ## Support this project
 
